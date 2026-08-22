@@ -15,6 +15,15 @@ it trusted, how it is superseded, contradicted, quarantined, or deleted. No
 consumer may define a second answer. A consumer may hold a lossy *projection*,
 which must declare what it drops.
 
+## The remote does not exist yet
+
+`Cargo.toml` sets `repository = "https://github.com/donaldfilimon/wdbx"`, and
+`repository.workspace = true` propagates it into all five crates' metadata. **That
+URL is an intent, not a fact** — this repository has no git remote configured and
+the GitHub repo has not been created. Creating it is Donald's call, since it is an
+outward-facing action. Until then, treat the field as a placeholder: do not cite it
+as a source, and do not publish from this workspace.
+
 ## Layout
 
 Five crates, in dependency order. Every crate depends only on crates above it.
