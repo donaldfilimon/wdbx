@@ -1,0 +1,49 @@
+[workspace]
+resolver = "3"
+members = ["crates/*"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.99"
+license = "MIT"
+repository = "https://github.com/donaldfilimon/wdbx"
+
+[workspace.dependencies]
+abi-foundation = { path = "crates/abi-foundation" }
+abi-telemetry = { path = "crates/abi-telemetry" }
+abi-compute = { path = "crates/abi-compute" }
+abi-core = { path = "crates/abi-core" }
+abi-wdbx = { path = "crates/abi-wdbx" }
+
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+sha2 = "0.10"
+crc32fast = "1"
+num-bigint = "0.4"
+num-traits = "0.2"
+nix = { version = "0.30", features = ["user"] }
+libc = "0.2"
+thiserror = "2"
+wyhash = "0.5"
+zeroize = { version = "1", features = ["derive"] }
+uuid = { version = "1", features = ["serde", "v4", "v5"] }
+chacha20poly1305 = { version = "0.11", features = ["getrandom"] }
+ed25519-dalek = "3"
+tfhe = { version = "=1.7.0", default-features = false, features = ["boolean", "integer", "shortint"] }
+
+[workspace.lints.rust]
+unsafe_code = "deny"
+missing_docs = "warn"
+
+[workspace.lints.clippy]
+all = { level = "deny", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+module_name_repetitions = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+panic = "abort"

@@ -15,7 +15,7 @@ use abi_wdbx::{ExactIndex, HnswIndex, Snapshot, StorePaths};
 use std::path::{Path, PathBuf};
 
 fn golden_dir() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../tests/golden")
+    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/golden")
 }
 
 fn read_golden(name: &str) -> String {
