@@ -15,14 +15,21 @@ it trusted, how it is superseded, contradicted, quarantined, or deleted. No
 consumer may define a second answer. A consumer may hold a lossy *projection*,
 which must declare what it drops.
 
-## The remote does not exist yet
+## The remote
 
-`Cargo.toml` sets `repository = "https://github.com/donaldfilimon/wdbx"`, and
-`repository.workspace = true` propagates it into all five crates' metadata. **That
-URL is an intent, not a fact** — this repository has no git remote configured and
-the GitHub repo has not been created. Creating it is Donald's call, since it is an
-outward-facing action. Until then, treat the field as a placeholder: do not cite it
-as a source, and do not publish from this workspace.
+`donaldfilimon/wdbx-substrate`, **private**, created 2026-08-22.
+
+The name is deliberate. `donaldfilimon/wdbx` was already taken by an unrelated
+**public** TypeScript and Zig Cloudflare Workers MCP server (5 commits, January
+2026) that shares only the name with this substrate. That repository was left
+untouched. If it is ever archived or renamed, this one can take the shorter name
+with `gh repo rename`, and the only things needing an edit are `repository` in
+`Cargo.toml` and the `repository:` line in each consumer's CI checkout step.
+
+Consumers check this out as a **sibling directory named `wdbx`**, not
+`wdbx-substrate`, because the relative path dependencies in `abi` and `abbey`
+say `../wdbx/crates/...`. The local directory name and the GitHub repository
+name are deliberately allowed to differ.
 
 ## Layout
 

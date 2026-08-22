@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  gate:
+    name: gate (fmt, clippy, test)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # This workspace is self-contained: the five crates depend only on each
+      # other and on crates.io, so no sibling checkout is needed here. Consumers
+      # (abi, abbey) are the ones that need this repository beside them.
+      - uses: dtolnay/rust-toolchain@nightly
+        with:
+          components: rustfmt, clippy
+
+      - name: cargo fmt
+        run: cargo fmt --all --check
+
+      # The workspace denies unsafe_code and all of clippy, and warns on
+      # missing_docs and clippy pedantic. --all-targets covers tests too.
+      - name: cargo clippy
+        run: cargo clippy --workspace --all-targets
+
+      - name: cargo test
+        run: cargo test --workspace
