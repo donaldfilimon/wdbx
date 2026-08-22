@@ -7,6 +7,12 @@ Extracted from [`donaldfilimon/abi`](https://github.com/donaldfilimon/abi) on
 2026-08-22 with history preserved. Every commit that ever touched these five
 crates is present; nothing was squashed or replayed.
 
+This repository is public so ABI, Abbey, and external forks can build the exact
+pinned substrate without a cross-repository credential. That visibility covers
+source code only: WDBX stores, episodes, evidence payloads, operator state,
+credentials, and consumer runtime data stay private to their owners. Nothing in
+this repository provides a hosted database or production authority.
+
 ## What this is
 
 Under the Abbey System Constitution, ABI is the canonical cognitive and

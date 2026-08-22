@@ -17,7 +17,12 @@ which must declare what it drops.
 
 ## The remote
 
-`donaldfilimon/wdbx`, **private**.
+`donaldfilimon/wdbx`, **public source** as of 2026-08-22.
+
+Public visibility applies to this reviewed source tree only. WDBX stores,
+episodes, evidence payloads, operator state, credentials, and consumer runtime
+data remain private to their owners and must never be committed here. Public
+source is not a public data service and grants no production authority.
 
 The short name was taken until 2026-08-22 by an unrelated **public** TypeScript
 and Zig Cloudflare Workers MCP server (5 commits, January 2026) that shared only
