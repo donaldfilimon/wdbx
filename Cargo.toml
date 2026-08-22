@@ -7,7 +7,7 @@ version = "0.1.0"
 edition = "2024"
 rust-version = "1.99"
 license = "MIT"
-repository = "https://github.com/donaldfilimon/wdbx-substrate"
+repository = "https://github.com/donaldfilimon/wdbx"
 
 [workspace.dependencies]
 abi-foundation = { path = "crates/abi-foundation" }

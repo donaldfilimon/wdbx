@@ -17,19 +17,20 @@ which must declare what it drops.
 
 ## The remote
 
-`donaldfilimon/wdbx-substrate`, **private**, created 2026-08-22.
+`donaldfilimon/wdbx`, **private**.
 
-The name is deliberate. `donaldfilimon/wdbx` was already taken by an unrelated
-**public** TypeScript and Zig Cloudflare Workers MCP server (5 commits, January
-2026) that shares only the name with this substrate. That repository was left
-untouched. If it is ever archived or renamed, this one can take the shorter name
-with `gh repo rename`, and the only things needing an edit are `repository` in
-`Cargo.toml` and the `repository:` line in each consumer's CI checkout step.
+The short name was taken until 2026-08-22 by an unrelated **public** TypeScript
+and Zig Cloudflare Workers MCP server (5 commits, January 2026) that shared only
+the name. Rather than force-push over it, that project was renamed to
+`donaldfilimon/wdbx-workers-legacy` and archived, and this repository then took
+the name. Nothing of it was deleted.
 
-Consumers check this out as a **sibling directory named `wdbx`**, not
-`wdbx-substrate`, because the relative path dependencies in `abi` and `abbey`
-say `../wdbx/crates/...`. The local directory name and the GitHub repository
-name are deliberately allowed to differ.
+Ordering trap worth remembering: **archiving a repository does not free its
+name.** The rename has to come first.
+
+Consumers check this out as a sibling directory named `wdbx`, which now matches
+the repository name, because the relative path dependencies in `abi` and `abbey`
+say `../wdbx/crates/...`.
 
 ## Layout
 
