@@ -91,4 +91,24 @@ Report **Current** versus **Proposed**. The specification this substrate targets
 is a *proposed architecture* whose own status box says the integrated system is
 not empirically validated. Most of the evidence half of that specification is
 unimplemented here; the README says exactly which parts. Do not describe a
-capability as Current above the evidence level (L0-L8) that supports it.
+capability as Current above the constitutional evidence level (C0-C7) that
+supports it.
+
+## Abbey contract conformance
+
+`contracts/abbey/` is an exact-byte vendor of ABI's qualified Program 1 corpus.
+The lock pins immutable ABI revision
+`348754bdaaf59a40fbb858380f925e0aba95a23b` and aggregate digest
+`72e241e34967df318376bf68f4a0e2db13f5ebf17d1a219709731f1f470dbe8e`.
+Refresh it only with ABI's deterministic `tools/vendor_abbey_contracts.py`;
+never copy or regenerate corpus files independently.
+
+WDBX qualifies only schemas and fixtures whose declared family begins
+`episode/`: proposal, evidence, claim, tombstone/retention, and the negative
+canonicalization boundary. The native integration test recomputes every file
+and aggregate digest, resolves schemas from the vendored corpus only, and
+rejects transport JSON or an adapter projection as a canonical episode. It
+does not open or mutate a `DurableStore`, enable a write path, or establish
+production federation. The corpus supplies no positive
+`abbey-cbor-episode-v1` golden fixture, so positive canonical-CBOR decoding is
+not claimed.

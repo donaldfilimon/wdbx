@@ -61,7 +61,28 @@ causal, and persona affinity, combined multiplicatively into one score, which is
 the opaque collapse the constitution's invariant I3 forbids. No selective write
 gate. No block-level retention, redaction, or deletion semantics.
 
-Closing those gaps is Program 3, the Canonical WDBX Episodic Contract.
+Closing those gaps is Program 4, `canonical-wdbx-episodes-claims`.
+
+### Program 1 contract qualification
+
+**Current at C1, data-only.** WDBX vendors ABI's 81-artifact Abbey contract
+corpus from immutable source revision
+`348754bdaaf59a40fbb858380f925e0aba95a23b`, aggregate digest
+`72e241e34967df318376bf68f4a0e2db13f5ebf17d1a219709731f1f470dbe8e`.
+Its native Rust integration test independently verifies the closed lock,
+artifact inventory and bytes, per-file SHA-256 commitments, aggregate digest,
+local-only episode-schema compilation, and the episode proposal, evidence,
+claim, retention, and tombstone fixtures. Mutation coverage rejects changed
+artifact bytes, extra files, changed line endings, adapter-supplied episode
+digests, missing deletion keys, invalid retention, transport JSON as a durable
+commitment, and adapter projections as canonical episodes.
+
+This qualification does not add runtime episode types, a selective write gate,
+canonical CBOR/COSE encoding, or `DurableStore` behavior. The canonical corpus
+does not contain a positive `abbey-cbor-episode-v1` golden fixture, so the test
+enforces only the available negative boundary: transport JSON and projections
+are not canonical WDBX commitments. Production federation, deployment, and
+live Discord evidence remain separately authorized and unclaimed.
 
 ## Gate
 
