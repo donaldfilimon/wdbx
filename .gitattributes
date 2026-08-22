@@ -1,0 +1,10 @@
+# Byte-contract fixtures. These are compared for exact equality by tests, so a
+# checkout that rewrites LF to CRLF silently changes the contract and fails the
+# comparison for a reason that has nothing to do with the code.
+#
+# abbey-bot hit exactly this and pinned its own copy of
+# abbey-bot-projection.seg.jsonl (donaldfilimon/abbey-bot c31af64). The two
+# copies are a deliberate cross-implementation pair, so both must be pinned or
+# they diverge on any Windows checkout.
+crates/abi-wdbx/tests/golden/*.jsonl   text eol=lf
+crates/abi-wdbx/tests/golden/*.manifest text eol=lf
