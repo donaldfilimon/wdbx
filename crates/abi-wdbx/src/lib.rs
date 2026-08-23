@@ -60,6 +60,7 @@ pub mod store;
 pub mod temporal;
 pub mod tls_config;
 pub mod v2;
+pub mod v3;
 pub mod versioned;
 pub mod wal;
 
