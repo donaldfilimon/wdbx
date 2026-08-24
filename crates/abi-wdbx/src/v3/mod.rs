@@ -4,3 +4,4 @@
 //! storage-independent canonical episode commitment profile.
 
 pub mod commitment;
+pub mod episode;

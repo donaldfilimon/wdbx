@@ -188,7 +188,8 @@ impl WdbxContractCorpus {
         if lock.source_repository != SOURCE_REPOSITORY
             || lock.source_revision.len() != 40
             || !is_lower_hex(&lock.source_revision)
-            || lock.contract_major != 1
+            || !matches!(lock.contract_major, 1 | 2)
+            || lock.contract_revision == 0
             || lock.aggregate_digest.len() != 64
             || !is_lower_hex(&lock.aggregate_digest)
         {
