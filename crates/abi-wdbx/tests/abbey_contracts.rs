@@ -9,9 +9,9 @@ use std::path::Path;
 use std::sync::atomic::{AtomicU64, Ordering};
 use support::{ContractFailure, FixtureDisposition, WdbxContractCorpus};
 
-const QUALIFIED_ABI_REVISION: &str = "348754bdaaf59a40fbb858380f925e0aba95a23b";
+const QUALIFIED_ABI_REVISION: &str = "63e6d6a79d0b8745a652803887d07665245ddb39";
 const QUALIFIED_AGGREGATE_DIGEST: &str =
-    "72e241e34967df318376bf68f4a0e2db13f5ebf17d1a219709731f1f470dbe8e";
+    "3ffd487bdc497b7ce54b8c29978a3686dcbffdb66a85957a0ee4f99ba576cdfd";
 static SCRATCH_SEQUENCE: AtomicU64 = AtomicU64::new(0);
 
 struct ScratchCorpus {
@@ -71,8 +71,8 @@ fn corpus_lock_and_manifest_match_the_qualified_abi_source() {
     let corpus = corpus();
     assert_eq!(corpus.source_revision(), QUALIFIED_ABI_REVISION);
     assert_eq!(corpus.aggregate_digest(), QUALIFIED_AGGREGATE_DIGEST);
-    assert_eq!(corpus.contract_major(), 1);
-    assert_eq!(corpus.contract_revision(), 1);
+    assert_eq!(corpus.contract_major(), 2);
+    assert_eq!(corpus.contract_revision(), 2);
 }
 
 #[test]

@@ -98,8 +98,8 @@ supports it.
 
 `contracts/abbey/` is an exact-byte vendor of ABI's qualified Program 1 corpus.
 The lock pins immutable ABI revision
-`348754bdaaf59a40fbb858380f925e0aba95a23b` and aggregate digest
-`72e241e34967df318376bf68f4a0e2db13f5ebf17d1a219709731f1f470dbe8e`.
+`63e6d6a79d0b8745a652803887d07665245ddb39` and aggregate digest
+`3ffd487bdc497b7ce54b8c29978a3686dcbffdb66a85957a0ee4f99ba576cdfd`.
 Refresh it only with ABI's deterministic `tools/vendor_abbey_contracts.py`;
 never copy or regenerate corpus files independently.
 
@@ -108,7 +108,7 @@ WDBX qualifies only schemas and fixtures whose declared family begins
 canonicalization boundary. The native integration test recomputes every file
 and aggregate digest, resolves schemas from the vendored corpus only, and
 rejects transport JSON or an adapter projection as a canonical episode. It
-does not open or mutate a `DurableStore`, enable a write path, or establish
-production federation. The corpus supplies no positive
-`abbey-cbor-episode-v1` golden fixture, so positive canonical-CBOR decoding is
-not claimed.
+does not itself open the separate v3 `EpisodeStore`, authorize a write, or
+establish production federation. WDBX's positive `abbey-cbor-episode-v1`
+vectors and episode-store replay tests are crate-local evidence, not corpus
+fixtures and not a claim of a general canonical-CBOR decoder.

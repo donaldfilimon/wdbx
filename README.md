@@ -52,28 +52,37 @@ signing over transaction and segment objects. MVCC. WAL plus segments with CRC
 framing. Cluster replication and read repair. A pluggable retrieval scoring seam.
 Program 4's first C1-only slice adds a pure `abbey-cbor-episode-v1`
 deterministic-CBOR envelope encoder, sorted parent commitments, and exact
-positive golden vectors. It performs no store I/O and no existing reader or
-writer uses it.
+positive golden vectors. The next bounded slice adds a single-writer
+`EpisodeStore`: it reconstructs that canonical envelope from typed lifecycle
+events, computes the commitment inside WDBX, appends linked records, verifies
+every complete record on reopen, and returns content-free receipts. New writes
+fail closed on contract/policy/consent drift, identity conflicts, request or
+operation replay, commitment mutation, guild opt-out, `QUIET`, and per-guild
+token or storage exhaustion. This is C1 source evidence plus local deterministic
+replay test evidence; it is not a claim-registry promotion or deployed
+federation evidence.
 
-**Not implemented, and not claimed.** No v3 `EpisodeBlock`, canonical-CBOR
-reader or persistence integration, COSE envelope, or episode signing. The
-existing v2 commit digest remains `serde_json` bytes with parents in insertion
+**Not implemented, and not claimed.** No complete constitutional v3
+`EpisodeBlock`, general canonical-CBOR reader, COSE envelope, or episode
+signing. The existing v2 commit digest remains `serde_json` bytes with parents in insertion
 order; it is intentionally unchanged for compatibility. No `policy_version`,
-`signer_key_id`, `task_regime`, or `regime_posterior`. No contradiction or
+`signer_key_id`, `task_regime`, or `regime_posterior` exists in the older v2
+record format; the new episode ledger binds `policy_version` but does not
+reinterpret v2. No contradiction or
 quarantine edges. No evidence-weighted retrieval: ranking is semantic,
 temporal, causal, and persona affinity, combined multiplicatively into one
 score, which is the opaque collapse the constitution's invariant I3 forbids. No
-selective write gate. No block-level retention, redaction, or deletion
-semantics.
+block-level retention, redaction, deletion, signature verification, or hosted
+service semantics.
 
 Closing those gaps is Program 4, `canonical-wdbx-episodes-claims`.
 
 ### Program 1 contract qualification
 
-**Current at C1, data-only.** WDBX vendors ABI's 81-artifact Abbey contract
+**Current at C1, data-only.** WDBX vendors ABI's 113-artifact Abbey contract
 corpus from immutable source revision
-`348754bdaaf59a40fbb858380f925e0aba95a23b`, aggregate digest
-`72e241e34967df318376bf68f4a0e2db13f5ebf17d1a219709731f1f470dbe8e`.
+`63e6d6a79d0b8745a652803887d07665245ddb39`, aggregate digest
+`3ffd487bdc497b7ce54b8c29978a3686dcbffdb66a85957a0ee4f99ba576cdfd`.
 Its native Rust integration test independently verifies the closed lock,
 artifact inventory and bytes, per-file SHA-256 commitments, aggregate digest,
 local-only episode-schema compilation, and the episode proposal, evidence,
@@ -82,12 +91,12 @@ artifact bytes, extra files, changed line endings, adapter-supplied episode
 digests, missing deletion keys, invalid retention, transport JSON as a durable
 commitment, and adapter projections as canonical episodes.
 
-This qualification does not add runtime episode types, a selective write gate,
-canonical CBOR/COSE encoding, or `DurableStore` behavior. The canonical corpus
-does not contain a positive `abbey-cbor-episode-v1` golden fixture, so the test
-enforces only the available negative boundary: transport JSON and projections
-are not canonical WDBX commitments. Production federation, deployment, and
-live Discord evidence remain separately authorized and unclaimed.
+Corpus qualification alone does not authorize the separate runtime episode
+write gate. The corpus still contains no positive `abbey-cbor-episode-v1`
+fixture; WDBX's crate-local positive canonical-CBOR vectors and episode-store
+replay tests are separate implementation evidence. Production federation,
+deployment, and live Discord evidence remain separately authorized and
+unclaimed.
 
 ## Gate
 
