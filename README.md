@@ -50,16 +50,21 @@ of the **evidence** half.
 **Current.** Multi-parent causal audit DAG. SHA-256 content addressing. Ed25519
 signing over transaction and segment objects. MVCC. WAL plus segments with CRC
 framing. Cluster replication and read repair. A pluggable retrieval scoring seam.
+Program 4's first C1-only slice adds a pure `abbey-cbor-episode-v1`
+deterministic-CBOR envelope encoder, sorted parent commitments, and exact
+positive golden vectors. It performs no store I/O and no existing reader or
+writer uses it.
 
-**Not implemented, and not claimed.** Canonical CBOR or COSE encoding; the commit
-digest is taken over `serde_json` bytes with parents in insertion order rather
-than sorted, so it satisfies neither the encoding nor the ordering half of the
-specification's commitment function. No `schema_version`, `policy_version`,
+**Not implemented, and not claimed.** No v3 `EpisodeBlock`, canonical-CBOR
+reader or persistence integration, COSE envelope, or episode signing. The
+existing v2 commit digest remains `serde_json` bytes with parents in insertion
+order; it is intentionally unchanged for compatibility. No `policy_version`,
 `signer_key_id`, `task_regime`, or `regime_posterior`. No contradiction or
-quarantine edges. No evidence-weighted retrieval: ranking is semantic, temporal,
-causal, and persona affinity, combined multiplicatively into one score, which is
-the opaque collapse the constitution's invariant I3 forbids. No selective write
-gate. No block-level retention, redaction, or deletion semantics.
+quarantine edges. No evidence-weighted retrieval: ranking is semantic,
+temporal, causal, and persona affinity, combined multiplicatively into one
+score, which is the opaque collapse the constitution's invariant I3 forbids. No
+selective write gate. No block-level retention, redaction, or deletion
+semantics.
 
 Closing those gaps is Program 4, `canonical-wdbx-episodes-claims`.
 
