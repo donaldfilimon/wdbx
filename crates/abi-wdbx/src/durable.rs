@@ -406,8 +406,10 @@ pub(crate) fn acquire_writer_lock(paths: &StorePaths) -> Result<File> {
 
 /// How long [`acquire_writer_lock`] tolerates a `WouldBlock` before declaring
 /// the store busy. Measured fork/exec windows clear on the first 1 ms retry;
-/// this leaves two orders of magnitude of headroom on a loaded machine.
-const WRITER_LOCK_RETRY_BUDGET: std::time::Duration = std::time::Duration::from_millis(50);
+/// this leaves ample scheduling headroom when the process is running a fully
+/// parallel test or inference workload, while keeping genuine contention
+/// bounded below an operator-visible delay.
+const WRITER_LOCK_RETRY_BUDGET: std::time::Duration = std::time::Duration::from_millis(250);
 
 /// Poll interval while waiting out a transient `WouldBlock`.
 const WRITER_LOCK_RETRY_STEP: std::time::Duration = std::time::Duration::from_millis(1);
