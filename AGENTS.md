@@ -8,8 +8,8 @@ The provenance-aware episodic substrate beneath ABI, plus the foundation layer i
 builds on. Extracted from `donaldfilimon/abi` on 2026-08-22 with history
 preserved (39 commits, every commit that touched these crates).
 
-Authority, per the Abbey System Constitution
-(`abi/docs/superpowers/specs/2026-08-22-abbey-system-constitution.md`): this
+Authority, per the
+[Abbey System Constitution](https://github.com/donaldfilimon/abi/blob/main/docs/superpowers/specs/2026-08-22-abbey-system-constitution.md): this
 repository **owns durable episodic semantics** — what an episode is, what makes
 it trusted, how it is superseded, contradicted, quarantined, or deleted. No
 consumer may define a second answer. A consumer may hold a lossy *projection*,
@@ -17,7 +17,7 @@ which must declare what it drops.
 
 ## The remote
 
-`donaldfilimon/wdbx`, **public source** as of 2026-08-22.
+[`donaldfilimon/wdbx`](https://github.com/donaldfilimon/wdbx), public source.
 
 Public visibility applies to this reviewed source tree only. WDBX stores,
 episodes, evidence payloads, operator state, credentials, and consumer runtime
@@ -61,8 +61,9 @@ cargo clippy --workspace --all-targets
 cargo test --workspace
 ```
 
-Green at extraction: 558 tests, 0 failed, 0 clippy diagnostics. The workspace
-denies `unsafe_code` and all of clippy.
+Run all three commands against the current checkout before making a green-gate
+claim; extraction-era test totals are historical and are not a current
+acceptance contract. The workspace denies `unsafe_code` and all of clippy.
 
 ## Rules that bite
 
@@ -112,3 +113,14 @@ does not itself open the separate v3 `EpisodeStore`, authorize a write, or
 establish production federation. WDBX's positive `abbey-cbor-episode-v1`
 vectors and episode-store replay tests are crate-local evidence, not corpus
 fixtures and not a claim of a general canonical-CBOR decoder.
+
+<!-- machine-git-policy -->
+## Git workflow (machine policy, 2026-08-27)
+
+Work on the default branch in this canonical checkout. Do not create
+branches or worktrees by default; they are for tasks that genuinely need
+isolation, or when Donald asks. Any worktree or topic branch created here
+must be merged back into this checkout's default branch, the worktree
+removed, and the branch deleted, before pushing and before the task is
+called done. Full policy: `~/.claude/CLAUDE.md` (*Git discipline*).
+<!-- /machine-git-policy -->

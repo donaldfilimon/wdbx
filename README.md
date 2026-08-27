@@ -34,7 +34,7 @@ was done, what followed, and why this record is trusted.
 | `abi-telemetry` | Bounded, process-wide counters with insertion order preserved. No dependencies. |
 | `abi-compute` | Compute selection, deterministic CPU SIMD primitives, and the `Accelerator` contract that consumers implement. No dependencies. |
 | `abi-core` | Config, task scheduler, memory accounting, plugin registry. Depends on `abi-foundation` and `abi-telemetry`. |
-| `abi-wdbx` | The substrate itself, 25,171 lines: on-disk segment format, CRC-framed WAL recovery, checkpoint publication and salvage, MVCC with conflict sets, multi-parent causal audit DAG, exact and layered-HNSW search, 3-D spatial index, cluster replication with read repair, reference quantization/Huffman/rANS/autoencoder codecs, and optional FHE reference paths. |
+| `abi-wdbx` | The substrate itself: on-disk segment format, CRC-framed WAL recovery, checkpoint publication and salvage, MVCC with conflict sets, multi-parent causal audit DAG, exact and layered-HNSW search, 3-D spatial index, cluster replication with read repair, reference quantization/Huffman/rANS/autoencoder codecs, and optional FHE reference paths. |
 
 Crate names keep the `abi-` prefix deliberately. Renaming them would churn every
 consumer for no behavioral gain, and the constitution's point is that ABI owns
@@ -42,8 +42,8 @@ this layer, not that the layer must be re-branded.
 
 ## Status: honest
 
-Measured against the CSAPS/WDBX specification (see
-`abi/docs/superpowers/specs/2026-08-22-wdbx-conformance-gap-analysis.md`), this
+Measured against the
+[CSAPS/WDBX conformance gap analysis](https://github.com/donaldfilimon/abi/blob/main/docs/superpowers/specs/2026-08-22-wdbx-conformance-gap-analysis.md), this
 codebase implements most of the **structural** half of the substrate and little
 of the **evidence** half.
 
@@ -106,8 +106,9 @@ cargo clippy --workspace --all-targets
 cargo test --workspace
 ```
 
-All three green as of extraction: 558 tests passed, 0 failed, 0 clippy
-diagnostics. The workspace denies `unsafe_code` and all of clippy, and warns on
+Run all three commands against the current checkout before making a green-gate
+claim. Extraction-era test totals are deliberately not a current acceptance
+contract. The workspace denies `unsafe_code` and all of clippy, and warns on
 `missing_docs` and clippy pedantic.
 
 ## Consumers
