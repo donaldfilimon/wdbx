@@ -6,6 +6,16 @@ use std::path::PathBuf;
 /// Length of a block hash, in bytes.
 pub const HASH_LEN: usize = 32;
 
+/// Encode bytes as canonical lowercase hexadecimal text.
+pub(crate) fn lower_hex(bytes: &[u8]) -> String {
+    use std::fmt::Write as _;
+    let mut out = String::with_capacity(bytes.len() * 2);
+    for byte in bytes {
+        let _ = write!(out, "{byte:02x}");
+    }
+    out
+}
+
 /// Why reading the store failed.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum FormatError {
@@ -136,12 +146,7 @@ impl Hash {
     /// Lowercase hex.
     #[must_use]
     pub fn to_hex(&self) -> String {
-        use std::fmt::Write as _;
-        let mut out = String::with_capacity(HASH_LEN * 2);
-        for byte in self.0 {
-            let _ = write!(out, "{byte:02x}");
-        }
-        out
+        lower_hex(&self.0)
     }
 
     /// Read a hash from either JSON encoding.

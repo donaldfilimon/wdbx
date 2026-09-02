@@ -159,7 +159,7 @@ pub fn codec_source_digest(records: &[CodecRecord<'_>]) -> Result<String, CodecE
             digest.update(value.to_bits().to_le_bytes());
         }
     }
-    Ok(format!("{:x}", digest.finalize()))
+    Ok(crate::hash::lower_hex(&digest.finalize()))
 }
 
 pub(super) fn squared_distance(left: &[f32], right: &[f32]) -> f32 {

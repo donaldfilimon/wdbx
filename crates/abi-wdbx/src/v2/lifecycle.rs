@@ -679,7 +679,7 @@ impl MigrationImage {
     fn digest(&self) -> Result<String, MigrationError> {
         let bytes = serde_json::to_vec(self)
             .map_err(|error| MigrationError::Verification(error.to_string()))?;
-        Ok(format!("{:x}", Sha256::digest(bytes)))
+        Ok(crate::hash::lower_hex(&Sha256::digest(bytes)))
     }
 }
 
@@ -840,7 +840,7 @@ fn initialize_v2_root(root: &Path) -> Result<(), MigrationError> {
 fn snapshot_digest(snapshot: &V2Snapshot) -> Result<String, MigrationError> {
     let bytes = serde_json::to_vec(snapshot)
         .map_err(|error| MigrationError::Verification(error.to_string()))?;
-    Ok(format!("{:x}", Sha256::digest(bytes)))
+    Ok(crate::hash::lower_hex(&Sha256::digest(bytes)))
 }
 
 fn publish_activation(paths: &StorePaths, activation: &Activation) -> Result<(), MigrationError> {

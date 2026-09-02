@@ -173,7 +173,7 @@ fn kind_from_object_id(object_id: &str) -> Option<SegmentCodecKind> {
 }
 
 fn digest(bytes: &[u8]) -> String {
-    format!("{:x}", Sha256::digest(bytes))
+    crate::hash::lower_hex(&Sha256::digest(bytes))
 }
 
 fn valid_digest(value: &str) -> bool {

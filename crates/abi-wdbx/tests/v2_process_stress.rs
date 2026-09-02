@@ -13,10 +13,13 @@ const ROOT_ENV: &str = "ABI_V2_PROCESS_STRESS_ROOT";
 const INDEX_ENV: &str = "ABI_V2_PROCESS_STRESS_INDEX";
 
 fn hash_for(index: usize) -> String {
-    format!(
-        "{:x}",
-        Sha256::digest(format!("audit-child-{index}").as_bytes())
-    )
+    use std::fmt::Write as _;
+    let digest = Sha256::digest(format!("audit-child-{index}").as_bytes());
+    let mut encoded = String::with_capacity(digest.len() * 2);
+    for byte in digest {
+        let _ = write!(encoded, "{byte:02x}");
+    }
+    encoded
 }
 
 fn wait_for(path: &Path, deadline: Instant) {

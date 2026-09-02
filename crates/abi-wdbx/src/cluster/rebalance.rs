@@ -190,5 +190,5 @@ fn step_key(step: &RebalanceStep) -> (&[u8], Uuid) {
 fn plan_digest(draining_node: Uuid, steps: &[RebalanceStep]) -> Result<String, ClusterDataError> {
     let payload = serde_json::to_vec(&(REBALANCE_FORMAT_VERSION, draining_node, steps))
         .map_err(|error| ClusterDataError::InvalidRebalancePlan(error.to_string()))?;
-    Ok(format!("{:x}", Sha256::digest(payload)))
+    Ok(crate::hash::lower_hex(&Sha256::digest(payload)))
 }

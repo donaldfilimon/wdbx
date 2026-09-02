@@ -584,11 +584,20 @@ fn aggregate_digest(manifest: &Manifest) -> Result<String, ContractFailure> {
         hasher.update(digest.as_bytes());
         hasher.update(b"\n");
     }
-    Ok(format!("{:x}", hasher.finalize()))
+    Ok(lower_hex(&hasher.finalize()))
 }
 
 fn sha256_hex(bytes: &[u8]) -> String {
-    format!("{:x}", Sha256::digest(bytes))
+    lower_hex(&Sha256::digest(bytes))
+}
+
+fn lower_hex(bytes: &[u8]) -> String {
+    use std::fmt::Write as _;
+    let mut encoded = String::with_capacity(bytes.len() * 2);
+    for byte in bytes {
+        let _ = write!(encoded, "{byte:02x}");
+    }
+    encoded
 }
 
 fn is_lower_hex(value: &str) -> bool {

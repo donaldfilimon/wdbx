@@ -345,7 +345,7 @@ fn valid_hash(value: &str) -> bool {
 fn transaction_hash(begin: &BeginFrame, mutations: &[V2Mutation]) -> Result<String, V2Error> {
     let bytes = serde_json::to_vec(&(begin, mutations))
         .map_err(|error| V2Error::InvalidMutation(error.to_string()))?;
-    Ok(format!("{:x}", Sha256::digest(bytes)))
+    Ok(crate::hash::lower_hex(&Sha256::digest(bytes)))
 }
 
 #[cfg(test)]

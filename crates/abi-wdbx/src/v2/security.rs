@@ -313,7 +313,7 @@ pub fn seal_object(
         encrypted: security.encryption.is_some(),
         signed: security.signing.is_some(),
         nonce,
-        ciphertext_sha256: format!("{:x}", Sha256::digest(&payload)),
+        ciphertext_sha256: crate::hash::lower_hex(&Sha256::digest(&payload)),
         plaintext_len: plaintext.len(),
         payload_len: payload.len(),
     };
@@ -357,7 +357,7 @@ pub fn open_object(
             "unsigned header carries signature bytes".into(),
         ));
     }
-    let found_hash = format!("{:x}", Sha256::digest(payload));
+    let found_hash = crate::hash::lower_hex(&Sha256::digest(payload));
     if found_hash != header.ciphertext_sha256 {
         return Err(SecurityError::Authentication);
     }

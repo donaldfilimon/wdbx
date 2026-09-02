@@ -507,7 +507,7 @@ fn head_path(root: &Path, writer_id: Uuid, sequence: u64) -> PathBuf {
 }
 
 fn encoded_sha256(encoded: &[u8]) -> String {
-    format!("{:x}", Sha256::digest(encoded))
+    crate::hash::lower_hex(&Sha256::digest(encoded))
 }
 
 #[cfg(test)]

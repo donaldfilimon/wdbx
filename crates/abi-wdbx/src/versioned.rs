@@ -515,7 +515,7 @@ fn audit_hash(
         metadata,
     };
     let bytes = serde_json::to_vec(&input).expect("audit hash input serializes");
-    format!("{:x}", Sha256::digest(bytes))
+    crate::hash::lower_hex(&Sha256::digest(bytes))
 }
 
 #[cfg(test)]
