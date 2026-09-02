@@ -17,6 +17,9 @@ use crate::time;
 use std::io::{Read as _, Write};
 use std::path::{Path, PathBuf};
 use std::sync::Mutex;
+use std::sync::atomic::{AtomicU64, Ordering};
+
+static ATOMIC_WRITE_COUNTER: AtomicU64 = AtomicU64::new(0);
 
 /// Default buffer size for streaming reads and writes.
 pub const DEFAULT_BUFFER_SIZE: usize = 4096;
@@ -211,25 +214,61 @@ pub fn write_file_atomic(path: impl AsRef<Path>, data: impl AsRef<[u8]>) -> std:
         std::fs::create_dir_all(parent)?;
     }
 
-    let mut tmp = path.as_os_str().to_owned();
-    tmp.push(format!(".tmp{}", std::process::id()));
-    let tmp = PathBuf::from(tmp);
+    let mut temp = AtomicTemp::create(path)?;
 
     // Flush to the OS before the rename; otherwise a crash between write and
     // rename can leave the target intact but the temp file empty, and some
     // filesystems will happily rename the empty version into place.
-    {
-        let mut file = std::fs::File::create(&tmp)?;
-        file.write_all(data.as_ref())?;
-        file.sync_all()?;
-    }
+    let file = temp.file.as_mut().expect("new atomic temp owns its file");
+    file.write_all(data.as_ref())?;
+    file.sync_all()?;
+    drop(temp.file.take());
 
-    match std::fs::rename(&tmp, path) {
-        Ok(()) => Ok(()),
-        Err(err) => {
-            let _ = std::fs::remove_file(&tmp);
-            Err(err)
+    std::fs::rename(&temp.path, path)?;
+    Ok(())
+}
+
+struct AtomicTemp {
+    path: PathBuf,
+    file: Option<std::fs::File>,
+}
+
+impl AtomicTemp {
+    fn create(target: &Path) -> std::io::Result<Self> {
+        const MAX_ATTEMPTS: usize = 128;
+
+        for _ in 0..MAX_ATTEMPTS {
+            let sequence = ATOMIC_WRITE_COUNTER.fetch_add(1, Ordering::Relaxed);
+            let mut name = target.as_os_str().to_owned();
+            name.push(format!(".tmp{}-{sequence}", std::process::id()));
+            let path = PathBuf::from(name);
+            match std::fs::OpenOptions::new()
+                .write(true)
+                .create_new(true)
+                .open(&path)
+            {
+                Ok(file) => {
+                    return Ok(Self {
+                        path,
+                        file: Some(file),
+                    });
+                }
+                Err(error) if error.kind() == std::io::ErrorKind::AlreadyExists => {}
+                Err(error) => return Err(error),
+            }
         }
+
+        Err(std::io::Error::new(
+            std::io::ErrorKind::AlreadyExists,
+            "could not create a unique atomic-write temporary file",
+        ))
+    }
+}
+
+impl Drop for AtomicTemp {
+    fn drop(&mut self) {
+        drop(self.file.take());
+        let _ = std::fs::remove_file(&self.path);
     }
 }
 
@@ -387,6 +426,58 @@ mod tests {
             .count();
         assert_eq!(leftovers, 0, "atomic write left a temp file behind");
         std::fs::remove_file(&path).ok();
+    }
+
+    #[test]
+    fn concurrent_atomic_writers_use_independent_temp_files() {
+        const WRITERS: usize = 16;
+        const PAYLOAD_BYTES: usize = 256 * 1024;
+
+        let path = temp_path::temp_file_path("abi_io_atomic_concurrent", "bin");
+        let barrier = std::sync::Arc::new(std::sync::Barrier::new(WRITERS));
+        let handles = (0..WRITERS)
+            .map(|index| {
+                let path = path.clone();
+                let barrier = std::sync::Arc::clone(&barrier);
+                std::thread::spawn(move || {
+                    let byte = u8::try_from(index + 1).expect("writer index is bounded");
+                    let payload = vec![byte; PAYLOAD_BYTES];
+                    barrier.wait();
+                    write_file_atomic(path, payload)
+                })
+            })
+            .collect::<Vec<_>>();
+
+        for handle in handles {
+            handle
+                .join()
+                .expect("atomic writer thread")
+                .expect("atomic writer succeeds");
+        }
+        let written = read_file(&path).expect("read winning payload");
+        assert_eq!(written.len(), PAYLOAD_BYTES);
+        assert!(
+            (1..=WRITERS).any(|index| {
+                let byte = u8::try_from(index).expect("writer index is bounded");
+                written.iter().all(|candidate| *candidate == byte)
+            }),
+            "target must contain one complete writer payload"
+        );
+
+        let dir = path.parent().expect("temp parent");
+        let stem = path.file_name().and_then(|n| n.to_str()).expect("utf8");
+        let leftovers = std::fs::read_dir(dir)
+            .expect("read temp dir")
+            .filter_map(std::result::Result::ok)
+            .filter(|entry| {
+                entry
+                    .file_name()
+                    .to_str()
+                    .is_some_and(|name| name.starts_with(stem) && name != stem)
+            })
+            .count();
+        assert_eq!(leftovers, 0, "atomic writes left temporary files behind");
+        std::fs::remove_file(path).ok();
     }
 
     #[test]
