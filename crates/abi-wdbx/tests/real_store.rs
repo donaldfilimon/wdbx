@@ -7,7 +7,7 @@
 //! so it exists and is documented rather than being left as an assumption.
 //!
 //! ```bash
-//! ABI_WDBX_REAL_STORE_TEST=1 ./tools/cargo.sh test -p abi-wdbx --test real_store
+//! ABI_WDBX_REAL_STORE_TEST=1 rustup run nightly-2026-09-01 cargo test -p abi-wdbx --test real_store
 //! ```
 
 use abi_wdbx::format::{Manifest, Record, parse_segment};

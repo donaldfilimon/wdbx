@@ -1,6 +1,7 @@
 # NOTE: Homebrew's cargo (/opt/homebrew/bin/cargo) is a real binary, not a
 # rustup shim, so it IGNORES this file. Always build through
-# `tools/cargo.sh` (or `rustup run nightly cargo`) — never bare `cargo`.
+# `tools/cargo.sh` does not exist in this repository. Invoke this exact
+# toolchain through rustup when Homebrew cargo shadows the rustup shim.
 [toolchain]
-channel = "nightly"
+channel = "nightly-2026-09-01"
 components = ["rustfmt", "clippy", "rust-src"]

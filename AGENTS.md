@@ -65,6 +65,11 @@ Run all three commands against the current checkout before making a green-gate
 claim; extraction-era test totals are historical and are not a current
 acceptance contract. The workspace denies `unsafe_code` and all of clippy.
 
+This repository deliberately has no `tools/cargo.sh`. If Homebrew's Cargo
+shadows rustup on macOS, prefix the gate commands with
+`rustup run nightly-2026-09-01 cargo`; do not follow stale ABI-specific wrapper
+guidance here.
+
 ## Rules that bite
 
 - **Sibling layout is load-bearing.** `abi` and `abbey` consume these crates by
