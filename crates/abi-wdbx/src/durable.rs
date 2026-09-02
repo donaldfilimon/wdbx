@@ -627,6 +627,58 @@ mod tests {
     }
 
     #[test]
+    fn corrupt_complete_wal_frame_releases_writer_lock_for_repair_and_reopen() {
+        let fixture = Fixture::new("abi_durable_corrupt_crc");
+        {
+            let mut store = DurableStore::open(fixture.paths.clone()).expect("open");
+            store
+                .put("checkpoint", "preserved")
+                .expect("checkpoint value");
+            store.checkpoint().expect("publish checkpoint");
+            store.put("wal", "preserved").expect("WAL value");
+        }
+
+        let wal = wal_path(&fixture.paths);
+        let valid_wal = std::fs::read(&wal).expect("read valid WAL");
+        let mut corrupt_wal = valid_wal.clone();
+        let frame_start = corrupt_wal
+            .iter()
+            .position(|byte| *byte == b'\n')
+            .map(|index| index + 1)
+            .expect("WAL header newline");
+        corrupt_wal[frame_start] = if corrupt_wal[frame_start] == b'0' {
+            b'1'
+        } else {
+            b'0'
+        };
+        std::fs::write(&wal, &corrupt_wal).expect("corrupt complete frame CRC");
+
+        let error = DurableStore::open(fixture.paths.clone()).expect_err("CRC must fail closed");
+        match error {
+            DurableError::Wal(crate::wal::WalError::Corruption { line, reason }) => {
+                assert_eq!(line, Some(2));
+                assert!(
+                    reason.starts_with("CRC mismatch:"),
+                    "unexpected reason: {reason}"
+                );
+            }
+            other => panic!("unexpected recovery error: {other:?}"),
+        }
+        assert_eq!(
+            std::fs::read(&wal).expect("read rejected WAL"),
+            corrupt_wal,
+            "failed recovery must not partially repair or mutate corruption"
+        );
+
+        std::fs::write(&wal, valid_wal).expect("repair only synthetic WAL corruption");
+        let reopened = DurableStore::open(fixture.paths.clone())
+            .expect("failed recovery must release the writer lock immediately");
+        assert_eq!(reopened.get("checkpoint"), Some("preserved"));
+        assert_eq!(reopened.get("wal"), Some("preserved"));
+        assert_eq!(reopened.frames_applied(), 1);
+    }
+
+    #[test]
     fn compaction_preserves_latest_checkpoint_plus_wal_recovery() {
         let fixture = Fixture::new("abi_durable_compact");
         let mut store = DurableStore::open(fixture.paths.clone()).expect("open");

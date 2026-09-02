@@ -13,6 +13,14 @@ fn failing(message: &str) -> TaskFn {
     Box::new(move || Err(message))
 }
 
+struct PanicsOnDrop;
+
+impl Drop for PanicsOnDrop {
+    fn drop(&mut self) {
+        panic!("panic payload drop must not run");
+    }
+}
+
 #[test]
 fn a_new_scheduler_is_empty() {
     let scheduler = Scheduler::new();
@@ -173,6 +181,56 @@ fn a_failing_task_records_its_message() {
     assert_eq!(info.status, TaskStatus::Failed);
     assert_eq!(info.error_msg.as_deref(), Some("disk on fire"));
     assert_eq!(scheduler.failed_count(), 1);
+}
+
+#[test]
+fn an_adversarial_panic_payload_cannot_strand_later_work() {
+    let scheduler = Scheduler::new();
+    let panicking = scheduler.submit(
+        "panic",
+        TaskPriority::Normal,
+        Box::new(|| std::panic::panic_any(PanicsOnDrop)),
+    );
+    let ran_later = Arc::new(AtomicBool::new(false));
+    let ran_later_in_task = Arc::clone(&ran_later);
+    let later = scheduler.submit(
+        "later",
+        TaskPriority::Normal,
+        Box::new(move || {
+            ran_later_in_task.store(true, AtomicOrdering::SeqCst);
+            Ok(())
+        }),
+    );
+
+    assert_eq!(
+        scheduler.run_next().expect_err("panic becomes failure"),
+        SchedulerError::TaskFailed {
+            id: panicking,
+            message: TASK_PANIC_MESSAGE.to_string(),
+        }
+    );
+    let failed = scheduler.task(panicking).expect("panicking task remains");
+    assert_eq!(failed.status, TaskStatus::Failed);
+    assert_eq!(failed.error_msg.as_deref(), Some(TASK_PANIC_MESSAGE));
+    assert!(failed.started_at > 0);
+    assert!(failed.completed_at > 0);
+    assert_eq!(
+        scheduler.stats(),
+        Stats {
+            running: 0,
+            pending: 1,
+            completed: 0,
+            failed: 1,
+            cancelled: 0,
+            total_tasks: 2,
+        }
+    );
+
+    assert_eq!(scheduler.run_next().expect("later task runs"), Some(later));
+    assert!(ran_later.load(AtomicOrdering::SeqCst));
+    assert_eq!(scheduler.stats().running, 0);
+    assert_eq!(scheduler.stats().completed, 1);
+    assert_eq!(scheduler.stats().failed, 1);
 }
 
 #[test]

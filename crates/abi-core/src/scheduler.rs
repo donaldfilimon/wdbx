@@ -48,7 +48,7 @@ pub enum SchedulerError {
         /// The state it was actually in.
         status: TaskStatus,
     },
-    /// A task's closure returned an error.
+    /// A task's closure returned an error or panicked while unwinding.
     TaskFailed {
         /// The failing task's id.
         id: u64,
@@ -85,7 +85,7 @@ pub struct Stats {
     pub pending: usize,
     /// Tasks that finished successfully.
     pub completed: usize,
-    /// Tasks whose closure returned an error.
+    /// Tasks whose closure returned an error or panicked while unwinding.
     pub failed: usize,
     /// Tasks cancelled before starting.
     pub cancelled: usize,
@@ -313,7 +313,15 @@ impl Scheduler {
 
         // Run with the lock released, so a task may re-enter the scheduler
         // (submit, or read stats) without deadlocking.
-        let outcome = work();
+        let outcome = match std::panic::catch_unwind(std::panic::AssertUnwindSafe(work)) {
+            Ok(outcome) => outcome,
+            Err(payload) => {
+                // A custom panic payload may itself panic on drop. Preserve the
+                // scheduler invariants rather than running adversarial cleanup.
+                std::mem::forget(payload);
+                Err(TASK_PANIC_MESSAGE.to_string())
+            }
+        };
 
         let mut inner = self.lock();
         inner.running -= 1;
@@ -438,6 +446,9 @@ impl Scheduler {
         self.stats().total_tasks
     }
 }
+
+/// Fixed, non-sensitive diagnostic recorded when task execution unwinds.
+const TASK_PANIC_MESSAGE: &str = "task panicked";
 
 impl Default for Scheduler {
     fn default() -> Self {
