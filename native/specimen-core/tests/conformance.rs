@@ -475,3 +475,21 @@ fn successful_mutation_keeps_slots_and_forbids_reciprocal_borrowing() {
     assert!(store.edit(1, invalid).is_err());
     assert_eq!(store.snapshot.revision, 1);
 }
+
+#[cfg(target_os = "linux")]
+#[test]
+fn optimized_glib_variant_iteration_backport() {
+    use glib::variant::ToVariant;
+    let variant = ["alpha", "beta", "gamma"].to_variant();
+    assert_eq!(
+        variant.array_iter_str().unwrap().collect::<Vec<_>>(),
+        ["alpha", "beta", "gamma"]
+    );
+    assert_eq!(
+        variant.array_iter_str().unwrap().rev().collect::<Vec<_>>(),
+        ["gamma", "beta", "alpha"]
+    );
+    assert_eq!(variant.array_iter_str().unwrap().nth(1), Some("beta"));
+    assert_eq!(variant.array_iter_str().unwrap().nth_back(1), Some("beta"));
+    assert_eq!(variant.array_iter_str().unwrap().last(), Some("gamma"));
+}
