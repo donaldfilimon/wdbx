@@ -219,9 +219,10 @@ impl Models {
             return Err(error(
                 "BudgetExceeded",
                 format!(
-                    "{} needs approximately {} GB of available memory",
+                    "{} needs approximately {} GB of available memory; {:.1} GB is available",
                     m.name,
-                    m.memory_bytes / 1_000_000_000
+                    m.memory_bytes / 1_000_000_000,
+                    system.available_memory() as f64 / 1e9
                 ),
             ));
         }

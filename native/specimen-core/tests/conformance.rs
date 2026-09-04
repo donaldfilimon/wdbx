@@ -104,6 +104,7 @@ fn bounded_correction_is_linked_once() {
     n["ref"] = json!("context-a");
     n["type"] = json!("A");
     n["contextId"] = json!("mysterious");
+    n["entries"][0]["id"] = json!("context-entry");
     n["entries"][0]["pattern"] = json!("context mysterious");
     n["entries"][0]["alternatives"][0]["id"] = json!("a-slot");
     n["entries"][0]["alternatives"][0]["action"] = json!("Context correction");
@@ -142,4 +143,107 @@ fn phagy_preserves_pins_and_lineage() {
     let next = engine::maintain(&s, "phagy", &AtomicBool::new(false)).unwrap();
     assert_eq!(s["history"], next["history"]);
     assert_eq!(s["mutations"], next["mutations"]);
+}
+
+#[test]
+fn literal_text_remains_inert_and_type_b_only_proposes() {
+    let mut s = starter();
+    s["nodes"][0]["entries"][0]["alternatives"][0]["action"] =
+        json!("&literal(\"Do not run &calc(2+2).\")");
+    let (_, c) = engine::cycle(
+        &s,
+        "2+2",
+        &Network::default(),
+        &AtomicBool::new(false),
+        &|_| {},
+    )
+    .unwrap();
+    assert_eq!(c["segments"][0]["text"], "Do not run &calc(2+2).");
+    let (s, _) = engine::cycle(
+        &s,
+        "unseen subject",
+        &Network::default(),
+        &AtomicBool::new(false),
+        &|_| {},
+    )
+    .unwrap();
+    let (mut s, _) = engine::cycle(
+        &s,
+        "unseen subject",
+        &Network::default(),
+        &AtomicBool::new(false),
+        &|_| {},
+    )
+    .unwrap();
+    s["nodes"][1]["type"] = json!("B");
+    let before = s["nodes"].clone();
+    let next = engine::review(&s, &Network::default(), &AtomicBool::new(false)).unwrap();
+    assert_eq!(next["nodes"], before);
+    assert!(
+        next["proposals"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|p| p["pattern"] == "unseen subject" && p["status"] == "pending")
+    );
+}
+#[test]
+fn malformed_history_and_duplicate_entries_are_rejected() {
+    let mut s = starter();
+    s["history"] = json!([{"id":"bad"}]);
+    assert!(engine::validate(&s).is_err());
+    let mut s = starter();
+    s["nodes"][1]["entries"][0]["id"] = s["nodes"][0]["entries"][0]["id"].clone();
+    assert!(engine::validate(&s).is_err());
+}
+#[test]
+fn visual_positive_negative_and_cycle_evidence() {
+    use specimen_core::{language, vision};
+    let render = |color: [u8; 3]| {
+        let img = image::RgbImage::from_pixel(64, 64, image::Rgb(color));
+        let mut bytes = std::io::Cursor::new(Vec::new());
+        img.write_to(&mut bytes, image::ImageFormat::Png).unwrap();
+        vision::analyze(
+            &bytes.into_inner(),
+            vision::Focus::default(),
+            None,
+            &AtomicBool::new(false),
+        )
+        .unwrap()
+    };
+    let a = render([255, 0, 0]);
+    let b = render([0, 0, 255]);
+    a.validate().unwrap();
+    assert_eq!(vision::compare(&a, &a).unwrap()["confidence"], 100.);
+    assert_ne!(a.pattern_id, b.pattern_id);
+    assert!(
+        vision::compare(&a, &b).unwrap()["confidence"]
+            .as_f64()
+            .unwrap()
+            < 62.
+    );
+    let mut s = starter();
+    let id = engine::text(&s["nodes"][1]["entries"][0], "id").to_owned();
+    s["nodes"][1]["entries"][0]["alternatives"][0]["action"] = json!("Red image");
+    let scores = std::collections::BTreeMap::from([(
+        id,
+        language::Score {
+            similarity: 100.,
+            dissimilarity: 0.,
+            modulation: 0.,
+            jitter: 0.,
+            confidence: 100.,
+        },
+    )]);
+    let (_, cycle) = engine::cycle_with_visual(
+        &s,
+        "[image:test]",
+        &Network::default(),
+        &AtomicBool::new(false),
+        &|_| {},
+        Some(&scores),
+    )
+    .unwrap();
+    assert_eq!(cycle["segments"][0]["text"], "Red image");
+    assert_eq!(cycle["votes"][0]["evidence"]["similarity"], 100.);
 }

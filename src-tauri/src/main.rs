@@ -81,7 +81,12 @@ fn invoke(state: Arc<AppState>, r: Value, progress: Channel<Value>) -> Result<Va
                 )?,
             };
             job.check()?;
-            let snapshot = state.store.lock().unwrap().commit(revision(&r)?, next)?;
+            let mut store = state.store.lock().unwrap();
+            let snapshot = store.commit(revision(&r)?, next)?;
+            if op == "maintenance" && r["mode"] == "phagy" {
+                let removed = store.cleanup(&job.cancel)?;
+                notify(json!({"phase":"PHAGY","removed":removed}));
+            }
             Ok(json!({"snapshot":snapshot,"cycle":cycle}))
         }
         "export" => {
@@ -226,8 +231,75 @@ fn invoke(state: Arc<AppState>, r: Value, progress: Channel<Value>) -> Result<Va
             let entry = specimen_core::uid();
             let pattern = format!("[image:{asset}]");
             next.specimen["nodes"].as_array_mut().ok_or_else(||error("MalformedSave","Initialize the specimen first"))?.push(json!({"ref":ref_id,"name":name,"type":"pattern","contextId":"","patternId":format!("visual:{}",analysis.pattern_id),"resolution":analysis.resolution,"strength":5,"jitter":true,"tone":"neutral","entries":[{"id":entry,"pattern":pattern,"alternatives":[{"id":specimen_core::uid(),"action":format!("Recognized image: {name}"),"inhibition":"","weight":1,"remixed":false}]}],"createdAt":specimen_core::now(),"modality":"image"}));
+            for artifact in &mut next.artifacts {
+                if artifact["asset"] == asset {
+                    artifact["learnedNode"] = json!(ref_id);
+                }
+            }
             next.visuals.push(json!({"asset":asset,"analysis":analysis,"nodeRef":ref_id,"name":name,"ocrCorrection":r["ocrCorrection"],"createdAt":specimen_core::now()}));
             Ok(serde_json::to_value(store.commit(revision(&r)?, next)?)?)
+        }
+        "learnText" => {
+            let mut store = state.store.lock().unwrap();
+            let mut next = store.snapshot.clone();
+            let (pattern, response, provenance) = if let Some(id) = r["artifactId"].as_str() {
+                let artifact = next
+                    .artifacts
+                    .iter()
+                    .find(|a| a["id"] == id)
+                    .ok_or_else(|| error("MalformedInput", "Unknown artifact"))?;
+                (
+                    value(artifact, "prompt")?.to_owned(),
+                    value(artifact, "text")?.to_owned(),
+                    json!({"artifactId":id,"model":artifact["model"],"modelDigest":artifact["modelDigest"]}),
+                )
+            } else {
+                let asset = value(&r, "asset")?;
+                store.asset(asset)?;
+                (
+                    value(&r, "pattern")?.to_owned(),
+                    value(&r, "text")?.to_owned(),
+                    json!({"asset":asset,"source":"reviewed OCR correction"}),
+                )
+            };
+            if pattern.is_empty()
+                || pattern.len() > 2000
+                || response.is_empty()
+                || response.len() > 7000
+            {
+                return Err(error(
+                    "BudgetExceeded",
+                    "Learning text exceeds pattern or action bounds",
+                ));
+            }
+            let reference = specimen_core::uid();
+            let descriptor = specimen_core::language::identify(&pattern);
+            let node = json!({"ref":reference,"name":pattern.chars().take(80).collect::<String>(),"type":"pattern","contextId":"","patternId":descriptor.id,"resolution":descriptor.resolution,"strength":engine::number(&next.specimen["settings"],"initialStrength",5.),"jitter":true,"tone":"neutral","entries":[{"id":specimen_core::uid(),"pattern":pattern,"alternatives":[{"id":specimen_core::uid(),"action":format!("&literal({})",serde_json::to_string(&response)?),"inhibition":"","weight":1,"remixed":false}]}],"provenance":provenance,"createdAt":specimen_core::now()});
+            next.specimen["nodes"]
+                .as_array_mut()
+                .ok_or_else(|| error("MalformedSave", "Initialize specimen first"))?
+                .push(node);
+            if let Some(id) = r["artifactId"].as_str() {
+                for artifact in &mut next.artifacts {
+                    if artifact["id"] == id {
+                        artifact["learnedNode"] = json!(reference);
+                    }
+                }
+            }
+            Ok(serde_json::to_value(store.commit(revision(&r)?, next)?)?)
+        }
+        "loadModel" => {
+            let job = state.scheduler.begin(
+                value(&r, "jobId")?.into(),
+                Some("generation".into()),
+                180,
+            )?;
+            state
+                .models
+                .lock()
+                .unwrap()
+                .load(value(&r, "modelId")?, &job.cancel, &notify)?;
+            Ok(json!(true))
         }
         "models" => match state.models.try_lock() {
             Ok(mut models) => Ok(models.status()),

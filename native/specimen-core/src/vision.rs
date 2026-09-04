@@ -100,8 +100,10 @@ pub fn analyze(
         || focus.y < 0.
         || focus.width <= 0.
         || focus.height <= 0.
-        || focus.x + focus.width > 1.001
-        || focus.y + focus.height > 1.001
+        || focus.x >= 1.
+        || focus.y >= 1.
+        || focus.x + focus.width > 1.000001
+        || focus.y + focus.height > 1.000001
     {
         return Err(error("MalformedInput", "Focus must fit within the image"));
     }

@@ -198,23 +198,52 @@ fn pick<'a>(items: &'a [Value], key: &str, rng: &mut Rng) -> Option<&'a Value> {
     }
     items.last()
 }
-fn support(s: &Value, input: &str, action: &str, node: &Value) -> Vec<Value> {
+struct ResourceIndex<'a> {
+    by_id: BTreeMap<String, Vec<&'a Value>>,
+}
+impl<'a> ResourceIndex<'a> {
+    fn new(state: &'a Value) -> Self {
+        let mut by_id: BTreeMap<String, Vec<&Value>> = BTreeMap::new();
+        for resource in rows(state, "resources") {
+            by_id
+                .entry(language::identify(text(resource, "text")).id)
+                .or_default()
+                .push(resource);
+            if !text(resource, "resourceId").is_empty() {
+                by_id
+                    .entry(text(resource, "resourceId").into())
+                    .or_default()
+                    .push(resource);
+            }
+        }
+        Self { by_id }
+    }
+}
+fn support(index: &ResourceIndex<'_>, input: &str, action: &str, node: &Value) -> Vec<Value> {
     let query = language::normalize(&format!("{input} {action}"));
     let keys = language::tokens(&query)
         .iter()
         .map(|t| language::identify(t).id)
-        .chain([language::identify(input).id, language::identify(action).id])
+        .chain([
+            language::identify(input).id,
+            language::identify(action).id,
+            text(node, "patternId").into(),
+        ])
         .collect::<BTreeSet<_>>();
-    rows(s, "resources")
-        .iter()
+    let mut seen = BTreeSet::new();
+    keys.iter()
+        .filter_map(|key| index.by_id.get(key))
+        .flatten()
         .filter(|r| {
-            (!text(r, "resourceId").is_empty() && text(r, "resourceId") == text(node, "patternId"))
-                || (keys.contains(&language::identify(text(r, "text")).id)
-                    && query.contains(&language::normalize(text(r, "text"))))
+            seen.insert(text(r, "ref"))
+                && ((!text(r, "resourceId").is_empty()
+                    && text(r, "resourceId") == text(node, "patternId"))
+                    || query.contains(&language::normalize(text(r, "text"))))
         })
-        .cloned()
+        .map(|r| (*r).clone())
         .collect()
 }
+
 struct Context<'a> {
     input: &'a str,
     binding: language::Binding,
@@ -439,6 +468,7 @@ pub fn cycle_with_visual(
         ),
         clauses.len(),
     );
+    let resources_index = ResourceIndex::new(&state);
     let nodes = rows(&state, "nodes");
     let mut index: BTreeMap<String, Vec<(usize, usize)>> = BTreeMap::new();
     let mut binds = Vec::new();
@@ -597,7 +627,7 @@ pub fn cycle_with_visual(
         let Some(a) = pick(&alternatives, "weight", &mut rng) else {
             continue;
         };
-        let resources = support(&state, &input, text(a, "action"), node);
+        let resources = support(&resources_index, &input, text(a, "action"), node);
         let binding = language::bind(pattern, &input);
         votes.push(json!({"id":crate::uid(),"nodeRef":node["ref"],"entryRef":entry["id"],"action":a["action"],"base":base,"confidence":evidence.confidence,"strength":strength,"input":input,"group":group,"origin":origin,"resources":resources.iter().map(|r|r["ref"].clone()).collect::<Vec<_>>(),"evidence":evidence,"binding":binding}));
         if depth < 4 && !binding.remainder.is_empty() {
@@ -678,7 +708,7 @@ pub fn cycle_with_visual(
     for v in &votes {
         cancelled(cancel)?;
         let node = nodes.iter().find(|n| n["ref"] == v["nodeRef"]).unwrap();
-        let resources = support(&state, text(v, "input"), text(v, "action"), node);
+        let resources = support(&resources_index, text(v, "input"), text(v, "action"), node);
         let mut ctx = Context {
             input: text(v, "input"),
             binding: serde_json::from_value(v["binding"].clone())?,

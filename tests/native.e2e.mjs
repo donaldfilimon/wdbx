@@ -19,11 +19,20 @@ describe('Native specimen desktop',()=>{
   await expect($('.runtime-pills')).toHaveText(expect.stringContaining('Native Rust engine'));
   const bytes=Array.from(await readFile(resolve('work/acceptance/ocr-fixture.png')));
   const result=await browser.tauri.execute(async(tauri,bytes)=>{
-   const channel="__CHANNEL__:0";
-   return tauri.core.invoke('native_call',{request:{op:'analyze',jobId:crypto.randomUUID(),bytes,focus:{x:0,y:0,width:1,height:1}},progress:channel});
+   return window.__wdbxTestCall({op:'analyze',jobId:crypto.randomUUID(),bytes,focus:{x:0,y:0,width:1,height:1}});
   },bytes);
   if(!result.analysis.patternId.startsWith('visual-v2:'))throw Error('Missing native visual descriptor');
   if(result.analysis.sdf.values.length!==4096)throw Error('Invalid signed distance field');
+  const visualCycle=await browser.tauri.execute(async(tauri,result)=>{
+   const call=request=>window.__wdbxTestCall(request);
+   const current=await call({op:'snapshot'});
+   const learned=await call({op:'learnVisual',revision:current.revision,asset:result.asset,analysis:result.analysis,name:'Native visual fixture',ocrCorrection:'HELLO WORLD'});
+   return call({op:'runVisual',revision:learned.revision,jobId:crypto.randomUUID(),asset:result.asset,focus:result.analysis.focus});
+  },result);
+  if(visualCycle.cycle.votes.length!==1)throw Error('Expected one learned visual vote');
+  if(visualCycle.cycle.votes[0].evidence.similarity!==100)throw Error('Visual score not preserved');
+  if(visualCycle.cycle.imageEvidence.asset!==result.asset)throw Error('Missing image provenance');
+
   await mkdir(resolve('../../work'),{recursive:true});
   await browser.saveScreenshot(resolve('../../work/native-desktop.png'));
  });

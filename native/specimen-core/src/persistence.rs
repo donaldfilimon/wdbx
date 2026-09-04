@@ -185,6 +185,72 @@ impl Store {
         next.specimen = specimen;
         self.commit(expected, next)
     }
+    /// Reclaim expired unreferenced assets only when no recovery snapshot needs them.
+    pub fn cleanup(&self, cancel: &std::sync::atomic::AtomicBool) -> Result<usize> {
+        use std::sync::atomic::Ordering;
+        fn assets(value: &Value, keep: &mut std::collections::BTreeSet<String>) {
+            match value {
+                Value::Object(map) => {
+                    for (key, value) in map {
+                        if key == "asset"
+                            && let Some(id) = value.as_str()
+                        {
+                            keep.insert(id.to_owned());
+                        }
+                        assets(value, keep);
+                    }
+                }
+                Value::Array(values) => {
+                    for value in values {
+                        assets(value, keep);
+                    }
+                }
+                _ => (),
+            }
+        }
+        let mut keep = std::collections::BTreeSet::new();
+        assets(&serde_json::to_value(&self.snapshot)?, &mut keep);
+        // Recovery imports may refer to assets not embedded in a JSON file. Keep asset files
+        // conservatively while recovery copies exist; partial scratch files remain eligible.
+        let recovery = self.root.join("recovery");
+        let recovery_exists = recovery.is_dir() && fs::read_dir(recovery)?.next().is_some();
+        let retention = engine::number(
+            &self.snapshot.specimen["settings"],
+            "scratchRetentionSeconds",
+            86400.,
+        )
+        .clamp(3600., 31536000.);
+        let mut removed = 0;
+        for directory in [self.root.join("assets"), self.root.join("models")] {
+            if !directory.is_dir() {
+                continue;
+            }
+            for entry in fs::read_dir(directory)? {
+                if cancel.load(Ordering::Relaxed) {
+                    return Err(error("Cancelled", "Cleanup cancelled"));
+                }
+                let entry = entry?;
+                let name = entry.file_name().to_string_lossy().to_string();
+                let kind = entry.file_type()?;
+                if !kind.is_file() || kind.is_symlink() {
+                    continue;
+                }
+                let expired = entry
+                    .metadata()?
+                    .modified()?
+                    .elapsed()
+                    .is_ok_and(|age| age.as_secs_f64() > retention);
+                let orphan =
+                    check_digest(&name).is_ok() && !keep.contains(&name) && !recovery_exists;
+                let scratch = name.starts_with('.') || name.ends_with(".partial");
+                if expired && (orphan || scratch) {
+                    fs::remove_file(entry.path())?;
+                    removed += 1;
+                }
+            }
+        }
+        Ok(removed)
+    }
     pub fn put_asset(&self, bytes: &[u8]) -> Result<String> {
         if bytes.len() > 32 * 1024 * 1024 {
             return Err(error("BudgetExceeded", "Asset exceeds 32 MiB"));

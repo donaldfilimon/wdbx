@@ -3,10 +3,16 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      models:
+        description: Run real local text inference qualification
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
   desktop:
+    if: ${{ !inputs.models }}
     strategy:
       fail-fast: false
       matrix:
@@ -67,3 +73,21 @@ jobs:
             target/release/bundle/**/*.AppImage
             target/release/bundle/**/*.deb
           if-no-files-found: warn
+
+  text-model:
+    if: ${{ inputs.models }}
+    runs-on: macos-15-intel
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build pinned text runtime
+        run: python3 scripts/build-runtimes.py --only llama
+      - name: Download verified Qwen model
+        run: python3 scripts/download-models.py work/acceptance/models --ids qwen3-4b
+      - name: Real CPU text inference
+        run: cargo run --release -p specimen-core --example acceptance -- "$PWD/work/acceptance" "$PWD/src-tauri/binaries" text
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: real-text-inference
+          path: work/acceptance/results

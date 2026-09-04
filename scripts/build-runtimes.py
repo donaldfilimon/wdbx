@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Build the pinned inference executables for the current desktop target."""
-import json,os,platform,shutil,subprocess,tarfile,urllib.request
+import argparse,json,os,platform,shutil,subprocess,tarfile,urllib.request
+p=argparse.ArgumentParser();p.add_argument("--only",choices=["llama","diffusion"]);options=p.parse_args()
 from pathlib import Path
 root=Path(__file__).resolve().parents[1]
 work=root/'work'/'runtimes';work.mkdir(parents=True,exist_ok=True)
@@ -16,6 +17,7 @@ def source(key):
  return dest
 out=root/'src-tauri/binaries';out.mkdir(exist_ok=True)
 for key,target in [('llama','llama-server'),('diffusion','sd-cli')]:
+ if options.only and key!=options.only:continue
  src=source(key)
  if key=='diffusion' and not (src/'ggml/CMakeLists.txt').exists():
   ggml=source('ggml');shutil.copytree(ggml,src/'ggml',dirs_exist_ok=True)
@@ -28,4 +30,7 @@ for key,target in [('llama','llama-server'),('diffusion','sd-cli')]:
  executable=next((p for p in choices if p.exists()),None)
  if not executable:raise RuntimeError('Missing runtime executable '+target)
  shutil.copy2(executable,out/(target+suffix))
+ for name in ['LICENSE','LICENSE.md','LICENSE.txt']:
+  if (src/name).exists():shutil.copy2(src/name,out/(key+'-LICENSE.txt'));break
+ if key=='diffusion' and (src/'ggml/LICENSE').exists():shutil.copy2(src/'ggml/LICENSE',out/'ggml-LICENSE.txt')
  print('Built',target,flush=True)
