@@ -90,6 +90,7 @@ export interface Cycle {
   reviewed?: boolean;
 }
 export interface Visual {
+  synthesis?: {backend:string;activationFunctions:string[];fallback?:string;networkVersion:number;seed:number;brainstorm:boolean};
   xArray: number[];
   yArray: number[];
   colorArray: string[];
@@ -120,6 +121,7 @@ export interface Proposal {
   status: 'pending' | 'learned' | 'dismissed';
 }
 export interface Settings {
+  gpu?: boolean;
   voteThreshold: number;
   jitter: number;
   maxStrength: number;

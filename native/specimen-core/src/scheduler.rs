@@ -46,6 +46,9 @@ impl Scheduler {
             deadline: Instant::now() + Duration::from_secs(seconds),
         })
     }
+    pub fn active(&self) -> Vec<String> {
+        self.jobs.lock().unwrap().keys().cloned().collect()
+    }
     pub fn cancel(&self, id: &str) {
         if let Some(flag) = self.jobs.lock().unwrap().get(id) {
             flag.store(true, Ordering::Relaxed);

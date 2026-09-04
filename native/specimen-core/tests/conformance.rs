@@ -247,3 +247,69 @@ fn visual_positive_negative_and_cycle_evidence() {
     assert_eq!(cycle["segments"][0]["text"], "Red image");
     assert_eq!(cycle["votes"][0]["evidence"]["similarity"], 100.);
 }
+
+#[test]
+fn explicit_resource_and_temporal_lookup_preserve_evidence() {
+    let mut s = starter();
+    s["resources"].as_array_mut().unwrap().push(json!({"ref":"res-exact-123","subsystem":"dictionary","text":"unrelated key","value":"Known value 17","patternId":"custom-id","resourceId":"","valence":0,"intensity":0}));
+    s["nodes"][0]["entries"][0]["alternatives"][0]["action"] =
+        json!("&LookUp(dictionary,res-exact-123)");
+    let (mut next, c) = engine::cycle(
+        &s,
+        "2+2",
+        &Network::default(),
+        &AtomicBool::new(false),
+        &|_| {},
+    )
+    .unwrap();
+    assert_eq!(c["segments"][0]["text"], "Known value 17");
+    assert!(
+        c["votes"][0]["resources"]
+            .as_array()
+            .unwrap()
+            .contains(&json!("res-exact-123"))
+    );
+    next["nodes"][0]["entries"][0]["alternatives"][0]["action"] = json!("&time");
+    let (_, c) = engine::cycle(
+        &next,
+        "2+2",
+        &Network::default(),
+        &AtomicBool::new(false),
+        &|_| {},
+    )
+    .unwrap();
+    assert!(
+        c["segments"][0]["text"]
+            .as_str()
+            .unwrap()
+            .contains("Previous input at")
+    );
+}
+#[test]
+fn all_same_id_entries_are_reachable_past_one_thousand() {
+    let mut s = starter();
+    s["nodes"] = json!([]);
+    s["attachments"] = json!([]);
+    s["settings"]["maxNodes"] = json!(2000);
+    let mut nodes = Vec::new();
+    for i in 0..1002 {
+        nodes.push(json!({"ref":format!("n{i}"),"name":format!("n{i}"),"type":"pattern","patternId":"same","strength":5,"jitter":false,"entries":[{"id":format!("e{i}"),"pattern":format!("status {i}"),"alternatives":[{"id":format!("a{i}"),"action":format!("Value {i}"),"inhibition":"","weight":1,"remixed":false}]}]}));
+    }
+    s["nodes"] = json!(nodes);
+    let (_, c) = engine::cycle(
+        &s,
+        "status 1001",
+        &Network::default(),
+        &AtomicBool::new(false),
+        &|_| {},
+    )
+    .unwrap();
+    assert_eq!(c["segments"][0]["text"], "Value 1001");
+    assert!(
+        c["trace"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|step| step["phase"] == "Index Rafts" && step["count"].as_u64().unwrap() > 1000)
+    );
+}

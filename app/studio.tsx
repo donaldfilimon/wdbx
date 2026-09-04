@@ -785,6 +785,7 @@ export default function Studio() {
                         </div>
                       ))}
                     </div>
+                    {showProvenance && cycle.visual?.synthesis && <details><summary>Transient computation evidence</summary><pre>{JSON.stringify(cycle.visual.synthesis,null,2)}</pre></details>}
                     {showProvenance && cycle.votes.some(v => v.evidence) && <details className="native-evidence"><summary>Comparison and retrieval evidence</summary>{cycle.votes.map(v => <div key={v.id}><strong>{state.nodes.find(n=>n.ref===v.nodeRef)?.name ?? 'Removed node'}</strong><pre>{JSON.stringify({evidence:v.evidence,binding:v.binding,resources:v.resources,origin:v.origin,group:v.group},null,2)}</pre></div>)}</details>}
                     <div className="answer-footer">
                       <span className="muted small">
@@ -2131,6 +2132,7 @@ function SettingsView({
             maxLength={100}
           />
         </div>
+        {isDesktop() && <div className="setting-row"><div><label htmlFor="native-gpu">Accelerate transient computation</label><p>Try the graphics processor; report CPU fallback when unavailable.</p></div><input id="native-gpu" type="checkbox" checked={!!draft.gpu} onChange={e=>setDraft({...draft,gpu:e.target.checked})}/></div>}
         {(['brainstorm', 'maintenance'] as const).map((key) => (
           <div className="setting-row" key={key}>
             <div>

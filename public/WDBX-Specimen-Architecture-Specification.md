@@ -846,7 +846,7 @@ More fundamentally, the source does not specify how fixed matrix operations reli
 
 ### Native implementation profile · 0.2
 
-The fixed native network is sparse feed-forward CSR with 128 inputs, 64 hidden units and 32 composition outputs. Initial layers use eight connections per output row, persisted weights and biases, and ephemeral activation vectors. Inputs encode retrieved features, context, familiarity and ATP. A seeded biased coin selects a layer activation: familiar input favors sigmoid at probability 0.75, unfamiliar input at 0.25; the alternative is ReLU. CPU execution is the reference. Optional wgpu computes matrix products, reports its backend, and falls back explicitly on failure. Shape, finite-value and composition checks reject invalid output. Brainstorming remains bounded sampling, not weight training.
+The fixed native network is sparse feed-forward CSR with 128 inputs, 64 hidden units and 32 composition outputs. Initial layers use eight connections per output row, persisted weights and biases, and ephemeral activation vectors. Inputs encode retrieved text and learned visual features, context, familiarity and ATP. A seeded biased coin selects a layer activation: familiar input favors sigmoid at probability 0.75, unfamiliar input at 0.25; the alternative is ReLU. CPU execution is the reference. Optional wgpu computes matrix products, reports its backend, and falls back explicitly on failure. Shape, finite-value and composition checks reject invalid output. Brainstorming perturbs composition sampling by at most 0.05 per output and leaves fixed weights intact. Saved results retain composition parameters and execution metadata; raw activation vectors remain ephemeral.
 
 ### Optional local text extension
 
@@ -889,7 +889,7 @@ The bias transform, maximum jitter, urgency override, and eligible-value invento
 
 ### Native implementation profile · 0.2
 
-ATP valence/intensity state is separate from confidence jitter and fixed-network activations. The initial profile exponentially decays state on a 180-second time scale, applies bounded chargebook contributions and reduces intensity on release. Confidence modulation is deterministic and bounded; jitter is newly sampled for eligible comparisons and does not accumulate. Full buildup/release/cooldown semantics and meaning-preserving language re-inflection beyond the implemented tone handlers require further qualification.
+ATP valence/intensity state is separate from confidence jitter and fixed-network activations. The initial profile exponentially decays state on a 180-second time scale, applies bounded chargebook contributions, reduces intensity on release and prevents additional charging during a configurable 30-second cooldown. Confidence modulation is deterministic and bounded; jitter is newly sampled for eligible comparisons and does not accumulate. Meaning-preserving language re-inflection beyond the implemented tone handlers requires further qualification.
 
 ## 15. Conversation memory and temporal coherence
 

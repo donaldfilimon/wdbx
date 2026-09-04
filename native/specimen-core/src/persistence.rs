@@ -74,6 +74,19 @@ impl Snapshot {
                 );
             }
         }
+        for visual in &self.visuals {
+            if let Some(node) = engine::rows(&self.specimen, "nodes")
+                .iter()
+                .find(|node| node["ref"] == visual["nodeRef"])
+            {
+                for entry in engine::rows(node, "entries") {
+                    self.native_ids.insert(
+                        engine::text(entry, "id").into(),
+                        engine::text(&visual["analysis"], "patternId").into(),
+                    );
+                }
+            }
+        }
         for r in engine::rows(&self.specimen, "resources") {
             self.native_ids.insert(
                 engine::text(r, "ref").into(),

@@ -8,6 +8,9 @@ on:
         description: Run real local text inference qualification
         type: boolean
         default: false
+concurrency:
+  group: native-${{ github.ref }}-${{ inputs.models && 'models' || 'desktop' }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:

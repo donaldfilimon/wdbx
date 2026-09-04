@@ -36,6 +36,7 @@ fn invoke(state: Arc<AppState>, r: Value, progress: Channel<Value>) -> Result<Va
         "capabilities" => Ok(
             json!({"runtime":"desktop","storage":"WDBX v2","cpu":true,"gpu":"optional wgpu","ocr":true,"textGeneration":true,"imageGeneration":true,"nativeVersion":"0.2.0","contactLedger":specimen_core::language::ledger()}),
         ),
+        "jobs" => Ok(json!(state.scheduler.active())),
         "snapshot" => Ok(serde_json::to_value(&state.store.lock().unwrap().snapshot)?),
         "edit" => Ok(serde_json::to_value(
             state
@@ -236,6 +237,7 @@ fn invoke(state: Arc<AppState>, r: Value, progress: Channel<Value>) -> Result<Va
                     artifact["learnedNode"] = json!(ref_id);
                 }
             }
+            next.specimen["resources"].as_array_mut().unwrap().push(json!({"ref":specimen_core::uid(),"subsystem":"imaginarium","text":name,"value":format!("Visual ingredient: {name}"),"patternId":analysis.pattern_id,"resourceId":"","valence":0,"intensity":0,"visualFeatures":analysis.features,"asset":asset,"nodeRef":ref_id}));
             next.visuals.push(json!({"asset":asset,"analysis":analysis,"nodeRef":ref_id,"name":name,"ocrCorrection":r["ocrCorrection"],"createdAt":specimen_core::now()}));
             Ok(serde_json::to_value(store.commit(revision(&r)?, next)?)?)
         }
@@ -370,6 +372,9 @@ async fn native_call(
     request: Value,
     progress: Channel<Value>,
 ) -> Result<Value> {
+    let request: specimen_core::protocol::Request =
+        serde_json::from_value(request).map_err(|e| error("MalformedInput", e))?;
+    let request = serde_json::to_value(request)?;
     let state = state.inner().clone();
     tauri::async_runtime::spawn_blocking(move || invoke(state, request, progress))
         .await

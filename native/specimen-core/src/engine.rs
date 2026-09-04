@@ -205,6 +205,11 @@ impl<'a> ResourceIndex<'a> {
     fn new(state: &'a Value) -> Self {
         let mut by_id: BTreeMap<String, Vec<&Value>> = BTreeMap::new();
         for resource in rows(state, "resources") {
+            for key in [text(resource, "ref"), text(resource, "patternId")] {
+                if !key.is_empty() {
+                    by_id.entry(key.into()).or_default().push(resource);
+                }
+            }
             by_id
                 .entry(language::identify(text(resource, "text")).id)
                 .or_default()
@@ -221,7 +226,35 @@ impl<'a> ResourceIndex<'a> {
 }
 fn support(index: &ResourceIndex<'_>, input: &str, action: &str, node: &Value) -> Vec<Value> {
     let query = language::normalize(&format!("{input} {action}"));
-    let keys = language::tokens(&query)
+    fn literals(expr: &[Expr], keys: &mut BTreeSet<String>) {
+        for item in expr {
+            if let Expr::Call { name, args } = item {
+                if name.eq_ignore_ascii_case("LookUp") || name.eq_ignore_ascii_case("memory") {
+                    for arg in args {
+                        let text = arg
+                            .iter()
+                            .filter_map(|e| {
+                                if let Expr::Text { value } = e {
+                                    Some(value.as_str())
+                                } else {
+                                    None
+                                }
+                            })
+                            .collect::<String>();
+                        keys.insert(text.trim().to_owned());
+                    }
+                }
+                for arg in args {
+                    literals(arg, keys);
+                }
+            }
+        }
+    }
+    let mut explicit = BTreeSet::new();
+    if let Ok(ast) = language::parse(action, Scope::NodeAction) {
+        literals(&ast, &mut explicit);
+    }
+    let mut keys = language::tokens(&query)
         .iter()
         .map(|t| language::identify(t).id)
         .chain([
@@ -230,6 +263,10 @@ fn support(index: &ResourceIndex<'_>, input: &str, action: &str, node: &Value) -
             text(node, "patternId").into(),
         ])
         .collect::<BTreeSet<_>>();
+    for key in &explicit {
+        keys.insert(key.clone());
+        keys.insert(language::identify(key).id);
+    }
     let mut seen = BTreeSet::new();
     keys.iter()
         .filter_map(|key| index.by_id.get(key))
@@ -238,6 +275,9 @@ fn support(index: &ResourceIndex<'_>, input: &str, action: &str, node: &Value) -
             seen.insert(text(r, "ref"))
                 && ((!text(r, "resourceId").is_empty()
                     && text(r, "resourceId") == text(node, "patternId"))
+                    || explicit.contains(text(r, "ref"))
+                    || explicit.contains(text(r, "patternId"))
+                    || explicit.contains(text(r, "text"))
                     || query.contains(&language::normalize(text(r, "text"))))
         })
         .map(|r| (*r).clone())
@@ -381,22 +421,47 @@ fn eval(expr: &[Expr], ctx: &mut Context<'_>) -> Result<String> {
                             .iter()
                             .map(|r| text(r, "value").to_owned())
                             .collect::<Vec<_>>();
-                        let features = crate::neural::encode(
+                        let mut features = crate::neural::encode(
                             arg,
                             &ingredients,
                             number(&ctx.state["atp"], "valence", 0.) as f32,
                             number(&ctx.state["atp"], "intensity", 0.) as f32,
                         );
-                        let synthesis = ctx.network.run(
+                        let visual_ingredients = ctx
+                            .resources
+                            .iter()
+                            .filter_map(|r| r["visualFeatures"].as_array())
+                            .filter(|v| v.len() == 80)
+                            .collect::<Vec<_>>();
+                        for ingredient in &visual_ingredients {
+                            for (i, value) in ingredient.iter().enumerate() {
+                                features[i] = (features[i]
+                                    + value.as_f64().unwrap_or(0.) as f32
+                                        / visual_ingredients.len() as f32)
+                                    .clamp(0., 1.);
+                            }
+                        }
+                        let mut synthesis = ctx.network.run(
                             &features,
                             !ingredients.is_empty(),
                             number(&ctx.state["settings"], "seed", 104729.) as u64,
                             ctx.state["settings"]["gpu"] == true,
                         )?;
+                        if ctx.state["settings"]["brainstorm"] == true {
+                            let mut sampling = Rng(number(&ctx.state["settings"], "seed", 104729.)
+                                as u64
+                                ^ 0x425241494e);
+                            for value in &mut synthesis.values {
+                                *value = (*value + (sampling.sample() as f32 - 0.5) * 0.1)
+                                    .clamp(0., 16.);
+                            }
+                            ctx.transforms
+                                .push("bounded brainstorm composition sampling".into());
+                        }
                         let colors = ["#14786b", "#91c7a7", "#e5ad50", "#8174b7"];
                         let v = &synthesis.values;
                         ctx.visual = Some(
-                            json!({"xArray":(0..32).map(|i|(i as f64*2.399).cos()*120.*v[i]as f64).collect::<Vec<_>>(),"yArray":(0..32).map(|i|(i as f64*2.399).sin()*70.*v[i]as f64).collect::<Vec<_>>(),"colorArray":(0..32).map(|i|colors[i%4]).collect::<Vec<_>>(),"brightnessArray":v.iter().map(|x|x.clamp(0.0,1.0)).collect::<Vec<_>>(),"size":{"width":320,"height":180},"position":{"x":0,"y":0},"synthesis":synthesis}),
+                            json!({"xArray":(0..32).map(|i|(i as f64*2.399).cos()*120.*v[i]as f64).collect::<Vec<_>>(),"yArray":(0..32).map(|i|(i as f64*2.399).sin()*70.*v[i]as f64).collect::<Vec<_>>(),"colorArray":(0..32).map(|i|colors[i%4]).collect::<Vec<_>>(),"brightnessArray":v.iter().map(|x|x.clamp(0.0,1.0)).collect::<Vec<_>>(),"size":{"width":320,"height":180},"position":{"x":0,"y":0},"synthesis":{"backend":synthesis.backend,"activationFunctions":synthesis.activations,"fallback":synthesis.fallback,"networkVersion":ctx.network.version,"seed":ctx.state["settings"]["seed"],"brainstorm":ctx.state["settings"]["brainstorm"]}}),
                         );
                         ctx.transforms.extend([
                             "fixed 128/64/32 sparse network".into(),
@@ -731,7 +796,15 @@ pub fn cycle_with_visual(
         if ctx.visual.is_some() {
             visual = ctx.visual;
         }
-        segments.push(json!({"id":crate::uid(),"text":value,"contributors":[node["ref"]],"sourceVotes":[v["id"]],"transformations":ctx.transforms,"color":colors[segments.len()%6]}));
+        let contributors = std::iter::once(text(node, "ref"))
+            .chain(
+                resources
+                    .iter()
+                    .filter_map(|r| r["nodeRef"].as_str())
+                    .filter(|r| nodes.iter().any(|n| text(n, "ref") == *r)),
+            )
+            .collect::<BTreeSet<_>>();
+        segments.push(json!({"id":crate::uid(),"text":value,"contributors":contributors,"sourceVotes":[v["id"]],"transformations":ctx.transforms,"color":colors[segments.len()%6]}));
     }
     let status = if segments.is_empty() {
         if clauses.iter().all(|c| c.negated) {
@@ -755,8 +828,10 @@ pub fn cycle_with_visual(
         ((time as f64 - number(&state["atp"], "lastUpdate", time as f64)) / 1000.).max(0.);
     let mut valence = number(&state["atp"], "valence", 0.) * (-elapsed / 180.).exp();
     let mut intensity = number(&state["atp"], "intensity", 0.) * (-elapsed / 180.).exp();
+    let mut cooldown = number(&state["atp"], "cooldownUntil", 0.);
     for r in rows(&state, "resources").iter().filter(|r| {
-        text(r, "subsystem") == "chargebook"
+        time as f64 >= cooldown
+            && text(r, "subsystem") == "chargebook"
             && language::normalize(input).contains(&language::normalize(text(r, "text")))
     }) {
         valence = (valence + number(r, "valence", 0.) * 0.2).clamp(-1., 1.);
@@ -764,8 +839,11 @@ pub fn cycle_with_visual(
     }
     if intensity > 0.85 {
         intensity *= 0.5;
+        cooldown =
+            time as f64 + number(&settings, "atpCooldownSeconds", 30.).clamp(1., 3600.) * 1000.;
     }
-    state["atp"] = json!({"valence":valence,"intensity":intensity,"lastUpdate":time});
+    state["atp"] =
+        json!({"valence":valence,"intensity":intensity,"lastUpdate":time,"cooldownUntil":cooldown});
     // Bounded co-activation correlation creates optional attachment edges after repeated evidence.
     if !state["correlations"].is_object() {
         state["correlations"] = json!({});
