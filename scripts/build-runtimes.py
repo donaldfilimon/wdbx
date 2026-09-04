@@ -23,8 +23,9 @@ for key,target in [('llama','llama-server'),('diffusion','sd-cli')]:
   ggml=source('ggml');shutil.copytree(ggml,src/'ggml',dirs_exist_ok=True,ignore=shutil.ignore_patterns('.pi'))
  build=work/(key+'-build')
  args=['cmake','-S',str(src),'-B',str(build),'-DCMAKE_BUILD_TYPE=Release','-DBUILD_SHARED_LIBS=OFF','-DGGML_NATIVE=OFF','-DGGML_OPENMP=OFF','-DGGML_METAL=OFF','-DGGML_VULKAN=OFF','-DLLAMA_BUILD_TESTS=OFF','-DLLAMA_BUILD_EXAMPLES=OFF','-DLLAMA_BUILD_SERVER=ON','-DLLAMA_CURL=OFF','-DSD_BUILD_EXAMPLES=ON']
+ if platform.system()=='Windows':args.append('-DCMAKE_CXX_FLAGS=/bigobj')
  subprocess.run(args,check=True)
- subprocess.run(['cmake','--build',str(build),'--config','Release','--target',target,'--parallel','4'],check=True)
+ subprocess.run(['cmake','--build',str(build),'--config','Release','--target',target,'--parallel','2' if platform.system()=='Windows' else '4'],check=True)
  suffix='.exe' if platform.system()=='Windows' else ''
  choices=[build/'bin'/('Release' if platform.system()=='Windows' else '')/(target+suffix),build/'bin'/(target+suffix)]
  executable=next((p for p in choices if p.exists()),None)
