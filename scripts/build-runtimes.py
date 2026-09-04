@@ -26,7 +26,7 @@ for key,target in [('llama','llama-server'),('diffusion','sd-cli')]:
  if platform.system()=='Windows':
   # The app uses authenticated HTTP on loopback; TLS is owned by model downloads.
   # Static MSVC linkage keeps the sidecars independent of developer-machine DLLs.
-  args += ['-DCMAKE_CXX_FLAGS=/bigobj','-DCMAKE_POLICY_DEFAULT_CMP0091=NEW',
+  args += ['-UCMAKE_CXX_FLAGS','-DCMAKE_CXX_FLAGS_INIT=/bigobj','-DCMAKE_POLICY_DEFAULT_CMP0091=NEW',
            '-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded']
  subprocess.run(args,check=True)
  subprocess.run(['cmake','--build',str(build),'--config','Release','--target',target,'--parallel','2' if platform.system()=='Windows' else '4'],check=True)

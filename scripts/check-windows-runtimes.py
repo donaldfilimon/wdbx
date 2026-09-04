@@ -22,9 +22,12 @@ if __name__ == '__main__':
  import os,subprocess
  root=Path(__file__).resolve().parents[1]
  results=[]
- for name in ['llama-server.exe','sd-cli.exe']:
+ for key,name in [('llama','llama-server.exe'),('diffusion','sd-cli.exe')]:
+  cache=(root/'work/runtimes'/f'{key}-build'/'CMakeCache.txt').read_text()
+  flags=next(line.split('=',1)[1] for line in cache.splitlines() if line.startswith('CMAKE_CXX_FLAGS:STRING='))
+  if '/EHsc' not in flags or '/bigobj' not in flags:raise RuntimeError(f'{name} lost required C++ flags: {flags}')
   path=root/'src-tauri/binaries'/name
-  item=inspect(path)
+  item=inspect(path);item['resolvedCxxFlags']=flags
   forbidden=[dll for dll in item['imports'] if dll.lower().startswith(('msvcp','vcruntime','libssl','libcrypto'))]
   if forbidden:raise RuntimeError(f'{name} requires unbundled libraries: {forbidden}')
   if item['architecture']!='x64':raise RuntimeError('Unexpected Windows runtime architecture')
