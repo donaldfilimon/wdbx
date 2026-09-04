@@ -14,8 +14,8 @@ describe('Native specimen desktop',()=>{
   await expect($('.provenance-detail')).toHaveText(expect.stringContaining('Calculate'));
   await $('input#prompt').setValue("don't calculate 2 + 2; say hello");
   await $('button=Run cycle').click();
-  await browser.waitUntil(async()=>/\b(Hello|Hi|Hey|Greetings)\b/.test(await $('.answer-text').getText()),{timeout:30000});
-  if((await $('.answer-text').getText()).trim()==='4')throw Error('Negated arithmetic escaped its clause');
+  await browser.waitUntil(async()=>/\b(Hello|Hi|Hey|Greetings)\b/.test((await $$('.answer-text').map(element=>element.getText())).join(' ')),{timeout:30000});
+  if((await $$('.answer-text').map(element=>element.getText())).some(text=>text.trim()==='4'))throw Error('Negated arithmetic escaped its clause');
  });
  it('shows installed model metadata and performs native image analysis',async()=>{
   await $('nav[aria-label="Main navigation"] a[href="?view=lab"]').click();
