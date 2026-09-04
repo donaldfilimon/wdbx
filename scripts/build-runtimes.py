@@ -20,7 +20,7 @@ for key,target in [('llama','llama-server'),('diffusion','sd-cli')]:
  if options.only and key!=options.only:continue
  src=source(key)
  if key=='diffusion' and not (src/'ggml/CMakeLists.txt').exists():
-  ggml=source('ggml');shutil.copytree(ggml,src/'ggml',dirs_exist_ok=True)
+  ggml=source('ggml');shutil.copytree(ggml,src/'ggml',dirs_exist_ok=True,ignore=shutil.ignore_patterns('.pi'))
  build=work/(key+'-build')
  args=['cmake','-S',str(src),'-B',str(build),'-DCMAKE_BUILD_TYPE=Release','-DBUILD_SHARED_LIBS=OFF','-DGGML_NATIVE=OFF','-DGGML_OPENMP=OFF','-DGGML_METAL=OFF','-DGGML_VULKAN=OFF','-DLLAMA_BUILD_TESTS=OFF','-DLLAMA_BUILD_EXAMPLES=OFF','-DLLAMA_BUILD_SERVER=ON','-DLLAMA_CURL=OFF','-DSD_BUILD_EXAMPLES=ON']
  subprocess.run(args,check=True)
