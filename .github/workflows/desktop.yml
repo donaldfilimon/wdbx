@@ -53,6 +53,9 @@ jobs:
           restore-keys: native-runtimes-${{ runner.os }}-${{ runner.arch }}-
       - name: Build model runtimes
         run: python scripts/build-runtimes.py
+      - name: Check portable Windows model runtimes
+        if: runner.os == 'Windows'
+        run: python scripts/check-windows-runtimes.py
       - name: Package desktop
         run: bunx tauri build
       - name: Seal macOS installer
