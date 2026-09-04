@@ -1,0 +1,24 @@
+name: Real local image model qualification
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  image-model:
+    runs-on: macos-15-large
+    timeout-minutes: 45
+    env:
+      CARGO_BUILD_JOBS: 4
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build pinned CPU image runtime
+        run: python3 scripts/build-runtimes.py --only diffusion
+      - name: Download and verify SDXL-Turbo
+        run: python3 scripts/download-models.py work/acceptance/models --ids sdxl-turbo
+      - name: Real local CPU image inference
+        run: cargo run --release -p specimen-core --example acceptance -- "$PWD/work/acceptance" "$PWD/src-tauri/binaries" image
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: real-image-inference
+          path: work/acceptance/results
