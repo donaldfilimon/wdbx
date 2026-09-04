@@ -76,6 +76,44 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             "Generation verified: {}",
             result["text"].as_str().unwrap_or("image")
         );
+        // Cancel only after the real provider reports its spawned inference job.
+        let cancel = Arc::new(AtomicBool::new(false));
+        let cancelled_at = std::sync::Mutex::new(None);
+        let failure = models
+            .generate(id, prompt, 104730, cancel.clone(), &|event| {
+                if event["phase"] == "generating" {
+                    let mut at = cancelled_at.lock().unwrap();
+                    if at.is_none() {
+                        *at = Some(std::time::Instant::now());
+                        cancel.store(true, std::sync::atomic::Ordering::Relaxed);
+                    }
+                }
+            })
+            .expect_err("A cancelled real inference job must not produce an artifact");
+        let cancellation_ms = cancelled_at
+            .lock()
+            .unwrap()
+            .ok_or("Job never entered generation")?
+            .elapsed()
+            .as_millis();
+        if failure.code != "Cancelled" || cancellation_ms > 5000 {
+            return Err(format!("Unexpected cancellation: {failure}; {cancellation_ms} ms").into());
+        }
+        let stray_images = std::fs::read_dir(root.join("models"))?
+            .filter_map(|entry| entry.ok())
+            .filter(|entry| entry.path().extension().is_some_and(|ext| ext == "png"))
+            .count();
+        if stray_images != 0 {
+            return Err("Cancelled image left a scratch artifact".into());
+        }
+        std::fs::write(
+            root.join("results")
+                .join(format!("{mode}-cancellation.json")),
+            serde_json::to_vec_pretty(
+                &serde_json::json!({"model":id,"code":failure.code,"cancelledAfterGenerationStarted":true,"cancellationMilliseconds":cancellation_ms,"scratchImages":stray_images,"previousArtifactDigest":result["artifactDigest"]}),
+            )?,
+        )?;
+        println!("Real inference cancellation verified in {cancellation_ms} ms");
     }
     Ok(())
 }
