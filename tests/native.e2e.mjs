@@ -5,6 +5,9 @@ describe('Native specimen desktop',()=>{
  before(async()=>{ await mkdir(resolve('../../work'),{recursive:true}); await browser.saveScreenshot(resolve('../../work/native-first-screen.png')); console.log('Native page title', await browser.getTitle()); });
  it('runs the Rust engine and renders a scoped response',async()=>{
   await browser.waitUntil(async()=>!(await $('body').getText()).includes('Opening workspace'),{timeout:30000});
+  await $('nav[aria-label="Main navigation"] a[href="?view=studio"]').waitForDisplayed();
+  await $('nav[aria-label="Main navigation"] a[href="?view=studio"]').click();
+  await $('button=What is 2 + 2?').waitForDisplayed();
   await $('button=What is 2 + 2?').click();
   await expect($('.answer-text')).toHaveText('4');
   await $('button=Contributors').click();
@@ -55,6 +58,7 @@ describe('Native specimen desktop',()=>{
   await browser.waitUntil(async()=>!(await $('body').getText()).includes('Opening workspace'),{timeout:30000});
   await $('nav[aria-label="Main navigation"] a[href="?view=memory"]').click();
   await $('button=Conversation').click();
+  await $('.history-record').waitForDisplayed({timeout:30000});
   const rendered=await $$('.history-record');
   if(rendered.length<1||rendered.length>30)throw Error('History virtualization failed: '+rendered.length);
   const start=Date.now();
