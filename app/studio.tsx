@@ -9,7 +9,6 @@ import {
   Boxes,
   Calculator,
   Check,
-  ChevronDown,
   Clock3,
   Database,
   FileText,
@@ -72,7 +71,12 @@ import {
 import sections from '@/lib/specification.json';
 import { VirtualList } from '@/components/virtual-list';
 import { NativeLab } from '@/components/native-lab';
-import { isDesktop, nativeReview, exportNative, importNative } from '@/lib/specimen/native';
+import {
+  isDesktop,
+  nativeReview,
+  exportNative,
+  importNative,
+} from '@/lib/specimen/native';
 import { useStudioTools } from '@/lib/webmcp';
 
 type View =
@@ -91,6 +95,11 @@ const views: { id: View; label: string; icon: typeof Network }[] = [
   { id: 'lab', label: 'Vision & models', icon: Sparkles },
   { id: 'specification', label: 'Specification', icon: FileText },
 ];
+const viewGroups: { label: string; ids: View[] }[] = [
+  { label: 'Build', ids: ['studio', 'nodes', 'memory'] },
+  { label: 'Observe', ids: ['activity', 'lab'] },
+  { label: 'Reference', ids: ['specification'] },
+];
 const icons = [
   Calculator,
   MessageCircle,
@@ -103,7 +112,10 @@ const icons = [
 ];
 const labels: Record<View, [string, string]> = {
   studio: ['Specimen studio', 'Teach a pattern. Trace a response.'],
-  lab: ['Vision & local models', 'Inspect an image. Compose locally. Learn deliberately.'],
+  lab: [
+    'Vision & local models',
+    'Inspect an image. Compose locally. Learn deliberately.',
+  ],
   nodes: ['Node library', 'Small patterns, reusable actions.'],
   memory: ['Memory', 'Supporting knowledge, close at hand.'],
   activity: ['Activity', 'Follow the changes that shape your specimen.'],
@@ -133,6 +145,7 @@ export default function Studio() {
     [saveStatus, setSaveStatus] = useState('Opening workspace…'),
     [view, setView] = useState<View>('studio'),
     [mobileNav, setMobileNav] = useState(false),
+    [mobileViewport, setMobileViewport] = useState(false),
     [selected, setSelected] = useState(''),
     [query, setQuery] = useState(''),
     [prompt, setPrompt] = useState(''),
@@ -149,6 +162,10 @@ export default function Studio() {
     [editing, setEditing] = useState<string | undefined>(),
     [pendingLoad, setPendingLoad] = useState<Specimen | null>(null);
   const fileRef = useRef<HTMLInputElement>(null),
+    promptRef = useRef<HTMLInputElement>(null),
+    mobileMenuRef = useRef<HTMLButtonElement>(null),
+    mobileCloseRef = useRef<HTMLButtonElement>(null),
+    navWasOpen = useRef(false),
     abortRef = useRef<AbortController | null>(null),
     lastInteraction = useRef(0),
     noticeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined),
@@ -156,6 +173,10 @@ export default function Studio() {
   const selectedNode =
     state.nodes.find((n) => n.ref === selected) ?? state.nodes[0];
   const cycle = state.history.at(-1);
+  const activeTrace = busy ? trace : (cycle?.trace ?? []);
+  const maxConfidence = cycle?.votes.length
+    ? Math.max(...cycle.votes.map((vote) => vote.confidence))
+    : null;
   const announce = useCallback((message: string) => {
     setNotice(message);
     clearTimeout(noticeTimer.current);
@@ -217,6 +238,42 @@ export default function Studio() {
     };
   }, [commit]);
   useEffect(() => {
+    const query = window.matchMedia('(max-width: 760px)');
+    const update = () => {
+      setMobileViewport(query.matches);
+      if (!query.matches) setMobileNav(false);
+    };
+    update();
+    query.addEventListener('change', update);
+    return () => query.removeEventListener('change', update);
+  }, []);
+  useEffect(() => {
+    if (!mobileNav) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMobileNav(false);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [mobileNav]);
+  useEffect(() => {
+    if (!mobileViewport) {
+      navWasOpen.current = false;
+      return;
+    }
+    if (mobileNav) {
+      navWasOpen.current = true;
+      const frame = requestAnimationFrame(() =>
+        mobileCloseRef.current?.focus(),
+      );
+      return () => cancelAnimationFrame(frame);
+    }
+    if (navWasOpen.current) {
+      navWasOpen.current = false;
+      const frame = requestAnimationFrame(() => mobileMenuRef.current?.focus());
+      return () => cancelAnimationFrame(frame);
+    }
+  }, [mobileNav, mobileViewport]);
+  useEffect(() => {
     if (!hydrated || !storageEnabled) return;
     queueMicrotask(() => setSaveStatus('Saving…'));
     let live = true;
@@ -262,8 +319,19 @@ export default function Studio() {
         !abortRef.current
       ) {
         if (isDesktop()) {
-          const controller = new AbortController(); abortRef.current = controller;
-          void nativeReview(current.current, 'maintenance', Math.random() < .5 ? 'phagy' : 'mutation', controller.signal).then(commit).catch((e) => setError(e.message)).finally(() => { if (abortRef.current === controller) abortRef.current = null; });
+          const controller = new AbortController();
+          abortRef.current = controller;
+          void nativeReview(
+            current.current,
+            'maintenance',
+            Math.random() < 0.5 ? 'phagy' : 'mutation',
+            controller.signal,
+          )
+            .then(commit)
+            .catch((e) => setError(e.message))
+            .finally(() => {
+              if (abortRef.current === controller) abortRef.current = null;
+            });
           return;
         }
         const snapshot = current.current,
@@ -287,7 +355,9 @@ export default function Studio() {
     const snapshot = current.current;
     setBusy(true);
     try {
-      const next = isDesktop() ? await nativeReview(snapshot, 'review', undefined, controller.signal) : await observeContext(snapshot, controller.signal);
+      const next = isDesktop()
+        ? await nativeReview(snapshot, 'review', undefined, controller.signal)
+        : await observeContext(snapshot, controller.signal);
       if (current.current !== snapshot)
         throw new Error(
           'The workspace changed during review. Run context review again.',
@@ -304,7 +374,10 @@ export default function Studio() {
   const run = useCallback(
     async (raw: string) => {
       if (!hydrated || busy) return;
-      if (abortRef.current) { abortRef.current.abort(); abortRef.current = null; }
+      if (abortRef.current) {
+        abortRef.current.abort();
+        abortRef.current = null;
+      }
       const input = raw.trim();
       if (!input) return;
       setError('');
@@ -332,14 +405,27 @@ export default function Studio() {
         return;
       }
       if (input.startsWith('/saveSpecimen')) {
-        if (isDesktop()) { void persistWorkspace(current.current).then(exportNative).then(saved=>saved&&announce('Portable specimen saved.')).catch(e=>setError(e.message)); setPrompt(''); return; }
+        if (isDesktop()) {
+          void persistWorkspace(current.current)
+            .then(exportNative)
+            .then((saved) => saved && announce('Portable specimen saved.'))
+            .catch((e) => setError(e.message));
+          setPrompt('');
+          return;
+        }
         downloadText('specimen.json', JSON.stringify(current.current, null, 2));
         announce('Specimen downloaded.');
         setPrompt('');
         return;
       }
       if (input.startsWith('/loadSpecimen')) {
-        if (isDesktop()) { void importNative().then((snapshot) => { if (snapshot?.specimen) commit(snapshot.specimen); }).catch((e) => setError(e.message)); } else fileRef.current?.click();
+        if (isDesktop()) {
+          void importNative()
+            .then((snapshot) => {
+              if (snapshot?.specimen) commit(snapshot.specimen);
+            })
+            .catch((e) => setError(e.message));
+        } else fileRef.current?.click();
         return;
       }
       if (input.startsWith('/learn')) {
@@ -439,7 +525,13 @@ export default function Studio() {
       announce(result.message);
     });
   const save = () => {
-    if (isDesktop()) { void persistWorkspace(current.current).then(exportNative).then((saved) => saved && announce('Portable specimen saved.')).catch((e) => setError(e.message)); return; }
+    if (isDesktop()) {
+      void persistWorkspace(current.current)
+        .then(exportNative)
+        .then((saved) => saved && announce('Portable specimen saved.'))
+        .catch((e) => setError(e.message));
+      return;
+    }
     downloadText(
       `${state.name.replace(/[^a-z0-9]/gi, '-').toLowerCase()}.json`,
       JSON.stringify(state, null, 2),
@@ -465,7 +557,13 @@ export default function Studio() {
       <a className="skip-link" href="#main">
         Skip to main content
       </a>
-      <aside className={`sidebar ${mobileNav ? 'is-open' : ''}`}>
+      <aside
+        id="workspace-navigation"
+        className={`sidebar ${mobileNav ? 'is-open' : ''}`}
+        aria-label="WDBX workspace"
+        aria-hidden={mobileViewport && !mobileNav ? true : undefined}
+        inert={mobileViewport && !mobileNav ? true : undefined}
+      >
         <a
           className="brand"
           href="?view=studio"
@@ -481,6 +579,7 @@ export default function Studio() {
           </span>
         </a>
         <button
+          ref={mobileCloseRef}
           className="icon-button mobile-close"
           aria-label="Close navigation"
           onClick={() => setMobileNav(false)}
@@ -488,25 +587,34 @@ export default function Studio() {
           <X />
         </button>
         <nav aria-label="Main navigation">
-          {views.map(({ id, label, icon: Icon }) => (
-            <a
-              key={id}
-              href={`?view=${id}`}
-              className={`nav-link ${view === id ? 'active' : ''}`}
-              aria-current={view === id ? 'page' : undefined}
-              onClick={(e) => {
-                if (!e.metaKey && !e.ctrlKey) {
-                  e.preventDefault();
-                  nav(id);
-                }
-              }}
-            >
-              <Icon size={20} />
-              {label}
-              {id === 'nodes' && (
-                <span className="nav-count">{state.nodes.length}</span>
-              )}
-            </a>
+          {viewGroups.map((group) => (
+            <div className="nav-group" key={group.label}>
+              <span className="nav-group-label">{group.label}</span>
+              {group.ids.map((id) => {
+                const item = views.find((candidate) => candidate.id === id)!;
+                const Icon = item.icon;
+                return (
+                  <a
+                    key={id}
+                    href={`?view=${id}`}
+                    className={`nav-link ${view === id ? 'active' : ''}`}
+                    aria-current={view === id ? 'page' : undefined}
+                    onClick={(e) => {
+                      if (!e.metaKey && !e.ctrlKey) {
+                        e.preventDefault();
+                        nav(id);
+                      }
+                    }}
+                  >
+                    <Icon size={19} />
+                    {item.label}
+                    {id === 'nodes' && (
+                      <span className="nav-count">{state.nodes.length}</span>
+                    )}
+                  </a>
+                );
+              })}
+            </div>
           ))}
         </nav>
         <div className="sidebar-bottom">
@@ -536,18 +644,35 @@ export default function Studio() {
           onClick={() => setMobileNav(false)}
         />
       )}
-      <main id="main" className="main-area">
+      <main
+        id="main"
+        className="main-area"
+        inert={mobileViewport && mobileNav ? true : undefined}
+      >
         <header className="page-header">
           <div className="heading-wrap">
             <button
+              ref={mobileMenuRef}
               className="icon-button mobile-menu"
               aria-label="Open navigation"
+              aria-controls="workspace-navigation"
+              aria-expanded={mobileNav}
               onClick={() => setMobileNav(true)}
             >
               <Menu />
             </button>
             <div>
-              <h1>{labels[view][0]}</h1>
+              <div className="page-title-row">
+                <h1>{labels[view][0]}</h1>
+                {view === 'studio' && (
+                  <span className="specimen-name header-specimen">
+                    <FileText size={15} aria-hidden="true" />
+                    {state.name}
+                    <i className={`status-dot ${busy ? 'busy' : ''}`} />
+                    <small>{busy ? 'Running' : 'Ready'}</small>
+                  </span>
+                )}
+              </div>
               <p>{labels[view][1]}</p>
             </div>
           </div>
@@ -563,15 +688,30 @@ export default function Studio() {
               </a>
             ) : (
               <>
+                {view === 'studio' && (
+                  <button
+                    className="button utility starter-action"
+                    aria-label="Reset to starter specimen"
+                    onClick={() => setDialog('reset')}
+                  >
+                    <RotateCcw size={16} />
+                    <span>Starter</span>
+                  </button>
+                )}
                 <button
-                  className="button outline"
+                  className="button utility"
+                  aria-label="Load specimen"
                   onClick={() => fileRef.current?.click()}
                   disabled={busy}
                 >
                   <Upload size={17} />
-                  Load
+                  <span>Load</span>
                 </button>
-                <button className="button primary" onClick={save}>
+                <button
+                  className="button outline"
+                  aria-label="Save specimen"
+                  onClick={save}
+                >
                   <Save size={17} />
                   <span>Save specimen</span>
                 </button>
@@ -601,286 +741,448 @@ export default function Studio() {
         )}
         {view === 'studio' && (
           <>
-            <div className="specimen-toolbar">
-              <span className="specimen-name">
-                <FileText size={18} />
-                {state.name}
-              </span>
-              <span className="toolbar-divider" />
-              <span className="ready-state">
-                <span className={`status-dot ${busy ? 'busy' : ''}`} />
-                {busy ? 'Processing' : 'Ready'}
-              </span>
-              <span className="toolbar-divider" />
-              <button
-                className="text-button"
-                onClick={() => setDialog('reset')}
+            <div className="studio-console" aria-busy={busy}>
+              <section
+                className="console-telemetry"
+                aria-label="Workspace overview"
               >
-                Starter specimen
-                <ChevronDown size={15} />
-              </button>
-              <span className="toolbar-spacer" />
-              <span className="muted small">
-                {state.settings.brainstorm
-                  ? 'Brainstorm mode'
-                  : 'Conservative mode'}
-              </span>
-            </div>
-            <div className="studio-grid">
-              <section className="panel network-panel">
-                <div className="panel-heading">
-                  <h2>Live topology</h2>
-                  <span className="muted small">
-                    {state.nodes.length} nodes · 3 resolution tiers
+                <div className="console-identity">
+                  <span className={`status-beacon ${busy ? 'is-running' : ''}`}>
+                    <Activity size={16} aria-hidden="true" />
                   </span>
-                  <div className="segmented" aria-label="Topology view">
-                    <button
-                      className={networkMode === 'network' ? 'selected' : ''}
-                      onClick={() => setNetworkMode('network')}
-                      aria-pressed={networkMode === 'network'}
-                    >
-                      <Network size={15} />
-                      Network
-                    </button>
-                    <button
-                      className={networkMode === 'trace' ? 'selected' : ''}
-                      onClick={() => setNetworkMode('trace')}
-                      aria-pressed={networkMode === 'trace'}
-                    >
-                      <Activity size={15} />
-                      Cycle trace
-                    </button>
+                  <div>
+                    <span className="telemetry-label">Runtime</span>
+                    <strong>
+                      {busy ? 'Cycle in progress' : 'Local · system ready'}
+                    </strong>
                   </div>
                 </div>
-                {networkMode === 'network' ? (
-                  <Topology
-                    nodes={state.nodes}
-                    selected={selectedNode?.ref}
-                    active={cycle?.votes.map((v) => v.nodeRef) ?? []}
-                    attachments={state.attachments}
-                    onSelect={setSelected}
-                  />
-                ) : (
-                  <Trace
-                    steps={busy ? trace : (cycle?.trace ?? [])}
-                    busy={busy}
-                  />
-                )}
-                <div className="graph-legend">
-                  <span>
-                    <i className="legend-dot green" />
-                    Pattern node
-                  </span>
-                  <span>
-                    <i className="legend-dot amber" />
-                    Context node
-                  </span>
-                  <span>
-                    <i className="legend-dot solid" />
-                    Orchestration
-                  </span>
-                  <span className="muted legend-tail">
-                    Select a node to inspect it
-                  </span>
+                <div className="telemetry-stat">
+                  <span className="telemetry-label">Pattern nodes</span>
+                  <strong>{state.nodes.length}</strong>
+                </div>
+                <div className="telemetry-stat">
+                  <span className="telemetry-label">Memory records</span>
+                  <strong>{state.resources.length}</strong>
+                </div>
+                <div className="telemetry-stat">
+                  <span className="telemetry-label">Last confidence</span>
+                  <strong>
+                    {maxConfidence === null ? '—' : fmt.format(maxConfidence)}
+                  </strong>
+                </div>
+                <div className="telemetry-stat telemetry-storage">
+                  <span className="telemetry-label">Workspace</span>
+                  <strong>
+                    {saveStatus.replace(
+                      'Stored on this device',
+                      'Local · stored on device',
+                    )}
+                  </strong>
                 </div>
               </section>
-              <NodeInspector
-                node={selectedNode}
-                maxStrength={state.settings.maxStrength}
-                onEdit={() => {
-                  setEditing(selectedNode?.ref);
-                  setDialog('node');
+              <nav className="workflow-rail" aria-label="Specimen workflow">
+                <button
+                  className="workflow-step"
+                  onClick={() => {
+                    setEditing(undefined);
+                    setDialog('node');
+                  }}
+                >
+                  <span className="workflow-index">01</span>
+                  <span>
+                    <strong>Teach pattern</strong>
+                    <small>Shape reusable behavior</small>
+                  </span>
+                  <Plus size={16} aria-hidden="true" />
+                </button>
+                <button
+                  className="workflow-step is-primary"
+                  onClick={() => promptRef.current?.focus()}
+                >
+                  <span className="workflow-index">02</span>
+                  <span>
+                    <strong>Prompt specimen</strong>
+                    <small>Run a local cycle</small>
+                  </span>
+                  <ArrowRight size={16} aria-hidden="true" />
+                </button>
+                <button
+                  className="workflow-step"
+                  onClick={() => {
+                    setNetworkMode('trace');
+                    document.querySelector('.network-panel')?.scrollIntoView({
+                      behavior: window.matchMedia(
+                        '(prefers-reduced-motion: reduce)',
+                      ).matches
+                        ? 'auto'
+                        : 'smooth',
+                      block: 'center',
+                    });
+                  }}
+                >
+                  <span className="workflow-index">03</span>
+                  <span>
+                    <strong>Inspect trace</strong>
+                    <small>Follow every phase</small>
+                  </span>
+                  <Activity size={16} aria-hidden="true" />
+                </button>
+                <button
+                  className="workflow-step"
+                  onClick={() => {
+                    if (cycle) setShowProvenance(true);
+                    else nav('activity');
+                  }}
+                >
+                  <span className="workflow-index">04</span>
+                  <span>
+                    <strong>Refine memory</strong>
+                    <small>Review evidence and learn</small>
+                  </span>
+                  <Sparkles size={16} aria-hidden="true" />
+                </button>
+              </nav>
+              <div className="cycle-phase-strip" aria-label="Cycle phases">
+                {['Prepare', 'Retrieve', 'Vote', 'Compose'].map(
+                  (phase, index) => {
+                    const complete = activeTrace.some(
+                      (step) => step.phase === phase,
+                    );
+                    const current = busy && activeTrace.at(-1)?.phase === phase;
+                    return (
+                      <span
+                        key={phase}
+                        className={`${complete ? 'is-complete' : ''} ${current ? 'is-current' : ''}`}
+                      >
+                        <i>{complete ? <Check size={12} /> : index + 1}</i>
+                        {phase}
+                      </span>
+                    );
+                  },
+                )}
+              </div>
+              <div className="studio-grid">
+                <section className="panel network-panel">
+                  <div className="panel-heading">
+                    <h2>Live topology</h2>
+                    <span className="muted small">
+                      {state.nodes.length} nodes · 3 resolution tiers
+                    </span>
+                    <fieldset className="segmented">
+                      <legend className="sr-only">Topology view</legend>
+                      <button
+                        className={networkMode === 'network' ? 'selected' : ''}
+                        onClick={() => setNetworkMode('network')}
+                        aria-pressed={networkMode === 'network'}
+                      >
+                        <Network size={15} />
+                        Network
+                      </button>
+                      <button
+                        className={networkMode === 'trace' ? 'selected' : ''}
+                        onClick={() => setNetworkMode('trace')}
+                        aria-pressed={networkMode === 'trace'}
+                      >
+                        <Activity size={15} />
+                        Cycle trace
+                      </button>
+                    </fieldset>
+                  </div>
+                  {networkMode === 'network' ? (
+                    <Topology
+                      nodes={state.nodes}
+                      selected={selectedNode?.ref}
+                      active={cycle?.votes.map((v) => v.nodeRef) ?? []}
+                      attachments={state.attachments}
+                      onSelect={setSelected}
+                    />
+                  ) : (
+                    <Trace
+                      steps={busy ? trace : (cycle?.trace ?? [])}
+                      busy={busy}
+                    />
+                  )}
+                  <div className="graph-legend">
+                    <span>
+                      <span className="legend-spectrum" aria-hidden="true">
+                        <i className="legend-dot green" />
+                        <i className="legend-dot amber" />
+                        <i className="legend-dot violet" />
+                      </span>
+                      Pattern nodes
+                    </span>
+                    <span>
+                      <i className="legend-edge" aria-hidden="true" />
+                      Attachment
+                    </span>
+                    <span>
+                      <i className="legend-dot solid" />
+                      Orchestration
+                    </span>
+                    <span className="muted legend-tail">
+                      Select a node to inspect it
+                    </span>
+                  </div>
+                </section>
+                <NodeInspector
+                  node={selectedNode}
+                  maxStrength={state.settings.maxStrength}
+                  onEdit={() => {
+                    setEditing(selectedNode?.ref);
+                    setDialog('node');
+                  }}
+                  onJitter={() =>
+                    act(() => {
+                      const s = structuredClone(state),
+                        n = s.nodes.find((x) => x.ref === selectedNode?.ref);
+                      if (n) n.jitter = !n.jitter;
+                      commit(s);
+                    })
+                  }
+                />
+                <section className="panel conversation-panel">
+                  <div className="panel-heading">
+                    <h2>Conversation &amp; result</h2>
+                    <span className="toolbar-spacer" />
+                    {cycle && (
+                      <>
+                        <button
+                          className={`text-button ${showProvenance ? 'teal' : ''}`}
+                          aria-label="Run dossier"
+                          onClick={() => setShowProvenance(!showProvenance)}
+                        >
+                          <GitBranch size={15} />
+                          Run dossier
+                        </button>
+                        <button
+                          className={`icon-button ${cycle.pinned ? 'teal' : ''}`}
+                          aria-label={
+                            cycle.pinned ? 'Unpin answer' : 'Pin answer'
+                          }
+                          onClick={() =>
+                            act(() => commit(togglePin(state, cycle.id)))
+                          }
+                        >
+                          <Pin size={16} />
+                        </button>
+                      </>
+                    )}
+                  </div>
+                  {cycle ? (
+                    <div className="answer-body">
+                      {cycle.visual && <VisualOutput visual={cycle.visual} />}
+                      <div className="answer-segments">
+                        {cycle.segments.map((seg) => (
+                          <div
+                            className={`answer-segment ${showProvenance ? `provenance-${seg.color}` : ''}`}
+                            key={seg.id}
+                          >
+                            <div className="answer-text">{seg.text}</div>
+                            {showProvenance && (
+                              <div className="provenance-detail">
+                                <span className="segment-color">
+                                  {seg.color}
+                                </span>
+                                <span>
+                                  {seg.contributors
+                                    .map(
+                                      (ref) =>
+                                        state.nodes.find((n) => n.ref === ref)
+                                          ?.name ?? 'Removed node',
+                                    )
+                                    .join(', ') || 'System response'}
+                                </span>
+                                <span>
+                                  {' '}
+                                  · {seg.transformations.join(' → ')}
+                                </span>
+                                {seg.contributors.length > 0 && (
+                                  <span className="segment-feedback">
+                                    <button
+                                      aria-label={`Right ${seg.color} segment`}
+                                      onClick={() =>
+                                        giveFeedback(true, seg.color)
+                                      }
+                                    >
+                                      <ThumbsUp size={14} />
+                                    </button>
+                                    <button
+                                      aria-label={`Wrong ${seg.color} segment`}
+                                      onClick={() =>
+                                        giveFeedback(false, seg.color)
+                                      }
+                                    >
+                                      <ThumbsDown size={14} />
+                                    </button>
+                                  </span>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                      {showProvenance && cycle.visual?.synthesis && (
+                        <details>
+                          <summary>Transient computation evidence</summary>
+                          <pre>
+                            {JSON.stringify(cycle.visual.synthesis, null, 2)}
+                          </pre>
+                        </details>
+                      )}
+                      {showProvenance &&
+                        cycle.votes.some((v) => v.evidence) && (
+                          <details className="native-evidence">
+                            <summary>Comparison and retrieval evidence</summary>
+                            {cycle.votes.map((v) => (
+                              <div key={v.id}>
+                                <strong>
+                                  {state.nodes.find((n) => n.ref === v.nodeRef)
+                                    ?.name ?? 'Removed node'}
+                                </strong>
+                                <pre>
+                                  {JSON.stringify(
+                                    {
+                                      evidence: v.evidence,
+                                      binding: v.binding,
+                                      resources: v.resources,
+                                      origin: v.origin,
+                                      group: v.group,
+                                    },
+                                    null,
+                                    2,
+                                  )}
+                                </pre>
+                              </div>
+                            ))}
+                          </details>
+                        )}
+                      <div className="answer-footer">
+                        <span className="muted small">
+                          {cycle.votes.length
+                            ? `${[...new Set(cycle.votes.map((v) => state.nodes.find((n) => n.ref === v.nodeRef)?.name ?? 'Removed node'))].join(', ')} contributed · confidence ${fmt.format(Math.max(...cycle.votes.map((v) => v.confidence)))}`
+                            : 'No node contributed'}
+                        </span>
+                        <div className="feedback-actions">
+                          <button
+                            className="button outline small-button"
+                            disabled={
+                              !cycle.votes.length ||
+                              cycle.feedback.includes('all')
+                            }
+                            onClick={() => giveFeedback(true)}
+                          >
+                            <ThumbsUp size={15} />
+                            Right
+                          </button>
+                          <button
+                            className="button outline small-button"
+                            disabled={
+                              !cycle.votes.length ||
+                              cycle.feedback.includes('all')
+                            }
+                            onClick={() => giveFeedback(false)}
+                          >
+                            <ThumbsDown size={15} />
+                            Wrong
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="empty-answer">
+                      <FlaskConical size={24} />
+                      <div>
+                        <strong>Your specimen is ready.</strong>
+                        <p>
+                          Run a starter prompt or teach it something of your
+                          own.
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </section>
+              </div>
+              <form
+                className="composer"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  void run(prompt);
                 }}
-                onJitter={() =>
-                  act(() => {
-                    const s = structuredClone(state),
-                      n = s.nodes.find((x) => x.ref === selectedNode?.ref);
-                    if (n) n.jitter = !n.jitter;
-                    commit(s);
-                  })
-                }
-              />
-              <section className="panel conversation-panel">
-                <div className="panel-heading">
-                  <h2>Try your specimen</h2>
-                  <span className="toolbar-spacer" />
-                  {cycle && (
-                    <>
-                      <button
-                        className={`text-button ${showProvenance ? 'teal' : ''}`}
-                        onClick={() => setShowProvenance(!showProvenance)}
-                      >
-                        <GitBranch size={15} />
-                        Contributors
-                      </button>
-                      <button
-                        className={`icon-button ${cycle.pinned ? 'teal' : ''}`}
-                        aria-label={
-                          cycle.pinned ? 'Unpin answer' : 'Pin answer'
-                        }
-                        onClick={() =>
-                          act(() => commit(togglePin(state, cycle.id)))
-                        }
-                      >
-                        <Pin size={16} />
-                      </button>
-                    </>
+              >
+                <div className="composer-heading">
+                  <div>
+                    <strong>Prompt specimen</strong>
+                    <span>Provide input and context to the local cycle.</span>
+                  </div>
+                  <span>
+                    {state.settings.brainstorm
+                      ? 'Brainstorm mode'
+                      : 'Conservative mode'}
+                  </span>
+                </div>
+                <div className="composer-row">
+                  <MessageCircle size={21} aria-hidden="true" />
+                  <label htmlFor="prompt" className="sr-only">
+                    Prompt your specimen
+                  </label>
+                  <input
+                    ref={promptRef}
+                    id="prompt"
+                    name="prompt"
+                    autoComplete="off"
+                    placeholder="Give your specimen a prompt…"
+                    value={prompt}
+                    onChange={(e) => setPrompt(e.target.value)}
+                    maxLength={8000}
+                  />
+                  {busy ? (
+                    <button
+                      type="button"
+                      className="button outline"
+                      onClick={() => abortRef.current?.abort()}
+                    >
+                      Cancel
+                    </button>
+                  ) : (
+                    <button className="button primary" type="submit">
+                      Run cycle
+                      <ArrowRight size={18} />
+                    </button>
                   )}
                 </div>
-                <div className="suggestions">
+                <div className="composer-suggestions">
+                  <span>Starter prompts</span>
                   {[
                     'What is 2 + 2?',
                     'Say hello 3 times',
                     'What can you recall?',
-                  ].map((p) => (
-                    <button key={p} disabled={busy} onClick={() => void run(p)}>
-                      {p}
+                  ].map((starter) => (
+                    <button
+                      key={starter}
+                      type="button"
+                      disabled={busy}
+                      onClick={() => void run(starter)}
+                    >
+                      {starter}
                     </button>
                   ))}
                 </div>
-                {cycle ? (
-                  <div className="answer-body">
-                    {cycle.visual && <VisualOutput visual={cycle.visual} />}
-                    <div className="answer-segments">
-                      {cycle.segments.map((seg) => (
-                        <div
-                          className={`answer-segment ${showProvenance ? `provenance-${seg.color}` : ''}`}
-                          key={seg.id}
-                        >
-                          <div className="answer-text">{seg.text}</div>
-                          {showProvenance && (
-                            <div className="provenance-detail">
-                              <span className="segment-color">{seg.color}</span>
-                              <span>
-                                {seg.contributors
-                                  .map(
-                                    (ref) =>
-                                      state.nodes.find((n) => n.ref === ref)
-                                        ?.name ?? 'Removed node',
-                                  )
-                                  .join(', ') || 'System response'}
-                              </span>
-                              <span> · {seg.transformations.join(' → ')}</span>
-                              {seg.contributors.length > 0 && (
-                                <span className="segment-feedback">
-                                  <button
-                                    aria-label={`Right ${seg.color} segment`}
-                                    onClick={() =>
-                                      giveFeedback(true, seg.color)
-                                    }
-                                  >
-                                    <ThumbsUp size={14} />
-                                  </button>
-                                  <button
-                                    aria-label={`Wrong ${seg.color} segment`}
-                                    onClick={() =>
-                                      giveFeedback(false, seg.color)
-                                    }
-                                  >
-                                    <ThumbsDown size={14} />
-                                  </button>
-                                </span>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                    {showProvenance && cycle.visual?.synthesis && <details><summary>Transient computation evidence</summary><pre>{JSON.stringify(cycle.visual.synthesis,null,2)}</pre></details>}
-                    {showProvenance && cycle.votes.some(v => v.evidence) && <details className="native-evidence"><summary>Comparison and retrieval evidence</summary>{cycle.votes.map(v => <div key={v.id}><strong>{state.nodes.find(n=>n.ref===v.nodeRef)?.name ?? 'Removed node'}</strong><pre>{JSON.stringify({evidence:v.evidence,binding:v.binding,resources:v.resources,origin:v.origin,group:v.group},null,2)}</pre></div>)}</details>}
-                    <div className="answer-footer">
-                      <span className="muted small">
-                        {cycle.votes.length
-                          ? `${[...new Set(cycle.votes.map((v) => state.nodes.find((n) => n.ref === v.nodeRef)?.name ?? 'Removed node'))].join(', ')} contributed · confidence ${fmt.format(Math.max(...cycle.votes.map((v) => v.confidence)))}`
-                          : 'No node contributed'}
-                      </span>
-                      <div className="feedback-actions">
-                        <button
-                          className="button outline small-button"
-                          disabled={
-                            !cycle.votes.length ||
-                            cycle.feedback.includes('all')
-                          }
-                          onClick={() => giveFeedback(true)}
-                        >
-                          <ThumbsUp size={15} />
-                          Right
-                        </button>
-                        <button
-                          className="button outline small-button"
-                          disabled={
-                            !cycle.votes.length ||
-                            cycle.feedback.includes('all')
-                          }
-                          onClick={() => giveFeedback(false)}
-                        >
-                          <ThumbsDown size={15} />
-                          Wrong
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="empty-answer">
-                    <FlaskConical size={24} />
-                    <div>
-                      <strong>Your specimen is ready.</strong>
-                      <p>
-                        Run a starter prompt or teach it something of your own.
-                      </p>
-                    </div>
-                  </div>
-                )}
-              </section>
-            </div>
-            <form
-              className="composer"
-              onSubmit={(e) => {
-                e.preventDefault();
-                void run(prompt);
-              }}
-            >
-              <MessageCircle size={22} />
-              <label htmlFor="prompt" className="sr-only">
-                Prompt your specimen
-              </label>
-              <input
-                id="prompt"
-                name="prompt"
-                autoComplete="off"
-                placeholder="Give your specimen a prompt…"
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-                maxLength={8000}
-              />
-              {busy ? (
-                <button
-                  type="button"
-                  className="button outline"
-                  onClick={() => abortRef.current?.abort()}
+              </form>
+              <footer className="studio-footer">
+                <span>{saveStatus}</span>
+                <a
+                  href="?view=specification"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    nav('specification');
+                  }}
                 >
-                  Cancel
-                </button>
-              ) : (
-                <button className="button primary" type="submit">
-                  Run cycle
-                  <ArrowRight size={19} />
-                </button>
-              )}
-            </form>
-            <footer className="studio-footer">
-              <span>{saveStatus}</span>
-              <a
-                href="?view=specification"
-                onClick={(e) => {
-                  e.preventDefault();
-                  nav('specification');
-                }}
-              >
-                View specification
-                <ArrowRight size={15} />
-              </a>
-            </footer>
+                  View specification
+                  <ArrowRight size={15} />
+                </a>
+              </footer>
+            </div>
           </>
         )}
         {view === 'lab' && <NativeLab specimen={state} onSnapshot={commit} />}
@@ -944,7 +1246,15 @@ export default function Studio() {
             onReview={() => void reviewContext()}
             onMaintenance={(mode) =>
               act(() => {
-                if (isDesktop()) { void nativeReview(current.current, 'maintenance', mode).then(commit).then(() => announce('Maintenance completed.')).catch((e) => setError(e.message)); } else { commit(maintenance(state, mode)); announce('Maintenance completed.'); }
+                if (isDesktop()) {
+                  void nativeReview(current.current, 'maintenance', mode)
+                    .then(commit)
+                    .then(() => announce('Maintenance completed.'))
+                    .catch((e) => setError(e.message));
+                } else {
+                  commit(maintenance(state, mode));
+                  announce('Maintenance completed.');
+                }
               })
             }
             onLearn={(pattern) => {
@@ -1413,7 +1723,7 @@ function NodesView({
   onSelect: (ref: string) => void;
 }) {
   const [filter, setFilter] = useState('all');
-  const [nodeStart,setNodeStart] = useState(0);
+  const [nodeStart, setNodeStart] = useState(0);
   const nodes = state.nodes.filter(
     (n) =>
       (filter === 'all' || n.type === filter) &&
@@ -1432,14 +1742,20 @@ function NodesView({
       <div className="workspace-tools">
         <SearchField
           value={query}
-          onChange={(value) => { setNodeStart(0); setQuery(value); }}
+          onChange={(value) => {
+            setNodeStart(0);
+            setQuery(value);
+          }}
           placeholder="Find a pattern or node…"
         />
         <select
           name="node-type-filter"
           aria-label="Filter node type"
           value={filter}
-          onChange={(e) => {setNodeStart(0); setFilter(e.target.value);}}
+          onChange={(e) => {
+            setNodeStart(0);
+            setFilter(e.target.value);
+          }}
         >
           <option value="all">All node types</option>
           <option value="pattern">Pattern</option>
@@ -1465,7 +1781,15 @@ function NodesView({
           <h2>Learned nodes</h2>
           <span className="muted small">{nodes.length} results</span>
         </div>
-        <div key={`${query}:${filter}`} className="table-scroll virtual-table" onScroll={e => setNodeStart(Math.max(0,Math.floor(e.currentTarget.scrollTop / 76)-2))}>
+        <div
+          key={`${query}:${filter}`}
+          className="table-scroll virtual-table"
+          onScroll={(e) =>
+            setNodeStart(
+              Math.max(0, Math.floor(e.currentTarget.scrollTop / 76) - 2),
+            )
+          }
+        >
           <table>
             <thead>
               <tr>
@@ -1480,7 +1804,19 @@ function NodesView({
               </tr>
             </thead>
             <tbody>
-              {nodeStart > 0 && <tr aria-hidden="true"><td aria-label="Unrendered rows" colSpan={6} style={{height:Math.min(nodeStart,nodes.length)*76,padding:0,border:0}} /></tr>}
+              {nodeStart > 0 && (
+                <tr aria-hidden="true">
+                  <td
+                    aria-label="Unrendered rows"
+                    colSpan={6}
+                    style={{
+                      height: Math.min(nodeStart, nodes.length) * 76,
+                      padding: 0,
+                      border: 0,
+                    }}
+                  />
+                </tr>
+              )}
               {nodes.slice(nodeStart, nodeStart + 24).map((n, i) => (
                 <tr key={n.ref} className="virtual-node-row">
                   <td aria-label={n.name}>
@@ -1545,7 +1881,19 @@ function NodesView({
                   </td>
                 </tr>
               ))}
-              {nodes.length > nodeStart+24 && <tr aria-hidden="true"><td aria-label="Unrendered rows" colSpan={6} style={{height:(nodes.length-nodeStart-24)*76,padding:0,border:0}} /></tr>}
+              {nodes.length > nodeStart + 24 && (
+                <tr aria-hidden="true">
+                  <td
+                    aria-label="Unrendered rows"
+                    colSpan={6}
+                    style={{
+                      height: (nodes.length - nodeStart - 24) * 76,
+                      padding: 0,
+                      border: 0,
+                    }}
+                  />
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
@@ -1634,7 +1982,8 @@ function MemoryView({
   return (
     <>
       <div className="workspace-tools">
-        <div className="segmented">
+        <fieldset className="segmented">
+          <legend className="sr-only">Memory view</legend>
           {[
             ['resources', 'Resources'],
             ['history', 'Conversation'],
@@ -1649,7 +1998,7 @@ function MemoryView({
               {label}
             </button>
           ))}
-        </div>
+        </fieldset>
         <span className="toolbar-spacer" />
         {tab === 'resources' && (
           <button className="button primary" onClick={onAdd}>
@@ -1742,28 +2091,33 @@ function MemoryView({
         </div>
       ) : (
         <div className="history-list">
-          <VirtualList key={`${query}:${tab}`} items={history} rowHeight={190} renderItem={(h) => (
-            <article className="panel history-record" key={h.id}>
-              <div className="history-heading">
-                <span>
-                  <MessageCircle size={17} />
-                  {h.input}
-                </span>
-                <button
-                  className={`icon-button ${h.pinned ? 'teal' : ''}`}
-                  aria-label={`${h.pinned ? 'Unpin' : 'Pin'} ${h.input}`}
-                  onClick={() => onPin(h.id)}
-                >
-                  <Pin size={17} />
-                </button>
-              </div>
-              <p>{h.segments.map((s) => s.text).join('\n\n')}</p>
-              <small>
-                {clock(h.createdAt)} · {h.votes.length} contributors ·{' '}
-                {h.status}
-              </small>
-            </article>
-          )} />
+          <VirtualList
+            key={`${query}:${tab}`}
+            items={history}
+            rowHeight={190}
+            renderItem={(h) => (
+              <article className="panel history-record" key={h.id}>
+                <div className="history-heading">
+                  <span>
+                    <MessageCircle size={17} />
+                    {h.input}
+                  </span>
+                  <button
+                    className={`icon-button ${h.pinned ? 'teal' : ''}`}
+                    aria-label={`${h.pinned ? 'Unpin' : 'Pin'} ${h.input}`}
+                    onClick={() => onPin(h.id)}
+                  >
+                    <Pin size={17} />
+                  </button>
+                </div>
+                <p>{h.segments.map((s) => s.text).join('\n\n')}</p>
+                <small>
+                  {clock(h.createdAt)} · {h.votes.length} contributors ·{' '}
+                  {h.status}
+                </small>
+              </article>
+            )}
+          />
           {!history.length && (
             <Empty
               title={
@@ -2133,7 +2487,25 @@ function SettingsView({
             maxLength={100}
           />
         </div>
-        {isDesktop() && <div className="setting-row"><div><label htmlFor="native-gpu">Accelerate transient computation</label><p>Try the graphics processor; report CPU fallback when unavailable.</p></div><input id="native-gpu" type="checkbox" checked={!!draft.gpu} onChange={e=>setDraft({...draft,gpu:e.target.checked})}/></div>}
+        {isDesktop() && (
+          <div className="setting-row">
+            <div>
+              <label htmlFor="native-gpu">
+                Accelerate transient computation
+              </label>
+              <p>
+                Try the graphics processor; report CPU fallback when
+                unavailable.
+              </p>
+            </div>
+            <input
+              id="native-gpu"
+              type="checkbox"
+              checked={!!draft.gpu}
+              onChange={(e) => setDraft({ ...draft, gpu: e.target.checked })}
+            />
+          </div>
+        )}
         {(['brainstorm', 'maintenance'] as const).map((key) => (
           <div className="setting-row" key={key}>
             <div>
