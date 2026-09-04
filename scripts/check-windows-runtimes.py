@@ -28,7 +28,7 @@ if __name__ == '__main__':
   forbidden=[dll for dll in item['imports'] if dll.lower().startswith(('msvcp','vcruntime','libssl','libcrypto'))]
   if forbidden:raise RuntimeError(f'{name} requires unbundled libraries: {forbidden}')
   if item['architecture']!='x64':raise RuntimeError('Unexpected Windows runtime architecture')
-  env=os.environ.copy();env['PATH']=str(Path(env['SystemRoot'])/'System32')
+  env=os.environ.copy();env['PATH']=str(Path(os.environ['SystemRoot'])/'System32')
   process=subprocess.run([str(path),'--help'],env=env,cwd=path.parent,capture_output=True,text=True,timeout=60)
   if process.returncode != 0:raise RuntimeError(f'{name} failed isolated startup: {process.returncode}: {process.stderr[-500:]}')
   item['isolatedHelpExitCode']=process.returncode;results.append(item)

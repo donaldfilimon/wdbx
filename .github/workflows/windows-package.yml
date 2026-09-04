@@ -27,6 +27,13 @@ jobs:
           restore-keys: native-runtimes-${{ runner.os }}-${{ runner.arch }}-
       - name: Build standalone Windows model runtimes
         run: python scripts/build-runtimes.py
+      - name: Save completed standalone helpers
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            work/runtimes
+            src-tauri/binaries
+          key: native-runtimes-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('native/runtime-pins.json', 'scripts/build-runtimes.py') }}
       - name: Verify helper imports and isolated startup
         run: python scripts/check-windows-runtimes.py
       - name: Restore byte-identical qualified application
