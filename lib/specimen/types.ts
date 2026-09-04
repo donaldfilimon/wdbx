@@ -62,7 +62,13 @@ export interface Vote {
   input: string;
   group?: string;
   resources: string[];
-  evidence?: { similarity:number; dissimilarity:number; modulation:number; jitter:number; confidence:number };
+  evidence?: {
+    similarity: number;
+    dissimilarity: number;
+    modulation: number;
+    jitter: number;
+    confidence: number;
+  };
   origin?: number;
   binding?: unknown;
 }
@@ -90,7 +96,14 @@ export interface Cycle {
   reviewed?: boolean;
 }
 export interface Visual {
-  synthesis?: {backend:string;activationFunctions:string[];fallback?:string;networkVersion:number;seed:number;brainstorm:boolean};
+  synthesis?: {
+    backend: string;
+    activationFunctions: string[];
+    fallback?: string;
+    networkVersion: number;
+    seed: number;
+    brainstorm: boolean;
+  };
   xArray: number[];
   yArray: number[];
   colorArray: string[];
@@ -172,6 +185,21 @@ export const SUBSYSTEMS = [
   'inhibition',
 ] as const;
 export const COLORS = ['green', 'violet', 'amber', 'blue', 'rose', 'cyan'];
-export const uid = () => crypto.randomUUID();
+export const uid = () => {
+  const webCrypto =
+    typeof globalThis.crypto === 'undefined' ? undefined : globalThis.crypto;
+  if (typeof webCrypto?.randomUUID === 'function')
+    return webCrypto.randomUUID();
+  const bytes = new Uint8Array(16);
+  if (typeof webCrypto?.getRandomValues === 'function')
+    webCrypto.getRandomValues(bytes);
+  else
+    for (let index = 0; index < bytes.length; index++)
+      bytes[index] = Math.floor(Math.random() * 256);
+  bytes[6] = (bytes[6] & 0x0f) | 0x40;
+  bytes[8] = (bytes[8] & 0x3f) | 0x80;
+  const value = [...bytes].map((byte) => byte.toString(16).padStart(2, '0'));
+  return `${value.slice(0, 4).join('')}-${value.slice(4, 6).join('')}-${value.slice(6, 8).join('')}-${value.slice(8, 10).join('')}-${value.slice(10).join('')}`;
+};
 export const clamp = (n: number, min: number, max: number) =>
   Math.max(min, Math.min(max, n));

@@ -6,7 +6,6 @@ import {
   addEntry,
   feedback,
   validateSpecimen,
-  validateSettings,
   calculate,
   runTape,
   identify,
@@ -19,6 +18,23 @@ import {
   maintenance,
   deepScore,
 } from '../lib/specimen/engine';
+import { uid } from '../lib/specimen/types';
+
+test('UID generation survives browser runtimes without Web Crypto', () => {
+  const descriptor = Object.getOwnPropertyDescriptor(globalThis, 'crypto');
+  Object.defineProperty(globalThis, 'crypto', {
+    value: undefined,
+    configurable: true,
+  });
+  try {
+    const id = uid();
+    expect(id).toMatch(/^[a-z0-9-]+$/i);
+    expect(id.length).toBeGreaterThan(20);
+  } finally {
+    if (descriptor) Object.defineProperty(globalThis, 'crypto', descriptor);
+    else delete globalThis.crypto;
+  }
+});
 
 test('arithmetic parser enforces precedence and rejects unsafe or undefined input', () => {
   expect(calculate('What is 2 + 2?')).toBe(4);
@@ -71,8 +87,8 @@ test('same Pattern-ID peers remain distinct and duplicate originals are rejected
   ).toThrow();
 });
 test('editing preserves sibling entries and vote weights', () => {
-  let s = seedSpecimen(),
-    node = s.nodes[0];
+  let s = seedSpecimen();
+  const node = s.nodes[0];
   s = addEntry(s, node.ref, '2+2', 'four');
   s.nodes[0].entries[0].alternatives[0].weight = 7;
   s = addNode(
@@ -96,7 +112,9 @@ test('editing preserves sibling entries and vote weights', () => {
   ).toThrow();
 });
 test('feedback is attributed once per contributing node across overlapping selections', async () => {
-  let { state, cycle } = await runCycle(seedSpecimen(), '2+2');
+  const result = await runCycle(seedSpecimen(), '2+2');
+  let { state } = result;
+  const { cycle } = result;
   state = feedback(state, cycle.id, true, 'green').state;
   expect(() => feedback(state, cycle.id, true)).toThrow();
   expect(() => feedback(state, cycle.id, false, 'green')).toThrow();
@@ -136,7 +154,7 @@ test('raft chunks cover each record exactly once with stable order and cancellat
 test('pins survive rolling history and original source remains unchanged', async () => {
   let s = seedSpecimen();
   s.settings.historyLimit = 1;
-  let r = await runCycle(s, 'hello');
+  const r = await runCycle(s, 'hello');
   s = togglePin(r.state, r.cycle.id);
   s = (await runCycle(s, '2+2')).state;
   s = (await runCycle(s, '3+3')).state;
@@ -230,7 +248,10 @@ test('automata halt at bounded budget and PHAGY preserves mutation history', () 
 test('coarse ID collisions are independently scored and negation stays within its clause', async () => {
   expect(identify('2+2').id).toBe(identify('9+9').id);
   expect(deepScore('2+2', '9+9')).toBeLessThan(62);
-  const {cycle} = await runCycle(seedSpecimen(), "don't calculate 2+2; hello");
-  expect(cycle.segments.some(s => s.text.startsWith('Hello'))).toBe(true);
-  expect(cycle.segments.some(s => s.text === '4')).toBe(false);
+  const { cycle } = await runCycle(
+    seedSpecimen(),
+    "don't calculate 2+2; hello",
+  );
+  expect(cycle.segments.some((s) => s.text.startsWith('Hello'))).toBe(true);
+  expect(cycle.segments.some((s) => s.text === '4')).toBe(false);
 });
