@@ -40,3 +40,10 @@ next-env.d.ts
 # local typecheck and browser artifacts
 *.tsbuildinfo
 /.playwright-mcp/
+/target/
+/desktop-dist/
+/src-tauri/gen/
+/src-tauri/binaries/
+/native-models/
+
+/logs/

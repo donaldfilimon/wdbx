@@ -1,4 +1,5 @@
 'use client';
+/* oxlint-disable next/no-html-link-for-pages -- Shared browser/desktop view uses host-neutral local navigation. */
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Activity,
@@ -67,8 +68,11 @@ import {
   DialogTitle,
   DialogDescription,
 } from '@/components/ui/dialog';
-import Link from 'next/link';
+
 import sections from '@/lib/specification.json';
+import { VirtualList } from '@/components/virtual-list';
+import { NativeLab } from '@/components/native-lab';
+import { isDesktop, nativeReview, exportNative, importNative } from '@/lib/specimen/native';
 import { useStudioTools } from '@/lib/webmcp';
 
 type View =
@@ -77,12 +81,14 @@ type View =
   | 'memory'
   | 'activity'
   | 'specification'
-  | 'settings';
+  | 'settings'
+  | 'lab';
 const views: { id: View; label: string; icon: typeof Network }[] = [
   { id: 'studio', label: 'Studio', icon: Network },
   { id: 'nodes', label: 'Node Library', icon: BookOpen },
   { id: 'memory', label: 'Memory', icon: Database },
   { id: 'activity', label: 'Activity', icon: Activity },
+  { id: 'lab', label: 'Vision & models', icon: Sparkles },
   { id: 'specification', label: 'Specification', icon: FileText },
 ];
 const icons = [
@@ -97,6 +103,7 @@ const icons = [
 ];
 const labels: Record<View, [string, string]> = {
   studio: ['Specimen studio', 'Teach a pattern. Trace a response.'],
+  lab: ['Vision & local models', 'Inspect an image. Compose locally. Learn deliberately.'],
   nodes: ['Node library', 'Small patterns, reusable actions.'],
   memory: ['Memory', 'Supporting knowledge, close at hand.'],
   activity: ['Activity', 'Follow the changes that shape your specimen.'],
@@ -254,6 +261,11 @@ export default function Studio() {
         Date.now() - lastInteraction.current >= state.settings.idleMin * 1000 &&
         !abortRef.current
       ) {
+        if (isDesktop()) {
+          const controller = new AbortController(); abortRef.current = controller;
+          void nativeReview(current.current, 'maintenance', Math.random() < .5 ? 'phagy' : 'mutation', controller.signal).then(commit).catch((e) => setError(e.message)).finally(() => { if (abortRef.current === controller) abortRef.current = null; });
+          return;
+        }
         const snapshot = current.current,
           next = maintenance(snapshot);
         if (next.nodes.some((n) => n.type !== 'pattern'))
@@ -275,7 +287,7 @@ export default function Studio() {
     const snapshot = current.current;
     setBusy(true);
     try {
-      const next = await observeContext(snapshot, controller.signal);
+      const next = isDesktop() ? await nativeReview(snapshot, 'review', undefined, controller.signal) : await observeContext(snapshot, controller.signal);
       if (current.current !== snapshot)
         throw new Error(
           'The workspace changed during review. Run context review again.',
@@ -291,7 +303,8 @@ export default function Studio() {
   }, [busy, commit, announce]);
   const run = useCallback(
     async (raw: string) => {
-      if (!hydrated || busy || abortRef.current) return;
+      if (!hydrated || busy) return;
+      if (abortRef.current) { abortRef.current.abort(); abortRef.current = null; }
       const input = raw.trim();
       if (!input) return;
       setError('');
@@ -325,7 +338,7 @@ export default function Studio() {
         return;
       }
       if (input.startsWith('/loadSpecimen')) {
-        fileRef.current?.click();
+        if (isDesktop()) { void importNative().then((snapshot) => { if (snapshot?.specimen) commit(snapshot.specimen); }).catch((e) => setError(e.message)); } else fileRef.current?.click();
         return;
       }
       if (input.startsWith('/learn')) {
@@ -425,6 +438,7 @@ export default function Studio() {
       announce(result.message);
     });
   const save = () => {
+    if (isDesktop()) { void persistWorkspace(current.current).then(exportNative).then((saved) => saved && announce('Portable specimen saved.')).catch((e) => setError(e.message)); return; }
     downloadText(
       `${state.name.replace(/[^a-z0-9]/gi, '-').toLowerCase()}.json`,
       JSON.stringify(state, null, 2),
@@ -447,11 +461,11 @@ export default function Studio() {
   };
   return (
     <div className="app-shell">
-      <Link className="skip-link" href="#main">
+      <a className="skip-link" href="#main">
         Skip to main content
-      </Link>
+      </a>
       <aside className={`sidebar ${mobileNav ? 'is-open' : ''}`}>
-        <Link
+        <a
           className="brand"
           href="?view=studio"
           onClick={(e) => {
@@ -464,7 +478,7 @@ export default function Studio() {
             <strong translate="no">WDBX</strong>
             <small>Specimen Studio</small>
           </span>
-        </Link>
+        </a>
         <button
           className="icon-button mobile-close"
           aria-label="Close navigation"
@@ -474,7 +488,7 @@ export default function Studio() {
         </button>
         <nav aria-label="Main navigation">
           {views.map(({ id, label, icon: Icon }) => (
-            <Link
+            <a
               key={id}
               href={`?view=${id}`}
               className={`nav-link ${view === id ? 'active' : ''}`}
@@ -491,11 +505,11 @@ export default function Studio() {
               {id === 'nodes' && (
                 <span className="nav-count">{state.nodes.length}</span>
               )}
-            </Link>
+            </a>
           ))}
         </nav>
         <div className="sidebar-bottom">
-          <Link
+          <a
             className={`nav-link ${view === 'settings' ? 'active' : ''}`}
             href="?view=settings"
             onClick={(e) => {
@@ -505,7 +519,7 @@ export default function Studio() {
           >
             <Settings2 size={20} />
             Settings
-          </Link>
+          </a>
           <div className="workspace-caption">
             <span className="status-dot" />
             <div>
@@ -538,14 +552,14 @@ export default function Studio() {
           </div>
           <div className="header-actions">
             {view === 'specification' ? (
-              <Link
+              <a
                 className="button outline"
                 href="/WDBX-Specimen-Architecture-Specification.md"
                 download
               >
                 <ArrowDownToLine size={17} />
                 Download Markdown
-              </Link>
+              </a>
             ) : (
               <>
                 <button
@@ -771,6 +785,7 @@ export default function Studio() {
                         </div>
                       ))}
                     </div>
+                    {showProvenance && cycle.votes.some(v => v.evidence) && <details className="native-evidence"><summary>Comparison and retrieval evidence</summary>{cycle.votes.map(v => <div key={v.id}><strong>{state.nodes.find(n=>n.ref===v.nodeRef)?.name ?? 'Removed node'}</strong><pre>{JSON.stringify({evidence:v.evidence,binding:v.binding,resources:v.resources,origin:v.origin,group:v.group},null,2)}</pre></div>)}</details>}
                     <div className="answer-footer">
                       <span className="muted small">
                         {cycle.votes.length
@@ -853,7 +868,7 @@ export default function Studio() {
             </form>
             <footer className="studio-footer">
               <span>{saveStatus}</span>
-              <Link
+              <a
                 href="?view=specification"
                 onClick={(e) => {
                   e.preventDefault();
@@ -862,10 +877,11 @@ export default function Studio() {
               >
                 View specification
                 <ArrowRight size={15} />
-              </Link>
+              </a>
             </footer>
           </>
         )}
+        {view === 'lab' && <NativeLab specimen={state} onSnapshot={commit} />}
         {view === 'nodes' && (
           <NodesView
             state={state}
@@ -926,8 +942,7 @@ export default function Studio() {
             onReview={() => void reviewContext()}
             onMaintenance={(mode) =>
               act(() => {
-                commit(maintenance(state, mode));
-                announce('Maintenance completed.');
+                if (isDesktop()) { void nativeReview(current.current, 'maintenance', mode).then(commit).then(() => announce('Maintenance completed.')).catch((e) => setError(e.message)); } else { commit(maintenance(state, mode)); announce('Maintenance completed.'); }
               })
             }
             onLearn={(pattern) => {
@@ -1396,6 +1411,7 @@ function NodesView({
   onSelect: (ref: string) => void;
 }) {
   const [filter, setFilter] = useState('all');
+  const [nodeStart,setNodeStart] = useState(0);
   const nodes = state.nodes.filter(
     (n) =>
       (filter === 'all' || n.type === filter) &&
@@ -1414,14 +1430,14 @@ function NodesView({
       <div className="workspace-tools">
         <SearchField
           value={query}
-          onChange={setQuery}
+          onChange={(value) => { setNodeStart(0); setQuery(value); }}
           placeholder="Find a pattern or node…"
         />
         <select
           name="node-type-filter"
           aria-label="Filter node type"
           value={filter}
-          onChange={(e) => setFilter(e.target.value)}
+          onChange={(e) => {setNodeStart(0); setFilter(e.target.value);}}
         >
           <option value="all">All node types</option>
           <option value="pattern">Pattern</option>
@@ -1447,7 +1463,7 @@ function NodesView({
           <h2>Learned nodes</h2>
           <span className="muted small">{nodes.length} results</span>
         </div>
-        <div className="table-scroll">
+        <div key={`${query}:${filter}`} className="table-scroll virtual-table" onScroll={e => setNodeStart(Math.max(0,Math.floor(e.currentTarget.scrollTop / 76)-2))}>
           <table>
             <thead>
               <tr>
@@ -1462,8 +1478,9 @@ function NodesView({
               </tr>
             </thead>
             <tbody>
-              {nodes.slice(0, 100).map((n, i) => (
-                <tr key={n.ref}>
+              {nodeStart > 0 && <tr aria-hidden="true"><td aria-label="Unrendered rows" colSpan={6} style={{height:Math.min(nodeStart,nodes.length)*76,padding:0,border:0}} /></tr>}
+              {nodes.slice(nodeStart, nodeStart + 24).map((n, i) => (
+                <tr key={n.ref} className="virtual-node-row">
                   <td aria-label={n.name}>
                     <button
                       aria-label={`Inspect ${n.name}`}
@@ -1526,6 +1543,7 @@ function NodesView({
                   </td>
                 </tr>
               ))}
+              {nodes.length > nodeStart+24 && <tr aria-hidden="true"><td aria-label="Unrendered rows" colSpan={6} style={{height:(nodes.length-nodeStart-24)*76,padding:0,border:0}} /></tr>}
             </tbody>
           </table>
         </div>
@@ -1537,7 +1555,7 @@ function NodesView({
         )}
         {nodes.length > 100 && (
           <p className="table-note">
-            Showing the first 100 matches. Refine your search to locate a node.
+            Scroll through all matching nodes, or refine your search.
           </p>
         )}
       </div>
@@ -1722,7 +1740,7 @@ function MemoryView({
         </div>
       ) : (
         <div className="history-list">
-          {history.slice(0, 100).map((h) => (
+          <VirtualList key={`${query}:${tab}`} items={history} rowHeight={190} renderItem={(h) => (
             <article className="panel history-record" key={h.id}>
               <div className="history-heading">
                 <span>
@@ -1743,7 +1761,7 @@ function MemoryView({
                 {h.status}
               </small>
             </article>
-          ))}
+          )} />
           {!history.length && (
             <Empty
               title={
@@ -1895,7 +1913,7 @@ function Specification({
         <span className="chapter-count">{filtered.length} chapters</span>
         <nav aria-label="Specification chapters">
           {filtered.map((s) => (
-            <Link
+            <a
               key={s.number}
               href={`?view=specification&chapter=${s.number}`}
               className={s.number === chapter ? 'active' : ''}
@@ -1909,7 +1927,7 @@ function Specification({
             >
               <span>{String(s.number).padStart(2, '0')}</span>
               {s.title}
-            </Link>
+            </a>
           ))}
         </nav>
         {!filtered.length && (
@@ -1928,7 +1946,7 @@ function Specification({
         />
         <div className="chapter-pagination">
           {chapter > 1 ? (
-            <Link
+            <a
               href={`?view=specification&chapter=${chapter - 1}`}
               onClick={(e) => {
                 e.preventDefault();
@@ -1936,12 +1954,12 @@ function Specification({
               }}
             >
               ← {sections[chapter - 2].title}
-            </Link>
+            </a>
           ) : (
             <span />
           )}
           {chapter < 26 && (
-            <Link
+            <a
               href={`?view=specification&chapter=${chapter + 1}`}
               onClick={(e) => {
                 e.preventDefault();
@@ -1949,7 +1967,7 @@ function Specification({
               }}
             >
               {sections[chapter].title} →
-            </Link>
+            </a>
           )}
         </div>
       </article>

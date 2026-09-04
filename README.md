@@ -28,3 +28,21 @@ The project uses React, TypeScript, Vinext/Vite, and the Sites Worker packaging 
 ## Architecture and runtime boundary
 
 The full specification is in [the downloadable Markdown](public/WDBX-Specimen-Architecture-Specification.md). It is preserved as the design authority. [RUNTIME-PROFILE.md](RUNTIME-PROFILE.md) documents the concrete browser implementation, limits, and extensions that remain outside this studio.
+
+## Native desktop (0.2.0 qualification build)
+
+The desktop adapter uses Tauri 2 and the Rust engine in `native/specimen-core`. WDBX storage and compute are pinned at `e55634cbb581c1de02f946a29c34db8cf5203704`. Existing ABI/Abbey/WDBX sibling checkouts are not modified.
+
+```sh
+bun install --frozen-lockfile
+python3 scripts/build-runtimes.py
+bun run desktop
+cargo test -p specimen-core
+bun run desktop:package
+```
+
+Linux builds additionally require WebKitGTK 4.1, AppIndicator, librsvg and OpenSSL development packages. Windows builds require the Visual Studio C++ toolchain and WebView2; macOS builds require Xcode command-line tools. The pinned nightly toolchain is selected by `rust-toolchain.toml`. Inference binaries build for the current machine. Models are installed separately through Vision & models; model downloads, licenses, hashes and resource estimates are visible there.
+
+Native saves use a dedicated app-data directory and transactional WDBX storage. Export `.wdbxspecimen` for portable records and assets; pretrained models remain referenced by digest. Existing browser JSON imports retain an original recovery copy. The browser edition keeps IndexedDB and its bounded JavaScript profile.
+
+Native UI tests use instrumented builds only: build assets with `VITE_NATIVE_E2E=1`, then `bunx tauri build --debug --features e2e --config src-tauri/tauri.e2e.conf.json --bundles app` on macOS and run `bunx wdio run wdio.conf.mjs`. Production builds omit the test feature and bridge. The desktop qualification workflow covers macOS ARM/Intel, Windows x64 and Linux x64. A configured job is not evidence of a passing platform; consult the verification report.

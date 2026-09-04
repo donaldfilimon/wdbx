@@ -1,0 +1,14 @@
+{
+  "llama": {
+    "repo": "ggml-org/llama.cpp",
+    "revision": "163a40796f0ebaae246325f8d2e15028b413fa9d"
+  },
+  "diffusion": {
+    "repo": "leejet/stable-diffusion.cpp",
+    "revision": "6b3edaaf32cc19e5bb2d819c788bd557eddc8eba"
+  },
+  "ggml": {
+    "repo": "ggml-org/ggml",
+    "revision": "e20c3a14aa70ee84ca58499814206dd08d8026bc"
+  }
+}

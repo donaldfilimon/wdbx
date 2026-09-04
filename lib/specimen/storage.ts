@@ -1,3 +1,4 @@
+import { isDesktop, loadNative, persistNative } from './native';
 import { validateSpecimen } from './engine';
 import type { Specimen } from './types';
 const database = 'wdbx-specimen-studio';
@@ -15,6 +16,7 @@ function open(): Promise<IDBDatabase> {
   });
 }
 export async function loadWorkspace(): Promise<Specimen | null> {
+  if (isDesktop()) return loadNative();
   const db = await open();
   return new Promise((resolve, reject) => {
     const tx = db.transaction('workspace', 'readonly'),
@@ -35,6 +37,7 @@ export async function loadWorkspace(): Promise<Specimen | null> {
   });
 }
 export async function persistWorkspace(state: Specimen): Promise<void> {
+  if (isDesktop()) return persistNative(state);
   const db = await open();
   return new Promise((resolve, reject) => {
     const tx = db.transaction('workspace', 'readwrite');

@@ -226,3 +226,11 @@ test('automata halt at bounded budget and PHAGY preserves mutation history', () 
   expect(cleaned.nodes).toEqual(s.nodes);
   expect(cleaned.mutations).toEqual(s.mutations);
 });
+
+test('coarse ID collisions are independently scored and negation stays within its clause', async () => {
+  expect(identify('2+2').id).toBe(identify('9+9').id);
+  expect(deepScore('2+2', '9+9')).toBeLessThan(62);
+  const {cycle} = await runCycle(seedSpecimen(), "don't calculate 2+2; hello");
+  expect(cycle.segments.some(s => s.text.startsWith('Hello'))).toBe(true);
+  expect(cycle.segments.some(s => s.text === '4')).toBe(false);
+});

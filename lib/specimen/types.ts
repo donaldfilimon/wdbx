@@ -62,6 +62,9 @@ export interface Vote {
   input: string;
   group?: string;
   resources: string[];
+  evidence?: { similarity:number; dissimilarity:number; modulation:number; jitter:number; confidence:number };
+  origin?: number;
+  binding?: unknown;
 }
 export interface Segment {
   id: string;

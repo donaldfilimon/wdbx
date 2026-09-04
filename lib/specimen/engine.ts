@@ -1,3 +1,4 @@
+import { isDesktop, runNative, nativeReview } from './native';
 import { validateCollections } from './contracts';
 import {
   clamp,
@@ -624,7 +625,8 @@ function matchesBind(pattern: string, input: string): boolean {
     const needle = literal.replaceAll('*', '');
     return normalize(input).includes(needle);
   }
-  if (identify(pattern).id === identify(input).id) return true;
+  if (normalize(pattern) === normalize(input)) return true;
+  if (normalize(pattern) === '&n &op &n' && arithmeticText(input)) return true;
   const parts = normalize(pattern).split(/(&n|&op|&equals|&text)/g);
   if (parts.length === 1) return false;
   const expression = parts
@@ -857,6 +859,7 @@ export async function runCycle(
   onTrace?: (trace: TraceStep[]) => void,
   signal?: AbortSignal,
 ): Promise<{ state: Specimen; cycle: Cycle }> {
+  if (isDesktop()) return runNative(source, input, onTrace, signal);
   if (!input.trim()) throw new Error('Enter a prompt first.');
   if (input.length > 8000)
     throw new Error('Keep prompts under 8,000 characters.');
@@ -890,7 +893,7 @@ export async function runCycle(
     `${variants.length} bounded variants; ${chunks.length} input chunks`,
     chunks.length,
   );
-  const negated = /\b(don't|do not|never)\b/i.test(input);
+  const negated = chunks.every((chunk) => /\b(don't|do not|never)\b/i.test(chunk));
   const map = new HybridTable(
     state.nodes.filter((n) => n.type === 'pattern'),
     (n) => n.patternId,
@@ -946,7 +949,7 @@ export async function runCycle(
       await new Promise<void>((r) => setTimeout(r, 0));
     const job = jobs[i];
     scans++;
-    if (negated && bindShape(job.entry.pattern) !== 'negation') continue;
+    if (/\b(don't|do not|never)\b/i.test(job.input) && bindShape(job.entry.pattern) !== 'negation') continue;
     const base = deepScore(job.entry.pattern, job.input);
     const score = confidence(base, job.node, state.settings, () =>
       random(state),
@@ -1226,7 +1229,7 @@ export function maintenance(
             donor.alternatives.length,
           );
           if (entry.alternatives.slice(count).some((a) => a.remixed)) continue;
-          entry.alternatives = entry.alternatives.slice(0, count);
+
           for (let i = 0; i < count; i++) {
             const a = entry.alternatives[i],
               b = donor.alternatives[i];
@@ -1247,6 +1250,7 @@ export function maintenance(
               .join(' ');
             a.weight = random(s) < 0.5 ? a.weight : b.weight;
             a.remixed = true;
+            entry.alternatives = entry.alternatives.slice(0, count);
             s.mutations.push({
               id: uid(),
               recipient: weak.ref,
@@ -1495,6 +1499,7 @@ export async function observeContext(
   source: Specimen,
   signal?: AbortSignal,
 ): Promise<Specimen> {
+  if (isDesktop()) return nativeReview(source, 'review', undefined, signal);
   const state = structuredClone(source);
   const unmatched = await raftFindAll(
     state.history,
