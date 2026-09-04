@@ -38,6 +38,13 @@ struct StateQueue {
     waiting: BTreeMap<u64, Priority>,
 }
 impl StateQueue {
+    fn admitted(&mut self, priority: Priority) {
+        self.priority_streak = if self.priority_streak >= 8 || priority == Priority::Idle {
+            0
+        } else {
+            self.priority_streak + 1
+        };
+    }
     fn selected(&self) -> Option<u64> {
         if self.active {
             return None;
@@ -107,11 +114,7 @@ impl Scheduler {
             if queue.selected() == Some(ticket) {
                 queue.waiting.remove(&ticket);
                 queue.active = true;
-                queue.priority_streak = if priority != Priority::Idle {
-                    queue.priority_streak.saturating_add(1)
-                } else {
-                    0
-                };
+                queue.admitted(priority);
                 job.state_permit = true;
                 return Ok(job);
             }
@@ -312,6 +315,10 @@ mod tests {
         assert_eq!(q.selected(), Some(0));
         q.active = true;
         assert_eq!(q.selected(), None);
+        // A residual fairness turn must return priority to foreground work.
+        q.admitted(Priority::Residual);
+        q.active = false;
+        assert_eq!(q.selected(), Some(2));
     }
     #[test]
     fn checkpoint_resume_and_cancel_are_exact() {
