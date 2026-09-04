@@ -332,6 +332,7 @@ export default function Studio() {
         return;
       }
       if (input.startsWith('/saveSpecimen')) {
+        if (isDesktop()) { void persistWorkspace(current.current).then(exportNative).then(saved=>saved&&announce('Portable specimen saved.')).catch(e=>setError(e.message)); setPrompt(''); return; }
         downloadText('specimen.json', JSON.stringify(current.current, null, 2));
         announce('Specimen downloaded.');
         setPrompt('');

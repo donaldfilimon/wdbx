@@ -75,11 +75,14 @@ fn invoke(state: Arc<AppState>, r: Value, progress: Channel<Value>) -> Result<Va
                     s
                 }
                 "review" => engine::review(&next.specimen, &next.network, &job.cancel)?,
-                _ => engine::maintain(
-                    &next.specimen,
-                    r["mode"].as_str().unwrap_or("phagy"),
-                    &job.cancel,
-                )?,
+                _ => {
+                    let maintained = engine::maintain(
+                        &next.specimen,
+                        r["mode"].as_str().unwrap_or("phagy"),
+                        &job.cancel,
+                    )?;
+                    engine::review(&maintained, &next.network, &job.cancel)?
+                }
             };
             job.check()?;
             let mut store = state.store.lock().unwrap();
