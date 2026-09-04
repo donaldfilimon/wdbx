@@ -20,7 +20,7 @@ fn cycle_and_clauses() {
     assert_eq!(n["history"].as_array().unwrap().len(), 1);
     let (_, c) = engine::cycle(
         &s,
-        "don't calculate 2+2; hello",
+        "don't calculate 2 + 2; say hello",
         &Network::default(),
         &AtomicBool::new(false),
         &|_| {},

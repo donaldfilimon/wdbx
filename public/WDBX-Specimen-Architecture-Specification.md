@@ -548,6 +548,8 @@ Wildcard overrides bypass specified ordinary matching details, not negation, act
 
 ### Native implementation profile · 0.2
 
+A bounded imperative preparation step treats “say hello” as a greeting object while retaining the original clause, source spans and originating group. Explicit numeric repetition keeps its repetition binding. This lets “don’t calculate 2 + 2; say hello” inhibit only the arithmetic clause.
+
 Native actions parse into nested Text and Call expressions. A six-scope registry checks permitted names before evaluation, with declared reads and no arbitrary persistent writes. Numeric bind sigils, arithmetic, repetition, tape automata, resource lookup, temporal lookup, recall, tone and imagination execute through bounded handlers. The new literal(JSON-string) extension preserves generated text without interpreting embedded sigils. Unknown or out-of-scope native calls fail with InvalidScope. Browser compatibility retains its separate limited interpreter.
 
 ## 9. Pattern-node activation and votes

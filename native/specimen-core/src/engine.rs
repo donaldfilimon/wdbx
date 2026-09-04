@@ -624,6 +624,15 @@ pub fn cycle_with_visual(
     let mut seen = BTreeSet::new();
     for clause in &clauses {
         let mut variants = vec![clause.text.clone(), language::normalize(&clause.text)];
+        // Interpret a bounded imperative utterance as its object while retaining
+        // the original clause, spans and originating group for independent votes.
+        let imperative = language::re(r"(?i)^(?:please\s+)?say\s+(.+)$");
+        if let Some(captures) = imperative.captures(clause.text.trim()) {
+            let object = captures[1].trim();
+            if !language::re(r"(?i)\s+\d+\s+(?:times|\*)$").is_match(object) {
+                variants.push(object.to_owned());
+            }
+        }
         for r in rows(&state, "resources")
             .iter()
             .filter(|r| text(r, "subsystem") == "thesaurus")
