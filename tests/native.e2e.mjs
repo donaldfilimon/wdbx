@@ -12,7 +12,7 @@ describe('Native specimen desktop',()=>{
   await expect($('.answer-text')).toHaveText('4');
   await $('button=Contributors').click();
   await expect($('.provenance-detail')).toHaveText(expect.stringContaining('Calculate'));
-  await $('textarea#prompt').setValue("don't calculate 2 + 2; say hello");
+  await $('input#prompt').setValue("don't calculate 2 + 2; say hello");
   await $('button=Run cycle').click();
   await browser.waitUntil(async()=>/^(Hello|Hi|Hey|Greetings)/.test(await $('.answer-text').getText()),{timeout:30000});
   if((await $('.answer-text').getText()).trim()==='4')throw Error('Negated arithmetic escaped its clause');
