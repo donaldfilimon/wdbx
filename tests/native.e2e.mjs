@@ -1,4 +1,4 @@
-import { browser, $, expect } from '@wdio/globals';
+import { browser, $, $$, expect } from '@wdio/globals';
 import { readFile, mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 describe('Native specimen desktop',()=>{
@@ -14,7 +14,12 @@ describe('Native specimen desktop',()=>{
   await $('nav[aria-label="Main navigation"] a[href="?view=lab"]').click();
   await expect($('.native-lab')).toBeDisplayed();
   await expect($('.runtime-pills')).toHaveText(expect.stringContaining('Native Rust engine'));
-  console.log('Native model workspace ready');
+  const missing=await browser.tauri.execute(async()=>{
+   try { await window.__wdbxTestCall({op:'generate',jobId:crypto.randomUUID(),modelId:'qwen3-4b',prompt:'hello',seed:1}); return 'unexpected success'; }
+   catch(e){return e.code;}
+  });
+  if(missing!=='ModelMissing')throw Error('Missing model must produce a structured error: '+missing);
+  console.log('Native model workspace ready; missing model handled locally');
   const bytes=Array.from(await readFile(resolve('work/acceptance/ocr-fixture.png')));
   const result=await browser.tauri.execute(async(tauri,bytes)=>{
    return window.__wdbxTestCall({op:'analyze',jobId:crypto.randomUUID(),bytes,focus:{x:0,y:0,width:1,height:1}});
@@ -34,5 +39,29 @@ describe('Native specimen desktop',()=>{
 
   await mkdir(resolve('../../work'),{recursive:true});
   await browser.saveScreenshot(resolve('../../work/native-desktop.png'));
+ });
+ it('searches a virtualized 100,000-record history',async()=>{
+  const count=await browser.tauri.execute(async()=>{
+   const call=request=>window.__wdbxTestCall(request);
+   const snapshot=await call({op:'snapshot'});
+   const specimen=snapshot.specimen;
+   specimen.settings.historyLimit=100000;
+   specimen.history=Array.from({length:100000},(_,i)=>({id:'scale-'+i,input:'Scale record '+i,createdAt:'2026-09-04T12:00:00Z',segments:[{id:'segment-'+i,text:'Evidence '+i,contributors:[]}],votes:[],trace:[],feedback:[],status:'matched',pinned:false}));
+   await call({op:'edit',revision:snapshot.revision,specimen});
+   return specimen.history.length;
+  });
+  if(count!==100000)throw Error('Scale fixture incomplete');
+  await browser.refresh();
+  await browser.waitUntil(async()=>!(await $('body').getText()).includes('Opening workspace'),{timeout:30000});
+  await $('nav[aria-label="Main navigation"] a[href="?view=memory"]').click();
+  await $('button=Conversation').click();
+  const rendered=await $$('.history-record');
+  if(rendered.length<1||rendered.length>30)throw Error('History virtualization failed: '+rendered.length);
+  const start=Date.now();
+  await $('input[placeholder="Search your memory…"]').setValue('Scale record 43210');
+  await expect($('.history-heading')).toHaveText(expect.stringContaining('Scale record 43210'));
+  const elapsed=Date.now()-start;
+  console.log('100,000-record history search rendered in '+elapsed+' ms; initial DOM rows '+rendered.length);
+  if(elapsed>5000)throw Error('History search exceeded five-second acceptance budget');
  });
 });

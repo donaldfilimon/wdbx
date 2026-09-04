@@ -490,6 +490,74 @@ fn append_event(s: &mut Value, kind: &str, title: &str, detail: &str) {
     events.truncate(500);
     s["updatedAt"] = json!(crate::now());
 }
+/// Initial conservative lexical profile. Only curated equivalent families may
+/// be substituted; resource authors cannot authorize arbitrary semantic changes.
+fn vary_literal(
+    value: &str,
+    tone: &str,
+    resources: &[Value],
+    atp: &Value,
+    rng: &mut Rng,
+) -> (String, Option<String>) {
+    let tokens = language::tokens(value);
+    if tone == "neutral"
+        || value.chars().any(|c| c.is_ascii_digit())
+        || value.contains(['`', '"', '&'])
+        || tokens.iter().any(|t| {
+            [
+                "not", "no", "never", "without", "dont", "don't", "cannot", "can't",
+            ]
+            .contains(&t.as_str())
+        })
+    {
+        return (value.into(), None);
+    }
+    let families: &[&[&str]] = &[
+        &["hello", "hi", "hey", "greetings"],
+        &["perhaps", "maybe"],
+        &["thanks", "thankyou"],
+    ];
+    for resource in resources
+        .iter()
+        .filter(|r| text(r, "subsystem") == "thesaurus")
+    {
+        let term = language::normalize(text(resource, "text"));
+        let Some(family) = families.iter().find(|f| f.contains(&term.as_str())) else {
+            continue;
+        };
+        if (number(resource, "valence", 0.) - number(atp, "valence", 0.)).abs() > 0.5
+            || (number(resource, "intensity", 0.) - number(atp, "intensity", 0.)).abs() > 0.5
+        {
+            continue;
+        }
+        let choices = text(resource, "value")
+            .split(',')
+            .map(str::trim)
+            .filter(|v| *v != term && family.contains(v))
+            .collect::<Vec<_>>();
+        if choices.is_empty() {
+            continue;
+        }
+        let expression = regex::Regex::new(&format!(r"(?i)\b{}\b", regex::escape(&term))).unwrap();
+        if let Some(found) = expression.find(value) {
+            let mut replacement =
+                choices[(rng.sample() * choices.len() as f64) as usize].to_owned();
+            if found.as_str().starts_with(char::is_uppercase) {
+                replacement.replace_range(..1, &replacement[..1].to_uppercase());
+            }
+            let mut result = value.to_owned();
+            result.replace_range(found.range(), &replacement);
+            return (
+                result,
+                Some(format!(
+                    "conservative {tone} variation via thesaurus {}",
+                    text(resource, "ref")
+                )),
+            );
+        }
+    }
+    (value.into(), None)
+}
 pub fn cycle(
     source: &Value,
     input: &str,
@@ -619,7 +687,7 @@ pub fn cycle_with_visual(
         jobs.len(),
     );
     let candidate_count = jobs.len();
-    let eligible = crate::scheduler::raft_find_all(
+    let eligible = crate::scheduler::raft_find_all_progress(
         &jobs,
         |job| {
             compare_entry(&rows(&nodes[job.0], "entries")[job.1], &job.2).confidence
@@ -631,6 +699,11 @@ pub fn cycle_with_visual(
         (number(&settings, "maxRafts", 8.) as usize)
             .min(number(&settings, "scanLimit", 1000.) as usize),
         cancel,
+        &|covered, total| {
+            progress(
+                json!({"id":crate::uid(),"phase":"Index Rafts","detail":format!("Checkpoint {covered} of {total}"),"count":covered,"covered":covered,"total":total,"checkpoint":covered}),
+            )
+        },
     )?;
     jobs = eligible
         .into_iter()
@@ -786,12 +859,24 @@ pub fn cycle_with_visual(
         };
         let ast = language::parse(text(v, "action"), Scope::NodeAction)?;
         let result = eval(&ast, &mut ctx);
-        let (value, failed) = match result {
+        let (mut value, failed) = match result {
             Ok(x) => (x, false),
             Err(e) => (e.message, true),
         };
         if failed {
             ctx.transforms.push("action rejected safely".into());
+        } else if ast.iter().all(|expr| matches!(expr, Expr::Text { .. })) {
+            let (varied, evidence) = vary_literal(
+                &value,
+                text(node, "tone"),
+                &resources,
+                &state["atp"],
+                &mut rng,
+            );
+            value = varied;
+            if let Some(evidence) = evidence {
+                ctx.transforms.push(evidence);
+            }
         }
         if ctx.visual.is_some() {
             visual = ctx.visual;

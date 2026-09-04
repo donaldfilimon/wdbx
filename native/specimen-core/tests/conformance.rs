@@ -26,13 +26,11 @@ fn cycle_and_clauses() {
         &|_| {},
     )
     .unwrap();
-    assert!(
-        c["segments"]
-            .as_array()
-            .unwrap()
+    assert!(c["segments"].as_array().unwrap().iter().any(|s| {
+        ["Hello", "Hi", "Hey", "Greetings"]
             .iter()
-            .any(|s| s["text"].as_str().unwrap().starts_with("Hello"))
-    );
+            .any(|g| s["text"].as_str().unwrap().starts_with(g))
+    }));
     assert!(
         !c["segments"]
             .as_array()
@@ -327,4 +325,153 @@ fn corrected_ocr_source_asset_survives_portable_export() {
     let mut dest = Store::open(temp.path().join("destination")).unwrap();
     dest.import(&path, 0).unwrap();
     assert_eq!(dest.asset(&id).unwrap(), b"synthetic source asset");
+}
+
+#[test]
+fn crash_writer_child() {
+    let Some(root) = std::env::var_os("WDBX_CRASH_FIXTURE") else {
+        return;
+    };
+    let root = std::path::PathBuf::from(root);
+    let mut store = Store::open(root.join("data")).unwrap();
+    let mut specimen = starter();
+    specimen["settings"]["seed"] = json!(0);
+    store.edit(0, specimen).unwrap();
+    std::fs::write(root.join("committed"), b"ready").unwrap();
+    loop {
+        let revision = store.snapshot.revision;
+        let mut specimen = store.snapshot.specimen.clone();
+        specimen["settings"]["seed"] = json!(revision);
+        store.edit(revision, specimen).unwrap();
+    }
+}
+
+#[test]
+fn forced_process_exit_recovers_a_whole_commit() {
+    use std::{
+        process::{Command, Stdio},
+        time::{Duration, Instant},
+    };
+    for delay in [0, 3, 11] {
+        let temp = tempfile::tempdir().unwrap();
+        let mut child = Command::new(std::env::current_exe().unwrap())
+            .args(["--exact", "crash_writer_child", "--nocapture"])
+            .env("WDBX_CRASH_FIXTURE", temp.path())
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
+            .spawn()
+            .unwrap();
+        let deadline = Instant::now() + Duration::from_secs(20);
+        while !temp.path().join("committed").exists() {
+            if Instant::now() > deadline {
+                let _ = child.kill();
+                let _ = child.wait();
+                panic!("Crash fixture did not initialize");
+            }
+            std::thread::sleep(Duration::from_millis(1));
+        }
+        std::thread::sleep(Duration::from_millis(delay));
+        child.kill().unwrap();
+        child.wait().unwrap();
+        let store = Store::open(temp.path().join("data")).unwrap();
+        store.snapshot.validate().unwrap();
+        assert!(store.snapshot.revision >= 1);
+        assert_eq!(
+            store.snapshot.specimen["settings"]["seed"]
+                .as_u64()
+                .unwrap()
+                + 1,
+            store.snapshot.revision
+        );
+    }
+}
+
+#[test]
+fn tone_variation_preserves_numbers_and_negation() {
+    let mut s = starter();
+    let greeting = s["nodes"]
+        .as_array_mut()
+        .unwrap()
+        .iter_mut()
+        .find(|n| n["name"] == "Greeting")
+        .unwrap();
+    greeting["entries"][0]["alternatives"][0]["action"] = json!("Hello; do not calculate 2 + 2.");
+    let (_, c) = engine::cycle(
+        &s,
+        "hello",
+        &Network::default(),
+        &AtomicBool::new(false),
+        &|_| {},
+    )
+    .unwrap();
+    assert_eq!(c["segments"][0]["text"], "Hello; do not calculate 2 + 2.");
+    let (_, c) = engine::cycle(
+        &starter(),
+        "hello",
+        &Network::default(),
+        &AtomicBool::new(false),
+        &|_| {},
+    )
+    .unwrap();
+    assert!(
+        c["segments"][0]["transformations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|v| v.as_str().unwrap().contains("thesaurus"))
+    );
+}
+
+#[test]
+fn successful_mutation_keeps_slots_and_forbids_reciprocal_borrowing() {
+    let mut s = starter();
+    let mut weak = s["nodes"][0].clone();
+    let mut donor = weak.clone();
+    weak["ref"] = json!("weak");
+    weak["strength"] = json!(3);
+    weak["entries"][0]["id"] = json!("weak-entry");
+    weak["entries"][0]["pattern"] = json!(
+        "one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty"
+    );
+    weak["entries"][0]["alternatives"][0]["id"] = json!("stable-slot");
+    weak["entries"][0]["alternatives"][0]["action"] =
+        json!("one two alpha beta one two gamma delta together in this place");
+    donor["ref"] = json!("donor");
+    donor["strength"] = json!(8);
+    donor["entries"][0]["id"] = json!("donor-entry");
+    donor["entries"][0]["pattern"] = json!(
+        "one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty extra"
+    );
+    donor["entries"][0]["alternatives"][0]["id"] = json!("donor-slot");
+    donor["entries"][0]["alternatives"][0]["action"] =
+        json!("one two alpha epsilon one two gamma zeta together in this place");
+    s["nodes"] = json!([weak, donor]);
+    s["attachments"] = json!([]);
+    let next = engine::maintain(&s, "mutation", &AtomicBool::new(false)).unwrap();
+    assert_eq!(
+        next["nodes"][0]["entries"][0]["alternatives"][0]["id"],
+        "stable-slot"
+    );
+    assert_eq!(
+        next["nodes"][0]["entries"][0]["alternatives"][0]["remixed"],
+        true
+    );
+    assert_eq!(next["nodes"][1], s["nodes"][1]);
+    assert_eq!(
+        next["mutations"][0]["originalAction"],
+        s["nodes"][0]["entries"][0]["alternatives"][0]["action"]
+    );
+    let mut reversed = next.clone();
+    reversed["nodes"][0]["strength"] = json!(9);
+    let second = engine::maintain(&reversed, "mutation", &AtomicBool::new(false)).unwrap();
+    assert_eq!(second["nodes"], reversed["nodes"]);
+    assert_eq!(second["mutations"], next["mutations"]);
+    let temp = tempfile::tempdir().unwrap();
+    let mut store = Store::open(temp.path()).unwrap();
+    store.edit(0, next.clone()).unwrap();
+    let mut invalid = next;
+    invalid["nodes"][0]["entries"][0]["alternatives"][0]["action"] =
+        s["nodes"][0]["entries"][0]["alternatives"][0]["action"].clone();
+    assert!(store.edit(1, invalid).is_err());
+    assert_eq!(store.snapshot.revision, 1);
 }

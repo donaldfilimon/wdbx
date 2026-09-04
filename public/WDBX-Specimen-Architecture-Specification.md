@@ -889,7 +889,7 @@ The bias transform, maximum jitter, urgency override, and eligible-value invento
 
 ### Native implementation profile · 0.2
 
-ATP valence/intensity state is separate from confidence jitter and fixed-network activations. The initial profile exponentially decays state on a 180-second time scale, applies bounded chargebook contributions, reduces intensity on release and prevents additional charging during a configurable 30-second cooldown. Confidence modulation is deterministic and bounded; jitter is newly sampled for eligible comparisons and does not accumulate. Meaning-preserving language re-inflection beyond the implemented tone handlers requires further qualification.
+ATP valence/intensity state is separate from confidence jitter and fixed-network activations. The initial profile exponentially decays state on a 180-second time scale, applies bounded chargebook contributions, reduces intensity on release and prevents additional charging during a configurable 30-second cooldown. Confidence modulation is deterministic and bounded; jitter is newly sampled for eligible comparisons and does not accumulate. Literal tone variation retrieves indexed thesaurus resources and admits only curated equivalent greeting/uncertainty families whose ATP values remain within a 0.5 tolerance. Structured actions, numeric text, quoted/code text and negation retain their original wording. Each accepted substitution records its resource. Broader grammatical re-inflection requires further qualification.
 
 ## 15. Conversation memory and temporal coherence
 
@@ -1231,7 +1231,7 @@ Queue all candidates returned by the current lookup and process them in waves un
 
 ### Native implementation profile · 0.2
 
-Native Index Rafts partition candidate work into disjoint chunks, join results in stable order and continue over all chunks. The 1,000 comparison ceiling governs active work, never total records searched. Scheduler jobs and worker counts bound actual concurrency. Cancellation is checked between partitions and comparisons. UI foreground work cancels its owned idle operation before proceeding; a full engine-level fairness queue and durable resume cursor remain qualification items. Browser rafts remain cooperative tasks on one JavaScript execution lane.
+Native Index Rafts partition candidate work into disjoint chunks and commit ordered coverage checkpoints only when a complete chunk finishes. A retained cursor resumes against the same snapshot identity; cancellation leaves its last checkpoint intact. The process-wide 1,000 active-comparison ceiling is enforced independently of total records searched. State-computation jobs use an engine queue with foreground, residual and idle priorities, FIFO within a class, and an oldest-background opportunity after eight higher-priority admissions. Running jobs remain bounded and cancellable; priorities apply at job admission. Image analysis and model generation use independent leases. The UI also cancels its owned idle operation before foreground work. Checkpoints are ephemeral and are not automatically replayed after restart. Browser rafts remain cooperative tasks on one JavaScript execution lane.
 
 ## 21. Compartmental contact ledger
 

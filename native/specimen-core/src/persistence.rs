@@ -299,8 +299,10 @@ impl Store {
         let path = self.root.join("assets").join(&digest);
         if !path.exists() {
             let temporary = self.root.join("assets").join(format!(".{}", crate::uid()));
-            fs::write(&temporary, bytes)?;
-            File::open(&temporary)?.sync_all()?;
+            let mut file = File::create(&temporary)?;
+            file.write_all(bytes)?;
+            file.sync_all()?;
+            drop(file);
             fs::rename(temporary, path)?;
         }
         Ok(digest)

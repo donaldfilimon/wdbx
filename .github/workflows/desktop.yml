@@ -10,7 +10,7 @@ on:
         default: false
 concurrency:
   group: native-${{ github.ref }}-${{ inputs.models && 'models' || 'desktop' }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 permissions:
   contents: read
 jobs:

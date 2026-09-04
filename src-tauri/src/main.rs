@@ -4,7 +4,7 @@ use specimen_core::{
     Result, engine, error,
     models::Models,
     persistence::Store,
-    scheduler::Scheduler,
+    scheduler::{Priority, Scheduler},
     vision::{self, Focus},
 };
 use std::{
@@ -51,9 +51,16 @@ fn invoke(state: Arc<AppState>, r: Value, progress: Channel<Value>) -> Result<Va
             } else {
                 None
             };
-            let job = state
-                .scheduler
-                .begin(value(&r, "jobId")?.into(), lease, 120)?;
+            let job = state.scheduler.begin_state(
+                value(&r, "jobId")?.into(),
+                lease,
+                120,
+                match op {
+                    "run" => Priority::Foreground,
+                    "review" => Priority::Residual,
+                    _ => Priority::Idle,
+                },
+            )?;
             let mut next = state.store.lock().unwrap().snapshot.clone();
             if next.revision != revision(&r)? {
                 return Err(error(
@@ -146,9 +153,12 @@ fn invoke(state: Arc<AppState>, r: Value, progress: Channel<Value>) -> Result<Va
             Ok(json!({"analysis":analysis,"asset":asset,"matches":matches}))
         }
         "runVisual" => {
-            let job = state
-                .scheduler
-                .begin(value(&r, "jobId")?.into(), None, 120)?;
+            let job = state.scheduler.begin_state(
+                value(&r, "jobId")?.into(),
+                None,
+                120,
+                Priority::Foreground,
+            )?;
             let (mut next, bytes) = {
                 let store = state.store.lock().unwrap();
                 (store.snapshot.clone(), store.asset(value(&r, "asset")?)?)
