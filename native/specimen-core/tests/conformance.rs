@@ -313,3 +313,18 @@ fn all_same_id_entries_are_reachable_past_one_thousand() {
             .any(|step| step["phase"] == "Index Rafts" && step["count"].as_u64().unwrap() > 1000)
     );
 }
+
+#[test]
+fn corrected_ocr_source_asset_survives_portable_export() {
+    let temp = tempfile::tempdir().unwrap();
+    let mut store = Store::open(temp.path().join("source")).unwrap();
+    let id = store.put_asset(b"synthetic source asset").unwrap();
+    let mut s = starter();
+    s["nodes"][0]["provenance"] = json!({"asset":id,"source":"reviewed OCR correction"});
+    store.edit(0, s).unwrap();
+    let path = temp.path().join("save.wdbxspecimen");
+    store.export(&path).unwrap();
+    let mut dest = Store::open(temp.path().join("destination")).unwrap();
+    dest.import(&path, 0).unwrap();
+    assert_eq!(dest.asset(&id).unwrap(), b"synthetic source asset");
+}

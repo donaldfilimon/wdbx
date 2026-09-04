@@ -64,6 +64,33 @@ impl Snapshot {
         }
         Ok(())
     }
+    fn asset_ids(&self) -> Result<std::collections::BTreeSet<String>> {
+        fn collect(value: &Value, ids: &mut std::collections::BTreeSet<String>) -> Result<()> {
+            match value {
+                Value::Object(values) => {
+                    for (key, value) in values {
+                        if key == "asset"
+                            && let Some(id) = value.as_str()
+                        {
+                            check_digest(id)?;
+                            ids.insert(id.into());
+                        }
+                        collect(value, ids)?;
+                    }
+                }
+                Value::Array(values) => {
+                    for value in values {
+                        collect(value, ids)?;
+                    }
+                }
+                _ => (),
+            }
+            Ok(())
+        }
+        let mut ids = std::collections::BTreeSet::new();
+        collect(&serde_json::to_value(self)?, &mut ids)?;
+        Ok(ids)
+    }
     fn reindex(&mut self) {
         self.native_ids.clear();
         for n in engine::rows(&self.specimen, "nodes") {
@@ -297,17 +324,10 @@ impl Store {
             zip.start_file("manifest.json", options)
                 .map_err(|e| error("Storage", e))?;
             zip.write_all(&serde_json::to_vec(&self.snapshot)?)?;
-            let ids = self
-                .snapshot
-                .visuals
-                .iter()
-                .chain(&self.snapshot.artifacts)
-                .filter_map(|v| v["asset"].as_str())
-                .collect::<std::collections::BTreeSet<_>>();
-            for id in ids {
+            for id in self.snapshot.asset_ids()? {
                 zip.start_file(format!("assets/{id}"), options)
                     .map_err(|e| error("Storage", e))?;
-                zip.write_all(&self.asset(id)?)?;
+                zip.write_all(&self.asset(&id)?)?;
             }
             zip.finish().map_err(|e| error("Storage", e))?.sync_all()?;
             fs::rename(&tmp, path)?;
@@ -381,10 +401,8 @@ impl Store {
             }
         };
         next.validate()?;
-        for v in next.visuals.iter().chain(&next.artifacts) {
-            if let Some(id) = v["asset"].as_str()
-                && !assets.contains_key(id)
-            {
+        for id in next.asset_ids()? {
+            if !assets.contains_key(&id) {
                 return Err(error(
                     "MalformedSave",
                     "Archive is missing a referenced asset",
