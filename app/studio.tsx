@@ -15,6 +15,7 @@ import {
   FlaskConical,
   GitBranch,
   Lightbulb,
+  Maximize2,
   Menu,
   MessageCircle,
   Network,
@@ -31,6 +32,8 @@ import {
   ThumbsUp,
   Upload,
   X,
+  ZoomIn,
+  ZoomOut,
 } from 'lucide-react';
 import {
   addNode,
@@ -152,6 +155,7 @@ export default function Studio() {
     [busy, setBusy] = useState(false),
     [trace, setTrace] = useState<TraceStep[]>([]),
     [networkMode, setNetworkMode] = useState('network'),
+    [topologyZoom, setTopologyZoom] = useState(1),
     [notice, setNotice] = useState(''),
     [error, setError] = useState(''),
     [showProvenance, setShowProvenance] = useState(false),
@@ -912,7 +916,7 @@ export default function Studio() {
               <div className="studio-grid">
                 <section className="panel conversation-panel">
                   <div className="panel-heading">
-                    <h2>Conversation &amp; result</h2>
+                    <h2>Latest result</h2>
                     <span className="toolbar-spacer" />
                     {cycle && (
                       <>
@@ -1073,29 +1077,75 @@ export default function Studio() {
                 </section>
                 <section className="panel network-panel">
                   <div className="panel-heading">
-                    <h2>Live topology</h2>
-                    <span className="muted small">
-                      {state.nodes.length} nodes · 3 resolution tiers
-                    </span>
-                    <fieldset className="segmented">
-                      <legend className="sr-only">Topology view</legend>
-                      <button
-                        className={networkMode === 'network' ? 'selected' : ''}
-                        onClick={() => setNetworkMode('network')}
-                        aria-pressed={networkMode === 'network'}
-                      >
-                        <Network size={15} />
-                        Network
-                      </button>
-                      <button
-                        className={networkMode === 'trace' ? 'selected' : ''}
-                        onClick={() => setNetworkMode('trace')}
-                        aria-pressed={networkMode === 'trace'}
-                      >
-                        <Activity size={15} />
-                        Cycle trace
-                      </button>
-                    </fieldset>
+                    <div className="panel-title-stack">
+                      <h2>Live topology</h2>
+                      <span className="muted small">
+                        {state.nodes.length} nodes · 3 resolution tiers
+                      </span>
+                    </div>
+                    <div className="network-controls">
+                      <fieldset className="segmented">
+                        <legend className="sr-only">Topology view</legend>
+                        <button
+                          type="button"
+                          className={
+                            networkMode === 'network' ? 'selected' : ''
+                          }
+                          onClick={() => setNetworkMode('network')}
+                          aria-pressed={networkMode === 'network'}
+                        >
+                          <Network size={15} />
+                          Network
+                        </button>
+                        <button
+                          type="button"
+                          className={networkMode === 'trace' ? 'selected' : ''}
+                          onClick={() => setNetworkMode('trace')}
+                          aria-pressed={networkMode === 'trace'}
+                        >
+                          <Activity size={15} />
+                          Cycle trace
+                        </button>
+                      </fieldset>
+                      {networkMode === 'network' && (
+                        <fieldset className="zoom-controls">
+                          <legend className="sr-only">Topology zoom</legend>
+                          <button
+                            type="button"
+                            aria-label="Zoom out topology"
+                            disabled={topologyZoom <= 0.8}
+                            onClick={() =>
+                              setTopologyZoom((value) =>
+                                Math.max(0.8, Number((value - 0.1).toFixed(2))),
+                              )
+                            }
+                          >
+                            <ZoomOut size={15} />
+                          </button>
+                          <button
+                            type="button"
+                            className="zoom-fit"
+                            aria-label={`Fit topology to canvas, current zoom ${Math.round(topologyZoom * 100)} percent`}
+                            onClick={() => setTopologyZoom(1)}
+                          >
+                            <Maximize2 size={14} />
+                            <span>{Math.round(topologyZoom * 100)}%</span>
+                          </button>
+                          <button
+                            type="button"
+                            aria-label="Zoom in topology"
+                            disabled={topologyZoom >= 1.3}
+                            onClick={() =>
+                              setTopologyZoom((value) =>
+                                Math.min(1.3, Number((value + 0.1).toFixed(2))),
+                              )
+                            }
+                          >
+                            <ZoomIn size={15} />
+                          </button>
+                        </fieldset>
+                      )}
+                    </div>
                   </div>
                   {networkMode === 'network' ? (
                     <Topology
@@ -1103,6 +1153,7 @@ export default function Studio() {
                       selected={selectedNode?.ref}
                       active={cycle?.votes.map((v) => v.nodeRef) ?? []}
                       attachments={state.attachments}
+                      zoom={topologyZoom}
                       onSelect={setSelected}
                     />
                   ) : (
@@ -1151,23 +1202,28 @@ export default function Studio() {
                 />
               </div>
               <div className="cycle-phase-strip" aria-label="Cycle phases">
-                {['Prepare', 'Retrieve', 'Vote', 'Compose'].map(
-                  (phase, index) => {
-                    const complete = activeTrace.some(
-                      (step) => step.phase === phase,
-                    );
-                    const current = busy && activeTrace.at(-1)?.phase === phase;
-                    return (
-                      <span
-                        key={phase}
-                        className={`${complete ? 'is-complete' : ''} ${current ? 'is-current' : ''}`}
-                      >
-                        <i>{complete ? <Check size={12} /> : index + 1}</i>
-                        {phase}
-                      </span>
-                    );
-                  },
-                )}
+                {[
+                  'Prepare',
+                  'Retrieve',
+                  'Deep scan',
+                  'Vote',
+                  'Enrich',
+                  'Compose',
+                ].map((phase, index) => {
+                  const complete = activeTrace.some(
+                    (step) => step.phase === phase,
+                  );
+                  const current = busy && activeTrace.at(-1)?.phase === phase;
+                  return (
+                    <span
+                      key={phase}
+                      className={`${complete ? 'is-complete' : ''} ${current ? 'is-current' : ''}`}
+                    >
+                      <i>{complete ? <Check size={12} /> : index + 1}</i>
+                      {phase}
+                    </span>
+                  );
+                })}
               </div>
               <footer className="studio-footer">
                 <span>{saveStatus}</span>
@@ -1454,12 +1510,14 @@ function Topology({
   selected,
   active,
   attachments,
+  zoom,
   onSelect,
 }: {
   nodes: SpecimenNode[];
   selected?: string;
   active: string[];
   attachments: Specimen['attachments'];
+  zoom: number;
   onSelect: (id: string) => void;
 }) {
   const visible = nodes.slice(0, 16);
@@ -1469,59 +1527,61 @@ function Topology({
   });
   return (
     <div className="topology">
-      <svg
-        className="topology-lines"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        {visible.map((n, i) => (
-          <line
-            key={n.ref}
-            x1="50"
-            y1="49"
-            x2={positions[i].x}
-            y2={positions[i].y}
-            className={active.includes(n.ref) ? 'active-edge' : ''}
-          />
-        ))}
-        {attachments.map((a) => {
-          const from = visible.findIndex((n) => n.ref === a.from),
-            to = visible.findIndex((n) => n.ref === a.to);
-          return from >= 0 && to >= 0 ? (
+      <div className="topology-stage" style={{ transform: `scale(${zoom})` }}>
+        <svg
+          className="topology-lines"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          {visible.map((n, i) => (
             <line
-              key={a.id}
-              x1={positions[from].x}
-              y1={positions[from].y}
-              x2={positions[to].x}
-              y2={positions[to].y}
-              className="attachment-edge"
+              key={n.ref}
+              x1="50"
+              y1="49"
+              x2={positions[i].x}
+              y2={positions[i].y}
+              className={active.includes(n.ref) ? 'active-edge' : ''}
             />
-          ) : null;
+          ))}
+          {attachments.map((a) => {
+            const from = visible.findIndex((n) => n.ref === a.from),
+              to = visible.findIndex((n) => n.ref === a.to);
+            return from >= 0 && to >= 0 ? (
+              <line
+                key={a.id}
+                x1={positions[from].x}
+                y1={positions[from].y}
+                x2={positions[to].x}
+                y2={positions[to].y}
+                className="attachment-edge"
+              />
+            ) : null;
+          })}
+        </svg>
+        <div className="orchestrator">
+          <Boxes size={19} />
+          Orchestration
+        </div>
+        {visible.map((n, i) => {
+          const Icon = icons[i % icons.length];
+          return (
+            <button
+              key={n.ref}
+              className={`graph-node node-color-${i % 3} ${selected === n.ref ? 'selected' : ''} ${active.includes(n.ref) ? 'contributed' : ''}`}
+              style={{ left: `${positions[i].x}%`, top: `${positions[i].y}%` }}
+              onClick={() => onSelect(n.ref)}
+              aria-label={`Inspect ${n.name}`}
+              aria-pressed={selected === n.ref}
+            >
+              <span className="node-icon">
+                <Icon size={21} />
+              </span>
+              <span className="node-label">{n.name}</span>
+            </button>
+          );
         })}
-      </svg>
-      <div className="orchestrator">
-        <Boxes size={19} />
-        Orchestration
       </div>
-      {visible.map((n, i) => {
-        const Icon = icons[i % icons.length];
-        return (
-          <button
-            key={n.ref}
-            className={`graph-node node-color-${i % 3} ${selected === n.ref ? 'selected' : ''} ${active.includes(n.ref) ? 'contributed' : ''}`}
-            style={{ left: `${positions[i].x}%`, top: `${positions[i].y}%` }}
-            onClick={() => onSelect(n.ref)}
-            aria-label={`Inspect ${n.name}`}
-            aria-pressed={selected === n.ref}
-          >
-            <span className="node-icon">
-              <Icon size={21} />
-            </span>
-            <span className="node-label">{n.name}</span>
-          </button>
-        );
-      })}
       {!nodes.length && (
         <div className="network-empty">
           Add your first node in the Node Library.

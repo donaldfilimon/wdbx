@@ -30,6 +30,18 @@ try {
   await expect(page.locator('.trace-step').first()).toBeVisible();
   await page.getByRole('button', { name: 'Network', exact: true }).click();
   await page
+    .getByRole('button', { name: 'Zoom in topology', exact: true })
+    .click();
+  await expect(
+    page.getByRole('button', { name: 'Fit topology to canvas', exact: true }),
+  ).toContainText('110%');
+  await page
+    .getByRole('button', { name: 'Fit topology to canvas', exact: true })
+    .click();
+  await expect(
+    page.getByRole('button', { name: 'Fit topology to canvas', exact: true }),
+  ).toContainText('100%');
+  await page
     .getByRole('button', { name: 'Inspect Greeting', exact: true })
     .click();
   await expect(

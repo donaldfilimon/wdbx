@@ -16,11 +16,17 @@ test('instrument console exposes a clear workflow and live telemetry', () => {
   expect(studio).toContain('aria-busy={busy}');
   expect(studio).toContain('Teach pattern');
   expect(studio).toContain('Run dossier');
+  expect(studio).toContain('Topology zoom');
+  expect(studio).toContain('Zoom in topology');
+  expect(studio).toContain("'Deep scan'");
+  expect(studio).toContain("'Enrich'");
 });
 
 test('instrument console retains responsive access to inspector detail', () => {
   expect(styles).toContain('.console-telemetry');
   expect(styles).toContain('.workflow-step');
+  expect(styles).toContain('.topology-stage');
+  expect(styles).toContain('repeat(6, minmax(0, 1fr))');
   expect(styles).not.toContain(
     '.inspector-section:nth-last-child(2) {\n    display: none;',
   );
