@@ -37,6 +37,9 @@ Consumers check this out as a sibling directory named `wdbx`, which now matches
 the repository name, because the relative path dependencies in `abi` and `abbey`
 say `../wdbx/crates/...`.
 
+The repository name is `wdbx`; `donaldfilimon/wdbx-substrate` is a rename
+redirect to it, not a second repository.
+
 ## Layout
 
 Five crates, in dependency order. Every crate depends only on crates above it.
@@ -64,6 +67,8 @@ cargo test --workspace
 Run all three commands against the current checkout before making a green-gate
 claim; extraction-era test totals are historical and are not a current
 acceptance contract. The workspace denies `unsafe_code` and all of clippy.
+One test: `cargo test -p abi-wdbx <test_name>`; `-p` takes any of the five
+crates.
 
 This repository deliberately has no `tools/cargo.sh`. If Homebrew's Cargo
 shadows rustup on macOS, prefix the gate commands with
