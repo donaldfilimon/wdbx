@@ -94,7 +94,9 @@ pub enum EvidenceLevel {
 }
 
 impl EvidenceLevel {
-    pub(super) const fn label(self) -> &'static str {
+    /// Stable wire label (`C0`..`C3`), the form receipts carry.
+    #[must_use]
+    pub const fn label(self) -> &'static str {
         match self {
             Self::C0 => "C0",
             Self::C1 => "C1",
@@ -339,7 +341,9 @@ pub enum TerminalStatus {
 }
 
 impl TerminalStatus {
-    pub(super) const fn label(self) -> &'static str {
+    /// Stable wire label (`completed`, `failed`, ...), the form receipts carry.
+    #[must_use]
+    pub const fn label(self) -> &'static str {
         match self {
             Self::Completed => "completed",
             Self::Compensated => "compensated",

@@ -257,6 +257,29 @@ impl EpisodeStore {
             .collect())
     }
 
+    /// Find the receipt for one commitment anywhere in a guild's ledger.
+    ///
+    /// Unlike [`Self::retrieve`], this is not windowed: it scans every record
+    /// the store holds, so verification does not silently stop at the first
+    /// [`MAX_RECEIPTS`] receipts of a busy guild. A digest that was never
+    /// appended, including the all-zero digest, is simply `Ok(None)`.
+    pub fn find_receipt(
+        &self,
+        guild_ref: &str,
+        episode_digest: &[u8; 32],
+    ) -> Result<Option<EpisodeReceipt>, EpisodeStoreError> {
+        if !bounded_identifier(guild_ref, 128) {
+            return Err(EpisodeStoreError::InvalidInput);
+        }
+        Ok(self
+            .records
+            .iter()
+            .find(|record| {
+                record.guild_ref == guild_ref && record.episode_digest == *episode_digest
+            })
+            .map(receipt))
+    }
+
     /// Return cumulative token and byte usage for a guild.
     #[must_use]
     pub fn guild_usage(&self, guild_ref: &str) -> Option<(u64, u64)> {

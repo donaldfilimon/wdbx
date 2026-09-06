@@ -367,3 +367,58 @@ fn raw_content_and_voice_collection_overflow_cannot_enter_the_typed_gate() {
         Err(EpisodeStoreError::InvalidInput)
     ));
 }
+
+#[test]
+fn find_receipt_scans_the_whole_ledger_not_a_window() {
+    let dir = Scratch::new();
+    // 2,049 proposals: one past the retrieve window, each its own operation.
+    let count = 2_049_usize;
+    let mut store =
+        EpisodeStore::open(dir.path(), policy(true, 1_000_000, 32 * 1024 * 1024)).unwrap();
+    let mut digests = Vec::with_capacity(count);
+    for index in 0..count {
+        digests.push(append(
+            &mut store,
+            proposal(&format!("req_{index}"), &format!("op_{index}")),
+        ));
+    }
+    assert_eq!(store.retrieve("guild_ref", 2_048).unwrap().len(), 2_048);
+    let last = digests[count - 1];
+    assert!(
+        !store
+            .retrieve("guild_ref", 2_048)
+            .unwrap()
+            .iter()
+            .any(|receipt| receipt.episode_digest == last),
+        "the window must not reach the last record, or this test proves nothing"
+    );
+    let found = store.find_receipt("guild_ref", &last).unwrap().unwrap();
+    assert_eq!(found.sequence, u64::try_from(count).unwrap());
+    assert_eq!(found.episode_digest, last);
+    assert!(found.redacted);
+    assert_eq!(
+        store
+            .find_receipt("guild_ref", &digests[0])
+            .unwrap()
+            .unwrap()
+            .sequence,
+        1
+    );
+    assert!(store.find_receipt("guild_ref", &[0; 32]).unwrap().is_none());
+    assert!(store.find_receipt("other_guild", &last).unwrap().is_none());
+    assert!(matches!(
+        store.find_receipt("Guild:Ref", &last),
+        Err(EpisodeStoreError::InvalidInput)
+    ));
+    drop(store);
+    let reopened =
+        EpisodeStore::open(dir.path(), policy(true, 1_000_000, 32 * 1024 * 1024)).unwrap();
+    assert_eq!(
+        reopened
+            .find_receipt("guild_ref", &last)
+            .unwrap()
+            .unwrap()
+            .sequence,
+        u64::try_from(count).unwrap()
+    );
+}
