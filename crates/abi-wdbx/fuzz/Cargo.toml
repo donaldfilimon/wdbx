@@ -1,0 +1,35 @@
+# Standalone workspace on purpose: the wdbx root globs `crates/*`, which does not
+# match this directory, so the root gate (fmt/clippy/test --workspace) never
+# reaches these targets. Keep it that way — fuzz builds need nightly + a
+# sanitizer runtime and must not gate ordinary development.
+[package]
+name = "abi-wdbx-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2024"
+
+[package.metadata]
+cargo-fuzz = true
+
+[workspace]
+
+[dependencies]
+libfuzzer-sys = "0.4"
+
+[dependencies.abi-wdbx]
+path = ".."
+
+# abi-wdbx denies unsafe_code, so ASan will only ever fire inside dependencies.
+# The actionable classes here are panics, hangs and OOM — these two flags are
+# what turn a silent wrapping subtraction into a reported crash.
+[profile.release]
+debug = 1
+debug-assertions = true
+overflow-checks = true
+
+[[bin]]
+name = "ans_roundtrip"
+path = "fuzz_targets/ans_roundtrip.rs"
+test = false
+doc = false
+bench = false
