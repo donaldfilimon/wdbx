@@ -2,7 +2,8 @@
 
 use super::types::{
     ActorKind, ActorRef, EpisodeEvent, EpisodeReceipt, EpisodeSource, EpisodeWrite,
-    GuildEpisodePolicy, MAX_VOICE_TRANSITIONS, StorePolicy, TerminalStatus, VoiceEvidence,
+    GuildEpisodePolicy, MAX_VOICE_TRANSITIONS, MemoryCandidate, MemoryClass, StorePolicy,
+    TerminalStatus, VoiceEvidence,
 };
 use crate::v3::commitment::{CanonicalCborError, CanonicalValue, EpisodeCommitment};
 use serde::{Deserialize, Serialize};
@@ -98,6 +99,17 @@ struct LedgerState {
     operations: BTreeMap<String, OperationState>,
     request_ids: BTreeSet<String>,
     guild_usage: BTreeMap<String, GuildUsage>,
+    memories: BTreeMap<String, GuildMemories>,
+}
+
+/// Memory-candidate edges per guild: digests admitted, and digests since forgotten.
+///
+/// Rebuilt on open from the ledger, so `supersedes`/`forgets` references are
+/// checked identically on the live and the replay path.
+#[derive(Clone, Debug, Default)]
+struct GuildMemories {
+    admitted: BTreeSet<[u8; 32]>,
+    forgotten: BTreeSet<[u8; 32]>,
 }
 
 #[derive(Clone, Debug)]
@@ -221,9 +233,11 @@ impl EpisodeStore {
         if usage.tokens.saturating_add(record.token_cost) > guild_policy.token_budget {
             return Err(EpisodeStoreError::TokenBudget);
         }
+        let line_bytes = u64::try_from(line.len()).map_err(|_| EpisodeStoreError::InvalidInput)?;
         if usage
             .bytes
-            .saturating_add(u64::try_from(line.len()).map_err(|_| EpisodeStoreError::InvalidInput)?)
+            .saturating_add(line_bytes)
+            .saturating_add(payload_bytes(&record.event))
             > guild_policy.storage_budget_bytes
         {
             return Err(EpisodeStoreError::StorageBudget);
@@ -281,6 +295,10 @@ impl EpisodeStore {
     }
 
     /// Return cumulative token and byte usage for a guild.
+    ///
+    /// Bytes count every serialized ledger line plus the `payload_bytes` of
+    /// every admitted memory candidate, so a guild's memory footprint is
+    /// bounded by the same policy that bounds its ledger.
     #[must_use]
     pub fn guild_usage(&self, guild_ref: &str) -> Option<(u64, u64)> {
         self.state
@@ -421,7 +439,60 @@ fn validate_new_write(
         return Err(EpisodeStoreError::StaleBinding);
     }
     validate_voice_binding(write.source_type, write.consent_epoch, &write.event, guild)?;
+    validate_event_shape(write.source_type, &write.event)?;
     Ok(())
+}
+
+/// Source and field rules an event must satisfy regardless of lifecycle position.
+///
+/// Checked on the write path (`InvalidInput`) and on replay (`Corrupt`), so a
+/// mutated ledger line cannot smuggle in a candidate the gate would refuse.
+fn validate_event_shape(
+    source: EpisodeSource,
+    event: &EpisodeEvent,
+) -> Result<(), EpisodeStoreError> {
+    let EpisodeEvent::MemoryCandidate { candidate, .. } = event else {
+        return Ok(());
+    };
+    // Raw audio and transcripts are ephemeral; there is no content-free
+    // memory of a voice epoch for this class to carry.
+    if source == EpisodeSource::DiscordVoice {
+        return Err(EpisodeStoreError::InvalidInput);
+    }
+    validate_memory_candidate(candidate)
+}
+
+fn validate_memory_candidate(candidate: &MemoryCandidate) -> Result<(), EpisodeStoreError> {
+    let zero = [0_u8; 32];
+    let forgets = candidate.forgets.is_some();
+    let shape_ok = if forgets {
+        candidate.supersedes.is_none()
+            && candidate.payload_bytes == 0
+            && candidate.payload_commitment == zero
+    } else {
+        candidate.payload_bytes > 0 && candidate.payload_commitment != zero
+    };
+    let dimension_ok = match candidate.dimension {
+        Some(width) => candidate.class == MemoryClass::Embedding && width > 0,
+        None => candidate.class != MemoryClass::Embedding,
+    };
+    let version_ok = candidate
+        .embedding_version
+        .as_deref()
+        .is_none_or(|version| bounded_identifier(version, 64));
+    if shape_ok && dimension_ok && version_ok {
+        Ok(())
+    } else {
+        Err(EpisodeStoreError::InvalidInput)
+    }
+}
+
+/// Bytes a candidate charges beyond its own ledger line.
+fn payload_bytes(event: &EpisodeEvent) -> u64 {
+    match event {
+        EpisodeEvent::MemoryCandidate { candidate, .. } => candidate.payload_bytes,
+        _ => 0,
+    }
 }
 
 fn validate_voice_binding(
@@ -488,6 +559,8 @@ fn validate_stored_record(
     }
     validate_historical_voice_binding(record.source_type, record.consent_epoch, &record.event)
         .map_err(|_| EpisodeStoreError::Corrupt)?;
+    validate_event_shape(record.source_type, &record.event)
+        .map_err(|_| EpisodeStoreError::Corrupt)?;
     validate_transition(record, state).map_err(|_| EpisodeStoreError::Corrupt)
 }
 
@@ -533,10 +606,24 @@ fn validate_transition(
             {
                 Ok(())
             }
+            EpisodeEvent::MemoryCandidate {
+                recorded_by,
+                candidate,
+            } if valid_actor(recorded_by)
+                && recorded_by.kind == ActorKind::Service
+                && record.previous_digest.is_none()
+                && memory_edges_admitted(&record.guild_ref, candidate, state) =>
+            {
+                Ok(())
+            }
             _ => Err(EpisodeStoreError::InvalidTransition),
         };
     };
-    if matches!(record.event, EpisodeEvent::Proposal { .. }) {
+    // Both operation-opening events replay an existing operation identifier.
+    if matches!(
+        record.event,
+        EpisodeEvent::Proposal { .. } | EpisodeEvent::MemoryCandidate { .. }
+    ) {
         return Err(EpisodeStoreError::Replay);
     }
     if existing.stage == Stage::Terminal
@@ -579,6 +666,23 @@ fn validate_transition(
     }
 }
 
+/// `supersedes`/`forgets` may only name a memory candidate this guild already
+/// admitted and has not forgotten. A superseded digest may be superseded again
+/// (two corrections of one memory are two edges, not a rewrite) and may still
+/// be forgotten; a forgotten digest is a tombstone and accepts no further edge.
+fn memory_edges_admitted(
+    guild_ref: &str,
+    candidate: &MemoryCandidate,
+    state: &LedgerState,
+) -> bool {
+    let Some(target) = candidate.supersedes.or(candidate.forgets) else {
+        return true;
+    };
+    state.memories.get(guild_ref).is_some_and(|memories| {
+        memories.admitted.contains(&target) && !memories.forgotten.contains(&target)
+    })
+}
+
 fn terminal_follows(status: TerminalStatus, stage: Stage) -> bool {
     match status {
         TerminalStatus::Completed => stage == Stage::Executed,
@@ -605,7 +709,23 @@ fn apply_record(
     usage.tokens = usage.tokens.saturating_add(record.token_cost);
     usage.bytes = usage
         .bytes
-        .saturating_add(u64::try_from(line_bytes).map_err(|_| EpisodeStoreError::Corrupt)?);
+        .saturating_add(u64::try_from(line_bytes).map_err(|_| EpisodeStoreError::Corrupt)?)
+        .saturating_add(payload_bytes(&record.event));
+    let open_operation =
+        |requested_by: &ActorRef, proposed_by: &ActorRef, stage: Stage| OperationState {
+            contract_revision: record.contract_revision,
+            contract_digest: record.contract_digest,
+            guild_ref: record.guild_ref.clone(),
+            consent_epoch: record.consent_epoch,
+            source_type: record.source_type,
+            policy_version: record.policy_version.clone(),
+            evidence_level: record.evidence_level,
+            requested_by: requested_by.clone(),
+            proposed_by: proposed_by.clone(),
+            approved_by: None,
+            stage,
+            last_digest: record.episode_digest,
+        };
     match &record.event {
         EpisodeEvent::Proposal {
             requested_by,
@@ -613,21 +733,22 @@ fn apply_record(
         } => {
             state.operations.insert(
                 record.operation_id.clone(),
-                OperationState {
-                    contract_revision: record.contract_revision,
-                    contract_digest: record.contract_digest,
-                    guild_ref: record.guild_ref.clone(),
-                    consent_epoch: record.consent_epoch,
-                    source_type: record.source_type,
-                    policy_version: record.policy_version.clone(),
-                    evidence_level: record.evidence_level,
-                    requested_by: requested_by.clone(),
-                    proposed_by: proposed_by.clone(),
-                    approved_by: None,
-                    stage: Stage::Proposed,
-                    last_digest: record.episode_digest,
-                },
+                open_operation(requested_by, proposed_by, Stage::Proposed),
             );
+        }
+        EpisodeEvent::MemoryCandidate {
+            recorded_by,
+            candidate,
+        } => {
+            state.operations.insert(
+                record.operation_id.clone(),
+                open_operation(recorded_by, recorded_by, Stage::Terminal),
+            );
+            let memories = state.memories.entry(record.guild_ref.clone()).or_default();
+            memories.admitted.insert(record.episode_digest);
+            if let Some(forgotten) = candidate.forgets {
+                memories.forgotten.insert(forgotten);
+            }
         }
         event => {
             let operation = state
@@ -642,7 +763,9 @@ fn apply_record(
                 EpisodeEvent::Execution { .. } => Stage::Executed,
                 EpisodeEvent::Compensation { .. } => Stage::Compensated,
                 EpisodeEvent::Terminal { .. } => Stage::Terminal,
-                EpisodeEvent::Proposal { .. } => return Err(EpisodeStoreError::Corrupt),
+                EpisodeEvent::Proposal { .. } | EpisodeEvent::MemoryCandidate { .. } => {
+                    return Err(EpisodeStoreError::Corrupt);
+                }
             };
             operation.last_digest = record.episode_digest;
         }
@@ -684,7 +807,59 @@ fn canonical_event(event: &EpisodeEvent) -> CanonicalValue {
             text_entry("status", CanonicalValue::Text(status.label().into())),
             text_entry("reason", CanonicalValue::Text(reason.label().into())),
         ]),
+        EpisodeEvent::MemoryCandidate {
+            recorded_by,
+            candidate,
+        } => CanonicalValue::Map(vec![
+            text_entry("recorded_by", canonical_actor(recorded_by)),
+            text_entry("candidate", canonical_memory_candidate(candidate)),
+        ]),
     }
+}
+
+fn canonical_memory_candidate(candidate: &MemoryCandidate) -> CanonicalValue {
+    let digest = |value: Option<[u8; 32]>| {
+        value.map_or(CanonicalValue::Null, |bytes| {
+            CanonicalValue::Bytes(bytes.to_vec())
+        })
+    };
+    CanonicalValue::Map(vec![
+        text_entry(
+            "class",
+            CanonicalValue::Text(candidate.class.label().into()),
+        ),
+        text_entry(
+            "retention",
+            CanonicalValue::Text(candidate.retention.label().into()),
+        ),
+        text_entry(
+            "payload_commitment",
+            CanonicalValue::Bytes(candidate.payload_commitment.to_vec()),
+        ),
+        text_entry(
+            "payload_bytes",
+            CanonicalValue::Unsigned(candidate.payload_bytes),
+        ),
+        text_entry(
+            "dimension",
+            candidate.dimension.map_or(CanonicalValue::Null, |width| {
+                CanonicalValue::Unsigned(u64::from(width))
+            }),
+        ),
+        text_entry(
+            "embedding_version",
+            candidate
+                .embedding_version
+                .clone()
+                .map_or(CanonicalValue::Null, CanonicalValue::Text),
+        ),
+        text_entry(
+            "member_scoped",
+            CanonicalValue::Bool(candidate.member_scoped),
+        ),
+        text_entry("supersedes", digest(candidate.supersedes)),
+        text_entry("forgets", digest(candidate.forgets)),
+    ])
 }
 
 fn canonical_actor(actor: &ActorRef) -> CanonicalValue {
@@ -759,6 +934,7 @@ fn receipt(record: &StoredRecord) -> EpisodeReceipt {
         evidence_level: record.evidence_level,
         terminal_status: match record.event {
             EpisodeEvent::Terminal { status, .. } => Some(status),
+            EpisodeEvent::MemoryCandidate { .. } => Some(TerminalStatus::Completed),
             _ => None,
         },
         redacted: true,

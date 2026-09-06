@@ -273,6 +273,88 @@ pub struct VoiceEvidence {
     pub terminal_reason: TerminalReason,
 }
 
+/// Closed memory record classes an adapter may propose (amendment 2026-09-06).
+#[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "snake_case")]
+pub enum MemoryClass {
+    /// A bounded fact record.
+    Fact,
+    /// A DQN replay checkpoint or similar experience record.
+    Experience,
+    /// An embedding vector; the only class that carries a `dimension`.
+    Embedding,
+    /// A summary record.
+    Summary,
+}
+
+impl MemoryClass {
+    pub(super) const fn label(self) -> &'static str {
+        match self {
+            Self::Fact => "fact",
+            Self::Experience => "experience",
+            Self::Embedding => "embedding",
+            Self::Summary => "summary",
+        }
+    }
+}
+
+/// Closed retention classes a memory candidate may request.
+///
+/// `ephemeral` is never proposed (there is nothing to record) and
+/// `mandatory_incident` is not a memory class.
+#[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "snake_case")]
+pub enum RetentionClass {
+    /// Lives only for the bounded session; never persisted by the adapter.
+    Session,
+    /// Persisted under an adapter-configured TTL; expiry emits a `forgets` candidate.
+    Operational,
+    /// Persisted; correction and deletion go through `supersedes`/`forgets`.
+    Durable,
+}
+
+impl RetentionClass {
+    pub(super) const fn label(self) -> &'static str {
+        match self {
+            Self::Session => "session",
+            Self::Operational => "operational",
+            Self::Durable => "durable",
+        }
+    }
+}
+
+/// Content-free description of one adapter memory write. Never the payload.
+///
+/// `supersedes` and `forgets` are mutually exclusive and must each name a
+/// memory-candidate episode already admitted in the same guild and not yet
+/// forgotten. A `forgets` candidate carries `payload_bytes = 0` and an
+/// all-zero `payload_commitment`; that is the one place an all-zero
+/// commitment is legal. Every other candidate carries a nonzero commitment
+/// and a nonzero byte count. `dimension` is present exactly when `class` is
+/// `embedding`, and is then nonzero.
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(deny_unknown_fields)]
+pub struct MemoryCandidate {
+    /// Closed memory class.
+    pub class: MemoryClass,
+    /// Closed retention class.
+    pub retention: RetentionClass,
+    /// SHA-256 over the adapter's canonical payload bytes.
+    pub payload_commitment: [u8; 32],
+    /// Size of those bytes, charged against the guild storage budget.
+    pub payload_bytes: u64,
+    /// Embedding width, when the class carries a vector.
+    pub dimension: Option<u16>,
+    /// Bounded identifier of the embedding model or transcription.
+    pub embedding_version: Option<String>,
+    /// True when the record is guild-plus-user isolated.
+    pub member_scoped: bool,
+    /// Episode digest of the candidate this replaces.
+    pub supersedes: Option<[u8; 32]>,
+    /// Episode digest of the candidate this erases.
+    pub forgets: Option<[u8; 32]>,
+}
+
 /// Append-only operation lifecycle event.
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(tag = "kind", rename_all = "snake_case", deny_unknown_fields)]
@@ -310,6 +392,17 @@ pub enum EpisodeEvent {
         /// Content-free reason.
         reason: TerminalReason,
     },
+    /// An adapter memory write proposed before it is written locally.
+    ///
+    /// A single-event operation: accepted only as the first event of a fresh
+    /// operation, from a service actor, and recorded as terminal
+    /// (`completed`) in the same append.
+    MemoryCandidate {
+        /// Recording service identity (the adapter).
+        recorded_by: ActorRef,
+        /// Content-free candidate description.
+        candidate: MemoryCandidate,
+    },
 }
 
 impl EpisodeEvent {
@@ -320,6 +413,7 @@ impl EpisodeEvent {
             Self::Execution { .. } => "execution",
             Self::Compensation { .. } => "compensation",
             Self::Terminal { .. } => "terminal",
+            Self::MemoryCandidate { .. } => "memory_candidate",
         }
     }
 }
