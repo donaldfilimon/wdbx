@@ -1,7 +1,7 @@
 import { chromium, expect } from '@playwright/test';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 const base = process.env.STUDIO_URL ?? 'http://localhost:3000';
-const out = new URL('../../../work/', import.meta.url).pathname;
+const out = new URL('../work/', import.meta.url).pathname;
 await mkdir(out, { recursive: true });
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
 const context = await browser.newContext({
@@ -28,6 +28,17 @@ try {
     page.getByRole('button', { name: 'Cycle trace', exact: true }),
   ).toHaveAttribute('aria-pressed', 'true');
   await expect(page.locator('.trace-step').first()).toBeVisible();
+  await expect(page.locator('.trace-step strong')).toHaveText([
+    'Prepare',
+    'Retrieve',
+    'Deep scan',
+    'Vote',
+    'Enrich',
+    'Compose',
+  ]);
+  await expect(page.locator('.trace-outcome')).toContainText(
+    'Completed: What is 2 + 2?',
+  );
   await page.getByRole('button', { name: 'Network', exact: true }).click();
   await page
     .getByRole('button', { name: 'Zoom in topology', exact: true })
@@ -55,15 +66,26 @@ try {
   ).toBeVisible();
   await page.getByRole('button', { name: 'Run dossier', exact: true }).click();
   await expect(page.locator('.provenance-detail')).toContainText('Calculate');
+  await expect(
+    page.getByRole('button', { name: 'Run dossier', exact: true }),
+  ).toHaveAttribute('aria-expanded', 'true');
+  await page.locator('.native-evidence summary').click();
+  await expect(page.locator('.native-evidence')).toContainText(
+    'matchedPattern',
+  );
+  await expect(page.locator('.native-evidence')).toContainText(
+    'confidenceScore',
+  );
   await page
     .getByRole('button', { name: 'Right green segment', exact: true })
     .click();
   await expect(page.locator('.toast')).toContainText('independent coin flips');
-  await page.getByRole('button', { name: 'Right', exact: true }).click();
-  await expect(page.getByRole('alert')).toContainText(
-    'already received feedback',
-  );
-  await page.getByRole('button', { name: 'Dismiss error' }).click();
+  await expect(
+    page.getByRole('button', { name: 'Right', exact: true }),
+  ).toBeDisabled();
+  await expect(
+    page.getByRole('button', { name: 'Right green segment', exact: true }),
+  ).toBeDisabled();
   await page.getByRole('button', { name: 'Pin answer', exact: true }).click();
   await page
     .locator('nav[aria-label="Main navigation"] a[href="?view=nodes"]')
@@ -204,6 +226,54 @@ try {
     await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)
   )
     throw Error('Reader mobile overflow');
+  await page.goto(base);
+  await expect(
+    page.getByText('Stored on this device', { exact: true }),
+  ).toBeVisible();
+  for (const width of [390, 768, 1440]) {
+    await page.setViewportSize({ width, height: 1000 });
+    await page
+      .getByRole('button', { name: 'Fit topology to canvas', exact: true })
+      .click();
+    await expect
+      .poll(() =>
+        page.locator('.topology').evaluate((canvas) => {
+          const bounds = canvas.getBoundingClientRect();
+          return [...canvas.querySelectorAll('.graph-node')].every((node) => {
+            const rect = node.getBoundingClientRect();
+            return (
+              rect.left >= bounds.left - 1 &&
+              rect.right <= bounds.right + 1 &&
+              rect.top >= bounds.top - 1 &&
+              rect.bottom <= bounds.bottom + 1
+            );
+          });
+        }),
+      )
+      .toBe(true);
+    await expect(
+      page.getByRole('button', { name: 'Fit topology to canvas', exact: true }),
+    ).toContainText('100%');
+    await page
+      .getByRole('button', { name: 'Zoom in topology', exact: true })
+      .click();
+    await page
+      .getByRole('button', { name: 'Zoom in topology', exact: true })
+      .click();
+    await page
+      .getByRole('button', { name: 'Zoom in topology', exact: true })
+      .click();
+    await expect(
+      page.getByRole('button', { name: 'Zoom in topology', exact: true }),
+    ).toBeDisabled();
+    await expect
+      .poll(() =>
+        page
+          .locator('.topology')
+          .evaluate((canvas) => canvas.scrollWidth > canvas.clientWidth),
+      )
+      .toBe(true);
+  }
   const webmcp = await page.evaluate(() =>
     Boolean(document.modelContext?.registerTool),
   );

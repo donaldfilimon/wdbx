@@ -63,6 +63,7 @@ import {
   type Specimen,
   type SpecimenNode,
   type TraceStep,
+  type Vote,
 } from '@/lib/specimen/types';
 import {
   Dialog,
@@ -154,6 +155,10 @@ export default function Studio() {
     [prompt, setPrompt] = useState(''),
     [busy, setBusy] = useState(false),
     [trace, setTrace] = useState<TraceStep[]>([]),
+    [runOutcome, setRunOutcome] = useState<
+      'idle' | 'running' | 'complete' | 'cancelled' | 'failed'
+    >('idle'),
+    [runInput, setRunInput] = useState(''),
     [networkMode, setNetworkMode] = useState('network'),
     [topologyZoom, setTopologyZoom] = useState(1),
     [notice, setNotice] = useState(''),
@@ -177,7 +182,18 @@ export default function Studio() {
   const selectedNode =
     state.nodes.find((n) => n.ref === selected) ?? state.nodes[0];
   const cycle = state.history.at(-1);
-  const activeTrace = busy ? trace : (cycle?.trace ?? []);
+  const activeTrace = runOutcome === 'idle' ? (cycle?.trace ?? []) : trace;
+  const ratedContributors = new Set(
+    cycle?.segments
+      .filter(
+        (segment) =>
+          cycle.feedback.includes('all') ||
+          cycle.feedback.includes(segment.color),
+      )
+      .flatMap((segment) => segment.contributors) ?? [],
+  );
+  const feedbackUnavailable = (refs: string[]) =>
+    busy || refs.length === 0 || refs.some((ref) => ratedContributors.has(ref));
   const maxConfidence = cycle?.votes.length
     ? Math.max(...cycle.votes.map((vote) => vote.confidence))
     : null;
@@ -458,6 +474,8 @@ export default function Studio() {
       abortRef.current = controller;
       setBusy(true);
       setTrace([]);
+      setRunOutcome('running');
+      setRunInput(input);
       try {
         const snapshot = current.current;
         const result = await runCycle(
@@ -478,9 +496,15 @@ export default function Studio() {
             'Workspace changed during residual review. Retry the prompt.',
           );
         commit(finalState);
+        setRunOutcome('complete');
         setPrompt('');
         setSelected(result.cycle.votes[0]?.nodeRef ?? '');
       } catch (e) {
+        setRunOutcome(
+          e instanceof Error && e.name === 'AbortError'
+            ? 'cancelled'
+            : 'failed',
+        );
         if (e instanceof Error && e.name !== 'AbortError') setError(e.message);
         else announce('Cycle cancelled. No partial changes were saved.');
       } finally {
@@ -501,6 +525,8 @@ export default function Studio() {
       abortRef.current = controller;
       setBusy(true);
       setTrace([]);
+      setRunOutcome('running');
+      setRunInput(input);
       try {
         const result = await runCycle(
           snapshot,
@@ -514,7 +540,15 @@ export default function Studio() {
           );
         commit(result.state);
         nav('studio');
+        setRunOutcome('complete');
         return result.cycle;
+      } catch (e) {
+        setRunOutcome(
+          e instanceof Error && e.name === 'AbortError'
+            ? 'cancelled'
+            : 'failed',
+        );
+        throw e;
       } finally {
         setBusy(false);
         abortRef.current = null;
@@ -923,6 +957,8 @@ export default function Studio() {
                         <button
                           className={`text-button ${showProvenance ? 'teal' : ''}`}
                           aria-label="Run dossier"
+                          aria-expanded={showProvenance}
+                          aria-controls="run-dossier"
                           onClick={() => setShowProvenance(!showProvenance)}
                         >
                           <GitBranch size={15} />
@@ -944,6 +980,17 @@ export default function Studio() {
                   </div>
                   {cycle ? (
                     <div className="answer-body">
+                      <p className="result-context">
+                        Saved result · {cycle.input} · {clock(cycle.createdAt)}
+                      </p>
+                      <div
+                        id="run-dossier"
+                        hidden={!showProvenance}
+                        className="dossier-summary"
+                      >
+                        Vote scores are engine rankings, not calibrated
+                        probabilities.
+                      </div>
                       {cycle.visual && <VisualOutput visual={cycle.visual} />}
                       <div className="answer-segments">
                         {cycle.segments.map((seg) => (
@@ -974,6 +1021,9 @@ export default function Studio() {
                                   <span className="segment-feedback">
                                     <button
                                       aria-label={`Right ${seg.color} segment`}
+                                      disabled={feedbackUnavailable(
+                                        seg.contributors,
+                                      )}
                                       onClick={() =>
                                         giveFeedback(true, seg.color)
                                       }
@@ -982,6 +1032,9 @@ export default function Studio() {
                                     </button>
                                     <button
                                       aria-label={`Wrong ${seg.color} segment`}
+                                      disabled={feedbackUnavailable(
+                                        seg.contributors,
+                                      )}
                                       onClick={() =>
                                         giveFeedback(false, seg.color)
                                       }
@@ -1003,33 +1056,53 @@ export default function Studio() {
                           </pre>
                         </details>
                       )}
-                      {showProvenance &&
-                        cycle.votes.some((v) => v.evidence) && (
-                          <details className="native-evidence">
-                            <summary>Comparison and retrieval evidence</summary>
-                            {cycle.votes.map((v) => (
-                              <div key={v.id}>
-                                <strong>
-                                  {state.nodes.find((n) => n.ref === v.nodeRef)
-                                    ?.name ?? 'Removed node'}
-                                </strong>
-                                <pre>
-                                  {JSON.stringify(
-                                    {
-                                      evidence: v.evidence,
-                                      binding: v.binding,
-                                      resources: v.resources,
-                                      origin: v.origin,
-                                      group: v.group,
-                                    },
-                                    null,
-                                    2,
-                                  )}
-                                </pre>
-                              </div>
-                            ))}
-                          </details>
-                        )}
+                      {showProvenance && cycle.votes.length > 0 && (
+                        <details className="native-evidence">
+                          <summary>Comparison and retrieval evidence</summary>
+                          {cycle.votes.map((v) => (
+                            <div key={v.id}>
+                              <button
+                                className="text-button"
+                                onClick={() => setSelected(v.nodeRef)}
+                              >
+                                {state.nodes.find((n) => n.ref === v.nodeRef)
+                                  ?.name ?? 'Removed node'}
+                              </button>
+                              <pre>
+                                {JSON.stringify(
+                                  {
+                                    input: v.input,
+                                    matchedPattern: state.nodes
+                                      .find((n) => n.ref === v.nodeRef)
+                                      ?.entries.find(
+                                        (entry) => entry.id === v.entryRef,
+                                      )?.pattern,
+                                    action: v.action,
+                                    baseScore: v.base,
+                                    confidenceScore: v.confidence,
+                                    strength: v.strength,
+                                    evidence: v.evidence,
+                                    binding: v.binding,
+                                    resources: v.resources.map(
+                                      (ref) =>
+                                        state.resources.find(
+                                          (resource) => resource.ref === ref,
+                                        ) ?? {
+                                          id: ref,
+                                          status: 'Record no longer available',
+                                        },
+                                    ),
+                                    origin: v.origin,
+                                    group: v.group,
+                                  },
+                                  null,
+                                  2,
+                                )}
+                              </pre>
+                            </div>
+                          ))}
+                        </details>
+                      )}
                       <div className="answer-footer">
                         <span className="muted small">
                           {cycle.votes.length
@@ -1039,10 +1112,11 @@ export default function Studio() {
                         <div className="feedback-actions">
                           <button
                             className="button outline small-button"
-                            disabled={
-                              !cycle.votes.length ||
-                              cycle.feedback.includes('all')
-                            }
+                            disabled={feedbackUnavailable(
+                              cycle.segments.flatMap(
+                                (segment) => segment.contributors,
+                              ),
+                            )}
                             onClick={() => giveFeedback(true)}
                           >
                             <ThumbsUp size={15} />
@@ -1050,10 +1124,11 @@ export default function Studio() {
                           </button>
                           <button
                             className="button outline small-button"
-                            disabled={
-                              !cycle.votes.length ||
-                              cycle.feedback.includes('all')
-                            }
+                            disabled={feedbackUnavailable(
+                              cycle.segments.flatMap(
+                                (segment) => segment.contributors,
+                              ),
+                            )}
                             onClick={() => giveFeedback(false)}
                           >
                             <ThumbsDown size={15} />
@@ -1080,7 +1155,8 @@ export default function Studio() {
                     <div className="panel-title-stack">
                       <h2>Live topology</h2>
                       <span className="muted small">
-                        {state.nodes.length} nodes · 3 resolution tiers
+                        {Math.min(16, state.nodes.length)} of{' '}
+                        {state.nodes.length} nodes · schematic layout
                       </span>
                     </div>
                     <div className="network-controls">
@@ -1125,7 +1201,8 @@ export default function Studio() {
                           <button
                             type="button"
                             className="zoom-fit"
-                            aria-label={`Fit topology to canvas, current zoom ${Math.round(topologyZoom * 100)} percent`}
+                            aria-label="Fit topology to canvas"
+                            title={`Current zoom ${Math.round(topologyZoom * 100)} percent`}
                             onClick={() => setTopologyZoom(1)}
                           >
                             <Maximize2 size={14} />
@@ -1158,8 +1235,10 @@ export default function Studio() {
                     />
                   ) : (
                     <Trace
-                      steps={busy ? trace : (cycle?.trace ?? [])}
+                      steps={activeTrace}
                       busy={busy}
+                      outcome={runOutcome}
+                      input={runInput}
                     />
                   )}
                   <div className="graph-legend">
@@ -1186,6 +1265,9 @@ export default function Studio() {
                 </section>
                 <NodeInspector
                   node={selectedNode}
+                  vote={cycle?.votes.find(
+                    (vote) => vote.nodeRef === selectedNode?.ref,
+                  )}
                   maxStrength={state.settings.maxStrength}
                   onEdit={() => {
                     setEditing(selectedNode?.ref);
@@ -1201,7 +1283,10 @@ export default function Studio() {
                   }
                 />
               </div>
-              <div className="cycle-phase-strip" aria-label="Cycle phases">
+              <div
+                className="cycle-phase-strip"
+                aria-label="Completed cycle phases"
+              >
                 {[
                   'Prepare',
                   'Retrieve',
@@ -1213,12 +1298,9 @@ export default function Studio() {
                   const complete = activeTrace.some(
                     (step) => step.phase === phase,
                   );
-                  const current = busy && activeTrace.at(-1)?.phase === phase;
+
                   return (
-                    <span
-                      key={phase}
-                      className={`${complete ? 'is-complete' : ''} ${current ? 'is-current' : ''}`}
-                    >
+                    <span key={phase} className={complete ? 'is-complete' : ''}>
                       <i>{complete ? <Check size={12} /> : index + 1}</i>
                       {phase}
                     </span>
@@ -1450,6 +1532,8 @@ export default function Studio() {
                 <button
                   className="button primary"
                   onClick={() => {
+                    setRunOutcome('idle');
+                    setTrace([]);
                     commit(pendingLoad);
                     setStorageEnabled(true);
                     setDialog(null);
@@ -1470,6 +1554,8 @@ export default function Studio() {
               <button
                 className="button primary"
                 onClick={() => {
+                  setRunOutcome('idle');
+                  setTrace([]);
                   commit(seedSpecimen());
                   setStorageEnabled(true);
                   setDialog(null);
@@ -1520,25 +1606,63 @@ function Topology({
   zoom: number;
   onSelect: (id: string) => void;
 }) {
-  const visible = nodes.slice(0, 16);
+  const viewport = useRef<HTMLDivElement>(null);
+  const [size, setSize] = useState({ width: 640, height: 294 });
+  useEffect(() => {
+    const element = viewport.current;
+    if (!element) return;
+    const observer = new ResizeObserver(([entry]) => {
+      setSize({
+        width: entry.contentRect.width,
+        height: entry.contentRect.height,
+      });
+    });
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+  useEffect(() => {
+    if (zoom === 1) viewport.current?.scrollTo({ left: 0, top: 0 });
+  }, [zoom]);
+  const priority = [
+    ...nodes.filter((node) => node.ref === selected),
+    ...nodes.filter(
+      (node) => node.ref !== selected && active.includes(node.ref),
+    ),
+  ];
+  const visible = [
+    ...priority,
+    ...nodes.filter((node) => !priority.includes(node)),
+  ].slice(0, 16);
+  const width = size.width * zoom;
+  const height = size.height * zoom;
   const positions = visible.map((_, i) => {
     const angle = -Math.PI / 2 + (i * 2 * Math.PI) / visible.length;
-    return { x: 50 + Math.cos(angle) * 35, y: 49 + Math.sin(angle) * 32 };
+    return {
+      x: width / 2 + Math.cos(angle) * Math.max(0, width / 2 - 100),
+      y: height / 2 + Math.sin(angle) * Math.max(0, height / 2 - 40),
+    };
   });
   return (
-    <div className="topology">
-      <div className="topology-stage" style={{ transform: `scale(${zoom})` }}>
+    <section
+      className="topology"
+      ref={viewport}
+      // Keyboard users can scroll the zoomed graph without selecting a node.
+      // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- Scroll containers require keyboard focus.
+      tabIndex={0}
+      aria-label="Scrollable specimen topology"
+    >
+      <div className="topology-stage" style={{ width, height }}>
         <svg
           className="topology-lines"
-          viewBox="0 0 100 100"
+          viewBox={`0 0 ${width} ${height}`}
           preserveAspectRatio="none"
           aria-hidden="true"
         >
           {visible.map((n, i) => (
             <line
               key={n.ref}
-              x1="50"
-              y1="49"
+              x1={width / 2}
+              y1={height / 2}
               x2={positions[i].x}
               y2={positions[i].y}
               className={active.includes(n.ref) ? 'active-edge' : ''}
@@ -1569,7 +1693,7 @@ function Topology({
             <button
               key={n.ref}
               className={`graph-node node-color-${i % 3} ${selected === n.ref ? 'selected' : ''} ${active.includes(n.ref) ? 'contributed' : ''}`}
-              style={{ left: `${positions[i].x}%`, top: `${positions[i].y}%` }}
+              style={{ left: positions[i].x, top: positions[i].y }}
               onClick={() => onSelect(n.ref)}
               aria-label={`Inspect ${n.name}`}
               aria-pressed={selected === n.ref}
@@ -1592,16 +1716,18 @@ function Topology({
           Showing 16 of {nodes.length} nodes. Browse all in the library.
         </span>
       )}
-    </div>
+    </section>
   );
 }
 function NodeInspector({
   node,
+  vote,
   maxStrength,
   onEdit,
   onJitter,
 }: {
   node?: SpecimenNode;
+  vote?: Vote;
   maxStrength: number;
   onEdit: () => void;
   onJitter: () => void;
@@ -1650,11 +1776,16 @@ function NodeInspector({
         )}
       </div>
       <div className="inspector-section">
-        <span className="inspector-label">Original pattern</span>
-        <div className="code-box">{node.entries[0]?.pattern}</div>
+        <span className="inspector-label">
+          {vote ? 'Contributing pattern' : 'First stored pattern'}
+        </span>
+        <div className="code-box">
+          {node.entries.find((entry) => entry.id === vote?.entryRef)?.pattern ??
+            node.entries[0]?.pattern}
+        </div>
         <span className="inspector-label">Action</span>
         <div className="code-box">
-          {node.entries[0]?.alternatives[0]?.action}
+          {vote?.action ?? node.entries[0]?.alternatives[0]?.action}
         </div>
       </div>
       <div className="inspector-section">
@@ -1678,9 +1809,31 @@ function NodeInspector({
     </aside>
   );
 }
-function Trace({ steps, busy }: { steps: TraceStep[]; busy: boolean }) {
+function Trace({
+  steps,
+  busy,
+  outcome,
+  input,
+}: {
+  steps: TraceStep[];
+  busy: boolean;
+  outcome: string;
+  input: string;
+}) {
   return (
     <div className="trace-list">
+      {outcome !== 'idle' && (
+        <output className="trace-outcome">
+          {outcome === 'complete'
+            ? 'Completed'
+            : outcome === 'cancelled'
+              ? 'Cancelled · partial changes discarded'
+              : outcome === 'failed'
+                ? 'Failed · partial changes discarded'
+                : 'Processing'}
+          : {input}
+        </output>
+      )}
       {steps.length ? (
         steps.map((step, i) => (
           <div key={step.id} className="trace-step">

@@ -249,7 +249,7 @@ svg {
 .workspace-caption small {
   display: block;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 12px;
   margin-top: 7px;
 }
 .main-area {
@@ -567,13 +567,13 @@ svg {
 }
 .graph-legend .legend-tail {
   margin-left: auto;
-  font-size: 11px;
+  font-size: 12px;
 }
 .graph-overflow {
   position: absolute;
   bottom: 3px;
   left: 5px;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--muted);
   background: #fff;
 }
@@ -630,7 +630,7 @@ svg {
   border-radius: 5px;
   padding: 5px 8px;
   max-width: 65%;
-  font-size: 11px;
+  font-size: 12px;
 }
 .strength-bar {
   height: 6px;
@@ -659,7 +659,7 @@ svg {
   border-radius: 5px;
   padding: 9px 11px;
   font-family: var(--font-geist-mono), monospace;
-  font-size: 11px;
+  font-size: 12px;
   overflow-wrap: anywhere;
   margin-bottom: 18px;
   min-height: 36px;
@@ -697,7 +697,7 @@ svg {
 }
 .crystal-label {
   display: block;
-  font-size: 11px;
+  font-size: 12px;
   color: #126d58;
   margin-top: 7px;
 }
@@ -806,7 +806,7 @@ svg {
   margin-top: 10px;
 }
 .provenance-detail {
-  font-size: 11px;
+  font-size: 12px;
   display: flex;
   align-items: center;
   gap: 7px;
@@ -866,7 +866,7 @@ svg {
 }
 .visual-output figcaption {
   text-align: center;
-  font-size: 11px;
+  font-size: 12px;
   color: #6a7e76;
 }
 .trace-list {
@@ -884,7 +884,7 @@ svg {
 .trace-step > span {
   font-family: var(--font-geist-mono), monospace;
   color: #819891;
-  font-size: 11px;
+  font-size: 12px;
 }
 .trace-step strong {
   font-size: 13px;
@@ -994,7 +994,7 @@ svg {
 }
 .node-name-button small {
   display: block;
-  font-size: 11px;
+  font-size: 12px;
   color: #7c8b91;
   margin-top: 3px;
 }
@@ -1029,7 +1029,7 @@ svg {
   background: #f1f5f5;
   padding: 4px 6px;
   border-radius: 4px;
-  font-size: 11px;
+  font-size: 12px;
 }
 .row-actions {
   display: flex;
@@ -1075,7 +1075,7 @@ svg {
   display: inline-block;
   color: #587269;
   background: #eef5f1;
-  font-size: 11px;
+  font-size: 12px;
   padding: 4px 8px;
   border-radius: 4px;
 }
@@ -1109,7 +1109,7 @@ svg {
   overflow-wrap: anywhere;
 }
 .history-record small {
-  font-size: 11px;
+  font-size: 12px;
   color: #819097;
 }
 .activity-row {
@@ -1230,7 +1230,7 @@ svg {
   display: block;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  font-size: 10px;
+  font-size: 12px;
   color: #819188;
   margin: 22px 8px 14px;
 }
@@ -1247,7 +1247,7 @@ svg {
 }
 .chapter-nav nav a span {
   font-family: var(--font-geist-mono), monospace;
-  font-size: 10px;
+  font-size: 12px;
   color: #879c92;
 }
 .chapter-nav nav a:hover {
@@ -1266,7 +1266,7 @@ svg {
 .reference-meta {
   display: flex;
   justify-content: space-between;
-  font-size: 11px;
+  font-size: 12px;
   color: #82968e;
   letter-spacing: 0.5px;
 }
@@ -1639,7 +1639,7 @@ svg {
     height: 335px;
   }
   .node-label {
-    font-size: 11px;
+    font-size: 12px;
     padding-right: 8px;
   }
   .node-icon {
@@ -1653,7 +1653,7 @@ svg {
     width: 17px;
   }
   .orchestrator {
-    font-size: 11px;
+    font-size: 12px;
     padding: 10px;
   }
   .inspector-identity {
@@ -1691,7 +1691,7 @@ svg {
     font-size: 20px;
   }
   .brand small {
-    font-size: 11px;
+    font-size: 12px;
   }
   .nav-link {
     font-size: 13px;
@@ -1736,7 +1736,7 @@ svg {
     margin-bottom: 10px;
   }
   .label-row code {
-    font-size: 10px;
+    font-size: 12px;
   }
   .inspector-section .button {
     min-height: 34px;
@@ -1760,7 +1760,7 @@ svg {
     padding-right: 12px;
   }
   .chapter-nav nav a {
-    font-size: 11px;
+    font-size: 12px;
   }
   .reference-article {
     padding-right: 0;
@@ -1791,7 +1791,7 @@ svg {
     font-size: 12px;
   }
   .workspace-caption small {
-    font-size: 10px;
+    font-size: 12px;
   }
 }
 @media (max-width: 760px) {
@@ -1886,7 +1886,7 @@ svg {
     display: none;
   }
   .specimen-toolbar .text-button {
-    font-size: 11px;
+    font-size: 12px;
     margin-left: auto;
   }
   .specimen-name {
@@ -1907,7 +1907,7 @@ svg {
     font-size: 14px;
   }
   .network-panel .panel-heading > .muted {
-    font-size: 11px;
+    font-size: 12px;
   }
   .network-panel .segmented {
     width: 100%;
@@ -1930,7 +1930,7 @@ svg {
     gap: 3px;
   }
   .node-label {
-    font-size: 11px;
+    font-size: 12px;
     border: 1px solid #d3dce0;
     margin: 0;
     border-radius: 5px;
@@ -1939,7 +1939,7 @@ svg {
     max-width: 105px;
   }
   .orchestrator {
-    font-size: 10px;
+    font-size: 12px;
     gap: 5px;
     padding: 9px 10px;
   }
@@ -1947,7 +1947,7 @@ svg {
     width: 15px;
   }
   .graph-legend {
-    font-size: 11px;
+    font-size: 12px;
     gap: 18px;
     padding: 12px;
   }
@@ -1996,7 +1996,7 @@ svg {
     padding: 5px 12px 12px;
   }
   .suggestions button {
-    font-size: 11px;
+    font-size: 12px;
     padding: 6px 8px;
   }
   .conversation-panel .panel-heading {
@@ -2007,7 +2007,7 @@ svg {
     font-size: 14px;
   }
   .conversation-panel .text-button {
-    font-size: 11px;
+    font-size: 12px;
     gap: 4px;
   }
   .answer-body {
@@ -2017,7 +2017,7 @@ svg {
     font-size: 16px;
   }
   .answer-footer .small {
-    font-size: 11px;
+    font-size: 12px;
   }
   .feedback-actions {
     margin-left: auto;
@@ -2045,7 +2045,7 @@ svg {
     width: 16px;
   }
   .studio-footer {
-    font-size: 11px;
+    font-size: 12px;
     padding: 16px 3px;
   }
   .workspace-tools {
@@ -2120,7 +2120,7 @@ svg {
     font-size: 21px;
   }
   .reference-content pre code {
-    font-size: 11px;
+    font-size: 12px;
   }
   .reference-content table {
     font-size: 12px;
@@ -2136,7 +2136,7 @@ svg {
     font-size: 13px;
   }
   .setting-row p {
-    font-size: 11px;
+    font-size: 12px;
   }
   .setting-row > input {
     width: 87px;
@@ -2158,7 +2158,7 @@ svg {
     gap: 12px;
   }
   .activity-row time {
-    font-size: 10px;
+    font-size: 12px;
   }
   .activity-row strong {
     font-size: 13px;
@@ -2195,7 +2195,7 @@ svg {
     font-size: 14px;
   }
   .workspace-caption small {
-    font-size: 11px;
+    font-size: 12px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -2380,7 +2380,7 @@ svg {
 .model-card code {
   display: block;
   overflow-wrap: anywhere;
-  font-size: 10px;
+  font-size: 12px;
   margin: 6px 0;
 }
 .native-lab pre {
@@ -2388,7 +2388,7 @@ svg {
   overflow-wrap: anywhere;
   max-height: 240px;
   overflow: auto;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.5;
   background: #f3f6f3;
   padding: 12px;
@@ -2414,7 +2414,7 @@ svg {
 }
 .model-state {
   display: block;
-  font-size: 11px;
+  font-size: 12px;
   color: #67816f;
   margin-top: 5px;
 }
@@ -2527,7 +2527,7 @@ svg {
   color: var(--teal);
 }
 .native-evidence pre {
-  font-size: 10px;
+  font-size: 12px;
   max-height: 250px;
   overflow: auto;
   white-space: pre-wrap;
@@ -2665,7 +2665,7 @@ body {
   border-radius: 999px;
   color: #c8ddd6;
   font-family: var(--font-geist-mono), monospace;
-  font-size: 10px;
+  font-size: 12px;
   text-align: center;
 }
 
@@ -2739,14 +2739,14 @@ body {
   color: #27433d;
   box-shadow: var(--console-shadow);
   font-family: var(--font-geist-mono), monospace;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 540;
 }
 
 .header-specimen small {
   color: #49665e;
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .header-specimen .status-dot {
@@ -2943,7 +2943,7 @@ body {
   border-radius: 50%;
   color: #61766f;
   font-family: var(--font-geist-mono), monospace;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .workflow-step.is-primary .workflow-index {
@@ -3237,7 +3237,7 @@ body {
   background: transparent;
   color: #405d55;
   font-family: var(--font-geist-mono), monospace;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .zoom-controls button:last-child {
@@ -3902,4 +3902,74 @@ body {
   .answer-footer {
     align-items: flex-start;
   }
+}
+
+/* Inspection controls retain reachability at phone widths and enlarged text. */
+.topology {
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.topology-stage {
+  position: relative;
+  inset: auto;
+  transform: none;
+  transition: none;
+}
+.topology-lines line {
+  stroke-width: 1;
+}
+.topology-lines line.active-edge {
+  stroke-width: 1.5;
+}
+.topology-lines line.attachment-edge {
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+}
+.graph-node {
+  min-height: 44px;
+}
+.node-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.zoom-controls button,
+.segment-feedback button {
+  min-width: 44px;
+  min-height: 44px;
+}
+.zoom-fit {
+  min-width: 78px !important;
+}
+.zoom-fit span {
+  display: inline;
+}
+.provenance-detail,
+.trace-step p,
+.result-context,
+.dossier-summary,
+.trace-outcome {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+.result-context,
+.dossier-summary {
+  margin: 0 0 12px;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.trace-outcome {
+  display: block;
+  padding: 10px;
+  border-bottom: 1px solid #cdd8d1;
+  overflow-wrap: anywhere;
+}
+.native-evidence pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 0.8125rem;
+}
+.segment-feedback button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
