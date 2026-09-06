@@ -1,136 +1,90 @@
-# AGENTS.md — WDBX substrate
+# AGENTS.md - WDBX Substrate
 
-Canonical instructions for this repository. `CLAUDE.md` is a pointer to this file.
+Canonical instructions; `CLAUDE.md` redirects here. Executable source wins over
+prose. This is the Rust substrate, not the archived Workers MCP namesake.
 
-## What this repository is
+## Ownership
 
-The provenance-aware episodic substrate beneath ABI, plus the foundation layer it
-builds on. Extracted from `donaldfilimon/abi` on 2026-08-22 with history
-preserved (39 commits, every commit that touched these crates).
+- WDBX owns durable episodic semantics: trust, supersession, contradiction,
+  quarantine, and deletion. Consumers may expose lossy projections only if they
+  declare what is dropped; they must not invent a second canonical episode.
+  This is architectural ownership, not a claim that every operation is shipped.
+- Public source does not make stores, episodes, evidence, credentials, or runtime
+  state public. Never use the user's live store for tests or commit runtime data.
+- Five local crates: `abi-foundation`, `abi-telemetry`, `abi-compute`, `abi-core`,
+  `abi-wdbx`. There are no path dependencies back into ABI or Abbey. `abi-core`
+  has no consumers inside this workspace; its runtime consumers live in ABI.
+- ABI and Abbey consume `../wdbx/crates/...`. Keep all three repositories as
+  siblings; mixing git and path sources creates distinct, non-unifying crates.
+  WDBX's own build/CI does not require either consumer checkout.
 
-Authority, per the
-[Abbey System Constitution](https://github.com/donaldfilimon/abi/blob/main/docs/superpowers/specs/2026-08-22-abbey-system-constitution.md): this
-repository **owns durable episodic semantics** — what an episode is, what makes
-it trusted, how it is superseded, contradicted, quarantined, or deleted. No
-consumer may define a second answer. A consumer may hold a lossy *projection*,
-which must declare what it drops.
+## Gates
 
-## The remote
+`rust-toolchain.toml` pins `nightly-2026-09-01`; edition 2024, Rust floor 1.99.
+The exact CI gate (`.github/workflows/ci.yml`, hosted macOS) is:
 
-[`donaldfilimon/wdbx`](https://github.com/donaldfilimon/wdbx), public source.
-
-Public visibility applies to this reviewed source tree only. WDBX stores,
-episodes, evidence payloads, operator state, credentials, and consumer runtime
-data remain private to their owners and must never be committed here. Public
-source is not a public data service and grants no production authority.
-
-The short name was taken until 2026-08-22 by an unrelated **public** TypeScript
-and Zig Cloudflare Workers MCP server (5 commits, January 2026) that shared only
-the name. Rather than force-push over it, that project was renamed to
-`donaldfilimon/wdbx-workers-legacy` and archived, and this repository then took
-the name. Nothing of it was deleted.
-
-Ordering trap worth remembering: **archiving a repository does not free its
-name.** The rename has to come first.
-
-Consumers check this out as a sibling directory named `wdbx`, which now matches
-the repository name, because the relative path dependencies in `abi` and `abbey`
-say `../wdbx/crates/...`.
-
-The repository name is `wdbx`; `donaldfilimon/wdbx-substrate` is a rename
-redirect to it, not a second repository.
-
-## Layout
-
-Five crates, in dependency order. Every crate depends only on crates above it.
-
-```
-abi-foundation   (no deps)
-abi-telemetry    (no deps)
-abi-compute      (no deps)
-abi-core         -> abi-foundation, abi-telemetry
-abi-wdbx         -> abi-foundation, abi-compute
-```
-
-`abi-core` is a leaf here: nothing in this repository depends on it. It travels
-with the substrate because Donald chose the full dependency closure, and its
-consumers (`abi-cli`, `abi-mcp`, `abi-plugins`) live in `abi`.
-
-## Gate
-
-```
+```sh
 cargo fmt --all --check
 cargo clippy --workspace --all-targets
 cargo test --workspace
 ```
 
-Run all three commands against the current checkout before making a green-gate
-claim; extraction-era test totals are historical and are not a current
-acceptance contract. The workspace denies `unsafe_code` and all of clippy.
-One test: `cargo test -p abi-wdbx <test_name>`; `-p` takes any of the five
-crates.
+- There is no `check.sh` or `tools/cargo.sh` here. Select the pinned rustup
+  toolchain, not a Homebrew Cargo/rustc pair; keep the toolchain bin directory
+  and `/usr/bin` ahead of Homebrew Rust and Swiftly's compiler shims on macOS.
+- Unlike ABI, this clippy gate does not pass `-D warnings`: workspace lints deny
+  unsafe code and clippy `all`, but `missing_docs` and pedantic remain warnings.
+- The default gate does not exercise `abi-wdbx`'s `full-fhe` or
+  `experimental-dghv-bootstrap` features. Feature work needs explicit checks;
+  do not report default green as optional FHE runtime evidence.
+- Focused test: `cargo test -p abi-wdbx <filter>`; corpus target:
+  `cargo test -p abi-wdbx --test abbey_contracts`.
+- Docs-only changes: compare claims with source/tests and run `git diff --check`.
+  There is no dedicated Markdown validator. Do not call this a full Rust gate.
 
-This repository deliberately has no `tools/cargo.sh`. If Homebrew's Cargo
-shadows rustup on macOS, prefix the gate commands with
-`rustup run nightly-2026-09-01 cargo`; do not follow stale ABI-specific wrapper
-guidance here.
+## Persistence Boundaries
 
-## Rules that bite
+- `crates/abi-wdbx/tests/golden/` owns format fixtures. CLI/MCP output goldens
+  and the scheduler integration oracle remain in ABI (`tests/golden/` and
+  `crates/abi-cli/tests/golden_scheduler.rs`); do not duplicate them here.
+- `DurableStore` holds `<base>.writer.lock` for its lifetime. The bounded
+  `WouldBlock` retry in `src/durable.rs` handles fork/exec descriptor inheritance;
+  persistent contention is `WriterBusy`, not permission to open without a lock.
+- `StorePaths::new` accepts a directory; ABI CLI arguments use a base path.
+  Abbey's `<state>/wdbx/` directory is `<state>/wdbx/wdbx` to the ABI CLI.
+- `crates/abi-foundation/src/env.rs` owns ABI environment names and accessors.
+  Tests use its override/reset/locking hooks; empty values count as unset.
+- Preserve the frozen v2 JSON commitment domain and parent ordering. The v3
+  `abbey-cbor-episode-v1` encoder in `src/v3/commitment.rs` is separate, with
+  sorted parent digests; it is not a general CBOR decoder or episode signer.
+- `src/v3/episode/` owns the single-writer episode ledger, canonical commitment
+  calculation, policy/consent checks, replay rejection, and content-free receipts.
+  Transport JSON and adapter-provided digests are not canonical authority.
+- `abi-wdbx-gateway` remains in ABI. Its `ProposeEpisodeWrite` / `VerifyEpisode`
+  RPCs use this episode store only with configured episode policy. Do not rename
+  crates into CSAPS service names without a spec or equate that gate with full
+  constitutional MemoryService conformance or production federation.
 
-- **Sibling layout is load-bearing.** `abi` and `abbey` consume these crates by
-  relative path (`../wdbx/crates/...`). Mixing a git dependency in one consumer
-  with a path dependency in another gives Cargo two distinct `abi-wdbx` crates
-  whose types do not unify. Keep all three as siblings under `~/dev/active`.
-- **Golden fixtures are crate-local now.** `crates/abi-wdbx/tests/golden/` holds
-  the WDBX on-disk format samples that used to live at abi's repo root. They moved
-  because they describe *this* format. The CLI and MCP output goldens
-  (`help-wdbx.txt`, `wdbx-stats.txt`, `wdbx-db-verify.txt`) stayed in `abi`,
-  because they describe abi's surfaces.
-- **`abi-core`'s golden scheduler test did not come with it.** It asserted
-  `abi-core`'s scheduler against fixtures captured from abi's CLI and MCP output,
-  which makes it an integration test between substrate and runtime. It lives in
-  `abi`, where both sides exist. Do not re-add it here by copying the fixtures;
-  that would create two copies that drift.
-- **Do not rename crates toward CSAPS service names.** `abi-wdbx-gateway` (which
-  stayed in `abi`) resembles the specification's `MemoryService` but is not it:
-  no `ProposeWrite` write gate, no `Verify`. Renaming is Program 6 work and needs
-  a spec first.
+Paths beginning `src/` above are relative to `crates/abi-wdbx/`.
 
-## Honesty
+## Contract Corpus
 
-Report **Current** versus **Proposed**. The specification this substrate targets
-is a *proposed architecture* whose own status box says the integrated system is
-not empirically validated. Most of the evidence half of that specification is
-unimplemented here; the README says exactly which parts. Do not describe a
-capability as Current above the constitutional evidence level (C0-C7) that
-supports it.
-
-## Abbey contract conformance
-
-`contracts/abbey/` is an exact-byte vendor of ABI's qualified Program 1 corpus.
-The lock pins immutable ABI revision
-`63e6d6a79d0b8745a652803887d07665245ddb39` and aggregate digest
-`3ffd487bdc497b7ce54b8c29978a3686dcbffdb66a85957a0ee4f99ba576cdfd`.
-Refresh it only with ABI's deterministic `tools/vendor_abbey_contracts.py`;
-never copy or regenerate corpus files independently.
-
-WDBX qualifies only schemas and fixtures whose declared family begins
-`episode/`: proposal, evidence, claim, tombstone/retention, and the negative
-canonicalization boundary. The native integration test recomputes every file
-and aggregate digest, resolves schemas from the vendored corpus only, and
-rejects transport JSON or an adapter projection as a canonical episode. It
-does not itself open the separate v3 `EpisodeStore`, authorize a write, or
-establish production federation. WDBX's positive `abbey-cbor-episode-v1`
-vectors and episode-store replay tests are crate-local evidence, not corpus
-fixtures and not a claim of a general canonical-CBOR decoder.
+- `contracts/abbey/abbey-contracts.lock.json` pins the exact ABI corpus revision
+  and digest; `crates/abi-wdbx/tests/abbey_contracts.rs` pins qualification too.
+  Refresh only through ABI's `tools/vendor_abbey_contracts.py`, never manual
+  copying or independently regenerated fixtures.
+- Native qualification verifies all artifact bytes/digests but validates only
+  `episode/` schemas/fixtures. It does not open `EpisodeStore` or authorize writes.
+  Positive canonical-CBOR vectors and episode-store replay tests are separate
+  crate-local evidence, not vendored corpus fixtures.
+- Preserve Current/Partial/Proposed and C0-C7 evidence boundaries. Source or local
+  replay proof is not empirical integrated-system or production multi-host proof.
+  See `README.md` for the implementation gaps.
 
 <!-- machine-git-policy -->
-## Git workflow (machine policy, 2026-08-27)
+## Git Workflow
 
-Work on the default branch in this canonical checkout. Do not create
-branches or worktrees by default; they are for tasks that genuinely need
-isolation, or when Donald asks. Any worktree or topic branch created here
-must be merged back into this checkout's default branch, the worktree
-removed, and the branch deleted, before pushing and before the task is
-called done. Full policy: `~/.claude/CLAUDE.md` (*Git discipline*).
+Use this canonical checkout's default branch. Branch/worktree isolation requires
+a concrete need or explicit request; merge back and remove it before completion.
+Full policy: `~/.claude/CLAUDE.md`. Never discard unrelated dirty work.
 <!-- /machine-git-policy -->
