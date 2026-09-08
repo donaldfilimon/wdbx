@@ -883,17 +883,49 @@ export async function runCycle(
     cycle.trace.push({ id: uid(), phase, detail, count });
     onTrace?.([...cycle.trace]);
   };
+  const lexicalNegation = /\b(don't|do not|never)\b/i;
+  const isLexicallyNegated = (text: string) =>
+    lexicalNegation.test(normalize(text));
+  const clauses = input
+    .split(';')
+    .map((clause) => clause.trim())
+    .filter(Boolean)
+    .map((clause) => ({
+      input: clause,
+      negated: isLexicallyNegated(clause),
+    }));
   const variants = fanouts(input, state);
-  const chunks = variants
-    .flatMap((v) => v.split(/\s+(?:and then|then)\s+|;/i))
-    .map((x) => x.trim())
-    .filter(Boolean);
+  const chunks = variants.flatMap((variant) =>
+    variant
+      .split(';')
+      .map((clause) => clause.trim())
+      .filter(Boolean)
+      .flatMap((clause) =>
+        clause
+          .split(/\s+(?:and then|then)\s+/i)
+          .map((input) => input.trim())
+          .filter(Boolean)
+          .map((input) => ({
+            input,
+            negated: isLexicallyNegated(clause),
+          })),
+      ),
+  );
   step(
     'Prepare',
     `${variants.length} bounded variants; ${chunks.length} input chunks`,
     chunks.length,
   );
-  const negated = chunks.every((chunk) => /\b(don't|do not|never)\b/i.test(chunk));
+  const negatedClauseCount = clauses.filter((clause) => clause.negated).length;
+  const negated = negatedClauseCount === clauses.length;
+  if (negatedClauseCount > 0)
+    step(
+      'Scope',
+      clauses.length > 1
+        ? `Lexical negation suppressed matches in ${negatedClauseCount} of ${clauses.length} semicolon-delimited clauses; ${clauses.length - negatedClauseCount} independent ${clauses.length - negatedClauseCount === 1 ? 'clause' : 'clauses'} remained active`
+        : 'Lexical negation conservatively scoped to the full prompt; no explicit semicolon boundary',
+      negatedClauseCount,
+    );
   const map = new HybridTable(
     state.nodes.filter((n) => n.type === 'pattern'),
     (n) => n.patternId,
@@ -902,6 +934,7 @@ export async function runCycle(
     node: SpecimenNode;
     entry: Entry;
     input: string;
+    negated: boolean;
     group?: string;
     depth: number;
   }[] = [];
@@ -909,32 +942,35 @@ export async function runCycle(
   const enqueue = (
     node: SpecimenNode,
     chunk: string,
+    negated: boolean,
     group?: string,
     depth = 0,
   ) => {
     if (depth > 4) return;
     for (const entry of node.entries) {
-      const key = `${entry.id}:${chunk}:${group ?? ''}`;
+      const key = `${entry.id}:${chunk}:${negated}:${group ?? ''}`;
       if (!visited.has(key)) {
         visited.add(key);
-        jobs.push({ node, entry, input: chunk, group, depth });
+        jobs.push({ node, entry, input: chunk, negated, group, depth });
       }
     }
   };
   for (const chunk of chunks) {
-    const id = identify(chunk);
+    const id = identify(chunk.input);
     const candidates = [
       ...map.lookup(id.id),
       ...state.nodes.filter(
         (n) =>
           n.type === 'pattern' &&
           n.entries.some(
-            (e) => /&[^\s]*\*/.test(e.pattern) || matchesBind(e.pattern, chunk),
+            (e) =>
+              /&[^\s]*\*/.test(e.pattern) ||
+              matchesBind(e.pattern, chunk.input),
           ),
       ),
     ];
     for (const node of new Map(candidates.map((n) => [n.ref, n])).values())
-      enqueue(node, chunk);
+      enqueue(node, chunk.input, chunk.negated);
   }
   step(
     'Retrieve',
@@ -949,7 +985,7 @@ export async function runCycle(
       await new Promise<void>((r) => setTimeout(r, 0));
     const job = jobs[i];
     scans++;
-    if (/\b(don't|do not|never)\b/i.test(job.input) && bindShape(job.entry.pattern) !== 'negation') continue;
+    if (job.negated && bindShape(job.entry.pattern) !== 'negation') continue;
     const base = deepScore(job.entry.pattern, job.input);
     const score = confidence(base, job.node, state.settings, () =>
       random(state),
@@ -996,7 +1032,14 @@ export async function runCycle(
               : null;
         if (target && (a.hard || random(state) < a.affinity)) {
           const node = state.nodes.find((n) => n.ref === target);
-          if (node) enqueue(node, remainder, job.group ?? a.id, job.depth + 1);
+          if (node)
+            enqueue(
+              node,
+              remainder,
+              job.negated,
+              job.group ?? a.id,
+              job.depth + 1,
+            );
         }
       }
   }

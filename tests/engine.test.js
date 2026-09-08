@@ -245,13 +245,46 @@ test('automata halt at bounded budget and PHAGY preserves mutation history', () 
   expect(cleaned.mutations).toEqual(s.mutations);
 });
 
-test('coarse ID collisions are independently scored and negation stays within its clause', async () => {
+test('coarse ID collisions are independently scored', () => {
   expect(identify('2+2').id).toBe(identify('9+9').id);
   expect(deepScore('2+2', '9+9')).toBeLessThan(62);
+});
+
+test('lexical negation suppresses only its semicolon-delimited clause', async () => {
+  for (const prompt of [
+    "don't calculate 2+2; hello",
+    'don’t calculate 2+2; hello',
+    "hello; don't calculate 2+2",
+  ]) {
+    const { cycle } = await runCycle(seedSpecimen(), prompt);
+    expect(cycle.segments.some((s) => s.text.startsWith('Hello'))).toBe(true);
+    expect(cycle.segments.some((s) => s.text === '4')).toBe(false);
+    expect(cycle.status).toBe('complete');
+    expect(
+      cycle.trace.some(
+        (step) =>
+          step.phase === 'Scope' &&
+          step.detail ===
+            'Lexical negation suppressed matches in 1 of 2 semicolon-delimited clauses; 1 independent clause remained active',
+      ),
+    ).toBe(true);
+  }
+});
+
+test('lexical negation remains conservative without a semicolon boundary', async () => {
   const { cycle } = await runCycle(
     seedSpecimen(),
-    "don't calculate 2+2; hello",
+    "don't calculate 2+2 then hello",
   );
-  expect(cycle.segments.some((s) => s.text.startsWith('Hello'))).toBe(true);
+  expect(cycle.segments.some((s) => s.text.startsWith('Hello'))).toBe(false);
   expect(cycle.segments.some((s) => s.text === '4')).toBe(false);
+  expect(cycle.status).toBe('inhibited');
+  expect(
+    cycle.trace.some(
+      (step) =>
+        step.phase === 'Scope' &&
+        step.detail ===
+          'Lexical negation conservatively scoped to the full prompt; no explicit semicolon boundary',
+    ),
+  ).toBe(true);
 });
