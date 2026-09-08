@@ -1,14 +1,64 @@
 # Validation record
 
-Validated on September 4, 2026.
+Validated on September 8, 2026, using the repository's local Vite preview and
+headless Chrome.
 
-- TypeScript type checking: passed.
-- Focused lint checks for studio, specimen runtime, and WebMCP adapter: passed.
-- Production build: passed.
-- Runtime tests: 13 passed, 57 assertions. Coverage includes arithmetic and parser failures, exact duplicate rejection, same-ID peers, preserved multi-entry edits, bind templates, bounded confidence, feedback deduplication, raft coverage/cancellation, pin retention, complete JSON round-trip, malformed nested data, last-peer detachment, Type A/B proposals, and bounded automata/PHAGY.
-- Isolated Chrome acceptance: passed. Exercised arithmetic, contributor view, overlapping-feedback rejection, pinning, node creation, a taught response, combined settings/name save, IndexedDB reload, JSON download and restore, malformed import rejection, reference chapter navigation, and phone navigation.
-- Browser sizes: 1568 × 1000 and 390 × 844. No horizontal document overflow in the studio or reader. No uncaught browser runtime errors in the acceptance run.
-- WebMCP: the browser did not expose `document.modelContext`; native registration/execution remains unverified. The application feature-detects the optional API and retains all graphical workflows. This is not a claim of verified native WebMCP support.
+- TypeScript type checking: `bunx tsc --noEmit` passed.
+- Focused lint checks: `bun run lint:studio` passed for the studio, specimen
+  runtime, and WebMCP adapter.
+- Production build: `bun run build` passed. Vinext emitted its existing dynamic
+  route-classification note and Node emitted the `module.register()` deprecation
+  warning; neither stopped the build.
+- Runtime tests: `bun test` passed 17 tests across 2 files, with 77 `expect()`
+  calls and no failures. Coverage includes the instrument-console contracts,
+  arithmetic and parser failures, exact duplicate rejection, same-ID peers,
+  preserved multi-entry edits, bind templates, bounded confidence, feedback
+  deduplication, raft coverage/cancellation, pin retention, complete JSON
+  round-trip, malformed nested data, last-peer detachment, Type A/B proposals,
+  and bounded automata/PHAGY.
+- Browser E2E: `STUDIO_URL=http://127.0.0.1:4176 bun run test:browser`
+  passed. It exercised arithmetic, topology/trace switching, all six trace
+  phases, result outcome context, contributor provenance and native evidence,
+  feedback deduplication, pinning, node creation, a taught response, combined
+  settings/name save, IndexedDB reload, JSON download and restore, malformed
+  import rejection, specification navigation, and the phone drawer lifecycle.
+- Independent browser rerun: `STUDIO_URL=http://127.0.0.1:3017 bun run
+test:browser` also passed with zero page or console errors. Port 3017 kept the
+  run isolated from an unrelated application already listening on port 3000.
+- Responsive topology acceptance passed at 390 × 1000, 768 × 1000, and
+  1440 × 1000. At each width, Fit returned the topology to 100%, every rendered
+  graph node remained inside the canvas, zoom reached its bounded 130% state,
+  and the zoomed canvas exposed scrolling rather than clipping its controls or
+  nodes. The broader run also checked the 1568 × 1000 desktop composition and
+  390 × 844 phone/reader flow, with no horizontal document overflow or uncaught
+  browser runtime errors.
+- Fresh desktop, phone, and specification-reader screenshots were inspected at
+  native size. The 390-pixel console keeps the view toggle and full zoom control
+  group visible by wrapping them within the topology panel.
+- Contributor feedback acceptance exercised a descriptively named segment
+  control, verified that both it and the overlapping whole-result control use
+  native disabled semantics after submission, and observed the result through
+  the polite live region.
+- WebMCP: Chrome did not expose `document.modelContext`; native
+  registration/execution remains unverified. The application feature-detects
+  the optional API and retains its graphical workflows. This is not a claim of
+  verified native WebMCP support.
+
+## Remaining native and manual qualification gaps
+
+- The Rust engine tests, workspace Clippy gate, Tauri launch, and desktop
+  packaging were not rerun for this browser-only layout correction. This record
+  does not extend the browser result into native-engine or packaged-desktop
+  qualification.
+- CPU runtime construction, model downloads, live text or image inference,
+  accelerator behavior, signing, notarization, and installer behavior were not
+  exercised and remain unqualified.
+- The responsive interaction run used headless Chrome. Safari, Firefox,
+  physical touch input, keyboard-only traversal of the entire studio, screen
+  readers, browser zoom/text enlargement, and a manual packaged-Tauri visual
+  pass remain unqualified.
+- Native WebMCP registration and execution still require a browser/runtime that
+  exposes `document.modelContext`.
 
 ## Design comparison
 

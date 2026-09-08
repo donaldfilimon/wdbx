@@ -3846,7 +3846,8 @@ body {
   .network-controls {
     width: 100%;
     margin-left: 0;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: flex-start;
   }
 
   .network-controls button {
