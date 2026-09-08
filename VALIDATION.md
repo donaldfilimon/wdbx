@@ -124,6 +124,19 @@ passed. Independent review approved the correction. The second Linux step uses
 Final hosted qualification must still prove the split-bundle sequence and
 installed payload on Linux.
 
+The completed `25ea8e95` desktop run ultimately passed both macOS architectures
+and Windows; Linux retained the Debian-stage failure described above. The next
+local candidate `6aba808e` passed production/native/OCR/GPU gates and Chrome/
+Firefox acceptance, but WebKit's accessibility test exposed a harness focus
+race: it waited for the mobile drawer's closed class, then focused Add pattern
+before the application's animation-frame focus return completed. Enter could
+therefore reopen navigation instead of opening the dialog. The test now waits
+for the required Open navigation focus-return state before proceeding. The
+focused WebKit accessibility rerun passed 390/768/1440; the initial failure is
+retained under that candidate's `browser-webkit-initial-focus.log`. No application
+behavior or timing delay was introduced. A new source commit and fresh final
+gates are required for this test-only correction as well.
+
 ### Fresh local baseline, September 8, 2026
 
 At `6d76b0c`, the following commands returned exit 0 in this task:

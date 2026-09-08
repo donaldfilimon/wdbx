@@ -118,6 +118,9 @@ async function navigate(page, width, href) {
     .click();
   if (width <= 760) {
     await expect(page.locator('.sidebar')).not.toHaveClass(/is-open/);
+    await expect(
+      page.getByRole('button', { name: 'Open navigation' }),
+    ).toBeFocused();
   }
 }
 
