@@ -292,6 +292,8 @@ test('records a completed failed job as failed without treating it as proof', as
   expect(summary.overall).toBe('failed');
 });
 
+// This integration case invokes the Python collector eight times. Keep a
+// bounded budget above Bun's five-second unit default on loaded CI hosts.
 test('accepts the real browser-checks receipt shape without treating it as inference', async () => {
   const { root, manifest } = await fixture({ artifact: false });
   const metadataPath = join(root, 'desktop-run.json');
@@ -426,7 +428,7 @@ test('accepts the real browser-checks receipt shape without treating it as infer
     status: 'unverified',
     blocker: 'required matrix job is missing, skipped, or incomplete',
   });
-});
+}, 30000);
 
 test('downgrades manual evidence without frozen-source provenance to unverified', async () => {
   const { root, manifest } = await fixture();
