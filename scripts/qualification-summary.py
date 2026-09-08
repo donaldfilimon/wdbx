@@ -170,6 +170,38 @@ def valid_file_record(value: Any) -> bool:
     return isinstance(value, dict) and isinstance(value.get("path"), str) and bool(value["path"]) and SHA256.fullmatch(str(value.get("sha256", ""))) is not None
 
 
+def validate_accessibility_widths(widths: Any) -> list[int]:
+    require(isinstance(widths, dict), "browser accessibility widths are malformed")
+    normalized = {str(key): value for key, value in widths.items()}
+    required_states = {
+        "studio", "open-provenance-dossier", "cycle-trace-completed",
+        "disabled-contributor-feedback", "zoomed-keyboard-scrollable-topology",
+        "specification-reader",
+    }
+    required_targets = {
+        "Network", "Cycle trace", "Zoom out topology", "Fit topology to canvas",
+        "Zoom in topology", "Run dossier", "Right", "Wrong",
+    }
+    for width in (390, 768, 1440):
+        record = normalized.get(str(width))
+        require(isinstance(record, dict), f"browser accessibility width {width} is missing or malformed")
+        audits = record.get("audits")
+        require(isinstance(audits, list) and bool(audits), f"browser accessibility width {width} has no audits")
+        states = set()
+        for audit in audits:
+            require(isinstance(audit, dict) and isinstance(audit.get("state"), str), f"browser accessibility width {width} has a malformed audit")
+            require(all(audit.get(key) == 0 and not isinstance(audit.get(key), bool) for key in ("seriousOrCriticalViolations", "unnamedControls", "orphanedControls")), f"browser accessibility width {width} contains violations or unlabeled controls")
+            states.add(audit["state"])
+        expected_states = required_states | ({"mobile-drawer"} if width == 390 else set())
+        require(expected_states <= states, f"browser accessibility width {width} is missing required audit states")
+        targets = record.get("touchTargets")
+        require(isinstance(targets, list) and required_targets <= set(targets), f"browser accessibility width {width} has incomplete touch-target evidence")
+        require(record.get("keyboardContainment") == "passed", f"browser accessibility width {width} keyboard containment did not pass")
+        if width == 1440:
+            require(record.get("traceOutcomes") == ["Processing", "Cancelled", "Failed", "Completed"], "browser accessibility trace outcomes are incomplete")
+    return [390, 768, 1440]
+
+
 def validate_domain(kind: str, receipt: dict[str, Any], source_sha: str, run_id: str, package_qualification_run_id: str | None, receipt_name: str) -> dict[str, Any]:
     receipt_sha = receipt.get("headSha", receipt.get("sourceSha"))
     require(receipt_sha == source_sha, f"{kind} receipt must identify the frozen source SHA")
@@ -179,11 +211,9 @@ def validate_domain(kind: str, receipt: dict[str, Any], source_sha: str, run_id:
     if kind == "browser":
         require(receipt.get("passed") is True and isinstance(receipt.get("engine"), str), "browser receipt does not record successful browser checks")
         if receipt_name.startswith("accessibility-checks-"):
-            widths = receipt.get("widths")
-            observed_widths = sorted(int(key) for key in widths if str(key).isdigit()) if isinstance(widths, dict) else []
             require(receipt.get("errors") == [], "browser accessibility receipt contains errors")
-            complete = all(width in observed_widths for width in (390, 768, 1440))
-            return {"engine": receipt["engine"], "accessibility": "passed" if complete else "incomplete", "widths": observed_widths}
+            observed_widths = validate_accessibility_widths(receipt.get("widths"))
+            return {"engine": receipt["engine"], "accessibility": "passed", "widths": observed_widths}
         return {"engine": receipt["engine"], "functional": "passed"}
     require(receipt.get("schema") == 1, f"{kind} receipt is malformed")
     if kind == "desktop":
@@ -326,8 +356,20 @@ def inspect_run(entry: dict[str, Any], repository: str, source_sha: str, package
             result.setdefault("receipts", []).append(str(path.relative_to(root)))
         except (EvidenceError, OSError, KeyError, TypeError) as error:
             message = f"{path.relative_to(root)}: {error}"
-            print(f"error: {message}", file=sys.stderr)
-            result.setdefault("errors", []).append(message)
+            incomplete_accessibility = kind == "browser" and any(
+                phrase in str(error)
+                for phrase in (
+                    "is missing or malformed", "has no audits",
+                    "is missing required audit states",
+                    "has incomplete touch-target evidence",
+                    "trace outcomes are incomplete",
+                )
+            )
+            if incomplete_accessibility:
+                result.setdefault("evidenceGaps", []).append(message)
+            else:
+                print(f"error: {message}", file=sys.stderr)
+                result.setdefault("errors", []).append(message)
     result["domain"] = domains[0] if len(domains) == 1 else {"receipts": domains}
     expected_matrix = {
         "desktop": {"macos-14", "macos-15-intel", "windows-2022", "ubuntu-24.04"},
@@ -372,6 +414,8 @@ def render_markdown(summary: dict[str, Any]) -> str:
             lines.append(f"  - Blocker: {run['blocker']}")
         for error in run.get("errors", []):
             lines.append(f"  - Evidence error: {error}")
+        for gap in run.get("evidenceGaps", []):
+            lines.append(f"  - Evidence gap: {gap}")
         for job in run.get("jobs", []):
             lines.append(f"  - Job `{job.get('name')}`: {job.get('conclusion') or 'unverified'}")
         if run.get("domain"):

@@ -18,6 +18,40 @@ function sha256(value) {
   return new Bun.CryptoHasher('sha256').update(value).digest('hex');
 }
 
+function accessibilityWidth(width) {
+  const states = [
+    'studio',
+    'open-provenance-dossier',
+    'cycle-trace-completed',
+    'disabled-contributor-feedback',
+    'zoomed-keyboard-scrollable-topology',
+    'specification-reader',
+  ];
+  if (width === 390) states.push('mobile-drawer');
+  return {
+    audits: states.map((state) => ({
+      state,
+      seriousOrCriticalViolations: 0,
+      unnamedControls: 0,
+      orphanedControls: 0,
+    })),
+    touchTargets: [
+      'Network',
+      'Cycle trace',
+      'Zoom out topology',
+      'Fit topology to canvas',
+      'Zoom in topology',
+      'Run dossier',
+      'Right',
+      'Wrong',
+    ],
+    keyboardContainment: 'passed',
+    ...(width === 1440
+      ? { traceOutcomes: ['Processing', 'Cancelled', 'Failed', 'Completed'] }
+      : {}),
+  };
+}
+
 async function fixture({ artifact = true, conclusion = 'success' } = {}) {
   const root = await mkdtemp(join(tmpdir(), 'wdbx-qualification-summary-'));
   temporary.push(root);
@@ -276,7 +310,11 @@ test('accepts the real browser-checks receipt shape without treating it as infer
         passed: true,
         headSha: sourceSha,
         engine,
-        widths: { 390: {}, 768: {}, 1440: {} },
+        widths: {
+          390: accessibilityWidth(390),
+          768: accessibilityWidth(768),
+          1440: accessibilityWidth(1440),
+        },
         errors: [],
       }),
     );
@@ -319,7 +357,7 @@ test('accepts the real browser-checks receipt shape without treating it as infer
       passed: true,
       headSha: sourceSha,
       engine: 'webkit',
-      widths: { 390: {}, 1440: {} },
+      widths: { 390: accessibilityWidth(390), 1440: accessibilityWidth(1440) },
       errors: [],
     }),
   );
@@ -339,10 +377,41 @@ test('accepts the real browser-checks receipt shape without treating it as infer
       passed: true,
       headSha: sourceSha,
       engine: 'webkit',
-      widths: { 390: {}, 768: {}, 1440: {} },
+      widths: {
+        390: accessibilityWidth(390),
+        768: accessibilityWidth(768),
+        1440: accessibilityWidth(1440),
+      },
       errors: [],
     }),
   );
+  const accessibilityPath = join(
+    root,
+    'desktop/accessibility-checks-webkit.json',
+  );
+  const validAccessibility = JSON.parse(
+    await readFile(accessibilityPath, 'utf8'),
+  );
+  for (const mutate of [
+    (receipt) => {
+      receipt.widths[390] = null;
+    },
+    (receipt) => {
+      receipt.widths[768].audits = [];
+    },
+    (receipt) => {
+      receipt.widths[1440].audits[0].seriousOrCriticalViolations = 1;
+    },
+    (receipt) => {
+      receipt.widths[390].keyboardContainment = 'failed';
+    },
+  ]) {
+    const invalid = structuredClone(validAccessibility);
+    mutate(invalid);
+    await writeFile(accessibilityPath, JSON.stringify(invalid));
+    expect(run(manifest).exitCode).not.toBe(0);
+  }
+  await writeFile(accessibilityPath, JSON.stringify(validAccessibility));
   const jobs = JSON.parse(
     await readFile(join(root, 'desktop-jobs.json'), 'utf8'),
   );
