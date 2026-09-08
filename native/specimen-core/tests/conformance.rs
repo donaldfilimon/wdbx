@@ -72,6 +72,25 @@ fn durable_roundtrip_stale_revision_and_failed_import() {
     let reopened = Store::open(temp.path().join("b")).unwrap();
     assert_eq!(reopened.snapshot.revision, 1);
 }
+
+#[test]
+fn portable_save_preserves_fractional_specimen_values_exactly() {
+    let temp = tempfile::tempdir().unwrap();
+    let mut store = Store::open(temp.path().join("source")).unwrap();
+    let mut specimen = starter();
+    // A valid f64 whose short decimal drifts by one ULP with the default parser.
+    // Cycle durations and confidence evidence exercise the same JSON boundary.
+    specimen["settings"]["jitter"] = json!(1.8688716782771921_f64);
+    store.edit(0, specimen.clone()).unwrap();
+    let archive = temp.path().join("fractional.wdbxspecimen");
+    store.export(&archive).unwrap();
+    let restored = store.import(&archive, 1).unwrap();
+    assert_eq!(restored.revision, 2);
+    assert_eq!(restored.specimen, specimen);
+    drop(store);
+    let reopened = Store::open(temp.path().join("source")).unwrap();
+    assert_eq!(reopened.snapshot.specimen, specimen);
+}
 #[test]
 fn cancellation_does_not_commit() {
     let s = starter();

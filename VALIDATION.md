@@ -55,6 +55,17 @@ workflow now isolates fixture dependencies in an ephemeral virtual environment
 and pins Pillow to the locally exercised 12.3.0 version; it does not disable
 managed-Python protections. The failed run produced no OCR acceptance artifact.
 
+Windows completed three native scenarios but failed exact portable save/restore.
+A local regression reproduced a real JSON parsing defect: the valid stored
+fraction `1.8688716782771921` became `1.868871678277192` after archive import.
+The workspace enables serde_json's exact floating-point round-trip parser;
+the regression covers both archive import and durable reopen. Native E2E
+compares complete specimen values with a structural diff and separately checks
+the new revision. The Windows failure lacks its original value diff, so the
+fresh hosted run must establish whether this correction resolves that case.
+Logs remain under `work/qualification-20260908/hosted/windows-initial-job.log`
+and `work/qualification-20260908/portable-fractional-*.log`.
+
 ### Fresh local baseline, September 8, 2026
 
 At `6d76b0c`, the following commands returned exit 0 in this task:

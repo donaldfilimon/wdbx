@@ -129,9 +129,7 @@ describe('Native specimen desktop', () => {
           stalePreserved: JSON.stringify(afterStale) === JSON.stringify(edited),
           malformedPreserved:
             JSON.stringify(afterMalformed) === JSON.stringify(edited),
-          restored:
-            JSON.stringify(restored.specimen) ===
-            JSON.stringify(original.specimen),
+          originalSpecimen: original.specimen,
           revision: restored.revision,
           expectedRevision: edited.revision + 1,
           specimen: restored.specimen,
@@ -143,7 +141,12 @@ describe('Native specimen desktop', () => {
       throw Error('Stale native edit replaced committed data');
     if (!result.malformedCode || !result.malformedPreserved)
       throw Error('Malformed import replaced committed data');
-    if (!result.restored || result.revision !== result.expectedRevision)
+    deepStrictEqual(
+      result.specimen,
+      result.originalSpecimen,
+      'Portable save changed the original specimen',
+    );
+    if (result.revision !== result.expectedRevision)
       throw Error(
         'Portable save did not restore the exact specimen at a new revision',
       );
