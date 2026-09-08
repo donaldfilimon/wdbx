@@ -883,7 +883,7 @@ svg {
 }
 .trace-step > span {
   font-family: var(--font-geist-mono), monospace;
-  color: #819891;
+  color: #657770;
   font-size: 12px;
 }
 .trace-step strong {
@@ -1231,7 +1231,7 @@ svg {
   text-transform: uppercase;
   letter-spacing: 1.5px;
   font-size: 12px;
-  color: #819188;
+  color: #62746e;
   margin: 22px 8px 14px;
 }
 .chapter-nav nav a {
@@ -1248,7 +1248,7 @@ svg {
 .chapter-nav nav a span {
   font-family: var(--font-geist-mono), monospace;
   font-size: 12px;
-  color: #879c92;
+  color: #586b64;
 }
 .chapter-nav nav a:hover {
   background: #f0f6f3;
@@ -1267,7 +1267,7 @@ svg {
   display: flex;
   justify-content: space-between;
   font-size: 12px;
-  color: #82968e;
+  color: #62746e;
   letter-spacing: 0.5px;
 }
 .reference-article > h2 {
@@ -3169,6 +3169,7 @@ body {
 
 .answer-footer .feedback-actions .button {
   flex: 1;
+  min-height: 44px;
 }
 
 .answer-footer .small {
@@ -3389,7 +3390,7 @@ body {
   min-height: 48px;
   padding: 9px 13px;
   border-right: 1px solid var(--line);
-  color: #687a74;
+  color: #62746e;
   font-size: 12px;
   font-weight: 600;
 }
@@ -3405,7 +3406,7 @@ body {
   height: 22px;
   border: 1px solid #ced8d2;
   border-radius: 50%;
-  color: #778983;
+  color: #657871;
   font-family: var(--font-geist-mono), monospace;
   font-size: 9px;
   font-style: normal;
@@ -3936,6 +3937,11 @@ body {
 }
 .zoom-controls button,
 .segment-feedback button {
+  min-width: 44px;
+  min-height: 44px;
+}
+.network-controls button,
+.conversation-panel .panel-heading button {
   min-width: 44px;
   min-height: 44px;
 }

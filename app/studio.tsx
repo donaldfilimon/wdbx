@@ -174,6 +174,8 @@ export default function Studio() {
     promptRef = useRef<HTMLInputElement>(null),
     mobileMenuRef = useRef<HTMLButtonElement>(null),
     mobileCloseRef = useRef<HTMLButtonElement>(null),
+    sidebarRef = useRef<HTMLElement>(null),
+    dialogReturnRef = useRef<HTMLElement | null>(null),
     navWasOpen = useRef(false),
     abortRef = useRef<AbortController | null>(null),
     lastInteraction = useRef(0),
@@ -217,6 +219,26 @@ export default function Studio() {
       );
     }
   }, []);
+  const openDialog = useCallback(
+    (
+      next: 'node' | 'resource' | 'load' | 'reset' | 'attach',
+      preserveReturn = false,
+    ) => {
+      if (!preserveReturn && document.activeElement instanceof HTMLElement)
+        dialogReturnRef.current = document.activeElement;
+      setDialog(next);
+    },
+    [],
+  );
+  useEffect(() => {
+    if (dialog !== null || !dialogReturnRef.current) return;
+    const target = dialogReturnRef.current;
+    dialogReturnRef.current = null;
+    const frame = requestAnimationFrame(() => {
+      if (target.isConnected) target.focus();
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [dialog]);
   const nav = useCallback((v: View, section?: number) => {
     setView(v);
     setQuery('');
@@ -269,11 +291,35 @@ export default function Studio() {
   }, []);
   useEffect(() => {
     if (!mobileNav) return;
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setMobileNav(false);
+    const containDrawerFocus = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMobileNav(false);
+        return;
+      }
+      if (event.key !== 'Tab') return;
+      const drawer = sidebarRef.current;
+      if (!drawer) return;
+      const controls = [
+        ...drawer.querySelectorAll<HTMLElement>(
+          'a[href], button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])',
+        ),
+      ].filter((element) => !element.hidden);
+      if (!controls.length) return;
+      event.preventDefault();
+      const currentIndex = controls.findIndex(
+        (element) => element === document.activeElement,
+      );
+      const direction = event.shiftKey ? -1 : 1;
+      const nextIndex =
+        currentIndex < 0
+          ? event.shiftKey
+            ? controls.length - 1
+            : 0
+          : (currentIndex + direction + controls.length) % controls.length;
+      controls[nextIndex].focus();
     };
-    window.addEventListener('keydown', closeOnEscape);
-    return () => window.removeEventListener('keydown', closeOnEscape);
+    window.addEventListener('keydown', containDrawerFocus);
+    return () => window.removeEventListener('keydown', containDrawerFocus);
   }, [mobileNav]);
   useEffect(() => {
     if (!mobileViewport) {
@@ -462,12 +508,12 @@ export default function Studio() {
         }
         setPrompt(p.pattern);
         setEditing(undefined);
-        setDialog('node');
+        openDialog('node');
         return;
       }
       if (input.startsWith('/addPattern')) {
         setEditing(undefined);
-        setDialog('node');
+        openDialog('node');
         return;
       }
       const controller = new AbortController();
@@ -512,7 +558,7 @@ export default function Studio() {
         abortRef.current = null;
       }
     },
-    [act, announce, busy, commit, hydrated],
+    [act, announce, busy, commit, hydrated, openDialog],
   );
   useStudioTools({
     read: () => current.current,
@@ -583,7 +629,7 @@ export default function Studio() {
         throw new Error('Choose a specimen file smaller than 20 MB.');
       const loaded = validateSpecimen(JSON.parse(await file.text()));
       setPendingLoad(loaded);
-      setDialog('load');
+      openDialog('load', true);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Could not read the specimen.');
     } finally {
@@ -596,6 +642,7 @@ export default function Studio() {
         Skip to main content
       </a>
       <aside
+        ref={sidebarRef}
         id="workspace-navigation"
         className={`sidebar ${mobileNav ? 'is-open' : ''}`}
         aria-label="WDBX workspace"
@@ -730,7 +777,7 @@ export default function Studio() {
                   <button
                     className="button utility starter-action"
                     aria-label="Reset to starter specimen"
-                    onClick={() => setDialog('reset')}
+                    onClick={() => openDialog('reset')}
                   >
                     <RotateCcw size={16} />
                     <span>Starter</span>
@@ -739,7 +786,10 @@ export default function Studio() {
                 <button
                   className="button utility"
                   aria-label="Load specimen"
-                  onClick={() => fileRef.current?.click()}
+                  onClick={(event) => {
+                    dialogReturnRef.current = event.currentTarget;
+                    fileRef.current?.click();
+                  }}
                   disabled={busy}
                 >
                   <Upload size={17} />
@@ -824,7 +874,7 @@ export default function Studio() {
                   className="workflow-step"
                   onClick={() => {
                     setEditing(undefined);
-                    setDialog('node');
+                    openDialog('node');
                   }}
                 >
                   <span className="workflow-index">01</span>
@@ -1271,7 +1321,7 @@ export default function Studio() {
                   maxStrength={state.settings.maxStrength}
                   onEdit={() => {
                     setEditing(selectedNode?.ref);
-                    setDialog('node');
+                    openDialog('node');
                   }}
                   onJitter={() =>
                     act(() => {
@@ -1331,11 +1381,11 @@ export default function Studio() {
             setQuery={setQuery}
             onAdd={() => {
               setEditing(undefined);
-              setDialog('node');
+              openDialog('node');
             }}
             onEdit={(ref) => {
               setEditing(ref);
-              setDialog('node');
+              openDialog('node');
             }}
             onRemove={(ref) =>
               act(() => {
@@ -1345,7 +1395,7 @@ export default function Studio() {
                 undo.current = previous;
               })
             }
-            onAttach={() => setDialog('attach')}
+            onAttach={() => openDialog('attach')}
             onSelect={(ref) => {
               setSelected(ref);
               nav('studio');
@@ -1359,11 +1409,11 @@ export default function Studio() {
             setQuery={setQuery}
             onAdd={() => {
               setEditing(undefined);
-              setDialog('resource');
+              openDialog('resource');
             }}
             onEdit={(ref) => {
               setEditing(ref);
-              setDialog('resource');
+              openDialog('resource');
             }}
             onPin={(id) => act(() => commit(togglePin(state, id)))}
             onRemove={(ref) =>
@@ -1398,7 +1448,7 @@ export default function Studio() {
             onLearn={(pattern) => {
               setPrompt(pattern);
               setEditing(undefined);
-              setDialog('node');
+              openDialog('node');
             }}
           />
         )}
@@ -1643,6 +1693,7 @@ function Topology({
     };
   });
   return (
+    // oxlint-disable-next-line jsx-a11y/no-noninteractive-element-interactions -- The named, focusable scroll region handles arrow-key scrolling across browser engines.
     <section
       className="topology"
       ref={viewport}
@@ -1650,6 +1701,18 @@ function Topology({
       // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- Scroll containers require keyboard focus.
       tabIndex={0}
       aria-label="Scrollable specimen topology"
+      onKeyDown={(event) => {
+        const distance = 44;
+        const delta = {
+          ArrowLeft: { left: -distance },
+          ArrowRight: { left: distance },
+          ArrowUp: { top: -distance },
+          ArrowDown: { top: distance },
+        }[event.key];
+        if (!delta) return;
+        event.preventDefault();
+        event.currentTarget.scrollBy(delta);
+      }}
     >
       <div className="topology-stage" style={{ width, height }}>
         <svg
@@ -1821,7 +1884,12 @@ function Trace({
   input: string;
 }) {
   return (
-    <div className="trace-list">
+    <section
+      className="trace-list"
+      // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- Scrollable trace output needs a keyboard focus target.
+      tabIndex={0}
+      aria-label="Cycle trace details"
+    >
       {outcome !== 'idle' && (
         <output className="trace-outcome">
           {outcome === 'complete'
@@ -1853,7 +1921,7 @@ function Trace({
         </div>
       )}
       {busy && <output>Processing…</output>}
-    </div>
+    </section>
   );
 }
 /* eslint-disable jsx-a11y/prefer-tag-over-role -- Inline SVG requires an image role; img cannot contain vector primitives. */
@@ -2471,6 +2539,10 @@ function Specification({
   const filtered = sections.filter((s) =>
     `${s.title} ${s.text}`.toLowerCase().includes(query.toLowerCase()),
   );
+  const accessibleHtml = current.html.replaceAll(
+    '<table>',
+    '<table tabindex="0" aria-label="Scrollable specification data table">',
+  );
   return (
     <div className="reference-layout">
       <aside className="chapter-nav">
@@ -2511,7 +2583,7 @@ function Specification({
         <h2>{current.title}</h2>
         <div
           className="reference-content"
-          dangerouslySetInnerHTML={{ __html: current.html }}
+          dangerouslySetInnerHTML={{ __html: accessibleHtml }}
         />
         <div className="chapter-pagination">
           {chapter > 1 ? (

@@ -12,7 +12,7 @@
     "lint": "oxlint",
     "format": "oxfmt",
     "test": "bun test",
-    "test:browser": "node tests/browser.e2e.mjs",
+    "test:browser": "node tests/browser.e2e.mjs && node tests/accessibility.e2e.mjs",
     "lint:studio": "oxlint app/studio.tsx lib/specimen lib/webmcp.ts",
     "desktop:dev": "vite --config vite.desktop.config.ts",
     "desktop:build": "vite build --config vite.desktop.config.ts",
@@ -47,6 +47,7 @@
     "vinext": "1.0.0-beta.5"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@cloudflare/vite-plugin": "1.37.1",
     "@cloudflare/workers-types": "4.20260515.1",
     "@openai/sites-vite-plugin": "0.2.0",

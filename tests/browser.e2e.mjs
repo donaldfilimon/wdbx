@@ -1,9 +1,19 @@
-import { chromium, expect } from '@playwright/test';
+import { chromium, expect, firefox, webkit } from '@playwright/test';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 const base = process.env.STUDIO_URL ?? 'http://localhost:3000';
+const engine = process.env.STUDIO_BROWSER ?? 'chrome';
+const launchers = { chrome: chromium, firefox, webkit };
+if (!(engine in launchers))
+  throw Error(`Unsupported STUDIO_BROWSER: ${engine}`);
 const out = new URL('../work/', import.meta.url).pathname;
 await mkdir(out, { recursive: true });
-const browser = await chromium.launch({ channel: 'chrome', headless: true });
+const browser = await launchers[engine].launch(
+  engine === 'chrome'
+    ? { channel: 'chrome', headless: true }
+    : { headless: true },
+);
+const artifact = (name, extension = 'png') =>
+  `${out}${name}-${engine}.${extension}`;
 const context = await browser.newContext({
   viewport: { width: 1568, height: 1000 },
   reducedMotion: 'reduce',
@@ -139,8 +149,9 @@ try {
     .getByRole('button', { name: 'Save specimen', exact: true })
     .click();
   const file = await download;
-  await file.saveAs(out + 'qa-specimen.json');
-  const saved = JSON.parse(await readFile(out + 'qa-specimen.json', 'utf8'));
+  const savedSpecimen = artifact('qa-specimen', 'json');
+  await file.saveAs(savedSpecimen);
+  const saved = JSON.parse(await readFile(savedSpecimen, 'utf8'));
   if (
     saved.name !== 'QA specimen' ||
     saved.settings.voteThreshold !== 70 ||
@@ -154,9 +165,7 @@ try {
   });
   await expect(page.getByRole('alert')).toContainText('not a supported');
   await page.getByRole('button', { name: 'Dismiss error' }).click();
-  await page
-    .locator('input[type=file]')
-    .setInputFiles(out + 'qa-specimen.json');
+  await page.locator('input[type=file]').setInputFiles(savedSpecimen);
   await expect(page.getByRole('dialog')).toContainText('QA specimen');
   await page
     .getByRole('button', { name: 'Load specimen', exact: true })
@@ -176,7 +185,7 @@ try {
   await expect(page.locator('.reference-content')).toContainText(
     'Native implementation profile',
   );
-  await page.screenshot({ path: out + 'studio-reader-desktop.png' });
+  await page.screenshot({ path: artifact('studio-reader-desktop') });
   await page
     .locator('nav[aria-label="Main navigation"] a[href="?view=studio"]')
     .click();
@@ -185,7 +194,7 @@ try {
     .click();
   await expect(page.locator('.answer-text')).toHaveText('4');
   await page.evaluate(() => window.scrollTo(0, 0));
-  await page.screenshot({ path: out + 'studio-desktop-final.png' });
+  await page.screenshot({ path: artifact('studio-desktop-final') });
   const desktopLayout = await page.evaluate(() => {
     const prompt = document.querySelector('.composer')?.getBoundingClientRect();
     return {
@@ -201,7 +210,7 @@ try {
     throw Error('Desktop console layout failed');
   await page.setViewportSize({ width: 390, height: 844 });
   await page.screenshot({
-    path: out + 'studio-mobile-final.png',
+    path: artifact('studio-mobile-final'),
     fullPage: true,
   });
   if (
@@ -279,10 +288,11 @@ try {
   );
   if (errors.length) throw Error(errors.join('\n'));
   await writeFile(
-    out + 'browser-checks.json',
+    artifact('browser-checks', 'json'),
     JSON.stringify(
       {
         passed: true,
+        engine,
         desktop: '1568×1000',
         mobile: '390×844',
         checks: [
@@ -312,7 +322,7 @@ try {
     ),
   );
   console.log(
-    'Browser acceptance passed: all core workflows; desktop and mobile; zero runtime errors. WebMCP native support: ' +
+    `Browser acceptance passed in ${engine}: all core workflows; desktop and mobile; zero runtime errors. WebMCP native support: ` +
       webmcp,
   );
 } finally {
