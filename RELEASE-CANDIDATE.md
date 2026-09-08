@@ -32,6 +32,17 @@ outside this release.
   incorrect raw-versus-packaged ELF hash comparison. The narrow staging-evidence
   correction requires a new candidate and complete hosted matrix; retain the
   superseded run and local results as history, not final qualification.
+- Replacement `25ea8e95` passed all local gates, hosted browser/text/image/OCR/
+  GPU, ARM64 macOS desktop and Windows desktop, including exact portable
+  save/restore. Linux's AppImage stage passed, but Debian qualification found
+  that Tauri's later bundle operations mutate the raw application after the
+  Debian installer is emitted. A separate pre-mutation Debian snapshot is
+  required; this corrective source change establishes another candidate.
+- Actual Firefox 200% text-only enlargement failed with clipped labels and
+  trace content. The layout predates this consolidation and is unchanged here;
+  retain the observed failure as a pre-existing manual release blocker. Targeted
+  page zoom and increased contrast passed, with settings restored exactly;
+  the full manual matrix and spoken VoiceOver acceptance remain incomplete.
 
 ## Decisions
 

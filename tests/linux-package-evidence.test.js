@@ -40,6 +40,8 @@ async function fixture() {
     await writeFile(paths[key], staged[key]);
   const installer = join(root, 'studio.AppImage');
   await writeFile(installer, 'appimage');
+  const debInstaller = join(root, 'studio.deb');
+  await writeFile(debInstaller, 'debian installer');
   const base = join(root, 'package-qualification.json');
   await writeFile(
     base,
@@ -60,11 +62,157 @@ async function fixture() {
         },
         { name: 'sd-cli', path: 'binaries/sd-cli', sha256: sha256(raw.sd) },
       ],
-      installers: [{ path: 'studio.AppImage', sha256: sha256('appimage') }],
+      installers: [
+        { path: 'studio.AppImage', sha256: sha256('appimage') },
+        { path: 'studio.deb', sha256: sha256('debian installer') },
+      ],
     }),
   );
-  return { root, appDir, extracted, retained, installer, base, raw, staged };
+  return {
+    root,
+    appDir,
+    extracted,
+    retained,
+    installer,
+    debInstaller,
+    base,
+    raw,
+    staged,
+  };
 }
+
+async function debStage(value) {
+  const staged = join(value.root, 'deb-stage');
+  const retained = join(value.root, 'deb-retained');
+  const receipt = join(value.root, 'linux-deb-qualification.json');
+  await mkdir(staged);
+  await writeFile(join(staged, 'wdbx-studio-desktop'), 'deb-patched-app');
+  await writeFile(join(staged, 'llama-server'), value.raw.llama);
+  await writeFile(join(staged, 'sd-cli'), value.raw.sd);
+  const result = run(
+    'create-deb',
+    '--root',
+    value.root,
+    '--base-receipt',
+    value.base,
+    '--staged-payload',
+    staged,
+    '--installer',
+    value.debInstaller,
+    '--output',
+    receipt,
+    '--retained-payload',
+    retained,
+    '--expected-source-sha',
+    sourceSha,
+    '--expected-run-id',
+    '101',
+  );
+  return { staged, retained, receipt, result };
+}
+
+function verifyDeb(
+  value,
+  receipt,
+  installed,
+  source = sourceSha,
+  runId = '101',
+) {
+  return run(
+    'verify-deb',
+    '--root',
+    value.root,
+    '--receipt',
+    receipt,
+    '--base-receipt',
+    value.base,
+    '--installer',
+    value.debInstaller,
+    '--expected-source-sha',
+    source,
+    '--expected-run-id',
+    runId,
+    ...installed.flatMap((path) => ['--installed-payload', path]),
+  );
+}
+
+test('binds an independent pre-installer Debian stage and verifies installed bytes', async () => {
+  const value = await fixture();
+  const { staged, receipt, result } = await debStage(value);
+  expect(result.exitCode, result.stderr.toString()).toBe(0);
+  const installed = ['wdbx-studio-desktop', 'llama-server', 'sd-cli'].map(
+    (name) => join(staged, name),
+  );
+  expect(verifyDeb(value, receipt, installed).exitCode).toBe(0);
+});
+
+test('rejects tampered or missing retained Debian stage payload', async () => {
+  const value = await fixture();
+  const { staged, retained, receipt } = await debStage(value);
+  const installed = ['wdbx-studio-desktop', 'llama-server', 'sd-cli'].map(
+    (name) => join(staged, name),
+  );
+  await writeFile(join(retained, 'wdbx-studio-desktop'), 'tampered');
+  expect(verifyDeb(value, receipt, installed).stderr.toString()).toContain(
+    'retained staged Debian qualification differs',
+  );
+  await rm(join(retained, 'wdbx-studio-desktop'));
+  expect(verifyDeb(value, receipt, installed).exitCode).not.toBe(0);
+});
+
+test('rejects a missing executable before sealing the Debian stage', async () => {
+  const value = await fixture();
+  const created = await debStage(value);
+  await rm(join(created.staged, 'sd-cli'));
+  await rm(created.retained, { recursive: true });
+  await rm(created.receipt);
+  const result = run(
+    'create-deb',
+    '--root',
+    value.root,
+    '--base-receipt',
+    value.base,
+    '--staged-payload',
+    created.staged,
+    '--installer',
+    value.debInstaller,
+    '--output',
+    created.receipt,
+    '--retained-payload',
+    created.retained,
+    '--expected-source-sha',
+    sourceSha,
+    '--expected-run-id',
+    '101',
+  );
+  expect(result.exitCode).not.toBe(0);
+  expect(result.stderr.toString()).toContain(
+    'exactly one staged Debian executable',
+  );
+});
+
+test('rejects stale Debian linkage, replaced installer, and installed mismatch', async () => {
+  const value = await fixture();
+  const { staged, receipt } = await debStage(value);
+  const installed = ['wdbx-studio-desktop', 'llama-server', 'sd-cli'].map(
+    (name) => join(staged, name),
+  );
+  expect(
+    verifyDeb(value, receipt, installed, 'f'.repeat(40)).exitCode,
+  ).not.toBe(0);
+  expect(
+    verifyDeb(value, receipt, installed, sourceSha, '202').exitCode,
+  ).not.toBe(0);
+  await writeFile(value.debInstaller, 'replaced');
+  expect(verifyDeb(value, receipt, installed).stderr.toString()).toContain(
+    'Debian installer digest differs',
+  );
+  await writeFile(value.debInstaller, 'debian installer');
+  await writeFile(installed[0], 'installed mismatch');
+  expect(verifyDeb(value, receipt, installed).stderr.toString()).toContain(
+    'installed payload differs from staged Debian qualification',
+  );
+});
 
 function run(...args) {
   return Bun.spawnSync(['python3', script, ...args], {

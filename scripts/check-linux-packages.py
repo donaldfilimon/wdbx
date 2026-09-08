@@ -81,10 +81,6 @@ def main() -> None:
     if os.environ.get("GITHUB_ACTIONS") != "true" or platform.system() != "Linux":
         raise RuntimeError("Linux install checks require a disposable GitHub Actions Linux runner")
     receipt = json.loads((ROOT / "work/package-qualification.json").read_text())
-    raw_payload = [
-        {"name": Path(record["path"]).name, "sha256": record["sha256"]}
-        for record in [receipt["application"], *receipt["helpers"]]
-    ]
     run("python3", str(ROOT / "scripts/package-evidence.py"), "verify", "--root", str(ROOT),
         "--receipt", "work/package-qualification.json", "--expected-head-sha", os.environ["GITHUB_SHA"],
         "--expected-run-id", os.environ["GITHUB_RUN_ID"], "--required-helper", "llama-server",
@@ -132,8 +128,23 @@ def main() -> None:
                 try:
                     run("sudo", "apt-get", "install", "-y", str(installer))
                     paths = [Path(line) for line in run("dpkg-query", "-L", package).splitlines()]
-                    item["payload"] = payload(paths, raw_payload, environment,
-                                              "raw build qualification")
+                    required_names = {"wdbx-studio-desktop", "llama-server", "sd-cli"}
+                    installed_payload = [path for path in paths
+                                         if path.name in required_names and path.is_file()]
+                    verify_arguments = ["python3", str(ROOT / "scripts/linux_package_evidence.py"),
+                        "verify-deb", "--root", str(ROOT),
+                        "--receipt", str(ROOT / "work/linux-deb-qualification.json"),
+                        "--base-receipt", str(ROOT / "work/package-qualification.json"),
+                        "--installer", str(installer), "--expected-source-sha", os.environ["GITHUB_SHA"],
+                        "--expected-run-id", os.environ["GITHUB_RUN_ID"]]
+                    for installed in installed_payload:
+                        verify_arguments.extend(("--installed-payload", str(installed)))
+                    run(*verify_arguments)
+                    deb_stage = json.loads((ROOT / "work/linux-deb-qualification.json").read_text())
+                    deb_payload = [{"name": value["name"], "sha256": value["sha256"]}
+                                   for value in deb_stage["payload"]]
+                    item["payload"] = payload(paths, deb_payload, environment,
+                                              "staged Debian qualification")
                     name = Path(receipt["application"]["path"]).name
                     app = next(path for path in paths if path.name == name and path.is_file())
                     item["launch"] = launch(app, environment, ROOT / "work/deb-launch.log")

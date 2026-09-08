@@ -34,7 +34,8 @@ transient retry or a passing Linux qualification.
 
 The corrective gate must bind the retained final AppDir payload separately to
 the same source, run, original build identities and installer digest, then
-require exact extracted-to-staged hashes. Debian retains its raw-build checks.
+require exact extracted-to-staged hashes. Debian must likewise retain its
+bundle-specific payload before later bundle operations mutate the executable.
 Expected AppImage hashes must never be derived from the extracted installer
 being tested. This source correction supersedes `720125b`; none of its hosted
 successes may be relabeled as new-candidate final evidence.
@@ -73,6 +74,55 @@ regression failed before the parser feature and passed afterward; all 32 Rust
 core/conformance tests, formatting and workspace Clippy passed. Independent
 review approved the three narrow corrections. Final clean-source local and
 hosted reruns are required before accepting the replacement candidate.
+
+### Debian bundle-stage correction after candidate `25ea8e95`
+
+Candidate `25ea8e95cf479172cfd74e38033cfdb8b9904194` passed all local gates:
+86 Bun tests / 357 assertions, TypeScript, Studio lint, production browser build,
+Rust formatting, 32 core/conformance tests, workspace Clippy, both runtime
+builds, production packaging/ad-hoc sealing and bridge exclusion, four native
+UI tests (39.6 seconds), real OCR, explicit wgpu parity, and the Chrome/Firefox/
+WebKit functional/accessibility matrix at 390/768/1440. The native 100,000-record
+history search rendered in 38 ms. A stale preview caused the first browser
+attempt to request obsolete assets; restarting only the owned preview resolved
+the failure and all engines passed without a source change.
+
+Its hosted browser, text, image, OCR and GPU workflows passed, as did ARM64
+macOS and Windows desktop jobs. Windows passed the exact portable save/restore
+scenario. These remain historical source-specific results, not evidence for a
+subsequent candidate. Logs and downloaded payloads are retained under
+`work/qualification-20260908/candidates/25ea8e95cf479172cfd74e38033cfdb8b9904194/`.
+
+Linux run `34226103601` passed the independent AppImage payload and launch
+checks, then failed the installed Debian application's raw-build hash check.
+The log records Tauri patching the executable for Debian before producing the
+`.deb`, then patching the same executable for RPM and AppImage. The installed
+Debian application therefore differs from the final raw executable; its two
+helpers match the raw helper hashes. This is an evidence-stage defect, not a
+transient runner failure. The correction must bundle Debian first, retain its
+application and helper bytes immediately, and bind that independent snapshot
+to the source, run, base receipt and installer digest. Installed Debian bytes
+must match that snapshot exactly. Expected payload hashes must not be derived
+from the installed or extracted Debian package under test.
+
+Actual Firefox 155.0.1 passed a targeted 200% page-zoom feedback path and an
+increased-contrast dialog/navigation path. Display accessibility preferences
+were restored and complete before/after accessibility records matched exactly.
+However, 200% **text-only** enlargement clipped labels and trace content. The
+relevant layout predates `ee99735` and is unchanged during this consolidation;
+this failed manual case remains a pre-existing release blocker outside the
+attributable-fix scope. VoiceOver caption access timed out again; spoken
+acceptance is unverified and VoiceOver was restored off. These observations
+must retain their actual observed SHA in the external evidence, not be
+relabeled as a new-candidate manual pass.
+
+Debian correction pre-freeze checks passed: 91 Bun tests / 369 assertions,
+including 33 focused Linux-stage/collector tests / 107 assertions; TypeScript,
+Studio lint, Python compilation, workflow lint and whitespace validation also
+passed. Independent review approved the correction. The second Linux step uses
+`tauri bundle` against the built executable, avoiding a second compilation.
+Final hosted qualification must still prove the split-bundle sequence and
+installed payload on Linux.
 
 ### Fresh local baseline, September 8, 2026
 

@@ -78,6 +78,7 @@ async function fixture({ artifact = true, conclusion = 'success' } = {}) {
     const application = 'qualified application';
     const helper = 'qualified helper';
     const installer = 'qualified installer';
+    const debInstaller = 'qualified deb installer';
     await mkdir(join(root, 'desktop/qualified-payload'));
     await writeFile(
       join(root, 'desktop/qualified-payload/app.bin'),
@@ -85,6 +86,7 @@ async function fixture({ artifact = true, conclusion = 'success' } = {}) {
     );
     await writeFile(join(root, 'desktop/qualified-payload/helper.bin'), helper);
     await writeFile(join(root, 'desktop/app.AppImage'), installer);
+    await writeFile(join(root, 'desktop/app.deb'), debInstaller);
     await writeFile(
       join(root, 'desktop/package-qualification.json'),
       JSON.stringify({
@@ -105,6 +107,7 @@ async function fixture({ artifact = true, conclusion = 'success' } = {}) {
             path: 'target/app.AppImage',
             sha256: sha256(installer),
           },
+          { path: 'target/app.deb', sha256: sha256(debInstaller) },
         ],
       }),
     );
@@ -150,6 +153,47 @@ async function fixture({ artifact = true, conclusion = 'success' } = {}) {
             sha256: sha256(helper),
             rawQualifiedSha256: sha256(helper),
             retainedPath: 'linux-appdir-payload/helper.bin',
+          },
+        ],
+      }),
+    );
+    await mkdir(join(root, 'desktop/linux-deb-payload'));
+    await writeFile(
+      join(root, 'desktop/linux-deb-payload/app.bin'),
+      'deb staged application',
+    );
+    await writeFile(join(root, 'desktop/linux-deb-payload/helper.bin'), helper);
+    await writeFile(
+      join(root, 'desktop/linux-deb-qualification.json'),
+      JSON.stringify({
+        schema: 1,
+        stageKind: 'deb',
+        sourceSha,
+        workflowRunId: '101',
+        baseQualification: {
+          path: 'package-qualification.json',
+          receiptSha256: sha256(baseReceipt),
+          payloadSha256: {
+            'app.bin': sha256(application),
+            'helper.bin': sha256(helper),
+          },
+        },
+        installer: {
+          path: 'target/app.deb',
+          sha256: sha256(debInstaller),
+        },
+        payload: [
+          {
+            name: 'app.bin',
+            sha256: sha256('deb staged application'),
+            rawQualifiedSha256: sha256(application),
+            retainedPath: 'linux-deb-payload/app.bin',
+          },
+          {
+            name: 'helper.bin',
+            sha256: sha256(helper),
+            rawQualifiedSha256: sha256(helper),
+            retainedPath: 'linux-deb-payload/helper.bin',
           },
         ],
       }),
@@ -278,6 +322,17 @@ test('rejects retained Linux AppDir bytes that differ from their independent sta
   await writeFile(
     join(root, 'desktop/linux-appdir-payload/helper.bin'),
     'tampered stage payload',
+  );
+  const result = run(manifest);
+  expect(result.exitCode).not.toBe(0);
+  expect(result.stderr.toString()).toContain('artifact digest differs');
+});
+
+test('rejects retained Debian stage bytes that differ from their independent receipt', async () => {
+  const { root, manifest } = await fixture();
+  await writeFile(
+    join(root, 'desktop/linux-deb-payload/app.bin'),
+    'tampered deb stage payload',
   );
   const result = run(manifest);
   expect(result.exitCode).not.toBe(0);

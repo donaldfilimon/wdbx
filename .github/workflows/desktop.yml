@@ -59,7 +59,17 @@ jobs:
         if: runner.os == 'Windows'
         run: python scripts/check-windows-runtimes.py
       - name: Package desktop
-        run: bunx tauri build
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" = Linux ]; then
+            bunx tauri build --bundles deb
+            mkdir -p work/linux-deb-stage
+            cp -p target/release/wdbx-studio-desktop work/linux-deb-stage/
+            cp -p src-tauri/binaries/llama-server src-tauri/binaries/sd-cli work/linux-deb-stage/
+            bunx tauri bundle --bundles rpm,appimage
+          else
+            bunx tauri build
+          fi
       - name: Verify production bridge exclusion
         run: python scripts/check-production-bridge.py
       - name: Desktop invocation tests
@@ -96,6 +106,7 @@ jobs:
           python scripts/package-evidence.py "${arguments[@]}"
           if [ "$RUNNER_OS" = Linux ]; then
             appimages=(target/release/bundle/appimage/*.AppImage)
+            debians=(target/release/bundle/deb/*.deb)
             if [ "${#appimages[@]}" -ne 1 ]; then
               echo "Expected exactly one AppImage for staged qualification" >&2
               exit 1
@@ -107,6 +118,19 @@ jobs:
               --installer "$PWD/${appimages[0]}" \
               --output "$PWD/work/linux-appdir-qualification.json" \
               --retained-payload "$PWD/work/linux-appdir-payload" \
+              --expected-source-sha "$GITHUB_SHA" \
+              --expected-run-id "$GITHUB_RUN_ID"
+            if [ "${#debians[@]}" -ne 1 ]; then
+              echo "Expected exactly one Debian installer for staged qualification" >&2
+              exit 1
+            fi
+            python scripts/linux_package_evidence.py create-deb \
+              --root "$PWD" \
+              --base-receipt "$PWD/work/package-qualification.json" \
+              --staged-payload "$PWD/work/linux-deb-stage" \
+              --installer "$PWD/${debians[0]}" \
+              --output "$PWD/work/linux-deb-qualification.json" \
+              --retained-payload "$PWD/work/linux-deb-payload" \
               --expected-source-sha "$GITHUB_SHA" \
               --expected-run-id "$GITHUB_RUN_ID"
           fi
@@ -162,6 +186,8 @@ jobs:
             work/linux-package-verification.json
             work/linux-appdir-qualification.json
             work/linux-appdir-payload/*
+            work/linux-deb-qualification.json
+            work/linux-deb-payload/*
             work/*-launch.log
           if-no-files-found: warn
 

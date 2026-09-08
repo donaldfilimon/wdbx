@@ -181,15 +181,20 @@ def valid_file_record(value: Any) -> bool:
 
 
 def validate_linux_stage(root: Path, package_path: Path, package: dict[str, Any],
-                         source_sha: str, run_id: str) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+                         source_sha: str, run_id: str, receipt_name: str,
+                         installer_suffix: str, result_key: str) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     relative = package_path.resolve().relative_to(root.resolve())
     scope = root if len(relative.parts) == 1 else root / relative.parts[0]
-    candidates = list(scope.rglob("linux-appdir-qualification.json"))
-    require(len(candidates) == 1, "ubuntu-24.04 evidence must contain exactly one AppDir qualification receipt")
+    candidates = list(scope.rglob(receipt_name))
+    require(len(candidates) == 1,
+            f"ubuntu-24.04 evidence must contain exactly one {receipt_name}")
     stage_path = candidates[0]
     stage = load_json(stage_path, "Linux AppDir qualification receipt")
     require(isinstance(stage, dict) and stage.get("schema") == 1,
             "Linux AppDir qualification receipt is malformed")
+    if installer_suffix == ".deb":
+        require(stage.get("stageKind") == "deb",
+                "Linux Debian stage receipt kind differs")
     require(stage.get("sourceSha") == source_sha and str(stage.get("workflowRunId")) == run_id,
             "Linux AppDir qualification source or run linkage differs")
     base = stage.get("baseQualification")
@@ -199,10 +204,11 @@ def validate_linux_stage(root: Path, package_path: Path, package: dict[str, Any]
     raw = {str(item.get("name") or Path(item["path"]).name): item["sha256"] for item in raw_records}
     require(base.get("payloadSha256") == raw,
             "Linux AppDir raw-qualified payload linkage differs")
-    appimages = [item for item in package["installers"] if Path(item["path"]).suffix == ".AppImage"]
-    require(len(appimages) == 1 and stage.get("installer") == appimages[0],
-            "Linux AppDir installer linkage differs")
-    artifacts = [artifact_record(scope, appimages[0]["path"], appimages[0]["sha256"])]
+    installers = [item for item in package["installers"]
+                  if Path(item["path"]).suffix == installer_suffix]
+    require(len(installers) == 1 and stage.get("installer") == installers[0],
+            f"Linux {result_key} installer linkage differs")
+    artifacts = [artifact_record(scope, installers[0]["path"], installers[0]["sha256"])]
     payload = stage.get("payload")
     require(isinstance(payload, list) and len(payload) == len(raw),
             "Linux AppDir staged payload evidence is incomplete")
@@ -226,7 +232,7 @@ def validate_linux_stage(root: Path, package_path: Path, package: dict[str, Any]
         "actualSha256": digest(stage_path),
         "verification": "receipt-identity-only",
     })
-    return {"appDirPayloadVerification": "passed"}, artifacts
+    return {result_key: "passed"}, artifacts
 
 
 def validate_accessibility_widths(widths: Any) -> list[int]:
@@ -413,8 +419,16 @@ def inspect_run(entry: dict[str, Any], repository: str, source_sha: str, package
             domain = validate_domain(kind, receipt, source_sha, run_id, package_qualification_run_id, path.name)
             receipt_records = receipt_artifacts(root, path, receipt, kind)
             if kind == "desktop" and domain.get("runner", {}).get("label") == "ubuntu-24.04":
-                stage_domain, stage_artifacts = validate_linux_stage(root, path, receipt, source_sha, run_id)
-                domain.update(stage_domain)
+                stage_artifacts = []
+                for receipt_name, suffix, result_key in (
+                    ("linux-appdir-qualification.json", ".AppImage", "appDirPayloadVerification"),
+                    ("linux-deb-qualification.json", ".deb", "debPayloadVerification"),
+                ):
+                    stage_domain, artifacts = validate_linux_stage(
+                        root, path, receipt, source_sha, run_id,
+                        receipt_name, suffix, result_key)
+                    domain.update(stage_domain)
+                    stage_artifacts.extend(artifacts)
             domains.append(domain)
             result["artifacts"].extend(receipt_records)
             if kind == "desktop" and domain.get("runner", {}).get("label") == "ubuntu-24.04":

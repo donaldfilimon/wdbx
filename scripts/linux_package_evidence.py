@@ -68,20 +68,22 @@ def raw_records(receipt: dict[str, Any]) -> dict[str, dict[str, str]]:
     return result
 
 
-def appimage_record(receipt: dict[str, Any], installer: Path) -> dict[str, str]:
+def installer_record(receipt: dict[str, Any], installer: Path,
+                     suffix: str, label: str) -> dict[str, str]:
     records = [item for item in receipt.get("installers", [])
-               if isinstance(item, dict) and Path(str(item.get("path", ""))).suffix == ".AppImage"]
-    require(len(records) == 1, "base receipt must identify exactly one AppImage")
+               if isinstance(item, dict) and Path(str(item.get("path", ""))).suffix == suffix]
+    require(len(records) == 1, f"base receipt must identify exactly one {label}")
     record = records[0]
     require(Path(str(record.get("path"))).name == installer.name,
-            "AppImage identity differs from base qualification")
+            f"{label} identity differs from base qualification")
     actual = digest(installer)
-    require(record.get("sha256") == actual, "AppImage digest differs from base qualification")
+    require(record.get("sha256") == actual, f"{label} digest differs from base qualification")
     return {"path": str(record["path"]), "sha256": actual}
 
 
 def validate_linkage(stage: dict[str, Any], base: dict[str, Any], base_path: Path,
-                     installer: Path, source_sha: str, run_id: str) -> None:
+                     installer: Path, source_sha: str, run_id: str,
+                     suffix: str = ".AppImage", label: str = "AppImage") -> None:
     require(base.get("headSha") == source_sha and stage.get("sourceSha") == source_sha,
             "source SHA differs from Linux qualification")
     require(str(base.get("workflowRunId")) == run_id and str(stage.get("workflowRunId")) == run_id,
@@ -92,9 +94,9 @@ def validate_linkage(stage: dict[str, Any], base: dict[str, Any], base_path: Pat
     require(stage.get("baseQualification", {}).get("payloadSha256") ==
             {name: raw[name]["sha256"] for name in REQUIRED},
             "raw-qualified payload linkage differs")
-    installer_record = appimage_record(base, installer)
-    require(stage.get("installer") == installer_record,
-            "AppImage linkage differs from base qualification")
+    installer_value = installer_record(base, installer, suffix, label)
+    require(stage.get("installer") == installer_value,
+            f"{label} linkage differs from base qualification")
 
 
 def create(args: argparse.Namespace) -> None:
@@ -108,7 +110,7 @@ def create(args: argparse.Namespace) -> None:
     raw = raw_records(base)
     installer = Path(args.installer).resolve()
     require(installer.is_relative_to(root), "AppImage must be within qualification root")
-    installer_record = appimage_record(base, installer)
+    installer_value = installer_record(base, installer, ".AppImage", "AppImage")
     appdir = Path(args.appdir).resolve()
     require(appdir.is_dir() and appdir.is_relative_to(root), "AppDir must be within qualification root")
     retained = Path(args.retained_payload).resolve()
@@ -136,7 +138,7 @@ def create(args: argparse.Namespace) -> None:
             "receiptSha256": digest(base_path),
             "payloadSha256": {name: raw[name]["sha256"] for name in REQUIRED},
         },
-        "installer": installer_record,
+        "installer": installer_value,
         "payload": payload,
     }
     output = Path(args.output).resolve()
@@ -189,6 +191,85 @@ def verify_appimage(args: argparse.Namespace) -> None:
                 f"extracted payload differs from staged AppDir qualification: {name}")
 
 
+def create_deb(args: argparse.Namespace) -> None:
+    root = Path(args.root).resolve()
+    base_path = Path(args.base_receipt).resolve()
+    base = load(base_path)
+    require(base_path.is_relative_to(root), "base receipt must be within qualification root")
+    require(base.get("headSha") == args.expected_source_sha, "source SHA differs from base qualification")
+    require(str(base.get("workflowRunId")) == args.expected_run_id,
+            "workflow run differs from base qualification")
+    raw = raw_records(base)
+    installer = Path(args.installer).resolve()
+    require(installer.is_relative_to(root), "Debian installer must be within qualification root")
+    installer_value = installer_record(base, installer, ".deb", "Debian installer")
+    staged = Path(args.staged_payload).resolve()
+    retained = Path(args.retained_payload).resolve()
+    require(staged.is_dir() and staged.is_relative_to(root),
+            "Debian staged payload must be within qualification root")
+    require(retained.is_relative_to(root), "retained payload must be within qualification root")
+    retained.mkdir(parents=True, exist_ok=True)
+    payload = []
+    for name in REQUIRED:
+        source = unique(staged, name, "staged Debian executable")
+        destination = retained / name
+        require(not destination.exists(), f"refusing duplicate retained payload {name}")
+        shutil.copy2(source, destination)
+        payload.append({"name": name, "sha256": digest(source),
+                        "rawQualifiedSha256": raw[name]["sha256"],
+                        "retainedPath": str(destination.relative_to(root))})
+    receipt = {"schema": 1, "stageKind": "deb", "sourceSha": args.expected_source_sha,
+               "workflowRunId": args.expected_run_id,
+               "baseQualification": {"path": str(base_path.relative_to(root)),
+                   "receiptSha256": digest(base_path),
+                   "payloadSha256": {name: raw[name]["sha256"] for name in REQUIRED}},
+               "installer": installer_value, "payload": payload}
+    output = Path(args.output).resolve()
+    require(output.is_relative_to(root), "stage receipt must be within qualification root")
+    output.write_text(json.dumps(receipt, indent=2) + "\n")
+
+
+def verify_deb(args: argparse.Namespace) -> None:
+    root = Path(args.root).resolve()
+    receipt_path = Path(args.receipt).resolve()
+    base_path = Path(args.base_receipt).resolve()
+    require(receipt_path.is_relative_to(root) and base_path.is_relative_to(root),
+            "qualification receipts must be within qualification root")
+    stage = load(receipt_path)
+    base = load(base_path)
+    installer = Path(args.installer).resolve()
+    require(installer.is_relative_to(root),
+            "Debian installer must be within qualification root")
+    require(stage.get("stageKind") == "deb", "Debian stage receipt kind differs")
+    validate_linkage(stage, base, base_path, installer, args.expected_source_sha,
+                     args.expected_run_id, ".deb", "Debian installer")
+    records = stage.get("payload")
+    require(isinstance(records, list) and len(records) == len(REQUIRED),
+            "staged Debian qualification payload is incomplete")
+    by_name = {item.get("name"): item for item in records if isinstance(item, dict)}
+    require(set(by_name) == set(REQUIRED), "staged Debian qualification identities are incomplete")
+    installed: dict[str, Path] = {}
+    for value in args.installed_payload:
+        path = Path(value).resolve()
+        require(path.is_file() and path.name in REQUIRED and path.name not in installed,
+                "installed Debian payload identities are missing or duplicated")
+        installed[path.name] = path
+    require(set(installed) == set(REQUIRED),
+            "installed Debian payload identities are incomplete")
+    raw = raw_records(base)
+    for name in REQUIRED:
+        record = by_name[name]
+        require(record.get("rawQualifiedSha256") == raw[name]["sha256"],
+                f"raw-qualified linkage differs for {name}")
+        retained = (root / str(record.get("retainedPath", ""))).resolve()
+        require(retained.is_relative_to(root) and retained.is_file() and
+                digest(retained) == record.get("sha256"),
+                f"retained staged Debian qualification differs: {name}")
+        packaged = installed[name]
+        require(digest(packaged) == record.get("sha256"),
+                f"installed payload differs from staged Debian qualification: {name}")
+
+
 def verify_raw(args: argparse.Namespace) -> None:
     base = load(Path(args.base_receipt))
     raw = raw_records(base)
@@ -207,11 +288,22 @@ def parser() -> argparse.ArgumentParser:
                  "retained-payload", "expected-source-sha", "expected-run-id"):
         create_parser.add_argument(f"--{flag}", required=True)
     create_parser.set_defaults(function=create)
+    deb_parser = commands.add_parser("create-deb")
+    for flag in ("root", "base-receipt", "staged-payload", "installer", "output",
+                 "retained-payload", "expected-source-sha", "expected-run-id"):
+        deb_parser.add_argument(f"--{flag}", required=True)
+    deb_parser.set_defaults(function=create_deb)
     verify_parser = commands.add_parser("verify-appimage")
     for flag in ("root", "receipt", "base-receipt", "installer", "extracted",
                  "expected-source-sha", "expected-run-id"):
         verify_parser.add_argument(f"--{flag}", required=True)
     verify_parser.set_defaults(function=verify_appimage)
+    verify_deb_parser = commands.add_parser("verify-deb")
+    for flag in ("root", "receipt", "base-receipt", "installer",
+                 "expected-source-sha", "expected-run-id"):
+        verify_deb_parser.add_argument(f"--{flag}", required=True)
+    verify_deb_parser.add_argument("--installed-payload", action="append", required=True)
+    verify_deb_parser.set_defaults(function=verify_deb)
     raw_parser = commands.add_parser("verify-raw")
     raw_parser.add_argument("--base-receipt", required=True)
     raw_parser.add_argument("--payload-root", required=True)
