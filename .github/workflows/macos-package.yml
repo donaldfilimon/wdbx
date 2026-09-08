@@ -1,6 +1,11 @@
 name: macOS portable runtime packaging
 on:
   workflow_dispatch:
+    inputs:
+      qualification_run_id:
+        description: Successful native desktop qualification workflow run ID
+        required: true
+        type: string
 permissions:
   contents: read
   actions: read
@@ -27,6 +32,7 @@ jobs:
       - name: Restore qualified app and replace text helper
         env:
           GH_TOKEN: ${{ github.token }}
+          WDBX_QUALIFICATION_RUN: ${{ inputs.qualification_run_id }}
           WDBX_RUNNER: ${{ matrix.os }}
         run: python3 scripts/repackage-macos.py
       - name: Seal final installer

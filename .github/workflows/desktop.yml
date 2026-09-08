@@ -61,6 +61,33 @@ jobs:
       - name: Seal macOS installer
         if: runner.os == 'macOS'
         run: python3 scripts/seal-macos-package.py
+      - name: Record package qualification
+        shell: bash
+        env:
+          WDBX_RUNNER_LABEL: ${{ matrix.os }}
+        run: |
+          shopt -s nullglob
+          case "$RUNNER_OS" in
+            macOS)
+              application='target/release/bundle/macos/WDBX Specimen Studio.app/Contents/MacOS/wdbx-studio-desktop'
+              helpers=(src-tauri/binaries/llama-server src-tauri/binaries/sd-cli)
+              installers=(target/release/bundle/dmg/*.dmg)
+              ;;
+            Windows)
+              application='target/release/wdbx-studio-desktop.exe'
+              helpers=(src-tauri/binaries/llama-server.exe src-tauri/binaries/sd-cli.exe)
+              installers=(target/release/bundle/nsis/*.exe)
+              ;;
+            Linux)
+              application='target/release/wdbx-studio-desktop'
+              helpers=(src-tauri/binaries/llama-server src-tauri/binaries/sd-cli)
+              installers=(target/release/bundle/appimage/*.AppImage target/release/bundle/deb/*.deb)
+              ;;
+          esac
+          arguments=(create --root "$PWD" --output work/package-qualification.json --head-sha "$GITHUB_SHA" --workflow-run-id "$GITHUB_RUN_ID" --runner-label "$WDBX_RUNNER_LABEL" --runner-os "$RUNNER_OS" --runner-arch "$RUNNER_ARCH" --application "$application")
+          for helper in "${helpers[@]}"; do arguments+=(--helper "$helper"); done
+          for installer in "${installers[@]}"; do arguments+=(--installer "$installer"); done
+          python scripts/package-evidence.py "${arguments[@]}"
       - name: Test application assets
         shell: bash
         run: VITE_NATIVE_E2E=1 bun run desktop:build
@@ -74,12 +101,14 @@ jobs:
       - name: Native interface tests
         shell: bash
         run: |
+          mkdir -p work
+          set -o pipefail
           if [ "$RUNNER_OS" = Linux ]; then
-            WDBX_STUDIO_TEST_DATA="$PWD/work/native-e2e" xvfb-run -a bunx wdio run wdio.conf.mjs
+            WDBX_STUDIO_TEST_DATA="$PWD/work/native-e2e" xvfb-run -a bunx wdio run wdio.conf.mjs 2>&1 | tee work/native-e2e.log
           else
-            WDBX_STUDIO_TEST_DATA="$PWD/work/native-e2e" bunx wdio run wdio.conf.mjs
+            WDBX_STUDIO_TEST_DATA="$PWD/work/native-e2e" bunx wdio run wdio.conf.mjs 2>&1 | tee work/native-e2e.log
           fi
-      - name: Upload installers
+      - name: Upload installers and qualification evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -89,6 +118,11 @@ jobs:
             target/release/bundle/**/*.exe
             target/release/bundle/**/*.AppImage
             target/release/bundle/**/*.deb
+            work/package-qualification.json
+            work/native-first-screen.png
+            work/native-desktop.png
+            work/native-e2e.log
+            work/native-ui-evidence.json
           if-no-files-found: warn
 
   text-model:
