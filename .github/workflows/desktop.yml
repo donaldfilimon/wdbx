@@ -94,6 +94,15 @@ jobs:
           for helper in "${helpers[@]}"; do arguments+=(--helper "$helper"); done
           for installer in "${installers[@]}"; do arguments+=(--installer "$installer"); done
           python scripts/package-evidence.py "${arguments[@]}"
+          mkdir -p work/qualified-payload
+          for payload in "$application" "${helpers[@]}"; do
+            destination="work/qualified-payload/$(basename "$payload")"
+            if [ -e "$destination" ]; then
+              echo "Refusing duplicate qualified payload basename: $destination" >&2
+              exit 1
+            fi
+            cp -p "$payload" "$destination"
+          done
       - name: Qualify installed Linux packages
         if: runner.os == 'Linux'
         run: xvfb-run -a python3 scripts/check-linux-packages.py
@@ -128,6 +137,7 @@ jobs:
             target/release/bundle/**/*.AppImage
             target/release/bundle/**/*.deb
             work/package-qualification.json
+            work/qualified-payload/*
             work/production-bridge-verification.json
             work/native-first-screen.png
             work/native-desktop.png

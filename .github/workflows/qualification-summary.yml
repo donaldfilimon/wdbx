@@ -31,7 +31,7 @@ on:
         required: true
         type: string
       macos_package_run_id:
-        description: Optional signed and notarized macOS packaging run ID
+        description: Optional macOS portable packaging run ID (with or without notarization)
         required: false
         type: string
       windows_package_run_id:
@@ -131,6 +131,7 @@ jobs:
                artifacts:("work/qualification-summary/"+$kind+"/artifacts"),
                jobs:("work/qualification-summary/"+$kind+"/jobs.json")};
              {schema:1, repository:$repository, sourceSha:$sourceSha,
+              packageQualificationRunId:$desktop,
               outputJson:"work/qualification-summary/qualification-summary.json",
               outputMarkdown:"work/qualification-summary/qualification-summary.md",
               localManualEvidence:$local,
