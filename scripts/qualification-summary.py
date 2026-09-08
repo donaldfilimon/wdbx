@@ -24,7 +24,7 @@ WORKFLOWS = {
 }
 RECEIPTS = {
     "desktop": ("package-qualification.json",),
-    "browser": ("browser-checks",),
+    "browser": ("browser-checks", "accessibility-checks"),
     "text-inference": ("run-receipt.json",),
     "image-inference": ("run-receipt.json",),
     "ocr": ("run-receipt.json",),
@@ -166,7 +166,11 @@ def require(condition: bool, message: str) -> None:
         raise EvidenceError(message)
 
 
-def validate_domain(kind: str, receipt: dict[str, Any], source_sha: str, run_id: str, package_qualification_run_id: str | None) -> dict[str, Any]:
+def valid_file_record(value: Any) -> bool:
+    return isinstance(value, dict) and isinstance(value.get("path"), str) and bool(value["path"]) and SHA256.fullmatch(str(value.get("sha256", ""))) is not None
+
+
+def validate_domain(kind: str, receipt: dict[str, Any], source_sha: str, run_id: str, package_qualification_run_id: str | None, receipt_name: str) -> dict[str, Any]:
     receipt_sha = receipt.get("headSha", receipt.get("sourceSha"))
     require(receipt_sha == source_sha, f"{kind} receipt must identify the frozen source SHA")
     workflow_run = receipt.get("workflowRunId")
@@ -174,16 +178,19 @@ def validate_domain(kind: str, receipt: dict[str, Any], source_sha: str, run_id:
         require(str(workflow_run) == run_id, f"{kind} receipt run identity differs")
     if kind == "browser":
         require(receipt.get("passed") is True and isinstance(receipt.get("engine"), str), "browser receipt does not record successful browser checks")
-        return {"engine": receipt["engine"], "checks": "passed"}
+        if receipt_name.startswith("accessibility-checks-"):
+            widths = receipt.get("widths")
+            observed_widths = sorted(int(key) for key in widths if str(key).isdigit()) if isinstance(widths, dict) else []
+            require(receipt.get("errors") == [], "browser accessibility receipt contains errors")
+            complete = all(width in observed_widths for width in (390, 768, 1440))
+            return {"engine": receipt["engine"], "accessibility": "passed" if complete else "incomplete", "widths": observed_widths}
+        return {"engine": receipt["engine"], "functional": "passed"}
     require(receipt.get("schema") == 1, f"{kind} receipt is malformed")
     if kind == "desktop":
-        def valid_file(value: Any) -> bool:
-            return isinstance(value, dict) and isinstance(value.get("path"), str) and bool(value["path"]) and SHA256.fullmatch(str(value.get("sha256", ""))) is not None
-
-        require(valid_file(receipt.get("application")), "desktop receipt has no application identity")
-        require(isinstance(receipt.get("helpers"), list) and bool(receipt["helpers"]) and all(valid_file(item) and isinstance(item.get("name"), str) and bool(item["name"]) for item in receipt["helpers"]), "desktop receipt has no helper identities")
+        require(valid_file_record(receipt.get("application")), "desktop receipt has no application identity")
+        require(isinstance(receipt.get("helpers"), list) and bool(receipt["helpers"]) and all(valid_file_record(item) and isinstance(item.get("name"), str) and bool(item["name"]) for item in receipt["helpers"]), "desktop receipt has no helper identities")
         require(isinstance(receipt.get("installers"), list) and bool(receipt["installers"]), "desktop receipt has no installer identity")
-        require(all(valid_file(item) for item in receipt["installers"]), "desktop receipt installer identity is malformed")
+        require(all(valid_file_record(item) for item in receipt["installers"]), "desktop receipt installer identity is malformed")
         runner = receipt.get("runner")
         require(isinstance(runner, dict) and all(isinstance(runner.get(key), str) and bool(runner[key]) for key in ("label", "os", "arch")), "desktop receipt runner identity is malformed")
         return {"receiptValidation": "passed", "runner": receipt.get("runner")}
@@ -218,16 +225,27 @@ def validate_domain(kind: str, receipt: dict[str, Any], source_sha: str, run_id:
             require(SHA256.fullmatch(str(ad_hoc.get("dmgSha256", ""))) is not None, "macos portable DMG digest is missing")
             return {"portablePackaging": "passed", "signing": "unverified"}
         require(receipt.get("hardenedRuntime") is True and receipt.get("secureTimestamps") is True, "macos-signing security properties are incomplete")
+        require(valid_file_record(receipt.get("input")), "macos-signing input identity is missing or malformed")
+        require(valid_file_record(receipt.get("output")), "macos-signing output identity is missing or malformed")
         require(receipt.get("finalInstallerPayloadVerification") == "passed", "macos-signing final payload verification failed")
         notarization = receipt.get("notarization", {})
         require(notarization.get("status") == "Accepted", "macos-signing notarization was not accepted")
         require(isinstance(receipt.get("signingIdentityFingerprint"), str) and bool(receipt["signingIdentityFingerprint"]), "macos-signing identity is missing")
+        signed_files = receipt.get("signedMachOFiles")
+        signed_hashes = receipt.get("signedPayloadSha256")
+        require(isinstance(signed_files, list) and bool(signed_files) and all(isinstance(path, str) and bool(path) for path in signed_files), "macos-signing has no signed payload identities")
+        require(isinstance(signed_hashes, dict) and bool(signed_hashes) and all(SHA256.fullmatch(str(value)) is not None for value in signed_hashes.values()), "macos-signing signed payload hashes are missing")
+        stapler = receipt.get("stapler")
+        gatekeeper = receipt.get("gatekeeper")
+        require(isinstance(stapler, dict) and all(isinstance(stapler.get(key), str) and bool(stapler[key].strip()) for key in ("staple", "validate")), "macos-signing stapler evidence is missing")
+        require(isinstance(gatekeeper, dict) and all(isinstance(gatekeeper.get(key), str) and bool(gatekeeper[key].strip()) for key in ("application", "dmg")), "macos-signing Gatekeeper evidence is missing")
         return {"notarization": "Accepted", "finalInstallerPayloadVerification": "passed", "hardenedRuntime": True, "secureTimestamps": True, "stapler": receipt.get("stapler"), "gatekeeper": receipt.get("gatekeeper")}
     verification = receipt.get("verification")
+    require(valid_file_record(receipt.get("finalInstaller")), "windows-signing final installer identity is missing or malformed")
     require(receipt.get("applicationQualifiedBeforeSigning") is True, "windows-signing application was not qualification-linked")
     require(receipt.get("timestampStatus") == "verified", "windows-signing timestamp is not verified")
     require(isinstance(verification, list) and bool(verification), "windows-signing has no signature verification results")
-    require(all(item.get("signtool") == "passed" and item.get("authenticodeStatus") == "Valid" and item.get("timestampStatus") == "verified" for item in verification if isinstance(item, dict)) and all(isinstance(item, dict) for item in verification), "windows-signing verification failed")
+    require(all(isinstance(item.get("path"), str) and bool(item["path"]) and item.get("signtool") == "passed" and item.get("authenticodeStatus") == "Valid" and item.get("timestampStatus") == "verified" for item in verification if isinstance(item, dict)) and all(isinstance(item, dict) for item in verification), "windows-signing verification failed")
     smoke = receipt.get("installSmoke", {})
     required_smoke = ("silentInstall", "installedHelperIsolatedStartup", "launch", "cleanShutdown", "silentUninstall")
     require(all(smoke.get(key) == "passed" for key in required_smoke), "windows-signing install smoke is incomplete")
@@ -299,14 +317,47 @@ def inspect_run(entry: dict[str, Any], repository: str, source_sha: str, package
         result["blocker"] = "portable packaging passed without Developer ID notarization evidence"
     domains = []
     for path in receipt_paths:
-        receipt = load_json(path, f"{kind} receipt")
-        if not isinstance(receipt, dict):
-            raise EvidenceError(f"{kind} receipt is malformed")
-        domains.append(validate_domain(kind, receipt, source_sha, run_id, package_qualification_run_id))
-        result["artifacts"].extend(receipt_artifacts(root, path, receipt, kind))
-        result.setdefault("receipts", []).append(str(path.relative_to(root)))
+        try:
+            receipt = load_json(path, f"{kind} receipt")
+            if not isinstance(receipt, dict):
+                raise EvidenceError(f"{kind} receipt is malformed")
+            domains.append(validate_domain(kind, receipt, source_sha, run_id, package_qualification_run_id, path.name))
+            result["artifacts"].extend(receipt_artifacts(root, path, receipt, kind))
+            result.setdefault("receipts", []).append(str(path.relative_to(root)))
+        except (EvidenceError, OSError, KeyError, TypeError) as error:
+            message = f"{path.relative_to(root)}: {error}"
+            print(f"error: {message}", file=sys.stderr)
+            result.setdefault("errors", []).append(message)
     result["domain"] = domains[0] if len(domains) == 1 else {"receipts": domains}
-    if status == "passed" and any(item.get("verification") == "payload-not-uploaded" for item in result["artifacts"]):
+    expected_matrix = {
+        "desktop": {"macos-14", "macos-15-intel", "windows-2022", "ubuntu-24.04"},
+        "browser": {"chrome", "firefox", "webkit"},
+    }.get(kind)
+    if expected_matrix:
+        job_conclusions = {}
+        for required in expected_matrix:
+            match = next((job for job in jobs_value if isinstance(job, dict) and f"({required})" in str(job.get("name", ""))), None)
+            job_conclusions[required] = match.get("conclusion") if match else None
+        failed_conclusions = {"failure", "cancelled", "timed_out", "action_required", "startup_failure", "stale"}
+        if any(value in failed_conclusions for value in job_conclusions.values()):
+            result["status"] = "failed"
+            result["blocker"] = "required matrix job failed"
+        elif any(value != "success" for value in job_conclusions.values()):
+            result["status"] = "unverified"
+            result["blocker"] = "required matrix job is missing, skipped, or incomplete"
+        if kind == "desktop":
+            observed = {domain.get("runner", {}).get("label") for domain in domains}
+            missing = sorted(expected_matrix - observed)
+        else:
+            functional = {domain.get("engine") for domain in domains if domain.get("functional") == "passed"}
+            accessibility = {domain.get("engine") for domain in domains if domain.get("accessibility") == "passed"}
+            missing = sorted((expected_matrix - functional) | (expected_matrix - accessibility))
+        if missing and result["status"] != "failed":
+            result["status"] = "unverified"
+            result["blocker"] = f"required {kind} evidence is missing: {', '.join(missing)}"
+    if result.get("errors"):
+        result["status"] = "failed"
+    if result["status"] == "passed" and any(item.get("verification") == "payload-not-uploaded" for item in result["artifacts"]):
         result["status"] = "unverified"
         result["blocker"] = "receipt-recorded package payload was not uploaded for independent hash verification"
     return result

@@ -34,7 +34,11 @@ async function fixture({ artifact = true, conclusion = 'success' } = {}) {
   await writeFile(join(root, 'desktop-run.json'), JSON.stringify(metadata));
   await writeFile(
     join(root, 'desktop-jobs.json'),
-    JSON.stringify({ jobs: [{ name: 'desktop (ubuntu-24.04)', conclusion }] }),
+    JSON.stringify({
+      jobs: ['ubuntu-24.04', 'macos-14', 'macos-15-intel', 'windows-2022'].map(
+        (label) => ({ name: `desktop (${label})`, conclusion }),
+      ),
+    }),
   );
   if (artifact) {
     const application = 'qualified application';
@@ -66,6 +70,40 @@ async function fixture({ artifact = true, conclusion = 'success' } = {}) {
         ],
       }),
     );
+    for (const label of ['macos-14', 'macos-15-intel', 'windows-2022']) {
+      const scope = join(root, 'desktop', label);
+      await mkdir(scope);
+      const app = `app ${label}`;
+      const helperBytes = `helper ${label}`;
+      const packageBytes = `installer ${label}`;
+      await writeFile(join(scope, `app-${label}`), app);
+      await writeFile(join(scope, `helper-${label}`), helperBytes);
+      await writeFile(join(scope, `installer-${label}`), packageBytes);
+      await writeFile(
+        join(scope, 'package-qualification.json'),
+        JSON.stringify({
+          schema: 1,
+          headSha: sourceSha,
+          workflowRunId: '101',
+          runner: {
+            label,
+            os: label.startsWith('macos') ? 'macOS' : 'Windows',
+            arch: 'X64',
+          },
+          application: { path: `app-${label}`, sha256: sha256(app) },
+          helpers: [
+            {
+              name: `helper-${label}`,
+              path: `helper-${label}`,
+              sha256: sha256(helperBytes),
+            },
+          ],
+          installers: [
+            { path: `installer-${label}`, sha256: sha256(packageBytes) },
+          ],
+        }),
+      );
+    }
   }
   const manifest = {
     schema: 1,
@@ -127,6 +165,9 @@ test('consolidates exact run, artifact hash, local evidence, and signing blocker
   });
   expect(summary.runs[0].jobs).toEqual([
     { name: 'desktop (ubuntu-24.04)', conclusion: 'success' },
+    { name: 'desktop (macos-14)', conclusion: 'success' },
+    { name: 'desktop (macos-15-intel)', conclusion: 'success' },
+    { name: 'desktop (windows-2022)', conclusion: 'success' },
   ]);
   expect(summary.runs[1]).toMatchObject({
     kind: 'macos-signing',
@@ -136,6 +177,16 @@ test('consolidates exact run, artifact hash, local evidence, and signing blocker
   expect(await readFile(join(root, 'summary.md'), 'utf8')).toContain(
     'https://github.com/studio/repo/actions/runs/101',
   );
+
+  await rm(join(root, 'desktop/macos-15-intel/package-qualification.json'));
+  const partialMatrix = run(manifest);
+  expect(partialMatrix.exitCode).not.toBe(0);
+  expect(
+    JSON.parse(await readFile(join(root, 'summary.json'), 'utf8')).runs[0],
+  ).toMatchObject({
+    status: 'unverified',
+    blocker: 'required desktop evidence is missing: macos-15-intel',
+  });
 });
 
 for (const [label, mutate, message] of [
@@ -213,9 +264,31 @@ test('accepts the real browser-checks receipt shape without treating it as infer
   const metadata = JSON.parse(await readFile(metadataPath, 'utf8'));
   metadata.path = '.github/workflows/browser.yml';
   await writeFile(metadataPath, JSON.stringify(metadata));
+  for (const engine of ['chrome', 'firefox', 'webkit']) {
+    await writeFile(
+      join(root, `desktop/browser-checks-${engine}.json`),
+      JSON.stringify({ passed: true, headSha: sourceSha, engine }),
+    );
+    await writeFile(
+      join(root, `desktop/accessibility-checks-${engine}.json`),
+      JSON.stringify({
+        schema: 1,
+        passed: true,
+        headSha: sourceSha,
+        engine,
+        widths: { 390: {}, 768: {}, 1440: {} },
+        errors: [],
+      }),
+    );
+  }
   await writeFile(
-    join(root, 'desktop/browser-checks-chrome.json'),
-    JSON.stringify({ passed: true, headSha: sourceSha, engine: 'chromium' }),
+    join(root, 'desktop-jobs.json'),
+    JSON.stringify({
+      jobs: ['chrome', 'firefox', 'webkit'].map((engine) => ({
+        name: `browser (${engine})`,
+        conclusion: 'success',
+      })),
+    }),
   );
   const manifestValue = JSON.parse(await readFile(manifest, 'utf8'));
   manifestValue.runs[0].kind = 'browser';
@@ -226,21 +299,64 @@ test('accepts the real browser-checks receipt shape without treating it as infer
     await readFile(join(root, 'summary.json'), 'utf8'),
   );
   expect(summary.runs[0]).toMatchObject({ kind: 'browser', status: 'passed' });
-  expect(summary.runs[0].artifacts).toEqual([
-    {
-      identity: 'browser-checks-chrome.json',
-      path: 'browser-checks-chrome.json',
-      recordedSha256: null,
-      actualSha256: sha256(
-        JSON.stringify({
-          passed: true,
-          headSha: sourceSha,
-          engine: 'chromium',
-        }),
-      ),
-      verification: 'receipt-identity-only',
-    },
-  ]);
+  expect(summary.runs[0].artifacts).toHaveLength(6);
+
+  await rm(join(root, 'desktop/accessibility-checks-webkit.json'));
+  const missingAccessibility = run(manifest);
+  expect(missingAccessibility.exitCode).not.toBe(0);
+  const incomplete = JSON.parse(
+    await readFile(join(root, 'summary.json'), 'utf8'),
+  );
+  expect(incomplete.runs[0]).toMatchObject({
+    status: 'unverified',
+    blocker: 'required browser evidence is missing: webkit',
+  });
+
+  await writeFile(
+    join(root, 'desktop/accessibility-checks-webkit.json'),
+    JSON.stringify({
+      schema: 1,
+      passed: true,
+      headSha: sourceSha,
+      engine: 'webkit',
+      widths: { 390: {}, 1440: {} },
+      errors: [],
+    }),
+  );
+  const missingWidth = run(manifest);
+  expect(missingWidth.exitCode).not.toBe(0);
+  expect(
+    JSON.parse(await readFile(join(root, 'summary.json'), 'utf8')).runs[0],
+  ).toMatchObject({
+    status: 'unverified',
+    blocker: 'required browser evidence is missing: webkit',
+  });
+
+  await writeFile(
+    join(root, 'desktop/accessibility-checks-webkit.json'),
+    JSON.stringify({
+      schema: 1,
+      passed: true,
+      headSha: sourceSha,
+      engine: 'webkit',
+      widths: { 390: {}, 768: {}, 1440: {} },
+      errors: [],
+    }),
+  );
+  const jobs = JSON.parse(
+    await readFile(join(root, 'desktop-jobs.json'), 'utf8'),
+  );
+  jobs.jobs.find((job) => job.name === 'browser (firefox)').conclusion =
+    'skipped';
+  await writeFile(join(root, 'desktop-jobs.json'), JSON.stringify(jobs));
+  const skippedJob = run(manifest);
+  expect(skippedJob.exitCode).not.toBe(0);
+  expect(
+    JSON.parse(await readFile(join(root, 'summary.json'), 'utf8')).runs[0],
+  ).toMatchObject({
+    status: 'unverified',
+    blocker: 'required matrix job is missing, skipped, or incomplete',
+  });
 });
 
 test('downgrades manual evidence without frozen-source provenance to unverified', async () => {
@@ -298,7 +414,11 @@ test('rejects a schema-only desktop receipt and still writes inspectable outputs
   );
   expect(summary.runs[0]).toMatchObject({
     status: 'failed',
-    errors: ['desktop receipt must identify the frozen source SHA'],
+    errors: [
+      expect.stringContaining(
+        'desktop receipt must identify the frozen source SHA',
+      ),
+    ],
   });
   expect(await readFile(join(root, 'summary.md'), 'utf8')).toContain(
     'desktop receipt must identify the frozen source SHA',
@@ -364,6 +484,30 @@ test('verifies real macOS absolute producer paths inside the receipt artifact sc
   expect(summary.runs[0].artifacts).toContainEqual(
     expect.objectContaining({ identity: 'signed.dmg', verification: 'passed' }),
   );
+
+  const receiptPath = join(artifact, 'signed-notarized.json');
+  const incomplete = JSON.parse(await readFile(receiptPath, 'utf8'));
+  delete incomplete.output;
+  await writeFile(receiptPath, JSON.stringify(incomplete));
+  const missingOutput = run(manifest);
+  expect(missingOutput.exitCode).not.toBe(0);
+  expect(
+    JSON.parse(await readFile(join(root, 'summary.json'), 'utf8')).runs[0]
+      .errors[0],
+  ).toContain('macos-signing output identity is missing or malformed');
+
+  incomplete.output = {
+    path: '/home/runner/work/repo/work/notarized/signed.dmg',
+    sha256: sha256(bytes),
+  };
+  delete incomplete.stapler;
+  await writeFile(receiptPath, JSON.stringify(incomplete));
+  const missingStapler = run(manifest);
+  expect(missingStapler.exitCode).not.toBe(0);
+  expect(
+    JSON.parse(await readFile(join(root, 'summary.json'), 'utf8')).runs[0]
+      .errors[0],
+  ).toContain('macos-signing stapler evidence is missing');
 });
 
 test('verifies a real Windows backslash installer path and signature conclusions', async () => {
@@ -419,6 +563,38 @@ test('verifies a real Windows backslash installer path and signature conclusions
     identity: 'signed.exe',
     verification: 'passed',
   });
+
+  const receiptPath = join(root, 'desktop/windows-package-verification.json');
+  const incomplete = JSON.parse(await readFile(receiptPath, 'utf8'));
+  incomplete.verification = [];
+  await writeFile(receiptPath, JSON.stringify(incomplete));
+  const noSignedPayloads = run(manifest);
+  expect(noSignedPayloads.exitCode).not.toBe(0);
+  expect(
+    JSON.parse(await readFile(join(root, 'summary.json'), 'utf8')).runs[0]
+      .errors[0],
+  ).toContain('windows-signing has no signature verification results');
+});
+
+test('retains valid platforms when another receipt in the same run is tampered', async () => {
+  const { root, manifest } = await fixture();
+  await writeFile(
+    join(root, 'desktop/windows-2022/app-windows-2022'),
+    'tampered',
+  );
+  const result = run(manifest);
+  expect(result.exitCode).not.toBe(0);
+  const summary = JSON.parse(
+    await readFile(join(root, 'summary.json'), 'utf8'),
+  );
+  expect(summary.runs[0].status).toBe('failed');
+  expect(summary.runs[0].errors[0]).toContain('windows-2022');
+  expect(summary.runs[0].artifacts).toContainEqual(
+    expect.objectContaining({
+      identity: 'app-macos-14',
+      verification: 'passed',
+    }),
+  );
 });
 
 test('preserves valid layers and concrete tampering errors in one summary', async () => {
@@ -479,7 +655,7 @@ test('preserves valid layers and concrete tampering errors in one summary', asyn
   expect(summary.runs[0].status).toBe('passed');
   expect(summary.runs[1]).toMatchObject({
     status: 'failed',
-    errors: ['artifact digest differs for app.bin'],
+    errors: [expect.stringContaining('artifact digest differs for app.bin')],
   });
   expect(await readFile(join(root, 'summary.md'), 'utf8')).toContain(
     'artifact digest differs for app.bin',
@@ -560,7 +736,9 @@ test('rejects an accelerator receipt that substitutes a weaker threshold', async
   expect(summary.runs[0]).toMatchObject({
     status: 'failed',
     errors: [
-      'accelerator max delta must be finite, nonnegative, and below 0.0001',
+      expect.stringContaining(
+        'accelerator max delta must be finite, nonnegative, and below 0.0001',
+      ),
     ],
   });
 });
@@ -591,6 +769,10 @@ test('rejects hash-valid text inference whose actual generated text is empty', a
   );
   expect(summary.runs[0]).toMatchObject({
     status: 'failed',
-    errors: ['text inference result contains no generated text'],
+    errors: [
+      expect.stringContaining(
+        'text inference result contains no generated text',
+      ),
+    ],
   });
 });
