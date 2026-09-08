@@ -53,6 +53,7 @@ jobs:
           APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
         run: python3 scripts/sign-macos-ci.py
       - name: Upload portable installer and evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: wdbx-studio-${{ matrix.os }}-portable

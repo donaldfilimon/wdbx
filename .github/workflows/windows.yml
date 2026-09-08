@@ -55,6 +55,8 @@ jobs:
           key: native-runtimes-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('native/runtime-pins.json', 'scripts/build-runtimes.py') }}
       - name: Package desktop
         run: bunx tauri build
+      - name: Verify production bridge exclusion
+        run: python scripts/check-production-bridge.py
       - name: Desktop invocation tests
         run: cargo test -p wdbx-studio-desktop --locked
       - name: Record package qualification
@@ -92,6 +94,7 @@ jobs:
             target/release/bundle/**/*.AppImage
             target/release/bundle/**/*.deb
             work/package-qualification.json
+            work/production-bridge-verification.json
             work/native-first-screen.png
             work/native-desktop.png
             work/native-e2e.log
