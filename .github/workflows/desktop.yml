@@ -63,9 +63,10 @@ jobs:
         run: |
           if [ "$RUNNER_OS" = Linux ]; then
             bunx tauri build --bundles deb
-            mkdir -p work/linux-deb-stage
-            cp -p target/release/wdbx-studio-desktop work/linux-deb-stage/
-            cp -p src-tauri/binaries/llama-server src-tauri/binaries/sd-cli work/linux-deb-stage/
+            python scripts/linux_package_evidence.py snapshot-deb \
+              --root "$PWD" \
+              --bundle-deb-root "$PWD/target/release/bundle/deb" \
+              --output "$PWD/work/linux-deb-stage"
             bunx tauri bundle --bundles rpm,appimage
           else
             bunx tauri build

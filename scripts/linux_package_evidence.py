@@ -191,6 +191,27 @@ def verify_appimage(args: argparse.Namespace) -> None:
                 f"extracted payload differs from staged AppDir qualification: {name}")
 
 
+def snapshot_deb(args: argparse.Namespace) -> None:
+    root = Path(args.root).resolve()
+    bundle_root = Path(args.bundle_deb_root).resolve()
+    output = Path(args.output).resolve()
+    require(bundle_root.is_dir() and bundle_root.is_relative_to(root),
+            "Debian bundle root must be within qualification root")
+    require(output.is_relative_to(root),
+            "Debian stage snapshot must be within qualification root")
+    data_roots = [path.resolve() for path in bundle_root.glob("*/data") if path.is_dir()]
+    require(len(data_roots) == 1,
+            f"expected exactly one Tauri Debian data root, found {len(data_roots)}")
+    data_root = data_roots[0]
+    require(data_root.is_relative_to(bundle_root), "unsafe Tauri Debian data root")
+    require(not output.exists(), "refusing to replace existing Debian stage snapshot")
+    sources = {name: unique(data_root, name, "Tauri Debian staged executable")
+               for name in REQUIRED}
+    output.mkdir(parents=True)
+    for name, source in sources.items():
+        shutil.copy2(source, output / name)
+
+
 def create_deb(args: argparse.Namespace) -> None:
     root = Path(args.root).resolve()
     base_path = Path(args.base_receipt).resolve()
@@ -288,6 +309,10 @@ def parser() -> argparse.ArgumentParser:
                  "retained-payload", "expected-source-sha", "expected-run-id"):
         create_parser.add_argument(f"--{flag}", required=True)
     create_parser.set_defaults(function=create)
+    snapshot_parser = commands.add_parser("snapshot-deb")
+    for flag in ("root", "bundle-deb-root", "output"):
+        snapshot_parser.add_argument(f"--{flag}", required=True)
+    snapshot_parser.set_defaults(function=snapshot_deb)
     deb_parser = commands.add_parser("create-deb")
     for flag in ("root", "base-receipt", "staged-payload", "installer", "output",
                  "retained-payload", "expected-source-sha", "expected-run-id"):

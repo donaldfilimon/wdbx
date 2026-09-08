@@ -10,6 +10,7 @@ import json
 import os
 import platform
 import subprocess
+import sys
 import tempfile
 from pathlib import Path
 
@@ -17,7 +18,12 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def run(*arguments: str, **kwargs) -> str:
-    return subprocess.check_output(arguments, text=True, stderr=subprocess.STDOUT, **kwargs).strip()
+    try:
+        return subprocess.check_output(arguments, text=True, stderr=subprocess.STDOUT, **kwargs).strip()
+    except subprocess.CalledProcessError as error:
+        if error.output:
+            print(error.output, file=sys.stderr, end="" if error.output.endswith("\n") else "\n")
+        raise
 
 
 def digest(path: Path) -> str:
