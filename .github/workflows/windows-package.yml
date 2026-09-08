@@ -17,6 +17,16 @@ jobs:
       WDBX_QUALIFICATION_RUN: ${{ inputs.qualification_run_id }}
     steps:
       - uses: actions/checkout@v4
+      - name: Require Authenticode credentials
+        shell: pwsh
+        env:
+          WINDOWS_SIGNING_CERTIFICATE_BASE64: ${{ secrets.WINDOWS_SIGNING_CERTIFICATE_BASE64 }}
+          WINDOWS_SIGNING_CERTIFICATE_PASSWORD: ${{ secrets.WINDOWS_SIGNING_CERTIFICATE_PASSWORD }}
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:WINDOWS_SIGNING_CERTIFICATE_BASE64) -or
+              [string]::IsNullOrWhiteSpace($env:WINDOWS_SIGNING_CERTIFICATE_PASSWORD)) {
+            throw 'Windows Authenticode certificate secrets are required before packaging'
+          }
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.0
@@ -90,32 +100,146 @@ jobs:
             if ($helperHash -ne $helper.sha256) {
               throw "Qualified helper digest differs: $($helper.name)"
             }
+            Copy-Item $helperPath "src-tauri/binaries/$($helper.name)" -Force
           }
           New-Item target/release -ItemType Directory -Force | Out-Null
           Copy-Item $app target/release/wdbx-studio-desktop.exe
           Copy-Item $receiptPath work/package-qualification.json
+      - name: Sign qualified application and helpers
+        shell: pwsh
+        env:
+          WINDOWS_SIGNING_CERTIFICATE_BASE64: ${{ secrets.WINDOWS_SIGNING_CERTIFICATE_BASE64 }}
+          WINDOWS_SIGNING_CERTIFICATE_PASSWORD: ${{ secrets.WINDOWS_SIGNING_CERTIFICATE_PASSWORD }}
+        run: |
+          $pfx = Join-Path $env:RUNNER_TEMP 'wdbx-authenticode.pfx'
+          [IO.File]::WriteAllBytes(
+            $pfx,
+            [Convert]::FromBase64String($env:WINDOWS_SIGNING_CERTIFICATE_BASE64)
+          )
+          "WDBX_PFX_PATH=$pfx" | Out-File $env:GITHUB_ENV -Append
+          $signTool = Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\bin" `
+            -Recurse -Filter signtool.exe |
+            Where-Object { $_.FullName -match '\\x64\\signtool\.exe$' } |
+            Sort-Object FullName -Descending |
+            Select-Object -First 1
+          if (-not $signTool) { throw 'The Windows SDK signing tool is unavailable' }
+          "WDBX_SIGNTOOL=$($signTool.FullName)" | Out-File $env:GITHUB_ENV -Append
+          $targets = @(
+            'target/release/wdbx-studio-desktop.exe',
+            'src-tauri/binaries/llama-server.exe',
+            'src-tauri/binaries/sd-cli.exe'
+          )
+          $records = @()
+          foreach ($target in $targets) {
+            $before = (Get-FileHash $target -Algorithm SHA256).Hash.ToLower()
+            & $signTool.FullName sign /fd SHA256 /td SHA256 `
+              /tr https://timestamp.digicert.com `
+              /f $pfx /p $env:WINDOWS_SIGNING_CERTIFICATE_PASSWORD $target
+            if ($LASTEXITCODE -ne 0) { throw "Authenticode signing failed: $target" }
+            $after = (Get-FileHash $target -Algorithm SHA256).Hash.ToLower()
+            $records += @{path=$target; preSignSha256=$before; postSignSha256=$after}
+          }
+          @{schema=1; files=$records} |
+            ConvertTo-Json -Depth 4 |
+            Set-Content work/windows-signing-hashes.json
       - name: Bundle verified app and standalone helpers
         run: bunx tauri bundle --bundles nsis --ci
+      - name: Sign final installer
+        shell: pwsh
+        env:
+          WINDOWS_SIGNING_CERTIFICATE_PASSWORD: ${{ secrets.WINDOWS_SIGNING_CERTIFICATE_PASSWORD }}
+        run: |
+          $installers = @(Get-ChildItem target/release/bundle/nsis -Filter *.exe)
+          if ($installers.Count -ne 1) { throw 'Expected exactly one NSIS installer to sign' }
+          $installer = $installers[0]
+          $before = (Get-FileHash $installer.FullName -Algorithm SHA256).Hash.ToLower()
+          & $env:WDBX_SIGNTOOL sign /fd SHA256 /td SHA256 `
+            /tr https://timestamp.digicert.com `
+            /f $env:WDBX_PFX_PATH /p $env:WINDOWS_SIGNING_CERTIFICATE_PASSWORD `
+            $installer.FullName
+          if ($LASTEXITCODE -ne 0) { throw 'Installer Authenticode signing failed' }
+          @{
+            path=[IO.Path]::GetRelativePath((Resolve-Path .), $installer.FullName)
+            preSignSha256=$before
+            postSignSha256=(Get-FileHash $installer.FullName -Algorithm SHA256).Hash.ToLower()
+          } | ConvertTo-Json | Set-Content work/windows-installer-signing-hashes.json
       - name: Verify final installer payload
         shell: pwsh
         run: |
           $receipt = Get-Content work/package-qualification.json -Raw | ConvertFrom-Json
+          $signedFiles = Get-Content work/windows-signing-hashes.json -Raw | ConvertFrom-Json
+          $installerSigning = Get-Content work/windows-installer-signing-hashes.json -Raw | ConvertFrom-Json
           $installers = @(Get-ChildItem target/release/bundle/nsis -Filter *.exe)
           if ($installers.Count -ne 1) { throw 'Expected exactly one final NSIS installer' }
           $installer = $installers[0]
           7z x $installer.FullName -owork/final-installer -y
           if ($LASTEXITCODE -ne 0) { throw 'Cannot extract final installer' }
+          $applicationSigning = @(
+            $signedFiles.files |
+              Where-Object { $_.path -eq 'target/release/wdbx-studio-desktop.exe' }
+          )
+          if ($applicationSigning.Count -ne 1) {
+            throw 'Application signing evidence is missing or ambiguous'
+          }
+          if ($applicationSigning[0].preSignSha256 -ne $receipt.application.sha256) {
+            throw 'Pre-sign application digest differs from qualified application'
+          }
           $app = 'work/final-installer/wdbx-studio-desktop.exe'
           $appHash = (Get-FileHash $app -Algorithm SHA256).Hash.ToLower()
-          if ($appHash -ne $receipt.application.sha256) {
-            throw 'Final application digest differs from qualified application'
+          if ($appHash -ne $applicationSigning[0].postSignSha256) {
+            throw 'Packaged application differs from the signed application'
           }
           $helperEvidence = @()
-          foreach ($name in @('llama-server.exe', 'sd-cli.exe')) {
+          foreach ($helper in $receipt.helpers) {
+            $name = $helper.name
+            $helperSigning = @(
+              $signedFiles.files |
+                Where-Object { $_.path -eq "src-tauri/binaries/$name" }
+            )
+            if ($helperSigning.Count -ne 1) {
+              throw "Helper signing evidence is missing or ambiguous: $name"
+            }
+            if ($helperSigning[0].preSignSha256 -ne $helper.sha256) {
+              throw "Pre-sign helper digest differs from qualification: $name"
+            }
             $built = (Get-FileHash "src-tauri/binaries/$name" -Algorithm SHA256).Hash.ToLower()
             $packed = (Get-FileHash "work/final-installer/binaries/$name" -Algorithm SHA256).Hash.ToLower()
+            if ($built -ne $helperSigning[0].postSignSha256) {
+              throw "Signed helper digest differs from signing evidence: $name"
+            }
             if ($built -ne $packed) { throw "Packaged helper differs: $name" }
-            $helperEvidence += @{name=$name; sha256=$packed}
+            $helperEvidence += @{
+              name=$name
+              qualifiedSha256=$helper.sha256
+              signedSha256=$packed
+            }
+          }
+          $verificationTargets = @(
+            'target/release/wdbx-studio-desktop.exe',
+            'src-tauri/binaries/llama-server.exe',
+            'src-tauri/binaries/sd-cli.exe',
+            $installer.FullName,
+            'work/final-installer/wdbx-studio-desktop.exe',
+            'work/final-installer/binaries/llama-server.exe',
+            'work/final-installer/binaries/sd-cli.exe'
+          )
+          $signatureEvidence = @()
+          foreach ($target in $verificationTargets) {
+            & $env:WDBX_SIGNTOOL verify /pa /all /v $target
+            if ($LASTEXITCODE -ne 0) { throw "signtool verification failed: $target" }
+            $signature = Get-AuthenticodeSignature $target
+            if ($signature.Status -ne 'Valid') {
+              throw "PowerShell Authenticode verification failed: $target ($($signature.Status))"
+            }
+            if (-not $signature.TimeStamperCertificate) {
+              throw "RFC 3161 timestamp is missing: $target"
+            }
+            $signatureEvidence += @{
+              path=$target
+              signtool='passed'
+              authenticodeStatus=$signature.Status.ToString()
+              timestampStatus='verified'
+            }
           }
           @{
             schema=1
@@ -124,13 +248,77 @@ jobs:
             qualificationRunner='windows-2022'
             qualifiedInstallerSha256=$receipt.installers[0].sha256
             applicationSha256=$appHash
-            applicationUnchanged=$true
+            applicationQualifiedBeforeSigning=$true
             helpers=$helperEvidence
             finalInstaller=@{
               path=[IO.Path]::GetRelativePath((Resolve-Path .), $installer.FullName)
               sha256=(Get-FileHash $installer.FullName -Algorithm SHA256).Hash.ToLower()
             }
+            preAndPostSignHashes=@{
+              files=$signedFiles.files
+              installer=$installerSigning
+            }
+            timestampService='https://timestamp.digicert.com'
+            timestampStatus='verified'
+            verification=$signatureEvidence
           } | ConvertTo-Json -Depth 5 | Set-Content work/windows-package-verification.json
+      - name: Silent install, launch, shutdown, and uninstall
+        shell: pwsh
+        run: |
+          $installer = @(Get-ChildItem target/release/bundle/nsis -Filter *.exe)[0]
+          $install = Start-Process $installer.FullName -ArgumentList '/S' -Wait -PassThru
+          if ($install.ExitCode -ne 0) { throw "Silent install failed: $($install.ExitCode)" }
+          $roots = @(
+            'HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*',
+            'HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*',
+            'HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*'
+          )
+          $entry = Get-ItemProperty $roots -ErrorAction SilentlyContinue |
+            Where-Object { $_.DisplayName -eq 'WDBX Specimen Studio' } |
+            Select-Object -First 1
+          if (-not $entry) { throw 'Installed application was not registered' }
+          if (-not [string]::IsNullOrWhiteSpace($entry.InstallLocation)) {
+            $installRoot = $entry.InstallLocation
+          } elseif ($entry.UninstallString -match '^"([^"]+)"') {
+            $installRoot = Split-Path $matches[1] -Parent
+          } else {
+            $installRoot = Split-Path $entry.UninstallString.Split(' ')[0] -Parent
+          }
+          $application = Join-Path $installRoot 'wdbx-studio-desktop.exe'
+          if (-not (Test-Path $application)) { throw 'Installed application is missing' }
+          $process = Start-Process $application -PassThru
+          Start-Sleep -Seconds 10
+          if ($process.HasExited -and $process.ExitCode -ne 0) {
+            throw "Installed application launch failed: $($process.ExitCode)"
+          }
+          if (-not $process.HasExited) {
+            if (-not $process.CloseMainWindow()) {
+              Stop-Process -Id $process.Id -Force
+              throw 'Installed application did not accept a clean shutdown'
+            }
+            if (-not $process.WaitForExit(15000)) {
+              Stop-Process -Id $process.Id -Force
+              throw 'Installed application did not finish a clean shutdown'
+            }
+          }
+          $uninstall = $entry.UninstallString
+          if ($uninstall -match '^"([^"]+)"') {
+            $uninstaller = $matches[1]
+          } else {
+            $uninstaller = $uninstall.Split(' ')[0]
+          }
+          $removed = Start-Process $uninstaller -ArgumentList '/S' -Wait -PassThru
+          if ($removed.ExitCode -ne 0) { throw "Silent uninstall failed: $($removed.ExitCode)" }
+          Start-Sleep -Seconds 2
+          if (Test-Path $application) { throw 'Silent uninstall left the application installed' }
+          $evidence = Get-Content work/windows-package-verification.json -Raw | ConvertFrom-Json
+          $evidence | Add-Member -NotePropertyName installSmoke -NotePropertyValue @{
+            silentInstall='passed'
+            launch='passed'
+            cleanShutdown='passed'
+            silentUninstall='passed'
+          }
+          $evidence | ConvertTo-Json -Depth 6 | Set-Content work/windows-package-verification.json
       - name: Upload portable installer and evidence
         uses: actions/upload-artifact@v4
         with:
@@ -140,3 +328,9 @@ jobs:
             work/package-qualification.json
             work/windows-runtime-verification.json
             work/windows-package-verification.json
+      - name: Remove temporary signing certificate
+        if: always()
+        shell: pwsh
+        run: |
+          $pfx = Join-Path $env:RUNNER_TEMP 'wdbx-authenticode.pfx'
+          if (Test-Path $pfx) { Remove-Item $pfx -Force }
