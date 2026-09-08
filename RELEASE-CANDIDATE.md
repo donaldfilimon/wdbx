@@ -35,14 +35,20 @@ outside this release.
 - Replacement `25ea8e95` passed all local gates, hosted browser/text/image/OCR/
   GPU, ARM64 macOS desktop and Windows desktop, including exact portable
   save/restore. Linux's AppImage stage passed, but Debian qualification found
-  that Tauri's later bundle operations mutate the raw application after the
-  Debian installer is emitted. A separate pre-mutation Debian snapshot is
-  required; this corrective source change establishes another candidate.
+  that the final raw executable does not preserve Debian's bundle-specific
+  bytes. The first post-bundle target snapshot was also insufficient: Tauri
+  restores the original before returning. Candidate `43a101cf` established
+  that the independent snapshot must come from Debian's producer `data`
+  staging tree. This correction establishes another candidate.
 - Actual Firefox 200% text-only enlargement failed with clipped labels and
   trace content. The layout predates this consolidation and is unchanged here;
   retain the observed failure as a pre-existing manual release blocker. Targeted
   page zoom and increased contrast passed, with settings restored exactly;
   the full manual matrix and spoken VoiceOver acceptance remain incomplete.
+- Candidate `43a101cf` passed all local gates and hosted browser/text/image/GPU
+  qualification. Its hosted OCR setup failed on rustup component-file conflicts
+  twice, including the single permitted retry, before inference; local OCR
+  remains separate. Preserve this external blocker and all superseded failures.
 
 ## Decisions
 

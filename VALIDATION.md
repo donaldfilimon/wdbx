@@ -35,7 +35,8 @@ transient retry or a passing Linux qualification.
 The corrective gate must bind the retained final AppDir payload separately to
 the same source, run, original build identities and installer digest, then
 require exact extracted-to-staged hashes. Debian must likewise retain its
-bundle-specific payload before later bundle operations mutate the executable.
+bundle-specific payload from the producer's `data` staging tree, not the raw
+executable restored when Tauri's bundle command returns.
 Expected AppImage hashes must never be derived from the extracted installer
 being tested. This source correction supersedes `720125b`; none of its hosted
 successes may be relabeled as new-candidate final evidence.
@@ -99,11 +100,11 @@ The log records Tauri patching the executable for Debian before producing the
 `.deb`, then patching the same executable for RPM and AppImage. The installed
 Debian application therefore differs from the final raw executable; its two
 helpers match the raw helper hashes. This is an evidence-stage defect, not a
-transient runner failure. The correction must bundle Debian first, retain its
-application and helper bytes immediately, and bind that independent snapshot
-to the source, run, base receipt and installer digest. Installed Debian bytes
-must match that snapshot exactly. Expected payload hashes must not be derived
-from the installed or extracted Debian package under test.
+transient runner failure. The first correction attempted to snapshot the target
+immediately after Debian bundling, then bind it to the source, run, base receipt
+and installer. The later `43a101cf` attempt disproved that snapshot boundary,
+as detailed below. Expected payload hashes must never be derived from the
+installed or extracted Debian package under test.
 
 Actual Firefox 155.0.1 passed a targeted 200% page-zoom feedback path and an
 increased-contrast dialog/navigation path. Display accessibility preferences
@@ -136,6 +137,47 @@ focused WebKit accessibility rerun passed 390/768/1440; the initial failure is
 retained under that candidate's `browser-webkit-initial-focus.log`. No application
 behavior or timing delay was introduced. A new source commit and fresh final
 gates are required for this test-only correction as well.
+
+### Debian producer staging and retained diagnostics after `43a101cf`
+
+Candidate `43a101cf371ea41e24703e244ee4197751eb6ae8` was non-force pushed after
+all local gates passed: 91 Bun tests / 369 assertions, TypeScript, Studio lint,
+production browser build, Rust formatting/32 tests/Clippy, both runtime builds,
+production package/seal/bridge exclusion, four native tests (13 seconds;
+100,000-record history rendered in 50 ms), real OCR, wgpu parity and all three
+browser/accessibility engines at 390/768/1440. Hosted browser, text, image and
+GPU passed, as did both macOS desktop jobs. None of these results qualifies a
+later source commit.
+
+Linux's verifier still rejected Debian in run `34231752495`. Downloaded artifact
+`10059490942` and exact Tauri CLI v2.11.4 source revealed the omitted behavior:
+Tauri saves the original executable, temporarily patches it during each bundle,
+then restores the original before the command returns. The post-command target
+snapshot was therefore raw (`4763ac…`), not Debian's archived application
+(`7d7952…`). The earlier diagnosis based only on patch log ordering was incomplete.
+The correct independent snapshot is Debian's actual producer staging directory,
+`target/release/bundle/deb/<package_base>/data`, populated before its archive is
+created and retained afterward. Capture its unique application and helpers,
+not a subsequently extracted installer or the restored target executable.
+Keep the source/run/base-receipt/installer binding and exact installed-byte
+comparison. The checker now prints captured child-command output before
+rethrowing failures; a red/green regression verifies that diagnostics survive.
+
+Hosted OCR failed before inference twice on this candidate: initial run
+`34231803091` encountered a rustup `bin/cargo-clippy` conflict; the single allowed
+fresh-run retry `34232250581` encountered `bin/cargo-fmt`. Fixture creation and
+verified OCR model downloads passed. Local recognition passed, but final-SHA
+hosted recognition did not occur. Retain this as a persistent external toolchain
+provisioning blocker, not a passing OCR result; no additional same-candidate
+retry was made.
+
+Actual Firefox 200% text-only enlargement was repeated on `43a101cf` and failed
+again with clipped dossier/trace labels and overlapping topology controls.
+Normal zoom segment feedback disabled both segment and overlapping whole-result
+controls, and AX live-region text was captured. Zoom/text-only settings were
+restored and only the audit tab closed. Evidence is under that candidate's
+`firefox-text-200-final.png` and `firefox-feedback-final.txt`. The pre-existing
+manual layout blocker and signing/VoiceOver checkpoints remain unresolved.
 
 ### Fresh local baseline, September 8, 2026
 

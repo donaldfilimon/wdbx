@@ -82,13 +82,33 @@ async function fixture() {
 }
 
 async function debStage(value) {
+  const data = join(value.root, 'bundle/deb/studio_0.2.0_amd64/data');
   const staged = join(value.root, 'deb-stage');
   const retained = join(value.root, 'deb-retained');
   const receipt = join(value.root, 'linux-deb-qualification.json');
-  await mkdir(staged);
-  await writeFile(join(staged, 'wdbx-studio-desktop'), 'deb-patched-app');
-  await writeFile(join(staged, 'llama-server'), value.raw.llama);
-  await writeFile(join(staged, 'sd-cli'), value.raw.sd);
+  await mkdir(join(data, 'usr/bin'), { recursive: true });
+  await mkdir(join(data, 'usr/lib/WDBX Specimen Studio/binaries'), {
+    recursive: true,
+  });
+  await writeFile(join(data, 'usr/bin/wdbx-studio-desktop'), 'deb-patched-app');
+  await writeFile(
+    join(data, 'usr/lib/WDBX Specimen Studio/binaries/llama-server'),
+    value.raw.llama,
+  );
+  await writeFile(
+    join(data, 'usr/lib/WDBX Specimen Studio/binaries/sd-cli'),
+    value.raw.sd,
+  );
+  const snapshot = run(
+    'snapshot-deb',
+    '--root',
+    value.root,
+    '--bundle-deb-root',
+    join(value.root, 'bundle/deb'),
+    '--output',
+    staged,
+  );
+  expect(snapshot.exitCode, snapshot.stderr.toString()).toBe(0);
   const result = run(
     'create-deb',
     '--root',
@@ -108,7 +128,7 @@ async function debStage(value) {
     '--expected-run-id',
     '101',
   );
-  return { staged, retained, receipt, result };
+  return { data, staged, retained, receipt, result };
 }
 
 function verifyDeb(
@@ -146,6 +166,36 @@ test('binds an independent pre-installer Debian stage and verifies installed byt
   expect(verifyDeb(value, receipt, installed).exitCode).toBe(0);
 });
 
+test('snapshots only one actual Tauri Debian data tree and refuses replacement', async () => {
+  const value = await fixture();
+  const created = await debStage(value);
+  const replacement = run(
+    'snapshot-deb',
+    '--root',
+    value.root,
+    '--bundle-deb-root',
+    join(value.root, 'bundle/deb'),
+    '--output',
+    created.staged,
+  );
+  expect(replacement.exitCode).not.toBe(0);
+  expect(replacement.stderr.toString()).toContain('refusing to replace');
+  await mkdir(join(value.root, 'bundle/deb/other/data'), { recursive: true });
+  const ambiguous = run(
+    'snapshot-deb',
+    '--root',
+    value.root,
+    '--bundle-deb-root',
+    join(value.root, 'bundle/deb'),
+    '--output',
+    join(value.root, 'other-stage'),
+  );
+  expect(ambiguous.exitCode).not.toBe(0);
+  expect(ambiguous.stderr.toString()).toContain(
+    'exactly one Tauri Debian data root',
+  );
+});
+
 test('rejects tampered or missing retained Debian stage payload', async () => {
   const value = await fixture();
   const { staged, retained, receipt } = await debStage(value);
@@ -163,31 +213,22 @@ test('rejects tampered or missing retained Debian stage payload', async () => {
 test('rejects a missing executable before sealing the Debian stage', async () => {
   const value = await fixture();
   const created = await debStage(value);
-  await rm(join(created.staged, 'sd-cli'));
+  await rm(join(created.data, 'usr/lib/WDBX Specimen Studio/binaries/sd-cli'));
+  await rm(created.staged, { recursive: true });
   await rm(created.retained, { recursive: true });
   await rm(created.receipt);
   const result = run(
-    'create-deb',
+    'snapshot-deb',
     '--root',
     value.root,
-    '--base-receipt',
-    value.base,
-    '--staged-payload',
-    created.staged,
-    '--installer',
-    value.debInstaller,
+    '--bundle-deb-root',
+    join(value.root, 'bundle/deb'),
     '--output',
-    created.receipt,
-    '--retained-payload',
-    created.retained,
-    '--expected-source-sha',
-    sourceSha,
-    '--expected-run-id',
-    '101',
+    created.staged,
   );
   expect(result.exitCode).not.toBe(0);
   expect(result.stderr.toString()).toContain(
-    'exactly one staged Debian executable',
+    'exactly one Tauri Debian staged executable',
   );
 });
 
