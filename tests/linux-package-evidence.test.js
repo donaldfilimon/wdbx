@@ -160,6 +160,14 @@ test('binds an independent pre-installer Debian stage and verifies installed byt
   const value = await fixture();
   const { staged, receipt, result } = await debStage(value);
   expect(result.exitCode, result.stderr.toString()).toBe(0);
+  const evidence = JSON.parse(await readFile(receipt, 'utf8'));
+  const hashes = Object.fromEntries(
+    evidence.payload.map((item) => [item.name, item.sha256]),
+  );
+  expect(hashes['wdbx-studio-desktop']).toBe(sha256('deb-patched-app'));
+  expect(hashes['wdbx-studio-desktop']).not.toBe(sha256(value.raw.app));
+  expect(hashes['llama-server']).toBe(sha256(value.raw.llama));
+  expect(hashes['sd-cli']).toBe(sha256(value.raw.sd));
   const installed = ['wdbx-studio-desktop', 'llama-server', 'sd-cli'].map(
     (name) => join(staged, name),
   );
