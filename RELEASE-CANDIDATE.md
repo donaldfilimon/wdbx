@@ -27,6 +27,11 @@ outside this release.
 - Hosted run 33878636044 at b2c382d qualified text-model only; desktop skipped.
 - Credential inventory: GitHub repository secret list empty; no local Developer
   ID Application identity. Signed release candidates require credentials.
+- Candidate `720125b` was non-force pushed and qualified browser, text, image,
+  GPU and both macOS desktop jobs. Linux AppImage qualification exposed an
+  incorrect raw-versus-packaged ELF hash comparison. The narrow staging-evidence
+  correction requires a new candidate and complete hosted matrix; retain the
+  superseded run and local results as history, not final qualification.
 
 ## Decisions
 

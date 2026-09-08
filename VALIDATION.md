@@ -19,6 +19,42 @@ commit may invalidate that frozen SHA. Failed, blocked and unverified layers
 must remain distinct from passed layers. A corrective source commit establishes
 a new candidate and requires the complete final-SHA hosted matrix again.
 
+### Superseded candidate and Linux packaging correction
+
+Candidate `720125bca2bd67b4e9a98a0bac224bef41bc589f` was pushed without
+force to `github/main`. Its browser matrix, real Qwen text inference,
+SDXL-Turbo image inference and wgpu parity passed; downloaded archives and
+payload receipts verified locally. Both macOS desktop jobs also passed.
+The Linux job in run `34220950934` failed its installed AppImage payload
+comparison: linuxdeploy transforms ELF loader metadata after the raw build.
+The extracted application and helpers therefore cannot correctly be compared
+to raw pre-AppImage whole-file hashes. The failure is retained under
+`work/qualification-20260908/hosted/linux-initial-job.log` and is not a
+transient retry or a passing Linux qualification.
+
+The corrective gate must bind the retained final AppDir payload separately to
+the same source, run, original build identities and installer digest, then
+require exact extracted-to-staged hashes. Debian retains its raw-build checks.
+Expected AppImage hashes must never be derived from the extracted installer
+being tested. This source correction supersedes `720125b`; none of its hosted
+successes may be relabeled as new-candidate final evidence.
+
+Local gates at that superseded SHA passed: 78 Bun tests / 338 assertions,
+TypeScript, Studio lint, browser build, Rust format, 31 Rust tests, Clippy,
+both runtime builds, ad-hoc desktop package/seal, production bridge exclusion,
+three-engine browser/accessibility matrix, actual OCR and wgpu parity.
+The isolated native retry passed four tests in 1m43.8s with a 146ms history
+search. Initial frontend fixture timeouts, DMG-wrapper failure and native
+driver connection loss remain alongside successful reruns under
+`work/qualification-20260908/final/`; no source fix is claimed for those
+symptoms. Final candidate results still belong in the external receipt.
+
+The same candidate's OCR run `34221042086` later failed before model download:
+the macOS runner refused system-wide Pillow installation under PEP 668. The
+workflow now isolates fixture dependencies in an ephemeral virtual environment
+and pins Pillow to the locally exercised 12.3.0 version; it does not disable
+managed-Python protections. The failed run produced no OCR acceptance artifact.
+
 ### Fresh local baseline, September 8, 2026
 
 At `6d76b0c`, the following commands returned exit 0 in this task:

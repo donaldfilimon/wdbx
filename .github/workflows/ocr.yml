@@ -13,8 +13,9 @@ jobs:
         run: rustup toolchain install nightly-2026-09-01 --profile minimal
       - name: Create OCR fixture
         run: |
-          python3 -m pip install pillow
-          python3 scripts/ocr-fixture.py work/acceptance
+          python3 -m venv "$RUNNER_TEMP/ocr-fixture-venv"
+          "$RUNNER_TEMP/ocr-fixture-venv/bin/python" -m pip install pillow==12.3.0
+          "$RUNNER_TEMP/ocr-fixture-venv/bin/python" scripts/ocr-fixture.py work/acceptance
           mkdir -p src-tauri/binaries work/acceptance/results
       - name: Download verified OCR models only
         run: python3 scripts/download-models.py work/acceptance/models --ids text-detection text-recognition
