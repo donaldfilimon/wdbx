@@ -53,7 +53,7 @@ def digest(path: Path) -> str:
     return value.hexdigest()
 
 
-def find_payload(root: Path, recorded_path: str) -> Path:
+def find_payload(root: Path, recorded_path: str, recorded_sha256: str | None = None) -> Path:
     normalized = recorded_path.replace("\\", "/")
     source_path = Path(normalized)
     if ".." in source_path.parts:
@@ -68,6 +68,16 @@ def find_payload(root: Path, recorded_path: str) -> Path:
         resolved = path.resolve()
         if path.is_file() and resolved.is_relative_to(resolved_root):
             matches.append(resolved)
+    if recorded_sha256 is not None and len(matches) > 1:
+        digest_matches = [path for path in matches if digest(path) == recorded_sha256]
+        if len(digest_matches) == 1:
+            return digest_matches[0]
+        if not digest_matches:
+            return matches[0]
+        # Artifact uploads can retain both raw and post-packaging copies when
+        # linuxdeploy leaves a payload byte-identical. Every candidate has
+        # independently matched the receipt digest, so choose deterministically.
+        return sorted(digest_matches)[0]
     if len(matches) != 1:
         raise EvidenceError(
             f"recorded artifact {recorded_path!r} has {len(matches)} matching payloads"
@@ -78,7 +88,7 @@ def find_payload(root: Path, recorded_path: str) -> Path:
 def artifact_record(root: Path, path: str, recorded: str) -> dict[str, str]:
     if not SHA256.fullmatch(recorded):
         raise EvidenceError(f"recorded artifact {path!r} has an invalid SHA-256")
-    payload = find_payload(root, path)
+    payload = find_payload(root, path, recorded)
     actual = digest(payload)
     if actual != recorded:
         raise EvidenceError(f"artifact digest differs for {path}")
@@ -168,6 +178,55 @@ def require(condition: bool, message: str) -> None:
 
 def valid_file_record(value: Any) -> bool:
     return isinstance(value, dict) and isinstance(value.get("path"), str) and bool(value["path"]) and SHA256.fullmatch(str(value.get("sha256", ""))) is not None
+
+
+def validate_linux_stage(root: Path, package_path: Path, package: dict[str, Any],
+                         source_sha: str, run_id: str) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    relative = package_path.resolve().relative_to(root.resolve())
+    scope = root if len(relative.parts) == 1 else root / relative.parts[0]
+    candidates = list(scope.rglob("linux-appdir-qualification.json"))
+    require(len(candidates) == 1, "ubuntu-24.04 evidence must contain exactly one AppDir qualification receipt")
+    stage_path = candidates[0]
+    stage = load_json(stage_path, "Linux AppDir qualification receipt")
+    require(isinstance(stage, dict) and stage.get("schema") == 1,
+            "Linux AppDir qualification receipt is malformed")
+    require(stage.get("sourceSha") == source_sha and str(stage.get("workflowRunId")) == run_id,
+            "Linux AppDir qualification source or run linkage differs")
+    base = stage.get("baseQualification")
+    require(isinstance(base, dict) and base.get("receiptSha256") == digest(package_path),
+            "Linux AppDir base qualification receipt digest differs")
+    raw_records = [package["application"], *package["helpers"]]
+    raw = {str(item.get("name") or Path(item["path"]).name): item["sha256"] for item in raw_records}
+    require(base.get("payloadSha256") == raw,
+            "Linux AppDir raw-qualified payload linkage differs")
+    appimages = [item for item in package["installers"] if Path(item["path"]).suffix == ".AppImage"]
+    require(len(appimages) == 1 and stage.get("installer") == appimages[0],
+            "Linux AppDir installer linkage differs")
+    artifacts = [artifact_record(scope, appimages[0]["path"], appimages[0]["sha256"])]
+    payload = stage.get("payload")
+    require(isinstance(payload, list) and len(payload) == len(raw),
+            "Linux AppDir staged payload evidence is incomplete")
+    observed = set()
+    for item in payload:
+        require(isinstance(item, dict) and item.get("name") in raw and item["name"] not in observed,
+                "Linux AppDir staged payload identity is malformed or duplicated")
+        observed.add(item["name"])
+        require(item.get("rawQualifiedSha256") == raw[item["name"]],
+                f"Linux AppDir raw-qualified hash differs for {item['name']}")
+        require(valid_file_record({"path": item.get("retainedPath"), "sha256": item.get("sha256")}),
+                f"Linux AppDir retained payload record is malformed for {item['name']}")
+        record = artifact_record(scope, item["retainedPath"], item["sha256"])
+        record["identity"] = item["name"]
+        artifacts.append(record)
+    require(observed == set(raw), "Linux AppDir staged payload identities are incomplete")
+    artifacts.append({
+        "identity": stage_path.name,
+        "path": str(stage_path.relative_to(root)),
+        "recordedSha256": None,
+        "actualSha256": digest(stage_path),
+        "verification": "receipt-identity-only",
+    })
+    return {"appDirPayloadVerification": "passed"}, artifacts
 
 
 def validate_accessibility_widths(widths: Any) -> list[int]:
@@ -351,8 +410,15 @@ def inspect_run(entry: dict[str, Any], repository: str, source_sha: str, package
             receipt = load_json(path, f"{kind} receipt")
             if not isinstance(receipt, dict):
                 raise EvidenceError(f"{kind} receipt is malformed")
-            domains.append(validate_domain(kind, receipt, source_sha, run_id, package_qualification_run_id, path.name))
-            result["artifacts"].extend(receipt_artifacts(root, path, receipt, kind))
+            domain = validate_domain(kind, receipt, source_sha, run_id, package_qualification_run_id, path.name)
+            receipt_records = receipt_artifacts(root, path, receipt, kind)
+            if kind == "desktop" and domain.get("runner", {}).get("label") == "ubuntu-24.04":
+                stage_domain, stage_artifacts = validate_linux_stage(root, path, receipt, source_sha, run_id)
+                domain.update(stage_domain)
+            domains.append(domain)
+            result["artifacts"].extend(receipt_records)
+            if kind == "desktop" and domain.get("runner", {}).get("label") == "ubuntu-24.04":
+                result["artifacts"].extend(stage_artifacts)
             result.setdefault("receipts", []).append(str(path.relative_to(root)))
         except (EvidenceError, OSError, KeyError, TypeError) as error:
             message = f"{path.relative_to(root)}: {error}"

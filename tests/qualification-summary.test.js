@@ -78,8 +78,12 @@ async function fixture({ artifact = true, conclusion = 'success' } = {}) {
     const application = 'qualified application';
     const helper = 'qualified helper';
     const installer = 'qualified installer';
-    await writeFile(join(root, 'desktop/app.bin'), application);
-    await writeFile(join(root, 'desktop/helper.bin'), helper);
+    await mkdir(join(root, 'desktop/qualified-payload'));
+    await writeFile(
+      join(root, 'desktop/qualified-payload/app.bin'),
+      application,
+    );
+    await writeFile(join(root, 'desktop/qualified-payload/helper.bin'), helper);
     await writeFile(join(root, 'desktop/app.AppImage'), installer);
     await writeFile(
       join(root, 'desktop/package-qualification.json'),
@@ -100,6 +104,52 @@ async function fixture({ artifact = true, conclusion = 'success' } = {}) {
           {
             path: 'target/app.AppImage',
             sha256: sha256(installer),
+          },
+        ],
+      }),
+    );
+    const baseReceipt = await readFile(
+      join(root, 'desktop/package-qualification.json'),
+    );
+    await mkdir(join(root, 'desktop/linux-appdir-payload'));
+    await writeFile(
+      join(root, 'desktop/linux-appdir-payload/app.bin'),
+      'staged application',
+    );
+    await writeFile(
+      join(root, 'desktop/linux-appdir-payload/helper.bin'),
+      helper,
+    );
+    await writeFile(
+      join(root, 'desktop/linux-appdir-qualification.json'),
+      JSON.stringify({
+        schema: 1,
+        sourceSha,
+        workflowRunId: '101',
+        baseQualification: {
+          path: 'package-qualification.json',
+          receiptSha256: sha256(baseReceipt),
+          payloadSha256: {
+            'app.bin': sha256(application),
+            'helper.bin': sha256(helper),
+          },
+        },
+        installer: {
+          path: 'target/app.AppImage',
+          sha256: sha256(installer),
+        },
+        payload: [
+          {
+            name: 'app.bin',
+            sha256: sha256('staged application'),
+            rawQualifiedSha256: sha256(application),
+            retainedPath: 'linux-appdir-payload/app.bin',
+          },
+          {
+            name: 'helper.bin',
+            sha256: sha256(helper),
+            rawQualifiedSha256: sha256(helper),
+            retainedPath: 'linux-appdir-payload/helper.bin',
           },
         ],
       }),
@@ -223,6 +273,17 @@ test('consolidates exact run, artifact hash, local evidence, and signing blocker
   });
 });
 
+test('rejects retained Linux AppDir bytes that differ from their independent stage receipt', async () => {
+  const { root, manifest } = await fixture();
+  await writeFile(
+    join(root, 'desktop/linux-appdir-payload/helper.bin'),
+    'tampered stage payload',
+  );
+  const result = run(manifest);
+  expect(result.exitCode).not.toBe(0);
+  expect(result.stderr.toString()).toContain('artifact digest differs');
+});
+
 for (const [label, mutate, message] of [
   ['malformed metadata', (value) => '{', 'not valid JSON'],
   [
@@ -269,7 +330,7 @@ test('marks successful workflow with missing receipt as unverified', async () =>
 
 test('rejects a tampered artifact whose recorded digest still names the original', async () => {
   const { root, manifest } = await fixture();
-  await writeFile(join(root, 'desktop/app.bin'), 'tampered');
+  await writeFile(join(root, 'desktop/qualified-payload/app.bin'), 'tampered');
   const result = run(manifest);
   expect(result.exitCode).not.toBe(0);
   expect(result.stderr.toString()).toContain('digest differs');

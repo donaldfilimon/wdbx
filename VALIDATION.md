@@ -66,6 +66,14 @@ fresh hosted run must establish whether this correction resolves that case.
 Logs remain under `work/qualification-20260908/hosted/windows-initial-job.log`
 and `work/qualification-20260908/portable-fractional-*.log`.
 
+Corrective pre-freeze checks: 86 Bun tests / 357 assertions passed, including
+28 focused Linux-stage/collector tests with 95 assertions; workflow lint,
+Python compilation and diff whitespace checks passed. The exact-float native
+regression failed before the parser feature and passed afterward; all 32 Rust
+core/conformance tests, formatting and workspace Clippy passed. Independent
+review approved the three narrow corrections. Final clean-source local and
+hosted reruns are required before accepting the replacement candidate.
+
 ### Fresh local baseline, September 8, 2026
 
 At `6d76b0c`, the following commands returned exit 0 in this task:

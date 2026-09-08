@@ -94,6 +94,22 @@ jobs:
           for helper in "${helpers[@]}"; do arguments+=(--helper "$helper"); done
           for installer in "${installers[@]}"; do arguments+=(--installer "$installer"); done
           python scripts/package-evidence.py "${arguments[@]}"
+          if [ "$RUNNER_OS" = Linux ]; then
+            appimages=(target/release/bundle/appimage/*.AppImage)
+            if [ "${#appimages[@]}" -ne 1 ]; then
+              echo "Expected exactly one AppImage for staged qualification" >&2
+              exit 1
+            fi
+            python scripts/linux_package_evidence.py create \
+              --root "$PWD" \
+              --base-receipt "$PWD/work/package-qualification.json" \
+              --appdir "$PWD/target/release/bundle/appimage/WDBX Specimen Studio.AppDir" \
+              --installer "$PWD/${appimages[0]}" \
+              --output "$PWD/work/linux-appdir-qualification.json" \
+              --retained-payload "$PWD/work/linux-appdir-payload" \
+              --expected-source-sha "$GITHUB_SHA" \
+              --expected-run-id "$GITHUB_RUN_ID"
+          fi
           mkdir -p work/qualified-payload
           for payload in "$application" "${helpers[@]}"; do
             destination="work/qualified-payload/$(basename "$payload")"
@@ -144,6 +160,8 @@ jobs:
             work/native-e2e.log
             work/native-ui-evidence.json
             work/linux-package-verification.json
+            work/linux-appdir-qualification.json
+            work/linux-appdir-payload/*
             work/*-launch.log
           if-no-files-found: warn
 

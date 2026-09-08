@@ -28,16 +28,17 @@ def digest(path: Path) -> str:
     return value.hexdigest()
 
 
-def payload(paths: list[Path], receipt: dict, environment: dict) -> list[dict]:
+def payload(paths: list[Path], expected: list[dict], environment: dict,
+            qualification: str) -> list[dict]:
     records = []
-    for record in [receipt["application"], *receipt["helpers"]]:
-        name = Path(record["path"]).name
+    for record in expected:
+        name = str(record.get("name") or Path(record["path"]).name)
         matches = {path.resolve() for path in paths if path.name == name and path.is_file()}
         if len(matches) != 1:
             raise RuntimeError(f"Expected exactly one packaged {name}")
         path = matches.pop()
         if digest(path) != record["sha256"]:
-            raise RuntimeError(f"Packaged payload differs from qualification: {name}")
+            raise RuntimeError(f"Packaged payload differs from {qualification}: {name}")
         architecture = run("file", "-b", str(path))
         if "ELF 64-bit" not in architecture or "x86-64" not in architecture:
             raise RuntimeError(f"Packaged executable has wrong architecture: {name}")
@@ -80,6 +81,10 @@ def main() -> None:
     if os.environ.get("GITHUB_ACTIONS") != "true" or platform.system() != "Linux":
         raise RuntimeError("Linux install checks require a disposable GitHub Actions Linux runner")
     receipt = json.loads((ROOT / "work/package-qualification.json").read_text())
+    raw_payload = [
+        {"name": Path(record["path"]).name, "sha256": record["sha256"]}
+        for record in [receipt["application"], *receipt["helpers"]]
+    ]
     run("python3", str(ROOT / "scripts/package-evidence.py"), "verify", "--root", str(ROOT),
         "--receipt", "work/package-qualification.json", "--expected-head-sha", os.environ["GITHUB_SHA"],
         "--expected-run-id", os.environ["GITHUB_RUN_ID"], "--required-helper", "llama-server",
@@ -90,7 +95,7 @@ def main() -> None:
                                 "Upgrade from a prior release is not tested"]}
     for record in receipt["installers"]:
         installer = ROOT / record["path"]
-        with tempfile.TemporaryDirectory(prefix="wdbx-linux-package-") as directory:
+        with tempfile.TemporaryDirectory(prefix="wdbx-linux-package-", dir=ROOT / "work") as directory:
             stage = Path(directory)
             environment = {**os.environ, "PATH": "/usr/bin:/bin", "HOME": str(stage / "home"),
                 "XDG_DATA_HOME": str(stage / "data"), "XDG_CONFIG_HOME": str(stage / "config"),
@@ -101,7 +106,20 @@ def main() -> None:
             if installer.suffix == ".AppImage":
                 run(str(installer), "--appimage-extract", cwd=stage)
                 extracted = stage / "squashfs-root"
-                item["payload"] = payload(list(extracted.rglob("*")), receipt, environment)
+                stage_receipt_path = ROOT / "work/linux-appdir-qualification.json"
+                run("python3", str(ROOT / "scripts/linux_package_evidence.py"),
+                    "verify-appimage", "--root", str(ROOT), "--receipt", str(stage_receipt_path),
+                    "--base-receipt", str(ROOT / "work/package-qualification.json"),
+                    "--installer", str(installer), "--extracted", str(extracted),
+                    "--expected-source-sha", os.environ["GITHUB_SHA"],
+                    "--expected-run-id", os.environ["GITHUB_RUN_ID"])
+                stage_receipt = json.loads(stage_receipt_path.read_text())
+                staged_payload = [
+                    {"name": record["name"], "sha256": record["sha256"]}
+                    for record in stage_receipt["payload"]
+                ]
+                item["payload"] = payload(list(extracted.rglob("*")), staged_payload,
+                                          environment, "staged AppDir qualification")
                 # Extraction avoids a runner dependency on FUSE; AppRun still resolves bundled resources.
                 item["launch"] = launch(extracted / "AppRun", environment, ROOT / "work/appimage-launch.log")
                 item["mode"] = "AppImage extracted AppRun (no FUSE)"
@@ -114,7 +132,8 @@ def main() -> None:
                 try:
                     run("sudo", "apt-get", "install", "-y", str(installer))
                     paths = [Path(line) for line in run("dpkg-query", "-L", package).splitlines()]
-                    item["payload"] = payload(paths, receipt, environment)
+                    item["payload"] = payload(paths, raw_payload, environment,
+                                              "raw build qualification")
                     name = Path(receipt["application"]["path"]).name
                     app = next(path for path in paths if path.name == name and path.is_file())
                     item["launch"] = launch(app, environment, ROOT / "work/deb-launch.log")
