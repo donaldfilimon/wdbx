@@ -53,6 +53,7 @@ def main() -> None:
     runner = required_environment("WDBX_RUNNER")
     run_id = required_environment("WDBX_QUALIFICATION_RUN")
     head_sha = required_environment("GITHUB_SHA")
+    repository = required_environment("GITHUB_REPOSITORY")
     if not run_id.isdecimal():
         raise RuntimeError("WDBX_QUALIFICATION_RUN must be a numeric run ID")
 
@@ -76,6 +77,10 @@ def main() -> None:
     if len(receipts) != 1:
         raise RuntimeError("Qualified artifact must contain exactly one receipt")
     receipt_path = receipts[0]
+    metadata_path = ROOT / "work/qualification-run.json"
+    metadata_path.write_text(subprocess.check_output(
+        ["gh", "api", f"repos/{repository}/actions/runs/{run_id}"], text=True
+    ))
     subprocess.run(
         [
             "python3",
@@ -97,6 +102,12 @@ def main() -> None:
             "sd-cli",
             "--file-scope",
             "installers",
+            "--workflow-run-metadata",
+            str(metadata_path),
+            "--expected-repository",
+            repository,
+            "--expected-workflow",
+            ".github/workflows/desktop.yml",
         ],
         check=True,
     )

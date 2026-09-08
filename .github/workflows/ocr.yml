@@ -15,13 +15,13 @@ jobs:
         run: |
           python3 -m pip install pillow
           python3 scripts/ocr-fixture.py work/acceptance
-          mkdir -p src-tauri/binaries
+          mkdir -p src-tauri/binaries work/acceptance/results
       - name: Download verified OCR models only
         run: python3 scripts/download-models.py work/acceptance/models --ids text-detection text-recognition
       - name: Recognize real fixture
         run: |
           set -o pipefail
-          cargo run --release -p specimen-core --example acceptance -- "$PWD/work/acceptance" "$PWD/src-tauri/binaries" ocr 2>&1 | tee work/acceptance/results/ocr.log
+          cargo run --locked --release -p specimen-core --example acceptance -- "$PWD/work/acceptance" "$PWD/src-tauri/binaries" ocr 2>&1 | tee work/acceptance/results/ocr.log
       - name: Record OCR qualification receipt
         run: |
           result_sha=$(shasum -a 256 work/acceptance/results/ocr.json | awk '{print $1}')
@@ -38,4 +38,3 @@ jobs:
         with:
           name: real-ocr
           path: work/acceptance/results
-

@@ -435,3 +435,47 @@ impl Models {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn missing_model_and_runtime_are_structured_failures() {
+        let temp = tempfile::tempdir().unwrap();
+        let models = Models::new(temp.path().join("models"), temp.path().join("binaries")).unwrap();
+        assert_eq!(models.path("qwen3-4b").unwrap_err().code, "ModelMissing");
+        assert_eq!(
+            models.binary("llama-server").unwrap_err().code,
+            "BackendUnavailable"
+        );
+        assert_eq!(
+            models.binary("sd-cli").unwrap_err().code,
+            "BackendUnavailable"
+        );
+    }
+
+    #[test]
+    fn failed_and_cancelled_imports_preserve_installed_model_and_clean_scratch() {
+        let temp = tempfile::tempdir().unwrap();
+        let models = Models::new(temp.path().join("models"), temp.path().join("binaries")).unwrap();
+        let target = models
+            .root
+            .join(models.model("text-detection").unwrap().file);
+        // Distinct existing bytes prove rejection preserves the target, even when it exists.
+        fs::write(&target, b"existing model").unwrap();
+        let source = temp.path().join("invalid-model");
+        fs::write(&source, b"invalid replacement").unwrap();
+        for (cancelled, code) in [(false, "ModelInvalid"), (true, "Cancelled")] {
+            let result = models.install(
+                "text-detection",
+                Some(&source),
+                &AtomicBool::new(cancelled),
+                &|_| {},
+            );
+            assert_eq!(result.unwrap_err().code, code);
+            assert_eq!(fs::read(&target).unwrap(), b"existing model");
+            assert_eq!(fs::read_dir(&models.root).unwrap().count(), 1);
+        }
+    }
+}

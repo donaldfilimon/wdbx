@@ -1,6 +1,7 @@
 import { browser, $, $$, expect } from '@wdio/globals';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { deepStrictEqual } from 'node:assert';
 const evidence = {
   schema: 1,
   headSha: process.env.GITHUB_SHA ?? null,
@@ -11,8 +12,14 @@ const evidence = {
   scenarios: [],
 };
 describe('Native specimen desktop', () => {
+  let fixtureDirectory;
   before(async () => {
+    if (!process.env.WDBX_STUDIO_TEST_DATA)
+      throw Error(
+        'Native qualification requires an isolated WDBX_STUDIO_TEST_DATA directory',
+      );
     await mkdir(resolve('work'), { recursive: true });
+    fixtureDirectory = await mkdtemp(resolve('work/native-fixtures-'));
     await browser.saveScreenshot(resolve('work/native-first-screen.png'));
     console.log('Native page title', await browser.getTitle());
   });
@@ -34,10 +41,26 @@ describe('Native specimen desktop', () => {
     await $('button=What is 2 + 2?').waitForDisplayed();
     await $('button=What is 2 + 2?').click();
     await expect($('.answer-text')).toHaveText('4');
-    await $('button=Contributors').click();
+    await $('button[aria-label="Run dossier"]').click();
     await expect($('.provenance-detail')).toHaveText(
       expect.stringContaining('Calculate'),
     );
+    const right = $('button[aria-label^="Right "][aria-label$=" segment"]');
+    await right.click();
+    await expect(right).toBeDisabled();
+    await browser.waitUntil(
+      async () =>
+        browser.tauri.execute(async () => {
+          const snapshot = await window.__wdbxTestCall({ op: 'snapshot' });
+          const cycle = snapshot.specimen.history.at(-1);
+          return (
+            cycle.feedback.length === 1 &&
+            cycle.segments[0].contributors.length > 0
+          );
+        }),
+      { timeout: 30000 },
+    );
+    evidence.scenarios.push('native-feedback-provenance-persistence');
     await $('input#prompt').setValue("don't calculate 2 + 2; say hello");
     await $('button=Run cycle').click();
     await browser.waitUntil(
@@ -56,6 +79,88 @@ describe('Native specimen desktop', () => {
     )
       throw Error('Negated arithmetic escaped its clause');
     evidence.scenarios.push('rust-engine-scoped-response');
+  });
+  it('rejects stale writes and malformed imports while restoring portable saves', async () => {
+    const archive = resolve(fixtureDirectory, 'roundtrip.wdbxspecimen');
+    const malformed = resolve(fixtureDirectory, 'malformed.json');
+    await writeFile(malformed, '{broken');
+    const result = await browser.tauri.execute(
+      async (tauri, paths) => {
+        const call = (request) => window.__wdbxTestCall(request);
+        const original = await call({ op: 'snapshot' });
+        await call({ op: 'export', path: paths.archive });
+        const changed = structuredClone(original.specimen);
+        changed.name = 'Native persistence qualification';
+        const edited = await call({
+          op: 'edit',
+          revision: original.revision,
+          specimen: changed,
+        });
+        let staleCode;
+        try {
+          await call({
+            op: 'edit',
+            revision: original.revision,
+            specimen: original.specimen,
+          });
+        } catch (error) {
+          staleCode = error.code;
+        }
+        const afterStale = await call({ op: 'snapshot' });
+        let malformedCode;
+        try {
+          await call({
+            op: 'import',
+            revision: edited.revision,
+            path: paths.malformed,
+          });
+        } catch (error) {
+          malformedCode = error.code;
+        }
+        const afterMalformed = await call({ op: 'snapshot' });
+        const restored = await call({
+          op: 'import',
+          revision: edited.revision,
+          path: paths.archive,
+        });
+        return {
+          staleCode,
+          malformedCode,
+          stalePreserved: JSON.stringify(afterStale) === JSON.stringify(edited),
+          malformedPreserved:
+            JSON.stringify(afterMalformed) === JSON.stringify(edited),
+          restored:
+            JSON.stringify(restored.specimen) ===
+            JSON.stringify(original.specimen),
+          revision: restored.revision,
+          expectedRevision: edited.revision + 1,
+          specimen: restored.specimen,
+        };
+      },
+      { archive, malformed },
+    );
+    if (result.staleCode !== 'StaleRevision' || !result.stalePreserved)
+      throw Error('Stale native edit replaced committed data');
+    if (!result.malformedCode || !result.malformedPreserved)
+      throw Error('Malformed import replaced committed data');
+    if (!result.restored || result.revision !== result.expectedRevision)
+      throw Error(
+        'Portable save did not restore the exact specimen at a new revision',
+      );
+    await browser.refresh();
+    await browser.waitUntil(
+      async () => !(await $('body').getText()).includes('Opening workspace'),
+      { timeout: 30000 },
+    );
+    const afterReload = await browser.tauri.execute(async () =>
+      window.__wdbxTestCall({ op: 'snapshot' }),
+    );
+    deepStrictEqual(
+      afterReload.specimen,
+      result.specimen,
+      'Native bridge reload changed the restored specimen',
+    );
+    evidence.scenarios.push('durable-conflict-import-export-reload');
   });
   it('shows installed model metadata and performs native image analysis', async () => {
     await $('nav[aria-label="Main navigation"] a[href="?view=lab"]').click();
@@ -126,28 +231,50 @@ describe('Native specimen desktop', () => {
     evidence.scenarios.push('native-image-analysis');
   });
   it('searches a virtualized 100,000-record history', async () => {
-    const count = await browser.tauri.execute(async () => {
-      const call = (request) => window.__wdbxTestCall(request);
-      const snapshot = await call({ op: 'snapshot' });
-      const specimen = snapshot.specimen;
-      specimen.settings.historyLimit = 100000;
-      specimen.history = Array.from({ length: 100000 }, (_, i) => ({
-        id: 'scale-' + i,
-        input: 'Scale record ' + i,
-        createdAt: '2026-09-04T12:00:00Z',
-        segments: [
-          { id: 'segment-' + i, text: 'Evidence ' + i, contributors: [] },
-        ],
-        votes: [],
-        trace: [],
-        feedback: [],
-        status: 'matched',
-        pinned: false,
-      }));
-      await call({ op: 'edit', revision: snapshot.revision, specimen });
-      return specimen.history.length;
+    // Embedded direct-eval has its own short timeout. Poll the asynchronous
+    // native commit so a large fixture does not outlive a single evaluation.
+    await browser.tauri.execute(() => {
+      window.__nativeScaleResult = { pending: true };
+      void (async () => {
+        const call = (request) => window.__wdbxTestCall(request);
+        const snapshot = await call({ op: 'snapshot' });
+        const specimen = snapshot.specimen;
+        specimen.settings.historyLimit = 100000;
+        specimen.history = Array.from({ length: 100000 }, (_, i) => ({
+          id: 'scale-' + i,
+          input: 'Scale record ' + i,
+          createdAt: '2026-09-04T12:00:00Z',
+          segments: [
+            { id: 'segment-' + i, text: 'Evidence ' + i, contributors: [] },
+          ],
+          votes: [],
+          trace: [],
+          feedback: [],
+          status: 'matched',
+          pinned: false,
+        }));
+        await call({ op: 'edit', revision: snapshot.revision, specimen });
+        return specimen.history.length;
+      })().then(
+        (count) => {
+          window.__nativeScaleResult = { count };
+        },
+        (error) => {
+          window.__nativeScaleResult = { error: String(error) };
+        },
+      );
+      return true;
     });
-    if (count !== 100000) throw Error('Scale fixture incomplete');
+    await browser.waitUntil(
+      async () =>
+        browser.tauri.execute(() => !window.__nativeScaleResult.pending),
+      { timeout: 90000, interval: 500 },
+    );
+    const result = await browser.tauri.execute(
+      () => window.__nativeScaleResult,
+    );
+    if (result.error) throw Error(result.error);
+    if (result.count !== 100000) throw Error('Scale fixture incomplete');
     await browser.refresh();
     await browser.waitUntil(
       async () => !(await $('body').getText()).includes('Opening workspace'),

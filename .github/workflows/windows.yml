@@ -27,7 +27,7 @@ jobs:
         run: bun install --frozen-lockfile
       - name: Browser unit tests and types
         run: |
-          bun test tests/engine.test.js
+          bun run test
           bunx tsc --noEmit
           bun run lint:studio
       - name: Native conformance tests
@@ -42,6 +42,8 @@ jobs:
           restore-keys: native-runtimes-${{ runner.os }}-${{ runner.arch }}-
       - name: Build model runtimes
         run: python scripts/build-runtimes.py
+      - name: Native warnings-denied gate
+        run: cargo clippy --workspace --all-targets --locked -- -D warnings
       - name: Check portable model runtimes
         run: python scripts/check-windows-runtimes.py
       - name: Save completed inference builds
@@ -53,6 +55,8 @@ jobs:
           key: native-runtimes-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('native/runtime-pins.json', 'scripts/build-runtimes.py') }}
       - name: Package desktop
         run: bunx tauri build
+      - name: Desktop invocation tests
+        run: cargo test -p wdbx-studio-desktop --locked
       - name: Record package qualification
         shell: bash
         run: |

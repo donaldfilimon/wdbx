@@ -128,6 +128,8 @@ def verify(args: argparse.Namespace) -> dict[str, Any]:
     installers = receipt.get("installers")
     if not isinstance(helpers, list) or not isinstance(installers, list):
         fail("Receipt package collections are malformed")
+    if not installers:
+        fail("Receipt has no qualified installers")
     verify_all_files = args.file_scope == "all"
     application = verify_file(
         root, receipt.get("application"), verify_contents=verify_all_files
@@ -142,9 +144,28 @@ def verify(args: argparse.Namespace) -> dict[str, Any]:
     ]
     if not all(isinstance(name, str) and name for name in helper_names):
         fail("Receipt helper identity is malformed")
+    if len(set(helper_names)) != len(helper_names):
+        fail("Receipt contains duplicate helper identities")
+    if any(Path(entry["path"]).name != entry["name"] for entry in helpers):
+        fail("Receipt helper name differs from its file name")
     missing = sorted(set(args.required_helper) - set(helper_names))
     if missing:
         fail(f"Missing required helper: {', '.join(missing)}")
+    if args.workflow_run_metadata:
+        metadata = json.loads(Path(args.workflow_run_metadata).read_text())
+        if not isinstance(metadata, dict):
+            fail("Workflow metadata must be an object")
+        if str(metadata.get("id")) != args.expected_run_id:
+            fail("Workflow metadata run ID differs from qualification")
+        if metadata.get("head_sha") != args.expected_head_sha:
+            fail("Workflow metadata source commit differs from qualification")
+        if metadata.get("status") != "completed" or metadata.get("conclusion") != "success":
+            fail("Qualification workflow must have completed successfully")
+        repository = metadata.get("repository")
+        if not args.expected_repository or not isinstance(repository, dict) or repository.get("full_name") != args.expected_repository:
+            fail("Qualification workflow repository differs")
+        if not args.expected_workflow or metadata.get("path") not in args.expected_workflow:
+            fail("Qualification workflow path is not allowed")
     return {
         "application": application,
         "headSha": receipt["headSha"],
@@ -177,6 +198,9 @@ def parser() -> argparse.ArgumentParser:
     verify_parser.add_argument("--expected-run-id", required=True)
     verify_parser.add_argument("--expected-runner-label")
     verify_parser.add_argument("--required-helper", action="append", default=[])
+    verify_parser.add_argument("--workflow-run-metadata")
+    verify_parser.add_argument("--expected-repository")
+    verify_parser.add_argument("--expected-workflow", action="append", default=[])
     verify_parser.add_argument(
         "--file-scope", choices=("all", "installers"), default="all"
     )

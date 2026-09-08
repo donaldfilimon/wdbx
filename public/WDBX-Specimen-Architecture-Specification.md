@@ -484,6 +484,8 @@ A relational triple contains subject, predicate, and object slots. Any slot can 
 
 Negation and conjunction constraints survive fan-out. “Don't solve 2+2” must not become an affirmative calculation merely because its arithmetic fragment matches. Chargebook interpretation complements explicit negation handling; a charge lookup alone is not a complete negation parser.
 
+**Browser implementation profile · 0.2:** The lexical markers `don't` (including curly apostrophes), `do not`, and `never` inhibit their entire semicolon-delimited clause. Independent semicolon clauses remain eligible; `then` and `and then` only subdivide matching work within the same inhibition scope. Source inhibition survives normalized and thesaurus variants and attachment remainders. A rewrite that crosses or introduces a semicolon has ambiguous source correspondence; when a source or generated scope is negated, all action scopes in that generated variant are conservatively inhibited. The single global fan-out ceiling remains in force. Negation acknowledgement patterns still undergo normal qualification. Scope traces describe the decision rather than assert that a match was suppressed. All-negative prompts report `inhibited`; mixed prompts report `complete` if any vote qualifies and `unmatched` otherwise. This policy is lexical and does not claim semantic or quotation-aware parsing.
+
 The dictionary and reusable action scripts are intended to reduce the number of specialized nodes needed. That is a design goal, not proof that a fixed small population can define arbitrary concepts.
 
 ### Native implementation profile · 0.2

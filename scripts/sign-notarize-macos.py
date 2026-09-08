@@ -117,7 +117,7 @@ def preflight_notary_profile(profile: str) -> None:
 
 def mount_application(image: Path, destination: Path) -> Path:
     mount = destination.parent / "qualified-mount"
-    mount.mkdir()
+    mount.mkdir(exist_ok=True)
     command(
         [
             "hdiutil",
@@ -313,6 +313,7 @@ def main() -> None:
         payload.mkdir()
         app = mount_application(source, payload / "WDBX Specimen Studio.app")
         signed_files = sign_application(app, args.identity)
+        signed_hashes = {relative: sha256(app / relative) for relative in signed_files}
         architecture = captured(
             ["lipo", "-archs", str(app / "Contents/MacOS/wdbx-studio-desktop")]
         )
@@ -335,6 +336,13 @@ def main() -> None:
         application_assessment = gatekeeper(
             ["spctl", "--assess", "--verbose=4", "--type", "execute", str(app)]
         )
+        final_payload = stage / "final-payload"
+        final_payload.mkdir()
+        installed = mount_application(staged_image, final_payload / app.name)
+        for relative, expected in signed_hashes.items():
+            if sha256(installed / relative) != expected:
+                fail(f"Final installer payload differs from signed application: {relative}")
+        command(["codesign", "--verify", "--deep", "--strict", str(installed)])
         output_sha = sha256(staged_image)
         shutil.copy2(staged_image, final_image)
 
@@ -349,6 +357,8 @@ def main() -> None:
         "hardenedRuntime": True,
         "secureTimestamps": True,
         "signedMachOFiles": signed_files,
+        "signedPayloadSha256": signed_hashes,
+        "finalInstallerPayloadVerification": "passed",
         "notarization": {"submissionId": submission_id, "status": status},
         "stapler": {"staple": stapler, "validate": stapler_validation},
         "gatekeeper": {

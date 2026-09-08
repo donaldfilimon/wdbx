@@ -600,22 +600,62 @@ export function seedSpecimen(): Specimen {
   );
   return s;
 }
-export function fanouts(input: string, state: Specimen): string[] {
-  const out = new Set([input, normalize(input)]);
+const isLexicallyNegated = (text: string) =>
+  /\b(don't|do not|never)\b/i.test(normalize(text));
+type ScopedVariant = {
+  input: string;
+  negated: boolean[];
+  ambiguous: boolean;
+};
+function scopedFanouts(input: string, state: Specimen): ScopedVariant[] {
+  const original = input.split(';').map(isLexicallyNegated);
+  const out = new Map<string, ScopedVariant>();
+  const add = (text: string, negated: boolean[], ambiguous = false) => {
+    // As with the original Set-based budget, the first admitted derivation
+    // owns this text. Later cyclic rewrites must not change its source scopes.
+    if (!out.has(text)) out.set(text, { input: text, negated, ambiguous });
+  };
+  add(input, original);
+  add(normalize(input), original);
   for (const r of state.resources.filter((x) => x.subsystem === 'thesaurus')) {
     const family = [r.text, ...r.value.split(',').map((x) => x.trim())];
-    for (const v of Array.from(out))
+    for (const v of Array.from(out.values()))
       for (const term of family) {
         if (!term || term.length > 100) continue;
-        if (v.toLowerCase().includes(term.toLowerCase()))
+        if (v.input.toLowerCase().includes(term.toLowerCase()))
           for (const other of family) {
-            out.add(v.replace(new RegExp(escapeRegex(term), 'gi'), other));
+            const text = v.input.replace(
+              new RegExp(escapeRegex(term), 'gi'),
+              () => other,
+            );
+            // Replacements crossing or introducing delimiters have no reliable
+            // source-clause correspondence, even when clause counts match.
+            const ambiguous =
+              v.ambiguous ||
+              (text !== v.input && (term.includes(';') || other.includes(';')));
+            const clauses = text.split(';');
+            const inhibitAll =
+              ambiguous &&
+              (v.negated.some(Boolean) || clauses.some(isLexicallyNegated));
+            add(
+              text,
+              clauses.map(
+                (clause, i) =>
+                  inhibitAll ||
+                  v.negated[i] === true ||
+                  isLexicallyNegated(clause),
+              ),
+              ambiguous,
+            );
             if (out.size >= state.settings.fanoutLimit)
-              return [...out].slice(0, state.settings.fanoutLimit);
+              return [...out.values()].slice(0, state.settings.fanoutLimit);
           }
       }
   }
-  return [...out].slice(0, state.settings.fanoutLimit);
+  return [...out.values()].slice(0, state.settings.fanoutLimit);
+}
+export function fanouts(input: string, state: Specimen): string[] {
+  return scopedFanouts(input, state).map((variant) => variant.input);
 }
 const escapeRegex = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 function matchesBind(pattern: string, input: string): boolean {
@@ -883,9 +923,6 @@ export async function runCycle(
     cycle.trace.push({ id: uid(), phase, detail, count });
     onTrace?.([...cycle.trace]);
   };
-  const lexicalNegation = /\b(don't|do not|never)\b/i;
-  const isLexicallyNegated = (text: string) =>
-    lexicalNegation.test(normalize(text));
   const clauses = input
     .split(';')
     .map((clause) => clause.trim())
@@ -894,22 +931,18 @@ export async function runCycle(
       input: clause,
       negated: isLexicallyNegated(clause),
     }));
-  const variants = fanouts(input, state);
+  const variants = scopedFanouts(input, state);
   const chunks = variants.flatMap((variant) =>
-    variant
-      .split(';')
-      .map((clause) => clause.trim())
-      .filter(Boolean)
-      .flatMap((clause) =>
-        clause
-          .split(/\s+(?:and then|then)\s+/i)
-          .map((input) => input.trim())
-          .filter(Boolean)
-          .map((input) => ({
-            input,
-            negated: isLexicallyNegated(clause),
-          })),
-      ),
+    variant.input.split(';').flatMap((clause, index) =>
+      clause
+        .split(/\s+(?:and then|then)\s+/i)
+        .map((input) => input.trim())
+        .filter(Boolean)
+        .map((input) => ({
+          input,
+          negated: variant.negated[index],
+        })),
+    ),
   );
   step(
     'Prepare',
@@ -922,9 +955,18 @@ export async function runCycle(
     step(
       'Scope',
       clauses.length > 1
-        ? `Lexical negation suppressed matches in ${negatedClauseCount} of ${clauses.length} semicolon-delimited clauses; ${clauses.length - negatedClauseCount} independent ${clauses.length - negatedClauseCount === 1 ? 'clause' : 'clauses'} remained active`
+        ? `Lexical negation scopes ${negatedClauseCount} of ${clauses.length} semicolon-delimited clauses; ${clauses.length - negatedClauseCount} independent ${clauses.length - negatedClauseCount === 1 ? 'clause remains' : 'clauses remain'} active`
         : 'Lexical negation conservatively scoped to the full prompt; no explicit semicolon boundary',
       negatedClauseCount,
+    );
+  const ambiguousVariants = variants.filter(
+    (variant) => variant.ambiguous && variant.negated.some(Boolean),
+  ).length;
+  if (ambiguousVariants)
+    step(
+      'Scope',
+      `${ambiguousVariants} fan-out variants have ambiguous clause correspondence; conservatively inhibit their action scopes`,
+      ambiguousVariants,
     );
   const map = new HybridTable(
     state.nodes.filter((n) => n.type === 'pattern'),

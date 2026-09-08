@@ -11,12 +11,14 @@ jobs:
       CARGO_BUILD_JOBS: 4
     steps:
       - uses: actions/checkout@v4
+      - name: Rust toolchain
+        run: rustup toolchain install nightly-2026-09-01 --profile minimal
       - name: Build pinned CPU image runtime
         run: python3 scripts/build-runtimes.py --only diffusion
       - name: Download and verify SDXL-Turbo
         run: python3 scripts/download-models.py work/acceptance/models --ids sdxl-turbo
       - name: Real local CPU image inference
-        run: cargo run --release -p specimen-core --example acceptance -- "$PWD/work/acceptance" "$PWD/src-tauri/binaries" image
+        run: cargo run --locked --release -p specimen-core --example acceptance -- "$PWD/work/acceptance" "$PWD/src-tauri/binaries" image
       - name: Record image inference receipt
         run: |
           test -s work/acceptance/results/generated-image.png

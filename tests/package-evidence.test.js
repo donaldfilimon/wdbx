@@ -272,3 +272,138 @@ test('can validate an installer-only artifact before extraction', async () => {
     verified: true,
   });
 });
+
+for (const [label, change, error] of [
+  ['failed workflow', { conclusion: 'failure' }, 'completed successfully'],
+  ['unfinished workflow', { status: 'in_progress' }, 'completed successfully'],
+  [
+    'unrelated workflow',
+    { path: '.github/workflows/other.yml' },
+    'path is not allowed',
+  ],
+  [
+    'foreign repository',
+    { repository: { full_name: 'other/repo' } },
+    'repository differs',
+  ],
+  [
+    'stale workflow source',
+    { head_sha: 'f'.repeat(40) },
+    'source commit differs',
+  ],
+]) {
+  test(`rejects ${label} even with a matching package receipt`, async () => {
+    const { root, files } = await createReceipt();
+    const metadata = join(root, 'workflow.json');
+    await writeFile(
+      metadata,
+      JSON.stringify({
+        id: 12345,
+        head_sha: headSha,
+        status: 'completed',
+        conclusion: 'success',
+        repository: { full_name: 'studio/repo' },
+        path: '.github/workflows/desktop.yml',
+        ...change,
+      }),
+    );
+    const result = run(
+      'verify',
+      '--root',
+      root,
+      '--receipt',
+      files.receipt,
+      '--expected-head-sha',
+      headSha,
+      '--expected-run-id',
+      '12345',
+      '--workflow-run-metadata',
+      metadata,
+      '--expected-repository',
+      'studio/repo',
+      '--expected-workflow',
+      '.github/workflows/desktop.yml',
+    );
+    expect(result.exitCode).not.toBe(0);
+    expect(result.stderr.toString()).toContain(error);
+  });
+}
+
+test('accepts successful qualification workflow metadata for the exact source', async () => {
+  const { root, files } = await createReceipt();
+  const metadata = join(root, 'workflow.json');
+  await writeFile(
+    metadata,
+    JSON.stringify({
+      id: 12345,
+      head_sha: headSha,
+      status: 'completed',
+      conclusion: 'success',
+      repository: { full_name: 'studio/repo' },
+      path: '.github/workflows/desktop.yml',
+    }),
+  );
+  const result = run(
+    'verify',
+    '--root',
+    root,
+    '--receipt',
+    files.receipt,
+    '--expected-head-sha',
+    headSha,
+    '--expected-run-id',
+    '12345',
+    '--workflow-run-metadata',
+    metadata,
+    '--expected-repository',
+    'studio/repo',
+    '--expected-workflow',
+    '.github/workflows/desktop.yml',
+  );
+  expect(result.exitCode, result.stderr.toString()).toBe(0);
+});
+
+for (const [label, change, error] of [
+  [
+    'empty installers',
+    (receipt) => {
+      receipt.installers = [];
+    },
+    'no qualified installers',
+  ],
+  [
+    'duplicate helpers',
+    (receipt) => {
+      receipt.helpers.push(receipt.helpers[0]);
+    },
+    'duplicate helper',
+  ],
+  [
+    'renamed helper',
+    (receipt) => {
+      receipt.helpers[0].name = 'forged';
+    },
+    'name differs',
+  ],
+]) {
+  test(`rejects ${label}`, async () => {
+    const { root, files } = await createReceipt();
+    const path = join(root, files.receipt);
+    const receipt = JSON.parse(await readFile(path, 'utf8'));
+    change(receipt);
+    await writeFile(path, JSON.stringify(receipt));
+    const result = run(
+      'verify',
+      '--root',
+      root,
+      '--receipt',
+      files.receipt,
+      '--expected-head-sha',
+      headSha,
+      '--expected-run-id',
+      '12345',
+    );
+    expect(result.exitCode).not.toBe(0);
+    expect(result.stderr.toString()).toContain(error);
+  });
+}

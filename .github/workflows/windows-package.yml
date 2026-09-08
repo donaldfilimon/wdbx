@@ -72,6 +72,9 @@ jobs:
             (Resolve-Path work/qualified-application),
             $receiptPath
           )
+          gh api "repos/$env:GITHUB_REPOSITORY/actions/runs/$env:WDBX_QUALIFICATION_RUN" |
+            Set-Content work/qualification-run.json
+          if ($LASTEXITCODE -ne 0) { throw 'Cannot verify qualification workflow status' }
           python scripts/package-evidence.py verify `
             --root work/qualified-application `
             --receipt $receiptRelative `
@@ -80,7 +83,11 @@ jobs:
             --expected-runner-label windows-2022 `
             --required-helper llama-server.exe `
             --required-helper sd-cli.exe `
-            --file-scope installers
+            --file-scope installers `
+            --workflow-run-metadata work/qualification-run.json `
+            --expected-repository $env:GITHUB_REPOSITORY `
+            --expected-workflow .github/workflows/desktop.yml `
+            --expected-workflow .github/workflows/windows.yml
           if ($LASTEXITCODE -ne 0) { throw 'Package qualification receipt was rejected' }
           $receipt = Get-Content $receiptPath -Raw | ConvertFrom-Json
           $installerRecords = @($receipt.installers | Where-Object { $_.path.EndsWith('.exe') })
@@ -286,10 +293,45 @@ jobs:
           }
           $application = Join-Path $installRoot 'wdbx-studio-desktop.exe'
           if (-not (Test-Path $application)) { throw 'Installed application is missing' }
+          $evidence = Get-Content work/windows-package-verification.json -Raw | ConvertFrom-Json
+          $installedFiles = @(
+            @{path=$application; sha256=$evidence.applicationSha256}
+          )
+          foreach ($helper in $evidence.helpers) {
+            $installedFiles += @{
+              path=(Join-Path $installRoot "binaries/$($helper.name)")
+              sha256=$helper.signedSha256
+            }
+          }
+          foreach ($file in $installedFiles) {
+            if ((Get-FileHash $file.path -Algorithm SHA256).Hash.ToLower() -ne $file.sha256) {
+              throw "Installed payload differs from signed payload: $($file.path)"
+            }
+            & $env:WDBX_SIGNTOOL verify /pa /all $file.path
+            if ($LASTEXITCODE -ne 0) { throw "Installed signature is invalid: $($file.path)" }
+          }
+          $originalPath = $env:PATH
+          try {
+            $env:PATH = "$env:SystemRoot\System32;$env:SystemRoot"
+            foreach ($helper in $evidence.helpers) {
+              $helperPath = Join-Path $installRoot "binaries/$($helper.name)"
+              $helperProcess = Start-Process $helperPath -ArgumentList '--help' `
+                -WorkingDirectory $env:RUNNER_TEMP -PassThru -NoNewWindow
+              if (-not $helperProcess.WaitForExit(60000)) {
+                Stop-Process -Id $helperProcess.Id -Force
+                throw "Installed helper did not stop: $($helper.name)"
+              }
+              if ($helperProcess.ExitCode -ne 0) {
+                throw "Installed helper startup failed: $($helper.name)"
+              }
+            }
+          } finally {
+            $env:PATH = $originalPath
+          }
           $process = Start-Process $application -PassThru
           Start-Sleep -Seconds 10
-          if ($process.HasExited -and $process.ExitCode -ne 0) {
-            throw "Installed application launch failed: $($process.ExitCode)"
+          if ($process.HasExited) {
+            throw "Installed application exited before the launch check: $($process.ExitCode)"
           }
           if (-not $process.HasExited) {
             if (-not $process.CloseMainWindow()) {
@@ -314,6 +356,8 @@ jobs:
           $evidence = Get-Content work/windows-package-verification.json -Raw | ConvertFrom-Json
           $evidence | Add-Member -NotePropertyName installSmoke -NotePropertyValue @{
             silentInstall='passed'
+            installedPayload=$installedFiles
+            installedHelperIsolatedStartup='passed'
             launch='passed'
             cleanShutdown='passed'
             silentUninstall='passed'

@@ -88,6 +88,35 @@ fn cancellation_does_not_commit() {
     assert!(s["history"].as_array().unwrap().is_empty());
 }
 #[test]
+fn cancellation_after_composition_preserves_the_durable_snapshot() {
+    use std::sync::atomic::Ordering;
+    let temp = tempfile::tempdir().unwrap();
+    let mut store = Store::open(temp.path()).unwrap();
+    store.edit(0, starter()).unwrap();
+    let before = serde_json::to_value(&store.snapshot).unwrap();
+    let cancel = AtomicBool::new(false);
+    let result = engine::cycle(
+        &store.snapshot.specimen,
+        "2+2",
+        &store.snapshot.network,
+        &cancel,
+        &|event| {
+            if event["phase"] == "Compose" {
+                cancel.store(true, Ordering::Relaxed);
+            }
+        },
+    );
+    assert!(
+        cancel.load(Ordering::Relaxed),
+        "fixture must reach composition"
+    );
+    assert_eq!(result.unwrap_err().code, "Cancelled");
+    assert_eq!(serde_json::to_value(&store.snapshot).unwrap(), before);
+    drop(store);
+    let reopened = Store::open(temp.path()).unwrap();
+    assert_eq!(serde_json::to_value(&reopened.snapshot).unwrap(), before);
+}
+#[test]
 fn bounded_correction_is_linked_once() {
     let mut s = starter();
     let (mut s2, c) = engine::cycle(

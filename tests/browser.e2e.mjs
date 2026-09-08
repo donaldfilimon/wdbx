@@ -283,6 +283,23 @@ try {
       )
       .toBe(true);
   }
+  for (const [prompt, allowed] of [
+    ["don't calculate 2+2; hello", true],
+    ["don't calculate 2+2 then hello", false],
+  ]) {
+    await page.locator('#prompt').fill(prompt);
+    await page.getByRole('button', { name: 'Run cycle', exact: true }).click();
+    await page
+      .getByRole('button', { name: 'Cycle trace', exact: true })
+      .click();
+    await expect(page.locator('.trace-step strong')).toContainText(['Scope']);
+    await expect(
+      page.locator('.answer-text').filter({ hasText: /^4$/ }),
+    ).toHaveCount(0);
+    await expect(
+      page.locator('.answer-text').filter({ hasText: /^Hello/ }),
+    ).toHaveCount(allowed ? 1 : 0);
+  }
   const webmcp = await page.evaluate(() =>
     Boolean(document.modelContext?.registerTool),
   );
@@ -292,11 +309,13 @@ try {
     JSON.stringify(
       {
         passed: true,
+        headSha: process.env.GITHUB_SHA ?? null,
         engine,
         desktop: '1568×1000',
         mobile: '390×844',
         checks: [
           'arithmetic',
+          'semicolon negation and conservative connective scope',
           'topology and trace switching',
           'node inspection',
           'provenance',

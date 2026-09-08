@@ -17,6 +17,7 @@ import {
   saveResource,
   maintenance,
   deepScore,
+  fanouts,
 } from '../lib/specimen/engine';
 import { uid } from '../lib/specimen/types';
 
@@ -260,15 +261,167 @@ test('lexical negation suppresses only its semicolon-delimited clause', async ()
     expect(cycle.segments.some((s) => s.text.startsWith('Hello'))).toBe(true);
     expect(cycle.segments.some((s) => s.text === '4')).toBe(false);
     expect(cycle.status).toBe('complete');
-    expect(
-      cycle.trace.some(
-        (step) =>
-          step.phase === 'Scope' &&
-          step.detail ===
-            'Lexical negation suppressed matches in 1 of 2 semicolon-delimited clauses; 1 independent clause remained active',
-      ),
-    ).toBe(true);
+    const scope = cycle.trace.find((step) => step.phase === 'Scope');
+    expect(scope.count).toBe(1);
+    expect(scope.detail).toContain('semicolon');
+    expect(scope.detail).toContain('independent');
   }
+});
+
+test('thesaurus rewrites cannot erase the originating prohibition', async () => {
+  const seed = saveResource(seedSpecimen(), {
+    subsystem: 'thesaurus',
+    text: "don't calculate",
+    value: 'calculate',
+    valence: 0,
+    intensity: 0,
+  });
+  const prompt = "don't calculate 2+2; hello";
+  expect(fanouts(prompt, seed)).toContain('calculate 2+2; hello');
+  const { cycle } = await runCycle(seed, prompt);
+  expect(cycle.segments.some((s) => s.text === '4')).toBe(false);
+  expect(cycle.segments.some((s) => s.text.startsWith('Hello'))).toBe(true);
+});
+
+test('cross-clause rewrites conservatively inhibit ambiguous generated scopes', async () => {
+  const seed = saveResource(seedSpecimen(), {
+    subsystem: 'thesaurus',
+    text: "don't calculate 2+2; hello",
+    value: 'hello; calculate 2+2',
+    valence: 0,
+    intensity: 0,
+  });
+  const { cycle } = await runCycle(seed, "don't calculate 2+2; hello");
+  expect(cycle.segments.some((s) => s.text === '4')).toBe(false);
+  expect(cycle.segments.some((s) => s.text.startsWith('Hello'))).toBe(true);
+  expect(
+    cycle.trace.some(
+      (s) => s.phase === 'Scope' && s.detail.includes('ambiguous'),
+    ),
+  ).toBe(true);
+});
+
+test('cyclic thesaurus variants cannot retroactively inhibit the original clauses', async () => {
+  for (const [prompt, term, replacement, arithmetic] of [
+    ['hello; 2+2', 'hello', 'never hello', true],
+    ['do not calculate 2+2; hello', 'hello', 'never hello', false],
+    [
+      'do not calculate 2+2; hello',
+      'do not calculate 2+2; hello',
+      'hello; 2+2',
+      false,
+    ],
+  ]) {
+    let seed = seedSpecimen();
+    seed.resources = seed.resources.filter(
+      (resource) => resource.subsystem !== 'thesaurus',
+    );
+    for (const [text, value] of [
+      [term, replacement],
+      [replacement, term],
+    ]) {
+      seed = saveResource(seed, {
+        subsystem: 'thesaurus',
+        text,
+        value,
+        valence: 0,
+        intensity: 0,
+      });
+    }
+    const { cycle } = await runCycle(seed, prompt);
+    expect(
+      cycle.segments.some((segment) => segment.text.startsWith('Hello')),
+    ).toBe(true);
+    expect(cycle.segments.some((segment) => segment.text === '4')).toBe(
+      arithmetic,
+    );
+    expect(cycle.status).toBe('complete');
+    expect(fanouts(prompt, seed).length).toBeLessThanOrEqual(
+      seed.settings.fanoutLimit,
+    );
+  }
+});
+
+test('mixed clause matrix retains active votes and contributor provenance', async () => {
+  for (const [prompt, numbers, greeting, status] of [
+    ['hello; do not calculate 2+2; 3+3', ['6'], true, 'complete'],
+    ['never calculate 2+2; hello; do not calculate 3+3', [], true, 'complete'],
+    ['never calculate 2+2; do not calculate 3+3', [], false, 'inhibited'],
+    ['do not calculate 2+2; xyzzy unmatched', [], false, 'unmatched'],
+    ['never hello then 2+2; 3+3', ['6'], false, 'complete'],
+    ["don't hello and then 2+2; 3+3", ['6'], false, 'complete'],
+    ["don't calculate 2+2 then hello; hello", [], true, 'complete'],
+    ["hello; don't calculate 2+2 then hello", [], true, 'complete'],
+    ['; ;don’t calculate 2+2;;hello;', [], true, 'complete'],
+  ]) {
+    const seed = seedSpecimen();
+    const { cycle } = await runCycle(seed, prompt);
+    expect(
+      cycle.segments.filter((s) => /^\d+$/.test(s.text)).map((s) => s.text),
+    ).toEqual(numbers);
+    expect(cycle.segments.some((s) => s.text.startsWith('Hello'))).toBe(
+      greeting,
+    );
+    expect(cycle.status).toBe(status);
+    for (const segment of cycle.segments) {
+      const votes = cycle.votes.filter((vote) =>
+        segment.sourceVotes.includes(vote.id),
+      );
+      expect(segment.contributors).toEqual(votes.map((vote) => vote.nodeRef));
+      expect(
+        votes.every((vote) =>
+          seed.nodes.some((node) => node.ref === vote.nodeRef),
+        ),
+      ).toBe(true);
+    }
+  }
+});
+
+test('negation acknowledgements cannot delegate uninhibited attachment actions', async () => {
+  const seed = addNode(seedSpecimen(), {
+    name: 'Attached greeting',
+    pattern: '&hello*',
+    action: 'escaped attachment',
+  });
+  const negation = seed.nodes.find((node) => node.name === 'Negation');
+  const target = seed.nodes.find((node) => node.name === 'Attached greeting');
+  seed.attachments.push({
+    id: uid(),
+    from: negation.ref,
+    to: target.ref,
+    hard: true,
+    bidirectional: false,
+    affinity: 1,
+  });
+  const { cycle } = await runCycle(seed, "don't hello");
+  expect(cycle.votes.some((vote) => vote.nodeRef === negation.ref)).toBe(true);
+  expect(cycle.votes.some((vote) => vote.nodeRef === target.ref)).toBe(false);
+  expect(cycle.segments.map((segment) => segment.text)).toEqual([
+    'I will leave that action alone.',
+  ]);
+  expect(cycle.status).toBe('inhibited');
+});
+
+test('positive fan-outs retain their global budget and ordinary trace', async () => {
+  const seed = seedSpecimen();
+  seed.settings.fanoutLimit = 3;
+  expect(fanouts('hello; hello; hello', seed)).toHaveLength(3);
+  const { cycle } = await runCycle(seed, 'hello; hello; hello');
+  expect(cycle.trace.some((step) => step.phase === 'Scope')).toBe(false);
+  expect(cycle.trace.find((step) => step.phase === 'Prepare').count).toBe(9);
+  expect(
+    cycle.segments.some((segment) => segment.text.startsWith('Hello')),
+  ).toBe(true);
+});
+
+test('unmatched inhibited scopes do not claim candidate suppression', async () => {
+  const seed = seedSpecimen();
+  seed.nodes = [];
+  const { cycle } = await runCycle(seed, 'never xyzzy; hello');
+  expect(cycle.votes).toHaveLength(0);
+  expect(
+    cycle.trace.find((step) => step.phase === 'Scope').detail,
+  ).not.toContain('suppressed matches');
 });
 
 test('lexical negation remains conservative without a semicolon boundary', async () => {
@@ -279,12 +432,7 @@ test('lexical negation remains conservative without a semicolon boundary', async
   expect(cycle.segments.some((s) => s.text.startsWith('Hello'))).toBe(false);
   expect(cycle.segments.some((s) => s.text === '4')).toBe(false);
   expect(cycle.status).toBe('inhibited');
-  expect(
-    cycle.trace.some(
-      (step) =>
-        step.phase === 'Scope' &&
-        step.detail ===
-          'Lexical negation conservatively scoped to the full prompt; no explicit semicolon boundary',
-    ),
-  ).toBe(true);
+  const scope = cycle.trace.find((step) => step.phase === 'Scope');
+  expect(scope.count).toBe(1);
+  expect(scope.detail).toContain('full prompt');
 });

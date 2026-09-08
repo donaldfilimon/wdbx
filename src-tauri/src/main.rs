@@ -447,3 +447,59 @@ fn main() {
             }
         });
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::sync::atomic::{AtomicBool, Ordering};
+    use tauri::ipc::InvokeResponseBody;
+
+    #[test]
+    fn invoke_cancellation_before_commit_preserves_revision_and_releases_job() {
+        let root =
+            std::env::temp_dir().join(format!("wdbx-invoke-cancel-{}", uuid::Uuid::new_v4()));
+        let mut store = Store::open(&root).unwrap();
+        let specimen = serde_json::from_str(include_str!(
+            "../../native/specimen-core/tests/fixtures/starter.json"
+        ))
+        .unwrap();
+        store.edit(0, specimen).unwrap();
+        let before = serde_json::to_value(&store.snapshot).unwrap();
+        let state = Arc::new(AppState {
+            store: Mutex::new(store),
+            models: Mutex::new(Models::new(root.join("models"), root.join("binaries")).unwrap()),
+            scheduler: Scheduler::default(),
+        });
+        let callback_state = state.clone();
+        let reached_compose = Arc::new(AtomicBool::new(false));
+        let callback_reached_compose = reached_compose.clone();
+        let channel = Channel::new(move |body| {
+            let InvokeResponseBody::Json(body) = body else {
+                panic!("Cycle progress must be JSON");
+            };
+            let event: Value = serde_json::from_str(&body).unwrap();
+            if event["phase"] == "Compose" {
+                callback_reached_compose.store(true, Ordering::Relaxed);
+                callback_state.scheduler.cancel("cancel-at-compose");
+            }
+            Ok(())
+        });
+        let result = invoke(
+            state.clone(),
+            json!({"op":"run","revision":1,"jobId":"cancel-at-compose","input":"2+2"}),
+            channel,
+        );
+        assert!(reached_compose.load(Ordering::Relaxed));
+        assert_eq!(result.unwrap_err().code, "Cancelled");
+        assert!(state.scheduler.active().is_empty());
+        assert_eq!(
+            serde_json::to_value(&state.store.lock().unwrap().snapshot).unwrap(),
+            before
+        );
+        drop(state);
+        let reopened = Store::open(&root).unwrap();
+        assert_eq!(serde_json::to_value(&reopened.snapshot).unwrap(), before);
+        drop(reopened);
+        std::fs::remove_dir_all(root).unwrap();
+    }
+}

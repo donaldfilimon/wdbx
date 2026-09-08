@@ -53,11 +53,15 @@ jobs:
           restore-keys: native-runtimes-${{ runner.os }}-${{ runner.arch }}-
       - name: Build model runtimes
         run: python scripts/build-runtimes.py
+      - name: Native warnings-denied gate
+        run: cargo clippy --workspace --all-targets --locked -- -D warnings
       - name: Check portable Windows model runtimes
         if: runner.os == 'Windows'
         run: python scripts/check-windows-runtimes.py
       - name: Package desktop
         run: bunx tauri build
+      - name: Desktop invocation tests
+        run: cargo test -p wdbx-studio-desktop --locked
       - name: Seal macOS installer
         if: runner.os == 'macOS'
         run: python3 scripts/seal-macos-package.py
@@ -70,7 +74,7 @@ jobs:
           case "$RUNNER_OS" in
             macOS)
               application='target/release/bundle/macos/WDBX Specimen Studio.app/Contents/MacOS/wdbx-studio-desktop'
-              helpers=(src-tauri/binaries/llama-server src-tauri/binaries/sd-cli)
+              helpers=('target/release/bundle/macos/WDBX Specimen Studio.app/Contents/Resources/binaries/llama-server' 'target/release/bundle/macos/WDBX Specimen Studio.app/Contents/Resources/binaries/sd-cli')
               installers=(target/release/bundle/dmg/*.dmg)
               ;;
             Windows)
@@ -88,6 +92,9 @@ jobs:
           for helper in "${helpers[@]}"; do arguments+=(--helper "$helper"); done
           for installer in "${installers[@]}"; do arguments+=(--installer "$installer"); done
           python scripts/package-evidence.py "${arguments[@]}"
+      - name: Qualify installed Linux packages
+        if: runner.os == 'Linux'
+        run: xvfb-run -a python3 scripts/check-linux-packages.py
       - name: Test application assets
         shell: bash
         run: VITE_NATIVE_E2E=1 bun run desktop:build
@@ -123,6 +130,8 @@ jobs:
             work/native-desktop.png
             work/native-e2e.log
             work/native-ui-evidence.json
+            work/linux-package-verification.json
+            work/*-launch.log
           if-no-files-found: warn
 
   text-model:
@@ -131,12 +140,14 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+      - name: Rust toolchain
+        run: rustup toolchain install nightly-2026-09-01 --profile minimal
       - name: Build pinned text runtime
         run: python3 scripts/build-runtimes.py --only llama
       - name: Download verified Qwen model
         run: python3 scripts/download-models.py work/acceptance/models --ids qwen3-4b
       - name: Real CPU text inference
-        run: cargo run --release -p specimen-core --example acceptance -- "$PWD/work/acceptance" "$PWD/src-tauri/binaries" text
+        run: cargo run --locked --release -p specimen-core --example acceptance -- "$PWD/work/acceptance" "$PWD/src-tauri/binaries" text
       - name: Record text inference receipt
         run: |
           result_sha=$(shasum -a 256 work/acceptance/results/text.json | awk '{print $1}')

@@ -160,12 +160,18 @@ try {
     if (width === 1440) {
       await page.evaluate(() => {
         window.__wdbxAcceptanceSetTimeout = window.setTimeout;
-        window.setTimeout = (callback, delay, ...arguments_) =>
-          window.__wdbxAcceptanceSetTimeout(
+        window.__wdbxAcceptancePending = [];
+        window.setTimeout = (callback, delay, ...arguments_) => {
+          if (delay === 0) {
+            window.__wdbxAcceptancePending.push(() => callback(...arguments_));
+            return 0;
+          }
+          return window.__wdbxAcceptanceSetTimeout(
             callback,
-            delay === 0 ? 250 : delay,
+            delay,
             ...arguments_,
           );
+        };
       });
       const longPrompt = Array.from(
         { length: 450 },
@@ -177,6 +183,9 @@ try {
       await expect(cancel).toBeVisible();
       await expect(page.locator('.trace-outcome')).toContainText('Processing:');
       await cancel.click();
+      await page.evaluate(() => {
+        for (const resume of window.__wdbxAcceptancePending.splice(0)) resume();
+      });
       await expect(page.locator('.trace-outcome')).toContainText('Cancelled ·');
       evidence.widths[width].traceOutcomes = ['Processing', 'Cancelled'];
 
@@ -184,19 +193,24 @@ try {
       await page.getByRole('button', { name: 'Run cycle' }).click();
       await expect(cancel).toBeVisible();
       await page.getByRole('switch', { name: /^Jitter for / }).click();
+      await page.evaluate(() => {
+        for (const resume of window.__wdbxAcceptancePending.splice(0)) resume();
+      });
       await expect(page.locator('.trace-outcome')).toContainText('Failed ·');
       evidence.widths[width].traceOutcomes.push('Failed');
       await page.getByRole('button', { name: 'Dismiss error' }).click();
+
+      await page.evaluate(() => {
+        window.setTimeout = window.__wdbxAcceptanceSetTimeout;
+        delete window.__wdbxAcceptanceSetTimeout;
+        delete window.__wdbxAcceptancePending;
+      });
 
       await page
         .getByRole('button', { name: 'What is 2 + 2?', exact: true })
         .click();
       await expect(page.locator('.trace-outcome')).toContainText('Completed:');
       evidence.widths[width].traceOutcomes.push('Completed');
-      await page.evaluate(() => {
-        window.setTimeout = window.__wdbxAcceptanceSetTimeout;
-        delete window.__wdbxAcceptanceSetTimeout;
-      });
     }
 
     await page.getByRole('button', { name: 'Network' }).click();
