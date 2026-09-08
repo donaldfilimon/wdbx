@@ -65,7 +65,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         if mode == "text" && result["text"].as_str().is_none_or(|s| s.trim().is_empty()) {
             return Err("Empty generated text".into());
         }
-        if let Some(bytes) = bytes {
+        if mode == "image" {
+            let bytes = bytes.ok_or("Image inference returned no image artifact")?;
+            if bytes.is_empty() {
+                return Err("Image inference returned an empty image artifact".into());
+            }
             std::fs::write(root.join("results/generated-image.png"), bytes)?;
         }
         std::fs::write(

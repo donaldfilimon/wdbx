@@ -137,6 +137,16 @@ jobs:
         run: python3 scripts/download-models.py work/acceptance/models --ids qwen3-4b
       - name: Real CPU text inference
         run: cargo run --release -p specimen-core --example acceptance -- "$PWD/work/acceptance" "$PWD/src-tauri/binaries" text
+      - name: Record text inference receipt
+        run: |
+          result_sha=$(shasum -a 256 work/acceptance/results/text.json | awk '{print $1}')
+          jq -n \
+            --arg headSha "$GITHUB_SHA" \
+            --arg workflowRunId "$GITHUB_RUN_ID" \
+            --arg runner "$RUNNER_OS/$RUNNER_ARCH" \
+            --arg resultSha256 "$result_sha" \
+            '{schema:1,headSha:$headSha,workflowRunId:$workflowRunId,runner:$runner,mode:"text",resultSha256:$resultSha256}' \
+            > work/acceptance/results/run-receipt.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:

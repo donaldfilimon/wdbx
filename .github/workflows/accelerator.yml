@@ -1,0 +1,41 @@
+name: Apple silicon accelerator qualification
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  cpu-gpu-parity:
+    runs-on: macos-14
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rust toolchain
+        run: rustup toolchain install nightly-2026-09-01 --profile minimal
+      - name: Require wgpu parity within tolerance
+        run: |
+          mkdir -p work/accelerator
+          set -o pipefail
+          cargo test -p specimen-core neural::tests::cpu_gpu_parity -- --ignored --exact --nocapture 2>&1 | tee work/accelerator/cpu-gpu-parity.log
+          grep -q 'backend=wgpu' work/accelerator/cpu-gpu-parity.log
+          grep -q 'threshold=0.0001' work/accelerator/cpu-gpu-parity.log
+      - name: Record accelerator qualification receipt
+        run: |
+          log_sha=$(shasum -a 256 work/accelerator/cpu-gpu-parity.log | awk '{print $1}')
+          max_delta=$(sed -n 's/.*max_delta=\([0-9.]*\).*/\1/p' work/accelerator/cpu-gpu-parity.log | tail -1)
+          test -n "$max_delta"
+          jq -n \
+            --arg headSha "$GITHUB_SHA" \
+            --arg workflowRunId "$GITHUB_RUN_ID" \
+            --arg runner "$RUNNER_OS/$RUNNER_ARCH" \
+            --arg backend "wgpu" \
+            --arg maxDelta "$max_delta" \
+            --arg logSha256 "$log_sha" \
+            '{schema:1,headSha:$headSha,workflowRunId:$workflowRunId,runner:$runner,backend:$backend,maxDelta:($maxDelta|tonumber),threshold:0.0001,logSha256:$logSha256}' \
+            > work/accelerator/run-receipt.json
+      - name: Upload accelerator log and receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: apple-silicon-cpu-gpu-parity
+          path: work/accelerator
+

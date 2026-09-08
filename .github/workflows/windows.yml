@@ -53,9 +53,14 @@ jobs:
           key: native-runtimes-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('native/runtime-pins.json', 'scripts/build-runtimes.py') }}
       - name: Package desktop
         run: bunx tauri build
-      - name: Seal macOS installer
-        if: runner.os == 'macOS'
-        run: python3 scripts/seal-macos-package.py
+      - name: Record package qualification
+        shell: bash
+        run: |
+          shopt -s nullglob
+          installers=(target/release/bundle/nsis/*.exe)
+          arguments=(create --root "$PWD" --output work/package-qualification.json --head-sha "$GITHUB_SHA" --workflow-run-id "$GITHUB_RUN_ID" --runner-label windows-2022 --runner-os "$RUNNER_OS" --runner-arch "$RUNNER_ARCH" --application target/release/wdbx-studio-desktop.exe --helper src-tauri/binaries/llama-server.exe --helper src-tauri/binaries/sd-cli.exe)
+          for installer in "${installers[@]}"; do arguments+=(--installer "$installer"); done
+          python scripts/package-evidence.py "${arguments[@]}"
       - name: Test application assets
         shell: bash
         run: VITE_NATIVE_E2E=1 bun run desktop:build
@@ -69,12 +74,10 @@ jobs:
       - name: Native interface tests
         shell: bash
         run: |
-          if [ "$RUNNER_OS" = Linux ]; then
-            WDBX_STUDIO_TEST_DATA="$PWD/work/native-e2e" xvfb-run -a bunx wdio run wdio.conf.mjs
-          else
-            WDBX_STUDIO_TEST_DATA="$PWD/work/native-e2e" bunx wdio run wdio.conf.mjs
-          fi
-      - name: Upload installers
+          mkdir -p work
+          set -o pipefail
+          WDBX_STUDIO_TEST_DATA="$PWD/work/native-e2e" bunx wdio run wdio.conf.mjs 2>&1 | tee work/native-e2e.log
+      - name: Upload installers and qualification evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -84,4 +87,9 @@ jobs:
             target/release/bundle/**/*.exe
             target/release/bundle/**/*.AppImage
             target/release/bundle/**/*.deb
+            work/package-qualification.json
+            work/native-first-screen.png
+            work/native-desktop.png
+            work/native-e2e.log
+            work/native-ui-evidence.json
           if-no-files-found: warn

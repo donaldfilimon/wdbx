@@ -323,8 +323,16 @@ mod tests {
         let cpu = n.run(&input, false, 9, false).unwrap();
         let gpu = n.run(&input, false, 9, true).unwrap();
         assert_eq!(gpu.backend, "wgpu");
-        for (a, b) in cpu.values.iter().zip(&gpu.values) {
-            assert!((a - b).abs() < 1e-4);
+        let mut max_delta = 0.0_f32;
+        for (index, (a, b)) in cpu.values.iter().zip(&gpu.values).enumerate() {
+            let delta = (a - b).abs();
+            println!("output[{index}] delta={delta:.8}");
+            assert!(delta < 1e-4, "output[{index}] delta {delta} exceeded 1e-4");
+            max_delta = max_delta.max(delta);
         }
+        println!(
+            "backend={} max_delta={max_delta:.8} threshold=0.0001",
+            gpu.backend
+        );
     }
 }

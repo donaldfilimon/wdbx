@@ -1,0 +1,41 @@
+name: Real OCR qualification
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  ocr:
+    runs-on: macos-14
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rust toolchain
+        run: rustup toolchain install nightly-2026-09-01 --profile minimal
+      - name: Create OCR fixture
+        run: |
+          python3 -m pip install pillow
+          python3 scripts/ocr-fixture.py work/acceptance
+          mkdir -p src-tauri/binaries
+      - name: Download verified OCR models only
+        run: python3 scripts/download-models.py work/acceptance/models --ids text-detection text-recognition
+      - name: Recognize real fixture
+        run: |
+          set -o pipefail
+          cargo run --release -p specimen-core --example acceptance -- "$PWD/work/acceptance" "$PWD/src-tauri/binaries" ocr 2>&1 | tee work/acceptance/results/ocr.log
+      - name: Record OCR qualification receipt
+        run: |
+          result_sha=$(shasum -a 256 work/acceptance/results/ocr.json | awk '{print $1}')
+          jq -n \
+            --arg headSha "$GITHUB_SHA" \
+            --arg workflowRunId "$GITHUB_RUN_ID" \
+            --arg runner "$RUNNER_OS/$RUNNER_ARCH" \
+            --arg resultSha256 "$result_sha" \
+            '{schema:1,headSha:$headSha,workflowRunId:$workflowRunId,runner:$runner,mode:"ocr",resultSha256:$resultSha256}' \
+            > work/acceptance/results/run-receipt.json
+      - name: Upload OCR result and receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: real-ocr
+          path: work/acceptance/results
+
