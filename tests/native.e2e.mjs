@@ -282,7 +282,17 @@ describe('Native specimen desktop', () => {
     );
     await $('nav[aria-label="Main navigation"] a[href="?view=memory"]').click();
     await $('button=Conversation').click();
-    await $('.history-record').waitForDisplayed({ timeout: 30000 });
+    try {
+      await $('.history-record').waitForDisplayed({ timeout: 30000 });
+    } catch (error) {
+      console.log(
+        'History qualification failure',
+        await browser.getUrl(),
+        await $('body').getText(),
+      );
+      await browser.saveScreenshot(resolve('work/native-history-failure.png'));
+      throw error;
+    }
     const rendered = await $$('.history-record');
     if (rendered.length < 1 || rendered.length > 30)
       throw Error('History virtualization failed: ' + rendered.length);
