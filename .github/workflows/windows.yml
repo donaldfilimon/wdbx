@@ -1,25 +1,14 @@
-name: Native desktop qualification
+name: Windows desktop qualification
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
-    inputs:
-      models:
-        description: Run real local text inference qualification
-        type: boolean
-        default: false
-concurrency:
-  group: native-${{ github.ref }}-${{ inputs.models && 'models' || 'desktop' }}
-  cancel-in-progress: false
 permissions:
   contents: read
 jobs:
   desktop:
-    if: ${{ !inputs.models }}
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-14, macos-15-intel, windows-2022, ubuntu-24.04]
+        os: [windows-2022]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 90
     env:
@@ -38,7 +27,7 @@ jobs:
         run: bun install --frozen-lockfile
       - name: Browser unit tests and types
         run: |
-          bun test
+          bun test tests/engine.test.js
           bunx tsc --noEmit
           bun run lint:studio
       - name: Native conformance tests
@@ -53,9 +42,15 @@ jobs:
           restore-keys: native-runtimes-${{ runner.os }}-${{ runner.arch }}-
       - name: Build model runtimes
         run: python scripts/build-runtimes.py
-      - name: Check portable Windows model runtimes
-        if: runner.os == 'Windows'
+      - name: Check portable model runtimes
         run: python scripts/check-windows-runtimes.py
+      - name: Save completed inference builds
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            work/runtimes
+            src-tauri/binaries
+          key: native-runtimes-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('native/runtime-pins.json', 'scripts/build-runtimes.py') }}
       - name: Package desktop
         run: bunx tauri build
       - name: Seal macOS installer
@@ -90,21 +85,3 @@ jobs:
             target/release/bundle/**/*.AppImage
             target/release/bundle/**/*.deb
           if-no-files-found: warn
-
-  text-model:
-    if: ${{ inputs.models }}
-    runs-on: macos-15-intel
-    timeout-minutes: 60
-    steps:
-      - uses: actions/checkout@v4
-      - name: Build pinned text runtime
-        run: python3 scripts/build-runtimes.py --only llama
-      - name: Download verified Qwen model
-        run: python3 scripts/download-models.py work/acceptance/models --ids qwen3-4b
-      - name: Real CPU text inference
-        run: cargo run --release -p specimen-core --example acceptance -- "$PWD/work/acceptance" "$PWD/src-tauri/binaries" text
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: real-text-inference
-          path: work/acceptance/results

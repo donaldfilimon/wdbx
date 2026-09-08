@@ -6,6 +6,10 @@ if platform.system()!='Darwin':raise SystemExit('macOS packaging only')
 root=Path(__file__).resolve().parents[1]
 source=root/'target/release/bundle/macos/WDBX Specimen Studio.app'
 images=list((root/'target/release/bundle/dmg').glob('*.dmg'))
+if not images:
+ architecture='aarch64' if platform.machine()=='arm64' else 'x64'
+ images=[root/'target/release/bundle/dmg'/f'WDBX Specimen Studio_0.2.0_{architecture}.dmg']
+ images[0].parent.mkdir(parents=True,exist_ok=True)
 if len(images)!=1:raise SystemExit('Build exactly one macOS target before sealing')
 with tempfile.TemporaryDirectory(prefix='wdbx-package-') as temporary:
  stage=Path(temporary);app=stage/source.name

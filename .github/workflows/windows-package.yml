@@ -1,0 +1,75 @@
+name: Windows portable runtime packaging
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  package:
+    runs-on: windows-2022
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.0
+      - name: Rust metadata toolchain
+        run: rustup toolchain install nightly-2026-09-01 --profile minimal
+      - name: Dependencies
+        run: bun install --frozen-lockfile
+      - name: Reuse pinned inference builds
+        uses: actions/cache@v4
+        with:
+          path: |
+            work/runtimes
+            src-tauri/binaries
+          key: native-runtimes-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('native/runtime-pins.json', 'scripts/build-runtimes.py') }}
+          restore-keys: native-runtimes-${{ runner.os }}-${{ runner.arch }}-
+      - name: Build standalone Windows model runtimes
+        run: python scripts/build-runtimes.py
+      - name: Save completed standalone helpers
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            work/runtimes
+            src-tauri/binaries
+          key: native-runtimes-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('native/runtime-pins.json', 'scripts/build-runtimes.py') }}
+      - name: Verify helper imports and isolated startup
+        run: python scripts/check-windows-runtimes.py
+      - name: Restore byte-identical qualified application
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 33880881755 -n wdbx-studio-windows-2022 -D work/qualified-application
+          if ($LASTEXITCODE -ne 0) { throw 'Cannot download qualified application' }
+          $installer = Get-ChildItem work/qualified-application -Recurse -Filter *.exe | Select-Object -First 1
+          if ((Get-FileHash $installer.FullName -Algorithm SHA256).Hash.ToLower() -ne '824b38be0fbadf3d318fb7aa77cbd267c2a105517d8821607917ef10950c02a6') { throw 'Qualified installer digest differs' }
+          7z x $installer.FullName -owork/qualified-extracted -y
+          if ($LASTEXITCODE -ne 0) { throw 'Cannot extract qualified application' }
+          $app = 'work/qualified-extracted/wdbx-studio-desktop.exe'
+          if ((Get-FileHash $app -Algorithm SHA256).Hash.ToLower() -ne '77d94c6386ddde4d96dcbe501e865aeca576b41a4630164976c11908ff30e25e') { throw 'Qualified application digest differs' }
+          New-Item target/release -ItemType Directory -Force | Out-Null
+          Copy-Item $app target/release/wdbx-studio-desktop.exe
+      - name: Bundle verified app and standalone helpers
+        run: bunx tauri bundle --bundles nsis --ci
+      - name: Verify final installer payload
+        run: |
+          $installer = Get-ChildItem target/release/bundle/nsis -Filter *.exe | Select-Object -First 1
+          7z x $installer.FullName -owork/final-installer -y
+          if ($LASTEXITCODE -ne 0) { throw 'Cannot extract final installer' }
+          $app = 'work/final-installer/wdbx-studio-desktop.exe'
+          if ((Get-FileHash $app -Algorithm SHA256).Hash.ToLower() -ne '77d94c6386ddde4d96dcbe501e865aeca576b41a4630164976c11908ff30e25e') { throw 'Final application digest differs' }
+          foreach ($name in @('llama-server.exe','sd-cli.exe')) {
+            $built = (Get-FileHash "src-tauri/binaries/$name" -Algorithm SHA256).Hash
+            $packed = (Get-FileHash "work/final-installer/binaries/$name" -Algorithm SHA256).Hash
+            if ($built -ne $packed) { throw "Packaged helper differs: $name" }
+          }
+          @{'applicationSha256'='77d94c6386ddde4d96dcbe501e865aeca576b41a4630164976c11908ff30e25e';'applicationQualificationRun'=33880881755;'applicationUnchanged'=$true;'helperPayloadsMatch'=$true} | ConvertTo-Json | Set-Content work/windows-package-verification.json
+      - name: Upload portable installer and evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: wdbx-studio-windows-portable
+          path: |
+            target/release/bundle/nsis/*.exe
+            work/windows-runtime-verification.json
+            work/windows-package-verification.json

@@ -1,0 +1,40 @@
+name: macOS portable runtime packaging
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  package:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-14, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reuse pinned inference builds
+        uses: actions/cache@v4
+        with:
+          path: |
+            work/runtimes
+            src-tauri/binaries
+          key: native-runtimes-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('native/runtime-pins.json', 'scripts/build-runtimes.py') }}
+          restore-keys: native-runtimes-${{ runner.os }}-${{ runner.arch }}-
+      - name: Build standalone loopback text runtime
+        run: python3 scripts/build-runtimes.py --only llama
+      - name: Restore qualified app and replace text helper
+        env:
+          GH_TOKEN: ${{ github.token }}
+          WDBX_RUNNER: ${{ matrix.os }}
+        run: python3 scripts/repackage-macos.py
+      - name: Seal final installer
+        run: python3 scripts/seal-macos-package.py
+      - name: Upload portable installer and evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: wdbx-studio-${{ matrix.os }}-portable
+          path: |
+            target/release/bundle/dmg/*.dmg
+            work/macos-package-verification.json
