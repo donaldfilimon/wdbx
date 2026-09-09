@@ -63,6 +63,25 @@ inference; `image-model.yml` is manually dispatched image inference qualificatio
 Native UI requires both `VITE_NATIVE_E2E=1` assets and Rust `e2e` instrumentation.
 Keep the test bridge out of production. Configured jobs are not passing receipts.
 
+## Remotes: there are two, and the default one is dead
+
+`git remote -v` is the check here, not `git branch -vv`.
+
+- `origin` points at `git.chatgpt-team.site`, the generated Codex-app host. It is
+  **unusable from this machine**: push, fetch, and `ls-remote` all fail with
+  `could not read Username ... Device not configured`, because only GitHub has a
+  credential helper configured. It is also the tracking upstream, so `git branch -vv`
+  reports an ahead-count against a server nothing can reach, and `@{u}` answers off the
+  stale cached ref. A `0 ahead` reading there is not evidence anything was pushed.
+- `github` points at `donaldfilimon/wdbx-specimen-studio` and **is reachable**. This is
+  the real backup: `git ls-remote github` exits 0 and `main` matches. Push here.
+
+The consequence of reading only the upstream line is concluding this repository is
+unbacked-up and needs rescue bundling, which was believed for two days. Its bundle is
+still worth keeping for a different reason: it carries `refs/codex/turn-diffs/*` refs that
+GitHub does not have, and `git bundle list-heads` lists those first, so grep `refs/heads/`
+rather than taking the first line.
+
 ## Commit & Pull Request Guidelines
 
 History uses short imperative subjects, such as `Fix managed preview compatibility`. Keep commits focused. PRs should explain behavior and rationale, link relevant issues, report actual checks and platform limitations, and include screenshots for visual changes. Preserve unrelated working-tree edits.
