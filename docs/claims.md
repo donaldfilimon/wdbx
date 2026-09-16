@@ -12,7 +12,7 @@
 |-------|-------------|---------------|
 | C0 | Source conforms under test | ✅ `cargo test --workspace` passes |
 | C1 | Source evidence + local deterministic replay | ✅ Golden fixtures, episode-store replay tests |
-| C2 | Cross-language canonicalization | 🟡 Partial: a standard-library Python encoder for `abbey-cbor-episode-v1` (`tools/abbey_cbor_episode_v1.py`) agrees with Rust on the golden vectors and a differential corpus in `cargo test` (`tests/v3_cross_language_commitment.rs`). Envelope encoding only; no COSE, no second-language store or signature verifier |
+| C2 | Cross-language canonicalization | 🟡 Partial: a standard-library Python reimplementation (`tools/abbey_cbor_episode_v1.py`) agrees with Rust on the `abbey-cbor-episode-v1` golden vectors and a differential corpus (`tests/v3_cross_language_commitment.rs`), and re-derives every receipt digest a real `EpisodeStore` appends, all seven event variants with chained parents, from the JSON wire form (`tests/v3_cross_language_episode.rs`), including the two pinned memory goldens. Encoding and digest derivation only; no COSE, no second-language admission rules or signature verifier |
 | C3 | Live provider / Discord evidence | ❌ Not claimed |
 | C4 | Hosted service / federation evidence | ❌ Not claimed |
 | C5 | Production deployment evidence | ❌ Not claimed |

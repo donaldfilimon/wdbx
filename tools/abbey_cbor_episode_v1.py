@@ -11,9 +11,15 @@ refused with the same error names.
 Scope, stated so nobody infers more from the file name:
 
 - It reimplements the profile encoder, the five-entry envelope, and the digest.
-- It does NOT derive an episode's header/payload from an `EpisodeWrite`; that
-  mapping lives in the Rust store and is not reproduced here. So this verifies
-  the canonical encoding, not a second-language episode store.
+- It also reimplements the store's derivation of an episode's header and
+  payload from an `EpisodeWrite` in its JSON wire form (`episode_digest`
+  below), so the pinned memory-candidate and memory-edge golden digests, and
+  every event variant the Rust store accepts, can be reproduced without Rust.
+- It does NOT reimplement the store: no transition rules, no replay or budget
+  checks, no ledger. Given a write the store would refuse, it still returns
+  the digest the store *would have computed*. The caller supplies the parent
+  digest (the previous record of the same operation), which only the ledger
+  knows.
 - It is not COSE, and it does not verify signatures.
 
 Value model (the interchange form used by the Rust differential test and by
@@ -41,6 +47,18 @@ Commands:
                            {"ok": false, "error": "<RustErrorName>"}
     encode                 like `differential`, for a single object on stdin,
                            printing the envelope hex and digest on two lines
+    verify-episode-goldens [DIR]
+                           derive the digests of DIR/episode_write_memory_candidate.json
+                           and DIR/episode_write_memory_edge.json (no parent) and
+                           compare with the digests the Rust tests pin
+                           (default DIR: crates/abi-wdbx/tests/golden)
+    episode-differential   read one JSON object per line from stdin:
+                           {"write": <EpisodeWrite wire JSON>,
+                            "previous_digest": "<64 hex>" | null}
+                           and write {"ok": true, "digest": "<hex>"} or
+                           {"ok": false, "error": "<name>"} per line
+    episode-digest         like `episode-differential`, for a single object
+                           on stdin, printing the digest on one line
 
 Exit status is 0 when every check passed and 1 otherwise. The script never
 prints input values in error messages, mirroring the content-free Rust errors.
@@ -275,6 +293,229 @@ def run_case(case: dict[str, Any]) -> dict[str, Any]:
     return {"ok": True, "bytes": env.hex(), "digest": digest(env).hex()}
 
 
+# --- episode derivation (mirrors StoredRecord::computed_digest in store.rs) ----
+
+# Digests the Rust golden tests pin (`GOLDEN_DIGEST` in
+# tests/v3_memory_candidate.rs and tests/v3_memory_edge.rs). Both goldens open
+# a fresh operation, so they have no parent.
+EPISODE_GOLDENS = {
+    "episode_write_memory_candidate.json": (
+        "3c19a479a23077d95238b710876e5c03d2300dd77e9ccfedbbe6c11b0fc768bc"
+    ),
+    "episode_write_memory_edge.json": (
+        "dfc839a6d6e6a39a0e3bccf837ea232f291ae74999241422efc26167eb47d47f"
+    ),
+}
+
+DEFAULT_EPISODE_GOLDEN_DIR = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)),
+    os.pardir,
+    "crates",
+    "abi-wdbx",
+    "tests",
+    "golden",
+)
+
+
+class WireError(ValueError):
+    """The wire JSON does not have the shape the Rust types serialise to."""
+
+
+def _entry(key: str, value: Any) -> tuple[Any, Any]:
+    return (Text(key), value)
+
+
+def _digest32(value: Any) -> Bytes:
+    if not (isinstance(value, list) and len(value) == 32 and all(isinstance(b, int) and 0 <= b <= 255 for b in value)):
+        raise WireError("digest must be a 32-byte array")
+    return Bytes(bytes(value))
+
+
+def _opt_digest(value: Any) -> Any:
+    return NULL if value is None else _digest32(value)
+
+
+def _text(value: Any) -> Text:
+    if not isinstance(value, str):
+        raise WireError("expected a string")
+    return Text(value)
+
+
+def _unsigned(value: Any) -> Unsigned:
+    if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+        raise WireError("expected an unsigned integer")
+    return Unsigned(value)
+
+
+def _bool(value: Any) -> Bool:
+    if not isinstance(value, bool):
+        raise WireError("expected a boolean")
+    return Bool(value)
+
+
+def _actor(actor: Any) -> Map:
+    return Map([_entry("principal_id", _text(actor["principal_id"])), _entry("kind", _text(actor["kind"]))])
+
+
+def _voice(voice: Any) -> Any:
+    if voice is None:
+        return NULL
+    return Map(
+        [
+            _entry("consent_epoch", _unsigned(voice["consent_epoch"])),
+            _entry("participant_count", _unsigned(voice["participant_count"])),
+            _entry("authorization_state", _text(voice["authorization_state"])),
+            _entry("attribution", _text(voice["attribution"])),
+            _entry("stt", _text(voice["stt"])),
+            _entry("tts", _text(voice["tts"])),
+            _entry("playback", _text(voice["playback"])),
+            _entry("barge_in_count", _unsigned(voice["barge_in_count"])),
+            _entry("transitions", Array([_text(t) for t in voice["transitions"]])),
+            _entry("terminal_reason", _text(voice["terminal_reason"])),
+        ]
+    )
+
+
+def _candidate(candidate: Any) -> Map:
+    dimension = candidate["dimension"]
+    embedding_version = candidate["embedding_version"]
+    return Map(
+        [
+            _entry("class", _text(candidate["class"])),
+            _entry("retention", _text(candidate["retention"])),
+            _entry("payload_commitment", _digest32(candidate["payload_commitment"])),
+            _entry("payload_bytes", _unsigned(candidate["payload_bytes"])),
+            _entry("dimension", NULL if dimension is None else _unsigned(dimension)),
+            _entry("embedding_version", NULL if embedding_version is None else _text(embedding_version)),
+            _entry("member_scoped", _bool(candidate["member_scoped"])),
+            _entry("supersedes", _opt_digest(candidate["supersedes"])),
+            _entry("forgets", _opt_digest(candidate["forgets"])),
+        ]
+    )
+
+
+def _edge(edge: Any) -> Map:
+    return Map(
+        [
+            _entry("kind", _text(edge["kind"])),
+            _entry("target", _digest32(edge["target"])),
+            _entry("counterpart", _opt_digest(edge["counterpart"])),
+            _entry("reason", _text(edge["reason"])),
+        ]
+    )
+
+
+def canonical_event(event: Any) -> Map:
+    """`canonical_event` in store.rs, keyed by the serde `kind` tag."""
+    kind = event["kind"]
+    if kind == "proposal":
+        return Map([_entry("requested_by", _actor(event["requested_by"])), _entry("proposed_by", _actor(event["proposed_by"]))])
+    if kind == "approval":
+        return Map([_entry("approved_by", _actor(event["approved_by"]))])
+    if kind == "execution":
+        return Map([_entry("executed_by", _actor(event["executed_by"])), _entry("voice", _voice(event["voice"]))])
+    if kind == "compensation":
+        return Map(
+            [
+                _entry("compensated_by", _actor(event["compensated_by"])),
+                _entry("exact_restore_observed", _bool(event["exact_restore_observed"])),
+            ]
+        )
+    if kind == "terminal":
+        return Map([_entry("status", _text(event["status"])), _entry("reason", _text(event["reason"]))])
+    if kind == "memory_candidate":
+        return Map([_entry("recorded_by", _actor(event["recorded_by"])), _entry("candidate", _candidate(event["candidate"]))])
+    if kind == "memory_edge":
+        return Map([_entry("recorded_by", _actor(event["recorded_by"])), _entry("edge", _edge(event["edge"]))])
+    raise WireError("unknown event kind")
+
+
+def episode_digest(write: Any, previous_digest: bytes | None) -> bytes:
+    """The digest `EpisodeStore` would commit for `write` after `previous_digest`.
+
+    Mirrors `StoredRecord::computed_digest`: a schema-1 envelope whose header
+    carries the nine binding fields, whose payload carries the event kind, the
+    canonical event and the token cost, and whose parents are the previous
+    record of the same operation (none when the write opens an operation).
+    """
+    consent_epoch = write["consent_epoch"]
+    header = Map(
+        [
+            _entry("request_id", _text(write["request_id"])),
+            _entry("operation_id", _text(write["operation_id"])),
+            _entry("contract_revision", _unsigned(write["contract_revision"])),
+            _entry("contract_digest", _digest32(write["contract_digest"])),
+            _entry("guild_ref", _text(write["guild_ref"])),
+            _entry("consent_epoch", NULL if consent_epoch is None else _unsigned(consent_epoch)),
+            _entry("source_type", _text(write["source_type"])),
+            _entry("policy_version", _text(write["policy_version"])),
+            _entry("evidence_level", _text(write["evidence_level"])),
+        ]
+    )
+    payload = Map(
+        [
+            _entry("event_kind", _text(write["event"]["kind"])),
+            _entry("event", canonical_event(write["event"])),
+            _entry("token_cost", _unsigned(write["token_cost"])),
+        ]
+    )
+    parents = [] if previous_digest is None else [previous_digest]
+    return digest(envelope_bytes(1, header, payload, parents))
+
+
+def run_episode_case(case: dict[str, Any]) -> dict[str, Any]:
+    try:
+        previous = case.get("previous_digest")
+        parent = None if previous is None else bytes.fromhex(previous)
+        if parent is not None and len(parent) != 32:
+            raise WireError("previous_digest must be 32 bytes")
+        result = episode_digest(case["write"], parent)
+    except ProfileError as error:
+        return {"ok": False, "error": error.name}
+    except (WireError, KeyError, TypeError, ValueError):
+        return {"ok": False, "error": "MalformedWire"}
+    return {"ok": True, "digest": result.hex()}
+
+
+def verify_episode_goldens(directory: str) -> int:
+    failures = 0
+    for name, expected in EPISODE_GOLDENS.items():
+        with open(os.path.join(directory, name), encoding="utf-8") as handle:
+            write = json.load(handle)
+        computed = episode_digest(write, None).hex()
+        ok = computed == expected
+        print(f"{'ok  ' if ok else 'FAIL'} {name}: python episode digest == pinned {expected[:8]}…")
+        if not ok:
+            failures += 1
+    print(f"{failures} failure(s)")
+    return 1 if failures else 0
+
+
+def episode_differential() -> int:
+    status = 0
+    for line in sys.stdin:
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            result = run_episode_case(json.loads(line))
+        except ValueError:
+            result = {"ok": False, "error": "MalformedInterchange"}
+            status = 1
+        sys.stdout.write(json.dumps(result, separators=(",", ":")) + "\n")
+    sys.stdout.flush()
+    return status
+
+
+def episode_one() -> int:
+    result = run_episode_case(json.load(sys.stdin))
+    if not result["ok"]:
+        print(result["error"], file=sys.stderr)
+        return 1
+    print(result["digest"])
+    return 0
+
+
 # --- commands --------------------------------------------------------------------
 
 
@@ -372,6 +613,12 @@ def main(argv: list[str]) -> int:
         return differential()
     if command == "encode":
         return encode_one()
+    if command == "verify-episode-goldens":
+        return verify_episode_goldens(argv[2] if len(argv) > 2 else DEFAULT_EPISODE_GOLDEN_DIR)
+    if command == "episode-differential":
+        return episode_differential()
+    if command == "episode-digest":
+        return episode_one()
     print(f"unknown command: {command}", file=sys.stderr)
     return 1
 

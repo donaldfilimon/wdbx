@@ -66,11 +66,14 @@ federation evidence.
 `EpisodeBlock`, general canonical-CBOR reader, or COSE envelope. Episode
 signing exists only as a detached per-record Ed25519 signature over the v3
 digest (no key rotation, revocation, or cross-language signature verifier).
-The `abbey-cbor-episode-v1` encoder does have a second-language witness: a
-standard-library Python reimplementation (`tools/abbey_cbor_episode_v1.py`)
-must agree with the Rust encoder on the golden vectors and a differential
-corpus under `cargo test`; it covers the envelope encoding only, not the
-store's header/payload derivation, and it verifies no signature. The existing v2 commit digest remains `serde_json` bytes with parents in insertion
+The `abbey-cbor-episode-v1` encoder and the episode digest do have a
+second-language witness: a standard-library Python reimplementation
+(`tools/abbey_cbor_episode_v1.py`) must agree with the Rust encoder on the
+golden vectors and a differential corpus, and must reproduce, from each
+write's JSON wire form plus its parent, every receipt digest a real
+`EpisodeStore` appends across all seven event variants, under `cargo test`.
+It reimplements the encoding and the header/payload derivation only: not the
+store's admission rules, not COSE, and it verifies no signature. The existing v2 commit digest remains `serde_json` bytes with parents in insertion
 order; it is intentionally unchanged for compatibility. No `policy_version`,
 `signer_key_id`, `task_regime`, or `regime_posterior` exists in the older v2
 record format; the new episode ledger binds `policy_version` but does not
