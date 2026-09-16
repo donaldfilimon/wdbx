@@ -46,9 +46,13 @@ cargo test --workspace
   or `WDBX_PYTHON` when set. It fails rather than skips without an
   interpreter, so a missing Python reads as red, never as green. Standalone
   forms: `python3 tools/abbey_cbor_episode_v1.py verify-goldens` and
-  `... verify-episode-goldens`. A change to `StoredRecord::computed_digest`
-  or `canonical_event` in `store.rs` must be mirrored in that script, or the
-  episode test fails; that is the point.
+  `... verify-episode-goldens`. Three things must move together or the
+  cross-language tests fail, which is the point: `StoredRecord::computed_digest`
+  and `canonical_event` in `store.rs` are mirrored by `episode_digest` and
+  `canonical_event` in the script, and the `GOLDEN_DIGEST` constants in
+  `tests/v3_memory_candidate.rs` / `tests/v3_memory_edge.rs` are mirrored by
+  `EPISODE_GOLDENS` in the script, so a deliberate golden regeneration updates
+  all three.
 - Docs-only changes: compare claims with source/tests and run `git diff --check`.
   There is no dedicated Markdown validator. Do not call this a full Rust gate.
 
