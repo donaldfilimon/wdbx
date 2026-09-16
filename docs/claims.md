@@ -12,7 +12,7 @@
 |-------|-------------|---------------|
 | C0 | Source conforms under test | ✅ `cargo test --workspace` passes |
 | C1 | Source evidence + local deterministic replay | ✅ Golden fixtures, episode-store replay tests |
-| C2 | Cross-language canonicalization | ❌ Not implemented (CBOR/COSE) |
+| C2 | Cross-language canonicalization | 🟡 Partial: a standard-library Python encoder for `abbey-cbor-episode-v1` (`tools/abbey_cbor_episode_v1.py`) agrees with Rust on the golden vectors and a differential corpus in `cargo test` (`tests/v3_cross_language_commitment.rs`). Envelope encoding only; no COSE, no second-language store or signature verifier |
 | C3 | Live provider / Discord evidence | ❌ Not claimed |
 | C4 | Hosted service / federation evidence | ❌ Not claimed |
 | C5 | Production deployment evidence | ❌ Not claimed |
@@ -29,7 +29,8 @@ sign each episode digest with Ed25519 (`src/v3/episode/signing.rs`), and replay
 rejects a tampered signature under the writer's own key. This is a detached
 Ed25519 signature over a canonical digest, verified in Rust tests. It is **not**
 COSE, is not verified by any other language, and has no key rotation or
-revocation, so C2 above stays ❌.
+revocation. C2 above is partial for the canonical *encoding* only (2026-09-16:
+the Python witness), never for signatures.
 
 **C6 reason corrected (2026-09-16).** The earlier reason, "No `Verify` RPC", was
 stale: `VerifyEpisode` / `ProposeEpisodeWrite` live on the ABI gateway

@@ -39,6 +39,12 @@ cargo test --workspace
   do not report default green as optional FHE runtime evidence.
 - Focused test: `cargo test -p abi-wdbx <filter>`; corpus target:
   `cargo test -p abi-wdbx --test abbey_contracts`.
+- `cargo test --workspace` includes `v3_cross_language_commitment`, which
+  runs `tools/abbey_cbor_episode_v1.py` (a standard-library Python
+  reimplementation of the `abbey-cbor-episode-v1` encoder) through `python3`,
+  or `WDBX_PYTHON` when set. It fails rather than skips without an
+  interpreter, so a missing Python reads as red, never as green. Standalone
+  form: `python3 tools/abbey_cbor_episode_v1.py verify-goldens`.
 - Docs-only changes: compare claims with source/tests and run `git diff --check`.
   There is no dedicated Markdown validator. Do not call this a full Rust gate.
 
