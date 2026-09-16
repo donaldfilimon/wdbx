@@ -16,7 +16,7 @@
 | C3 | Live provider / Discord evidence | ❌ Not claimed |
 | C4 | Hosted service / federation evidence | ❌ Not claimed |
 | C5 | Production deployment evidence | ❌ Not claimed |
-| C6 | Operator witnessed exact outcome | ❌ No `Verify` RPC |
+| C6 | Operator witnessed exact outcome | ❌ Not claimed: `VerifyEpisode` exists on the ABI gateway, but no operator-witnessed outcome is recorded |
 | C7 | Reconstructible experiment manifest | ❌ Partial (`abi-telemetry` exists but incomplete) |
 
 ## Current Claim Boundary
@@ -30,3 +30,8 @@ rejects a tampered signature under the writer's own key. This is a detached
 Ed25519 signature over a canonical digest, verified in Rust tests. It is **not**
 COSE, is not verified by any other language, and has no key rotation or
 revocation, so C2 above stays ❌.
+
+**C6 reason corrected (2026-09-16).** The earlier reason, "No `Verify` RPC", was
+stale: `VerifyEpisode` / `ProposeEpisodeWrite` live on the ABI gateway
+(`abi/crates/abi-wdbx-gateway/src/service.rs`, `abi wdbx episode verify`). An RPC
+existing is not an operator witnessing an outcome, so the level stays ❌.
