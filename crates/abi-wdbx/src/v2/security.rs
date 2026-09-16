@@ -412,6 +412,14 @@ fn env_key(name: &str, kind: KeyKind) -> Result<Option<KeyMaterial>, SecurityErr
         .transpose()
 }
 
+/// Read a raw 32-byte Ed25519 secret key from an owner-only file.
+///
+/// Shares the bounded, permission-checked reader used for v2 keys, so v3
+/// episode signing does not grow a second key loader.
+pub(crate) fn read_signing_key_file(path: &Path) -> Result<SigningKey, SecurityError> {
+    read_key_file(path, KeyKind::Signing).map(|material| SigningKey::from_bytes(&material.bytes))
+}
+
 fn read_key_file(path: &Path, kind: KeyKind) -> Result<KeyMaterial, SecurityError> {
     let mut file = std::fs::File::open(path).map_err(|error| io_error(path, &error))?;
     let metadata = file.metadata().map_err(|error| io_error(path, &error))?;

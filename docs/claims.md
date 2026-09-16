@@ -24,3 +24,9 @@
 > This codebase implements most of the **structural** half of the substrate and little of the **evidence** half.
 
 Closing the evidence half is Program 4: `canonical-wdbx-episodes-claims`.
+**Per-episode signatures (2026-09-16): C0/C1 only.** The v3 episode store can
+sign each episode digest with Ed25519 (`src/v3/episode/signing.rs`), and replay
+rejects a tampered signature under the writer's own key. This is a detached
+Ed25519 signature over a canonical digest, verified in Rust tests. It is **not**
+COSE, is not verified by any other language, and has no key rotation or
+revocation, so C2 above stays ❌.

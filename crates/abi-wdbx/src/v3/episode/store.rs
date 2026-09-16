@@ -1,5 +1,8 @@
 //! Durable append-only episode ledger and write gate.
 
+use super::signing::{
+    EpisodeSignature, EpisodeSigner, SignatureStatus, SignerKeyId, check_signature,
+};
 use super::types::{
     ActorKind, ActorRef, EpisodeEvent, EpisodeReceipt, EpisodeSource, EpisodeWrite,
     GuildEpisodePolicy, MAX_VOICE_TRANSITIONS, MemoryCandidate, MemoryClass, StorePolicy,
@@ -73,6 +76,7 @@ pub struct EpisodeStore {
     records: Vec<StoredRecord>,
     state: LedgerState,
     poisoned: bool,
+    signer: Option<EpisodeSigner>,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
@@ -92,6 +96,11 @@ struct StoredRecord {
     token_cost: u64,
     previous_digest: Option<[u8; 32]>,
     episode_digest: [u8; 32],
+    /// Detached writer signature over `episode_digest`. Kept outside the
+    /// committed envelope and omitted when absent, so an unsigned record
+    /// serializes byte-for-byte as it did before signing existed.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    signature: Option<EpisodeSignature>,
 }
 
 #[derive(Debug, Default)]
@@ -145,12 +154,41 @@ struct GuildUsage {
 
 impl EpisodeStore {
     /// Open and replay-verify a store, truncating only an incomplete final line.
+    ///
+    /// A store opened this way appends unsigned records. Existing signed
+    /// records remain readable; use [`Self::signature_status`] to check them.
     pub fn open(
         directory: impl AsRef<Path>,
         policy: StorePolicy,
     ) -> Result<Self, EpisodeStoreError> {
+        Self::open_inner(directory.as_ref(), policy, None)
+    }
+
+    /// Open a store whose canonical writer signs every record it appends.
+    ///
+    /// Replay additionally verifies every existing record that claims this
+    /// signer's key id; one that fails is corruption, exactly as a mutated
+    /// digest is. Records signed under other keys, and unsigned records, are
+    /// accepted and left for [`Self::signature_status`] to report.
+    ///
+    /// Note that a ledger containing signed records cannot be opened by a
+    /// build that predates episode signing: that build's record decoder
+    /// rejects the unknown `signature` member.
+    pub fn open_with_signer(
+        directory: impl AsRef<Path>,
+        policy: StorePolicy,
+        signer: EpisodeSigner,
+    ) -> Result<Self, EpisodeStoreError> {
+        Self::open_inner(directory.as_ref(), policy, Some(signer))
+    }
+
+    fn open_inner(
+        directory: &Path,
+        policy: StorePolicy,
+        signer: Option<EpisodeSigner>,
+    ) -> Result<Self, EpisodeStoreError> {
         validate_store_policy(&policy)?;
-        let directory = prepare_directory(directory.as_ref())?;
+        let directory = prepare_directory(directory)?;
         let lock_path = directory.join(LOCK_FILE);
         let ledger_path = directory.join(LEDGER_FILE);
         reject_symlink_if_present(&lock_path)?;
@@ -180,6 +218,9 @@ impl EpisodeStore {
         for record in &records {
             let line_bytes = serialized_line(record)?.len();
             validate_stored_record(record, &state, offset)?;
+            if let Some(signer) = &signer {
+                validate_own_signature(record, signer)?;
+            }
             apply_record(record, line_bytes, &mut state)?;
             offset = offset.saturating_add(line_bytes);
         }
@@ -191,7 +232,14 @@ impl EpisodeStore {
             records,
             state,
             poisoned: false,
+            signer,
         })
+    }
+
+    /// Identifier of the key this store signs new records with, if any.
+    #[must_use]
+    pub fn signer_key_id(&self) -> Option<&SignerKeyId> {
+        self.signer.as_ref().map(EpisodeSigner::key_id)
     }
 
     /// Compute the exact commitment WDBX would append without mutating the store.
@@ -211,7 +259,11 @@ impl EpisodeStore {
         if self.poisoned {
             return Err(EpisodeStoreError::Io);
         }
-        let record = self.prepare_record(write)?;
+        let mut record = self.prepare_record(write)?;
+        record.signature = self
+            .signer
+            .as_ref()
+            .map(|signer| signer.sign_digest(&record.episode_digest));
         if write
             .expected_commitment
             .is_some_and(|expected| expected != record.episode_digest)
@@ -294,6 +346,31 @@ impl EpisodeStore {
             .map(receipt))
     }
 
+    /// Report the signature state of one appended episode.
+    ///
+    /// `Ok(None)` means the digest was never appended for this guild.
+    /// `resolve` maps a signer key id to its verifying key; returning `None`
+    /// yields [`SignatureStatus::UnknownKey`], never `Invalid`.
+    pub fn signature_status(
+        &self,
+        guild_ref: &str,
+        episode_digest: &[u8; 32],
+        resolve: impl Fn(&SignerKeyId) -> Option<ed25519_dalek::VerifyingKey>,
+    ) -> Result<Option<SignatureStatus>, EpisodeStoreError> {
+        if !bounded_identifier(guild_ref, 128) {
+            return Err(EpisodeStoreError::InvalidInput);
+        }
+        Ok(self
+            .records
+            .iter()
+            .find(|record| {
+                record.guild_ref == guild_ref && record.episode_digest == *episode_digest
+            })
+            .map(|record| {
+                check_signature(&record.episode_digest, record.signature.as_ref(), &resolve)
+            }))
+    }
+
     /// Return cumulative token and byte usage for a guild.
     ///
     /// Bytes count every serialized ledger line plus the `payload_bytes` of
@@ -333,6 +410,7 @@ impl EpisodeStore {
             token_cost: write.token_cost,
             previous_digest,
             episode_digest: [0; 32],
+            signature: None,
         };
         record.episode_digest = record.computed_digest()?;
         validate_transition(&record, &self.state)?;
@@ -919,6 +997,24 @@ fn canonical_voice(voice: &VoiceEvidence) -> CanonicalValue {
 
 fn text_entry(key: &str, value: CanonicalValue) -> (CanonicalValue, CanonicalValue) {
     (CanonicalValue::Text(key.into()), value)
+}
+
+/// Replay check for records claiming the opening writer's own key.
+fn validate_own_signature(
+    record: &StoredRecord,
+    signer: &EpisodeSigner,
+) -> Result<(), EpisodeStoreError> {
+    let Some(signature) = &record.signature else {
+        return Ok(());
+    };
+    if &signature.signer_key_id != signer.key_id() {
+        return Ok(());
+    }
+    let key = signer.verifying_key();
+    match check_signature(&record.episode_digest, Some(signature), |_| Some(key)) {
+        SignatureStatus::Valid(_) => Ok(()),
+        _ => Err(EpisodeStoreError::Corrupt),
+    }
 }
 
 fn receipt(record: &StoredRecord) -> EpisodeReceipt {

@@ -12,6 +12,7 @@ mod lease;
 mod lifecycle;
 mod replication;
 mod security;
+pub(crate) use security::read_signing_key_file;
 mod segment;
 mod types;
 

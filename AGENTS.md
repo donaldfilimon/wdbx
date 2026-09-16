@@ -60,6 +60,15 @@ cargo test --workspace
 - `src/v3/episode/` owns the single-writer episode ledger, canonical commitment
   calculation, policy/consent checks, replay rejection, and content-free receipts.
   Transport JSON and adapter-provided digests are not canonical authority.
+- Episode signing lives in `src/v3/episode/signing.rs`, not in the commitment
+  encoder: the store signs the 32-byte digest with Ed25519 when opened via
+  `EpisodeStore::open_with_signer`. The signature is detached (stored beside the
+  record, outside the envelope), so digests are unchanged and unsigned records
+  serialize byte-for-byte as before. `signer_key_id` is derived from the key, not
+  chosen. Keep the episode key distinct from the v2 segment-signing key. Only the
+  canonical writer signs; adapters never do. A ledger holding signed records
+  will not open on a build that predates this. Not implemented: COSE_Sign1,
+  cross-language verification, key rotation/revocation, source-side signatures.
 - `abi-wdbx-gateway` remains in ABI. Its `ProposeEpisodeWrite` / `VerifyEpisode`
   RPCs use this episode store only with configured episode policy. Do not rename
   crates into CSAPS service names without a spec or equate that gate with full
