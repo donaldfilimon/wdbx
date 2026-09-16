@@ -355,6 +355,121 @@ pub struct MemoryCandidate {
     pub forgets: Option<[u8; 32]>,
 }
 
+/// Closed kinds of memory edge (amendment 2026-09-16).
+#[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "snake_case")]
+pub enum MemoryEdgeKind {
+    /// Marks one live memory candidate as suspect. It stays visible.
+    Quarantines,
+    /// Records that two live memory candidates disagree.
+    Contradicts,
+    /// Closes one open `quarantines` or `contradicts` edge.
+    Resolves,
+}
+
+impl MemoryEdgeKind {
+    pub(super) const fn label(self) -> &'static str {
+        match self {
+            Self::Quarantines => "quarantines",
+            Self::Contradicts => "contradicts",
+            Self::Resolves => "resolves",
+        }
+    }
+}
+
+/// Closed, content-free reason bound into a memory edge.
+///
+/// `conflicting_observation` belongs to `contradicts`, the two `reviewed_*`
+/// reasons to `resolves`, and every other reason to `quarantines`.
+#[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "snake_case")]
+pub enum EdgeReason {
+    /// The candidate's source is not trusted.
+    SourceUntrusted,
+    /// A signature over the candidate did not verify.
+    SignatureInvalid,
+    /// The candidate violates guild policy.
+    PolicyViolation,
+    /// An operator reported the candidate.
+    OperatorReport,
+    /// Two candidates describe incompatible observations.
+    ConflictingObservation,
+    /// Newer evidence undermines the candidate.
+    SupersededEvidence,
+    /// Review found the flagged memory valid.
+    ReviewedValid,
+    /// Review found the flagged memory invalid.
+    ReviewedInvalid,
+}
+
+impl EdgeReason {
+    pub(super) const fn label(self) -> &'static str {
+        match self {
+            Self::SourceUntrusted => "source_untrusted",
+            Self::SignatureInvalid => "signature_invalid",
+            Self::PolicyViolation => "policy_violation",
+            Self::OperatorReport => "operator_report",
+            Self::ConflictingObservation => "conflicting_observation",
+            Self::SupersededEvidence => "superseded_evidence",
+            Self::ReviewedValid => "reviewed_valid",
+            Self::ReviewedInvalid => "reviewed_invalid",
+        }
+    }
+
+    pub(super) const fn fits(self, kind: MemoryEdgeKind) -> bool {
+        match self {
+            Self::ConflictingObservation => matches!(kind, MemoryEdgeKind::Contradicts),
+            Self::ReviewedValid | Self::ReviewedInvalid => {
+                matches!(kind, MemoryEdgeKind::Resolves)
+            }
+            Self::SourceUntrusted
+            | Self::SignatureInvalid
+            | Self::PolicyViolation
+            | Self::OperatorReport
+            | Self::SupersededEvidence => matches!(kind, MemoryEdgeKind::Quarantines),
+        }
+    }
+}
+
+/// Content-free edge over memory-candidate episodes. Never alters its targets.
+///
+/// `counterpart` is present exactly for `contradicts`, and then the pair is
+/// ordered `target < counterpart` so one disagreement has one encoding.
+/// `resolves` names the digest of an open `quarantines` or `contradicts`
+/// edge episode.
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(deny_unknown_fields)]
+pub struct MemoryEdge {
+    /// Closed edge kind.
+    pub kind: MemoryEdgeKind,
+    /// Episode digest this edge names.
+    pub target: [u8; 32],
+    /// Second candidate of a contradiction; absent for other kinds.
+    pub counterpart: Option<[u8; 32]>,
+    /// Closed reason matching the kind.
+    pub reason: EdgeReason,
+}
+
+/// Open edge state of one admitted memory candidate.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct MemoryEdgeState {
+    /// The candidate has been forgotten (a tombstone).
+    pub forgotten: bool,
+    /// Digest of the open `quarantines` edge naming the candidate, if any.
+    pub open_quarantine: Option<[u8; 32]>,
+    /// Open contradictions, ordered by counterpart digest.
+    pub open_contradictions: Vec<OpenContradiction>,
+}
+
+/// One open contradiction as seen from one of its two candidates.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct OpenContradiction {
+    /// The other candidate.
+    pub counterpart: [u8; 32],
+    /// Digest of the `contradicts` edge episode.
+    pub edge: [u8; 32],
+}
+
 /// Append-only operation lifecycle event.
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(tag = "kind", rename_all = "snake_case", deny_unknown_fields)]
@@ -403,6 +518,17 @@ pub enum EpisodeEvent {
         /// Content-free candidate description.
         candidate: MemoryCandidate,
     },
+    /// A quarantine, contradiction, or resolution over memory candidates.
+    ///
+    /// A single-event operation like `MemoryCandidate`. A service records
+    /// `quarantines` and `contradicts`; only a guild owner, administrator,
+    /// manager, or organization owner records `resolves`.
+    MemoryEdge {
+        /// Recording identity.
+        recorded_by: ActorRef,
+        /// Content-free edge.
+        edge: MemoryEdge,
+    },
 }
 
 impl EpisodeEvent {
@@ -414,6 +540,7 @@ impl EpisodeEvent {
             Self::Compensation { .. } => "compensation",
             Self::Terminal { .. } => "terminal",
             Self::MemoryCandidate { .. } => "memory_candidate",
+            Self::MemoryEdge { .. } => "memory_edge",
         }
     }
 }

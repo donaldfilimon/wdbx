@@ -69,6 +69,14 @@ cargo test --workspace
   canonical writer signs; adapters never do. A ledger holding signed records
   will not open on a build that predates this. Not implemented: COSE_Sign1,
   cross-language verification, key rotation/revocation, source-side signatures.
+- Quarantine, contradiction, and resolution are `EpisodeEvent::MemoryEdge`
+  variants (ABI spec `2026-09-16-spec-memory-edge-episodes.md`), not fields on
+  `MemoryCandidate`: adding a field there changes every existing candidate
+  digest and the pinned golden that abbey-bot reproduces. New memory vocabulary
+  goes in as new event variants. A service may quarantine or contradict; only
+  guild owner/administrator/manager or organization owner may resolve. Edges
+  never hide a record and never block `forgets`. `tests/v3_memory_edge.rs` pins
+  the edge golden; `tests/v3_memory_candidate.rs` must keep passing unchanged.
 - `abi-wdbx-gateway` remains in ABI. Its `ProposeEpisodeWrite` / `VerifyEpisode`
   RPCs use this episode store only with configured episode policy. Do not rename
   crates into CSAPS service names without a spec or equate that gate with full

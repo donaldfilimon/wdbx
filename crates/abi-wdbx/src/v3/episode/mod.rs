@@ -10,8 +10,8 @@ pub use signing::{
 };
 pub use store::{EpisodeStore, EpisodeStoreError};
 pub use types::{
-    ActorKind, ActorRef, AttributionResult, AuthorizationState, EpisodeEvent, EpisodeReceipt,
-    EpisodeSource, EpisodeWrite, EvidenceLevel, GuildEpisodePolicy, MediaOutcome, MemoryCandidate,
-    MemoryClass, RetentionClass, StorePolicy, TerminalReason, TerminalStatus, VoiceEvidence,
-    VoiceTransition,
+    ActorKind, ActorRef, AttributionResult, AuthorizationState, EdgeReason, EpisodeEvent,
+    EpisodeReceipt, EpisodeSource, EpisodeWrite, EvidenceLevel, GuildEpisodePolicy, MediaOutcome,
+    MemoryCandidate, MemoryClass, MemoryEdge, MemoryEdgeKind, MemoryEdgeState, OpenContradiction,
+    RetentionClass, StorePolicy, TerminalReason, TerminalStatus, VoiceEvidence, VoiceTransition,
 };

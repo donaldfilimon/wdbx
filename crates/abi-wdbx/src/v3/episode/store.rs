@@ -5,8 +5,8 @@ use super::signing::{
 };
 use super::types::{
     ActorKind, ActorRef, EpisodeEvent, EpisodeReceipt, EpisodeSource, EpisodeWrite,
-    GuildEpisodePolicy, MAX_VOICE_TRANSITIONS, MemoryCandidate, MemoryClass, StorePolicy,
-    TerminalStatus, VoiceEvidence,
+    GuildEpisodePolicy, MAX_VOICE_TRANSITIONS, MemoryCandidate, MemoryClass, MemoryEdge,
+    MemoryEdgeKind, MemoryEdgeState, OpenContradiction, StorePolicy, TerminalStatus, VoiceEvidence,
 };
 use crate::v3::commitment::{CanonicalCborError, CanonicalValue, EpisodeCommitment};
 use serde::{Deserialize, Serialize};
@@ -111,14 +111,33 @@ struct LedgerState {
     memories: BTreeMap<String, GuildMemories>,
 }
 
-/// Memory-candidate edges per guild: digests admitted, and digests since forgotten.
+/// Memory-candidate edges per guild.
 ///
-/// Rebuilt on open from the ledger, so `supersedes`/`forgets` references are
-/// checked identically on the live and the replay path.
+/// Rebuilt on open from the ledger, so `supersedes`/`forgets` references and
+/// memory-edge rules are checked identically on the live and the replay path.
 #[derive(Clone, Debug, Default)]
 struct GuildMemories {
-    admitted: BTreeSet<[u8; 32]>,
+    /// Admitted candidate digests, with each candidate's `member_scoped`.
+    admitted: BTreeMap<[u8; 32], bool>,
     forgotten: BTreeSet<[u8; 32]>,
+    /// Open quarantine per candidate: target digest to edge digest.
+    quarantined: BTreeMap<[u8; 32], [u8; 32]>,
+    /// Open contradiction per ordered candidate pair, to edge digest.
+    contradictions: BTreeMap<([u8; 32], [u8; 32]), [u8; 32]>,
+    /// Open `quarantines`/`contradicts` edge episodes and what each holds.
+    open_edges: BTreeMap<[u8; 32], OpenEdge>,
+}
+
+#[derive(Clone, Copy, Debug)]
+enum OpenEdge {
+    Quarantine([u8; 32]),
+    Contradiction([u8; 32], [u8; 32]),
+}
+
+impl GuildMemories {
+    fn is_live(&self, digest: &[u8; 32]) -> bool {
+        self.admitted.contains_key(digest) && !self.forgotten.contains(digest)
+    }
 }
 
 #[derive(Clone, Debug)]
@@ -384,6 +403,84 @@ impl EpisodeStore {
             .map(|usage| (usage.tokens, usage.bytes))
     }
 
+    /// Report the open memory-edge state of one admitted memory candidate.
+    ///
+    /// `Ok(None)` means the digest is not a memory candidate admitted in this
+    /// guild. Quarantine and contradiction never hide a record; this read is
+    /// how a retrieval layer learns about them.
+    pub fn memory_edge_state(
+        &self,
+        guild_ref: &str,
+        candidate_digest: &[u8; 32],
+    ) -> Result<Option<MemoryEdgeState>, EpisodeStoreError> {
+        if !bounded_identifier(guild_ref, 128) {
+            return Err(EpisodeStoreError::InvalidInput);
+        }
+        let Some(memories) = self.state.memories.get(guild_ref) else {
+            return Ok(None);
+        };
+        if !memories.admitted.contains_key(candidate_digest) {
+            return Ok(None);
+        }
+        let mut open_contradictions: Vec<OpenContradiction> = memories
+            .contradictions
+            .iter()
+            .filter_map(|(&(low, high), &edge)| {
+                if low == *candidate_digest {
+                    Some(OpenContradiction {
+                        counterpart: high,
+                        edge,
+                    })
+                } else if high == *candidate_digest {
+                    Some(OpenContradiction {
+                        counterpart: low,
+                        edge,
+                    })
+                } else {
+                    None
+                }
+            })
+            .collect();
+        open_contradictions.sort_by_key(|item| item.counterpart);
+        Ok(Some(MemoryEdgeState {
+            forgotten: memories.forgotten.contains(candidate_digest),
+            open_quarantine: memories.quarantined.get(candidate_digest).copied(),
+            open_contradictions,
+        }))
+    }
+
+    /// Report whether a `quarantines`/`contradicts` edge episode is still open.
+    ///
+    /// `Ok(None)` means the digest is not such an edge in this guild,
+    /// `Some(true)` that it is open, and `Some(false)` that a `resolves` edge
+    /// has closed it.
+    pub fn memory_edge_open(
+        &self,
+        guild_ref: &str,
+        edge_digest: &[u8; 32],
+    ) -> Result<Option<bool>, EpisodeStoreError> {
+        if !bounded_identifier(guild_ref, 128) {
+            return Err(EpisodeStoreError::InvalidInput);
+        }
+        if self
+            .state
+            .memories
+            .get(guild_ref)
+            .is_some_and(|memories| memories.open_edges.contains_key(edge_digest))
+        {
+            return Ok(Some(true));
+        }
+        let closable = self.records.iter().any(|record| {
+            record.guild_ref == guild_ref
+                && record.episode_digest == *edge_digest
+                && matches!(
+                    &record.event,
+                    EpisodeEvent::MemoryEdge { edge, .. } if edge.kind != MemoryEdgeKind::Resolves
+                )
+        });
+        Ok(closable.then_some(false))
+    }
+
     fn prepare_record(&self, write: &EpisodeWrite) -> Result<StoredRecord, EpisodeStoreError> {
         validate_new_write(write, &self.policy, &self.state)?;
         let sequence = u64::try_from(self.records.len())
@@ -529,15 +626,32 @@ fn validate_event_shape(
     source: EpisodeSource,
     event: &EpisodeEvent,
 ) -> Result<(), EpisodeStoreError> {
-    let EpisodeEvent::MemoryCandidate { candidate, .. } = event else {
-        return Ok(());
-    };
-    // Raw audio and transcripts are ephemeral; there is no content-free
-    // memory of a voice epoch for this class to carry.
-    if source == EpisodeSource::DiscordVoice {
-        return Err(EpisodeStoreError::InvalidInput);
+    match event {
+        // Raw audio and transcripts are ephemeral; there is no content-free
+        // memory of a voice epoch for these classes to carry.
+        EpisodeEvent::MemoryCandidate { .. } | EpisodeEvent::MemoryEdge { .. }
+            if source == EpisodeSource::DiscordVoice =>
+        {
+            Err(EpisodeStoreError::InvalidInput)
+        }
+        EpisodeEvent::MemoryCandidate { candidate, .. } => validate_memory_candidate(candidate),
+        EpisodeEvent::MemoryEdge { edge, .. } => validate_memory_edge(edge),
+        _ => Ok(()),
     }
-    validate_memory_candidate(candidate)
+}
+
+fn validate_memory_edge(edge: &MemoryEdge) -> Result<(), EpisodeStoreError> {
+    let pair_ok = match (edge.kind, edge.counterpart) {
+        // Strict order also rules out a candidate contradicting itself.
+        (MemoryEdgeKind::Contradicts, Some(counterpart)) => edge.target < counterpart,
+        (MemoryEdgeKind::Quarantines | MemoryEdgeKind::Resolves, None) => true,
+        _ => false,
+    };
+    if pair_ok && edge.target != [0; 32] && edge.reason.fits(edge.kind) {
+        Ok(())
+    } else {
+        Err(EpisodeStoreError::InvalidInput)
+    }
 }
 
 fn validate_memory_candidate(candidate: &MemoryCandidate) -> Result<(), EpisodeStoreError> {
@@ -694,13 +808,23 @@ fn validate_transition(
             {
                 Ok(())
             }
+            EpisodeEvent::MemoryEdge { recorded_by, edge }
+                if valid_actor(recorded_by)
+                    && edge_author_allowed(edge.kind, recorded_by.kind)
+                    && record.previous_digest.is_none()
+                    && memory_edge_admitted(&record.guild_ref, edge, state) =>
+            {
+                Ok(())
+            }
             _ => Err(EpisodeStoreError::InvalidTransition),
         };
     };
-    // Both operation-opening events replay an existing operation identifier.
+    // Every operation-opening event replays an existing operation identifier.
     if matches!(
         record.event,
-        EpisodeEvent::Proposal { .. } | EpisodeEvent::MemoryCandidate { .. }
+        EpisodeEvent::Proposal { .. }
+            | EpisodeEvent::MemoryCandidate { .. }
+            | EpisodeEvent::MemoryEdge { .. }
     ) {
         return Err(EpisodeStoreError::Replay);
     }
@@ -756,9 +880,53 @@ fn memory_edges_admitted(
     let Some(target) = candidate.supersedes.or(candidate.forgets) else {
         return true;
     };
-    state.memories.get(guild_ref).is_some_and(|memories| {
-        memories.admitted.contains(&target) && !memories.forgotten.contains(&target)
-    })
+    state
+        .memories
+        .get(guild_ref)
+        .is_some_and(|memories| memories.is_live(&target))
+}
+
+/// A service flags; only human guild or organization governance resolves.
+const fn edge_author_allowed(kind: MemoryEdgeKind, author: ActorKind) -> bool {
+    match kind {
+        MemoryEdgeKind::Quarantines | MemoryEdgeKind::Contradicts => {
+            matches!(author, ActorKind::Service)
+        }
+        MemoryEdgeKind::Resolves => matches!(
+            author,
+            ActorKind::GuildOwner
+                | ActorKind::GuildAdministrator
+                | ActorKind::GuildManager
+                | ActorKind::OrganizationOwner
+        ),
+    }
+}
+
+/// Graph rules for a memory edge, given a shape already validated.
+///
+/// `quarantines` and `contradicts` name live candidates of this guild and may
+/// not duplicate an open edge; a contradiction joins candidates of equal
+/// member scope. `resolves` names an open edge episode, which may still name
+/// a candidate forgotten since.
+fn memory_edge_admitted(guild_ref: &str, edge: &MemoryEdge, state: &LedgerState) -> bool {
+    let Some(memories) = state.memories.get(guild_ref) else {
+        return false;
+    };
+    match (edge.kind, edge.counterpart) {
+        (MemoryEdgeKind::Quarantines, None) => {
+            memories.is_live(&edge.target) && !memories.quarantined.contains_key(&edge.target)
+        }
+        (MemoryEdgeKind::Contradicts, Some(counterpart)) => {
+            memories.is_live(&edge.target)
+                && memories.is_live(&counterpart)
+                && memories.admitted.get(&edge.target) == memories.admitted.get(&counterpart)
+                && !memories
+                    .contradictions
+                    .contains_key(&(edge.target, counterpart))
+        }
+        (MemoryEdgeKind::Resolves, None) => memories.open_edges.contains_key(&edge.target),
+        _ => false,
+    }
 }
 
 fn terminal_follows(status: TerminalStatus, stage: Stage) -> bool {
@@ -823,10 +991,20 @@ fn apply_record(
                 open_operation(recorded_by, recorded_by, Stage::Terminal),
             );
             let memories = state.memories.entry(record.guild_ref.clone()).or_default();
-            memories.admitted.insert(record.episode_digest);
+            memories
+                .admitted
+                .insert(record.episode_digest, candidate.member_scoped);
             if let Some(forgotten) = candidate.forgets {
                 memories.forgotten.insert(forgotten);
             }
+        }
+        EpisodeEvent::MemoryEdge { recorded_by, edge } => {
+            state.operations.insert(
+                record.operation_id.clone(),
+                open_operation(recorded_by, recorded_by, Stage::Terminal),
+            );
+            let memories = state.memories.entry(record.guild_ref.clone()).or_default();
+            apply_memory_edge(memories, edge, record.episode_digest)?;
         }
         event => {
             let operation = state
@@ -841,12 +1019,54 @@ fn apply_record(
                 EpisodeEvent::Execution { .. } => Stage::Executed,
                 EpisodeEvent::Compensation { .. } => Stage::Compensated,
                 EpisodeEvent::Terminal { .. } => Stage::Terminal,
-                EpisodeEvent::Proposal { .. } | EpisodeEvent::MemoryCandidate { .. } => {
+                EpisodeEvent::Proposal { .. }
+                | EpisodeEvent::MemoryCandidate { .. }
+                | EpisodeEvent::MemoryEdge { .. } => {
                     return Err(EpisodeStoreError::Corrupt);
                 }
             };
             operation.last_digest = record.episode_digest;
         }
+    }
+    Ok(())
+}
+
+fn apply_memory_edge(
+    memories: &mut GuildMemories,
+    edge: &MemoryEdge,
+    edge_digest: [u8; 32],
+) -> Result<(), EpisodeStoreError> {
+    match (edge.kind, edge.counterpart) {
+        (MemoryEdgeKind::Quarantines, None) => {
+            memories.quarantined.insert(edge.target, edge_digest);
+            memories
+                .open_edges
+                .insert(edge_digest, OpenEdge::Quarantine(edge.target));
+        }
+        (MemoryEdgeKind::Contradicts, Some(counterpart)) => {
+            memories
+                .contradictions
+                .insert((edge.target, counterpart), edge_digest);
+            memories.open_edges.insert(
+                edge_digest,
+                OpenEdge::Contradiction(edge.target, counterpart),
+            );
+        }
+        (MemoryEdgeKind::Resolves, None) => {
+            match memories
+                .open_edges
+                .remove(&edge.target)
+                .ok_or(EpisodeStoreError::Corrupt)?
+            {
+                OpenEdge::Quarantine(target) => {
+                    memories.quarantined.remove(&target);
+                }
+                OpenEdge::Contradiction(low, high) => {
+                    memories.contradictions.remove(&(low, high));
+                }
+            }
+        }
+        _ => return Err(EpisodeStoreError::Corrupt),
     }
     Ok(())
 }
@@ -892,7 +1112,25 @@ fn canonical_event(event: &EpisodeEvent) -> CanonicalValue {
             text_entry("recorded_by", canonical_actor(recorded_by)),
             text_entry("candidate", canonical_memory_candidate(candidate)),
         ]),
+        EpisodeEvent::MemoryEdge { recorded_by, edge } => CanonicalValue::Map(vec![
+            text_entry("recorded_by", canonical_actor(recorded_by)),
+            text_entry("edge", canonical_memory_edge(edge)),
+        ]),
     }
+}
+
+fn canonical_memory_edge(edge: &MemoryEdge) -> CanonicalValue {
+    CanonicalValue::Map(vec![
+        text_entry("kind", CanonicalValue::Text(edge.kind.label().into())),
+        text_entry("target", CanonicalValue::Bytes(edge.target.to_vec())),
+        text_entry(
+            "counterpart",
+            edge.counterpart.map_or(CanonicalValue::Null, |bytes| {
+                CanonicalValue::Bytes(bytes.to_vec())
+            }),
+        ),
+        text_entry("reason", CanonicalValue::Text(edge.reason.label().into())),
+    ])
 }
 
 fn canonical_memory_candidate(candidate: &MemoryCandidate) -> CanonicalValue {
@@ -1030,7 +1268,9 @@ fn receipt(record: &StoredRecord) -> EpisodeReceipt {
         evidence_level: record.evidence_level,
         terminal_status: match record.event {
             EpisodeEvent::Terminal { status, .. } => Some(status),
-            EpisodeEvent::MemoryCandidate { .. } => Some(TerminalStatus::Completed),
+            EpisodeEvent::MemoryCandidate { .. } | EpisodeEvent::MemoryEdge { .. } => {
+                Some(TerminalStatus::Completed)
+            }
             _ => None,
         },
         redacted: true,

@@ -63,13 +63,16 @@ replay test evidence; it is not a claim-registry promotion or deployed
 federation evidence.
 
 **Not implemented, and not claimed.** No complete constitutional v3
-`EpisodeBlock`, general canonical-CBOR reader, COSE envelope, or episode
-signing. The existing v2 commit digest remains `serde_json` bytes with parents in insertion
+`EpisodeBlock`, general canonical-CBOR reader, or COSE envelope. Episode
+signing exists only as a detached per-record Ed25519 signature over the v3
+digest (no key rotation, revocation, or cross-language verifier). The existing v2 commit digest remains `serde_json` bytes with parents in insertion
 order; it is intentionally unchanged for compatibility. No `policy_version`,
 `signer_key_id`, `task_regime`, or `regime_posterior` exists in the older v2
 record format; the new episode ledger binds `policy_version` but does not
-reinterpret v2. No contradiction or
-quarantine edges. No evidence-weighted retrieval: ranking is semantic,
+reinterpret v2. Contradiction, quarantine, and resolution edges exist only
+as single-event memory-edge episodes over v3 memory candidates (spec
+`2026-09-16-spec-memory-edge-episodes.md` in ABI); they never hide a record,
+and nothing in retrieval weighs them yet. No evidence-weighted retrieval: ranking is semantic,
 temporal, causal, and persona affinity, combined multiplicatively into one
 score, which is the opaque collapse the constitution's invariant I3 forbids. No
 block-level retention, redaction, deletion, signature verification, or hosted
