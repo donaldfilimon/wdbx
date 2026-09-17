@@ -390,3 +390,46 @@ fn exchange(port: u16, chunks: &[&[u8]]) -> String {
     stream.read_to_string(&mut response).expect("read response");
     response
 }
+
+#[test]
+fn mismatched_vector_width_is_refused_and_queries_keep_working() {
+    let fixture = Fixture::new("abi_rest_vector_width");
+    let mut store = fixture.open();
+    for body in [r#"{"vector":[1,0,0]}"#, r#"{"vector":[0,1,0]}"#] {
+        assert_eq!(
+            route(&mut store, "POST", "/insert", body.as_bytes(), 1_000).status,
+            200
+        );
+    }
+
+    let refused = route(&mut store, "POST", "/insert", br#"{"vector":[1,0]}"#, 1_000);
+    assert_eq!(refused.status, 400, "{}", refused.body);
+    assert!(
+        refused.body.contains("expected 3, found 2"),
+        "{}",
+        refused.body
+    );
+
+    let query = route(
+        &mut store,
+        "POST",
+        "/query",
+        br#"{"vector":[1,0,0],"limit":2}"#,
+        1_000,
+    );
+    assert_eq!(query.status, 200, "{}", query.body);
+    let json: Value = serde_json::from_str(&query.body).expect("query json");
+    assert_eq!(json["vectors"], 2);
+    assert_eq!(json["results"].as_array().map(Vec::len), Some(2));
+
+    drop(store);
+    let mut reopened = fixture.open();
+    let query = route(
+        &mut reopened,
+        "POST",
+        "/query",
+        br#"{"vector":[0,1,0],"limit":1}"#,
+        1_000,
+    );
+    assert_eq!(query.status, 200, "{}", query.body);
+}

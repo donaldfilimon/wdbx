@@ -5,7 +5,7 @@
 //! optionally checks a bearer token, and always closes the connection.
 
 use crate::rate_limit::{RateLimitStats, RateLimiter};
-use crate::{HybridScorer, RecordId, TemporalCausalGraph, VersionedStore};
+use crate::{HybridScorer, RecordId, TemporalCausalGraph, V2Error, VersionedError, VersionedStore};
 use abi_foundation::env::WDBX_REST_TOKEN;
 use abi_foundation::http::{
     MAX_REQUEST_SIZE, ReadResult, find_body, has_bearer_token, read_request, reason_phrase,
@@ -96,6 +96,9 @@ fn route_insert(store: &mut VersionedStore, body: &[u8], now_ms: i64) -> RestRes
         };
         return match store.put_vector(&vector) {
             Ok(id) => RestResponse::json(200, &json!({"inserted": "vector", "id": id})),
+            Err(error @ VersionedError::V2(V2Error::InvalidMutation(_))) => {
+                RestResponse::error(400, error.to_string())
+            }
             Err(error) => RestResponse::error(500, error.to_string()),
         };
     }

@@ -172,6 +172,7 @@ impl V2Store {
 
     fn commit_refreshed(&mut self, mutations: Vec<V2Mutation>) -> Result<Uuid, V2Error> {
         validate_mutations(&mutations)?;
+        validate_vector_width(&self.snapshot, &mutations)?;
         if mutations.is_empty() {
             return Err(V2Error::InvalidMutation(
                 "transactions must contain at least one mutation".into(),
@@ -331,6 +332,40 @@ fn validate_mutations(mutations: &[V2Mutation]) -> Result<(), V2Error> {
                 ));
             }
             _ => {}
+        }
+    }
+    Ok(())
+}
+
+/// Every vector in one store shares a width: the v2 index is rebuilt from the
+/// whole snapshot on each search, so one stray width breaks every later query.
+/// The v1 WAL enforced this at apply time; v2 checks it against the refreshed
+/// frontier before any bytes are appended. Recovery and replicated imports are
+/// deliberately not checked, so a store written before this check still opens.
+fn validate_vector_width(snapshot: &V2Snapshot, mutations: &[V2Mutation]) -> Result<(), V2Error> {
+    let mut expected = if snapshot.vector_count() == 0 {
+        None
+    } else {
+        Some(snapshot.vector_dimensions().ok_or_else(|| {
+            V2Error::InvalidMutation(
+                "store already holds vectors of differing widths; repair it before inserting"
+                    .into(),
+            )
+        })?)
+    };
+    for mutation in mutations {
+        let V2Mutation::PutVector { values, .. } = mutation else {
+            continue;
+        };
+        match expected {
+            None => expected = Some(values.len()),
+            Some(width) if width == values.len() => {}
+            Some(width) => {
+                return Err(V2Error::InvalidMutation(format!(
+                    "vector dimension mismatch: expected {width}, found {}",
+                    values.len()
+                )));
+            }
         }
     }
     Ok(())

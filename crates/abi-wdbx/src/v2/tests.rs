@@ -497,3 +497,60 @@ fn fifty_independent_writers_recover_every_commit_without_a_global_lock() {
     }
     std::fs::remove_dir_all(root).unwrap();
 }
+
+#[test]
+fn v2_refuses_a_vector_whose_width_differs_from_the_store() {
+    let root = scratch();
+    let mut store = V2Store::open(&root).unwrap();
+    store
+        .commit(vec![V2Mutation::PutVector {
+            id: RecordId::new_v2(),
+            values: vec![1.0, 0.0, 0.0],
+        }])
+        .unwrap();
+    store
+        .commit(vec![V2Mutation::PutVector {
+            id: RecordId::new_v2(),
+            values: vec![0.0, 1.0, 0.0],
+        }])
+        .unwrap();
+    let refused = store.commit(vec![V2Mutation::PutVector {
+        id: RecordId::new_v2(),
+        values: vec![1.0, 0.0],
+    }]);
+    assert!(
+        matches!(&refused, Err(V2Error::InvalidMutation(reason)) if reason.contains("expected 3, found 2")),
+        "{refused:?}"
+    );
+    assert_eq!(store.snapshot().vector_count(), 2);
+    assert_eq!(store.snapshot().vector_dimensions(), Some(3));
+
+    // Nothing reached the journal: a reopened store still searches.
+    drop(store);
+    let reopened = V2Store::open(&root).unwrap();
+    let index = crate::v2::V2VectorIndex::from_snapshot(reopened.snapshot()).unwrap();
+    assert_eq!(index.search(&[1.0, 0.0, 0.0], 2).unwrap().len(), 2);
+    std::fs::remove_dir_all(root).unwrap();
+}
+
+#[test]
+fn v2_refuses_a_batch_whose_vectors_disagree_on_width() {
+    let root = scratch();
+    let mut store = V2Store::open(&root).unwrap();
+    let refused = store.commit(vec![
+        V2Mutation::PutVector {
+            id: RecordId::new_v2(),
+            values: vec![1.0, 0.0],
+        },
+        V2Mutation::PutVector {
+            id: RecordId::new_v2(),
+            values: vec![1.0, 0.0, 0.0],
+        },
+    ]);
+    assert!(
+        matches!(&refused, Err(V2Error::InvalidMutation(reason)) if reason.contains("expected 2, found 3")),
+        "{refused:?}"
+    );
+    assert_eq!(store.snapshot().vector_count(), 0);
+    std::fs::remove_dir_all(root).unwrap();
+}
