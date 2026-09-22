@@ -27,6 +27,7 @@ For the full index of active plans and design drafts, see:
 All documentation changes must pass the workspace gate:
 
 ```bash
+bash tools/check.sh   # runs the size limit, then the three steps below
 cargo fmt --all --check
 cargo clippy --workspace --all-targets
 cargo test --workspace

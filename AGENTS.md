@@ -21,15 +21,17 @@ prose. This is the Rust substrate, not the archived Workers MCP namesake.
 ## Gates
 
 `rust-toolchain.toml` pins `nightly-2026-09-01`; edition 2024, Rust floor 1.99.
-The exact CI gate (`.github/workflows/ci.yml`, hosted macOS) is:
+The gate is `tools/check.sh`, which `.github/workflows/ci.yml` (hosted macOS)
+runs verbatim:
 
 ```sh
+bash tools/check_rust_sizes.sh   # every tracked/untracked .rs <= 1000 lines
 cargo fmt --all --check
 cargo clippy --workspace --all-targets
 cargo test --workspace
 ```
 
-- There is no `check.sh` or `tools/cargo.sh` here. Select the pinned rustup
+- There is no `tools/cargo.sh` here. Select the pinned rustup
   toolchain, not a Homebrew Cargo/rustc pair; keep the toolchain bin directory
   and `/usr/bin` ahead of Homebrew Rust and Swiftly's compiler shims on macOS.
 - Unlike ABI, this clippy gate does not pass `-D warnings`: workspace lints deny

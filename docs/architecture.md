@@ -69,6 +69,7 @@ CLI/MCP output goldens (`help-wdbx.txt`, etc.) remain in `abi` because they desc
 ## Gate
 
 ```bash
+bash tools/check.sh   # runs the size limit, then the three steps below
 cargo fmt --all --check
 cargo clippy --workspace --all-targets
 cargo test --workspace

@@ -18,7 +18,7 @@ env:
 
 jobs:
   gate:
-    name: gate (fmt, clippy, test)
+    name: gate (sizes, fmt, clippy, test)
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -33,13 +33,9 @@ jobs:
           toolchain: nightly-2026-09-01
           components: rustfmt, clippy
 
-      - name: cargo fmt
-        run: cargo fmt --all --check
-
+      # tools/check.sh is the contract: Rust source size limit, cargo fmt
+      # --check, cargo clippy --workspace --all-targets, cargo test --workspace.
       # The workspace denies unsafe_code and all of clippy, and warns on
-      # missing_docs and clippy pedantic. --all-targets covers tests too.
-      - name: cargo clippy
-        run: cargo clippy --workspace --all-targets
-
-      - name: cargo test
-        run: cargo test --workspace
+      # missing_docs and clippy pedantic, so clippy runs without -D warnings.
+      - name: gate
+        run: bash tools/check.sh

@@ -112,13 +112,15 @@ unclaimed.
 ## Gate
 
 ```
+bash tools/check.sh   # runs the size limit, then the three steps below
 cargo fmt --all --check
 cargo clippy --workspace --all-targets
 cargo test --workspace
 ```
 
-Run all three commands against the current checkout before making a green-gate
-claim. Extraction-era test totals are deliberately not a current acceptance
+`tools/check.sh` runs the Rust source size limit (1000 lines per `.rs`) and
+then the three cargo commands; CI runs the same script. Run it against the
+current checkout before making a green-gate claim. Extraction-era test totals are deliberately not a current acceptance
 contract. The workspace denies `unsafe_code` and all of clippy, and warns on
 `missing_docs` and clippy pedantic.
 
