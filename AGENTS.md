@@ -51,7 +51,7 @@ before touching `node_modules`, `.wrangler`, or `.next`.
   `lib/specimen/native.ts` serializes durable edits with expected revisions;
   `native/specimen-core/src/persistence.rs` owns the WDBX store and recovery copies.
 - Native `abi-wdbx` and `abi-compute` are Git-revision dependencies in
-  `native/specimen-core/Cargo.toml` (pinned to wdbx rev `62ac490`), not sibling path
+  `native/specimen-core/Cargo.toml` (pinned to wdbx rev `3ac03f0`), not sibling path
   dependencies. Picking up WDBX changes means bumping that rev. Do not change
   ABI/Abbey/WDBX checkouts to implement this studio's runtime behavior.
 - Keep the root Cargo GLib patch and its attribution/safety rationale in
