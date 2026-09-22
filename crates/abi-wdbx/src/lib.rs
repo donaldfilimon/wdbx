@@ -57,6 +57,7 @@ pub mod segment;
 pub mod segments;
 pub mod spatial;
 pub mod store;
+pub mod store_path;
 pub mod temporal;
 pub mod tls_config;
 pub mod v2;
@@ -138,6 +139,9 @@ pub use spatial::{
     calculate_distance, cosine_distance, euclidean_distance, manhattan_distance,
 };
 pub use store::{Snapshot, SnapshotStats};
+pub use store_path::{
+    MemoryReason, StoreLocation, resolve_store_location, resolve_store_location_from_env,
+};
 pub use temporal::{
     HybridScorer, RankedNode, ScoreComponents, TemporalCausalGraph, hybrid_search, temporal_weight,
 };
