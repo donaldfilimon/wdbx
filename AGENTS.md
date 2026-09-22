@@ -17,6 +17,7 @@ prose. This is the Rust substrate, not the archived Workers MCP namesake.
 - ABI and Abbey consume `../wdbx/crates/...`. Keep all three repositories as
   siblings; mixing git and path sources creates distinct, non-unifying crates.
   WDBX's own build/CI does not require either consumer checkout.
+- Never discard unrelated dirty work; stage exact paths.
 
 ## Gates
 
@@ -25,6 +26,7 @@ The gate is `tools/check.sh`, which `.github/workflows/ci.yml` (hosted macOS)
 runs verbatim:
 
 ```sh
+bash tools/check_instructions.sh # CLAUDE.md == pointer + this file's git block
 bash tools/check_rust_sizes.sh   # every tracked/untracked .rs <= 1000 lines
 cargo fmt --all --check
 cargo clippy --workspace --all-targets
@@ -118,9 +120,12 @@ Paths beginning `src/` above are relative to `crates/abi-wdbx/`.
   See `README.md` for the implementation gaps.
 
 <!-- machine-git-policy -->
-## Git Workflow
+## Git workflow (machine policy, 2026-08-27)
 
-Use this canonical checkout's default branch. Branch/worktree isolation requires
-a concrete need or explicit request; merge back and remove it before completion.
-Full policy: `~/.claude/CLAUDE.md`. Never discard unrelated dirty work.
+Work on the default branch in this canonical checkout. Do not create
+branches or worktrees by default; they are for tasks that genuinely need
+isolation, or when Donald asks. Any worktree or topic branch created here
+must be merged back into this checkout's default branch, the worktree
+removed, and the branch deleted, before pushing and before the task is
+called done. Full policy: `~/.claude/CLAUDE.md` (*Git discipline*).
 <!-- /machine-git-policy -->

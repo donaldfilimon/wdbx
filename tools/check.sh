@@ -19,6 +19,9 @@ step() {
     printf '\n==> %s\n' "$1"
 }
 
+step "agent instructions (CLAUDE.md is the AGENTS.md pointer form)"
+bash ./tools/check_instructions.sh
+
 step "Rust source size limits"
 bash ./tools/check_rust_sizes.sh
 
