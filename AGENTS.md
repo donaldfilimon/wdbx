@@ -52,8 +52,7 @@ cargo test --workspace
   forms: `python3 tools/abbey_cbor_episode_v1.py verify-goldens` and
   `... verify-episode-goldens`. Three things must move together or the
   cross-language tests fail, which is the point: `StoredRecord::computed_digest`
-  and `canonical_event` in `src/v3/episode/store/canonical.rs` (the script's
-  comments still say `store.rs`, the pre-split location) are mirrored by
+  and `canonical_event` in `src/v3/episode/store/canonical.rs` are mirrored by
   `episode_digest` and
   `canonical_event` in the script, and the `GOLDEN_DIGEST` constants in
   `tests/v3_memory_candidate.rs` / `tests/v3_memory_edge.rs` are mirrored by

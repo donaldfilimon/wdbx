@@ -293,7 +293,7 @@ def run_case(case: dict[str, Any]) -> dict[str, Any]:
     return {"ok": True, "bytes": env.hex(), "digest": digest(env).hex()}
 
 
-# --- episode derivation (mirrors StoredRecord::computed_digest in store.rs) ----
+# --- episode derivation (mirrors StoredRecord::computed_digest in store/canonical.rs) ----
 
 # Digests the Rust golden tests pin (`GOLDEN_DIGEST` in
 # tests/v3_memory_candidate.rs and tests/v3_memory_edge.rs). Both goldens open
@@ -406,7 +406,7 @@ def _edge(edge: Any) -> Map:
 
 
 def canonical_event(event: Any) -> Map:
-    """`canonical_event` in store.rs, keyed by the serde `kind` tag."""
+    """`canonical_event` in store/canonical.rs, keyed by the serde `kind` tag."""
     kind = event["kind"]
     if kind == "proposal":
         return Map([_entry("requested_by", _actor(event["requested_by"])), _entry("proposed_by", _actor(event["proposed_by"]))])
