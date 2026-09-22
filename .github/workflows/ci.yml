@@ -28,7 +28,7 @@ jobs:
       # This workspace is self-contained: the five crates depend only on each
       # other and on crates.io, so no sibling checkout is needed here. Consumers
       # (abi, abbey) are the ones that need this repository beside them.
-      - uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772
+      - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de
         with:
           toolchain: nightly-2026-09-01
           components: rustfmt, clippy
