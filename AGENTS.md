@@ -50,7 +50,9 @@ cargo test --workspace
   forms: `python3 tools/abbey_cbor_episode_v1.py verify-goldens` and
   `... verify-episode-goldens`. Three things must move together or the
   cross-language tests fail, which is the point: `StoredRecord::computed_digest`
-  and `canonical_event` in `store.rs` are mirrored by `episode_digest` and
+  and `canonical_event` in `src/v3/episode/store/canonical.rs` (the script's
+  comments still say `store.rs`, the pre-split location) are mirrored by
+  `episode_digest` and
   `canonical_event` in the script, and the `GOLDEN_DIGEST` constants in
   `tests/v3_memory_candidate.rs` / `tests/v3_memory_edge.rs` are mirrored by
   `EPISODE_GOLDENS` in the script, so a deliberate golden regeneration updates
@@ -73,8 +75,9 @@ cargo test --workspace
 - Preserve the frozen v2 JSON commitment domain and parent ordering. The v3
   `abbey-cbor-episode-v1` encoder in `src/v3/commitment.rs` is separate, with
   sorted parent digests; it is not a general CBOR decoder or episode signer.
-- `src/v3/episode/` owns the single-writer episode ledger, canonical commitment
-  calculation, policy/consent checks, replay rejection, and content-free receipts.
+- `src/v3/episode/` owns the single-writer episode ledger (`store.rs`), canonical
+  commitment calculation (`store/canonical.rs`), policy/consent checks and replay
+  rejection (`store/validate.rs`), and content-free receipts.
   Transport JSON and adapter-provided digests are not canonical authority.
 - Episode signing lives in `src/v3/episode/signing.rs`, not in the commitment
   encoder: the store signs the 32-byte digest with Ed25519 when opened via

@@ -56,9 +56,14 @@ positive golden vectors. The next bounded slice adds a single-writer
 `EpisodeStore`: it reconstructs that canonical envelope from typed lifecycle
 events, computes the commitment inside WDBX, appends linked records, verifies
 every complete record on reopen, and returns content-free receipts. New writes
-fail closed on contract/policy/consent drift, identity conflicts, request or
+fail closed on contract-revision drift, identity conflicts, request or
 operation replay, commitment mutation, guild opt-out, `QUIET`, and per-guild
-token or storage exhaustion. This is C1 source evidence plus local deterministic
+token or storage exhaustion, each exercised by `tests/v3_episode_store.rs`.
+**Proposed (enforced in source, untested):** rejection of policy-version and
+consent-epoch drift. `validate_new_write` in
+`crates/abi-wdbx/src/v3/episode/store/validate.rs` returns `StaleBinding` for
+both, but no test drives either path yet; the only `StaleBinding` assertion
+changes `contract_revision`. This is C1 source evidence plus local deterministic
 replay test evidence; it is not a claim-registry promotion or deployed
 federation evidence.
 
