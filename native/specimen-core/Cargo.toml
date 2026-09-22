@@ -3,8 +3,8 @@ name = "specimen-core"
 version = "0.2.0"
 edition = "2024"
 [dependencies]
-abi-wdbx = { git = "https://github.com/donaldfilimon/wdbx", rev = "e55634cbb581c1de02f946a29c34db8cf5203704" }
-abi-compute = { git = "https://github.com/donaldfilimon/wdbx", rev = "e55634cbb581c1de02f946a29c34db8cf5203704" }
+abi-wdbx = { git = "https://github.com/donaldfilimon/wdbx", rev = "62ac490f962df0f73fc875c1e294393474d329ad" }
+abi-compute = { git = "https://github.com/donaldfilimon/wdbx", rev = "62ac490f962df0f73fc875c1e294393474d329ad" }
 serde.workspace = true
 serde_json.workspace = true
 thiserror.workspace = true
