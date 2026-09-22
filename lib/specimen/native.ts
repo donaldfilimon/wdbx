@@ -18,3 +18,4 @@ export function nativeOperation<T>(request:Record<string,unknown>,progress?:(eve
 export function cancelNative(jobId:string){return invoke('cancel_job',{jobId});}
 export async function exportNative(){const {save}=await import('@tauri-apps/plugin-dialog');const path=await save({defaultPath:'specimen.wdbxspecimen',filters:[{name:'WDBX specimen',extensions:['wdbxspecimen']}]});if(path)await nativeOperation({op:'export',path});return !!path;}
 export async function importNative(){const {open}=await import('@tauri-apps/plugin-dialog');const path=await open({multiple:false,filters:[{name:'WDBX specimen',extensions:['wdbxspecimen','json']}]});if(typeof path==='string')return await nativeOperation<NativeSnapshot>({op:'import',path});return null;}
+export async function pickNativeFile(){const {open}=await import('@tauri-apps/plugin-dialog');const selected=await open({multiple:false});return typeof selected==='string'?selected:undefined;}

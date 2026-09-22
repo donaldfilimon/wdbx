@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { ImagePlus, Download, Play, Square, Brain, ScanText, Check, Trash2 } from 'lucide-react';
-import { acceptSnapshot, callNative, cancelNative, isDesktop, nativeOperation, persistNative, type NativeSnapshot } from '@/lib/specimen/native';
+import { acceptSnapshot, callNative, cancelNative, isDesktop, nativeOperation, persistNative, pickNativeFile, type NativeSnapshot } from '@/lib/specimen/native';
 import type { Specimen } from '@/lib/specimen/types';
 interface Model {id:string;name:string;kind:string;size:number;source:string;license:string;revision:string;sha256:string;memoryBytes:number}
 interface Installed {model:Model;installed:boolean;loaded:boolean}
@@ -23,7 +23,7 @@ export function NativeLab({specimen,onSnapshot}:{specimen:Specimen;onSnapshot:(s
  const learn=()=>work('Learning image',async()=>{if(!analysis)return;await persistNative(specimen);snapshot(await nativeOperation<NativeSnapshot>({op:'learnVisual',asset:analysis.asset,analysis:analysis.analysis,name,ocrCorrection:ocr}));});
  const runImage=()=>work('Running image cycle',async()=>{if(!analysis)return;await persistNative(specimen);const result=await nativeOperation<{snapshot:NativeSnapshot}>({op:'runVisual',asset:analysis.asset,focus,jobId:job.current},progress);snapshot(result.snapshot);});
  const runOcr=()=>work('Running recognized text',async()=>{await persistNative(specimen);const result=await nativeOperation<{snapshot:NativeSnapshot}>({op:'run',input:ocr,jobId:job.current},progress);snapshot(result.snapshot);});
- const install=(id:string,fromFile=false)=>work('Installing model',async()=>{let path:string|undefined;if(fromFile){const {open}=await import('@tauri-apps/plugin-dialog');const selected=await open({multiple:false});if(typeof selected!=='string')return;path=selected;}await nativeOperation({op:'installModel',modelId:id,path,jobId:job.current},progress);});
+ const install=(id:string,fromFile=false)=>work('Installing model',async()=>{let path:string|undefined;if(fromFile){path=await pickNativeFile();if(!path)return;}await nativeOperation({op:'installModel',modelId:id,path,jobId:job.current},progress);});
  const generate=()=>work('Generating locally',async()=>{await persistNative(specimen);const result=await nativeOperation<{snapshot:NativeSnapshot;artifact:Artifact}>({op:'generate',modelId:kind,prompt,seed,jobId:job.current},progress);snapshot(result.snapshot);});
  const learnText=(artifact:Artifact)=>work('Learning generated text',async()=>{await persistNative(specimen);snapshot(await nativeOperation<NativeSnapshot>({op:'learnText',artifactId:artifact.id}));});
  const learnOcr=()=>work('Learning reviewed text',async()=>{if(!analysis)return;await persistNative(specimen);snapshot(await nativeOperation<NativeSnapshot>({op:'learnText',asset:analysis.asset,pattern:name,text:ocr}));});
