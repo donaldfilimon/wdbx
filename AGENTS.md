@@ -24,9 +24,11 @@ CI uses Bun 1.4.0; dependency resolutions live in `bun.lock` and `Cargo.lock`.
 - `bun run desktop:package`: package the desktop application.
 - `bun run test:native`: test `specimen-core`; `bun run check:native` runs workspace Clippy with warnings denied.
 
-There is no aggregate `check` script. Browser code verification combines `bun test`,
-`bunx tsc --noEmit`, `bun run lint:studio`, and `bun run build`. Native CI uses
-`cargo test -p specimen-core --locked`; this excludes desktop UI qualification.
+`bun run check` is the browser gate: `bunx tsc --noEmit`, `bun run lint:studio`,
+`bun test`, then `bun run build`. `bun run check:all` chains it with
+`bun run check:native` (workspace Clippy). Neither runs the native tests: native CI
+uses `cargo test -p specimen-core --locked` (`bun run test:native`), and none of these
+cover desktop UI qualification.
 
 ## Runtime boundaries
 

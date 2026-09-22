@@ -7,10 +7,10 @@ native edition. On any conflict, it wins.
 
 Three points worth carrying in before you open it:
 
-- **This project has two halves and therefore two gates.** There is no aggregate `check`
-  script. The JS side is `bun test`, `bunx tsc --noEmit`, `bun run lint:studio`,
-  `bun run build`; the Rust/Tauri side is `cargo test -p specimen-core`. Running only one
-  half and calling it green is the standing mistake here.
+- **This project has two halves and therefore two gates.** The JS side is
+  `bun run check`; the Rust/Tauri side is `cargo test -p specimen-core`
+  (`bun run check:all` adds Clippy, not the tests). Running only one half and calling it
+  green is the standing mistake here.
 - **⚠️ It has two remotes and the default one is dead.** `origin` points at
   `git.chatgpt-team.site` and is unreachable from this machine, *and* it is the tracking
   upstream — so `git branch -vv` never mentions the reachable `github` remote

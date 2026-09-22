@@ -19,7 +19,9 @@
     "desktop": "tauri dev",
     "desktop:package": "tauri build",
     "test:native": "cargo test -p specimen-core",
-    "check:native": "cargo clippy --workspace --all-targets -- -D warnings"
+    "check:native": "cargo clippy --workspace --all-targets -- -D warnings",
+    "check": "bunx tsc --noEmit && bun run lint:studio && bun test && bun run build",
+    "check:all": "bun run check && bun run check:native"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",
