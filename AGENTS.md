@@ -22,7 +22,8 @@ CI uses Bun 1.4.0; dependency resolutions live in `bun.lock` and `Cargo.lock`.
 - `bun run lint:studio`: lint studio/runtime code; `bun run lint` checks the broader project.
 - `bun run desktop`: launch Tauri; first build inference binaries with `python3 scripts/build-runtimes.py`.
 - `bun run desktop:package`: package the desktop application.
-- `bun run test:native`: test `specimen-core`; `bun run check:native` runs workspace Clippy with warnings denied.
+- `bun run test:native`: test `specimen-core` (runs without `--locked`; report the `--locked` form below); `bun run check:native` runs workspace Clippy with warnings denied.
+- Single tests: `bun test tests/engine.test.js` runs one file, `bun test -t '<name pattern>'` filters by name; `cargo test -p specimen-core --locked --test conformance -- <test_name>` runs one Rust conformance test (`native/specimen-core/tests/conformance.rs`).
 
 `bun run check` is the browser gate: `scripts/check-instructions.sh` (CLAUDE.md must
 stay a pointer to this file), `bunx tsc --noEmit`, `bun run lint:studio`,
@@ -50,7 +51,8 @@ before touching `node_modules`, `.wrangler`, or `.next`.
   `lib/specimen/native.ts` serializes durable edits with expected revisions;
   `native/specimen-core/src/persistence.rs` owns the WDBX store and recovery copies.
 - Native `abi-wdbx` and `abi-compute` are Git-revision dependencies in
-  `native/specimen-core/Cargo.toml`, not sibling path dependencies. Do not change
+  `native/specimen-core/Cargo.toml` (pinned to wdbx rev `62ac490`), not sibling path
+  dependencies. Picking up WDBX changes means bumping that rev. Do not change
   ABI/Abbey/WDBX checkouts to implement this studio's runtime behavior.
 - Keep the root Cargo GLib patch and its attribution/safety rationale in
   `native/vendor/README.md`; the vendored crate is excluded from the workspace.
@@ -80,14 +82,15 @@ Keep the test bridge out of production. Configured jobs are not passing receipts
 - `origin` points at `git.chatgpt-team.site`, the generated Codex-app host. It is
   **unusable from this machine**: push, fetch, and `ls-remote` all fail with
   `could not read Username ... Device not configured`, because only GitHub has a
-  credential helper configured. It is also the tracking upstream, so `git branch -vv`
-  reports an ahead-count against a server nothing can reach, and `@{u}` answers off the
-  stale cached ref. A `0 ahead` reading there is not evidence anything was pushed.
+  credential helper configured. It is kept only for provenance.
 - `github` points at `donaldfilimon/wdbx-specimen-studio` and **is reachable**. This is
-  the real backup: `git ls-remote github` exits 0 and `main` matches. Push here.
+  the real backup and, since 2026-09-21, `main`'s tracking upstream (`github/main`).
+  Push here.
 
-The consequence of reading only the upstream line is concluding this repository is
-unbacked-up and needs rescue bundling, which was believed for two days. Its bundle is
+`origin` used to be the upstream, so `git branch -vv` reported an ahead-count against a
+server nothing could reach, and the repository was believed unbacked-up and in need of
+rescue bundling for two days. If a branch ever tracks `origin` again, its `@{u}` answers
+off a stale cached ref and `0 ahead` proves nothing. Its bundle is
 still worth keeping for a different reason: it carries `refs/codex/turn-diffs/*` refs that
 GitHub does not have, and `git bundle list-heads` lists those first, so grep `refs/heads/`
 rather than taking the first line.
