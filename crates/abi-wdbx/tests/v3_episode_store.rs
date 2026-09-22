@@ -422,3 +422,70 @@ fn find_receipt_scans_the_whole_ledger_not_a_window() {
         u64::try_from(count).unwrap()
     );
 }
+
+/// Every file under the store directory with its exact bytes, so a rejected
+/// write can be shown to leave the ledger, lock, and any sidecar untouched.
+fn store_bytes(root: &Path) -> BTreeMap<PathBuf, Vec<u8>> {
+    let mut files = BTreeMap::new();
+    let mut pending = vec![root.to_path_buf()];
+    while let Some(dir) = pending.pop() {
+        for entry in fs::read_dir(&dir).expect("read store dir") {
+            let path = entry.expect("store dir entry").path();
+            if path.is_dir() {
+                pending.push(path);
+            } else {
+                let bytes = fs::read(&path).expect("read store file");
+                files.insert(path, bytes);
+            }
+        }
+    }
+    files
+}
+
+/// Drives one drifted write against a store holding one admitted record and
+/// asserts the write gate returns `StaleBinding` with no partial effect: the
+/// receipts, usage, on-disk bytes, and verified reopen are unchanged, and the
+/// rejected request identifier was not consumed.
+fn assert_drift_rejected_without_effect(drift: impl FnOnce(&mut EpisodeWrite)) {
+    let scratch = Scratch::new();
+    let store_policy = policy(true, 100, 100_000);
+    let mut store = EpisodeStore::open(scratch.path(), store_policy.clone()).expect("open");
+    append(&mut store, proposal("request_1", "operation_1"));
+    let receipts = store.retrieve("guild_ref", 10).expect("receipts");
+    let usage = store.guild_usage("guild_ref").expect("usage");
+    let bytes = store_bytes(scratch.path());
+
+    let mut drifted = proposal("request_2", "operation_2");
+    drift(&mut drifted);
+    assert!(matches!(
+        store.preview_commitment(&drifted),
+        Err(EpisodeStoreError::StaleBinding)
+    ));
+    assert!(matches!(
+        store.propose_write(&drifted),
+        Err(EpisodeStoreError::StaleBinding)
+    ));
+
+    assert_eq!(store.retrieve("guild_ref", 10).expect("receipts"), receipts);
+    assert_eq!(store.guild_usage("guild_ref").expect("usage"), usage);
+    assert_eq!(store_bytes(scratch.path()), bytes);
+    // The rejected write claimed neither its request nor its operation.
+    append(&mut store, proposal("request_2", "operation_2"));
+    drop(store);
+    let reopened = EpisodeStore::open(scratch.path(), store_policy).expect("verified reopen");
+    assert_eq!(
+        reopened.retrieve("guild_ref", 10).expect("receipts").len(),
+        2
+    );
+}
+
+#[test]
+fn policy_version_drift_is_rejected_as_stale_binding_without_partial_write() {
+    assert_drift_rejected_without_effect(|write| write.policy_version = "policy_v2".into());
+}
+
+#[test]
+fn consent_epoch_drift_is_rejected_as_stale_binding_without_partial_write() {
+    // The guild's current consent epoch is 7; a voice write bound to 8 is stale.
+    assert_drift_rejected_without_effect(|write| write.consent_epoch = Some(8));
+}
