@@ -22,15 +22,15 @@ prose. This is the Rust substrate, not the archived Workers MCP namesake.
 ## Gates
 
 `rust-toolchain.toml` pins `nightly-2026-09-01`; edition 2024, Rust floor 1.99.
-The gate is `tools/check.sh`, which `.github/workflows/ci.yml` (hosted macOS)
-runs verbatim:
+Run the gate as `bash tools/check.sh`; `.github/workflows/ci.yml` (hosted macOS)
+runs it verbatim. Its steps:
 
 ```sh
 bash tools/check_instructions.sh # CLAUDE.md == pointer + this file's git block
 bash tools/check_rust_sizes.sh   # every tracked/untracked .rs <= 1000 lines
 cargo fmt --all --check
 cargo clippy --workspace --all-targets
-cargo test --workspace
+cargo test --workspace < /dev/null
 ```
 
 - There is no `tools/cargo.sh` here. Select the pinned rustup
@@ -40,7 +40,12 @@ cargo test --workspace
   unsafe code and clippy `all`, but `missing_docs` and pedantic remain warnings.
 - The default gate does not exercise `abi-wdbx`'s `full-fhe` or
   `experimental-dghv-bootstrap` features. Feature work needs explicit checks;
-  do not report default green as optional FHE runtime evidence.
+  do not report default green as optional FHE runtime evidence. Check each with
+  `cargo test -p abi-wdbx --features full-fhe` and
+  `cargo test -p abi-wdbx --features experimental-dghv-bootstrap`.
+- The 1000-line limit shapes layout: grow a module by splitting it into a
+  sibling directory of submodules (as `wal/`, `v2/segment/` and
+  `v3/episode/store/` already are), not by lengthening one file.
 - Focused test: `cargo test -p abi-wdbx <filter>`; corpus target:
   `cargo test -p abi-wdbx --test abbey_contracts`.
 - `cargo test --workspace` includes `v3_cross_language_commitment` and
@@ -60,6 +65,24 @@ cargo test --workspace
   all three.
 - Docs-only changes: compare claims with source/tests and run `git diff --check`.
   There is no dedicated Markdown validator. Do not call this a full Rust gate.
+
+## Layout
+
+- Crate layering: `abi-foundation`, `abi-telemetry` and `abi-compute` depend on
+  no workspace crate; `abi-core` uses foundation and telemetry; `abi-wdbx` uses
+  only compute and foundation.
+- `abi-wdbx` holds three storage generations side by side; know which one you
+  are editing:
+  - Legacy durable store: `DurableStore` (`src/durable.rs`) over the
+    checkpoint/WAL (`wal/`), snapshots (`store/`), compaction (`segments.rs`)
+    and HNSW search (`hnsw/`).
+  - v2 causal multi-writer journals (`src/v2/`): per-writer append-only
+    journals and head files, no shared manifest or writer lock; segments
+    use `codecs/`. Owns the frozen v2 JSON commitment domain.
+  - v3 episode ledger (`src/v3/`): commitment encoder plus `EpisodeStore`,
+    touching v2 only to read the signing-key file.
+- `cluster*`, `rest/`, `spatial.rs`, `multiway/`, `fhe.rs`/`tfhe_demo.rs` and
+  the compression/entropy codecs are reference subsystems beside these paths.
 
 ## Persistence Boundaries
 
