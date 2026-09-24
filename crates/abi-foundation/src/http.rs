@@ -12,8 +12,10 @@
 //! - `bind_loopback` used a raw `getsockname` extern to recover the
 //!   kernel-assigned port; `TcpListener::local_addr` does that without FFI.
 
-use std::io::{Read, Write};
-use std::net::{Ipv4Addr, SocketAddr, SocketAddrV4, TcpListener};
+use std::io::{self, ErrorKind, Read, Write};
+use std::net::{Ipv4Addr, SocketAddr, SocketAddrV4, TcpListener, TcpStream};
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::time::{Duration, Instant};
 
 /// Largest request this module will buffer: 64 KiB.
 ///
@@ -23,6 +25,63 @@ pub const MAX_REQUEST_SIZE: usize = 64 * 1024;
 
 /// The header/body separator.
 const HEADER_TERMINATOR: &[u8] = b"\r\n\r\n";
+
+/// Read one TCP request with an absolute deadline, even if a peer trickles bytes.
+///
+/// The optional stop flag lets long-running listeners interrupt an idle read.
+/// A short socket timeout polls that flag without extending the overall deadline.
+pub struct DeadlineReader<'a> {
+    stream: &'a mut TcpStream,
+    stop: Option<&'a AtomicBool>,
+    deadline: Instant,
+}
+
+impl<'a> DeadlineReader<'a> {
+    /// Start a bounded read for a listener without a shutdown flag.
+    #[must_use]
+    pub fn new(stream: &'a mut TcpStream, duration: Duration) -> Self {
+        Self {
+            stream,
+            stop: None,
+            deadline: Instant::now() + duration,
+        }
+    }
+
+    /// Start a bounded read that also checks `stop` at most every 250 ms.
+    #[must_use]
+    pub fn with_stop(stream: &'a mut TcpStream, stop: &'a AtomicBool, duration: Duration) -> Self {
+        Self {
+            stream,
+            stop: Some(stop),
+            deadline: Instant::now() + duration,
+        }
+    }
+}
+
+impl Read for DeadlineReader<'_> {
+    fn read(&mut self, buffer: &mut [u8]) -> io::Result<usize> {
+        const POLL_INTERVAL: Duration = Duration::from_millis(250);
+        loop {
+            if self.stop.is_some_and(|stop| stop.load(Ordering::SeqCst)) {
+                return Err(ErrorKind::Interrupted.into());
+            }
+            let remaining = self.deadline.saturating_duration_since(Instant::now());
+            if remaining.is_zero() {
+                return Err(ErrorKind::TimedOut.into());
+            }
+            self.stream
+                .set_read_timeout(Some(remaining.min(POLL_INTERVAL)))?;
+            match self.stream.read(buffer) {
+                Err(error)
+                    if matches!(
+                        error.kind(),
+                        ErrorKind::Interrupted | ErrorKind::TimedOut | ErrorKind::WouldBlock
+                    ) => {}
+                result => return result,
+            }
+        }
+    }
+}
 
 /// Outcome of reading one request.
 #[derive(Debug, Clone, PartialEq, Eq)]

@@ -320,6 +320,49 @@ fn undeclared_coalesced_insert_body_cannot_mutate_the_store() {
 }
 
 #[test]
+fn slow_partial_request_times_out_then_next_request_is_served() {
+    let fixture = Fixture::new("abi_rest_slow_request");
+    let config = RestConfig {
+        bearer_token: None,
+        rate_limiter: RateLimiter::new(5, 0, 0),
+    };
+    let listener = TcpListener::bind((Ipv4Addr::LOCALHOST, 0)).expect("bind probe listener");
+    let port = listener.local_addr().expect("probe address").port();
+    let handle = thread::spawn(move || {
+        let mut store = fixture.open();
+        for _ in 0..2 {
+            let (stream, _) = listener.accept().expect("accept request");
+            handle_connection_with_deadline(
+                &mut store,
+                &config,
+                stream,
+                Duration::from_millis(100),
+            )
+            .expect("respond to request");
+        }
+        assert_eq!(config.rate_limiter.stats().allowed, 1);
+    });
+
+    let mut slow = TcpStream::connect((Ipv4Addr::LOCALHOST, port)).expect("connect slow peer");
+    slow.set_read_timeout(Some(Duration::from_secs(1)))
+        .expect("read timeout");
+    slow.write_all(b"GET /health HTTP/1.1\r\nHost: localhost\r\n")
+        .expect("write incomplete headers");
+    let mut rejected = String::new();
+    slow.read_to_string(&mut rejected)
+        .expect("deadline ends the open request");
+    assert!(
+        rejected.starts_with("HTTP/1.1 400 Bad Request"),
+        "{rejected}"
+    );
+    assert!(rejected.contains("incomplete request"), "{rejected}");
+
+    let healthy = exchange(port, &[b"GET /health HTTP/1.1\r\n\r\n"]);
+    assert!(healthy.starts_with("HTTP/1.1 200 OK"), "{healthy}");
+    handle.join().expect("server joins");
+}
+
+#[test]
 fn repeated_query_joined_teardown_and_reopen_preserve_searchability() {
     const ITERATIONS: usize = 50;
 

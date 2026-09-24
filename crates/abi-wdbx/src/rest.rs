@@ -8,14 +8,16 @@ use crate::rate_limit::{RateLimitStats, RateLimiter};
 use crate::{HybridScorer, RecordId, TemporalCausalGraph, V2Error, VersionedError, VersionedStore};
 use abi_foundation::env::WDBX_REST_TOKEN;
 use abi_foundation::http::{
-    MAX_REQUEST_SIZE, ReadResult, find_body, has_bearer_token, read_request, reason_phrase,
-    write_all, write_unauthorized,
+    DeadlineReader, MAX_REQUEST_SIZE, ReadResult, find_body, has_bearer_token, read_request,
+    reason_phrase, write_all, write_unauthorized,
 };
 use serde_json::{Value, json};
 use std::fmt::Write as _;
 use std::io;
 use std::net::{Ipv4Addr, SocketAddrV4, TcpListener, TcpStream};
-use std::time::{SystemTime, UNIX_EPOCH};
+use std::time::{Duration, SystemTime, UNIX_EPOCH};
+
+const REQUEST_DEADLINE: Duration = Duration::from_secs(5);
 
 /// JSON response returned by the pure router.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -337,9 +339,21 @@ impl RestServer {
 fn handle_connection(
     store: &mut VersionedStore,
     config: &RestConfig,
-    mut stream: TcpStream,
+    stream: TcpStream,
 ) -> io::Result<()> {
-    let raw = match read_request(&mut stream, MAX_REQUEST_SIZE) {
+    handle_connection_with_deadline(store, config, stream, REQUEST_DEADLINE)
+}
+
+fn handle_connection_with_deadline(
+    store: &mut VersionedStore,
+    config: &RestConfig,
+    mut stream: TcpStream,
+    deadline: Duration,
+) -> io::Result<()> {
+    let raw = match read_request(
+        &mut DeadlineReader::new(&mut stream, deadline),
+        MAX_REQUEST_SIZE,
+    ) {
         ReadResult::Empty => return Ok(()),
         ReadResult::Malformed => {
             return write_response(
