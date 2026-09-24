@@ -416,6 +416,47 @@ fn supersede_and_forget_edges_name_admitted_digests_only() {
 }
 
 #[test]
+fn forgetting_tombstones_cannot_be_forgotten_or_superseded_again() {
+    let scratch = Scratch::new();
+    let store_policy = policy(1024 * 1024);
+    let tombstone;
+    {
+        let mut store = EpisodeStore::open(scratch.path(), store_policy.clone()).expect("open");
+        let first = append(&mut store, memory("request_1", "memory_1", candidate(1)));
+        tombstone = append(&mut store, memory("request_2", "memory_2", forget(first)));
+        assert!(matches!(
+            rejected(
+                &mut store,
+                &memory("request_3", "memory_3", forget(tombstone))
+            ),
+            EpisodeStoreError::InvalidTransition
+        ));
+        assert!(matches!(
+            rejected(
+                &mut store,
+                &memory(
+                    "request_4",
+                    "memory_4",
+                    MemoryCandidate {
+                        supersedes: Some(tombstone),
+                        ..candidate(4)
+                    }
+                )
+            ),
+            EpisodeStoreError::InvalidTransition
+        ));
+    }
+    let mut reopened = EpisodeStore::open(scratch.path(), store_policy).expect("verified reopen");
+    assert!(matches!(
+        rejected(
+            &mut reopened,
+            &memory("request_5", "memory_5", forget(tombstone))
+        ),
+        EpisodeStoreError::InvalidTransition
+    ));
+}
+
+#[test]
 fn payload_bytes_are_charged_against_the_storage_budget() {
     let scratch = Scratch::new();
     let mut store = EpisodeStore::open(scratch.path(), policy(100_000)).expect("open");

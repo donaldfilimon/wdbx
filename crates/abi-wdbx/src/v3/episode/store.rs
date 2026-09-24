@@ -126,6 +126,8 @@ struct LedgerState {
 struct GuildMemories {
     /// Admitted candidate digests, with each candidate's `member_scoped`.
     admitted: BTreeMap<[u8; 32], bool>,
+    /// Zero-payload forgetting records are durable tombstones, not live memories.
+    tombstones: BTreeSet<[u8; 32]>,
     forgotten: BTreeSet<[u8; 32]>,
     /// Open quarantine per candidate: target digest to edge digest.
     quarantined: BTreeMap<[u8; 32], [u8; 32]>,
@@ -143,7 +145,9 @@ enum OpenEdge {
 
 impl GuildMemories {
     fn is_live(&self, digest: &[u8; 32]) -> bool {
-        self.admitted.contains_key(digest) && !self.forgotten.contains(digest)
+        self.admitted.contains_key(digest)
+            && !self.tombstones.contains(digest)
+            && !self.forgotten.contains(digest)
     }
 }
 
@@ -590,6 +594,7 @@ fn apply_record(
                 .admitted
                 .insert(record.episode_digest, candidate.member_scoped);
             if let Some(forgotten) = candidate.forgets {
+                memories.tombstones.insert(record.episode_digest);
                 memories.forgotten.insert(forgotten);
             }
         }

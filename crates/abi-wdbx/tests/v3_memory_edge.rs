@@ -263,6 +263,53 @@ fn a_quarantine_opens_closes_by_human_resolution_and_survives_reopen() {
 }
 
 #[test]
+fn a_forgetting_tombstone_is_not_a_live_edge_target() {
+    let scratch = Scratch::new();
+    let tombstone;
+    let other;
+    {
+        let mut store = EpisodeStore::open(scratch.path(), policy()).expect("open");
+        let first = append(&mut store, memory("request_1", candidate(1, true)));
+        other = append(&mut store, memory("request_2", candidate(2, true)));
+        tombstone = append(
+            &mut store,
+            memory(
+                "request_3",
+                MemoryCandidate {
+                    payload_commitment: [0; 32],
+                    payload_bytes: 0,
+                    forgets: Some(first),
+                    ..candidate(3, true)
+                },
+            ),
+        );
+        assert!(state(&store, &first).forgotten);
+        assert!(matches!(
+            rejected(
+                &mut store,
+                &edge_write("request_4", service(), quarantine(tombstone))
+            ),
+            EpisodeStoreError::InvalidTransition
+        ));
+        assert!(matches!(
+            rejected(
+                &mut store,
+                &edge_write("request_5", service(), contradiction(tombstone, other))
+            ),
+            EpisodeStoreError::InvalidTransition
+        ));
+    }
+    let mut reopened = EpisodeStore::open(scratch.path(), policy()).expect("verified reopen");
+    assert!(matches!(
+        rejected(
+            &mut reopened,
+            &edge_write("request_6", service(), quarantine(tombstone))
+        ),
+        EpisodeStoreError::InvalidTransition
+    ));
+}
+
+#[test]
 fn edge_authority_and_single_event_rules() {
     let scratch = Scratch::new();
     let mut store = EpisodeStore::open(scratch.path(), policy()).expect("open");
