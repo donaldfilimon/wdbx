@@ -402,6 +402,100 @@ fn slow_partial_request_times_out_then_next_request_is_served() {
 }
 
 #[test]
+fn slow_reader_does_not_hold_the_rest_accept_loop() {
+    let fixture = Fixture::new("abi_rest_concurrent_read");
+    let config = RestConfig {
+        bearer_token: None,
+        rate_limiter: RateLimiter::new(5, 0, 0),
+    };
+    let mut server = RestServer::bind(0, fixture.open(), config).expect("bind");
+    let port = server.local_port().expect("port");
+    let stop = Arc::new(AtomicBool::new(false));
+    let server_stop = Arc::clone(&stop);
+    let handle = thread::spawn(move || {
+        server.serve_until(&server_stop).expect("serve until stop");
+        server
+    });
+
+    let mut slow = TcpStream::connect((Ipv4Addr::LOCALHOST, port)).expect("connect slow peer");
+    slow.write_all(b"GET /health HTTP/1.1\r\nHost: localhost\r\n")
+        .expect("send incomplete request");
+    thread::sleep(Duration::from_millis(50));
+    let started = std::time::Instant::now();
+    let healthy = exchange(port, &[b"GET /health HTTP/1.1\r\nHost: localhost\r\n\r\n"]);
+    assert!(healthy.starts_with("HTTP/1.1 200 OK"), "{healthy}");
+    assert!(started.elapsed() < Duration::from_secs(3));
+
+    let inserts = [
+        thread::spawn(move || {
+            let body = br#"{"key":"first","value":"one"}"#;
+            let header = format!(
+                "POST /insert HTTP/1.1\r\nHost: localhost\r\nContent-Length: {}\r\n\r\n",
+                body.len()
+            );
+            exchange(port, &[header.as_bytes(), body])
+        }),
+        thread::spawn(move || {
+            let body = br#"{"key":"second","value":"two"}"#;
+            let header = format!(
+                "POST /insert HTTP/1.1\r\nHost: localhost\r\nContent-Length: {}\r\n\r\n",
+                body.len()
+            );
+            exchange(port, &[header.as_bytes(), body])
+        }),
+    ];
+    for insert in inserts {
+        let response = insert.join().expect("insert client joins");
+        assert!(response.starts_with("HTTP/1.1 200 OK"), "{response}");
+    }
+
+    stop.store(true, Ordering::SeqCst);
+    let stopping = std::time::Instant::now();
+    let server = handle.join().expect("server joins");
+    assert!(stopping.elapsed() < Duration::from_secs(2));
+    assert_eq!(server.store().get("first").as_deref(), Some("one"));
+    assert_eq!(server.store().get("second").as_deref(), Some("two"));
+    assert_eq!(server.config.rate_limiter.stats().allowed, 3);
+}
+
+#[test]
+fn saturated_rest_readers_get_503_without_store_routing() {
+    let fixture = Fixture::new("abi_rest_reader_overload");
+    let config = RestConfig {
+        bearer_token: None,
+        rate_limiter: RateLimiter::new(5, 0, 0),
+    };
+    let mut server = RestServer::bind(0, fixture.open(), config).expect("bind");
+    let port = server.local_port().expect("port");
+    let stop = Arc::new(AtomicBool::new(false));
+    let server_stop = Arc::clone(&stop);
+    let handle = thread::spawn(move || {
+        server.serve_until(&server_stop).expect("serve until stop");
+        server
+    });
+
+    let mut slow_peers = Vec::new();
+    for _ in 0..MAX_REQUEST_WORKERS {
+        let mut stream =
+            TcpStream::connect((Ipv4Addr::LOCALHOST, port)).expect("connect slow peer");
+        stream
+            .write_all(b"GET /health HTTP/1.1\r\nHost: localhost\r\n")
+            .expect("send incomplete request");
+        slow_peers.push(stream);
+    }
+    thread::sleep(Duration::from_millis(100));
+    let overloaded = exchange(port, &[b"GET /health HTTP/1.1\r\nHost: localhost\r\n\r\n"]);
+    assert!(
+        overloaded.starts_with("HTTP/1.1 503 Service Unavailable"),
+        "{overloaded}"
+    );
+    stop.store(true, Ordering::SeqCst);
+    let server = handle.join().expect("server joins");
+    assert_eq!(server.config.rate_limiter.stats().allowed, 0);
+    drop(slow_peers);
+}
+
+#[test]
 fn repeated_query_joined_teardown_and_reopen_preserve_searchability() {
     const ITERATIONS: usize = 50;
 
