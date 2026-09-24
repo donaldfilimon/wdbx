@@ -318,6 +318,46 @@ fn partial_tail_recovers_but_a_mutated_complete_commitment_fails_closed() {
 }
 
 #[test]
+fn failed_replay_preserves_an_incomplete_tail_until_the_prefix_is_repaired() {
+    let scratch = Scratch::new();
+    {
+        let mut store =
+            EpisodeStore::open(scratch.path(), policy(true, 100, 100_000)).expect("open");
+        append(&mut store, proposal("request_1", "operation_1"));
+    }
+    let ledger_path = scratch.path().join("episodes.v1.jsonl");
+    let valid = fs::read_to_string(&ledger_path).expect("valid ledger");
+    let corrupted = format!(
+        "{}{{\"partial\":",
+        valid.replace("requester_ref", "attacker_ref")
+    );
+    fs::write(&ledger_path, &corrupted).expect("synthetic tamper and torn tail");
+
+    assert!(matches!(
+        EpisodeStore::open(scratch.path(), policy(true, 100, 100_000)),
+        Err(EpisodeStoreError::Corrupt)
+    ));
+    assert_eq!(
+        fs::read(&ledger_path).expect("ledger after rejected open"),
+        corrupted.as_bytes(),
+        "failed replay must not truncate even an incomplete final line"
+    );
+
+    fs::write(&ledger_path, format!("{valid}{{\"partial\":"))
+        .expect("restore complete record while retaining torn tail");
+    let reopened = EpisodeStore::open(scratch.path(), policy(true, 100, 100_000))
+        .expect("verified prefix permits tail recovery");
+    assert_eq!(
+        reopened.retrieve("guild_ref", 10).expect("receipts").len(),
+        1
+    );
+    assert_eq!(
+        fs::read(&ledger_path).expect("repaired ledger"),
+        valid.as_bytes()
+    );
+}
+
+#[test]
 fn raw_content_and_voice_collection_overflow_cannot_enter_the_typed_gate() {
     let raw = serde_json::json!({
         "request_id": "request_1",

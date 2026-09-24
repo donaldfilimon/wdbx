@@ -228,16 +228,6 @@ impl EpisodeStore {
         }
         let raw = read_bounded_ledger(&ledger_path)?;
         let (records, valid_bytes) = decode_complete_records(&raw)?;
-        if valid_bytes != raw.len() {
-            let repair = OpenOptions::new()
-                .write(true)
-                .open(&ledger_path)
-                .map_err(|_| EpisodeStoreError::Io)?;
-            repair
-                .set_len(u64::try_from(valid_bytes).map_err(|_| EpisodeStoreError::Io)?)
-                .map_err(|_| EpisodeStoreError::Io)?;
-            repair.sync_data().map_err(|_| EpisodeStoreError::Io)?;
-        }
 
         let mut state = LedgerState::default();
         let mut offset = 0_usize;
@@ -249,6 +239,18 @@ impl EpisodeStore {
             }
             apply_record(record, line_bytes, &mut state)?;
             offset = offset.saturating_add(line_bytes);
+        }
+        // A failed replay must not repair the file. Only a fully verified
+        // prefix permits discarding an incomplete final line.
+        if valid_bytes != raw.len() {
+            let repair = OpenOptions::new()
+                .write(true)
+                .open(&ledger_path)
+                .map_err(|_| EpisodeStoreError::Io)?;
+            repair
+                .set_len(u64::try_from(valid_bytes).map_err(|_| EpisodeStoreError::Io)?)
+                .map_err(|_| EpisodeStoreError::Io)?;
+            repair.sync_data().map_err(|_| EpisodeStoreError::Io)?;
         }
         let ledger = owner_file(&ledger_path)?;
         Ok(Self {
