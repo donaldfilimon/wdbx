@@ -258,6 +258,45 @@ fn failed_auth_consumes_the_bucket_before_a_valid_request() {
 }
 
 #[test]
+fn hostile_host_or_origin_cannot_reach_rest_store() {
+    let fixture = Fixture::new("abi_rest_loopback_headers");
+    let config = RestConfig {
+        bearer_token: None,
+        rate_limiter: RateLimiter::new(5, 0, 0),
+    };
+    let mut server = RestServer::bind(0, fixture.open(), config).expect("bind");
+    let port = server.local_port().expect("port");
+    let handle = thread::spawn(move || {
+        for _ in 0..5 {
+            server.serve_one().expect("serve request");
+        }
+        server
+    });
+    let body = br#"{"key":"forbidden","value":"must not persist"}"#;
+    for headers in [
+        "Host: attacker.example\r\n",
+        "Host: localhost.evil.example\r\n",
+        "Host: localhost\r\nHost: attacker.example\r\n",
+        "Host: localhost\r\nOrigin: https://attacker.example\r\n",
+    ] {
+        let request = format!(
+            "POST /insert HTTP/1.1\r\n{headers}Content-Length: {}\r\n\r\n",
+            body.len()
+        );
+        let response = exchange(port, &[request.as_bytes(), body]);
+        assert!(response.starts_with("HTTP/1.1 403 Forbidden"), "{response}");
+    }
+    let valid = exchange(
+        port,
+        &[b"GET /health HTTP/1.1\r\nHost: localhost\r\nOrigin: http://localhost\r\n\r\n"],
+    );
+    assert!(valid.starts_with("HTTP/1.1 200 OK"), "{valid}");
+    let server = handle.join().expect("server joins");
+    assert_eq!(server.store().get("forbidden"), None);
+    assert_eq!(server.config.rate_limiter.stats().allowed, 1);
+}
+
+#[test]
 fn real_tcp_reassembles_body_and_embeds_rate_stats() {
     let fixture = Fixture::new("abi_rest_tcp_body");
     let config = RestConfig {

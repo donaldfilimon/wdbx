@@ -8,8 +8,9 @@ use crate::rate_limit::{RateLimitStats, RateLimiter};
 use crate::{HybridScorer, RecordId, TemporalCausalGraph, V2Error, VersionedError, VersionedStore};
 use abi_foundation::env::WDBX_REST_TOKEN;
 use abi_foundation::http::{
-    DeadlineReader, MAX_REQUEST_SIZE, ReadResult, find_body, has_bearer_token, read_request,
-    reason_phrase, write_all, write_unauthorized,
+    DeadlineReader, MAX_REQUEST_SIZE, ReadResult, find_body, has_bearer_token,
+    loopback_host_allowed, loopback_origin_allowed, read_request, reason_phrase, write_all,
+    write_unauthorized,
 };
 use serde_json::{Value, json};
 use std::fmt::Write as _;
@@ -385,6 +386,13 @@ fn handle_connection_with_deadline(
             &[],
         );
     };
+    if !loopback_host_allowed(raw_text) || !loopback_origin_allowed(raw_text) {
+        return write_response(
+            &mut stream,
+            &RestResponse::error(403, "loopback host and origin required"),
+            &[],
+        );
+    }
     let Some((method, path)) = request_target(raw_text) else {
         return Ok(());
     };

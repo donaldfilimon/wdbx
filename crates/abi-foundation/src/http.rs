@@ -157,6 +157,74 @@ fn header_lines(block: &str) -> impl Iterator<Item = (&str, &str)> {
         })
 }
 
+fn header_values<'a>(raw: &'a str, name: &'a str) -> impl Iterator<Item = &'a str> {
+    let block = raw.find("\r\n\r\n").map_or(raw, |index| &raw[..index]);
+    header_lines(block)
+        .filter_map(move |(key, value)| key.eq_ignore_ascii_case(name).then_some(value))
+}
+
+/// Whether an HTTP authority names exactly a loopback host and optional port.
+///
+/// Rejects userinfo, paths, invalid ports, and suffixes such as
+/// `localhost.example` rather than comparing string prefixes.
+#[must_use]
+pub fn is_loopback_host(authority: &str) -> bool {
+    if authority.is_empty()
+        || authority
+            .bytes()
+            .any(|byte| matches!(byte, b'/' | b'?' | b'#' | b'@' | b' ' | b'\t'))
+    {
+        return false;
+    }
+    let (host, rest) = if authority.starts_with('[') {
+        match authority.find(']') {
+            Some(end) => authority.split_at(end + 1),
+            None => return false,
+        }
+    } else {
+        authority
+            .find(':')
+            .map_or((authority, ""), |index| authority.split_at(index))
+    };
+    if !matches!(host, "127.0.0.1" | "localhost" | "[::1]") {
+        return false;
+    }
+    rest.is_empty()
+        || rest
+            .strip_prefix(':')
+            .filter(|port| !port.is_empty() && port.bytes().all(|byte| byte.is_ascii_digit()))
+            .and_then(|port| port.parse::<u16>().ok())
+            .is_some_and(|port| port != 0)
+}
+
+/// Admit a missing Host for legacy native clients, but reject a hostile,
+/// malformed, or repeated Host before routing a supplied one.
+#[must_use]
+pub fn loopback_host_allowed(raw: &str) -> bool {
+    let mut hosts = header_values(raw, "Host");
+    let Some(host) = hosts.next() else {
+        return true;
+    };
+    hosts.next().is_none() && is_loopback_host(host)
+}
+
+/// Whether an Origin names this plain-HTTP loopback surface.
+#[must_use]
+pub fn is_loopback_origin(origin: &str) -> bool {
+    origin.strip_prefix("http://").is_some_and(is_loopback_host)
+}
+
+/// Native clients may omit Origin; a supplied Origin must be a single
+/// plain-HTTP loopback authority. Repeated fields fail closed.
+#[must_use]
+pub fn loopback_origin_allowed(raw: &str) -> bool {
+    let mut origins = header_values(raw, "Origin");
+    let Some(origin) = origins.next() else {
+        return true;
+    };
+    origins.next().is_none() && is_loopback_origin(origin)
+}
+
 /// The total byte count a request should reach, or `None` if it will not fit.
 ///
 /// Guards against an overflow that a naive `header_end + declared_body_len` would
@@ -282,6 +350,7 @@ pub const fn reason_phrase(status: u16) -> &'static str {
     match status {
         400 => "Bad Request",
         401 => "Unauthorized",
+        403 => "Forbidden",
         404 => "Not Found",
         405 => "Method Not Allowed",
         429 => "Too Many Requests",
@@ -633,10 +702,50 @@ mod tests {
         assert_eq!(reason_phrase(200), "OK");
         assert_eq!(reason_phrase(400), "Bad Request");
         assert_eq!(reason_phrase(401), "Unauthorized");
+        assert_eq!(reason_phrase(403), "Forbidden");
         assert_eq!(reason_phrase(404), "Not Found");
         assert_eq!(reason_phrase(405), "Method Not Allowed");
         assert_eq!(reason_phrase(429), "Too Many Requests");
         assert_eq!(reason_phrase(500), "Internal Server Error");
+    }
+
+    #[test]
+    fn loopback_authorities_reject_aliases_bad_ports_and_duplicate_headers() {
+        for host in [
+            "localhost",
+            "localhost:8091",
+            "127.0.0.1",
+            "127.0.0.1:8091",
+            "[::1]",
+            "[::1]:8091",
+        ] {
+            assert!(is_loopback_host(host), "{host}");
+            assert!(is_loopback_origin(&format!("http://{host}")), "{host}");
+        }
+        for host in [
+            "localhost.example",
+            "localhost@evil.example",
+            "localhost:0",
+            "localhost:+1",
+            "localhost:not-a-port",
+            "localhost:65536",
+            "localhost:",
+            "localhost/path",
+            "[::1",
+            "[::1].example",
+        ] {
+            assert!(!is_loopback_host(host), "{host}");
+            assert!(!is_loopback_origin(&format!("http://{host}")), "{host}");
+        }
+        assert!(!is_loopback_origin("https://localhost"));
+        assert!(loopback_host_allowed("GET / HTTP/1.1\r\n\r\n"));
+        assert!(loopback_origin_allowed("GET / HTTP/1.1\r\n\r\n"));
+        assert!(!loopback_host_allowed(
+            "GET / HTTP/1.1\r\nHost: localhost\r\nhost: 127.0.0.1\r\n\r\n"
+        ));
+        assert!(!loopback_origin_allowed(
+            "GET / HTTP/1.1\r\nOrigin: http://localhost\r\norigin: http://127.0.0.1\r\n\r\n"
+        ));
     }
 
     #[test]
