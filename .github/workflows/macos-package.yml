@@ -16,22 +16,43 @@ permissions:
   actions: read
 jobs:
   package:
+    if: >
+      github.repository == 'donaldfilimon/wdbx-specimen-studio' &&
+      github.event_name == 'workflow_dispatch'
     strategy:
       fail-fast: false
       matrix:
         os: [macos-14, macos-15-intel]
-    runs-on: ${{ matrix.os }}
+    # The Apple silicon leg keeps its matrix value (and so its check name,
+    # WDBX_RUNNER and artifact names) but runs on the macOS arm64 self-hosted
+    # runner registered to this repository. The Intel leg stays GitHub-hosted.
+    # Signing uses an ephemeral keychain (scripts/sign-macos-ci.py).
+    # See docs/SelfHostedRunner.md.
+    runs-on: ${{ matrix.os == 'macos-14' && fromJSON('["self-hosted","macOS","ARM64","wdbx-specimen-studio"]') || matrix.os }}
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Self-hosted runner deployment target
+        if: matrix.os == 'macos-14'
+        # Without a deployment target, CMake builds llama-server for the host's
+        # SDK version; pin the macOS 14 floor the hosted leg produced so the
+        # portable installer's helper still starts on macOS 14. The step below
+        # (scripts/build-runtimes.py) needs Python 3.12 or later as python3.
+        run: |
+          python3 -c 'import sys; assert sys.version_info >= (3, 12), "the runner needs Python 3.12 or later as python3"'
+          echo "MACOSX_DEPLOYMENT_TARGET=14.0" >> "$GITHUB_ENV"
       - name: Reuse pinned inference builds
         uses: actions/cache@v4
         with:
           path: |
             work/runtimes
             src-tauri/binaries
-          key: native-runtimes-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('native/runtime-pins.json', 'scripts/build-runtimes.py') }}
-          restore-keys: native-runtimes-${{ runner.os }}-${{ runner.arch }}-
+          # CMake build trees hold absolute paths, so a self-hosted checkout
+          # must not restore a hosted runner's cache (or the reverse).
+          key: native-runtimes-${{ runner.environment == 'self-hosted' && 'self-hosted-' || '' }}${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('native/runtime-pins.json', 'scripts/build-runtimes.py') }}
+          restore-keys: native-runtimes-${{ runner.environment == 'self-hosted' && 'self-hosted-' || '' }}${{ runner.os }}-${{ runner.arch }}-
       - name: Build standalone loopback text runtime
         run: python3 scripts/build-runtimes.py --only llama
       - name: Restore qualified app and replace text helper

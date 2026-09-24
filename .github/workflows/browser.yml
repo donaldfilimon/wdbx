@@ -7,7 +7,14 @@ permissions:
   contents: read
 jobs:
   browser:
-    runs-on: ubuntu-24.04
+    if: >
+      github.repository == 'donaldfilimon/wdbx-specimen-studio' &&
+      (github.event_name == 'push' ||
+       github.event_name == 'workflow_dispatch')
+    # Trusted events only (push to main, dispatch), so every leg runs on the
+    # macOS arm64 self-hosted runner registered to this repository. The host
+    # provides Google Chrome for the chrome leg. See docs/SelfHostedRunner.md.
+    runs-on: [self-hosted, macOS, ARM64, wdbx-specimen-studio]
     timeout-minutes: 25
     strategy:
       fail-fast: false
@@ -15,6 +22,8 @@ jobs:
         browser: [chrome, firefox, webkit]
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -26,7 +35,21 @@ jobs:
       - run: bunx tsc --noEmit
       - run: bun run lint:studio
       - run: bun run build
-      - run: bunx playwright install --with-deps ${{ matrix.browser }}
+      - name: Provide Playwright browser
+        env:
+          STUDIO_BROWSER: ${{ matrix.browser }}
+        run: |
+          if [ "$STUDIO_BROWSER" = chrome ]; then
+            # On macOS, `playwright install chrome` runs `sudo rm -rf` on
+            # /Applications/Google Chrome.app and copies in a fresh one (CI=true
+            # forces the reinstall). The runner has no sudo and must not replace
+            # the host's browser, so the host provides Google Chrome instead.
+            "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --version
+          else
+            # Per-user download into ~/Library/Caches/ms-playwright. --with-deps
+            # only installs apt packages on Linux and does nothing on macOS.
+            bunx playwright install "$STUDIO_BROWSER"
+          fi
       - name: Qualify production browser runtime
         env:
           STUDIO_BROWSER: ${{ matrix.browser }}
