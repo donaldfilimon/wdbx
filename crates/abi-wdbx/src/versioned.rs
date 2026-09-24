@@ -63,6 +63,17 @@ pub struct VersionedSearchResult {
     vector: VersionedVectorView,
 }
 
+/// Identities produced by one vector-pair, metadata, and audit transaction.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct RecordedVectorPair {
+    /// Query vector identity.
+    pub query_id: RecordId,
+    /// Response vector identity.
+    pub response_id: RecordId,
+    /// Lowercase audit block hash.
+    pub block_hash: String,
+}
+
 #[derive(Debug, Clone)]
 enum VersionedVectorView {
     V1 { snapshot: Arc<Snapshot>, id: u64 },
@@ -359,6 +370,64 @@ impl VersionedStore {
         Ok(id)
     }
 
+    /// Commit a vector pair, caller-owned metadata, and its audit block together.
+    ///
+    /// `metadata_for_ids` receives the fresh vector identities and returns the
+    /// metadata key and value. All four mutations share one causal transaction;
+    /// validation failure cannot publish only a subset of the record. A storage
+    /// error after publication can leave the whole transaction committed even
+    /// when this call returns `Err`; callers must treat that outcome as unknown.
+    pub fn record_vector_pair<F>(
+        &mut self,
+        query_values: &[f32],
+        response_values: &[f32],
+        profile: &str,
+        timestamp_ms: i64,
+        metadata_for_ids: F,
+    ) -> Result<RecordedVectorPair, VersionedError>
+    where
+        F: FnOnce(RecordId, RecordId) -> (String, String),
+    {
+        let query_id = RecordId::new_v2();
+        let response_id = RecordId::new_v2();
+        let (key, metadata) = metadata_for_ids(query_id, response_id);
+        let mut block_hash = None;
+        self.inner
+            .commit_with_snapshot::<VersionedError, _>(|snapshot| {
+                let block = audit_block(
+                    snapshot,
+                    profile,
+                    query_id,
+                    response_id,
+                    &metadata,
+                    timestamp_ms,
+                )?;
+                block_hash = Some(block.hash.clone());
+                Ok(vec![
+                    V2Mutation::PutVector {
+                        id: query_id,
+                        values: query_values.to_vec(),
+                    },
+                    V2Mutation::PutVector {
+                        id: response_id,
+                        values: response_values.to_vec(),
+                    },
+                    V2Mutation::PutKv {
+                        key,
+                        value: metadata,
+                    },
+                    V2Mutation::PutAudit { block },
+                ])
+            })?;
+        Ok(RecordedVectorPair {
+            query_id,
+            response_id,
+            block_hash: block_hash.ok_or_else(|| {
+                V2Error::InvalidMutation("audit transaction did not construct a block".into())
+            })?,
+        })
+    }
+
     /// Search the current immutable v2 snapshot.
     pub fn search(
         &self,
@@ -439,30 +508,14 @@ impl VersionedStore {
         let mut committed = None;
         self.inner
             .commit_with_snapshot::<VersionedError, _>(|snapshot| {
-                let sequence = u64::try_from(snapshot.audit_count())
-                    .ok()
-                    .and_then(|value| value.checked_add(1))
-                    .ok_or(VersionedError::AuditSequenceOverflow)?;
-                let parents = snapshot.audit_heads();
-                let hash = audit_hash(
-                    &parents,
-                    timestamp_ms,
-                    sequence,
+                let block = audit_block(
+                    snapshot,
                     profile,
                     query_id,
                     response_id,
                     metadata,
-                );
-                let block = V2AuditBlock {
-                    hash,
-                    parents,
                     timestamp_ms,
-                    sequence,
-                    profile: profile.to_owned(),
-                    query_id,
-                    response_id,
-                    metadata: metadata.to_owned(),
-                };
+                )?;
                 committed = Some(block.clone());
                 Ok(vec![V2Mutation::PutAudit { block }])
             })?;
@@ -483,6 +536,40 @@ impl VersionedStore {
     ) -> Result<CompactionReport, VersionedError> {
         Ok(self.inner.compact_with_codec(policy)?)
     }
+}
+
+fn audit_block(
+    snapshot: &V2Snapshot,
+    profile: &str,
+    query_id: RecordId,
+    response_id: RecordId,
+    metadata: &str,
+    timestamp_ms: i64,
+) -> Result<V2AuditBlock, VersionedError> {
+    let sequence = u64::try_from(snapshot.audit_count())
+        .ok()
+        .and_then(|value| value.checked_add(1))
+        .ok_or(VersionedError::AuditSequenceOverflow)?;
+    let parents = snapshot.audit_heads();
+    let hash = audit_hash(
+        &parents,
+        timestamp_ms,
+        sequence,
+        profile,
+        query_id,
+        response_id,
+        metadata,
+    );
+    Ok(V2AuditBlock {
+        hash,
+        parents,
+        timestamp_ms,
+        sequence,
+        profile: profile.to_owned(),
+        query_id,
+        response_id,
+        metadata: metadata.to_owned(),
+    })
 }
 
 #[derive(Serialize)]
@@ -584,6 +671,53 @@ mod tests {
         let stale_block = stale.add_block("abi", id, id, "stale", 2).unwrap();
         assert_eq!(stale_block.parents, [peer_block.hash]);
         assert_eq!(stale.snapshot().audit_heads(), [stale_block.hash]);
+        std::fs::remove_dir_all(paths.dir).unwrap();
+    }
+
+    #[test]
+    fn vector_pair_and_audit_publish_as_one_transaction() {
+        let paths = scratch("wdbx-versioned-pair-atomic");
+        let mut store = VersionedStore::open(paths.clone()).unwrap();
+        let before = store.stats();
+        let refused =
+            store.record_vector_pair(&[1.0, 0.0], &[f32::NAN, 1.0], "abbey", 1, |_, _| {
+                ("completion:bad".into(), "invalid".into())
+            });
+        assert!(refused.is_err());
+        assert_eq!(store.stats(), before);
+        assert_eq!(store.snapshot().committed_transactions(), 0);
+        assert!(store.get("completion:bad").is_none());
+
+        let recorded = store
+            .record_vector_pair(&[1.0, 0.0], &[0.0, 1.0], "abbey", 2, |query, response| {
+                (
+                    format!("completion:{query}"),
+                    format!("response={response}"),
+                )
+            })
+            .unwrap();
+        assert_eq!(store.stats().vectors, 2);
+        assert_eq!(store.stats().kv_entries, 1);
+        assert_eq!(store.stats().blocks, 1);
+        assert_eq!(store.snapshot().committed_transactions(), 1);
+        assert_eq!(
+            store.get(&format!("completion:{}", recorded.query_id)),
+            Some(format!("response={}", recorded.response_id))
+        );
+        assert!(store.get_vector(recorded.query_id).is_some());
+        assert!(store.get_vector(recorded.response_id).is_some());
+        assert_eq!(
+            store.snapshot().audit_blocks().next().unwrap().hash,
+            recorded.block_hash
+        );
+        drop(store);
+
+        let reopened = VersionedStore::open(paths.clone()).unwrap();
+        assert_eq!(reopened.stats().vectors, 2);
+        assert_eq!(reopened.stats().kv_entries, 1);
+        assert_eq!(reopened.stats().blocks, 1);
+        assert_eq!(reopened.snapshot().committed_transactions(), 1);
+        drop(reopened);
         std::fs::remove_dir_all(paths.dir).unwrap();
     }
 

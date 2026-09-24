@@ -151,5 +151,7 @@ pub use v2::{
     SegmentCodecPolicy, V2Error, V2Mutation, V2Snapshot, V2Store, Version, VersionedSnapshot,
     open_versioned_read_only,
 };
-pub use versioned::{VersionedError, VersionedSearchResult, VersionedStats, VersionedStore};
+pub use versioned::{
+    RecordedVectorPair, VersionedError, VersionedSearchResult, VersionedStats, VersionedStore,
+};
 pub use wal::{Recovered, RecoverySource, Wal, WalError};
