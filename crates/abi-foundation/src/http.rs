@@ -31,6 +31,8 @@ pub enum ReadResult {
     Request(Vec<u8>),
     /// The peer closed without sending anything.
     Empty,
+    /// The headers are invalid or use ambiguous or unsupported body framing.
+    Malformed,
     /// Headers or body exceeded [`MAX_REQUEST_SIZE`].
     TooLarge,
     /// The connection ended before the declared body arrived.
@@ -44,13 +46,31 @@ pub enum ReadResult {
 /// Parse a `Content-Length` header out of a header block.
 ///
 /// The request line is skipped, header names are matched case-insensitively, and
-/// values are trimmed of spaces and tabs. A malformed value yields `None` rather
-/// than an error, so the caller treats it as absent.
+/// values are trimmed of spaces and tabs. Invalid, duplicate, or unsupported
+/// framing yields `None`; [`read_request`] distinguishes that from absence.
 #[must_use]
 pub fn parse_content_length(header_block: &str) -> Option<usize> {
-    header_lines(header_block)
-        .find_map(|(name, value)| name.eq_ignore_ascii_case("Content-Length").then_some(value))
-        .and_then(|value| value.parse().ok())
+    parse_request_body_length(header_block).ok().flatten()
+}
+
+/// Only one decimal Content-Length is supported; chunked bodies are not.
+fn parse_request_body_length(header_block: &str) -> Result<Option<usize>, ()> {
+    let mut declared = None;
+    for (name, value) in header_lines(header_block) {
+        if name.eq_ignore_ascii_case("Transfer-Encoding") {
+            return Err(());
+        }
+        if name.eq_ignore_ascii_case("Content-Length") {
+            if declared.is_some()
+                || value.is_empty()
+                || !value.bytes().all(|byte| byte.is_ascii_digit())
+            {
+                return Err(());
+            }
+            declared = Some(value.parse().map_err(|_| ())?);
+        }
+    }
+    Ok(declared)
 }
 
 /// Read a header's value from a raw request or response.
@@ -137,12 +157,13 @@ pub fn read_request<R: Read>(reader: &mut R, max_size: usize) -> ReadResult {
         {
             let end = index + HEADER_TERMINATOR.len();
             header_end = Some(end);
-            // A header block that is not UTF-8 cannot carry a Content-Length we
-            // would honour; treat it as absent rather than failing the read.
-            let declared = std::str::from_utf8(&buf[..end])
-                .ok()
-                .and_then(parse_content_length)
-                .unwrap_or(0);
+            let Ok(header_block) = std::str::from_utf8(&buf[..end]) else {
+                return ReadResult::Malformed;
+            };
+            let Ok(declared) = parse_request_body_length(header_block) else {
+                return ReadResult::Malformed;
+            };
+            let declared = declared.unwrap_or(0);
             match request_target_within_buffer(end, declared, buf.len()) {
                 Some(target) => want_total = Some(target),
                 None => return ReadResult::TooLarge,
@@ -390,6 +411,24 @@ mod tests {
             assert_eq!(
                 read_request(&mut raw, MAX_REQUEST_SIZE),
                 ReadResult::Request(expected.to_vec())
+            );
+        }
+    }
+
+    #[test]
+    fn ambiguous_or_unsupported_body_framing_is_malformed() {
+        for raw in [
+            &b"POST / HTTP/1.1\r\nContent-Length: 0\r\nContent-Length: 2\r\n\r\n{}"[..],
+            &b"POST / HTTP/1.1\r\nContent-Length: 2\r\ncontent-length: 2\r\n\r\n{}"[..],
+            &b"POST / HTTP/1.1\r\nContent-Length: nope\r\n\r\n{}"[..],
+            &b"POST / HTTP/1.1\r\nContent-Length: +2\r\n\r\n{}"[..],
+            &b"POST / HTTP/1.1\r\nTransfer-Encoding: chunked\r\n\r\n"[..],
+            &b"POST / HTTP/1.1\r\nContent-Length: 2\r\nTransfer-Encoding: chunked\r\n\r\n{}"[..],
+            &b"POST / HTTP/1.1\r\nX-Test: \xff\r\n\r\n"[..],
+        ] {
+            assert_eq!(
+                read_request(&mut &raw[..], MAX_REQUEST_SIZE),
+                ReadResult::Malformed
             );
         }
     }

@@ -402,6 +402,37 @@ fn real_tcp_rejects_incomplete_and_oversize_requests() {
     handle.join().expect("server thread");
 }
 
+#[test]
+fn real_tcp_rejects_ambiguous_body_framing_before_routing() {
+    let fixture = Fixture::new("abi_rest_tcp_framing");
+    let config = RestConfig {
+        bearer_token: None,
+        rate_limiter: RateLimiter::new(2, 0, 0),
+    };
+    let mut server = RestServer::bind(0, fixture.open(), config).expect("bind");
+    let port = server.local_port().expect("port");
+    let handle = thread::spawn(move || {
+        for _ in 0..2 {
+            server.serve_one().expect("serve malformed request");
+        }
+        server
+    });
+
+    for request in [
+        b"POST /insert HTTP/1.1\r\nContent-Length: 0\r\nContent-Length: 0\r\n\r\n".as_slice(),
+        b"POST /insert HTTP/1.1\r\nTransfer-Encoding: chunked\r\n\r\n".as_slice(),
+    ] {
+        let response = exchange(port, &[request]);
+        assert!(
+            response.starts_with("HTTP/1.1 400 Bad Request"),
+            "{response}"
+        );
+        assert!(response.contains("malformed request"), "{response}");
+    }
+    let server = handle.join().expect("server thread");
+    assert_eq!(server.config.rate_limiter.stats().allowed, 0);
+}
+
 fn exchange(port: u16, chunks: &[&[u8]]) -> String {
     let mut stream =
         TcpStream::connect((Ipv4Addr::LOCALHOST, port)).expect("connect to REST server");

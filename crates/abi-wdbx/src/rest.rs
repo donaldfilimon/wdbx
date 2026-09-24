@@ -341,6 +341,13 @@ fn handle_connection(
 ) -> io::Result<()> {
     let raw = match read_request(&mut stream, MAX_REQUEST_SIZE) {
         ReadResult::Empty => return Ok(()),
+        ReadResult::Malformed => {
+            return write_response(
+                &mut stream,
+                &RestResponse::error(400, "malformed request"),
+                &[],
+            );
+        }
         ReadResult::Incomplete => {
             return write_response(
                 &mut stream,
