@@ -69,7 +69,7 @@ pub enum EpisodeStoreError {
     /// The guild token budget is exhausted.
     #[error("episode_token_budget_exhausted")]
     TokenBudget,
-    /// The guild storage budget is exhausted.
+    /// The guild storage budget or whole-ledger size ceiling is exhausted.
     #[error("episode_storage_budget_exhausted")]
     StorageBudget,
 }
@@ -319,6 +319,19 @@ impl EpisodeStore {
             .saturating_add(line_bytes)
             .saturating_add(payload_bytes(&record.event))
             > guild_policy.storage_budget_bytes
+        {
+            return Err(EpisodeStoreError::StorageBudget);
+        }
+        // Replay refuses ledgers larger than this bound, even when no single
+        // guild has exhausted its own budget. Never append an unreopenable file.
+        let ledger_bytes = self
+            .ledger
+            .metadata()
+            .map_err(|_| EpisodeStoreError::Io)?
+            .len();
+        if ledger_bytes
+            .checked_add(line_bytes)
+            .is_none_or(|total| total > MAX_LEDGER_BYTES)
         {
             return Err(EpisodeStoreError::StorageBudget);
         }

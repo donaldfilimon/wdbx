@@ -238,6 +238,45 @@ fn quiet_opt_out_stale_bindings_and_budgets_fail_before_append() {
 }
 
 #[test]
+fn global_ledger_limit_rejects_an_append_before_it_becomes_unreopenable() {
+    const MAX_LEDGER_BYTES: u64 = 64 * 1024 * 1024;
+    let scratch = Scratch::new();
+    let mut store = EpisodeStore::open(scratch.path(), policy(true, 100, MAX_LEDGER_BYTES))
+        .expect("open scratch store");
+    append(&mut store, proposal("request_1", "operation_1"));
+
+    let ledger_path = scratch.path().join("episodes.v1.jsonl");
+    let original_len = fs::metadata(&ledger_path).expect("ledger metadata").len();
+    let ledger = OpenOptions::new()
+        .write(true)
+        .open(&ledger_path)
+        .expect("open scratch ledger");
+    ledger
+        .set_len(MAX_LEDGER_BYTES - 1)
+        .expect("simulate a nearly full ledger");
+
+    let next = proposal("request_2", "operation_2");
+    assert!(matches!(
+        store.propose_write(&next),
+        Err(EpisodeStoreError::StorageBudget)
+    ));
+    assert_eq!(
+        fs::metadata(&ledger_path).expect("ledger metadata").len(),
+        MAX_LEDGER_BYTES - 1,
+        "rejected append must leave the ledger untouched"
+    );
+
+    ledger
+        .set_len(original_len)
+        .expect("restore scratch ledger");
+    append(&mut store, next);
+    drop(store);
+    let reopened = EpisodeStore::open(scratch.path(), policy(true, 100, MAX_LEDGER_BYTES))
+        .expect("ledger remains reopenable");
+    assert_eq!(reopened.retrieve("guild_ref", 10).unwrap().len(), 2);
+}
+
+#[test]
 fn replay_identity_order_and_commitment_mutation_are_rejected() {
     let scratch = Scratch::new();
     let mut store = EpisodeStore::open(scratch.path(), policy(true, 100, 100_000)).expect("open");
