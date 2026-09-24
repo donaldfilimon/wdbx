@@ -121,6 +121,10 @@ fn find_subslice(haystack: &[u8], needle: &[u8]) -> Option<usize> {
 }
 
 /// Read one request from `reader`, bounded by `max_size`.
+///
+/// Bytes beyond the declared body may arrive in the same socket read. They
+/// are excluded from the returned request so callers cannot dispatch them as
+/// body data. This one-request transport does not support HTTP pipelining.
 pub fn read_request<R: Read>(reader: &mut R, max_size: usize) -> ReadResult {
     let mut buf = vec![0u8; max_size];
     let mut total = 0usize;
@@ -165,10 +169,10 @@ pub fn read_request<R: Read>(reader: &mut R, max_size: usize) -> ReadResult {
         return ReadResult::Empty;
     }
     match (header_end, want_total) {
-        (None, _) => ReadResult::Incomplete,
+        (None, _) | (Some(_), None) => ReadResult::Incomplete,
         (Some(_), Some(want)) if total < want => ReadResult::Incomplete,
-        (Some(_), _) => {
-            buf.truncate(total);
+        (Some(_), Some(want)) => {
+            buf.truncate(want);
             ReadResult::Request(buf)
         }
     }
@@ -365,6 +369,29 @@ mod tests {
         let raw = b"POST / HTTP/1.1\r\nContent-Length: 2\r\n\r\n{}";
         let result = read_request(&mut &raw[..], MAX_REQUEST_SIZE);
         assert_eq!(result, ReadResult::Request(raw.to_vec()));
+    }
+
+    #[test]
+    fn read_request_excludes_bytes_beyond_the_declared_body() {
+        for (mut raw, expected) in [
+            (
+                &b"POST / HTTP/1.1\r\nContent-Length: 2\r\n\r\n{}extra"[..],
+                &b"POST / HTTP/1.1\r\nContent-Length: 2\r\n\r\n{}"[..],
+            ),
+            (
+                &b"POST / HTTP/1.1\r\nContent-Length: 0\r\n\r\n{}"[..],
+                &b"POST / HTTP/1.1\r\nContent-Length: 0\r\n\r\n"[..],
+            ),
+            (
+                &b"POST / HTTP/1.1\r\n\r\n{}"[..],
+                &b"POST / HTTP/1.1\r\n\r\n"[..],
+            ),
+        ] {
+            assert_eq!(
+                read_request(&mut raw, MAX_REQUEST_SIZE),
+                ReadResult::Request(expected.to_vec())
+            );
+        }
     }
 
     #[test]

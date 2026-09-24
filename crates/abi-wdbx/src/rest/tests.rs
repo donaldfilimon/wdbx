@@ -297,6 +297,29 @@ fn real_tcp_reassembles_body_and_embeds_rate_stats() {
 }
 
 #[test]
+fn undeclared_coalesced_insert_body_cannot_mutate_the_store() {
+    let fixture = Fixture::new("abi_rest_undeclared_body");
+    let mut store = fixture.open();
+    for mut request in [
+        b"POST /insert HTTP/1.1\r\nContent-Length: 0\r\n\r\n{\"key\":\"undeclared\",\"value\":\"must not persist\"}".as_slice(),
+        b"POST /insert HTTP/1.1\r\n\r\n{\"key\":\"undeclared\",\"value\":\"must not persist\"}".as_slice(),
+    ] {
+        let ReadResult::Request(raw) = read_request(&mut request, MAX_REQUEST_SIZE) else {
+            panic!("queued request must decode");
+        };
+        let response = route(
+            &mut store,
+            "POST",
+            "/insert",
+            find_body(&raw).unwrap_or_default(),
+            1_000,
+        );
+        assert_eq!(response.status, 400);
+        assert_eq!(store.get("undeclared"), None);
+    }
+}
+
+#[test]
 fn repeated_query_joined_teardown_and_reopen_preserve_searchability() {
     const ITERATIONS: usize = 50;
 
