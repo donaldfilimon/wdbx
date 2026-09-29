@@ -1,6 +1,6 @@
 # WDBX Specimen Studio
 
-A working local specimen studio with the complete 26-chapter WDBX architecture specification built into its reference reader. The white and teal interface includes a selectable topology, node inspector, cycle trace, conversation, supporting memory, learning proposals, and an activity journal.
+A working local specimen studio with the complete 26-chapter WDBX architecture specification built into its reference reader. The interface is dark graphite and teal by default, with the original white and teal as a light theme, and includes a selectable topology, node inspector, cycle trace, conversation, supporting memory, learning proposals, and an activity journal.
 
 ## Use the studio
 
@@ -10,6 +10,8 @@ A working local specimen studio with the complete 26-chapter WDBX architecture s
 4. Add supporting records in **Memory** and optionally link them to a Pattern ID. Pin conversation records to retain them beyond rolling history.
 5. **Save specimen** exports browser JSON or a native `.wdbxspecimen` archive, depending on the runtime. **Load** validates before replacement. Browser data saves through IndexedDB; desktop data saves transactionally through WDBX. Native import retains recovery copies.
 6. Read or search **Specification**, and download the full Markdown document from the reader.
+
+The shell is keyboard-first. **⌘K** (Ctrl-K) opens the command palette: go to any view, open a second view beside the current one, save, load, reset, or switch theme. **⌘\\** opens or closes that side pane (it appears at 1024 px and wider, and stays in the URL as `?split=`). **⌘B** collapses the sidebar to an icon rail. The backtick key toggles the activity dock. The sun/moon button at the bottom of the sidebar switches between the dark and light themes; the choice is remembered on this device.
 
 `/prompt`, `/right`, `/wrong`, `/wrng`, `/contributorfractal`, `/saveSpecimen`, `/loadSpecimen`, `/addPattern`, and `/learn` are recognized by the studio composer. Add/load/learn commands open the corresponding visible editor or file chooser. `/learn` accepts a pending proposal ID or exact proposal text, or defaults to the first pending proposal.
 

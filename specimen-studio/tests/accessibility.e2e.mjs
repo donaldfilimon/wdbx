@@ -8,6 +8,10 @@ const launchers = { chrome: chromium, firefox, webkit };
 if (!(engine in launchers))
   throw Error(`Unsupported STUDIO_BROWSER: ${engine}`);
 const out = new URL('../work/', import.meta.url).pathname;
+// STUDIO_THEME=light|dark seeds the stored theme; unset keeps the default and
+// the CI receipt names.
+const theme = process.env.STUDIO_THEME;
+const suffix = theme ? `-${theme}` : '';
 await mkdir(out, { recursive: true });
 const browser = await launchers[engine].launch(
   engine === 'chrome'
@@ -131,6 +135,13 @@ try {
       viewport: { width, height: 1000 },
       reducedMotion: 'reduce',
     });
+    if (theme) {
+      await context.addInitScript((t) => {
+        try {
+          localStorage.setItem('wdbx-studio-theme', t);
+        } catch {}
+      }, theme);
+    }
     const page = await context.newPage();
     page.on('pageerror', (error) => evidence.errors.push(error.message));
     page.on('console', (message) => {
@@ -292,6 +303,18 @@ try {
     ).toBeVisible();
     await audit(page, width, 'specification-reader');
 
+    if (width === 1440) {
+      await page.goto(`${base}?view=studio&split=nodes`);
+      await expect(
+        page.getByRole('region', { name: 'Side pane: Node library' }),
+      ).toBeVisible();
+      await audit(page, width, 'split-studio-nodes');
+      await page.goto(base);
+      await expect(
+        page.getByText('Stored on this device', { exact: true }),
+      ).toBeVisible();
+    }
+
     await navigate(page, width, '?view=nodes');
     const addPattern = page.getByRole('button', { name: 'Add pattern' });
     await addPattern.focus();
@@ -316,7 +339,7 @@ try {
     await expect(addPattern).toBeFocused();
     evidence.widths[width].keyboardContainment = 'passed';
     await page.screenshot({
-      path: `${out}accessibility-${width}-${engine}.png`,
+      path: `${out}accessibility-${width}-${engine}${suffix}.png`,
       fullPage: true,
     });
     await context.close();
@@ -328,7 +351,7 @@ try {
   );
 } finally {
   await writeFile(
-    `${out}accessibility-checks-${engine}.json`,
+    `${out}accessibility-checks-${engine}${suffix}.json`,
     `${JSON.stringify(evidence, null, 2)}\n`,
   );
   await browser.close();

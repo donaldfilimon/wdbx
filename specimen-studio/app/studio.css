@@ -2596,7 +2596,7 @@ body {
 .nav-group-label {
   display: block;
   padding: 0 10px 8px;
-  color: var(--teal);
+  color: var(--sidebar-muted);
   font-size: 12px;
   line-height: 1;
   font-weight: 650;
@@ -2623,10 +2623,10 @@ body {
 
 .nav-link.active {
   background: var(--sidebar-active);
-  border-color: var(--teal);
+  border-color: var(--sidebar-accent);
   color: var(--sidebar-ink);
   font-weight: 600;
-  box-shadow: inset 3px 0 var(--teal);
+  box-shadow: inset 3px 0 var(--sidebar-accent);
 }
 
 .nav-link svg {
@@ -2668,7 +2668,7 @@ body {
 
 .workspace-caption small {
   margin-top: 3px;
-  color: var(--teal);
+  color: var(--sidebar-muted);
   font-size: 12px;
 }
 

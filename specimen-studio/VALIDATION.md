@@ -503,3 +503,32 @@ Findings:
 Not exercised: the browser Worker running WASM (the probe ran under Bun only),
 wasm-bindgen, IndexedDB storage, and any x86 or Linux host. Vision and model
 tooling remain native-only by design.
+
+## P2 shell redesign (2026-09-29)
+
+The studio moved from one 3,238-line component to a shell (`app/shell/`),
+one module per view (`app/panels/`), dialogs (`app/dialogs/`) and a state
+hook (`app/state/use-studio.ts`), with a dark graphite + teal default theme
+and the previous white/teal look as the light theme. All colors come from
+`app/theme.css`.
+
+Evidence on aarch64 macOS 27.2, Chrome via Playwright, Bun 1.4.0, against a
+freshly built `bun start` preview:
+
+- `bun run test:browser` (default dark theme): browser acceptance passed,
+  including the new command-palette and side-pane step; accessibility passed at
+  390, 768 and 1440 px with a new `split-studio-nodes` audit at 1440.
+- `STUDIO_THEME=light bun run test:browser`: same result in the light theme.
+- Both accessibility receipts pass `scripts/qualification-summary.py`'s
+  `validate_accessibility_widths`.
+- `bun run check` (116 Bun tests and the Worker build), `bun run test:native`
+  and `bun run check:native` exit 0.
+
+Findings during the work: the kit's `CommandDialog` rendered without a cmdk
+root (runtime crash on open) and placed its title outside the dialog; the
+palette now composes the parts itself. The light theme failed axe contrast on
+the sidebar group labels (teal on dark green, 2.54:1) until the sidebar got
+its own `--sidebar-accent` and muted tokens.
+
+Not exercised: Firefox and WebKit engines, the native desktop UI suite
+(`native.e2e.mjs`), a packaged Tauri build, and screen readers.

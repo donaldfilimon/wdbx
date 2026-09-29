@@ -28,6 +28,7 @@
   --sidebar-ink: #e6f2ee;
   --sidebar-muted: #a9c7bd;
   --sidebar-active: #0d4a40;
+  --sidebar-accent: #5cc8b3;
   --focus: #087b6c;
   --background: var(--bg);
   --foreground: var(--ink);
@@ -71,6 +72,7 @@
   --sidebar-ink: #d7e0e3;
   --sidebar-muted: #8aa0a7;
   --sidebar-active: #172024;
+  --sidebar-accent: #2ec4b6;
   --focus: #5fd6ca;
   --background: var(--bg);
   --foreground: var(--ink);

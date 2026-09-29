@@ -12,12 +12,23 @@ const browser = await launchers[engine].launch(
     ? { channel: 'chrome', headless: true }
     : { headless: true },
 );
+// STUDIO_THEME=light|dark seeds the stored theme; unset keeps the default and
+// the CI receipt names.
+const theme = process.env.STUDIO_THEME;
+const suffix = theme ? `-${theme}` : '';
 const artifact = (name, extension = 'png') =>
-  `${out}${name}-${engine}.${extension}`;
+  `${out}${name}-${engine}${suffix}.${extension}`;
 const context = await browser.newContext({
   viewport: { width: 1568, height: 1000 },
   reducedMotion: 'reduce',
 });
+if (theme) {
+  await context.addInitScript((t) => {
+    try {
+      localStorage.setItem('wdbx-studio-theme', t);
+    } catch {}
+  }, theme);
+}
 const page = await context.newPage();
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));
@@ -200,6 +211,9 @@ try {
   const palette = page.getByRole('dialog', { name: 'Command palette' });
   await expect(palette).toBeVisible();
   await page.keyboard.type('go to memory');
+  await expect(
+    palette.getByRole('option', { name: 'Go to Memory', exact: true }),
+  ).toHaveAttribute('aria-selected', 'true');
   await page.keyboard.press('Enter');
   await expect(palette).toHaveCount(0);
   await expect(
@@ -208,7 +222,10 @@ try {
   await page.keyboard.press('ControlOrMeta+k');
   await expect(palette).toBeVisible();
   await page.keyboard.type('specification beside memory');
-  await page.keyboard.press('Enter');
+  // Click rather than Enter: cmdk selects the row under a resting pointer.
+  await palette
+    .getByRole('option', { name: 'Specification beside Memory', exact: true })
+    .click();
   await expect(
     page.getByRole('region', { name: 'Side pane: Specification' }),
   ).toBeVisible();
