@@ -20,6 +20,7 @@ For the full index of active plans and design drafts, see:
 - [`contracts/README.md`](contracts/README.md) — Honest status table mirroring the README claim ledger.
 - [`architecture.md`](architecture.md) — Crate graph, storage path, and concurrency model summary.
 - [`claims.md`](claims.md) — Claim ledger pointer.
+- [`SelfHostedRunner.md`](SelfHostedRunner.md) — macOS arm64 self-hosted CI runner: labels, registration, host requirements, trust gate.
 - [`superpowers/README.md`](superpowers/README.md) — Local mirror of the ABI superpowers index header.
 
 ## Gate
