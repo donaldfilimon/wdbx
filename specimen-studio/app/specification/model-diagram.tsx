@@ -66,7 +66,7 @@ export function ModelDiagram({
                             <a
                               key={name}
                               href={`#${anchor(known.get(name)!, name)}`}
-                              className="ml-1.5 inline-flex min-h-6 items-center font-sans font-semibold text-teal"
+                              className="ml-1.5 inline-flex min-h-11 items-center font-sans font-semibold text-teal"
                               onClick={(e) => {
                                 const target = document.getElementById(
                                   anchor(known.get(name)!, name),

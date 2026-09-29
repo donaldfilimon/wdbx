@@ -1,5 +1,5 @@
 import sectionsJson from '@/lib/specification.json';
-import type { SpecChapter } from '@/lib/specimen/spec-figures';
+import type { RunOutcome, SpecChapter } from '@/lib/specimen/spec-figures';
 import type { Specimen, TraceStep } from '@/lib/specimen/types';
 import { cn } from '@/lib/utils';
 import { SpecFigureView } from '../specification/figures';
@@ -12,7 +12,7 @@ const sections = sectionsJson as SpecChapter[];
 export interface SpecLive {
   specimen: Specimen;
   trace: TraceStep[];
-  busy: boolean;
+  outcome: RunOutcome;
   desktop: boolean;
 }
 

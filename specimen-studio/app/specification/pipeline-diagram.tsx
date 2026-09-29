@@ -89,7 +89,7 @@ export function PipelineDiagram({
         <ChapterLink
           chapter={19}
           onChapter={onChapter}
-          className="font-semibold text-teal"
+          className="inline-flex min-h-11 items-center font-semibold text-teal"
         >
           (ch. 19)
         </ChapterLink>

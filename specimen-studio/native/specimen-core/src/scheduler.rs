@@ -210,7 +210,7 @@ impl RaftCursor {
         Ok(Self {
             snapshot_id: snapshot_id.into(),
             total,
-            chunk: chunk.min(4096),
+            chunk: chunk.min(specimen_kernel::search::MAX_RAFT_CHUNK),
             next_index: 0,
             found: Vec::new(),
         })

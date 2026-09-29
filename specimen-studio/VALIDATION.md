@@ -666,10 +666,11 @@ with chapter links, entity model with cross-links and live counts, lifecycle
 lit by the trace, maintenance coin flip with counts, kernel raft planner,
 save/restore flow). The reader chrome moved to Tailwind tokens.
 
-Found on the way: the B1 CSS pruner had corrupted six selectors (overlapping
-deletion spans), so the empty state, search field, subsystem tag and mobile
+Found on the way: the B1 CSS pruner (a scratch script used during B1, never
+committed to this repository) had corrupted six selectors through overlapping
+deletion spans, so the empty state, search field, subsystem tag and mobile
 toast, dialog and table rules had been dead since B1. Repaired from the
-pre-B1 source and the pruner fixed. Prose color was teal since the P2 token
+pre-B1 source; the scratch script was corrected before its B4 use. Prose color was teal since the P2 token
 refactor mapped `#435d64` to `--teal`; now `--ink-soft`. Element heading
 rules moved to `@layer base` so utilities apply.
 
@@ -709,3 +710,38 @@ store step and axe state `store-explorer` at 390, 768 and 1440 pixels.
 Not exercised: `storeInfo` through the desktop webview (the op is covered by
 the Rust tests, the view by server-rendered tests), and `persist()` prompts,
 which headless Chrome answers without a user.
+
+## B4 review fixes (2026-09-29)
+
+Fresh reviewer on 8a0a247: no Critical; six Important, all fixed.
+
+1. The raft planner ran uncached on every render and built every chunk (100k
+   chunks at chunkSize 1). `raft_plan` now returns totals plus a bounded
+   prefix (`limit`), the diagram memoizes it, and the table says when it
+   shows only the first rows.
+2. `raftPlan(20M, 1, 1)` trapped the kernel. Plans above 10,000,000
+   candidates are a `BudgetExceeded` error and dispatch converts with
+   `usize::try_from`; the facade test proves the kernel stays usable.
+3. The promised partition parity test now exists
+   (`native/specimen-core/tests/raft_partition.rs`): it observes which
+   thread scanned which indexes in the threaded scan and compares with
+   `raft_plan`; a mutation of the scheduler's split makes it fail. The chunk
+   cap is one constant, `MAX_RAFT_CHUNK`.
+4. The sync script splits on markdown-it's top-level `fence` tokens and
+   asserts that rendering the pieces equals rendering the chapter (shown to
+   fire on a reference link defined after a fence). Output is byte-identical.
+5. Lifecycle and engine trace follow the run outcome, not `busy`: context
+   reviews no longer show a running Compose, and cancelled or failed runs
+   mark the phase they stopped in.
+6. Model "Go to" links and the pipeline's chapter link are 44px targets.
+
+Deferred minors: entity links ignore modified clicks and hash deep links;
+figure ids are positional and `DIAGRAMS` duplicates the registry switch;
+`.search-field` min-width in the chapter column; panel `h2` is now 14px;
+figure line-height inherits 1.85; raft bar contrast; maintenance counts mix
+unbounded and capped sources; one region landmark per entity card;
+`qualification-summary.py` does not yet require the new audit states; the
+ATP clock is shared if two ATP panels are open.
+
+Evidence: `bun run check` (155), `check:native`, `test:native` exit 0;
+`test:browser` passes in dark and light on a fresh preview.

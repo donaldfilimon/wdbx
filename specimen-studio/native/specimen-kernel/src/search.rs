@@ -10,35 +10,74 @@ pub struct RaftChunk {
     pub rafts: Vec<(usize, usize)>,
 }
 
+/// Largest checkpoint chunk a raft scan takes; larger requests are capped.
+pub const MAX_RAFT_CHUNK: usize = 4096;
+/// Largest candidate count `raft_plan` will describe.
+pub const MAX_PLAN_CANDIDATES: usize = 10_000_000;
+
 /// Candidates per raft when `len` candidates are split across `workers`.
 pub fn raft_size(len: usize, workers: usize) -> usize {
     len.div_ceil(workers.max(1)).max(1)
 }
 
+/// A raft scan's partition: totals plus the first chunks in full.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RaftPlan {
+    /// Effective checkpoint chunk size (the request capped at `MAX_RAFT_CHUNK`).
+    pub chunk_size: usize,
+    /// Total checkpoint chunks the scan takes.
+    pub checkpoints: usize,
+    /// Most rafts any chunk is split into.
+    pub max_rafts: usize,
+    /// The first `limit` chunks with their raft ranges.
+    pub chunks: Vec<RaftChunk>,
+}
+
+fn chunk_at(start: usize, len: usize, chunk: usize, workers: usize) -> RaftChunk {
+    let end = (start + chunk).min(len);
+    let size = raft_size(end - start, workers);
+    let rafts = (start..end)
+        .step_by(size)
+        .map(|s| (s, (s + size).min(end)))
+        .collect();
+    RaftChunk { start, end, rafts }
+}
+
 /// The partition a raft scan of `len` candidates uses: checkpoint chunks of
-/// `min(chunk, 4096)`, each split into rafts of `ceil(chunk_len / workers)`.
+/// `min(chunk, MAX_RAFT_CHUNK)`, each split into rafts of
+/// `ceil(chunk_len / workers)`. Only the first `limit` chunks are built.
 /// `RaftCursor::advance` in specimen-core splits with the same `raft_size`.
-pub fn raft_plan(len: usize, chunk: usize, workers: usize) -> Result<Vec<RaftChunk>> {
+pub fn raft_plan(len: usize, chunk: usize, workers: usize, limit: usize) -> Result<RaftPlan> {
     if chunk == 0 {
         return Err(error("BudgetExceeded", "Invalid raft chunk size"));
     }
     if workers == 0 || workers > 64 {
         return Err(error("BudgetExceeded", "Invalid raft worker count"));
     }
-    let chunk = chunk.min(4096);
-    let mut plan = Vec::new();
-    let mut start = 0;
-    while start < len {
-        let end = (start + chunk).min(len);
-        let size = raft_size(end - start, workers);
-        let rafts = (start..end)
-            .step_by(size)
-            .map(|s| (s, (s + size).min(end)))
-            .collect();
-        plan.push(RaftChunk { start, end, rafts });
-        start = end;
+    if len > MAX_PLAN_CANDIDATES {
+        return Err(error(
+            "BudgetExceeded",
+            format!("A raft plan covers at most {MAX_PLAN_CANDIDATES} candidates"),
+        ));
     }
-    Ok(plan)
+    let chunk = chunk.min(MAX_RAFT_CHUNK);
+    let chunks = (0..len)
+        .step_by(chunk)
+        .take(limit)
+        .map(|start| chunk_at(start, len, chunk, workers))
+        .collect();
+    Ok(RaftPlan {
+        chunk_size: chunk,
+        checkpoints: len.div_ceil(chunk),
+        // The first chunk is the largest, so it has the most rafts.
+        max_rafts: if len == 0 {
+            0
+        } else {
+            chunk_at(0, len, chunk, workers).rafts.len()
+        },
+        chunks,
+    })
 }
 
 /// Finds every index in `0..len` whose predicate holds, in index order.
@@ -71,7 +110,7 @@ impl Search for Sequential {
         if chunk == 0 {
             return Err(error("BudgetExceeded", "Invalid raft chunk size"));
         }
-        let chunk = chunk.min(4096);
+        let chunk = chunk.min(MAX_RAFT_CHUNK);
         let mut next = 0;
         let mut found = Vec::new();
         loop {

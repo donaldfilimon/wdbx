@@ -246,33 +246,44 @@ test('imports with out-of-range records are rejected', () => {
   expect(() => validateSpecimen(s)).toThrow('ATP state is invalid.');
 });
 
-test('raftPlan returns the kernel partition of a raft scan', () => {
-  expect(raftPlan(10, 4, 3)).toEqual([
-    {
-      start: 0,
-      end: 4,
-      rafts: [
-        [0, 2],
-        [2, 4],
-      ],
-    },
-    {
-      start: 4,
-      end: 8,
-      rafts: [
-        [4, 6],
-        [6, 8],
-      ],
-    },
-    {
-      start: 8,
-      end: 10,
-      rafts: [
-        [8, 9],
-        [9, 10],
-      ],
-    },
-  ]);
-  expect(raftPlan(0, 256, 8)).toEqual([]);
-  expect(() => raftPlan(10, 0, 1)).toThrow(/chunk size/);
+test('raftPlan returns totals and a bounded prefix of the kernel partition', () => {
+  expect(raftPlan(10, 4, 3, 100)).toEqual({
+    chunkSize: 4,
+    checkpoints: 3,
+    maxRafts: 2,
+    chunks: [
+      {
+        start: 0,
+        end: 4,
+        rafts: [
+          [0, 2],
+          [2, 4],
+        ],
+      },
+      {
+        start: 4,
+        end: 8,
+        rafts: [
+          [4, 6],
+          [6, 8],
+        ],
+      },
+      {
+        start: 8,
+        end: 10,
+        rafts: [
+          [8, 9],
+          [9, 10],
+        ],
+      },
+    ],
+  });
+  const big = raftPlan(100000, 1, 1, 12);
+  expect(big.checkpoints).toBe(100000);
+  expect(big.chunks).toHaveLength(12);
+  expect(raftPlan(0, 256, 8, 12)).toMatchObject({ checkpoints: 0, chunks: [] });
+  expect(() => raftPlan(10, 0, 1, 12)).toThrow(/chunk size/);
+  // Out-of-range sizes are rejected, not trapped: the kernel stays usable.
+  expect(() => raftPlan(20_000_000, 1, 1, 12)).toThrow(/at most/);
+  expect(raftPlan(3, 256, 8, 12).checkpoints).toBe(1);
 });

@@ -178,3 +178,49 @@ export function reachedPhases(
     return { done: seen.slice(0, -1), active: seen.at(-1) };
   return { done: seen, active: undefined };
 }
+
+export type RunOutcome =
+  | 'idle'
+  | 'running'
+  | 'complete'
+  | 'cancelled'
+  | 'failed';
+
+/**
+ * The lifecycle diagram's state for the latest run. Only a running outcome
+ * has an active phase; a cancelled or failed run marks the phase it stopped
+ * in as stopped, not reached.
+ */
+export function lifecycleState(
+  trace: Pick<TraceStep, 'phase'>[],
+  outcome: RunOutcome,
+): {
+  done: string[];
+  active: string | undefined;
+  stopped: string | undefined;
+  status: string;
+} {
+  const { done, active } = reachedPhases(trace, outcome === 'running');
+  if (active)
+    return { done, active, stopped: undefined, status: `Running: ${active}` };
+  if (outcome === 'cancelled' || outcome === 'failed') {
+    const word = outcome === 'cancelled' ? 'Cancelled' : 'Failed';
+    const stopped = done.at(-1);
+    return {
+      done: done.slice(0, -1),
+      active: undefined,
+      stopped,
+      status: stopped
+        ? `${word} during ${stopped}`
+        : `The last run ${outcome === 'cancelled' ? 'was cancelled' : 'failed'} before Prepare.`,
+    };
+  }
+  return {
+    done,
+    active: undefined,
+    stopped: undefined,
+    status: done.length
+      ? `Last cycle reached ${done.at(-1)}`
+      : 'No cycle yet. Run a prompt in Studio to light the phases.',
+  };
+}

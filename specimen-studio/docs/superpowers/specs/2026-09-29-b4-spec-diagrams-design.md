@@ -5,6 +5,11 @@ live visualization). Depends on B1 (components) and B3 (live trace data).
 
 ## Goal
 
+As shipped (8a0a247 and its review fixes): eight figures are interactive
+HTML diagrams (the three ch5 model figures share one component) with
+server-rendered logic tests in `tests/spec-figures.test.js`; the original
+draft below said six SVG diagrams.
+
 The specification reader shows its 29 fenced figures as first-class figures.
 Six become interactive diagrams tied to the running specimen where that is
 honest; the rest become labelled code figures. The authoritative Markdown stays

@@ -31,7 +31,6 @@ const render = (props = {}) =>
         step('Prepare', { count: 1 }),
         step('Index Rafts', { covered: 1, total: 2 }),
       ],
-      busy: true,
       cycle,
       history: [cycle],
       nodes,
@@ -82,7 +81,7 @@ test('valence is drawn as a signed bar from the centre', () => {
 });
 
 test('charts are named images, not unnamed application tab stops', () => {
-  const out = render({ busy: false, outcome: 'complete' });
+  const out = render({ outcome: 'complete' });
   expect(out).toContain('role="img" aria-label="Vote confidence by node"');
   expect(out).toContain(
     'role="img" aria-label="Confidence and duration of recent cycles"',
@@ -91,7 +90,6 @@ test('charts are named images, not unnamed application tab stops', () => {
 
 test('a cancelled run is labelled as cancelled, not as the last cycle', () => {
   const out = render({
-    busy: false,
     outcome: 'cancelled',
     runInput: 'second prompt',
   });
@@ -100,7 +98,7 @@ test('a cancelled run is labelled as cancelled, not as the last cycle', () => {
   expect(out).not.toContain('Last cycle');
   // Votes and stats still describe the previous completed cycle, and say so.
   expect(out).toContain('previous cycle');
-  expect(render({ busy: false, outcome: 'failed' })).toContain('Failed cycle');
+  expect(render({ outcome: 'failed' })).toContain('Failed cycle');
 });
 
 test('while running, earlier votes are labelled as the previous cycle', () => {
@@ -112,7 +110,6 @@ test('while running, earlier votes are labelled as the previous cycle', () => {
 test('an idle specimen with no cycles explains itself', () => {
   const out = render({
     trace: [],
-    busy: false,
     cycle: undefined,
     history: [],
     outcome: 'idle',

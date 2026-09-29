@@ -213,9 +213,21 @@ export interface RaftChunk {
   rafts: [number, number][];
 }
 
+/** A raft scan's partition: totals plus the first `limit` chunks. */
+export interface RaftPlan {
+  chunkSize: number;
+  checkpoints: number;
+  maxRafts: number;
+  chunks: RaftChunk[];
+}
+
 /** The kernel's partition of a raft scan over `len` candidates. */
-export const raftPlan = (len: number, chunk: number, workers: number) =>
-  call<RaftChunk[]>({ op: 'raftPlan', len, chunk, workers });
+export const raftPlan = (
+  len: number,
+  chunk: number,
+  workers: number,
+  limit: number,
+) => call<RaftPlan>({ op: 'raftPlan', len, chunk, workers, limit });
 
 /** Structural checks for untrusted files, then the kernel's native rules. */
 export function validateSpecimen(value: unknown): Specimen {

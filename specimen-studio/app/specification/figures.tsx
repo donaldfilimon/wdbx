@@ -99,7 +99,7 @@ export function SpecFigureView({
           caption="The kernel's trace phases over run_cycle. Phases light up as the running or last cycle reaches them."
           source={code}
         >
-          <LifecycleDiagram trace={live.trace} busy={live.busy} />
+          <LifecycleDiagram trace={live.trace} outcome={live.outcome} />
         </SpecFigure>
       );
     case 'ch19-1':

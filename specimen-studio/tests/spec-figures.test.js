@@ -6,6 +6,7 @@ import {
   PIPELINE,
   entityLinks,
   parseEntityOutline,
+  lifecycleState,
   reachedPhases,
 } from '../lib/specimen/spec-figures';
 
@@ -111,4 +112,42 @@ test('reachedPhases reports which lifecycle phases a trace reached', () => {
   expect(reachedPhases([], false)).toEqual({ done: [], active: undefined });
   // Non-lifecycle steps (Processing, Failed) are ignored.
   expect(reachedPhases([{ phase: 'Failed' }], false).done).toEqual([]);
+});
+
+test('lifecycleState follows the run outcome, not the busy flag', () => {
+  const trace = [
+    { phase: 'Prepare' },
+    { phase: 'Retrieve' },
+    { phase: 'Index Rafts' },
+  ];
+  expect(lifecycleState(trace, 'running')).toEqual({
+    done: ['Prepare', 'Retrieve'],
+    active: 'Index Rafts',
+    stopped: undefined,
+    status: 'Running: Index Rafts',
+  });
+  // A cancelled or failed run did not complete the phase it stopped in.
+  expect(lifecycleState(trace, 'cancelled')).toEqual({
+    done: ['Prepare', 'Retrieve'],
+    active: undefined,
+    stopped: 'Index Rafts',
+    status: 'Cancelled during Index Rafts',
+  });
+  expect(lifecycleState(trace, 'failed').status).toBe(
+    'Failed during Index Rafts',
+  );
+  expect(lifecycleState([], 'failed').status).toBe(
+    'The last run failed before Prepare.',
+  );
+  const full = [
+    ...trace,
+    { phase: 'Deep scan' },
+    { phase: 'Vote' },
+    { phase: 'Compose' },
+  ];
+  expect(lifecycleState(full, 'complete').status).toBe(
+    'Last cycle reached Compose',
+  );
+  expect(lifecycleState(full, 'idle').done).toHaveLength(6);
+  expect(lifecycleState([], 'idle').status).toMatch(/^No cycle yet/);
 });

@@ -137,7 +137,6 @@ export function ViewOutlet({
       {view === 'engine' && (
         <EnginePanel
           trace={model.activeTrace}
-          busy={busy}
           cycle={model.cycle}
           history={state.history}
           nodes={state.nodes}
@@ -157,7 +156,7 @@ export function ViewOutlet({
           live={{
             specimen: state,
             trace: model.activeTrace,
-            busy,
+            outcome: model.runOutcome,
             desktop: isDesktop(),
           }}
         />

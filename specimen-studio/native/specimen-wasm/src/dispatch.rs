@@ -46,10 +46,15 @@ pub fn dispatch(h: &Host, req: &Value, progress: &dyn Fn(Value)) -> Result<Value
             let n = |k: &str| -> Result<usize> {
                 field(req, k)?
                     .as_u64()
-                    .map(|v| v as usize)
+                    .and_then(|v| usize::try_from(v).ok())
                     .ok_or_else(|| error("InvalidInput", format!("{k} must be a whole number")))
             };
-            let plan = specimen_kernel::search::raft_plan(n("len")?, n("chunk")?, n("workers")?)?;
+            let plan = specimen_kernel::search::raft_plan(
+                n("len")?,
+                n("chunk")?,
+                n("workers")?,
+                n("limit")?,
+            )?;
             Ok(serde_json::to_value(plan)?)
         }
         "addNode" => {

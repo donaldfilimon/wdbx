@@ -200,7 +200,6 @@ const OUTCOME_TITLE = {
 /** Live views of the kernel: the running trace, votes, history and ATP. */
 export function EnginePanel({
   trace,
-  busy,
   cycle,
   history,
   nodes,
@@ -210,7 +209,6 @@ export function EnginePanel({
   runInput,
 }: {
   trace: TraceStep[];
-  busy: boolean;
   cycle: Cycle | undefined;
   history: Cycle[];
   nodes: Specimen['nodes'];
@@ -220,7 +218,8 @@ export function EnginePanel({
   outcome: keyof typeof OUTCOME_TITLE;
   runInput: string;
 }) {
-  const phases = phaseTimeline(trace, busy);
+  // Review and maintenance also set `busy`; only a running cycle has a live phase.
+  const phases = phaseTimeline(trace, outcome === 'running');
   // `cycle` is the last completed cycle; a running, cancelled or failed run
   // has a trace of its own but no votes yet.
   const ownRun = outcome === 'idle' || outcome === 'complete';
