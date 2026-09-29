@@ -45,3 +45,11 @@ test('the studio panel owns the workflow and telemetry markup', async () => {
   expect(panel).toContain('aria-label="Specimen workflow"');
   expect(panel).toContain('aria-busy={busy}');
 });
+
+test('the shell exposes its landmarks', () => {
+  expect(studio).toContain('aria-label="Search or run a command"');
+  expect(studio).toContain('Side pane: ${title}');
+  expect(studio).toContain('aria-label="Activity dock"');
+  expect(studio).toContain("'Collapse sidebar'");
+  expect(studio).toContain('<DialogTitle className="sr-only">Command palette');
+});

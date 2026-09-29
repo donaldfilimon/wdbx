@@ -1,73 +1,119 @@
 'use client';
-/* oxlint-disable next/no-html-link-for-pages -- Shared browser/desktop view uses host-neutral local navigation. */
 import { useCallback, useEffect, useRef, useState } from 'react';
-import {
-  ArrowDownToLine,
-  Boxes,
-  Check,
-  FileText,
-  Menu,
-  RotateCcw,
-  Save,
-  Settings2,
-  Upload,
-  X,
-} from 'lucide-react';
-import {
-  maintenance,
-  removeNode,
-  togglePin,
-  validateSettings,
-  validateSpecimen,
-} from '@/lib/specimen/engine';
-
-import { NativeLab } from '@/components/native-lab';
-import { isDesktop, nativeReview } from '@/lib/specimen/native';
-import { ActivityView } from './panels/activity-panel';
+import { Check, X } from 'lucide-react';
 import { DialogHost } from './dialogs/dialog-host';
-import { MemoryView } from './panels/memory-panel';
-import { NodesView } from './panels/nodes-panel';
-import { SettingsView } from './panels/settings-panel';
-import { Specification } from './panels/specification-panel';
-import { StudioPanel } from './panels/studio-panel';
-import type { View } from './state/navigation';
-import { labels } from './shell/view-meta';
+import { AppSidebar } from './shell/app-sidebar';
+import { buildCommands, type ShellCommand } from './shell/commands';
+import { CommandPalette } from './shell/command-palette';
+import { ConsoleDock } from './shell/console-dock';
+import { PaneLayout } from './shell/pane-layout';
+import { matchShortcut } from './shell/shortcuts';
+import {
+  applyTheme,
+  resolveTheme,
+  storeTheme,
+  type Theme,
+} from './shell/theme';
+import { TopBar } from './shell/top-bar';
+import { ViewOutlet } from './shell/view-outlet';
+import { VIEWS, parseRoute, routeSearch, type View } from './state/navigation';
 import { useStudio } from './state/use-studio';
-import { viewGroups } from './shell/view-meta';
-import { views } from './shell/view-meta';
+
+function safeStorage(): Storage | undefined {
+  try {
+    return window.localStorage;
+  } catch {
+    return undefined;
+  }
+}
 
 export default function Studio() {
   const [view, setView] = useState<View>('studio'),
+    [split, setSplit] = useState<View | undefined>(),
     [mobileNav, setMobileNav] = useState(false),
     [mobileViewport, setMobileViewport] = useState(false),
+    [wide, setWide] = useState(false),
+    [collapsed, setCollapsed] = useState(false),
+    [dockOpen, setDockOpen] = useState(false),
+    [paletteOpen, setPaletteOpen] = useState(false),
+    [theme, setTheme] = useState<Theme>('dark'),
     [query, setQuery] = useState(''),
     [chapter, setChapter] = useState(1);
   const mobileMenuRef = useRef<HTMLButtonElement>(null),
     mobileCloseRef = useRef<HTMLButtonElement>(null),
     sidebarRef = useRef<HTMLElement>(null),
-    navWasOpen = useRef(false);
-  const nav = useCallback((v: View, section?: number) => {
-    setView(v);
-    setQuery('');
-    setMobileNav(false);
-    if (section) setChapter(section);
-    const params = new URLSearchParams();
-    params.set('view', v);
-    if (section) params.set('chapter', String(section));
-    window.history.pushState({}, '', `?${params}`);
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    navWasOpen = useRef(false),
+    route = useRef<{ view: View; split?: View; chapter?: number }>({
+      view: 'studio',
+    }),
+    lastSide = useRef<View | undefined>(undefined);
+  const go = useCallback(
+    (next: { view: View; split?: View; chapter?: number }, scroll: boolean) => {
+      const split = next.split === next.view ? undefined : next.split;
+      route.current = { ...next, split };
+      setView(next.view);
+      setSplit(split);
+      if (split) lastSide.current = split;
+      if (next.chapter) setChapter(next.chapter);
+      window.history.pushState({}, '', routeSearch(route.current));
+      if (scroll) window.scrollTo({ top: 0, behavior: 'instant' });
+    },
+    [],
+  );
+  const nav = useCallback(
+    (v: View, section?: number) => {
+      setQuery('');
+      setMobileNav(false);
+      go({ view: v, split: route.current.split, chapter: section }, true);
+    },
+    [go],
+  );
+  const openSide = useCallback(
+    (v: View) => go({ ...route.current, split: v }, false),
+    [go],
+  );
+  const closeSide = useCallback(
+    () => go({ ...route.current, split: undefined }, false),
+    [go],
+  );
+  const toggleSplit = useCallback(() => {
+    if (route.current.split) return closeSide();
+    const fallback =
+      lastSide.current && lastSide.current !== route.current.view
+        ? lastSide.current
+        : VIEWS.find((v) => v !== route.current.view && v !== 'settings');
+    if (fallback) openSide(fallback);
+  }, [closeSide, openSide]);
+  const toggleTheme = useCallback(() => {
+    setTheme((current) => {
+      const next: Theme = current === 'dark' ? 'light' : 'dark';
+      applyTheme(document.documentElement, next);
+      storeTheme(safeStorage(), next);
+      return next;
+    });
   }, []);
   useEffect(() => {
     const restore = () => {
-      const p = new URLSearchParams(location.search),
-        v = p.get('view') as View;
-      if ([...views.map((x) => x.id), 'settings'].includes(v)) setView(v);
-      const c = Number(p.get('chapter'));
-      if (c >= 1 && c <= 26) setChapter(c);
+      const r = parseRoute(location.search);
+      route.current = r;
+      setView(r.view);
+      setSplit(r.split);
+      if (r.split) lastSide.current = r.split;
+      if (r.chapter) setChapter(r.chapter);
     };
-    queueMicrotask(restore);
+    queueMicrotask(() => {
+      restore();
+      setTheme(resolveTheme(safeStorage()));
+    });
     window.addEventListener('popstate', restore);
     return () => window.removeEventListener('popstate', restore);
+  }, []);
+  useEffect(() => {
+    const query = window.matchMedia('(min-width: 1024px)');
+    const update = () => setWide(query.matches);
+    update();
+    query.addEventListener('change', update);
+    return () => query.removeEventListener('change', update);
   }, []);
   useEffect(() => {
     const query = window.matchMedia('(max-width: 760px)');
@@ -132,197 +178,114 @@ export default function Studio() {
   const model = useStudio(nav);
   const {
     state,
-    commit,
-    act,
-    announce,
-    openDialog,
-    setEditing,
-    setSelected,
-    setPrompt,
-    busy,
     notice,
     error,
     setError,
-    reviewContext,
-    save,
+    commit,
+    announce,
+    popUndo,
     load,
     fileRef,
-    current,
-    setDialogReturn,
-    setUndo,
-    popUndo,
+    openDialog,
+    save,
   } = model;
+  // Built when the palette opens (it is modal, so the view cannot change
+  // underneath it); building during render would read refs in render.
+  const [commands, setCommands] = useState<ShellCommand[]>([]);
+  const openPalette = useCallback(() => {
+    setCommands(
+      buildCommands({
+        view,
+        split,
+        go: (v) => nav(v),
+        openSide,
+        closeSide,
+        save,
+        load: () => fileRef.current?.click(),
+        reset: () => openDialog('reset'),
+        toggleTheme,
+        toggleSidebar: () =>
+          mobileViewport ? setMobileNav((o) => !o) : setCollapsed((c) => !c),
+        toggleDock: () => setDockOpen((o) => !o),
+      }),
+    );
+    setPaletteOpen(true);
+  }, [
+    view,
+    split,
+    nav,
+    openSide,
+    closeSide,
+    save,
+    fileRef,
+    openDialog,
+    toggleTheme,
+    mobileViewport,
+  ]);
+
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      const action = matchShortcut(event);
+      if (!action || action === 'close') return;
+      event.preventDefault();
+      if (action === 'palette') {
+        if (paletteOpen) setPaletteOpen(false);
+        else openPalette();
+      } else if (action === 'sidebar')
+        if (mobileViewport) setMobileNav((o) => !o);
+        else setCollapsed((c) => !c);
+      else if (action === 'dock') setDockOpen((o) => !o);
+      else if (action === 'split') toggleSplit();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [mobileViewport, toggleSplit, openPalette, paletteOpen]);
+  const outlet = (v: View) => (
+    <ViewOutlet
+      view={v}
+      model={model}
+      nav={nav}
+      query={query}
+      setQuery={setQuery}
+      chapter={chapter}
+    />
+  );
   return (
-    <div className="app-shell">
+    <div
+      className={`app-shell ${collapsed && !mobileViewport ? 'sidebar-collapsed' : ''}`}
+    >
       <a className="skip-link" href="#main">
         Skip to main content
       </a>
-      <aside
-        ref={sidebarRef}
-        id="workspace-navigation"
-        className={`sidebar ${mobileNav ? 'is-open' : ''}`}
-        aria-label="WDBX workspace"
-        aria-hidden={mobileViewport && !mobileNav ? true : undefined}
-        inert={mobileViewport && !mobileNav ? true : undefined}
-      >
-        <a
-          className="brand"
-          href="?view=studio"
-          onClick={(e) => {
-            e.preventDefault();
-            nav('studio');
-          }}
-        >
-          <Boxes size={39} strokeWidth={1.4} />
-          <span>
-            <strong translate="no">WDBX</strong>
-            <small>Specimen Studio</small>
-          </span>
-        </a>
-        <button
-          ref={mobileCloseRef}
-          className="icon-button mobile-close"
-          aria-label="Close navigation"
-          onClick={() => setMobileNav(false)}
-        >
-          <X />
-        </button>
-        <nav aria-label="Main navigation">
-          {viewGroups.map((group) => (
-            <div className="nav-group" key={group.label}>
-              <span className="nav-group-label">{group.label}</span>
-              {group.ids.map((id) => {
-                const item = views.find((candidate) => candidate.id === id)!;
-                const Icon = item.icon;
-                return (
-                  <a
-                    key={id}
-                    href={`?view=${id}`}
-                    className={`nav-link ${view === id ? 'active' : ''}`}
-                    aria-current={view === id ? 'page' : undefined}
-                    onClick={(e) => {
-                      if (!e.metaKey && !e.ctrlKey) {
-                        e.preventDefault();
-                        nav(id);
-                      }
-                    }}
-                  >
-                    <Icon size={19} />
-                    {item.label}
-                    {id === 'nodes' && (
-                      <span className="nav-count">{state.nodes.length}</span>
-                    )}
-                  </a>
-                );
-              })}
-            </div>
-          ))}
-        </nav>
-        <div className="sidebar-bottom">
-          <a
-            className={`nav-link ${view === 'settings' ? 'active' : ''}`}
-            href="?view=settings"
-            onClick={(e) => {
-              e.preventDefault();
-              nav('settings');
-            }}
-          >
-            <Settings2 size={20} />
-            Settings
-          </a>
-          <div className="workspace-caption">
-            <span className="status-dot" />
-            <div>
-              Local workspace<small>Your data stays on this device</small>
-            </div>
-          </div>
-        </div>
-      </aside>
-      {mobileNav && (
-        <button
-          aria-label="Close navigation overlay"
-          className="nav-backdrop"
-          onClick={() => setMobileNav(false)}
-        />
-      )}
+      <AppSidebar
+        view={view}
+        nav={nav}
+        nodeCount={state.nodes.length}
+        mobileNav={mobileNav}
+        setMobileNav={setMobileNav}
+        mobileViewport={mobileViewport}
+        collapsed={collapsed && !mobileViewport}
+        toggleCollapsed={() => setCollapsed((c) => !c)}
+        theme={theme}
+        toggleTheme={toggleTheme}
+        sidebarRef={sidebarRef}
+        mobileCloseRef={mobileCloseRef}
+      />
       <main
         id="main"
-        className="main-area"
+        className={`main-area ${split && wide ? 'has-split' : ''}`}
         inert={mobileViewport && mobileNav ? true : undefined}
       >
-        <header className="page-header">
-          <div className="heading-wrap">
-            <button
-              ref={mobileMenuRef}
-              className="icon-button mobile-menu"
-              aria-label="Open navigation"
-              aria-controls="workspace-navigation"
-              aria-expanded={mobileNav}
-              onClick={() => setMobileNav(true)}
-            >
-              <Menu />
-            </button>
-            <div>
-              <div className="page-title-row">
-                <h1>{labels[view][0]}</h1>
-                {view === 'studio' && (
-                  <span className="specimen-name header-specimen">
-                    <FileText size={15} aria-hidden="true" />
-                    {state.name}
-                    <i className={`status-dot ${busy ? 'busy' : ''}`} />
-                    <small>{busy ? 'Running' : 'Ready'}</small>
-                  </span>
-                )}
-              </div>
-              <p>{labels[view][1]}</p>
-            </div>
-          </div>
-          <div className="header-actions">
-            {view === 'specification' ? (
-              <a
-                className="button outline"
-                href="/WDBX-Specimen-Architecture-Specification.md"
-                download
-              >
-                <ArrowDownToLine size={17} />
-                Download Markdown
-              </a>
-            ) : (
-              <>
-                {view === 'studio' && (
-                  <button
-                    className="button utility starter-action"
-                    aria-label="Reset to starter specimen"
-                    onClick={() => openDialog('reset')}
-                  >
-                    <RotateCcw size={16} />
-                    <span>Starter</span>
-                  </button>
-                )}
-                <button
-                  className="button utility"
-                  aria-label="Load specimen"
-                  onClick={(event) => {
-                    setDialogReturn(event.currentTarget);
-                    fileRef.current?.click();
-                  }}
-                  disabled={busy}
-                >
-                  <Upload size={17} />
-                  <span>Load</span>
-                </button>
-                <button
-                  className="button outline"
-                  aria-label="Save specimen"
-                  onClick={save}
-                >
-                  <Save size={17} />
-                  <span>Save specimen</span>
-                </button>
-              </>
-            )}
-          </div>
-        </header>
+        <TopBar
+          view={view}
+          model={model}
+          mobileNav={mobileNav}
+          setMobileNav={setMobileNav}
+          mobileMenuRef={mobileMenuRef}
+          openPalette={openPalette}
+          dockOpen={dockOpen}
+          toggleDock={() => setDockOpen((o) => !o)}
+        />
         <input
           ref={fileRef}
           className="sr-only"
@@ -343,119 +306,14 @@ export default function Studio() {
             </button>
           </div>
         )}
-        {view === 'studio' && <StudioPanel m={model} nav={nav} />}
-        {view === 'lab' && <NativeLab specimen={state} onSnapshot={commit} />}
-        {view === 'nodes' && (
-          <NodesView
-            state={state}
-            query={query}
-            setQuery={setQuery}
-            onAdd={() => {
-              setEditing(undefined);
-              openDialog('node');
-            }}
-            onEdit={(ref) => {
-              setEditing(ref);
-              openDialog('node');
-            }}
-            onRemove={(ref) =>
-              act(() => {
-                const previous = state;
-                commit(removeNode(state, ref));
-                announce('Node removed. Use Undo to restore it.');
-                setUndo(previous);
-              })
-            }
-            onAttach={() => openDialog('attach')}
-            onSelect={(ref) => {
-              setSelected(ref);
-              nav('studio');
-            }}
-          />
-        )}
-        {view === 'memory' && (
-          <MemoryView
-            state={state}
-            query={query}
-            setQuery={setQuery}
-            onAdd={() => {
-              setEditing(undefined);
-              openDialog('resource');
-            }}
-            onEdit={(ref) => {
-              setEditing(ref);
-              openDialog('resource');
-            }}
-            onPin={(id) => act(() => commit(togglePin(state, id)))}
-            onRemove={(ref) =>
-              act(() => {
-                setUndo(state);
-                const s = structuredClone(state);
-                s.resources = s.resources.filter((r) => r.ref !== ref);
-                commit(s);
-                announce('Memory removed. Use Undo to restore it.');
-              })
-            }
-          />
-        )}
-        {view === 'activity' && (
-          <ActivityView
-            state={state}
-            busy={busy}
-            onReview={() => void reviewContext()}
-            onMaintenance={(mode) =>
-              act(() => {
-                if (isDesktop()) {
-                  void nativeReview(current.current, 'maintenance', mode)
-                    .then(commit)
-                    .then(() => announce('Maintenance completed.'))
-                    .catch((e) => setError(e.message));
-                } else {
-                  commit(maintenance(state, mode));
-                  announce('Maintenance completed.');
-                }
-              })
-            }
-            onLearn={(pattern) => {
-              setPrompt(pattern);
-              setEditing(undefined);
-              openDialog('node');
-            }}
-          />
-        )}
-        {view === 'specification' && (
-          <Specification
-            chapter={chapter}
-            query={query}
-            setQuery={setQuery}
-            onChapter={(n) => nav('specification', n)}
-          />
-        )}
-        {view === 'settings' && (
-          <SettingsView
-            key={state.name + JSON.stringify(state.settings)}
-            state={state}
-            onSave={(settings, name) =>
-              act(() => {
-                validateSettings(settings);
-                if (
-                  state.nodes.some(
-                    (n) =>
-                      n.entries.length > settings.entryLimit ||
-                      n.strength > settings.maxStrength,
-                  )
-                )
-                  throw new Error(
-                    'Existing nodes exceed those limits. Adjust them before reducing the limits.',
-                  );
-                const next = { ...state, settings, name: name.trim() };
-                validateSpecimen(next);
-                commit(next);
-                announce('Settings saved.');
-              })
-            }
-          />
-        )}
+        <PaneLayout
+          primary={outlet(view)}
+          side={split ? outlet(split) : null}
+          sideView={split}
+          wide={wide}
+          onCloseSide={closeSide}
+        />
+        {dockOpen && <ConsoleDock events={state.events} />}
       </main>
       <div aria-live="polite" className={`toast ${notice ? 'visible' : ''}`}>
         <Check size={17} />
@@ -474,6 +332,11 @@ export default function Studio() {
           </button>
         )}
       </div>
+      <CommandPalette
+        open={paletteOpen}
+        onOpenChange={setPaletteOpen}
+        commands={commands}
+      />
       <DialogHost m={model} />
     </div>
   );

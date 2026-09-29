@@ -13,6 +13,9 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-destructive: var(--danger);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -3956,4 +3959,192 @@ body {
 .segment-feedback button:disabled {
   opacity: 0.45;
   cursor: not-allowed;
+}
+
+/* Shell: collapsible sidebar, palette trigger, side pane, activity dock */
+.app-shell.sidebar-collapsed {
+  --sidebar: 72px;
+}
+.sidebar .nav-label {
+  min-width: 0;
+}
+.sidebar.is-collapsed {
+  padding-inline: 10px;
+}
+.sidebar.is-collapsed .nav-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.sidebar.is-collapsed .nav-link,
+.sidebar.is-collapsed .brand {
+  justify-content: center;
+  padding-inline: 0;
+}
+.sidebar.is-collapsed .nav-count {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  min-width: 18px;
+  height: 18px;
+  font-size: 11px;
+}
+.sidebar.is-collapsed .nav-link {
+  position: relative;
+}
+.sidebar-tools {
+  display: flex;
+  gap: 6px;
+  margin: 6px 0 10px;
+}
+.sidebar.is-collapsed .sidebar-tools {
+  flex-direction: column;
+  align-items: center;
+}
+.sidebar-tool {
+  width: 44px;
+  height: 44px;
+  color: var(--sidebar-ink);
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--sidebar-ink) 18%, transparent);
+  border-radius: 8px;
+}
+.sidebar-tool:hover {
+  background: var(--sidebar-active);
+}
+.palette-trigger kbd {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 11px;
+  padding: 1px 6px;
+  border: 1px solid var(--line-strong);
+  border-radius: 5px;
+  color: var(--muted);
+}
+.button.icon-only {
+  min-width: 44px;
+  justify-content: center;
+  padding-inline: 0;
+}
+.pane-group {
+  min-height: 0;
+  align-items: stretch;
+}
+.pane {
+  min-width: 0;
+  height: 100%;
+}
+.pane-primary {
+  padding-right: 14px;
+}
+.pane-side {
+  padding-left: 14px;
+  overflow: auto;
+}
+.pane-side-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+.pane-side-head h2 {
+  margin: 0;
+  font-size: 16px;
+  color: var(--ink);
+}
+.pane-side-head .icon-button {
+  width: 44px;
+  height: 44px;
+}
+.pane-handle {
+  background: var(--line);
+}
+.console-dock {
+  position: sticky;
+  bottom: 0;
+  margin-top: 18px;
+  max-height: 34vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+.console-dock-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+}
+.console-dock-head h2 {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink);
+}
+.console-dock-head small {
+  color: var(--muted);
+}
+.console-dock-log {
+  margin: 0;
+  padding: 6px 14px 12px;
+  overflow: auto;
+  list-style: none;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12px;
+}
+.console-dock-log li {
+  display: grid;
+  grid-template-columns: 64px minmax(120px, 0.35fr) 1fr;
+  gap: 10px;
+  padding: 5px 0;
+  border-bottom: 1px dashed var(--line);
+  color: var(--ink-soft);
+}
+.console-dock-log time {
+  color: var(--muted);
+}
+.console-dock-log strong {
+  color: var(--teal-strong);
+  font-weight: 600;
+}
+.command-palette {
+  background: var(--popover);
+  color: var(--popover-foreground);
+}
+@media (max-width: 760px) {
+  .palette-trigger span,
+  .palette-trigger kbd {
+    display: none;
+  }
+  .palette-trigger {
+    min-width: 44px;
+    justify-content: center;
+  }
+  .console-dock-log li {
+    grid-template-columns: 56px 1fr;
+  }
+  .console-dock-log li span {
+    grid-column: 1 / -1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .command-palette,
+  .console-dock {
+    animation: none;
+    transition: none;
+  }
+}
+/* Tables keep their column widths inside the narrower side pane and scroll. */
+.pane-side .table-scroll {
+  overflow-x: auto;
+}
+.pane-side .table-scroll table {
+  min-width: 620px;
 }

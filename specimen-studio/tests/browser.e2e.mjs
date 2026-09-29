@@ -195,6 +195,30 @@ try {
   await expect(page.locator('.answer-text')).toHaveText('4');
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({ path: artifact('studio-desktop-final') });
+  // Command palette: keyboard open, filter, run; then a side pane opens.
+  await page.keyboard.press('ControlOrMeta+k');
+  const palette = page.getByRole('dialog', { name: 'Command palette' });
+  await expect(palette).toBeVisible();
+  await page.keyboard.type('go to memory');
+  await page.keyboard.press('Enter');
+  await expect(palette).toHaveCount(0);
+  await expect(
+    page.getByRole('heading', { level: 1, name: 'Memory', exact: true }),
+  ).toBeVisible();
+  await page.keyboard.press('ControlOrMeta+k');
+  await expect(palette).toBeVisible();
+  await page.keyboard.type('specification beside memory');
+  await page.keyboard.press('Enter');
+  await expect(
+    page.getByRole('region', { name: 'Side pane: Specification' }),
+  ).toBeVisible();
+  await page.getByRole('button', { name: 'Close side pane' }).click();
+  await expect(
+    page.getByRole('region', { name: 'Side pane: Specification' }),
+  ).toHaveCount(0);
+  await page
+    .locator('nav[aria-label="Main navigation"] a[href="?view=studio"]')
+    .click();
   const desktopLayout = await page.evaluate(() => {
     const prompt = document.querySelector('.composer')?.getBoundingClientRect();
     return {
@@ -332,6 +356,7 @@ try {
           'desktop console fit',
           'mobile overflow',
           'mobile drawer lifecycle',
+          'command palette and side pane',
         ],
         webmcpSupported: webmcp,
         errors,
