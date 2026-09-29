@@ -648,3 +648,40 @@ Evidence (aarch64 macOS 27.2, Bun 1.4.0, Chrome via Playwright):
   state at 390, 768 and 1440 pixels.
 
 Not exercised: the view inside the desktop webview, Firefox and WebKit.
+
+## B3 review fixes and B4 specification diagrams (2026-09-29)
+
+B3 review (fresh reviewer, no Critical): fixed the six Important findings with
+tests that failed first (`tests/engine-panel.test.js`): a cancelled or failed
+run is labelled as such and earlier votes say "previous cycle"; ATP meters
+show the stored state (what modulates the next cycle) with the decayed value
+beside it; the clock lives in the ATP panel, pauses while hidden and is
+`null` on the server; charts are named images with the recharts
+accessibility layer off (their data tables carry the values); each "Show
+data" names its table; valence is a signed bar from the centre.
+
+B4 (spec `docs/superpowers/specs/2026-09-29-b4-spec-diagrams-design.md`): the
+reader renders 29 figure segments; eight are interactive diagrams (pipeline
+with chapter links, entity model with cross-links and live counts, lifecycle
+lit by the trace, maintenance coin flip with counts, kernel raft planner,
+save/restore flow). The reader chrome moved to Tailwind tokens.
+
+Found on the way: the B1 CSS pruner had corrupted six selectors (overlapping
+deletion spans), so the empty state, search field, subsystem tag and mobile
+toast, dialog and table rules had been dead since B1. Repaired from the
+pre-B1 source and the pruner fixed. Prose color was teal since the P2 token
+refactor mapped `#435d64` to `--teal`; now `--ink-soft`. Element heading
+rules moved to `@layer base` so utilities apply.
+
+Evidence (aarch64 macOS 27.2, Bun 1.4.0, Chrome via Playwright):
+
+- `bun run check` exit 0 (147 Bun tests), `check:native` and `test:native`
+  exit 0 (5 new `raft_plan` tests; specimen-core's raft/sequential parity
+  test still passes after sharing `raft_size`).
+- `bun run test:browser` passes in dark and light on a freshly rebuilt
+  preview, including the new specification-diagram step and axe states
+  `spec-model` and `spec-diagrams` at 390, 768 and 1440 pixels (confirmed in
+  `work/accessibility-checks-chrome.json`).
+
+Not exercised: desktop webview, Firefox and WebKit; meter/progress paint
+outside Chromium.

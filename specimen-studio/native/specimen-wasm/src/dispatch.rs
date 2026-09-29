@@ -42,6 +42,16 @@ pub fn dispatch(h: &Host, req: &Value, progress: &dyn Fn(Value)) -> Result<Value
             mutate::validate_settings(field(req, "settings")?).map(|()| Value::Null)
         }
         "migrateIds" => Ok(mutate::migrate_ids(h, state()?)),
+        "raftPlan" => {
+            let n = |k: &str| -> Result<usize> {
+                field(req, k)?
+                    .as_u64()
+                    .map(|v| v as usize)
+                    .ok_or_else(|| error("InvalidInput", format!("{k} must be a whole number")))
+            };
+            let plan = specimen_kernel::search::raft_plan(n("len")?, n("chunk")?, n("workers")?)?;
+            Ok(serde_json::to_value(plan)?)
+        }
         "addNode" => {
             let input: NodeInput = serde_json::from_value(field(req, "input")?.clone())?;
             mutate::add_node(h, state()?, &input, optional(req, "ref"))

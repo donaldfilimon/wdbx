@@ -53,4 +53,4 @@ After `desktop:package` on macOS, run `python3 scripts/seal-macos-package.py` to
 
 The GLib 0.18 dependency includes the documented upstream `VariantStrIter` safety backport in `native/vendor/README.md`. Linux conformance tests exercise the optimized iterator. React/React DOM/server components are pinned to 19.2.8 and Vite to 8.0.16 for their published security fixes.
 
-After editing the authoritative Markdown, run `python3 scripts/sync-specification.py` (requires `markdown-it-py`) to regenerate all chapter text, HTML and reading times together.
+After editing the authoritative Markdown, run `python3 scripts/sync-specification.py` (requires `markdown-it-py`) to regenerate all chapter text, prose and figure segments, and reading times together. It fails unless the Markdown still has 29 fenced figures.

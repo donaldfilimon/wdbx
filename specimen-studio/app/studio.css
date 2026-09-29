@@ -117,29 +117,33 @@ select {
   max-width: 100%;
   padding-right: 26px;
 }
-h1,
-h2,
-h3,
-p {
-  margin: 0;
-}
-h1,
-h2,
-h3 {
-  text-wrap: balance;
-}
-h1 {
-  font-size: 36px;
-  line-height: 1.15;
-  letter-spacing: -1.25px;
-  font-weight: 620;
-}
-h2 {
-  font-size: 15px;
-  font-weight: 600;
-}
-h3 {
-  font-weight: 600;
+/* Element defaults sit in the base layer so component utilities override them;
+   unlayered legacy class rules still win over both. */
+@layer base {
+  h1,
+  h2,
+  h3,
+  p {
+    margin: 0;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  h1 {
+    font-size: 36px;
+    line-height: 1.15;
+    letter-spacing: -1.25px;
+    font-weight: 620;
+  }
+  h2 {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  h3 {
+    font-weight: 600;
+  }
 }
 code {
   font-family: var(--font-geist-mono), monospace;
@@ -934,7 +938,7 @@ svg {
   font-size: 13px;
   max-width: 300px;
 }
-earch-field {
+.search-field {
   display: flex;
   align-items: center;
   gap: 9px;
@@ -1058,7 +1062,7 @@ earch-field {
   font-size: 13px;
   margin: 21px 4px;
 }
-bsystem-tag {
+.subsystem-tag {
   display: inline-block;
   color: var(--ink-soft);
   background: var(--surface-2);
@@ -1099,7 +1103,7 @@ bsystem-tag {
   font-size: 12px;
   color: var(--muted);
 }
-{
+.empty-state {
   text-align: center;
   padding: 65px 20px;
   display: flex;
@@ -1116,87 +1120,12 @@ bsystem-tag {
   color: var(--muted);
   max-width: 450px;
 }
-.reference-layout {
-  display: grid;
-  grid-template-columns: 245px minmax(0, 1fr);
-  gap: 40px;
-  border-top: 1px solid var(--line);
-  padding-top: 25px;
-}
-.chapter-nav {
-  border-right: 1px solid var(--line);
-  padding-right: 20px;
-  align-self: start;
-  position: sticky;
-  top: 22px;
-  max-height: calc(100vh - 44px);
-  overflow: auto;
-}
-.chapter-nav .search-field {
-  min-width: 0;
-  width: 100%;
-  padding: 0 8px;
-}
-.chapter-nav .search-field input {
-  font-size: 12px;
-}
-.chapter-count {
-  display: block;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  font-size: 12px;
-  color: var(--ink-soft);
-  margin: 22px 8px 14px;
-}
-.chapter-nav nav a {
-  display: flex;
-  align-items: baseline;
-  gap: 13px;
-  font-size: 12px;
-  padding: 11px 9px;
-  margin: 3px 0;
-  line-height: 1.45;
-  border-radius: 6px;
-  color: var(--ink-soft);
-}
-.chapter-nav nav a span {
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 12px;
-  color: var(--ink-soft);
-}
-.chapter-nav nav a:hover {
-  background: var(--surface-2);
-}
-.chapter-nav nav a.active {
-  background: var(--info-soft);
-  color: var(--teal-strong);
-  font-weight: 580;
-}
-.reference-article {
-  max-width: 900px;
-  min-width: 0;
-  padding: 5px 10px 50px;
-}
-.reference-meta {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  color: var(--ink-soft);
-  letter-spacing: 0.5px;
-}
-.reference-article > h2 {
-  font-size: 30px;
-  line-height: 1.2;
-  letter-spacing: -0.65px;
-  margin: 20px 0 28px;
-  font-weight: 600;
-}
 .reference-content {
   font-size: 15px;
   line-height: 1.85;
-  color: var(--teal);
+  color: var(--ink-soft);
 }
-.reference-content h3 {
+.reference-content .prose-segment h3 {
   color: var(--ink);
   font-size: 21px;
   line-height: 1.35;
@@ -1204,42 +1133,30 @@ bsystem-tag {
   margin: 33px 0 16px;
   scroll-margin-top: 25px;
 }
-.reference-content h4 {
+.reference-content .prose-segment h4 {
   font-size: 17px;
   margin: 24px 0 13px;
 }
-.reference-content p {
+.reference-content .prose-segment p {
   margin: 14px 0;
 }
-.reference-content ul,
-.reference-content ol {
+.reference-content .prose-segment ul,
+.reference-content .prose-segment ol {
   padding-left: 22px;
   margin: 17px 0;
   list-style: revert;
 }
-.reference-content li {
+.reference-content .prose-segment li {
   padding-left: 4px;
   margin: 8px 0;
 }
-.reference-content pre {
-  background: var(--surface);
-  border: 1px solid var(--line-strong);
-  padding: 20px;
-  border-radius: 7px;
-  overflow: auto;
-  line-height: 1.8;
-  margin: 22px 0;
-}
-.reference-content pre code {
-  font-size: 12px;
-}
-.reference-content :not(pre) > code {
+.reference-content .prose-segment :not(pre) > code {
   background: var(--surface-2);
   color: var(--teal);
   padding: 2px 4px;
   border-radius: 3px;
 }
-.reference-content table {
+.reference-content .prose-segment table {
   display: block;
   overflow: auto;
   border-collapse: collapse;
@@ -1248,45 +1165,29 @@ bsystem-tag {
   width: 100%;
   margin: 23px 0;
 }
-.reference-content th,
-.reference-content td {
+.reference-content .prose-segment th,
+.reference-content .prose-segment td {
   padding: 13px 16px;
   border: 1px solid var(--line-strong);
   text-align: left;
   min-width: 130px;
 }
-.reference-content th {
+.reference-content .prose-segment th {
   background: var(--surface);
   color: var(--teal);
   font-weight: 550;
 }
-.reference-content blockquote {
+.reference-content .prose-segment blockquote {
   border-left: 3px solid var(--teal);
   padding: 4px 20px;
   color: var(--teal);
   background: var(--surface);
   margin: 23px 0;
 }
-.reference-content a {
+.reference-content .prose-segment a {
   color: var(--teal-strong);
   text-decoration: underline;
   text-underline-offset: 3px;
-}
-.chapter-pagination {
-  display: flex;
-  justify-content: space-between;
-  gap: 30px;
-  border-top: 1px solid var(--line);
-  padding-top: 24px;
-  margin-top: 35px;
-  font-size: 13px;
-  color: var(--teal);
-}
-.chapter-pagination a {
-  max-width: 48%;
-}
-.chapter-pagination a:last-child {
-  text-align: right;
 }
 dialog {
   width: min(540px, calc(100vw - 32px)) !important;
@@ -1542,10 +1443,6 @@ dialog {
   .answer-footer {
     flex-wrap: wrap;
   }
-  .reference-layout {
-    grid-template-columns: 210px minmax(0, 1fr);
-    gap: 26px;
-  }
 }
 @media (max-width: 1000px) {
   :root {
@@ -1625,27 +1522,8 @@ dialog {
   .topology {
     height: 350px;
   }
-  .reference-layout {
-    grid-template-columns: 175px minmax(0, 1fr);
-    gap: 20px;
-  }
-  .chapter-nav {
-    padding-right: 12px;
-  }
-  .chapter-nav nav a {
-    font-size: 12px;
-  }
-  .reference-article {
-    padding-right: 0;
-  }
-  .reference-article > h2 {
-    font-size: 26px;
-  }
   .reference-content {
     font-size: 14px;
-  }
-  .reference-content pre {
-    padding: 14px;
   }
   .header-actions .button {
     padding: 9px 12px;
@@ -1921,7 +1799,7 @@ dialog {
     font-size: 12px;
     padding: 16px 3px;
   }
-  able-panel th,
+  .table-panel th,
   .table-panel td {
     padding: 12px;
   }
@@ -1932,62 +1810,22 @@ dialog {
   .workspace-footnote {
     font-size: 12px;
   }
-  .reference-layout {
-    display: block;
-    padding-top: 18px;
-  }
-  .chapter-nav {
-    position: static;
-    max-height: none;
-    border: 0;
-    padding: 0;
-  }
-  .chapter-nav nav {
-    display: flex;
-    overflow: auto;
-    gap: 7px;
-    margin: 10px 0 23px;
-    max-height: 140px;
-  }
-  .chapter-nav nav a {
-    flex-shrink: 0;
-    max-width: 185px;
-    font-size: 12px;
-    border: 1px solid var(--line);
-    min-height: 43px;
-  }
-  .chapter-count {
-    margin-top: 14px;
-  }
-  .reference-article {
-    padding: 0 2px 20px;
-  }
-  .reference-article > h2 {
-    font-size: 28px;
-    margin: 17px 0 25px;
-  }
   .reference-content {
     font-size: 15px;
   }
-  .reference-content h3 {
+  .reference-content .prose-segment h3 {
     font-size: 21px;
   }
-  .reference-content pre code {
+  .reference-content .prose-segment table {
     font-size: 12px;
   }
-  .reference-content table {
-    font-size: 12px;
-  }
-  .chapter-pagination {
-    font-size: 12px;
-  }
-  oast {
+  .toast {
     left: 50%;
     font-size: 12px;
     width: max-content;
     max-width: calc(100vw - 28px);
   }
-  udio-dialog {
+  .studio-dialog {
     padding: 22px !important;
   }
   .form-columns {

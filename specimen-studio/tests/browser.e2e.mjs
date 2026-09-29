@@ -221,6 +221,30 @@ try {
   await expect(
     page.locator('caption', { hasText: 'Votes by node' }),
   ).toHaveCount(1);
+  // Specification diagrams: the lifecycle shows the last cycle, the raft
+  // planner asks the kernel, and pipeline stages open their chapters.
+  await page
+    .locator('nav[aria-label="Main navigation"] a[href="?view=specification"]')
+    .click();
+  const chapters = page.locator('nav[aria-label="Specification chapters"] a');
+  await chapters.nth(10).click();
+  await expect(page.locator('[data-figure="ch11-1"]')).toContainText(
+    'Last cycle reached Compose',
+  );
+  await chapters.nth(19).click();
+  const planner = page.locator('[data-figure="ch20-2"]');
+  await planner.getByLabel('Candidates (N)').fill('10');
+  await expect(planner.locator('output')).toHaveText(
+    /^10 candidates: 1 checkpoint of up to 256, each split across up to 5 rafts\.$/,
+  );
+  await chapters.nth(1).click();
+  await page
+    .locator('[data-figure="ch2-1"]')
+    .getByRole('link', { name: /Transient Memory when needed/ })
+    .click();
+  await expect(page.locator('article h2')).toHaveText(
+    'Transient Memory and imagination',
+  );
   await page
     .locator('nav[aria-label="Main navigation"] a[href="?view=studio"]')
     .click();
@@ -421,6 +445,7 @@ try {
           'mobile drawer lifecycle',
           'command palette and side pane',
           'live engine views',
+          'specification diagrams',
         ],
         webmcpSupported: webmcp,
         errors,

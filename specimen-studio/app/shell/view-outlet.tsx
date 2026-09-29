@@ -142,6 +142,8 @@ export function ViewOutlet({
           nodes={state.nodes}
           atp={state.atp}
           threshold={state.settings.voteThreshold}
+          outcome={model.runOutcome}
+          runInput={model.runInput}
         />
       )}
       {view === 'specification' && (
@@ -150,6 +152,12 @@ export function ViewOutlet({
           query={query}
           setQuery={setQuery}
           onChapter={onChapter}
+          live={{
+            specimen: state,
+            trace: model.activeTrace,
+            busy,
+            desktop: isDesktop(),
+          }}
         />
       )}
       {view === 'settings' && (

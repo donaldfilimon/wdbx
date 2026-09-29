@@ -206,6 +206,17 @@ export function validateSettings(settings: Settings): void {
 export const migrateIds = (state: Specimen) =>
   call<Specimen>({ op: 'migrateIds', state });
 
+/** One checkpoint chunk of a raft scan and its disjoint raft ranges. */
+export interface RaftChunk {
+  start: number;
+  end: number;
+  rafts: [number, number][];
+}
+
+/** The kernel's partition of a raft scan over `len` candidates. */
+export const raftPlan = (len: number, chunk: number, workers: number) =>
+  call<RaftChunk[]>({ op: 'raftPlan', len, chunk, workers });
+
 /** Structural checks for untrusted files, then the kernel's native rules. */
 export function validateSpecimen(value: unknown): Specimen {
   if (!value || typeof value !== 'object')

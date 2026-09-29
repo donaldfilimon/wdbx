@@ -308,6 +308,17 @@ try {
       page.getByRole('heading', { name: 'Specification', exact: true }),
     ).toBeVisible();
     await audit(page, width, 'specification-reader');
+    for (const [nth, figure, state] of [
+      [4, 'ch5-1', 'spec-model'],
+      [19, 'ch20-2', 'spec-diagrams'],
+    ]) {
+      await page
+        .locator('nav[aria-label="Specification chapters"] a')
+        .nth(nth)
+        .click();
+      await expect(page.locator(`[data-figure="${figure}"]`)).toBeVisible();
+      await audit(page, width, state);
+    }
 
     await page
       .getByRole('button', { name: 'Show activity dock', exact: true })

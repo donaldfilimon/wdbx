@@ -11,6 +11,7 @@ import {
   maintenance,
   migrateIds,
   observeContext,
+  raftPlan,
   removeNode,
   runCycle,
   saveResource,
@@ -243,4 +244,35 @@ test('imports with out-of-range records are rejected', () => {
   const s = seedSpecimen();
   s.atp.valence = 50;
   expect(() => validateSpecimen(s)).toThrow('ATP state is invalid.');
+});
+
+test('raftPlan returns the kernel partition of a raft scan', () => {
+  expect(raftPlan(10, 4, 3)).toEqual([
+    {
+      start: 0,
+      end: 4,
+      rafts: [
+        [0, 2],
+        [2, 4],
+      ],
+    },
+    {
+      start: 4,
+      end: 8,
+      rafts: [
+        [4, 6],
+        [6, 8],
+      ],
+    },
+    {
+      start: 8,
+      end: 10,
+      rafts: [
+        [8, 9],
+        [9, 10],
+      ],
+    },
+  ]);
+  expect(raftPlan(0, 256, 8)).toEqual([]);
+  expect(() => raftPlan(10, 0, 1)).toThrow(/chunk size/);
 });

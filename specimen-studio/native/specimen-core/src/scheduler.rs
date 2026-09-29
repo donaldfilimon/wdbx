@@ -240,11 +240,11 @@ impl RaftCursor {
         }
         let end = (self.next_index + self.chunk).min(self.total);
         let part = &items[self.next_index..end];
-        let size = part.len().div_ceil(workers);
+        let size = specimen_kernel::search::raft_size(part.len(), workers);
         let start = self.next_index;
         let results = std::thread::scope(|scope| {
             let tasks = part
-                .chunks(size.max(1))
+                .chunks(size)
                 .enumerate()
                 .map(|(index, p)| {
                     scope.spawn(move || {
