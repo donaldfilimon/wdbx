@@ -274,6 +274,14 @@ try {
   ).toHaveCount(0);
   await page.getByRole('tab', { name: 'Topology' }).click();
   await expect(page.getByRole('region', { name: 'Nodes' })).toBeVisible();
+  // Vision & models: the browser edition explains what the desktop adds.
+  await page
+    .locator('nav[aria-label="Main navigation"] a[href="?view=lab"]')
+    .click();
+  await expect(page.locator('.native-lab')).toContainText(
+    'Bring your specimen to the desktop',
+  );
+  await expect(page.locator('.runtime-pills')).toContainText('Browser runtime');
   // Store explorer: the browser edition reports its IndexedDB record.
   await page
     .locator('nav[aria-label="Main navigation"] a[href="?view=store"]')
@@ -506,6 +514,7 @@ try {
           'specification diagrams',
           'store explorer',
           'network layers and topology',
+          'lab browser intro',
         ],
         webmcpSupported: webmcp,
         errors,

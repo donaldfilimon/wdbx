@@ -240,7 +240,7 @@ def validate_accessibility_widths(widths: Any) -> list[int]:
         "studio", "open-provenance-dossier", "cycle-trace-completed",
         "disabled-contributor-feedback", "zoomed-keyboard-scrollable-topology",
         "specification-reader", "live-engine", "spec-model", "spec-diagrams",
-        "store-explorer", "network-layers", "network-topology",
+        "store-explorer", "network-layers", "network-topology", "lab-browser",
     }
     required_targets = {
         "Network", "Cycle trace", "Zoom out topology", "Fit topology to canvas",

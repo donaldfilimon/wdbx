@@ -5,7 +5,6 @@ import {
   validateSettings,
   validateSpecimen,
 } from '@/lib/specimen/kernel';
-import { NativeLab } from '@/components/native-lab';
 import { isDesktop, nativeReview } from '@/lib/specimen/native';
 import { ActivityView } from '../panels/activity-panel';
 import { EnginePanel } from '../panels/engine-panel';
@@ -13,6 +12,7 @@ import { MemoryView } from '../panels/memory-panel';
 import { NodesView } from '../panels/nodes-panel';
 import { SettingsView } from '../panels/settings-panel';
 import { StorePanel } from '../panels/store-panel';
+import { BrowserLabIntro, LabPanel } from '../lab/lab-panel';
 import { NetworkPanel } from '../network/network-panel';
 import { Specification } from '../panels/specification-panel';
 import { StudioPanel } from '../panels/studio-panel';
@@ -56,7 +56,12 @@ export function ViewOutlet({
   return (
     <>
       {view === 'studio' && <StudioPanel m={model} nav={nav} />}
-      {view === 'lab' && <NativeLab specimen={state} onSnapshot={commit} />}
+      {view === 'lab' &&
+        (isDesktop() ? (
+          <LabPanel specimen={state} onSnapshot={commit} />
+        ) : (
+          <BrowserLabIntro />
+        ))}
       {view === 'nodes' && (
         <NodesView
           state={state}

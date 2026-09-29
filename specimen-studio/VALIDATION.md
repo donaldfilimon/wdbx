@@ -874,3 +874,33 @@ exactly, a resampled network changes it, a malformed one is rejected.
 Evidence: `bun run check` (172), native gates, `test:browser` dark and light.
 Not exercised end to end: a Studio cycle after a Network edit (the wiring is
 covered by typecheck and the facade test, not an e2e assertion).
+
+## B7.2-7.3 typed Lab client and rebuilt Lab (2026-09-29)
+
+`components/native-lab.tsx` (41 dense lines, hand-cast results, a 5 s poll
+that ran while hidden and swallowed errors, hardcoded model choices) is
+replaced by `lib/specimen/lab-api.ts` (typed calls; artifacts parsed, not
+cast; busy model store distinguished from an empty one) and `app/lab/`:
+`use-lab.ts` (one job at a time, progress, cancel, visibility-aware polling
+that reports failures), an Image workspace (drop, paste, open, focus, OCR
+overlay in theme tokens, learn and run), Generate (models from the catalog),
+Models and Artifacts tabs on shadcn Tabs and the WDBX components. The
+`.native-lab`, `.runtime-pills` and `.model-card` contracts are kept.
+
+Evidence:
+- `bun run check` (178 including `lab-api` and `lab-panel` tests) and
+  `test:browser` dark and light, with a new `lab-browser` axe state.
+- **The native desktop suite ran on this Mac for the first time in this
+  program:** `VITE_NATIVE_E2E=1 bunx tauri build --debug --features e2e
+  --config src-tauri/tauri.e2e.conf.json --bundles app`, then
+  `WDBX_STUDIO_TEST_DATA=<fresh dir> bunx wdio run wdio.conf.mjs`: 5 passing,
+  including a new test that calls `storeInfo` through the protocol gate
+  (closing the B5 gap), commits a network edit and gets `StaleRevision` for
+  a repeat at the old revision (closing the B6 gap), renders the desktop
+  Store view, and opens the Lab's Models tab. The suite needs
+  `WDBX_STUDIO_TEST_DATA` set to an isolated directory and
+  `python3 scripts/ocr-fixture.py work/acceptance` first.
+
+Not exercised: model download, load and generation (no bundled runtimes or
+models on this machine), and the Lab's image learn/run buttons through the
+UI (the native suite drives analysis through the test bridge).

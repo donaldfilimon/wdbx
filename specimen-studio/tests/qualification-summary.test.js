@@ -32,6 +32,7 @@ function accessibilityWidth(width) {
     'store-explorer',
     'network-layers',
     'network-topology',
+    'lab-browser',
   ];
   if (width === 390) states.push('mobile-drawer');
   return {

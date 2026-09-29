@@ -233,6 +233,40 @@ describe('Native specimen desktop', () => {
     await browser.saveScreenshot(resolve('work/native-desktop.png'));
     evidence.scenarios.push('native-image-analysis');
   });
+  it('reports the store, commits network edits at their revision, and shows the Lab tabs', async () => {
+    const result = await browser.tauri.execute(async () => {
+      const call = (request) => window.__wdbxTestCall(request);
+      const info = await call({ op: 'storeInfo' });
+      const snapshot = await call({ op: 'snapshot' });
+      const saved = await call({
+        op: 'network',
+        revision: snapshot.revision,
+        network: snapshot.network,
+      });
+      let stale = 'accepted';
+      try {
+        await call({ op: 'network', revision: snapshot.revision, network: snapshot.network });
+      } catch (e) {
+        stale = e.code;
+      }
+      return { info, before: snapshot.revision, after: saved.revision, stale };
+    });
+    if (typeof result.info.revision !== 'number' || !result.info.auditDag.ok)
+      throw Error('storeInfo must report a revision and a verified audit DAG: ' + JSON.stringify(result.info));
+    if (result.info.snapshotKey && result.info.snapshotKey.key !== 'studio/snapshot')
+      throw Error('storeInfo must describe the studio snapshot key');
+    if (result.after !== result.before + 1) throw Error('network edit must advance the revision');
+    if (result.stale !== 'StaleRevision')
+      throw Error('a network edit at an old revision must be StaleRevision, got ' + result.stale);
+    await $('nav[aria-label="Main navigation"] a[href="?view=store"]').click();
+    await expect($('main')).toHaveText(expect.stringContaining('Desktop · WDBX v2 journal'));
+    await $('nav[aria-label="Main navigation"] a[href="?view=lab"]').click();
+    for (const tab of ['Image', 'Generate', 'Models'])
+      await expect($(`button=${tab}`)).toBeDisplayed();
+    await $('button=Models').click();
+    await expect($('.model-card')).toBeDisplayed();
+    evidence.scenarios.push('store-info-network-revision-lab-tabs');
+  });
   it('searches a virtualized 100,000-record history', async () => {
     // Embedded direct-eval has its own short timeout. Poll the asynchronous
     // native commit so a large fixture does not outlive a single evaluation.

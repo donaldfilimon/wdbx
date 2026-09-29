@@ -310,6 +310,10 @@ try {
     await expect(page.getByRole('region', { name: 'Nodes' })).toBeVisible();
     await audit(page, width, 'network-topology');
 
+    await navigate(page, width, '?view=lab');
+    await expect(page.locator('.native-lab')).toBeVisible();
+    await audit(page, width, 'lab-browser');
+
     await navigate(page, width, '?view=store');
     await expect(page.getByText('Browser · IndexedDB')).toBeVisible();
     await expect(page.getByRole('region', { name: 'Records' })).toBeVisible();
