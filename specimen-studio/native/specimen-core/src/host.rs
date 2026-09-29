@@ -16,7 +16,14 @@ impl Search for RaftSearch {
         progress: &dyn Fn(usize, usize),
     ) -> Result<Vec<usize>> {
         let items: Vec<usize> = (0..len).collect();
-        scheduler::raft_find_all_progress(&items, |i| predicate(*i), chunk, workers, cancel, progress)
+        scheduler::raft_find_all_progress(
+            &items,
+            |i| predicate(*i),
+            chunk,
+            workers,
+            cancel,
+            progress,
+        )
     }
 }
 
@@ -44,7 +51,13 @@ mod tests {
 
     #[test]
     fn sequential_matches_raft() {
-        for (len, chunk, workers) in [(0, 1, 1), (1, 1, 1), (10_000, 256, 8), (9_999, 5000, 3), (17, 4, 64)] {
+        for (len, chunk, workers) in [
+            (0, 1, 1),
+            (1, 1, 1),
+            (10_000, 256, 8),
+            (9_999, 5000, 3),
+            (17, 4, 64),
+        ] {
             let (a, pa) = run(&RaftSearch, len, chunk, workers, false);
             let (b, pb) = run(&Sequential, len, chunk, workers, false);
             assert_eq!(a.unwrap(), b.unwrap(), "len={len} chunk={chunk}");
@@ -54,7 +67,8 @@ mod tests {
 
     #[test]
     fn sequential_matches_raft_errors() {
-        for (chunk, workers, cancel) in [(0, 1, false), (8, 0, false), (8, 65, false), (8, 4, true)] {
+        for (chunk, workers, cancel) in [(0, 1, false), (8, 0, false), (8, 65, false), (8, 4, true)]
+        {
             let (a, _) = run(&RaftSearch, 100, chunk, workers, cancel);
             let (b, _) = run(&Sequential, 100, chunk, workers, cancel);
             assert_eq!(

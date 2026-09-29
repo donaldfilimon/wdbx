@@ -8,3 +8,4 @@ serde_json.workspace = true
 thiserror.workspace = true
 sha2.workspace = true
 regex = "1"
+abi-compute = { git = "https://github.com/donaldfilimon/wdbx", rev = "3ac03f085196dbe6e922a127ceaa37bc2368de89" }

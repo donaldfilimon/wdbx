@@ -4785,6 +4785,7 @@ dependencies = [
 name = "specimen-kernel"
 version = "0.2.0"
 dependencies = [
+ "abi-compute",
  "regex",
  "serde",
  "serde_json",

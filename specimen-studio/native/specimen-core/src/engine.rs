@@ -445,7 +445,14 @@ fn eval(expr: &[Expr], ctx: &mut Context<'_>) -> Result<String> {
                             &features,
                             !ingredients.is_empty(),
                             number(&ctx.state["settings"], "seed", 104729.) as u64,
-                            ctx.state["settings"]["gpu"] == true,
+                            if ctx.state["settings"]["gpu"] == true {
+                                Some(
+                                    &crate::neural::WgpuAccelerator
+                                        as &dyn crate::neural::Accelerator,
+                                )
+                            } else {
+                                None
+                            },
                         )?;
                         if ctx.state["settings"]["brainstorm"] == true {
                             let mut sampling = Rng(number(&ctx.state["settings"], "seed", 104729.)
