@@ -1,0 +1,58 @@
+[
+  {
+    "id": "qwen3-4b",
+    "name": "Qwen3 4B",
+    "kind": "text",
+    "repo": "Qwen/Qwen3-4B-GGUF",
+    "file": "Qwen3-4B-Q4_K_M.gguf",
+    "license": "Apache-2.0",
+    "memoryBytes": 4000000000,
+    "revision": "bc640142c66e1fdd12af0bd68f40445458f3869b",
+    "size": 2497280256,
+    "sha256": "7485fe6f11af29433bc51cab58009521f205840f5b4ae3a32fa7f92e8534fdf5",
+    "url": "https://huggingface.co/Qwen/Qwen3-4B-GGUF/resolve/bc640142c66e1fdd12af0bd68f40445458f3869b/Qwen3-4B-Q4_K_M.gguf",
+    "source": "https://huggingface.co/Qwen/Qwen3-4B-GGUF"
+  },
+  {
+    "id": "sdxl-turbo",
+    "name": "SDXL Turbo",
+    "kind": "image",
+    "repo": "stabilityai/sdxl-turbo",
+    "file": "sd_xl_turbo_1.0_fp16.safetensors",
+    "license": "SAI Non-Commercial Community; commercial terms linked in model card",
+    "memoryBytes": 14000000000,
+    "revision": "71153311d3dbb46851df1931d3ca6e939de83304",
+    "size": 6938081905,
+    "sha256": "e869ac7d6942cb327d68d5ed83a40447aadf20e0c3358d98b2cc9e270db0da26",
+    "url": "https://huggingface.co/stabilityai/sdxl-turbo/resolve/71153311d3dbb46851df1931d3ca6e939de83304/sd_xl_turbo_1.0_fp16.safetensors",
+    "source": "https://huggingface.co/stabilityai/sdxl-turbo"
+  },
+  {
+    "id": "text-detection",
+    "name": "Text Detection",
+    "kind": "ocr",
+    "repo": "robertknight/ocrs",
+    "file": "text-detection-ssfbcj81.rten",
+    "license": "MIT OR Apache-2.0 (see publisher)",
+    "memoryBytes": 1000000000,
+    "revision": "df0edd170279ab971b53e094c627255a87e1a503",
+    "size": 2523564,
+    "sha256": "614aafabf27c94d386f7aa036c967c2e47e4b9938fa11531ca8f5698c1ca4c36",
+    "url": "https://huggingface.co/robertknight/ocrs/resolve/df0edd170279ab971b53e094c627255a87e1a503/text-detection-ssfbcj81.rten",
+    "source": "https://huggingface.co/robertknight/ocrs"
+  },
+  {
+    "id": "text-recognition",
+    "name": "Text recognition",
+    "kind": "ocr",
+    "repo": "robertknight/ocrs",
+    "file": "text-rec-checkpoint-s52qdbqt.rten",
+    "license": "MIT OR Apache-2.0 (see publisher)",
+    "memoryBytes": 1000000000,
+    "revision": "df0edd170279ab971b53e094c627255a87e1a503",
+    "size": 9716444,
+    "sha256": "606d9a0414c6b73c99df75b707c11c70d1c8b12e1d4f900922e185fc37bfca65",
+    "url": "https://huggingface.co/robertknight/ocrs/resolve/df0edd170279ab971b53e094c627255a87e1a503/text-rec-checkpoint-s52qdbqt.rten",
+    "source": "https://huggingface.co/robertknight/ocrs"
+  }
+]

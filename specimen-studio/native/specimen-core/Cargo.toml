@@ -1,0 +1,28 @@
+[package]
+name = "specimen-core"
+version = "0.2.0"
+edition = "2024"
+[dependencies]
+abi-wdbx = { git = "https://github.com/donaldfilimon/wdbx", rev = "3ac03f085196dbe6e922a127ceaa37bc2368de89" }
+abi-compute = { git = "https://github.com/donaldfilimon/wdbx", rev = "3ac03f085196dbe6e922a127ceaa37bc2368de89" }
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+uuid.workspace = true
+sha2.workspace = true
+sysinfo = "0.37"
+regex = "1"
+chrono = { version = "0.4", features = ["serde"] }
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "webp"] }
+zip = { version = "4", default-features = false, features = ["deflate"] }
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "json", "rustls-tls"] }
+ocrs = "0.12.2"
+rten = "0.24"
+wgpu = "0.19"
+pollster = "0.4"
+bytemuck = { version = "1", features = ["derive"] }
+[dev-dependencies]
+tempfile = "3"
+
+[target.'cfg(target_os = "linux")'.dev-dependencies]
+glib = "0.18.5"

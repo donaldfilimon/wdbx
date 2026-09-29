@@ -1,0 +1,166 @@
+name: Consolidated qualification summary
+on:
+  workflow_dispatch:
+    inputs:
+      source_sha:
+        description: Frozen 40-character source SHA shared by every qualifying run
+        required: true
+        type: string
+      desktop_run_id:
+        description: Native desktop qualification run ID
+        required: true
+        type: string
+      browser_run_id:
+        description: Browser qualification run ID
+        required: true
+        type: string
+      text_run_id:
+        description: Real text inference qualification run ID
+        required: true
+        type: string
+      image_run_id:
+        description: Real image inference qualification run ID
+        required: true
+        type: string
+      ocr_run_id:
+        description: Real OCR qualification run ID
+        required: true
+        type: string
+      accelerator_run_id:
+        description: Accelerator qualification run ID
+        required: true
+        type: string
+      macos_package_run_id:
+        description: Optional macOS portable packaging run ID (with or without notarization)
+        required: false
+        type: string
+      windows_package_run_id:
+        description: Optional Authenticode Windows packaging run ID
+        required: false
+        type: string
+      local_manual_evidence:
+        description: JSON array of external local/manual evidence records
+        required: false
+        default: '[]'
+        type: string
+permissions:
+  contents: read
+  actions: read
+jobs:
+  consolidate:
+    if: >
+      github.repository == 'donaldfilimon/wdbx-specimen-studio' &&
+      github.event_name == 'workflow_dispatch'
+    # Dispatch-only, so it always runs on the macOS arm64 self-hosted runner
+    # registered to this repository. It checks out and runs the collector
+    # from inputs.source_sha: dispatch it only with a commit on a branch of
+    # this repository. See docs/SelfHostedRunner.md.
+    runs-on: [self-hosted, macOS, ARM64, wdbx-specimen-studio]
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source_sha }}
+          persist-credentials: false
+      - name: Validate frozen source and inputs
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          LOCAL_MANUAL_EVIDENCE: ${{ inputs.local_manual_evidence }}
+        run: |
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          jq -e 'type == "array"' <<< "$LOCAL_MANUAL_EVIDENCE" >/dev/null
+      - name: Download run metadata and artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DESKTOP_RUN_ID: ${{ inputs.desktop_run_id }}
+          BROWSER_RUN_ID: ${{ inputs.browser_run_id }}
+          TEXT_RUN_ID: ${{ inputs.text_run_id }}
+          IMAGE_RUN_ID: ${{ inputs.image_run_id }}
+          OCR_RUN_ID: ${{ inputs.ocr_run_id }}
+          ACCELERATOR_RUN_ID: ${{ inputs.accelerator_run_id }}
+          MACOS_PACKAGE_RUN_ID: ${{ inputs.macos_package_run_id }}
+          WINDOWS_PACKAGE_RUN_ID: ${{ inputs.windows_package_run_id }}
+        run: |
+          set -euo pipefail
+          mkdir -p work/qualification-summary
+          fetch_run() {
+            kind="$1"
+            run_id="$2"
+            required="$3"
+            if [ -z "$run_id" ]; then
+              test "$required" = false
+              return
+            fi
+            [[ "$run_id" =~ ^[0-9]+$ ]]
+            mkdir -p "work/qualification-summary/$kind/artifacts"
+            gh api "repos/$GITHUB_REPOSITORY/actions/runs/$run_id" \
+              > "work/qualification-summary/$kind/run.json"
+            gh api "repos/$GITHUB_REPOSITORY/actions/runs/$run_id/jobs?per_page=100" \
+              > "work/qualification-summary/$kind/jobs.json"
+            gh run download "$run_id" -D "work/qualification-summary/$kind/artifacts" || true
+          }
+          fetch_run desktop "$DESKTOP_RUN_ID" true
+          fetch_run browser "$BROWSER_RUN_ID" true
+          fetch_run text-inference "$TEXT_RUN_ID" true
+          fetch_run image-inference "$IMAGE_RUN_ID" true
+          fetch_run ocr "$OCR_RUN_ID" true
+          fetch_run accelerator "$ACCELERATOR_RUN_ID" true
+          fetch_run macos-signing "$MACOS_PACKAGE_RUN_ID" false
+          fetch_run windows-signing "$WINDOWS_PACKAGE_RUN_ID" false
+      - name: Build collector manifest
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          DESKTOP_RUN_ID: ${{ inputs.desktop_run_id }}
+          BROWSER_RUN_ID: ${{ inputs.browser_run_id }}
+          TEXT_RUN_ID: ${{ inputs.text_run_id }}
+          IMAGE_RUN_ID: ${{ inputs.image_run_id }}
+          OCR_RUN_ID: ${{ inputs.ocr_run_id }}
+          ACCELERATOR_RUN_ID: ${{ inputs.accelerator_run_id }}
+          MACOS_PACKAGE_RUN_ID: ${{ inputs.macos_package_run_id }}
+          WINDOWS_PACKAGE_RUN_ID: ${{ inputs.windows_package_run_id }}
+          LOCAL_MANUAL_EVIDENCE: ${{ inputs.local_manual_evidence }}
+        run: |
+          jq -n \
+            --arg repository "$GITHUB_REPOSITORY" \
+            --arg sourceSha "$SOURCE_SHA" \
+            --arg desktop "$DESKTOP_RUN_ID" \
+            --arg browser "$BROWSER_RUN_ID" \
+            --arg text "$TEXT_RUN_ID" \
+            --arg image "$IMAGE_RUN_ID" \
+            --arg ocr "$OCR_RUN_ID" \
+            --arg accelerator "$ACCELERATOR_RUN_ID" \
+            --arg macos "$MACOS_PACKAGE_RUN_ID" \
+            --arg windows "$WINDOWS_PACKAGE_RUN_ID" \
+            --argjson local "$LOCAL_MANUAL_EVIDENCE" \
+            'def run($kind; $id; $required):
+              {kind:$kind, runId:$id, required:$required,
+               metadata:("work/qualification-summary/"+$kind+"/run.json"),
+               artifacts:("work/qualification-summary/"+$kind+"/artifacts"),
+               jobs:("work/qualification-summary/"+$kind+"/jobs.json")};
+             {schema:1, repository:$repository, sourceSha:$sourceSha,
+              packageQualificationRunId:$desktop,
+              outputJson:"work/qualification-summary/qualification-summary.json",
+              outputMarkdown:"work/qualification-summary/qualification-summary.md",
+              localManualEvidence:$local,
+              runs:[run("desktop";$desktop;true),run("browser";$browser;true),
+                run("text-inference";$text;true),run("image-inference";$image;true),
+                run("ocr";$ocr;true),run("accelerator";$accelerator;true),
+                run("macos-signing";$macos;false),run("windows-signing";$windows;false)]}' \
+            > work/qualification-summary/manifest.json
+      - name: Consolidate and verify evidence
+        id: collector
+        continue-on-error: true
+        run: python3 scripts/qualification-summary.py --manifest work/qualification-summary/manifest.json
+      - name: Upload consolidated qualification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qualification-summary-${{ inputs.source_sha }}
+          path: |
+            work/qualification-summary/qualification-summary.json
+            work/qualification-summary/qualification-summary.md
+          if-no-files-found: error
+      - name: Enforce collector conclusion
+        if: steps.collector.outcome != 'success'
+        run: exit 1

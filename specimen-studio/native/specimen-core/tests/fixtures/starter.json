@@ -1,0 +1,386 @@
+{
+  "schema": "wdbx.studio.v1",
+  "name": "Specimen 001",
+  "nodes": [
+    {
+      "ref": "b4dbc5e9-af46-4ef3-a690-f7185bcc89e2",
+      "name": "Calculate",
+      "patternId": "low:arithmetic",
+      "resolution": "low",
+      "type": "pattern",
+      "contextId": "",
+      "strength": 6,
+      "jitter": true,
+      "tone": "neutral",
+      "entries": [
+        {
+          "id": "70e0b4ca-3c1a-40e6-93e4-7da3d22a832f",
+          "pattern": "&n &op &n",
+          "alternatives": [
+            {
+              "id": "3588c7ec-bacd-4e81-9722-17ddbb8f7018",
+              "action": "&calc(&current_input)",
+              "inhibition": "",
+              "weight": 1,
+              "remixed": false
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-09-04T11:24:46.837Z"
+    },
+    {
+      "ref": "090cc702-d333-4634-b857-68ec4a469e0e",
+      "name": "Greeting",
+      "patternId": "low:hello",
+      "resolution": "low",
+      "type": "pattern",
+      "contextId": "",
+      "strength": 5,
+      "jitter": true,
+      "tone": "warm",
+      "entries": [
+        {
+          "id": "313e2547-1cb9-4698-a5a0-14f7e470df43",
+          "pattern": "hello",
+          "alternatives": [
+            {
+              "id": "c5d74575-3aa6-483d-84fa-52e161473c8a",
+              "action": "Hello. What would you like to explore?",
+              "inhibition": "",
+              "weight": 1,
+              "remixed": false
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-09-04T11:24:46.838Z"
+    },
+    {
+      "ref": "9c83b694-1684-4aaa-8a22-fd7e4087eef3",
+      "name": "Repeat",
+      "patternId": "low:repeat",
+      "resolution": "low",
+      "type": "pattern",
+      "contextId": "",
+      "strength": 5,
+      "jitter": true,
+      "tone": "neutral",
+      "entries": [
+        {
+          "id": "ffb6be98-a1de-4bee-8cd6-687bc3db793f",
+          "pattern": "say &text &n times",
+          "alternatives": [
+            {
+              "id": "b1698e6e-38d8-4d52-bf95-00c89e8034d1",
+              "action": "&repeat(&current_input)",
+              "inhibition": "",
+              "weight": 1,
+              "remixed": false
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-09-04T11:24:46.840Z"
+    },
+    {
+      "ref": "c8fc04d9-26e9-429d-876b-43879be41796",
+      "name": "Time",
+      "patternId": "low:time",
+      "resolution": "low",
+      "type": "pattern",
+      "contextId": "",
+      "strength": 5,
+      "jitter": true,
+      "tone": "neutral",
+      "entries": [
+        {
+          "id": "ba6c7047-56c3-4186-bf85-599b2834a9eb",
+          "pattern": "what time is it",
+          "alternatives": [
+            {
+              "id": "fe7487d6-cdbd-42cd-a7b8-5614624981d4",
+              "action": "&time&",
+              "inhibition": "",
+              "weight": 1,
+              "remixed": false
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-09-04T11:24:46.841Z"
+    },
+    {
+      "ref": "5874f661-fc81-44cd-b7bf-8a4bb157de49",
+      "name": "Recall",
+      "patternId": "low:recall",
+      "resolution": "low",
+      "type": "pattern",
+      "contextId": "",
+      "strength": 5,
+      "jitter": true,
+      "tone": "neutral",
+      "entries": [
+        {
+          "id": "4de32824-a8a7-4a02-9a41-4467b66becb5",
+          "pattern": "what can you recall",
+          "alternatives": [
+            {
+              "id": "d745ecf0-021d-43bc-9e5f-ac659b0b6361",
+              "action": "&recall(&current_input)",
+              "inhibition": "",
+              "weight": 1,
+              "remixed": false
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-09-04T11:24:46.847Z"
+    },
+    {
+      "ref": "6be2339f-1990-428a-81f8-cc97890a1dba",
+      "name": "Imagine",
+      "patternId": "low:imagine",
+      "resolution": "low",
+      "type": "pattern",
+      "contextId": "",
+      "strength": 5,
+      "jitter": true,
+      "tone": "neutral",
+      "entries": [
+        {
+          "id": "0259fb14-c7e8-41df-b601-400b7fcf3248",
+          "pattern": "imagine &text",
+          "alternatives": [
+            {
+              "id": "301a07df-16af-4683-9e10-c98f111ef77c",
+              "action": "&imagine(&current_input)",
+              "inhibition": "",
+              "weight": 1,
+              "remixed": false
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-09-04T11:24:46.847Z"
+    },
+    {
+      "ref": "e7b7d4d5-8901-454c-ba01-e13196582879",
+      "name": "Tone",
+      "patternId": "low:tone",
+      "resolution": "low",
+      "type": "pattern",
+      "contextId": "",
+      "strength": 5,
+      "jitter": true,
+      "tone": "neutral",
+      "entries": [
+        {
+          "id": "8c317783-3974-4c17-8444-5ae8f511a43e",
+          "pattern": "how are you feeling",
+          "alternatives": [
+            {
+              "id": "d414eed9-4e4f-4a74-84e3-dbcc2d304ed3",
+              "action": "&tone&",
+              "inhibition": "",
+              "weight": 1,
+              "remixed": false
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-09-04T11:24:46.847Z"
+    },
+    {
+      "ref": "23996788-e5f4-466c-994b-32bb43501115",
+      "name": "Negation",
+      "patternId": "low:negation",
+      "resolution": "low",
+      "type": "pattern",
+      "contextId": "",
+      "strength": 5,
+      "jitter": true,
+      "tone": "neutral",
+      "entries": [
+        {
+          "id": "207da029-0101-42d7-b97f-4f3544b11c80",
+          "pattern": "don't &text",
+          "alternatives": [
+            {
+              "id": "262acebf-c2f5-4fb5-9ff1-97e2e0c2b40e",
+              "action": "I will leave that action alone.",
+              "inhibition": "",
+              "weight": 1,
+              "remixed": false
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-09-04T11:24:46.847Z"
+    }
+  ],
+  "resources": [
+    {
+      "ref": "9a51bee2-a8d8-4ced-9c96-83388f38fbd7",
+      "subsystem": "dictionary",
+      "text": "specimen",
+      "value": "A persistent collection of pattern nodes and supporting organs.",
+      "patternId": "low:5y8xx7",
+      "resourceId": "low:recall",
+      "valence": 0,
+      "intensity": 0.4
+    },
+    {
+      "ref": "517cbfb0-d828-44c0-8af0-9b915fdad0cf",
+      "subsystem": "dictionary",
+      "text": "WDBX",
+      "value": "A system for retrieving patterns, collecting gated votes, and composing responses.",
+      "patternId": "low:wv4lws",
+      "resourceId": "low:recall",
+      "valence": 0,
+      "intensity": 0.4
+    },
+    {
+      "ref": "e37bec43-45dd-4c4a-929b-de4fe6b9cad0",
+      "subsystem": "thesaurus",
+      "text": "hello",
+      "value": "hi, hey, greetings",
+      "patternId": "low:hello",
+      "resourceId": "",
+      "valence": 0,
+      "intensity": 0.4
+    },
+    {
+      "ref": "2542e080-c9d7-4518-8aea-50e607570288",
+      "subsystem": "chargebook",
+      "text": "happy",
+      "value": "warm, pleased, content",
+      "patternId": "low:tone",
+      "resourceId": "",
+      "valence": 0.7,
+      "intensity": 0.4
+    },
+    {
+      "ref": "6c2bad6d-d249-4b72-adb9-21fe4d9017fe",
+      "subsystem": "chargebook",
+      "text": "stressed",
+      "value": "tense, concerned",
+      "patternId": "low:tone",
+      "resourceId": "",
+      "valence": 0,
+      "intensity": 0.4
+    },
+    {
+      "ref": "8f9d2fa9-a9f0-41f0-ae6b-62d96bba2038",
+      "subsystem": "negation",
+      "text": "do not",
+      "value": "Inhibit the scoped action rather than execute it.",
+      "patternId": "low:negation",
+      "resourceId": "",
+      "valence": 0,
+      "intensity": 0.4
+    },
+    {
+      "ref": "27d164f1-5aae-4fda-be08-fc88f5e689f5",
+      "subsystem": "verbSemantics",
+      "text": "give",
+      "value": "subject, predicate, object, recipient",
+      "patternId": "low:16j8vmk",
+      "resourceId": "",
+      "valence": 0,
+      "intensity": 0.4
+    },
+    {
+      "ref": "346197a9-ddb8-48a6-ab12-d0c35ab5159d",
+      "subsystem": "morphology",
+      "text": "running",
+      "value": "run",
+      "patternId": "low:5opvf0",
+      "resourceId": "",
+      "valence": 0,
+      "intensity": 0.4
+    },
+    {
+      "ref": "4e26ea5d-ce10-410b-aa2d-2b0aec80de0e",
+      "subsystem": "antiThesaurus",
+      "text": "race",
+      "value": "Use context to distinguish running from ethnicity.",
+      "patternId": "low:13lq2zc",
+      "resourceId": "",
+      "valence": 0,
+      "intensity": 0.4
+    },
+    {
+      "ref": "4aa903f7-44ee-4752-bb04-355661253493",
+      "subsystem": "conjunctiveRules",
+      "text": "and",
+      "value": "Combine independent, compatible contributions.",
+      "patternId": "low:47gkh2",
+      "resourceId": "",
+      "valence": 0,
+      "intensity": 0.4
+    },
+    {
+      "ref": "5a82f433-5aad-4fc1-92b2-34eb5a0a5353",
+      "subsystem": "roleMapper",
+      "text": "subject predicate object",
+      "value": "Preserve who does what to whom.",
+      "patternId": "low:1vk0r7d",
+      "resourceId": "",
+      "valence": 0,
+      "intensity": 0.4
+    },
+    {
+      "ref": "f8e71edf-824f-44d2-89b5-da59fad60237",
+      "subsystem": "sigils",
+      "text": "&current_input",
+      "value": "Read the original input; never execute it as arbitrary code.",
+      "patternId": "low:1v6mlo9",
+      "resourceId": "",
+      "valence": 0,
+      "intensity": 0.4
+    }
+  ],
+  "attachments": [],
+  "history": [],
+  "events": [
+    {
+      "id": "4b77449c-5a3d-4600-a009-a742deaf7922",
+      "type": "system",
+      "title": "Starter specimen created",
+      "detail": "8 pattern nodes and 12 supporting memories.",
+      "createdAt": "2026-09-04T11:24:46.849Z"
+    }
+  ],
+  "mutations": [],
+  "proposals": [],
+  "atp": {
+    "valence": 0.2,
+    "intensity": 0.25,
+    "lastUpdate": 0
+  },
+  "settings": {
+    "voteThreshold": 62,
+    "jitter": 1.5,
+    "maxStrength": 10,
+    "initialStrength": 5,
+    "entryLimit": 20,
+    "scanLimit": 1000,
+    "fanoutLimit": 12,
+    "historyLimit": 100000,
+    "pinLimit": 100,
+    "maxNodes": 1000,
+    "maxRafts": 8,
+    "maxThreads": 1,
+    "chunkSize": 256,
+    "raftThreshold": 128,
+    "brainstorm": false,
+    "maintenance": false,
+    "adaptiveThreading": false,
+    "idleMin": 60,
+    "idleMax": 120,
+    "transientWidth": 32,
+    "seed": 104729
+  },
+  "updatedAt": "2026-09-04T11:24:46.849Z"
+}

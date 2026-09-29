@@ -1,0 +1,39 @@
+name: Real local image model qualification
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  image-model:
+    runs-on: macos-15-large
+    timeout-minutes: 45
+    env:
+      CARGO_BUILD_JOBS: 4
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rust toolchain
+        run: rustup toolchain install nightly-2026-09-01 --profile minimal
+      - name: Build pinned CPU image runtime
+        run: python3 scripts/build-runtimes.py --only diffusion
+      - name: Download and verify SDXL-Turbo
+        run: python3 scripts/download-models.py work/acceptance/models --ids sdxl-turbo
+      - name: Real local CPU image inference
+        run: cargo run --locked --release -p specimen-core --example acceptance -- "$PWD/work/acceptance" "$PWD/src-tauri/binaries" image
+      - name: Record image inference receipt
+        run: |
+          test -s work/acceptance/results/generated-image.png
+          result_sha=$(shasum -a 256 work/acceptance/results/image.json | awk '{print $1}')
+          image_sha=$(shasum -a 256 work/acceptance/results/generated-image.png | awk '{print $1}')
+          jq -n \
+            --arg headSha "$GITHUB_SHA" \
+            --arg workflowRunId "$GITHUB_RUN_ID" \
+            --arg runner "$RUNNER_OS/$RUNNER_ARCH" \
+            --arg resultSha256 "$result_sha" \
+            --arg imageSha256 "$image_sha" \
+            '{schema:1,headSha:$headSha,workflowRunId:$workflowRunId,runner:$runner,mode:"image",resultSha256:$resultSha256,imageSha256:$imageSha256}' \
+            > work/acceptance/results/run-receipt.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: real-image-inference
+          path: work/acceptance/results

@@ -1,0 +1,86 @@
+name: macOS portable runtime packaging
+on:
+  workflow_dispatch:
+    inputs:
+      qualification_run_id:
+        description: Successful native desktop qualification workflow run ID
+        required: true
+        type: string
+      notarize:
+        description: Produce Developer ID signed and notarized candidate (requires signing secrets)
+        required: true
+        default: true
+        type: boolean
+permissions:
+  contents: read
+  actions: read
+jobs:
+  package:
+    if: >
+      github.repository == 'donaldfilimon/wdbx-specimen-studio' &&
+      github.event_name == 'workflow_dispatch'
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-14, macos-15-intel]
+    # The Apple silicon leg keeps its matrix value (and so its check name,
+    # WDBX_RUNNER and artifact names) but runs on the macOS arm64 self-hosted
+    # runner registered to this repository. The Intel leg stays GitHub-hosted.
+    # Signing uses an ephemeral keychain (scripts/sign-macos-ci.py).
+    # See docs/SelfHostedRunner.md.
+    runs-on: ${{ matrix.os == 'macos-14' && fromJSON('["self-hosted","macOS","ARM64","wdbx-specimen-studio"]') || matrix.os }}
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Self-hosted runner deployment target
+        if: matrix.os == 'macos-14'
+        # Without a deployment target, CMake builds llama-server for the host's
+        # SDK version; pin the macOS 14 floor the hosted leg produced so the
+        # portable installer's helper still starts on macOS 14. The step below
+        # (scripts/build-runtimes.py) needs Python 3.12 or later as python3.
+        run: |
+          python3 -c 'import sys; assert sys.version_info >= (3, 12), "the runner needs Python 3.12 or later as python3"'
+          echo "MACOSX_DEPLOYMENT_TARGET=14.0" >> "$GITHUB_ENV"
+      - name: Reuse pinned inference builds
+        uses: actions/cache@v4
+        with:
+          path: |
+            work/runtimes
+            src-tauri/binaries
+          # CMake build trees hold absolute paths, so a self-hosted checkout
+          # must not restore a hosted runner's cache (or the reverse).
+          key: native-runtimes-${{ runner.environment == 'self-hosted' && 'self-hosted-' || '' }}${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('native/runtime-pins.json', 'scripts/build-runtimes.py') }}
+          restore-keys: native-runtimes-${{ runner.environment == 'self-hosted' && 'self-hosted-' || '' }}${{ runner.os }}-${{ runner.arch }}-
+      - name: Build standalone loopback text runtime
+        run: python3 scripts/build-runtimes.py --only llama
+      - name: Restore qualified app and replace text helper
+        env:
+          GH_TOKEN: ${{ github.token }}
+          WDBX_QUALIFICATION_RUN: ${{ inputs.qualification_run_id }}
+          WDBX_RUNNER: ${{ matrix.os }}
+        run: python3 scripts/repackage-macos.py
+      - name: Seal final installer
+        run: python3 scripts/seal-macos-package.py
+      - name: Developer ID sign, notarize, staple, and verify
+        if: inputs.notarize
+        env:
+          MACOS_SIGNING_CERTIFICATE_BASE64: ${{ secrets.MACOS_SIGNING_CERTIFICATE_BASE64 }}
+          MACOS_SIGNING_CERTIFICATE_PASSWORD: ${{ secrets.MACOS_SIGNING_CERTIFICATE_PASSWORD }}
+          MACOS_SIGNING_IDENTITY: ${{ secrets.MACOS_SIGNING_IDENTITY }}
+          APPLE_API_KEY_BASE64: ${{ secrets.APPLE_API_KEY_BASE64 }}
+          APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+          APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
+        run: python3 scripts/sign-macos-ci.py
+      - name: Upload portable installer and evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wdbx-studio-${{ matrix.os }}-portable
+          path: |
+            target/release/bundle/dmg/*.dmg
+            work/macos-package-verification.json
+            work/qualification-run.json
+            work/notarized/*.dmg
+            work/notarized/*.json

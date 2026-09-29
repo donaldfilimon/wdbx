@@ -1,0 +1,31 @@
+[workspace]
+members = ["native/specimen-core", "src-tauri"]
+resolver = "2"
+exclude = ["native/vendor/glib-0.18.5"]
+[workspace.dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["float_roundtrip"] }
+thiserror = "2"
+uuid = { version = "1", features = ["v4", "serde"] }
+sha2 = "0.10"
+[profile.dev]
+debug = 0
+[profile.release]
+strip = true
+codegen-units = 8
+
+[profile.dev.package.rten]
+opt-level = 3
+[profile.dev.package.rten-gemm]
+opt-level = 3
+[profile.dev.package.rten-simd]
+opt-level = 3
+
+[profile.dev.package.sha2]
+opt-level = 3
+
+[patch.crates-io]
+glib = { path = "native/vendor/glib-0.18.5" }
+
+[profile.dev.package."glib@0.18.5"]
+opt-level = 3

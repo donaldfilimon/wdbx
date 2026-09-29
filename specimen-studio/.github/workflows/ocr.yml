@@ -1,0 +1,48 @@
+name: Real OCR qualification
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  ocr:
+    if: >
+      github.repository == 'donaldfilimon/wdbx-specimen-studio' &&
+      github.event_name == 'workflow_dispatch'
+    # Dispatch-only, so it always runs on the macOS arm64 self-hosted runner
+    # registered to this repository. See docs/SelfHostedRunner.md.
+    runs-on: [self-hosted, macOS, ARM64, wdbx-specimen-studio]
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Rust toolchain
+        run: rustup toolchain install nightly-2026-09-01 --profile minimal
+      - name: Create OCR fixture
+        run: |
+          python3 -m venv "$RUNNER_TEMP/ocr-fixture-venv"
+          "$RUNNER_TEMP/ocr-fixture-venv/bin/python" -m pip install pillow==12.3.0
+          "$RUNNER_TEMP/ocr-fixture-venv/bin/python" scripts/ocr-fixture.py work/acceptance
+          mkdir -p src-tauri/binaries work/acceptance/results
+      - name: Download verified OCR models only
+        run: python3 scripts/download-models.py work/acceptance/models --ids text-detection text-recognition
+      - name: Recognize real fixture
+        run: |
+          set -o pipefail
+          cargo run --locked --release -p specimen-core --example acceptance -- "$PWD/work/acceptance" "$PWD/src-tauri/binaries" ocr 2>&1 | tee work/acceptance/results/ocr.log
+      - name: Record OCR qualification receipt
+        run: |
+          result_sha=$(shasum -a 256 work/acceptance/results/ocr.json | awk '{print $1}')
+          jq -n \
+            --arg headSha "$GITHUB_SHA" \
+            --arg workflowRunId "$GITHUB_RUN_ID" \
+            --arg runner "$RUNNER_OS/$RUNNER_ARCH" \
+            --arg resultSha256 "$result_sha" \
+            '{schema:1,headSha:$headSha,workflowRunId:$workflowRunId,runner:$runner,mode:"ocr",resultSha256:$resultSha256}' \
+            > work/acceptance/results/run-receipt.json
+      - name: Upload OCR result and receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: real-ocr
+          path: work/acceptance/results
