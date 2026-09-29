@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Toolbar, ToolbarSpacer, WButton } from '@/components/wdbx';
+import { Panel, Toolbar, ToolbarSpacer, WButton } from '@/components/wdbx';
 import { Database, MessageCircle, Pencil, Pin, Plus, X } from 'lucide-react';
 import { SUBSYSTEMS, type Specimen } from '@/lib/specimen/types';
 
 import { VirtualList } from '@/components/virtual-list';
 import { Empty } from './common';
-import { SearchField } from './common';
+import { SearchField, tableCls, tdCls, thCls } from './common';
 import { clock } from '../state/format';
 
 export function MemoryView({
@@ -95,51 +95,57 @@ export function MemoryView({
         )}
       </Toolbar>
       {tab === 'resources' ? (
-        <div className="panel table-panel">
-          <div className="table-scroll">
-            <table>
+        <Panel title="Resources" description={`${resources.length} results`}>
+          <div className="overflow-auto">
+            <table className={tableCls}>
               <thead>
                 <tr>
-                  <th>Term</th>
-                  <th>Supporting information</th>
-                  <th>Subsystem</th>
-                  <th>Linked node ID</th>
-                  <th>
+                  <th className={thCls}>Term</th>
+                  <th className={thCls}>Supporting information</th>
+                  <th className={thCls}>Subsystem</th>
+                  <th className={thCls}>Linked node ID</th>
+                  <th className={thCls}>
                     <span className="sr-only">Actions</span>
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {resources.slice(0, 100).map((r) => (
-                  <tr key={r.ref}>
-                    <td>
-                      <strong>{r.text}</strong>
+                  <tr key={r.ref} className="hover:bg-surface">
+                    <td className={tdCls}>
+                      <strong className="text-ink">{r.text}</strong>
                     </td>
-                    <td className="memory-value">{r.value}</td>
-                    <td>
-                      <span className="subsystem-tag">{r.subsystem}</span>
+                    <td className={`${tdCls} leading-relaxed text-ink-soft`}>
+                      {r.value}
                     </td>
-                    <td>
-                      <code className="subtle-code">
+                    <td className={tdCls}>
+                      <span className="inline-block rounded bg-surface-2 px-2 py-1 text-xs text-ink-soft">
+                        {r.subsystem}
+                      </span>
+                    </td>
+                    <td className={tdCls}>
+                      <code className="rounded bg-surface-2 px-1.5 py-1 text-xs text-muted-foreground">
                         {r.resourceId || 'Unlinked'}
                       </code>
                     </td>
-                    <td>
-                      <div className="row-actions">
-                        <button
-                          className="icon-button"
+                    <td className={tdCls}>
+                      <div className="flex gap-1">
+                        <WButton
+                          variant="ghost"
+                          size="icon"
                           aria-label={`Edit memory ${r.text}`}
                           onClick={() => onEdit(r.ref)}
                         >
-                          <Pencil size={16} />
-                        </button>
-                        <button
-                          className="icon-button"
+                          <Pencil aria-hidden="true" size={16} />
+                        </WButton>
+                        <WButton
+                          variant="ghost"
+                          size="icon"
                           aria-label={`Remove memory ${r.text}`}
                           onClick={() => onRemove(r.ref)}
                         >
-                          <X size={16} />
-                        </button>
+                          <X aria-hidden="true" size={16} />
+                        </WButton>
                       </div>
                     </td>
                   </tr>
@@ -153,30 +159,41 @@ export function MemoryView({
               text="Add a term, definition, or contextual resource to support your specimen."
             />
           )}
-        </div>
+        </Panel>
       ) : (
-        <div className="history-list">
+        <div className="grid gap-4">
           <VirtualList
             key={`${query}:${tab}`}
             items={history}
             rowHeight={190}
             renderItem={(h) => (
-              <article className="panel history-record" key={h.id}>
-                <div className="history-heading">
-                  <span>
-                    <MessageCircle size={17} />
-                    {h.input}
+              <article
+                className="history-record h-full overflow-hidden rounded-xl border border-line bg-raised px-5 py-4"
+                key={h.id}
+              >
+                <div className="history-heading flex items-center justify-between gap-4 font-semibold text-ink">
+                  <span className="flex min-w-0 items-center gap-3">
+                    <MessageCircle
+                      aria-hidden="true"
+                      size={17}
+                      className="shrink-0"
+                    />
+                    <span className="truncate">{h.input}</span>
                   </span>
-                  <button
-                    className={`icon-button ${h.pinned ? 'teal' : ''}`}
+                  <WButton
+                    variant="ghost"
+                    size="icon"
+                    className={h.pinned ? 'text-teal-strong' : undefined}
                     aria-label={`${h.pinned ? 'Unpin' : 'Pin'} ${h.input}`}
                     onClick={() => onPin(h.id)}
                   >
-                    <Pin size={17} />
-                  </button>
+                    <Pin aria-hidden="true" size={17} />
+                  </WButton>
                 </div>
-                <p>{h.segments.map((s) => s.text).join('\n\n')}</p>
-                <small>
+                <p className="my-3 line-clamp-3 whitespace-pre-wrap text-ink-soft [overflow-wrap:anywhere]">
+                  {h.segments.map((s) => s.text).join('\n\n')}
+                </p>
+                <small className="text-xs text-muted-foreground">
                   {clock(h.createdAt)} · {h.votes.length} contributors ·{' '}
                   {h.status}
                 </small>
@@ -199,9 +216,9 @@ export function MemoryView({
           )}
         </div>
       )}
-      <div className="workspace-footnote">
-        <Database size={17} />
-        <p>
+      <div className="mx-1 my-5 flex items-start gap-2.5 text-sm text-muted-foreground">
+        <Database aria-hidden="true" size={17} className="mt-0.5 shrink-0" />
+        <p className="m-0">
           Resources are indexed at insertion. Only relevant retrieved
           information enters orchestration.
         </p>

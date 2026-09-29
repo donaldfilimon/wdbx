@@ -917,3 +917,18 @@ button text. 22 legacy rules (127 lines) pruned from `app/studio.css` with the
 fixed pruner (usage-checked; `full-width`, `text-button`, `empty-state` kept
 because other markup still uses them). Evidence: `bun run check` (181),
 `test:browser` dark and light (both suites drive every dialog).
+
+## B8b Node Library and Memory on shadcn/WDBX (2026-09-29)
+
+Both tables are WDBX `Panel`s with Tailwind table styles shared from
+`app/panels/common.tsx`, WDBX icon buttons, token tints and strength bars;
+history records keep the `.history-record`/`.history-heading` hooks the
+native suite uses, styled in Tailwind. 41 more legacy rules pruned
+(`app/studio.css` 3,838 → 3,514 lines across B8a and B8b).
+
+Found on the way: automatic table layout squeezed the node-name column to
+one character at 800 px, making rows 215 to 295 px tall and breaking the
+76 px row windowing. Names now truncate with a minimum column width. A new
+`test:browser` assertion measures every rendered node row at 800 px; it
+failed on the unfixed code (rows 215-295 px) and passes now. Evidence:
+`bun run check` (181), `test:browser` dark and light.

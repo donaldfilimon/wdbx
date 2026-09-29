@@ -115,6 +115,21 @@ try {
   await page
     .locator('nav[aria-label="Main navigation"] a[href="?view=nodes"]')
     .click();
+  // The node table windows rows by a fixed 76 px height; every rendered row
+  // must be exactly that tall (a wrapped name once made rows much taller).
+  // Measured at 800 px, where automatic table layout used to squeeze names.
+  const wide = page.viewportSize();
+  await page.setViewportSize({ width: 800, height: 900 });
+  const nodeRows = page
+    .getByRole('region', { name: 'Learned nodes' })
+    .locator('tbody tr:not([aria-hidden])');
+  await expect(nodeRows.first()).toBeVisible();
+  const rowHeights = await nodeRows.evaluateAll((rows) =>
+    rows.map((r) => Math.round(r.getBoundingClientRect().height)),
+  );
+  if (!rowHeights.length || rowHeights.some((h) => h !== 76))
+    throw Error(`Node rows must be 76 px tall, got ${rowHeights.join(', ')}`);
+  await page.setViewportSize(wide);
   await page.getByRole('button', { name: 'Add pattern', exact: true }).click();
   await page.getByLabel('Node name', { exact: true }).fill('Color check');
   await page

@@ -4,7 +4,20 @@ import { GitBranch, Network, Pencil, Plus, Shield, X } from 'lucide-react';
 import { type Specimen } from '@/lib/specimen/types';
 
 import { Empty } from './common';
-import { SearchField } from './common';
+import {
+  SearchField,
+  tableCls as table,
+  tdCls as td,
+  thCls as th,
+} from './common';
+
+/** Rendered row height in px; the windowing math depends on it. */
+const ROW = 76;
+const TINTS = [
+  'bg-info-soft text-teal',
+  'bg-amber-soft text-amber',
+  'bg-surface-2 text-violet',
+];
 
 export function NodesView({
   state,
@@ -76,29 +89,27 @@ export function NodesView({
           Add pattern
         </WButton>
       </Toolbar>
-      <div className="panel table-panel">
-        <div className="panel-heading">
-          <h2>Learned nodes</h2>
-          <span className="muted small">{nodes.length} results</span>
-        </div>
+      <Panel title="Learned nodes" description={`${nodes.length} results`}>
         <div
           key={`${query}:${filter}`}
-          className="table-scroll virtual-table"
+          // Rows are exactly ROW px tall: the spacer rows and the scroll
+          // handler window the list with that height.
+          className="max-h-[600px] overflow-auto"
           onScroll={(e) =>
             setNodeStart(
-              Math.max(0, Math.floor(e.currentTarget.scrollTop / 76) - 2),
+              Math.max(0, Math.floor(e.currentTarget.scrollTop / ROW) - 2),
             )
           }
         >
-          <table>
-            <thead>
+          <table className={table}>
+            <thead className="sticky top-0 z-[1] bg-raised">
               <tr>
-                <th>Node</th>
-                <th>Original pattern</th>
-                <th>Pattern ID</th>
-                <th>Strength</th>
-                <th>Entries</th>
-                <th>
+                <th className={th}>Node</th>
+                <th className={th}>Original pattern</th>
+                <th className={th}>Pattern ID</th>
+                <th className={th}>Strength</th>
+                <th className={th}>Entries</th>
+                <th className={th}>
                   <span className="sr-only">Actions</span>
                 </th>
               </tr>
@@ -109,28 +120,30 @@ export function NodesView({
                   <td
                     aria-label="Unrendered rows"
                     colSpan={6}
-                    style={{
-                      height: Math.min(nodeStart, nodes.length) * 76,
-                      padding: 0,
-                      border: 0,
-                    }}
+                    className="border-0 p-0"
+                    style={{ height: Math.min(nodeStart, nodes.length) * ROW }}
                   />
                 </tr>
               )}
               {nodes.slice(nodeStart, nodeStart + 24).map((n, i) => (
-                <tr key={n.ref} className="virtual-node-row">
-                  <td aria-label={n.name}>
+                <tr key={n.ref} className="h-[76px] hover:bg-surface">
+                  <td className={`${td} min-w-52`} aria-label={n.name}>
                     <button
                       aria-label={`Inspect ${n.name}`}
-                      className="node-name-button"
+                      className="flex min-h-11 max-w-60 items-center gap-3 rounded-md text-left focus-visible:outline-2 focus-visible:outline-focus"
                       onClick={() => onSelect(n.ref)}
                     >
-                      <span className={`table-node-icon node-color-${i % 3}`}>
+                      <span
+                        aria-hidden="true"
+                        className={`grid size-9 shrink-0 place-items-center rounded-lg ${TINTS[i % 3]}`}
+                      >
                         <Network size={17} />
                       </span>
-                      <span>
-                        <strong>{n.name}</strong>
-                        <small>
+                      <span className="min-w-0">
+                        <strong className="block truncate text-sm font-semibold text-ink">
+                          {n.name}
+                        </strong>
+                        <small className="mt-0.5 block truncate text-xs text-muted-foreground">
                           {n.type === 'pattern'
                             ? 'Pattern node'
                             : `Context · Type ${n.type}`}
@@ -138,21 +151,27 @@ export function NodesView({
                       </span>
                     </button>
                   </td>
-                  <td className="pattern-cell">
-                    <code>{n.entries[0]?.pattern}</code>
+                  <td className={td}>
+                    <code className="block max-w-60 truncate text-xs text-ink-soft">
+                      {n.entries[0]?.pattern}
+                    </code>
                   </td>
-                  <td>
-                    <code className="subtle-code">{n.patternId}</code>
+                  <td className={td}>
+                    <code className="block max-w-60 truncate rounded bg-surface-2 px-1.5 py-1 text-xs text-muted-foreground">
+                      {n.patternId}
+                    </code>
                   </td>
                   <td
+                    className={td}
                     aria-label={`Strength ${n.strength} of ${state.settings.maxStrength}`}
                   >
-                    <div className="table-strength">
+                    <div className="min-w-[75px] text-xs">
                       <span>
                         {n.strength} / {state.settings.maxStrength}
                       </span>
-                      <div className="strength-bar">
+                      <div className="mt-2 h-1 overflow-hidden rounded-full bg-surface-2">
                         <span
+                          className="block h-full rounded-full bg-teal"
                           style={{
                             width: `${(n.strength / state.settings.maxStrength) * 100}%`,
                           }}
@@ -160,23 +179,25 @@ export function NodesView({
                       </div>
                     </div>
                   </td>
-                  <td>{n.entries.length}</td>
-                  <td>
-                    <div className="row-actions">
-                      <button
-                        className="icon-button"
+                  <td className={td}>{n.entries.length}</td>
+                  <td className={td}>
+                    <div className="flex gap-1">
+                      <WButton
+                        variant="ghost"
+                        size="icon"
                         aria-label={`Edit ${n.name}`}
                         onClick={() => onEdit(n.ref)}
                       >
-                        <Pencil size={16} />
-                      </button>
-                      <button
-                        className="icon-button"
+                        <Pencil aria-hidden="true" size={16} />
+                      </WButton>
+                      <WButton
+                        variant="ghost"
+                        size="icon"
                         aria-label={`Remove ${n.name}`}
                         onClick={() => onRemove(n.ref)}
                       >
-                        <X size={16} />
-                      </button>
+                        <X aria-hidden="true" size={16} />
+                      </WButton>
                     </div>
                   </td>
                 </tr>
@@ -186,11 +207,8 @@ export function NodesView({
                   <td
                     aria-label="Unrendered rows"
                     colSpan={6}
-                    style={{
-                      height: (nodes.length - nodeStart - 24) * 76,
-                      padding: 0,
-                      border: 0,
-                    }}
+                    className="border-0 p-0"
+                    style={{ height: (nodes.length - nodeStart - 24) * ROW }}
                   />
                 </tr>
               )}
@@ -204,11 +222,11 @@ export function NodesView({
           />
         )}
         {nodes.length > 100 && (
-          <p className="table-note">
+          <p className="m-0 p-3.5 text-xs text-muted-foreground">
             Scroll through all matching nodes, or refine your search.
           </p>
         )}
-      </div>
+      </Panel>
       <p className="m-0 flex items-start gap-2 text-sm text-ink-soft">
         <Shield size={17} className="mt-0.5 shrink-0 text-teal" />
         Pattern IDs may repeat. Every node keeps its own original patterns,

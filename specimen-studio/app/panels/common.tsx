@@ -41,3 +41,10 @@ export function SearchField({
 export function Empty({ title, text }: { title: string; text: string }) {
   return <EmptyState title={title} text={text} />;
 }
+
+/** Shared table styles for the Node Library and Memory tables. */
+export const tableCls = 'w-full border-collapse text-left text-[13px]';
+export const thCls =
+  'border-b border-line bg-surface px-4 py-3 text-xs font-medium text-muted-foreground';
+export const tdCls =
+  'max-w-[340px] border-b border-line px-4 py-3 [overflow-wrap:anywhere]';
