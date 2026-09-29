@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vinext build",
+    "build:wasm": "cargo build --locked -p specimen-wasm --target wasm32-unknown-unknown --release",
     "start": "wrangler dev --config dist/server/wrangler.json",
     "lint": "oxlint",
     "format": "oxfmt",
@@ -20,7 +21,7 @@
     "desktop:package": "tauri build",
     "test:native": "cargo test -p specimen-core",
     "check:native": "cargo clippy --workspace --all-targets -- -D warnings",
-    "check": "sh scripts/check-instructions.sh && bunx tsc --noEmit && bun run lint:studio && bun test && bun run build",
+    "check": "sh scripts/check-instructions.sh && bunx tsc --noEmit && bun run lint:studio && bun run build:wasm && bun test && bun run build",
     "check:all": "bun run check && bun run check:native"
   },
   "dependencies": {

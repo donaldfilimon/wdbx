@@ -1,0 +1,9 @@
+[package]
+name = "specimen-wasm"
+version = "0.2.0"
+edition = "2024"
+[lib]
+crate-type = ["cdylib", "rlib"]
+[dependencies]
+specimen-kernel = { path = "../specimen-kernel" }
+serde_json.workspace = true
