@@ -492,7 +492,7 @@ pub fn calculate(input: &str) -> Result<f64> {
                 "*" => left * right,
                 "/" => left / right,
                 "%" => left % right,
-                _ => left.powf(right),
+                _ => libm::pow(left, right),
             };
             if !left.is_finite() {
                 return Err(error("BudgetExceeded", "Nonfinite arithmetic result"));

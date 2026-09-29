@@ -466,7 +466,7 @@ fn eval(expr: &[Expr], ctx: &mut Context<'_>) -> Result<String> {
                         let colors = ["#14786b", "#91c7a7", "#e5ad50", "#8174b7"];
                         let v = &synthesis.values;
                         ctx.visual = Some(
-                            json!({"xArray":(0..32).map(|i|(i as f64*2.399).cos()*120.*v[i]as f64).collect::<Vec<_>>(),"yArray":(0..32).map(|i|(i as f64*2.399).sin()*70.*v[i]as f64).collect::<Vec<_>>(),"colorArray":(0..32).map(|i|colors[i%4]).collect::<Vec<_>>(),"brightnessArray":v.iter().map(|x|x.clamp(0.0,1.0)).collect::<Vec<_>>(),"size":{"width":320,"height":180},"position":{"x":0,"y":0},"synthesis":{"backend":synthesis.backend,"activationFunctions":synthesis.activations,"fallback":synthesis.fallback,"networkVersion":ctx.network.version,"seed":ctx.state["settings"]["seed"],"brainstorm":ctx.state["settings"]["brainstorm"]}}),
+                            json!({"xArray":(0..32).map(|i|libm::cos(i as f64*2.399)*120.*v[i]as f64).collect::<Vec<_>>(),"yArray":(0..32).map(|i|libm::sin(i as f64*2.399)*70.*v[i]as f64).collect::<Vec<_>>(),"colorArray":(0..32).map(|i|colors[i%4]).collect::<Vec<_>>(),"brightnessArray":v.iter().map(|x|x.clamp(0.0,1.0)).collect::<Vec<_>>(),"size":{"width":320,"height":180},"position":{"x":0,"y":0},"synthesis":{"backend":synthesis.backend,"activationFunctions":synthesis.activations,"fallback":synthesis.fallback,"networkVersion":ctx.network.version,"seed":ctx.state["settings"]["seed"],"brainstorm":ctx.state["settings"]["brainstorm"]}}),
                         );
                         ctx.transforms.extend([
                             "fixed 128/64/32 sparse network".into(),
@@ -929,8 +929,8 @@ pub fn cycle_with_visual(
     let time = host.env.now_millis();
     let elapsed =
         ((time as f64 - number(&state["atp"], "lastUpdate", time as f64)) / 1000.).max(0.);
-    let mut valence = number(&state["atp"], "valence", 0.) * (-elapsed / 180.).exp();
-    let mut intensity = number(&state["atp"], "intensity", 0.) * (-elapsed / 180.).exp();
+    let mut valence = number(&state["atp"], "valence", 0.) * libm::exp(-elapsed / 180.);
+    let mut intensity = number(&state["atp"], "intensity", 0.) * libm::exp(-elapsed / 180.);
     let mut cooldown = number(&state["atp"], "cooldownUntil", 0.);
     for r in rows(&state, "resources").iter().filter(|r| {
         time as f64 >= cooldown

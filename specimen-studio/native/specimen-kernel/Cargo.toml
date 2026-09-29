@@ -9,3 +9,4 @@ thiserror.workspace = true
 sha2.workspace = true
 regex = "1"
 abi-compute = { git = "https://github.com/donaldfilimon/wdbx", rev = "3ac03f085196dbe6e922a127ceaa37bc2368de89" }
+libm = { version = "0.2.16", default-features = false }

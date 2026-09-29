@@ -142,7 +142,7 @@ impl Network {
                 .iter()
                 .map(|x| {
                     if sigmoid {
-                        1.0 / (1.0 + (-x.clamp(-30.0, 30.0)).exp())
+                        1.0 / (1.0 + libm::expf(-x.clamp(-30.0, 30.0)))
                     } else {
                         x.clamp(0.0, 16.0)
                     }

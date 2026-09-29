@@ -39,29 +39,38 @@ test('wasm probe reproduces the native golden digest', async () => {
   expect(createHash('sha256').update(out).digest('hex')).toBe(golden);
 });
 
-// Known divergence (VALIDATION.md, P0 finding 3): f64::sin and f64::exp differ
-// in the last bit between the native and WASM libm. `test.failing` passes while
-// the digests differ and fails once they match; then promote it to `test`.
-test.failing(
-  'wasm probe reproduces the native imagine golden digest',
-  async () => {
-    const starter = JSON.parse(
-      readFileSync(new URL('conformance/starter.json', root), 'utf8'),
-    );
-    starter.atp.lastUpdate = 1767225538766;
-    const out = await probe(
-      JSON.stringify({
-        specimen: starter,
-        input: 'imagine a happy blue square',
-      }),
-    );
-    const golden = readFileSync(
-      new URL('conformance/p0-probe-imagine.sha256', root),
-      'utf8',
-    ).trim();
-    expect(createHash('sha256').update(out).digest('hex')).toBe(golden);
-  },
-);
+test('wasm probe reproduces the native imagine golden digest', async () => {
+  const starter = JSON.parse(
+    readFileSync(new URL('conformance/starter.json', root), 'utf8'),
+  );
+  starter.atp.lastUpdate = 1767225538766;
+  const out = await probe(
+    JSON.stringify({
+      specimen: starter,
+      input: 'imagine a happy blue square',
+    }),
+  );
+  const golden = readFileSync(
+    new URL('conformance/p0-probe-imagine.sha256', root),
+    'utf8',
+  ).trim();
+  expect(createHash('sha256').update(out).digest('hex')).toBe(golden);
+});
+
+test('wasm probe reproduces the native pow golden digest', async () => {
+  const starter = JSON.parse(
+    readFileSync(new URL('conformance/starter.json', root), 'utf8'),
+  );
+  starter.atp.lastUpdate = 1767225538766;
+  const out = await probe(
+    JSON.stringify({ specimen: starter, input: '2 ^ 0.5' }),
+  );
+  const golden = readFileSync(
+    new URL('conformance/p0-probe-pow.sha256', root),
+    'utf8',
+  ).trim();
+  expect(createHash('sha256').update(out).digest('hex')).toBe(golden);
+});
 
 test('wasm probe reports malformed input as an error', async () => {
   const out = JSON.parse(await probe('{not json'));

@@ -419,6 +419,32 @@ The accessibility pass followed the fetched Vercel Web Interface Guidelines: nam
 
 The broader specification remains distinct from this browser implementation. See RUNTIME-PROFILE.md for exact executable mechanisms and limits.
 
+## P0.1 portable libm (2026-09-28)
+
+**Byte-exact native/WASM parity on all three probe cases.** On Donald's
+decision, every transcendental in `native/specimen-kernel` now goes through the
+`libm` crate (0.2.16, `default-features = false`, so no `arch` intrinsics):
+`libm::sin`/`cos` for the visual arrays, `libm::exp` for the atp decay,
+`libm::expf` for the sigmoid layer, `libm::pow` for the `^` operator. `sqrt`
+and the basic arithmetic stay native because IEEE 754 rounds them exactly.
+`cargo tree -i libm` shows it enters only through the kernel.
+
+- `p0-probe.sha256` unchanged (`9577ece5…`): the arithmetic path has no
+  transcendental that survives rounding.
+- `p0-probe-imagine.sha256` re-blessed from native, `8f99f4ea…` to
+  `51ae9bb4…`. That is the digest WASM produced before this change: Rust's
+  wasm32 standard library already used the same musl-derived routines, so
+  native moved to match the browser.
+- `p0-probe-pow.sha256` (new, `142bcfcb…`): `2 ^ 0.5` with a finite decay;
+  a native test asserts the result starts `1.41421356`.
+- `tests/wasm-probe.test.js`: all three digests match as plain `test`s (the
+  former `test.failing` was promoted after being shown red).
+
+Desktop results change in the last bit wherever these functions run. This was
+a deliberate re-bless; no stored specimen changes, only newly computed values.
+Finding 3 below is resolved by this section. The lane-width caveat (finding 2)
+still applies to x86 hosts.
+
 ## P0 kernel WASM feasibility (2026-09-28)
 
 **Verdict: GO for building on WASM; NOT byte-identical.** The pure specimen

@@ -69,6 +69,12 @@ mod tests {
         s["atp"]["lastUpdate"] = json!(1_767_225_538_766_i64);
         json!({ "specimen": s, "input": "imagine a happy blue square" }).to_string()
     }
+    /// The `^` operator (`powf`) plus the finite `exp` decay.
+    fn pow_request() -> String {
+        let mut s = starter();
+        s["atp"]["lastUpdate"] = json!(1_767_225_538_766_i64);
+        json!({ "specimen": s, "input": "2 ^ 0.5" }).to_string()
+    }
     fn check_golden(request: &str, file: &str) {
         let got = specimen_kernel::digest(probe(request).as_bytes());
         let path = format!("{}/../../conformance/{file}", env!("CARGO_MANIFEST_DIR"));
@@ -84,6 +90,16 @@ mod tests {
     #[test]
     fn native_imagine_probe_matches_golden() {
         check_golden(&imagine_request(), "p0-probe-imagine.sha256");
+    }
+    #[test]
+    fn native_pow_probe_matches_golden() {
+        check_golden(&pow_request(), "p0-probe-pow.sha256");
+    }
+    #[test]
+    fn pow_case_evaluates_a_fractional_power() {
+        let out: Value = serde_json::from_str(&probe(&pow_request())).unwrap();
+        let text = out["cycle"]["segments"][0]["text"].as_str().unwrap();
+        assert!(text.starts_with("1.41421356"), "got {text}");
     }
     #[test]
     fn imagine_case_exercises_transcendentals() {
