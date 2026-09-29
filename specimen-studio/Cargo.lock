@@ -4772,12 +4772,24 @@ dependencies = [
  "serde",
  "serde_json",
  "sha2 0.10.9",
+ "specimen-kernel",
  "sysinfo",
  "tempfile",
  "thiserror 2.0.20",
  "uuid",
  "wgpu",
  "zip",
+]
+
+[[package]]
+name = "specimen-kernel"
+version = "0.2.0"
+dependencies = [
+ "regex",
+ "serde",
+ "serde_json",
+ "sha2 0.10.9",
+ "thiserror 2.0.20",
 ]
 
 [[package]]

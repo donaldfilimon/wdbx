@@ -1,5 +1,5 @@
 [workspace]
-members = ["native/specimen-core", "src-tauri"]
+members = ["native/specimen-kernel", "native/specimen-core", "src-tauri"]
 resolver = "2"
 exclude = ["native/vendor/glib-0.18.5"]
 [workspace.dependencies]
