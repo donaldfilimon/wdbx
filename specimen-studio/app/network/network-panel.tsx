@@ -19,8 +19,16 @@ import {
   type Network,
   type NetworkCommand,
 } from '@/lib/specimen/kernel';
-import { layerRows, traceStats } from '@/lib/specimen/network-view';
-import { loadNetwork, persistNetwork } from '@/lib/specimen/storage';
+import {
+  describeRewiring,
+  layerRows,
+  traceStats,
+} from '@/lib/specimen/network-view';
+import {
+  loadNetwork,
+  persistNetwork,
+  type StoredNetwork,
+} from '@/lib/specimen/storage';
 import type { Specimen } from '@/lib/specimen/types';
 import { Viewport } from './viewport';
 
@@ -303,7 +311,7 @@ export function LayersView({
       </div>
       <Panel
         title="Trace"
-        description="Encode a prompt as the engine does and run it through every layer on the CPU."
+        description="Runs a prompt through every layer on the CPU with a text-only encoding: no resources, ATP state, visual features or specimen seed, so values differ from a real cycle."
       >
         <form
           className="flex flex-wrap items-end gap-3 p-4"
@@ -514,36 +522,58 @@ export function NetworkPanel({
   specimen: Specimen;
   desktop: boolean;
 }) {
-  const [network, setNetwork] = useState<Network | null>(null);
+  const [stored, setStored] = useState<StoredNetwork | null>(null);
+  // Bumped on every successful edit: remounts the builder so drafts and the
+  // last trace never describe a network that no longer exists.
+  const [version, setVersion] = useState(0);
+  const [reads, setReads] = useState(0);
   const [error, setError] = useState('');
   const [status, setStatus] = useState('');
   const [busy, setBusy] = useState(false);
+  const network = stored?.network ?? null;
   useEffect(() => {
     let live = true;
     loadNetwork().then(
-      (n) => live && setNetwork(n),
+      (loaded) => {
+        if (!live) return;
+        setStored(loaded);
+        setVersion((v) => v + 1);
+        setError('');
+      },
       (e: unknown) =>
         live && setError(e instanceof Error ? e.message : String(e)),
     );
     return () => {
       live = false;
     };
-  }, []);
+  }, [reads]);
   const command = (cmd: NetworkCommand, done: string) => {
-    if (!network) return;
+    if (!stored) return;
     let next: Network;
     try {
-      next = networkEdit(network, cmd);
+      next = networkEdit(stored.network, cmd);
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
       return;
     }
+    const targets =
+      cmd.command === 'addLayer'
+        ? [cmd.at]
+        : cmd.command === 'removeLayer'
+          ? [cmd.index - 1]
+          : cmd.command === 'initWeights'
+            ? []
+            : [cmd.index];
+    const sideEffect = targets.length
+      ? describeRewiring(stored.network, next, targets)
+      : '';
     setBusy(true);
-    persistNetwork(next).then(
+    persistNetwork(next, stored.revision).then(
       (saved) => {
-        setNetwork(saved);
+        setStored(saved);
+        setVersion((v) => v + 1);
         setError('');
-        setStatus(done);
+        setStatus(sideEffect ? `${done} ${sideEffect}` : done);
         setBusy(false);
       },
       (e: unknown) => {
@@ -561,22 +591,39 @@ export function NetworkPanel({
       </p>
       <output className="text-sm text-ink-soft">{status}</output>
       {error && (
-        <p role="alert" className="m-0 text-sm text-danger">
+        <div
+          role="alert"
+          className="flex flex-wrap items-center gap-3 text-sm text-danger"
+        >
           {error}
-        </p>
+          <WButton variant="outline" onClick={() => setReads((n) => n + 1)}>
+            Reload network
+          </WButton>
+        </div>
       )}
       <Tabs defaultValue="layers" className="flex-col">
         <TabsList className="h-auto">
-          <TabsTrigger value="layers" className="min-h-11 px-4 text-ink-soft data-active:text-ink">
+          <TabsTrigger
+            value="layers"
+            className="min-h-11 px-4 text-ink-soft data-active:text-ink"
+          >
             Layers
           </TabsTrigger>
-          <TabsTrigger value="topology" className="min-h-11 px-4 text-ink-soft data-active:text-ink">
+          <TabsTrigger
+            value="topology"
+            className="min-h-11 px-4 text-ink-soft data-active:text-ink"
+          >
             Topology
           </TabsTrigger>
         </TabsList>
         <TabsContent value="layers">
           {network ? (
-            <LayersView network={network} onCommand={command} busy={busy} />
+            <LayersView
+              key={version}
+              network={network}
+              onCommand={command}
+              busy={busy}
+            />
           ) : (
             !error && (
               <p className="m-0 text-sm text-muted-foreground">

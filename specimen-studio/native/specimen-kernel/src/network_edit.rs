@@ -130,6 +130,8 @@ fn hidden(net: &Network, index: usize) -> Result<()> {
 
 /// Applies `command` to a copy of `net`; the result always validates.
 pub fn apply(net: &Network, command: NetworkCommand) -> Result<Network> {
+    // Untrusted input: widths drive allocation, so validate before any work.
+    net.validate().map_err(|e| invalid(e.message))?;
     let mut next = net.clone();
     match command {
         NetworkCommand::AddLayer {

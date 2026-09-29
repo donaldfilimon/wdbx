@@ -93,8 +93,14 @@ export async function persistWorkspace(state: Specimen): Promise<void> {
  * The editable network: the desktop snapshot's, or the browser's own under
  * the `network` key. A missing or invalid browser network is the default.
  */
-export async function loadNetwork(): Promise<Network> {
-  if (isDesktop()) return (await loadNativeNetwork()) as Network;
+/** A network and, on desktop, the store revision it was read at. */
+export interface StoredNetwork {
+  network: Network;
+  revision?: number;
+}
+
+export async function loadNetwork(): Promise<StoredNetwork> {
+  if (isDesktop()) return (await loadNativeNetwork()) as StoredNetwork;
   // Validation and the default both come from the kernel.
   await kernelLoaded;
   const db = await open();
@@ -112,17 +118,24 @@ export async function loadNetwork(): Promise<Network> {
       reject(req.error);
     };
   });
-  if (!stored) return networkDefault();
+  if (!stored) return { network: networkDefault() };
   try {
     networkValidate(stored as Network);
-    return stored as Network;
+    return { network: stored as Network };
   } catch {
-    return networkDefault();
+    return { network: networkDefault() };
   }
 }
 
-export async function persistNetwork(network: Network): Promise<Network> {
-  if (isDesktop()) return (await persistNativeNetwork(network)) as Network;
+export async function persistNetwork(
+  network: Network,
+  revision?: number,
+): Promise<StoredNetwork> {
+  if (isDesktop())
+    return (await persistNativeNetwork(
+      network,
+      revision ?? 0,
+    )) as StoredNetwork;
   const db = await open();
   await new Promise<void>((resolve, reject) => {
     const tx = db.transaction('workspace', 'readwrite');
@@ -131,12 +144,13 @@ export async function persistNetwork(network: Network): Promise<Network> {
       db.close();
       resolve();
     };
-    tx.onerror = () => {
+    // A quota failure aborts the transaction without an error event.
+    tx.onerror = tx.onabort = () => {
       db.close();
       reject(new Error('The network could not be stored on this device.'));
     };
   });
-  return network;
+  return { network };
 }
 
 export function downloadText(

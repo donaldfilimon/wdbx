@@ -1,5 +1,6 @@
 import { expect, test } from 'bun:test';
 import {
+  describeRewiring,
   layerRows,
   neuronPositions,
   sampledEdges,
@@ -70,4 +71,24 @@ test('topologyLayout is deterministic and spreads nodes on a sphere', () => {
   for (const [x, y, z] of Object.values(a))
     expect(Math.hypot(x, y, z)).toBeCloseTo(3, 5);
   expect(topologyLayout([{ ref: 'solo' }]).solo).toEqual([0, 0, 0]);
+});
+
+test('describeRewiring names layers an edit rewired as a side effect', () => {
+  const after = {
+    version: 1,
+    layers: [layer(128, 4, 8), layer(4, 32, 4)],
+  };
+  // Layer 1 was the edit's target; layer 2 lost inputs because of it.
+  expect(describeRewiring(net, after, [0])).toBe(
+    'Layer 2 was rewired to its new inputs: 4 per neuron (was 8), new random weights.',
+  );
+  expect(describeRewiring(net, net, [0])).toBe('');
+  // Adding a layer shifts indexes; the displaced layer is still reported.
+  const added = {
+    version: 1,
+    layers: [layer(128, 64, 8), layer(64, 48, 6), layer(48, 32, 8)],
+  };
+  expect(describeRewiring(net, added, [1])).toBe(
+    'Layer 3 was rewired to its new inputs: 8 per neuron, new random weights.',
+  );
 });

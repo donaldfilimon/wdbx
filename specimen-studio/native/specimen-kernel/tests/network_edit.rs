@@ -157,3 +157,23 @@ fn trace_ends_with_the_run_result() {
     assert_eq!(layers[0].len(), 64);
     assert_eq!(layers[1], n.run(&input, false, 9, None).unwrap().values);
 }
+
+#[test]
+fn a_malformed_input_network_is_rejected_before_any_work() {
+    let mut bad = Network::default();
+    // A previous layer claiming a huge width must not size the input pool
+    // (billions of entries) before the network is validated.
+    bad.layers[0].outputs = 2_000_000_000;
+    let started = std::time::Instant::now();
+    let err = apply(
+        &bad,
+        cmd(r#"{"command":"setConnectivity","index":1,"fanIn":4,"seed":1}"#),
+    )
+    .unwrap_err();
+    assert_eq!(err.code, "InvalidNetwork");
+    assert!(
+        started.elapsed() < std::time::Duration::from_millis(200),
+        "rejected only after {:?} of work",
+        started.elapsed()
+    );
+}

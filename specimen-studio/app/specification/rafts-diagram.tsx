@@ -1,7 +1,11 @@
 import { useId, useMemo, useState } from 'react';
-import { raftPlan, type RaftPlan } from '@/lib/specimen/kernel';
+import {
+  kernelLoadError,
+  raftPlan,
+  type RaftPlan,
+} from '@/lib/specimen/kernel';
 import type { Settings } from '@/lib/specimen/types';
-import { useKernelReady } from '@/lib/specimen/use-kernel-ready';
+import { useKernelStatus } from '@/lib/specimen/use-kernel-ready';
 
 const SHOWN = 12;
 const TABLE_ROWS = 200;
@@ -23,10 +27,12 @@ export function RaftsDiagram({ settings }: { settings: Settings }) {
     parsed <= MAX_CANDIDATES;
   const [count, setCount] = useState(1000);
   const workers = Math.min(settings.maxRafts, settings.scanLimit);
-  const ready = useKernelReady();
+  const status = useKernelStatus();
   // Only a bounded prefix is built, and only when an input changes.
   const result = useMemo((): { plan: RaftPlan } | { failure: string } => {
-    if (!ready) return { failure: 'Loading the kernel…' };
+    if (status === 'loading') return { failure: 'Loading the kernel…' };
+    if (status === 'failed')
+      return { failure: `The kernel failed to load: ${kernelLoadError()}` };
     try {
       return {
         plan: raftPlan(count, settings.chunkSize, workers, TABLE_ROWS),
@@ -34,7 +40,7 @@ export function RaftsDiagram({ settings }: { settings: Settings }) {
     } catch (err) {
       return { failure: err instanceof Error ? err.message : String(err) };
     }
-  }, [ready, count, settings.chunkSize, workers]);
+  }, [status, count, settings.chunkSize, workers]);
   const plan = 'plan' in result ? result.plan : null;
   const chunks = plan?.chunks ?? [];
   const summary = !plan

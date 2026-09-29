@@ -107,3 +107,30 @@ export function topologyLayout(
     }),
   );
 }
+
+/**
+ * The layer after an edit's targets is rewired by the kernel when its input
+ * width changes (keeping at most its old fan-in, with new weights). Describes
+ * that side effect, or returns '' when there was none. `targets` are indexes
+ * in `after`; layers are matched from the end, since the decoder anchors it.
+ */
+export function describeRewiring(
+  before: Network,
+  after: Network,
+  targets: number[],
+): string {
+  const j = Math.max(...targets) + 1;
+  const next = after.layers[j];
+  const prev = before.layers[j - (after.layers.length - before.layers.length)];
+  if (!next || !prev) return '';
+  const same =
+    next.inputs === prev.inputs &&
+    next.columns.length === prev.columns.length &&
+    next.columns.every((c, k) => c === prev.columns[k]);
+  if (same) return '';
+  const [fan] = layerRows({ version: 1, layers: [next] }).map((r) => r.fanIn);
+  const [was] = layerRows({ version: 1, layers: [prev] }).map((r) => r.fanIn);
+  return `Layer ${j + 1} was rewired to its new inputs: ${fan} per neuron${
+    fan === was ? '' : ` (was ${was})`
+  }, new random weights.`;
+}

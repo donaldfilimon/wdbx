@@ -820,3 +820,44 @@ In headless Chrome the scene renders a real WebGL canvas.
 Not exercised: the desktop `network` commit path through the webview;
 dragging and connect-by-drag (out of scope). Browser cycles still compose
 with the built-in default network; the view says so.
+
+## B6 review fixes (2026-09-29)
+
+Fresh reviewer on 1800042: no Critical; five Important, all fixed.
+
+1. A failed kernel load left `kernelLoaded` pending forever (network view
+   stuck on "Loading", raft planner on "Loading the kernel"). Load state is
+   now `lib/specimen/readiness.ts` (tested): waiters reject with the load
+   error and `useKernelStatus` reports `failed`.
+2. The trace and draft inputs outlived the network they described. The
+   builder remounts on every successful edit; the e2e checks the trace table
+   disappears after a resize.
+3. The kernel rewires the layer after an edited one (capped fan-in, new
+   weights) silently. `describeRewiring` (tested) adds that to the status
+   line, e.g. "Layer 2 was rewired to its new inputs: 8 per neuron".
+4. Desktop edits committed at the latest revision, so an import made while
+   the view was open was overwritten. Edits now commit at the revision the
+   network was loaded from and fail as `StaleRevision` with a Reload button
+   (tested with a mocked Tauri bridge).
+5. The trace copy claimed engine parity; it now says it is a text-only
+   encoding without resources, ATP, visual features or the specimen seed.
+
+Also: `network_edit::apply` validates its input first; a network claiming a
+2-billion-wide layer spent 15 s allocating before rejection (a trap on
+wasm32), now immediate (test asserts under 200 ms). Aborted IndexedDB
+network writes reject instead of leaving the view busy.
+
+Deferred minors: seed 0 equals seed 1 and the first draw is near zero for
+common seeds; `removeLayer` ignores the chosen seed; same-width resize
+resamples; malformed JSON reports `MalformedSave`; an invalid stored browser
+network silently becomes the default; theme changes do not repaint the
+canvas; `getComputedStyle` per node per render; the viewport error boundary
+never resets and the WebGL probe context is not released; "Before layer"
+can point past the end after a remove; one seed field drives every command;
+the canvas has no keyboard controls (the tables carry every action); the
+spec says "Network" and "affinity to width", the view is "Neural layers"
+and uses opacity. Ruling: the stale-trace e2e assertion was not
+mutation-checked (it was written with the fix).
+
+Evidence: `bun run check` (171), `check:native`, `test:native` exit 0;
+`test:browser` dark and light with the new assertions.

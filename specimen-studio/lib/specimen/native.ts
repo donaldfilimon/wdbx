@@ -173,17 +173,27 @@ export async function pickNativeFile() {
   const selected = await open({ multiple: false });
   return typeof selected === 'string' ? selected : undefined;
 }
-/** The desktop snapshot's network (the one cycles use for composition). */
+/** The desktop snapshot's network (the one cycles use) and its revision. */
 export async function loadNativeNetwork() {
-  return acceptSnapshot(await callNative<NativeSnapshot>({ op: 'snapshot' }))
-    .network;
-}
-/** Commits a network edit at the current revision; the store validates it again. */
-export function persistNativeNetwork(network: unknown) {
-  return serial(
-    async () =>
-      acceptSnapshot(
-        await callNative<NativeSnapshot>({ op: 'network', revision, network }),
-      ).network,
+  const snapshot = acceptSnapshot(
+    await callNative<NativeSnapshot>({ op: 'snapshot' }),
   );
+  return { network: snapshot.network, revision: snapshot.revision };
+}
+/**
+ * Commits a network edit at `base`, the revision the edited network was
+ * loaded from, so a change committed since (an import, another edit) makes
+ * this a `StaleRevision` error instead of being overwritten.
+ */
+export function persistNativeNetwork(network: unknown, base: number) {
+  return serial(async () => {
+    const snapshot = acceptSnapshot(
+      await callNative<NativeSnapshot>({
+        op: 'network',
+        revision: base,
+        network,
+      }),
+    );
+    return { network: snapshot.network, revision: snapshot.revision };
+  });
 }

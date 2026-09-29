@@ -13,6 +13,8 @@ import {
   type KernelInstance,
 } from './kernel-core';
 import { validateCollections } from './contracts';
+import { createReadiness, type LoadStatus } from './readiness';
+export type { LoadStatus };
 import { isDesktop, nativeReview, runNative } from './native';
 import type {
   Cycle,
@@ -32,19 +34,14 @@ let restarting: Promise<void> | undefined;
 let worker: Worker | undefined;
 let workerAllowed = true;
 let nextJob = 1;
-const readyListeners = new Set<() => void>();
-let markLoaded: () => void = () => {};
-/** Resolves once the kernel has loaded (never rejects; see `initKernel`). */
-export const kernelLoaded = new Promise<void>((resolve) => {
-  markLoaded = resolve;
-});
-/** Calls `onChange` when the kernel finishes loading; returns an unsubscribe. */
-export function subscribeKernel(onChange: () => void) {
-  readyListeners.add(onChange);
-  return () => {
-    readyListeners.delete(onChange);
-  };
-}
+const readiness = createReadiness();
+/** Resolves once the kernel loads; rejects with the load error if it fails. */
+export const kernelLoaded = readiness.ready;
+/** Calls `onChange` when the kernel finishes loading or fails to. */
+export const subscribeKernel = readiness.subscribe;
+/** 'loading' | 'ready' | 'failed', for UI that must not wait forever. */
+export const kernelStatus = readiness.status;
+export const kernelLoadError = readiness.error;
 
 /**
  * Loads the kernel once. `source` is the .wasm bytes or its URL; `worker` is
@@ -62,10 +59,10 @@ export async function initKernel(
     await load(source);
     workerUrl = options.worker;
     loadError = undefined;
-    markLoaded();
-    for (const listener of readyListeners) listener();
+    readiness.markReady();
   } catch (err) {
     loadError = err instanceof Error ? err.message : String(err);
+    readiness.markFailed(err);
     throw new Error(`The specimen kernel failed to load: ${loadError}`);
   }
 }

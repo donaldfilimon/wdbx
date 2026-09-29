@@ -257,6 +257,21 @@ try {
       })
       .locator('tbody tr'),
   ).toHaveCount(3);
+  // An edit clears the trace (it described the old network) and says which
+  // other layer the kernel rewired.
+  await page.getByLabel('Layer 1 neurons').fill('32');
+  await page
+    .getByRole('button', { name: 'Resize', exact: true })
+    .first()
+    .click();
+  await expect(
+    page
+      .locator('output')
+      .filter({ hasText: 'Layer 1 now has 32 neurons. Layer 2 was rewired' }),
+  ).toBeVisible();
+  await expect(
+    page.locator('caption', { hasText: 'Trace: output per layer' }),
+  ).toHaveCount(0);
   await page.getByRole('tab', { name: 'Topology' }).click();
   await expect(page.getByRole('region', { name: 'Nodes' })).toBeVisible();
   // Store explorer: the browser edition reports its IndexedDB record.
