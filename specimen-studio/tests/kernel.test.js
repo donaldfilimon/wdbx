@@ -217,3 +217,30 @@ test('browser saves from the TypeScript engine migrate to native IDs', () => {
   );
   expect(() => validateSpecimen(next)).not.toThrow();
 });
+
+test('importing a TypeScript-era file migrates before validating', () => {
+  const legacy = JSON.parse(
+    readFileSync(new URL('../conformance/starter.json', import.meta.url)),
+  );
+  legacy.settings.scanLimit = 5000;
+  const next = validateSpecimen(legacy);
+  expect(next.settings.scanLimit).toBe(1000);
+  expect(next.nodes[0].patternId.startsWith('text-v2:')).toBe(true);
+});
+
+test('the advanced editor cannot store a node without entries', () => {
+  expect(() =>
+    addNode(seedSpecimen(), {
+      name: 'N',
+      pattern: 'new thing',
+      action: 'act',
+      entries: [],
+    }),
+  ).toThrow('Store between 1 and 20 entries.');
+});
+
+test('imports with out-of-range records are rejected', () => {
+  const s = seedSpecimen();
+  s.atp.valence = 50;
+  expect(() => validateSpecimen(s)).toThrow('ATP state is invalid.');
+});

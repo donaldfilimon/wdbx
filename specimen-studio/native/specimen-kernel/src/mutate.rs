@@ -147,6 +147,13 @@ pub fn add_node(
             json!(list)
         }
     };
+    let entry_limit = number(&settings, "entryLimit", 20.);
+    if entries.as_array().is_none_or(Vec::is_empty) {
+        return Err(invalid(&format!(
+            "Store between 1 and {} entries.",
+            fmt_bound(entry_limit)
+        )));
+    }
     let first_pattern = entries[0]["pattern"]
         .as_str()
         .unwrap_or_default()
@@ -523,29 +530,36 @@ pub fn toggle_pin(h: &Host, source: &Value, cycle_id: &str) -> Result<Value> {
     Ok(s)
 }
 
+/// Native settings bounds, shared by validation and migration clamping.
+pub const BOUNDS: [(&str, f64, f64); 18] = [
+    ("voteThreshold", -100., 100.),
+    ("jitter", 0., 100.),
+    ("maxStrength", 1., 1000.),
+    ("initialStrength", 1., 1000.),
+    ("entryLimit", 1., 1000.),
+    ("scanLimit", 1., 1000.),
+    ("fanoutLimit", 1., 100.),
+    ("historyLimit", 1., 100000.),
+    ("pinLimit", 1., 10000.),
+    ("maxNodes", 1., 100000.),
+    ("maxRafts", 1., 64.),
+    ("maxThreads", 1., 64.),
+    ("chunkSize", 1., 4096.),
+    ("raftThreshold", 1., 10000.),
+    ("idleMin", 1., 86400.),
+    ("idleMax", 1., 86400.),
+    ("transientWidth", 8., 128.),
+    ("seed", 1., 4294967295.),
+];
+
+/// Whether a bounded setting must be a whole number.
+fn whole(key: &str) -> bool {
+    key != "voteThreshold" && key != "jitter"
+}
+
 /// Settings checks with native bounds (from `engine::validate`) plus the type
 /// checks the browser profile enforced.
 pub fn validate_settings(settings: &Value) -> Result<()> {
-    const BOUNDS: [(&str, f64, f64); 18] = [
-        ("voteThreshold", -100., 100.),
-        ("jitter", 0., 100.),
-        ("maxStrength", 1., 1000.),
-        ("initialStrength", 1., 1000.),
-        ("entryLimit", 1., 1000.),
-        ("scanLimit", 1., 1000.),
-        ("fanoutLimit", 1., 100.),
-        ("historyLimit", 1., 100000.),
-        ("pinLimit", 1., 10000.),
-        ("maxNodes", 1., 100000.),
-        ("maxRafts", 1., 64.),
-        ("maxThreads", 1., 64.),
-        ("chunkSize", 1., 4096.),
-        ("raftThreshold", 1., 10000.),
-        ("idleMin", 1., 86400.),
-        ("idleMax", 1., 86400.),
-        ("transientWidth", 8., 128.),
-        ("seed", 1., 4294967295.),
-    ];
     for (key, lo, hi) in BOUNDS {
         let v = settings[key].as_f64().unwrap_or(f64::NAN);
         if !v.is_finite() || v < lo || v > hi {
@@ -555,7 +569,7 @@ pub fn validate_settings(settings: &Value) -> Result<()> {
                 fmt_bound(hi)
             )));
         }
-        if key != "voteThreshold" && key != "jitter" && v.fract() != 0. {
+        if whole(key) && v.fract() != 0. {
             return Err(invalid(&format!("{key} must be a whole number.")));
         }
     }
@@ -583,36 +597,106 @@ fn fmt_bound(v: f64) -> String {
     }
 }
 
-/// Recomputes node and memory Pattern IDs with the native identifier and
-/// remaps memory links, so browser saves from the TypeScript engine load.
+/// Repairs a specimen saved by the retired TypeScript engine so it satisfies
+/// native rules: clamps settings to native bounds, recomputes Pattern IDs with
+/// the native identifier, splits entries that no longer share their node's ID
+/// into new nodes, and remaps memory links (the first node that carried an old
+/// ID wins). Every repair is logged; an already-native specimen is unchanged.
 pub fn migrate_ids(h: &Host, source: &Value) -> Value {
     let mut s = source.clone();
-    let mut remap = BTreeMap::new();
-    for n in s["nodes"].as_array_mut().into_iter().flatten() {
-        let first = n["entries"][0]["pattern"]
-            .as_str()
-            .unwrap_or_default()
-            .to_owned();
-        let pid = language::identify(&first);
-        let old = text(n, "patternId").to_owned();
-        if old != pid.id {
-            remap.insert(old, pid.id.clone());
+    let mut adjusted = vec![];
+    for (key, lo, hi) in BOUNDS {
+        let Some(v) = s["settings"][key].as_f64() else {
+            continue;
+        };
+        let mut next = v.clamp(lo, hi);
+        if whole(key) {
+            next = next.round();
         }
-        n["patternId"] = json!(pid.id);
-        n["resolution"] = json!(pid.resolution);
+        if next != v {
+            adjusted.push(format!("{key} {} → {}", fmt_bound(v), fmt_bound(next)));
+            s["settings"][key] = if whole(key) {
+                json!(next as i64)
+            } else {
+                json!(next)
+            };
+        }
     }
-    let mut changed = !remap.is_empty();
+    if s["settings"]["initialStrength"].as_f64() > s["settings"]["maxStrength"].as_f64() {
+        s["settings"]["initialStrength"] = s["settings"]["maxStrength"].clone();
+        adjusted.push("initialStrength lowered to maxStrength".into());
+    }
+    if s["settings"]["idleMin"].as_f64() > s["settings"]["idleMax"].as_f64() {
+        s["settings"]["idleMax"] = s["settings"]["idleMin"].clone();
+        adjusted.push("idleMax raised to idleMin".into());
+    }
+    if !adjusted.is_empty() {
+        log(
+            h.env,
+            &mut s,
+            "system",
+            "Settings adjusted to native limits",
+            &adjusted.join(", "),
+        );
+    }
+    let mut remap: BTreeMap<String, String> = BTreeMap::new();
+    let mut ids_changed = false;
+    let mut split = 0;
+    let mut nodes = vec![];
+    for n in rows(&s, "nodes").to_vec() {
+        let old = text(&n, "patternId").to_owned();
+        // Group entries by their native Pattern ID, keeping first-seen order.
+        let mut groups: Vec<(language::PatternId, Vec<Value>)> = vec![];
+        for e in rows(&n, "entries") {
+            let pid = language::identify(text(e, "pattern"));
+            match groups.iter_mut().find(|(g, _)| g.id == pid.id) {
+                Some((_, list)) => list.push(e.clone()),
+                None => groups.push((pid, vec![e.clone()])),
+            }
+        }
+        if groups.is_empty() {
+            nodes.push(n);
+            continue;
+        }
+        for (k, (pid, entries)) in groups.into_iter().enumerate() {
+            let mut node = n.clone();
+            if k > 0 {
+                node["ref"] = json!(h.env.uid());
+                node["name"] = json!(format!("{} · {}", text(&n, "name"), k + 1));
+                split += 1;
+            } else {
+                remap.entry(old.clone()).or_insert_with(|| pid.id.clone());
+            }
+            if text(&node, "patternId") != pid.id {
+                ids_changed = true;
+            }
+            node["patternId"] = json!(pid.id);
+            node["resolution"] = json!(pid.resolution);
+            node["entries"] = json!(entries);
+            nodes.push(node);
+        }
+    }
+    s["nodes"] = json!(nodes);
     for r in s["resources"].as_array_mut().into_iter().flatten() {
         let pid = language::identify(text(r, "text")).id;
         if text(r, "patternId") != pid {
             r["patternId"] = json!(pid);
-            changed = true;
+            ids_changed = true;
         }
         if let Some(new) = remap.get(text(r, "resourceId")) {
             r["resourceId"] = json!(new);
         }
     }
-    if changed {
+    if split > 0 {
+        log(
+            h.env,
+            &mut s,
+            "system",
+            "Nodes split for native Pattern IDs",
+            &format!("{split} entries moved to new nodes so every entry matches its node."),
+        );
+    }
+    if ids_changed {
         log(
             h.env,
             &mut s,
@@ -622,6 +706,141 @@ pub fn migrate_ids(h: &Host, source: &Value) -> Value {
         );
     }
     s
+}
+
+/// The record checks the browser engine applied to files it loaded, run at
+/// the import boundary (the desktop store keeps `engine::validate` only).
+pub fn validate_records(s: &Value) -> Result<()> {
+    let limit = number(&s["settings"], "entryLimit", 20.) as usize;
+    let max_strength = number(&s["settings"], "maxStrength", 10.);
+    let mut refs = BTreeSet::new();
+    let mut patterns = BTreeSet::new();
+    for n in rows(s, "nodes") {
+        let entries = rows(n, "entries");
+        let strength = n["strength"].as_f64().unwrap_or(f64::NAN);
+        if text(n, "ref").is_empty()
+            || !refs.insert(text(n, "ref").to_owned())
+            || !n["name"].is_string()
+            || !["pattern", "A", "B"].contains(&text(n, "type"))
+            || entries.is_empty()
+            || entries.len() > limit
+            || !strength.is_finite()
+            || strength < 1.
+            || strength > max_strength
+        {
+            return Err(invalid("A node is invalid or repeated."));
+        }
+        for e in entries {
+            let p = text(e, "pattern");
+            let alts = rows(e, "alternatives");
+            if !e["pattern"].is_string()
+                || p.chars().count() > 2000
+                || !patterns.insert(p.to_owned())
+                || language::identify(p).id != text(n, "patternId")
+                || alts.is_empty()
+                || alts.len() > 100
+            {
+                return Err(invalid(
+                    "A pattern entry is invalid, repeated, or indexed incorrectly.",
+                ));
+            }
+            for a in alts {
+                let w = a["weight"].as_f64().unwrap_or(f64::NAN);
+                if !a["action"].is_string()
+                    || text(a, "action").chars().count() > 8000
+                    || !a["inhibition"].is_string()
+                    || !a["id"].is_string()
+                    || !a["remixed"].is_boolean()
+                    || !w.is_finite()
+                    || w < 0.
+                {
+                    return Err(invalid("A vote alternative is invalid."));
+                }
+            }
+        }
+    }
+    let node_ids: BTreeSet<&str> = rows(s, "nodes")
+        .iter()
+        .map(|n| text(n, "patternId"))
+        .collect();
+    for r in rows(s, "resources") {
+        let (v, i) = (
+            r["valence"].as_f64().unwrap_or(f64::NAN),
+            r["intensity"].as_f64().unwrap_or(f64::NAN),
+        );
+        let link = text(r, "resourceId");
+        if text(r, "ref").is_empty()
+            || !r["text"].is_string()
+            || !r["value"].is_string()
+            || text(r, "value").chars().count() > 12000
+            || language::identify(text(r, "text")).id != text(r, "patternId")
+            || !SUBSYSTEMS.contains(&text(r, "subsystem"))
+            || (!link.is_empty() && !node_ids.contains(link))
+            || !v.is_finite()
+            || v.abs() > 1.
+            || !i.is_finite()
+            || !(0. ..=1.).contains(&i)
+        {
+            return Err(invalid("A supporting memory is invalid."));
+        }
+    }
+    for a in rows(s, "attachments") {
+        let affinity = a["affinity"].as_f64().unwrap_or(f64::NAN);
+        if !refs.contains(text(a, "from"))
+            || !refs.contains(text(a, "to"))
+            || text(a, "from") == text(a, "to")
+            || !affinity.is_finite()
+            || !(0. ..=1.).contains(&affinity)
+        {
+            return Err(invalid("An attachment has invalid endpoints or affinity."));
+        }
+    }
+    for h in rows(s, "history") {
+        let segments_ok = rows(h, "segments").iter().all(|x| {
+            x["text"].is_string()
+                && x["contributors"].is_array()
+                && x["sourceVotes"].is_array()
+                && x["transformations"].is_array()
+        });
+        if !h["input"].is_string()
+            || !h["segments"].is_array()
+            || !h["votes"].is_array()
+            || !h["trace"].is_array()
+            || !h["feedback"].is_array()
+            || !["complete", "unmatched", "inhibited", "cancelled"].contains(&text(h, "status"))
+            || !segments_ok
+        {
+            return Err(invalid("Conversation history is malformed."));
+        }
+        let v = &h["visual"];
+        if !v.is_null() {
+            let arrays =
+                ["xArray", "yArray", "colorArray", "brightnessArray"].map(|k| v[k].as_array());
+            let aligned = arrays.iter().all(Option::is_some)
+                && arrays
+                    .iter()
+                    .map(|a| a.map_or(0, Vec::len))
+                    .collect::<BTreeSet<_>>()
+                    .len()
+                    == 1;
+            let finite = |k: &str| {
+                rows(v, k)
+                    .iter()
+                    .all(|x| x.as_f64().is_some_and(f64::is_finite))
+            };
+            if !aligned || rows(v, "xArray").len() > 128 || !finite("xArray") || !finite("yArray") {
+                return Err(invalid("Visual arrays are invalid."));
+            }
+        }
+    }
+    let (v, i) = (
+        s["atp"]["valence"].as_f64().unwrap_or(f64::NAN),
+        s["atp"]["intensity"].as_f64().unwrap_or(f64::NAN),
+    );
+    if !v.is_finite() || v.abs() > 1. || !i.is_finite() || !(0. ..=1.).contains(&i) {
+        return Err(invalid("ATP state is invalid."));
+    }
+    Ok(())
 }
 
 /// The starter specimen: eight pattern nodes and twelve supporting memories.

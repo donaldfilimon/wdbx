@@ -323,3 +323,179 @@ fn migrate_ids_recomputes_patterns_and_remaps_links() {
     );
     engine::validate(&next).unwrap();
 }
+
+#[test]
+fn add_node_rejects_missing_or_empty_explicit_entries() {
+    let (fixed, s) = seeded();
+    let h = fixed.host();
+    for entries in [json!([]), json!({}), json!("x")] {
+        let input = NodeInput {
+            entries: Some(entries),
+            ..node("N", "new thing", "act")
+        };
+        assert_eq!(
+            mutate::add_node(&h, &s, &input, None).unwrap_err().message,
+            "Store between 1 and 20 entries."
+        );
+    }
+}
+
+fn legacy_recall(s: &mut Value) {
+    // A TypeScript-era node: its identifier put both patterns in `low:recall`.
+    s["nodes"][4]["patternId"] = json!("low:recall");
+    let alt = s["nodes"][4]["entries"][0]["alternatives"][0].clone();
+    let mut second = s["nodes"][4]["entries"][0].clone();
+    second["id"] = json!("legacy-entry");
+    second["pattern"] = json!("do you remember me");
+    let mut alt2 = alt;
+    alt2["id"] = json!("legacy-alt");
+    second["alternatives"] = json!([alt2]);
+    s["nodes"][4]["entries"]
+        .as_array_mut()
+        .unwrap()
+        .push(second);
+    for r in s["resources"].as_array_mut().unwrap() {
+        if r["subsystem"] == "dictionary" {
+            r["resourceId"] = json!("low:recall");
+        }
+    }
+}
+
+#[test]
+fn migrate_splits_entries_that_no_longer_share_a_pattern_id() {
+    let (fixed, mut s) = seeded();
+    let h = fixed.host();
+    legacy_recall(&mut s);
+    let next = mutate::migrate_ids(&h, &s);
+    let nodes = next["nodes"].as_array().unwrap();
+    assert_eq!(nodes.len(), 9);
+    let recall = &nodes[4];
+    assert_eq!(recall["entries"].as_array().unwrap().len(), 1);
+    let split = nodes
+        .iter()
+        .find(|n| n["name"] == "Recall · 2")
+        .expect("split node");
+    assert_eq!(split["entries"][0]["pattern"], "do you remember me");
+    assert_eq!(
+        split["patternId"],
+        language::identify("do you remember me").id
+    );
+    assert_eq!(split["strength"], recall["strength"]);
+    for n in nodes {
+        for e in n["entries"].as_array().unwrap() {
+            assert_eq!(
+                language::identify(e["pattern"].as_str().unwrap()).id,
+                n["patternId"]
+            );
+        }
+    }
+    // Links follow the first node that carried the old ID, deterministically.
+    assert!(
+        next["resources"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|r| r["subsystem"] == "dictionary")
+            .all(|r| r["resourceId"] == recall["patternId"])
+    );
+    // The split node is editable: add_node on it succeeds.
+    let r = split["ref"].as_str().unwrap().to_owned();
+    mutate::add_node(
+        &h,
+        &next,
+        &node("Recall · 2", "do you remember me", "Yes."),
+        Some(&r),
+    )
+    .unwrap();
+    mutate::validate_records(&next).unwrap();
+}
+
+#[test]
+fn migrate_clamps_settings_to_native_bounds() {
+    let (fixed, mut s) = seeded();
+    let h = fixed.host();
+    s["settings"]["scanLimit"] = json!(5000);
+    s["settings"]["chunkSize"] = json!(10000);
+    s["settings"]["idleMin"] = json!(60.5);
+    let next = mutate::migrate_ids(&h, &s);
+    assert_eq!(next["settings"]["scanLimit"], 1000);
+    assert_eq!(next["settings"]["chunkSize"], 4096);
+    assert_eq!(next["settings"]["idleMin"], 61);
+    mutate::validate_settings(&next["settings"]).unwrap();
+    engine::validate(&next).unwrap();
+    let event = next["events"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|e| e["title"] == "Settings adjusted to native limits")
+        .expect("logged");
+    assert!(
+        event["detail"]
+            .as_str()
+            .unwrap()
+            .contains("scanLimit 5000 → 1000")
+    );
+}
+
+/// A change that should make `validate_records` fail.
+type Corruption = Box<dyn Fn(&mut Value)>;
+
+#[test]
+fn validate_records_restores_the_browser_record_checks() {
+    let (_, s) = seeded();
+    mutate::validate_records(&s).unwrap();
+    let cases: Vec<(Corruption, &str)> = vec![
+        (
+            Box::new(|s| s["atp"]["valence"] = json!(50)),
+            "ATP state is invalid.",
+        ),
+        (
+            Box::new(|s| {
+                let r = s["nodes"][0]["ref"].clone();
+                s["attachments"] = json!([{"id":"a","from":r,"to":r,"bidirectional":false,"hard":false,"affinity":0.5}]);
+            }),
+            "An attachment has invalid endpoints or affinity.",
+        ),
+        (
+            Box::new(|s| {
+                let (a, b) = (s["nodes"][0]["ref"].clone(), s["nodes"][1]["ref"].clone());
+                s["attachments"] = json!([{"id":"a","from":a,"to":b,"bidirectional":false,"hard":false,"affinity":7}]);
+            }),
+            "An attachment has invalid endpoints or affinity.",
+        ),
+        (
+            Box::new(|s| s["nodes"][0]["strength"] = json!(0)),
+            "A node is invalid or repeated.",
+        ),
+        (
+            Box::new(|s| s["resources"][0]["resourceId"] = json!("text-v2:low:nothing")),
+            "A supporting memory is invalid.",
+        ),
+        (
+            Box::new(|s| s["nodes"][0]["entries"][0]["pattern"] = json!("tell me a story")),
+            "A pattern entry is invalid, repeated, or indexed incorrectly.",
+        ),
+        (
+            Box::new(|s| s["nodes"][0]["entries"][0]["alternatives"][0]["remixed"] = json!("no")),
+            "A vote alternative is invalid.",
+        ),
+        (
+            Box::new(|s| {
+                s["history"] = json!([{"id":"h","input":"x","segments":[],"votes":[],"trace":[],"feedback":[],"status":"weird"}]);
+            }),
+            "Conversation history is malformed.",
+        ),
+        (
+            Box::new(|s| {
+                s["history"] = json!([{"id":"h","input":"x","segments":[],"votes":[],"trace":[],"feedback":[],"status":"complete",
+                    "visual":{"xArray":[1,2],"yArray":[1],"colorArray":[],"brightnessArray":[]}}]);
+            }),
+            "Visual arrays are invalid.",
+        ),
+    ];
+    for (mutate_case, message) in cases {
+        let mut bad = s.clone();
+        mutate_case(&mut bad);
+        assert_eq!(mutate::validate_records(&bad).unwrap_err().message, message);
+    }
+}

@@ -9,6 +9,8 @@ export type KernelReply =
 
 export interface KernelInstance {
   call(request: object, onProgress?: (step: unknown) => void): KernelReply;
+  /** True after a WebAssembly trap: the instance must be replaced. */
+  readonly poisoned: boolean;
 }
 
 interface Exports {
@@ -44,8 +46,14 @@ export async function instantiateKernel(
     },
   });
   bound.exports = instance.exports as unknown as Exports;
+  let poisoned = false;
   return {
+    get poisoned() {
+      return poisoned;
+    },
     call(request, onProgress) {
+      if (poisoned)
+        throw new KernelError('Trap', 'The specimen kernel is restarting.');
       const e = bound.exports!;
       const input = encoder.encode(JSON.stringify(request));
       const ptr = e.alloc(input.length);
@@ -54,6 +62,15 @@ export async function instantiateKernel(
       let packed: bigint;
       try {
         packed = e.call(ptr, input.length);
+      } catch (err) {
+        if (err instanceof WebAssembly.RuntimeError) {
+          poisoned = true;
+          throw new KernelError(
+            'Trap',
+            `The specimen kernel stopped unexpectedly (${err.message}). It is restarting; try again.`,
+          );
+        }
+        throw err;
       } finally {
         listener = undefined;
       }

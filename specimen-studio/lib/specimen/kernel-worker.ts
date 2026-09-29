@@ -7,6 +7,7 @@
  */
 import { instantiateKernel, type KernelInstance } from './kernel-core';
 
+let bytes: ArrayBuffer | undefined;
 let kernel: Promise<KernelInstance> | undefined;
 
 self.onmessage = async (event: MessageEvent) => {
@@ -14,12 +15,30 @@ self.onmessage = async (event: MessageEvent) => {
     | { type: 'init'; bytes: ArrayBuffer }
     | { id: number; request: object };
   if ('type' in data) {
-    kernel = instantiateKernel(data.bytes);
+    bytes = data.bytes;
+    kernel = instantiateKernel(bytes);
     return;
   }
-  const k = await kernel!;
-  const reply = k.call(data.request, (step) =>
-    self.postMessage({ id: data.id, type: 'trace', step }),
-  );
-  self.postMessage({ id: data.id, type: 'result', reply });
+  try {
+    const k = await kernel!;
+    const reply = k.call(data.request, (step) =>
+      self.postMessage({ id: data.id, type: 'trace', step }),
+    );
+    self.postMessage({ id: data.id, type: 'result', reply });
+  } catch (err) {
+    // Never leave the caller waiting: report the failure as a kernel error
+    // and start a fresh instance if the old one trapped.
+    const e = err as { code?: string; message?: string };
+    self.postMessage({
+      id: data.id,
+      type: 'result',
+      reply: {
+        error: {
+          code: e.code ?? 'Trap',
+          message: e.message ?? String(err),
+        },
+      },
+    });
+    if (bytes) kernel = instantiateKernel(bytes);
+  }
 };

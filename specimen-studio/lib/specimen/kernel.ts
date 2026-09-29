@@ -27,6 +27,8 @@ import type {
 let kernel: KernelInstance | undefined;
 let wasmBytes: ArrayBuffer | undefined;
 let workerUrl: string | undefined;
+let loadError: string | undefined;
+let restarting: Promise<void> | undefined;
 let worker: Worker | undefined;
 let workerAllowed = true;
 let nextJob = 1;
@@ -39,11 +41,30 @@ export async function initKernel(
   source: BufferSource | string | URL,
   options: { worker?: string } = {},
 ) {
-  if (kernel) return;
-  workerUrl = options.worker;
+  if (kernel) {
+    if (options.worker) workerUrl = options.worker;
+    return;
+  }
+  try {
+    await load(source);
+    workerUrl = options.worker;
+    loadError = undefined;
+  } catch (err) {
+    loadError = err instanceof Error ? err.message : String(err);
+    throw new Error(`The specimen kernel failed to load: ${loadError}`);
+  }
+}
+
+async function fetchBytes(url: string | URL): Promise<ArrayBuffer> {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`${res.status} ${res.statusText} for ${url}`);
+  return res.arrayBuffer();
+}
+
+async function load(source: BufferSource | string | URL) {
   const bytes =
     typeof source === 'string' || source instanceof URL
-      ? await (await fetch(source)).arrayBuffer()
+      ? await fetchBytes(source)
       : source instanceof ArrayBuffer
         ? source
         : new Uint8Array(
@@ -63,7 +84,17 @@ export function useKernelWorker(allowed: boolean) {
 }
 
 function k(): KernelInstance {
+  if (loadError)
+    throw new Error(`The specimen kernel failed to load: ${loadError}`);
   if (!kernel) throw new Error('The specimen kernel is still loading.');
+  if (kernel.poisoned) {
+    // Replace a trapped instance in the background; calls resume once ready.
+    restarting ??= instantiateKernel(wasmBytes!).then((fresh) => {
+      kernel = fresh;
+      restarting = undefined;
+    });
+    throw new KernelError('Trap', 'The specimen kernel is restarting.');
+  }
   return kernel;
 }
 
@@ -201,8 +232,10 @@ export function validateSpecimen(value: unknown): Specimen {
     if (!Array.isArray(s[key]))
       throw new Error(`The ${key} collection is missing.`);
   validateCollections(s);
-  call({ op: 'validate', state: s });
-  return structuredClone(s);
+  // Repair files from the retired TypeScript engine before native checks.
+  const migrated = call<Specimen>({ op: 'migrateIds', state: s });
+  call({ op: 'validate', state: migrated });
+  return migrated;
 }
 
 /** Runs PHAGY or vote mutation (a coin flip when `mode` is omitted). */
@@ -236,6 +269,16 @@ async function runLong<T>(
   signal?: AbortSignal,
 ): Promise<T> {
   await checkpoint(signal);
+  if (kernel?.poisoned) {
+    // Long commands can wait for the fresh instance a trap requires.
+    try {
+      k();
+    } catch {
+      // k() started the restart; wait for it below.
+    }
+    await restarting;
+  }
+  k();
   if (!workerAllowed || !workerUrl || typeof Worker === 'undefined') {
     return unwrap<T>(k().call(request, (step) => onStep?.(step as TraceStep)));
   }
@@ -245,13 +288,25 @@ async function runLong<T>(
   return new Promise<T>((resolve, reject) => {
     const cleanup = () => {
       w.removeEventListener('message', onMessage);
+      w.removeEventListener('error', onError);
+      w.removeEventListener('messageerror', onError);
       signal?.removeEventListener('abort', onAbort);
     };
-    const onAbort = () => {
+    const retire = () => {
       cleanup();
       w.terminate();
       if (worker === w) worker = undefined;
+    };
+    const onAbort = () => {
+      retire();
       reject(abortError());
+    };
+    const onError = (event: Event) => {
+      retire();
+      const detail = (event as ErrorEvent).message || 'worker error';
+      reject(
+        new KernelError('Trap', `The specimen worker failed (${detail}).`),
+      );
     };
     const onMessage = (event: MessageEvent) => {
       const data = event.data as {
@@ -270,6 +325,8 @@ async function runLong<T>(
       }
     };
     w.addEventListener('message', onMessage);
+    w.addEventListener('error', onError);
+    w.addEventListener('messageerror', onError);
     signal?.addEventListener('abort', onAbort, { once: true });
     w.postMessage({ id, request });
   });

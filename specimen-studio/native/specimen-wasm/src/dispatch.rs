@@ -35,6 +35,7 @@ pub fn dispatch(h: &Host, req: &Value, progress: &dyn Fn(Value)) -> Result<Value
         "validate" => {
             engine::validate(state()?)?;
             mutate::validate_settings(&state()?["settings"])?;
+            mutate::validate_records(state()?)?;
             Ok(Value::Null)
         }
         "validateSettings" => {

@@ -603,3 +603,28 @@ phase list (see `RUNTIME-PROFILE.md`).
 
 Not exercised: the desktop webview loading the WASM under the new CSP (the
 native UI suite was not run), Firefox and WebKit.
+
+Whole-branch review fixes (each with a test that failed first):
+
+- **Desktop CSP blocked the WASM fetch** (`connect-src` lacked `'self'`, and
+  `default-src` does not apply once `connect-src` is present): every desktop
+  edit would have failed. `tests/desktop-config.test.js` pins the directives.
+- **The advanced entry editor could store a node with no entries**, which
+  made the workspace unloadable on the next start. `add_node` now rejects it.
+- **A failure inside the worker left the run in Processing forever.** The
+  worker reports errors as kernel errors and restarts its instance;
+  `runLong` rejects on worker errors; a trapped main-thread instance is
+  replaced and long commands wait for it (`tests/kernel-worker.test.js`
+  exercises a real Worker).
+- **TypeScript-era saves could load into uneditable or unloadable state.**
+  Ruling: migration runs before validation (for loads and imports); it clamps
+  settings to native bounds and splits entries that no longer share their
+  node's native Pattern ID into new nodes (`<name> · 2`), keeping every entry;
+  memory links follow the first node that carried the old ID. All repairs are
+  logged. Cost if wrong: a user sees an extra node per split class.
+- **Record checks the browser engine had were missing** (ATP bounds,
+  self-attachments and affinity, node strength, entry/Pattern ID agreement,
+  memory links, history status, visual arrays). Ruling: they run at the
+  import boundary (`mutate::validate_records`); `engine::validate`, which also
+  guards every desktop edit, is unchanged so existing desktop stores keep
+  loading. Cost if wrong: a malformed desktop store is caught later.
