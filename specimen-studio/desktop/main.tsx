@@ -5,7 +5,17 @@ import '@fontsource/geist/600.css';
 import '@fontsource/geist-mono/400.css';
 import { createRoot } from 'react-dom/client';
 import Studio from '../app/studio';
+import { applyTheme, resolveTheme } from '../app/shell/theme';
 import '../app/studio.css';
+function safeStorage(): Storage | undefined {
+  try {
+    return window.localStorage;
+  } catch {
+    return undefined;
+  }
+}
+// index.html ships class="dark" (the default); CSP forbids an inline boot script.
+applyTheme(document.documentElement, resolveTheme(safeStorage()));
 async function mount() {
   if (import.meta.env.VITE_NATIVE_E2E === '1') {
     await import('@wdio/tauri-plugin');
