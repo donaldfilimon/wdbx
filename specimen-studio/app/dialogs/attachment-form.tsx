@@ -1,5 +1,12 @@
 import { useState } from 'react';
 import { GitBranch } from 'lucide-react';
+import {
+  CheckboxField,
+  control,
+  Field,
+  FormError,
+  WButton,
+} from '@/components/wdbx';
 import { type Specimen } from '@/lib/specimen/types';
 
 import { formText } from '../state/format';
@@ -14,7 +21,7 @@ export function AttachmentForm({
   const [error, setError] = useState('');
   return (
     <form
-      className="editor-form"
+      className="grid gap-3"
       onSubmit={(e) => {
         e.preventDefault();
         const f = new FormData(e.currentTarget);
@@ -38,11 +45,13 @@ export function AttachmentForm({
       }}
     >
       {['from', 'to'].map((field, i) => (
-        <div key={field}>
-          <label htmlFor={`attach-${field}`}>
-            {field === 'from' ? 'Issuing node' : 'Attached node'}
-          </label>
+        <Field
+          key={field}
+          htmlFor={`attach-${field}`}
+          label={field === 'from' ? 'Issuing node' : 'Attached node'}
+        >
           <select
+            className={control}
             id={`attach-${field}`}
             name={field}
             defaultValue={state.nodes[i]?.ref}
@@ -53,35 +62,27 @@ export function AttachmentForm({
               </option>
             ))}
           </select>
-        </div>
+        </Field>
       ))}
-      <label htmlFor="attach-affinity">Attachment affinity (0 to 1)</label>
-      <input
-        id="attach-affinity"
-        name="affinity"
-        type="number"
-        min="0"
-        max="1"
-        step="0.05"
-        defaultValue="0.7"
-      />
-      <label className="checkbox-label">
-        <input type="checkbox" name="hard" />
-        Hard attachment (always schedule)
-      </label>
-      <label className="checkbox-label">
-        <input type="checkbox" name="bidirectional" />
-        Bidirectional handoff
-      </label>
-      {error && (
-        <p className="form-error" role="alert">
-          {error}
-        </p>
-      )}
-      <button className="button primary full-width" type="submit">
+      <Field htmlFor="attach-affinity" label="Attachment affinity (0 to 1)">
+        <input
+          className={control}
+          id="attach-affinity"
+          name="affinity"
+          type="number"
+          min="0"
+          max="1"
+          step="0.05"
+          defaultValue="0.7"
+        />
+      </Field>
+      <CheckboxField name="hard" label="Hard attachment (always schedule)" />
+      <CheckboxField name="bidirectional" label="Bidirectional handoff" />
+      {error && <FormError>{error}</FormError>}
+      <WButton variant="primary" type="submit" className="w-full">
         Create attachment
-        <GitBranch size={16} />
-      </button>
+        <GitBranch aria-hidden="true" size={16} />
+      </WButton>
     </form>
   );
 }

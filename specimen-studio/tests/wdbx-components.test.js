@@ -2,7 +2,13 @@ import { expect, test } from 'bun:test';
 import { createElement as h } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import {
+  CheckboxField,
   CodeBlock,
+  control,
+  Disclosure,
+  Field,
+  FieldRow,
+  FormError,
   EmptyState,
   EventTimeline,
   Panel,
@@ -88,4 +94,25 @@ test('CodeBlock is a focusable, labelled scroll region', () => {
   expect(out).toContain('<pre');
   expect(out).toContain('tabindex="0"');
   expect(out).toContain('aria-label="Vote evidence"');
+});
+
+test('Field labels its control and keeps the 44px control height', () => {
+  const out = html(
+    h(Field, { label: 'Node name', htmlFor: 'n' }, h('input', { id: 'n', className: control })),
+  );
+  expect(out).toContain('<label for="n"');
+  expect(out).toContain('Node name');
+  expect(out).toMatch(/<input id="n" class="[^"]*min-h-11/);
+});
+
+test('CheckboxField is a labelled checkbox with a 44px target', () => {
+  const out = html(h(CheckboxField, { name: 'hard', label: 'Hard attachment' }));
+  expect(out).toMatch(/<label class="[^"]*min-h-11[^"]*"><input type="checkbox"[^>]*name="hard"/);
+  expect(out).toContain('Hard attachment');
+});
+
+test('FormError is an alert; Disclosure has a 44px summary; FieldRow is a grid', () => {
+  expect(html(h(FormError, null, 'Choose two nodes.'))).toMatch(/^<p role="alert"/);
+  expect(html(h(Disclosure, { summary: 'More' }, 'x'))).toMatch(/<summary class="[^"]*min-h-11/);
+  expect(html(h(FieldRow, null, 'a'))).toMatch(/class="grid/);
 });

@@ -1,5 +1,13 @@
 import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
+import {
+  control,
+  Disclosure,
+  Field,
+  FieldRow,
+  FormError,
+  WButton,
+} from '@/components/wdbx';
 import { type SpecimenNode } from '@/lib/specimen/types';
 
 import { formText } from '../state/format';
@@ -26,7 +34,7 @@ export function NodeForm({
   const [error, setError] = useState('');
   return (
     <form
-      className="editor-form"
+      className="grid gap-3"
       onSubmit={(e) => {
         e.preventDefault();
         const f = new FormData(e.currentTarget);
@@ -50,20 +58,22 @@ export function NodeForm({
         }
       }}
     >
-      <label htmlFor="node-name">Node name</label>
-      <input
-        id="node-name"
-        name="name"
-        autoComplete="off"
-        required
-        maxLength={100}
-        defaultValue={node?.name ?? ''}
-        placeholder="e.g. Favorite color…"
-      />
-      <div className="form-columns">
-        <div>
-          <label htmlFor="node-type">Node type</label>
+      <Field htmlFor="node-name" label="Node name">
+        <input
+          className={control}
+          id="node-name"
+          name="name"
+          autoComplete="off"
+          required
+          maxLength={100}
+          defaultValue={node?.name ?? ''}
+          placeholder="e.g. Favorite color…"
+        />
+      </Field>
+      <FieldRow>
+        <Field htmlFor="node-type" label="Node type">
           <select
+            className={control}
             id="node-type"
             name="type"
             defaultValue={node?.type ?? 'pattern'}
@@ -72,10 +82,10 @@ export function NodeForm({
             <option value="A">Type A · residual supervisor</option>
             <option value="B">Type B · idle observer</option>
           </select>
-        </div>
-        <div>
-          <label htmlFor="node-tone">Tone</label>
+        </Field>
+        <Field htmlFor="node-tone" label="Tone">
           <select
+            className={control}
             id="node-tone"
             name="tone"
             defaultValue={node?.tone ?? 'neutral'}
@@ -84,90 +94,92 @@ export function NodeForm({
               <option key={t}>{t}</option>
             ))}
           </select>
-        </div>
-      </div>
-      <label htmlFor="node-pattern">Original pattern</label>
-      <textarea
-        id="node-pattern"
-        name="pattern"
-        spellCheck={false}
-        autoComplete="off"
-        required
-        maxLength={2000}
-        defaultValue={node?.entries[0]?.pattern ?? defaultPattern}
-        placeholder="e.g. what is your favorite color…"
-      />
-      <label htmlFor="node-action">Response or action</label>
-      <textarea
-        id="node-action"
-        name="action"
-        spellCheck={false}
-        autoComplete="off"
-        required
-        maxLength={8000}
-        defaultValue={node?.entries[0]?.alternatives[0]?.action ?? ''}
-        placeholder="e.g. Forest green. Or a scoped action sigil…"
-      />
-      <details>
-        <summary>Sigils & context</summary>
-        <p>
+        </Field>
+      </FieldRow>
+      <Field htmlFor="node-pattern" label="Original pattern">
+        <textarea
+          className={`${control} min-h-20 font-mono`}
+          id="node-pattern"
+          name="pattern"
+          spellCheck={false}
+          autoComplete="off"
+          required
+          maxLength={2000}
+          defaultValue={node?.entries[0]?.pattern ?? defaultPattern}
+          placeholder="e.g. what is your favorite color…"
+        />
+      </Field>
+      <Field htmlFor="node-action" label="Response or action">
+        <textarea
+          className={`${control} min-h-20 font-mono`}
+          id="node-action"
+          name="action"
+          spellCheck={false}
+          autoComplete="off"
+          required
+          maxLength={8000}
+          defaultValue={node?.entries[0]?.alternatives[0]?.action ?? ''}
+          placeholder="e.g. Forest green. Or a scoped action sigil…"
+        />
+      </Field>
+      <Disclosure summary="Sigils & context">
+        <p className="m-0">
           Use plain response text or <code>&calc(&current_input)</code>,{' '}
           <code>&repeat(&current_input)</code>, <code>&time&</code>,{' '}
           <code>&recall(&current_input)</code>,{' '}
           <code>&imagine(&current_input)</code>.
         </p>
-        <label htmlFor="node-context">Context magnet (Type A / B)</label>
-        <input
-          id="node-context"
-          name="context"
-          autoComplete="off"
-          defaultValue={node?.contextId ?? ''}
-          placeholder="e.g. recent output…"
-        />
-        <p>
+        <Field htmlFor="node-context" label="Context magnet (Type A / B)">
+          <input
+            className={control}
+            id="node-context"
+            name="context"
+            autoComplete="off"
+            defaultValue={node?.contextId ?? ''}
+            placeholder="e.g. recent output…"
+          />
+        </Field>
+        <p className="m-0">
           Custom automata use a bounded eight-operation tape interpreter.
           Programs stop after 10,000 instructions.
         </p>
-      </details>
+      </Disclosure>
       {node && (
-        <details className="advanced-fields">
-          <summary>All entries & weighted votes</summary>
-          <p>
+        <Disclosure summary="All entries & weighted votes">
+          <p className="m-0">
             Optional JSON editor for additional entries, inhibition terms, and
             weighted alternatives. When supplied, this replaces the entry list
             above. Keep original patterns unique and in the same Pattern-ID
             class.
           </p>
-          <label htmlFor="node-entries">Entry list (JSON)</label>
-          <textarea
-            id="node-entries"
-            name="entries"
-            autoComplete="off"
-            rows={10}
-            placeholder={JSON.stringify(node.entries, null, 2)}
-          />
-          <button
-            type="button"
-            className="text-button"
-            onClick={(e) => {
-              const area =
-                e.currentTarget.parentElement?.querySelector('textarea');
-              if (area) area.value = JSON.stringify(node.entries, null, 2);
+          <Field htmlFor="node-entries" label="Entry list (JSON)">
+            <textarea
+              className={`${control} font-mono`}
+              id="node-entries"
+              name="entries"
+              autoComplete="off"
+              rows={10}
+              placeholder={JSON.stringify(node.entries, null, 2)}
+            />
+          </Field>
+          <WButton
+            variant="ghost"
+            className="justify-self-start"
+            onClick={() => {
+              const area = document.getElementById('node-entries');
+              if (area instanceof HTMLTextAreaElement)
+                area.value = JSON.stringify(node.entries, null, 2);
             }}
           >
             Fill current entries
-          </button>
-        </details>
+          </WButton>
+        </Disclosure>
       )}
-      {error && (
-        <p role="alert" className="form-error">
-          {error}
-        </p>
-      )}
-      <button className="button primary full-width" type="submit">
+      {error && <FormError>{error}</FormError>}
+      <WButton variant="primary" type="submit" className="w-full">
         {node ? 'Save node' : 'Teach pattern'}
-        <ArrowRight size={16} />
-      </button>
+        <ArrowRight aria-hidden="true" size={16} />
+      </WButton>
     </form>
   );
 }

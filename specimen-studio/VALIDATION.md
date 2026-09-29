@@ -904,3 +904,16 @@ Evidence:
 Not exercised: model download, load and generation (no bundled runtimes or
 models on this machine), and the Lab's image learn/run buttons through the
 UI (the native suite drives analysis through the test bridge).
+
+## B8a forms, dialogs and search on shadcn/WDBX (2026-09-29)
+
+New form primitives in `components/wdbx/form.tsx` (`Field`, `FieldRow`,
+`CheckboxField`, `FormError`, `Disclosure`, the shared `control` style; 44px
+targets, token colours; tested in `tests/wdbx-components.test.js`). The node,
+memory and attachment forms, the dialog host (shadcn Dialog with Tailwind
+title, description and actions, WDBX buttons) and `SearchField`/`Empty` in
+`app/panels/common.tsx` moved onto them with identical labels, ids, names and
+button text. 22 legacy rules (127 lines) pruned from `app/studio.css` with the
+fixed pruner (usage-checked; `full-width`, `text-button`, `empty-state` kept
+because other markup still uses them). Evidence: `bun run check` (181),
+`test:browser` dark and light (both suites drive every dialog).

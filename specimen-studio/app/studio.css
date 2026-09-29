@@ -938,25 +938,6 @@ svg {
   font-size: 13px;
   max-width: 300px;
 }
-.search-field {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  border: 1px solid var(--line);
-  border-radius: 7px;
-  padding: 0 11px;
-  min-width: 240px;
-  max-width: 460px;
-  flex: 1;
-  color: var(--muted);
-}
-.search-field input {
-  border: 0;
-  padding: 10px 0;
-  width: 100%;
-  font-size: 13px;
-  background: transparent;
-}
 .table-scroll {
   overflow: auto;
 }
@@ -1199,103 +1180,6 @@ dialog {
   gap: 13px !important;
   box-shadow: 0 25px 90px var(--sidebar-bg);
   border: 1px solid var(--line-strong);
-}
-.studio-dialog [data-slot='dialog-title'] {
-  font-size: 24px;
-  font-weight: 600;
-  letter-spacing: -0.5px;
-  line-height: 1.25;
-  margin-right: 25px;
-}
-.studio-dialog [data-slot='dialog-description'] {
-  font-size: 13px;
-  line-height: 1.7;
-  color: var(--muted);
-}
-.editor-form {
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
-  margin-top: 7px;
-}
-.editor-form > label,
-.editor-form > div > label {
-  font-size: 13px;
-  font-weight: 550;
-  margin-top: 5px;
-}
-.editor-form input,
-.editor-form select,
-.editor-form textarea {
-  width: 100%;
-  font-size: 14px;
-}
-.editor-form details {
-  margin: 10px 0 17px;
-  background: var(--surface);
-  border-radius: 6px;
-  padding: 10px 13px;
-  font-size: 12px;
-  color: var(--ink-soft);
-}
-.editor-form details summary {
-  cursor: pointer;
-  font-size: 13px;
-  color: var(--teal-strong);
-}
-.editor-form details p {
-  margin: 10px 0;
-  line-height: 1.8;
-}
-.editor-form details label {
-  display: block;
-  margin-bottom: 5px;
-}
-.form-columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-  margin: 5px 0;
-}
-.form-columns label {
-  display: block;
-  font-size: 12px;
-  font-weight: 550;
-  margin-bottom: 7px;
-}
-.editor-form .checkbox-label {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-.editor-form input[type='checkbox'] {
-  width: 17px;
-  height: 17px;
-  accent-color: var(--teal);
-}
-.form-error {
-  font-size: 13px;
-  color: var(--danger);
-  background: var(--surface);
-  padding: 9px 12px;
-  border-radius: 5px;
-}
-.modal-actions {
-  display: flex;
-  gap: 12px;
-  justify-content: flex-end;
-  margin-top: 15px;
-  flex-wrap: wrap;
-}
-.load-summary {
-  padding: 18px;
-  background: var(--surface);
-  border-radius: 7px;
-}
-.load-summary p {
-  font-size: 13px;
-  color: var(--muted);
-  margin-top: 5px;
 }
 .error-banner {
   display: flex;
@@ -1824,17 +1708,6 @@ dialog {
     font-size: 12px;
     width: max-content;
     max-width: calc(100vw - 28px);
-  }
-  .studio-dialog {
-    padding: 22px !important;
-  }
-  .form-columns {
-    gap: 11px;
-  }
-  .editor-form input,
-  .editor-form textarea,
-  .editor-form select {
-    font-size: 16px;
   }
   .history-record {
     padding: 16px;

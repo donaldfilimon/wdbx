@@ -5,6 +5,7 @@ import {
   seedSpecimen,
 } from '@/lib/specimen/kernel';
 import { uid } from '@/lib/specimen/types';
+import { WButton } from '@/components/wdbx';
 import {
   Dialog,
   DialogContent,
@@ -40,8 +41,8 @@ export function DialogHost({ m }: { m: StudioModel }) {
         if (!open) setDialog(null);
       }}
     >
-      <DialogContent className="studio-dialog">
-        <DialogTitle>
+      <DialogContent className="max-h-[90dvh] overflow-y-auto p-6 max-sm:p-5 sm:max-w-lg">
+        <DialogTitle className="mr-6 text-2xl leading-tight font-semibold tracking-tight">
           {dialog === 'node'
             ? editing
               ? 'Edit node'
@@ -56,7 +57,7 @@ export function DialogHost({ m }: { m: StudioModel }) {
                   ? 'Attach two nodes'
                   : 'Start a fresh specimen?'}
         </DialogTitle>
-        <DialogDescription>
+        <DialogDescription className="text-sm leading-relaxed text-muted-foreground">
           {dialog === 'node'
             ? 'A pattern activates a node. Its vote defines the action.'
             : dialog === 'resource'
@@ -98,20 +99,20 @@ export function DialogHost({ m }: { m: StudioModel }) {
         )}
         {dialog === 'load' && pendingLoad && (
           <>
-            <div className="load-summary">
-              <strong>{pendingLoad.name}</strong>
-              <p>
+            <div className="rounded-lg bg-surface-2 p-4">
+              <strong className="text-ink">{pendingLoad.name}</strong>
+              <p className="m-0 mt-1 text-sm text-muted-foreground">
                 {pendingLoad.nodes.length} nodes ·{' '}
                 {pendingLoad.resources.length} memories ·{' '}
                 {pendingLoad.history.length} conversations
               </p>
             </div>
-            <div className="modal-actions">
-              <button className="button outline" onClick={save}>
+            <div className="mt-4 flex flex-wrap justify-end gap-3">
+              <WButton variant="outline" onClick={save}>
                 Save current specimen
-              </button>
-              <button
-                className="button primary"
+              </WButton>
+              <WButton
+                variant="primary"
                 onClick={() => {
                   setRunOutcome('idle');
                   setTrace([]);
@@ -123,17 +124,17 @@ export function DialogHost({ m }: { m: StudioModel }) {
                 }}
               >
                 Load specimen
-              </button>
+              </WButton>
             </div>
           </>
         )}
         {dialog === 'reset' && (
-          <div className="modal-actions">
-            <button className="button outline" onClick={save}>
+          <div className="mt-4 flex flex-wrap justify-end gap-3">
+            <WButton variant="outline" onClick={save}>
               Save current specimen
-            </button>
-            <button
-              className="button primary"
+            </WButton>
+            <WButton
+              variant="primary"
               onClick={() => {
                 setRunOutcome('idle');
                 setTrace([]);
@@ -145,7 +146,7 @@ export function DialogHost({ m }: { m: StudioModel }) {
               }}
             >
               Create starter specimen
-            </button>
+            </WButton>
           </div>
         )}
         {dialog === 'attach' && (

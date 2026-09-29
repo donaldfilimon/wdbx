@@ -1,5 +1,12 @@
 import { useState } from 'react';
 import { Check } from 'lucide-react';
+import {
+  control,
+  Field,
+  FieldRow,
+  FormError,
+  WButton,
+} from '@/components/wdbx';
 import { SUBSYSTEMS, type Resource, type Specimen } from '@/lib/specimen/types';
 
 import { formText } from '../state/format';
@@ -16,7 +23,7 @@ export function ResourceForm({
   const [error, setError] = useState('');
   return (
     <form
-      className="editor-form"
+      className="grid gap-3"
       onSubmit={(e) => {
         e.preventDefault();
         const f = new FormData(e.currentTarget);
@@ -36,28 +43,32 @@ export function ResourceForm({
         }
       }}
     >
-      <label htmlFor="memory-term">Word, phrase, or concept</label>
-      <input
-        id="memory-term"
-        name="term"
-        autoComplete="off"
-        required
-        defaultValue={resource?.text ?? ''}
-        placeholder="e.g. curiosity…"
-      />
-      <label htmlFor="memory-value">Supporting information</label>
-      <textarea
-        id="memory-value"
-        name="value"
-        autoComplete="off"
-        required
-        defaultValue={resource?.value ?? ''}
-        placeholder="Add a definition, synonyms, or a contextual rule…"
-      />
-      <div className="form-columns">
-        <div>
-          <label htmlFor="memory-subsystem">Subsystem</label>
+      <Field htmlFor="memory-term" label="Word, phrase, or concept">
+        <input
+          className={control}
+          id="memory-term"
+          name="term"
+          autoComplete="off"
+          required
+          defaultValue={resource?.text ?? ''}
+          placeholder="e.g. curiosity…"
+        />
+      </Field>
+      <Field htmlFor="memory-value" label="Supporting information">
+        <textarea
+          className={`${control} min-h-24`}
+          id="memory-value"
+          name="value"
+          autoComplete="off"
+          required
+          defaultValue={resource?.value ?? ''}
+          placeholder="Add a definition, synonyms, or a contextual rule…"
+        />
+      </Field>
+      <FieldRow>
+        <Field htmlFor="memory-subsystem" label="Subsystem">
           <select
+            className={control}
             id="memory-subsystem"
             name="subsystem"
             defaultValue={resource?.subsystem ?? 'dictionary'}
@@ -66,10 +77,10 @@ export function ResourceForm({
               <option key={s}>{s}</option>
             ))}
           </select>
-        </div>
-        <div>
-          <label htmlFor="memory-link">Link to node ID</label>
+        </Field>
+        <Field htmlFor="memory-link" label="Link to node ID">
           <select
+            className={control}
             id="memory-link"
             name="link"
             defaultValue={resource?.resourceId ?? ''}
@@ -79,12 +90,12 @@ export function ResourceForm({
               <option key={id}>{id}</option>
             ))}
           </select>
-        </div>
-      </div>
-      <div className="form-columns">
-        <div>
-          <label htmlFor="memory-valence">Valence (−1 to 1)</label>
+        </Field>
+      </FieldRow>
+      <FieldRow>
+        <Field htmlFor="memory-valence" label="Valence (−1 to 1)">
           <input
+            className={control}
             id="memory-valence"
             name="valence"
             type="number"
@@ -93,10 +104,10 @@ export function ResourceForm({
             step="0.1"
             defaultValue={resource?.valence ?? 0}
           />
-        </div>
-        <div>
-          <label htmlFor="memory-intensity">Intensity (0 to 1)</label>
+        </Field>
+        <Field htmlFor="memory-intensity" label="Intensity (0 to 1)">
           <input
+            className={control}
             id="memory-intensity"
             name="intensity"
             type="number"
@@ -105,17 +116,13 @@ export function ResourceForm({
             step="0.1"
             defaultValue={resource?.intensity ?? 0.5}
           />
-        </div>
-      </div>
-      {error && (
-        <p className="form-error" role="alert">
-          {error}
-        </p>
-      )}
-      <button className="button primary full-width" type="submit">
+        </Field>
+      </FieldRow>
+      {error && <FormError>{error}</FormError>}
+      <WButton variant="primary" type="submit" className="w-full">
         Save memory
-        <Check size={16} />
-      </button>
+        <Check aria-hidden="true" size={16} />
+      </WButton>
     </form>
   );
 }
