@@ -303,6 +303,17 @@ try {
     ).toBeVisible();
     await audit(page, width, 'specification-reader');
 
+    await page
+      .getByRole('button', { name: 'Show activity dock', exact: true })
+      .click();
+    await expect(
+      page.getByRole('region', { name: 'Activity dock' }),
+    ).toBeVisible();
+    await audit(page, width, 'activity-dock-open');
+    await page
+      .getByRole('button', { name: 'Hide activity dock', exact: true })
+      .click();
+
     if (width === 1440) {
       await page.goto(`${base}?view=studio&split=nodes`);
       await expect(

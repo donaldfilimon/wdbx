@@ -680,7 +680,7 @@ svg {
   display: block;
   width: 15px;
   height: 15px;
-  background: white;
+  background: var(--knob);
   border-radius: 50%;
   transition: transform 0.2s;
 }
@@ -2468,12 +2468,12 @@ svg {
   border: 1px solid var(--line-strong);
   font-size: 12px;
   font-weight: 600;
-  background: white;
+  background: var(--raised);
 }
 .native-lab .btn.primary {
   background: var(--teal-strong);
   border-color: var(--teal-strong);
-  color: white;
+  color: var(--on-teal);
 }
 .native-lab .btn:hover:not(:disabled) {
   filter: brightness(0.95);
@@ -2490,7 +2490,7 @@ svg {
   position: sticky;
   top: 0;
   z-index: 1;
-  background: white;
+  background: var(--raised);
 }
 .virtual-table .virtual-node-row {
   height: 76px;
@@ -4092,12 +4092,19 @@ body {
   color: var(--muted);
 }
 .console-dock-log {
-  margin: 0;
   padding: 6px 14px 12px;
   overflow: auto;
-  list-style: none;
   font-family: var(--font-geist-mono), monospace;
   font-size: 12px;
+}
+.console-dock-log:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+.console-dock-log ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 .console-dock-log li {
   display: grid;

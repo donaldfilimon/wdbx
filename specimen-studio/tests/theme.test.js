@@ -73,6 +73,7 @@ const TOKENS = [
   '--sidebar-muted',
   '--sidebar-active',
   '--sidebar-accent',
+  '--knob',
   '--focus',
   '--background',
   '--foreground',

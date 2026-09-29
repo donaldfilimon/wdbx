@@ -12,15 +12,26 @@ export function ConsoleDock({ events }: { events: Specimen['events'] }) {
           Latest {latest.length} of {events.length} events
         </small>
       </header>
-      <ol className="console-dock-log" role="log" aria-live="off">
-        {latest.map((event) => (
-          <li key={event.id}>
-            <time dateTime={event.createdAt}>{clock(event.createdAt)}</time>
-            <strong>{event.title}</strong>
-            <span>{event.detail}</span>
-          </li>
-        ))}
-      </ol>
+      {/* The scroll region is focusable for keyboard scrolling; role="log"
+          sits on the wrapper so the <ol> keeps its list semantics. */}
+      <div
+        className="console-dock-log"
+        role="log"
+        aria-label="Activity events"
+        aria-live="off"
+        // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- axe requires scrollable regions to be keyboard-focusable.
+        tabIndex={0}
+      >
+        <ol>
+          {latest.map((event) => (
+            <li key={event.id}>
+              <time dateTime={event.createdAt}>{clock(event.createdAt)}</time>
+              <strong>{event.title}</strong>
+              <span>{event.detail}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
     </section>
   );
 }

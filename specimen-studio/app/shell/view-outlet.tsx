@@ -24,6 +24,7 @@ export function ViewOutlet({
   query,
   setQuery,
   chapter,
+  onChapter,
 }: {
   view: View;
   model: StudioModel;
@@ -31,6 +32,8 @@ export function ViewOutlet({
   query: string;
   setQuery: (q: string) => void;
   chapter: number;
+  /** Opening a chapter: the primary pane navigates, the side pane stays put. */
+  onChapter: (n: number) => void;
 }) {
   const {
     state,
@@ -134,7 +137,7 @@ export function ViewOutlet({
           chapter={chapter}
           query={query}
           setQuery={setQuery}
-          onChapter={(n) => nav('specification', n)}
+          onChapter={onChapter}
         />
       )}
       {view === 'settings' && (

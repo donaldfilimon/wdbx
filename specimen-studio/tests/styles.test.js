@@ -12,6 +12,14 @@ test('studio.css uses theme tokens instead of color literals', () => {
   expect(literals).toEqual([]);
 });
 
+test('studio.css uses no named colors in color properties', () => {
+  const named =
+    css.match(
+      /(?:^|;|\{)\s*(?:color|background(?:-color)?|border(?:-[a-z]+)?-color|fill|stroke|outline-color)\s*:\s*(?:white|black|red|green|blue|gray|grey|silver)\b/gim,
+    ) ?? [];
+  expect(named).toEqual([]);
+});
+
 test('studio.css defines no color layer of its own', () => {
   expect(css).not.toMatch(/:root\s*\{[^}]*--(?:ink|teal|line|pale)\s*:/);
 });

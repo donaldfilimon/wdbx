@@ -516,13 +516,21 @@ Evidence on aarch64 macOS 27.2, Chrome via Playwright, Bun 1.4.0, against a
 freshly built `bun start` preview:
 
 - `bun run test:browser` (default dark theme): browser acceptance passed,
-  including the new command-palette and side-pane step; accessibility passed at
-  390, 768 and 1440 px with a new `split-studio-nodes` audit at 1440.
+  including the new command-palette, side-pane chapter and per-pane search
+  steps; accessibility passed at 390, 768 and 1440 px with new
+  `activity-dock-open` (all widths) and `split-studio-nodes` (1440) audits.
 - `STUDIO_THEME=light bun run test:browser`: same result in the light theme.
 - Both accessibility receipts pass `scripts/qualification-summary.py`'s
   `validate_accessibility_widths`.
 - `bun run check` (116 Bun tests and the Worker build), `bun run test:native`
   and `bun run check:native` exit 0.
+
+Findings from the whole-branch review, fixed with tests that failed first: both
+panes shared one search string; a chapter clicked in a side-pane
+Specification replaced the primary view and closed the split; the activity
+dock failed axe (`listitem`, `scrollable-region-focusable`); four named
+`white` colors had escaped the token migration because the no-literal test
+only matched hex and function notations.
 
 Findings during the work: the kit's `CommandDialog` rendered without a cmdk
 root (runtime crash on open) and placed its title outside the dialog; the

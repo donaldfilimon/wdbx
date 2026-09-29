@@ -229,7 +229,27 @@ try {
   await expect(
     page.getByRole('region', { name: 'Side pane: Specification' }),
   ).toBeVisible();
+  // A chapter clicked in the side pane keeps the split and the primary view.
+  await page
+    .getByRole('region', { name: 'Side pane: Specification' })
+    .locator('nav[aria-label="Specification chapters"] a')
+    .nth(3)
+    .click();
+  await expect(
+    page.getByRole('region', { name: 'Side pane: Specification' }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole('heading', { level: 1, name: 'Memory', exact: true }),
+  ).toBeVisible();
+  await expect(page).toHaveURL(/view=memory.*split=specification/);
   await page.getByRole('button', { name: 'Close side pane' }).click();
+  // Each pane keeps its own search text.
+  await page.goto(`${base}?view=nodes&split=memory`);
+  await page.getByPlaceholder('Find a pattern or node…').fill('zz');
+  await expect(page.getByPlaceholder('Search your memory…')).toHaveValue('');
+  await page
+    .locator('nav[aria-label="Main navigation"] a[href="?view=studio"]')
+    .click();
   await expect(
     page.getByRole('region', { name: 'Side pane: Specification' }),
   ).toHaveCount(0);

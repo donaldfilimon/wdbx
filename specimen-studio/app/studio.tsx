@@ -37,7 +37,7 @@ export default function Studio() {
     [dockOpen, setDockOpen] = useState(false),
     [paletteOpen, setPaletteOpen] = useState(false),
     [theme, setTheme] = useState<Theme>('dark'),
-    [query, setQuery] = useState(''),
+    [queries, setQueries] = useState({ primary: '', side: '' }),
     [chapter, setChapter] = useState(1);
   const mobileMenuRef = useRef<HTMLButtonElement>(null),
     mobileCloseRef = useRef<HTMLButtonElement>(null),
@@ -62,7 +62,7 @@ export default function Studio() {
   );
   const nav = useCallback(
     (v: View, section?: number) => {
-      setQuery('');
+      setQueries({ primary: '', side: '' });
       setMobileNav(false);
       go({ view: v, split: route.current.split, chapter: section }, true);
     },
@@ -74,6 +74,10 @@ export default function Studio() {
   );
   const closeSide = useCallback(
     () => go({ ...route.current, split: undefined }, false),
+    [go],
+  );
+  const openChapterInSide = useCallback(
+    (n: number) => go({ ...route.current, chapter: n }, false),
     [go],
   );
   const toggleSplit = useCallback(() => {
@@ -240,14 +244,17 @@ export default function Studio() {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [mobileViewport, toggleSplit, openPalette, paletteOpen]);
-  const outlet = (v: View) => (
+  const outlet = (v: View, pane: 'primary' | 'side') => (
     <ViewOutlet
       view={v}
       model={model}
       nav={nav}
-      query={query}
-      setQuery={setQuery}
+      query={queries[pane]}
+      setQuery={(q) => setQueries((all) => ({ ...all, [pane]: q }))}
       chapter={chapter}
+      onChapter={(n) =>
+        pane === 'primary' ? nav('specification', n) : openChapterInSide(n)
+      }
     />
   );
   return (
@@ -307,8 +314,8 @@ export default function Studio() {
           </div>
         )}
         <PaneLayout
-          primary={outlet(view)}
-          side={split ? outlet(split) : null}
+          primary={outlet(view, 'primary')}
+          side={split ? outlet(split, 'side') : null}
           sideView={split}
           wide={wide}
           onCloseSide={closeSide}
