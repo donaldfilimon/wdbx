@@ -100,7 +100,7 @@ and it no longer knows the `windows-signing` kind.
 
 The code is versioned by the wdbx repository; `git remote -v` there is the check.
 The retired standalone repository had two remotes: `github`
-(`donaldfilimon/wdbx-specimen-studio`, to be archived after the fold) and a dead `origin` on
+(`donaldfilimon/wdbx-specimen-studio`, archived on GitHub after the fold) and a dead `origin` on
 `git.chatgpt-team.site`, the generated Codex-app host, which was never reachable from
 this machine. Its `refs/codex/turn-diffs/*` refs were deliberately not imported into
 wdbx; they survive only in
