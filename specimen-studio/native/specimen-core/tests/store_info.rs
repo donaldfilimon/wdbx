@@ -55,3 +55,35 @@ fn committed_store_reports_heads_key_version_counts_and_files() {
     assert!(info["disk"]["store"]["bytes"].as_u64().unwrap() > 0);
     assert_eq!(info["disk"]["assets"]["files"], 0);
 }
+
+#[test]
+fn a_vanished_or_unreadable_entry_does_not_fail_the_report() {
+    let temp = tempfile::tempdir().unwrap();
+    let mut store = Store::open(temp.path().join("s")).unwrap();
+    store.edit(0, starter()).unwrap();
+    // A dangling symlink is unreadable as a file (metadata follows it and fails).
+    #[cfg(unix)]
+    std::os::unix::fs::symlink(
+        temp.path().join("missing"),
+        temp.path().join("s/store/dangling"),
+    )
+    .unwrap();
+    let info = serde_json::to_value(store.info().unwrap()).unwrap();
+    assert!(info["disk"]["store"]["files"].as_u64().unwrap() > 0);
+    #[cfg(unix)]
+    assert_eq!(info["disk"]["store"]["skipped"], 1);
+}
+
+#[test]
+fn tombstone_names_are_strings_or_null() {
+    let temp = tempfile::tempdir().unwrap();
+    let mut store = Store::open(temp.path().join("s")).unwrap();
+    let specimen = starter();
+    store.edit(0, specimen.clone()).unwrap();
+    let mut fewer = specimen.clone();
+    fewer["nodes"].as_array_mut().unwrap().remove(0);
+    store.edit(1, fewer).unwrap();
+    let info = serde_json::to_value(store.info().unwrap()).unwrap();
+    assert!(info["tombstones"][0]["name"].is_string());
+    assert!(info["tombstones"][0]["deletedAt"].is_string());
+}

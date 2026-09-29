@@ -30,6 +30,8 @@ import {
 } from '@/lib/specimen/store-info';
 
 const short = (id: string) => `${id.slice(0, 8)}…`;
+const skippedText = (n: number) =>
+  `${n} ${n === 1 ? 'entry' : 'entries'} could not be read while measuring and ${n === 1 ? 'is' : 'are'} not counted.`;
 const when = (iso: unknown) =>
   typeof iso === 'string' && !Number.isNaN(Date.parse(iso))
     ? new Date(iso).toLocaleString()
@@ -69,7 +71,7 @@ export function DesktopStoreView({ info }: { info: DesktopStoreInfo }) {
       <StatGroup label="Store summary">
         <Stat label="Revision" value={info.revision} />
         <Stat label="Transactions" value={info.committedTransactions} />
-        <Stat label="Writers" value={Object.keys(info.heads).length} />
+        <Stat label="Writer sessions" value={Object.keys(info.heads).length} />
         <Stat label="Keys" value={info.kvCount} />
         <Stat
           label="On disk"
@@ -103,7 +105,7 @@ export function DesktopStoreView({ info }: { info: DesktopStoreInfo }) {
                     {key.conflicts === 1 ? '' : 's'}
                   </Badge>
                 ) : (
-                  <Badge variant="secondary">None</Badge>
+                  <Badge variant="outline">None</Badge>
                 )}
               </dd>
             </dl>
@@ -146,7 +148,7 @@ export function DesktopStoreView({ info }: { info: DesktopStoreInfo }) {
         </Panel>
         <Panel
           title="Causal frontier"
-          description="Committed sequence per writer journal"
+          description="Committed sequence per writer journal; the desktop app starts a new writer session each launch"
         >
           <Table>
             <TableCaption className="sr-only">Writer heads</TableCaption>
@@ -164,7 +166,7 @@ export function DesktopStoreView({ info }: { info: DesktopStoreInfo }) {
                   <TableCell className="font-mono text-xs">
                     {short(writer)}{' '}
                     {writer === info.writerId && (
-                      <Badge variant="outline">This app</Badge>
+                      <Badge variant="outline">This session</Badge>
                     )}
                   </TableCell>
                   <TableCell className="text-right tabular-nums">
@@ -208,7 +210,7 @@ export function DesktopStoreView({ info }: { info: DesktopStoreInfo }) {
         </Panel>
         <Panel
           title="Disk"
-          description="Measured file sizes under the store root"
+          description="Measured sizes of the journal and asset folders"
         >
           <div className="grid gap-3 p-4 text-sm">
             <p className="m-0">
@@ -219,6 +221,13 @@ export function DesktopStoreView({ info }: { info: DesktopStoreInfo }) {
               Assets: {info.disk.assets.files} files,{' '}
               {formatBytes(info.disk.assets.bytes)}
             </p>
+            {info.disk.store.skipped + info.disk.assets.skipped > 0 && (
+              <p className="m-0 text-xs text-muted-foreground">
+                {skippedText(
+                  info.disk.store.skipped + info.disk.assets.skipped,
+                )}
+              </p>
+            )}
             <CodeBlock label="Store location">{info.root}</CodeBlock>
           </div>
         </Panel>

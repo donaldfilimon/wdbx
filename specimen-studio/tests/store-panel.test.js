@@ -31,14 +31,20 @@ const info = {
   tombstones: [
     { name: 'Greeting', ref: 'n1', deletedAt: '2026-09-29T06:00:00Z' },
   ],
-  disk: { store: { files: 4, bytes: 4096 }, assets: { files: 0, bytes: 0 } },
+  disk: {
+    store: { files: 4, bytes: 4096, skipped: 1 },
+    assets: { files: 0, bytes: 0, skipped: 0 },
+  },
 };
 
 test('desktop view shows frontier, key version, conflicts and tombstones', () => {
   const out = renderToStaticMarkup(h(DesktopStoreView, { info }));
   expect(out).toContain('studio/snapshot');
   expect(out).toContain('1 unresolved concurrent version');
-  expect(out).toContain('This app');
+  // A new writer id is minted per launch: say session, not app or device.
+  expect(out).toContain('This session');
+  expect(out).toContain('Writer sessions');
+  expect(out).toContain('1 entry could not be read');
   expect(out).toContain('Greeting');
   expect(out).toContain('2.0 KiB');
   expect(out).toContain('the studio writes no audit blocks');

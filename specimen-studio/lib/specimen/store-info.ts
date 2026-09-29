@@ -10,6 +10,8 @@ import type { Specimen } from './types';
 export interface DiskUsage {
   files: number;
   bytes: number;
+  /** Entries that vanished or could not be read while measuring. */
+  skipped: number;
 }
 
 /** Mirrors `specimen_core::persistence::StoreInfo`. */
@@ -35,7 +37,11 @@ export interface DesktopStoreInfo {
   schema: string;
   revision: number;
   records: Record<string, number>;
-  tombstones: { name?: string; ref?: string; deletedAt?: string }[];
+  tombstones: {
+    name: string | null;
+    ref: string | null;
+    deletedAt: string | null;
+  }[];
   disk: { store: DiskUsage; assets: DiskUsage };
 }
 
@@ -53,16 +59,19 @@ type Counted = Pick<
   | 'proposals'
 >;
 
-export function recordCounts(s: Counted): Record<string, number> {
+/** Collection sizes; a collection missing from an old record counts as 0. */
+export function recordCounts(s: Partial<Counted>): Record<string, number> {
+  const n = (v: unknown) => (Array.isArray(v) ? v.length : 0);
+  const nodes = Array.isArray(s.nodes) ? s.nodes : [];
   return {
-    nodes: s.nodes.length,
-    entries: s.nodes.reduce((n, node) => n + (node.entries?.length ?? 0), 0),
-    resources: s.resources.length,
-    attachments: s.attachments.length,
-    history: s.history.length,
-    events: s.events.length,
-    mutations: s.mutations.length,
-    proposals: s.proposals.length,
+    nodes: nodes.length,
+    entries: nodes.reduce((sum, node) => sum + n(node?.entries), 0),
+    resources: n(s.resources),
+    attachments: n(s.attachments),
+    history: n(s.history),
+    events: n(s.events),
+    mutations: n(s.mutations),
+    proposals: n(s.proposals),
   };
 }
 
@@ -78,7 +87,7 @@ export interface BrowserStoreReport {
 }
 
 export function browserStoreReport(
-  record: (Counted & { updatedAt?: string }) | null,
+  record: (Partial<Counted> & { updatedAt?: string }) | null,
   estimate: { usage?: number; quota?: number } | null,
   persisted: boolean | null,
 ): BrowserStoreReport {

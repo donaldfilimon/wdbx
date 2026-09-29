@@ -2,7 +2,6 @@
 use super::Store;
 use crate::{Result, engine};
 use serde::Serialize;
-use serde_json::Value;
 use std::{collections::BTreeMap, fs, path::Path};
 
 const SNAPSHOT_KEY: &str = "studio/snapshot";
@@ -53,36 +52,55 @@ pub struct KeyVersion {
 #[derive(Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Tombstone {
-    pub name: Value,
+    pub name: Option<String>,
     #[serde(rename = "ref")]
-    pub node_ref: Value,
-    pub deleted_at: Value,
+    pub node_ref: Option<String>,
+    pub deleted_at: Option<String>,
 }
 
 #[derive(Debug, Default, Serialize)]
 pub struct DiskUsage {
     pub files: u64,
     pub bytes: u64,
+    /// Entries that vanished or could not be read while measuring.
+    pub skipped: u64,
 }
 
-fn usage(dir: &Path) -> Result<DiskUsage> {
+/// Measures regular files under `dir`, following file symlinks. An entry that
+/// vanishes or cannot be read mid-walk is counted as skipped, never fatal:
+/// other instances create and remove lease files while this runs.
+fn usage(dir: &Path) -> DiskUsage {
     let mut total = DiskUsage::default();
-    if !dir.is_dir() {
-        return Ok(total);
-    }
-    for entry in fs::read_dir(dir)? {
-        let entry = entry?;
-        let kind = entry.file_type()?;
-        if kind.is_dir() {
-            let inner = usage(&entry.path())?;
-            total.files += inner.files;
-            total.bytes += inner.bytes;
-        } else if kind.is_file() {
-            total.files += 1;
-            total.bytes += entry.metadata()?.len();
+    let Ok(entries) = fs::read_dir(dir) else {
+        return total;
+    };
+    for entry in entries {
+        let Ok(entry) = entry else {
+            total.skipped += 1;
+            continue;
+        };
+        let path = entry.path();
+        match entry.file_type() {
+            Ok(kind) if kind.is_dir() => {
+                let inner = usage(&path);
+                total.files += inner.files;
+                total.bytes += inner.bytes;
+                total.skipped += inner.skipped;
+            }
+            // Directory symlinks are not followed, so the walk cannot loop.
+            Ok(kind) if kind.is_file() || kind.is_symlink() => match fs::metadata(&path) {
+                Ok(meta) if meta.is_file() => {
+                    total.files += 1;
+                    total.bytes += meta.len();
+                }
+                Ok(_) => {}
+                Err(_) => total.skipped += 1,
+            },
+            Ok(_) => {}
+            Err(_) => total.skipped += 1,
         }
     }
-    Ok(total)
+    total
 }
 
 impl Store {
@@ -134,9 +152,9 @@ impl Store {
             .rev()
             .take(TOMBSTONES_SHOWN)
             .map(|t| Tombstone {
-                name: t["node"]["name"].clone(),
-                node_ref: t["node"]["ref"].clone(),
-                deleted_at: t["deletedAt"].clone(),
+                name: t["node"]["name"].as_str().map(str::to_owned),
+                node_ref: t["node"]["ref"].as_str().map(str::to_owned),
+                deleted_at: t["deletedAt"].as_str().map(str::to_owned),
             })
             .collect();
         Ok(StoreInfo {
@@ -160,8 +178,8 @@ impl Store {
             records,
             tombstones,
             disk: BTreeMap::from([
-                ("store", usage(&self.root.join("store"))?),
-                ("assets", usage(&self.root.join("assets"))?),
+                ("store", usage(&self.root.join("store"))),
+                ("assets", usage(&self.root.join("assets"))),
             ]),
         })
     }

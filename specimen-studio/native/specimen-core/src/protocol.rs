@@ -7,6 +7,8 @@ use serde_json::Value;
 pub enum Request {
     Capabilities,
     Snapshot,
+    /// Read-only store report for the store explorer.
+    StoreInfo,
     Edit {
         revision: u64,
         specimen: Value,

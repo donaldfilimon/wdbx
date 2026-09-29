@@ -696,8 +696,8 @@ transaction and record counts, the `studio/snapshot` key's current version
 and unresolved conflicts, audit DAG verification (parent existence and
 acyclicity; hashes are not recomputed, and the studio writes no audit
 blocks), tombstones, and measured on-disk usage. The pinned
-`abi_wdbx::v2::V2Snapshot` keeps only current versions, so there is no
-revision history to show; the view says so rather than inventing one. The
+`abi_wdbx::v2` store journals every version, but its public snapshot API
+exposes only current ones, so there is no revision history to show. The
 browser reports its single IndexedDB record (UTF-8 size, counts, last save),
 the origin's storage estimate and persistence, and can request persistent
 storage.
@@ -707,9 +707,11 @@ tombstone), `check:native` and `test:native` exit 0; `bun run check` exit 0
 (154 Bun tests); `bun run test:browser` passes in dark and light with the new
 store step and axe state `store-explorer` at 390, 768 and 1440 pixels.
 
-Not exercised: `storeInfo` through the desktop webview (the op is covered by
-the Rust tests, the view by server-rendered tests), and `persist()` prompts,
-which headless Chrome answers without a user.
+Not exercised: `storeInfo` through the desktop webview, and `persist()`
+prompts, which headless Chrome answers without a user. (Correction: an
+earlier version of this note said the Rust tests covered the op. They called
+`Store::info` directly, and the op was in fact unreachable; see the fix
+pass below.)
 
 ## B4 review fixes (2026-09-29)
 
@@ -745,3 +747,38 @@ ATP clock is shared if two ATP panels are open.
 
 Evidence: `bun run check` (155), `check:native`, `test:native` exit 0;
 `test:browser` passes in dark and light on a fresh preview.
+
+## B5 review fixes (2026-09-29)
+
+Fresh reviewer on 20208b8/08a6206 (08a6206 verified byte-identical to
+8a0a247 for the vendored crate and manifest).
+
+- Critical, fixed: the desktop protocol gate had no `StoreInfo` variant, so
+  every `storeInfo` request was rejected before dispatch and the desktop
+  Store view could only show an error. Added the variant, and
+  `native/specimen-core/tests/protocol_ops.rs`, which parses every op the
+  dispatcher in `src-tauri/src/main.rs` matches and fails if the protocol
+  rejects any as an unknown variant (it failed on `storeInfo` before the
+  fix).
+- A vanished or unreadable entry no longer fails the report: it is counted
+  as `skipped` and shown; file symlinks are followed, directory symlinks are
+  not (no loops).
+- Old browser records missing a collection report zeros instead of
+  throwing.
+- "Writers" and "This app" are "Writer sessions" and "This session": the
+  pinned store mints a new writer id per launch.
+- Tombstone fields are typed strings or null; the "None" badge uses the
+  outline variant, which has token colours.
+- `qualification-summary.py` now requires the `live-engine`, `spec-model`,
+  `spec-diagrams` and `store-explorer` audit states.
+
+Ruling: the desktop view still has no end-to-end or axe run; the native
+webview suite needs a desktop build and a signed-in session this pass did
+not have. The structural protocol test closes the failure class that let
+the Critical ship. Deferred minors: the store mutex is held during the
+disk walk and the snapshot clone for its size; a poisoned mutex panics the
+view; recursive audit check depth; the report reflects this session's last
+commit; the Disk panel omits `models/` and `recovery/`; browser readings
+share one failure path; "Saved workspace" is JSON size; persistence copy is
+Chrome-centric; no loading or stale state on refresh; tombstones cap at 50
+silently.

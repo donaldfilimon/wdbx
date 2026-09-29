@@ -26,6 +26,10 @@ function accessibilityWidth(width) {
     'disabled-contributor-feedback',
     'zoomed-keyboard-scrollable-topology',
     'specification-reader',
+    'live-engine',
+    'spec-model',
+    'spec-diagrams',
+    'store-explorer',
   ];
   if (width === 390) states.push('mobile-drawer');
   return {

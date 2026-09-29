@@ -64,3 +64,18 @@ test('browserStoreReport is honest when nothing is saved or APIs are missing', (
     persisted: null,
   });
 });
+
+test('an old record missing collections still reports what it has', () => {
+  const old = { nodes: [{ ref: 'a' }], history: [{}], updatedAt: 'x' };
+  expect(recordCounts(old)).toEqual({
+    nodes: 1,
+    entries: 0,
+    resources: 0,
+    attachments: 0,
+    history: 1,
+    events: 0,
+    mutations: 0,
+    proposals: 0,
+  });
+  expect(browserStoreReport(old, null, null).records.nodes).toBe(1);
+});
