@@ -74,6 +74,10 @@ With the preview running and Chrome installed, run `bun run test:browser`; `STUD
 inference; `image-model.yml` is manually dispatched image inference qualification.
 Native UI requires both `VITE_NATIVE_E2E=1` assets and Rust `e2e` instrumentation.
 Keep the test bridge out of production. Configured jobs are not passing receipts.
+The Apple silicon jobs (browser, `desktop (macos-14)`, `package (macos-14)`,
+accelerator, OCR, consolidation) run on a self-hosted macOS arm64 runner with the
+label `wdbx-specimen-studio`; see `docs/SelfHostedRunner.md` for host setup, the
+trust gate, and which jobs stay GitHub-hosted.
 
 ## Remotes: there are two, and the default one is dead
 

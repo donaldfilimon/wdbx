@@ -15,20 +15,45 @@ permissions:
   contents: read
 jobs:
   desktop:
-    if: ${{ !inputs.models }}
+    if: >
+      github.repository == 'donaldfilimon/wdbx-specimen-studio' &&
+      (github.event_name == 'push' ||
+       github.event_name == 'workflow_dispatch') &&
+      !inputs.models
     strategy:
       fail-fast: false
       matrix:
         os: [macos-14, macos-15-intel, windows-2022, ubuntu-24.04]
-    runs-on: ${{ matrix.os }}
+    # The Apple silicon leg keeps its matrix value, so its check name
+    # "desktop (macos-14)", WDBX_RUNNER_LABEL, artifact name and the
+    # collector's expected matrix are unchanged, but it runs on the macOS
+    # arm64 self-hosted runner registered to this repository. The Intel,
+    # Windows and Linux legs stay GitHub-hosted. See docs/SelfHostedRunner.md.
+    runs-on: ${{ matrix.os == 'macos-14' && fromJSON('["self-hosted","macOS","ARM64","wdbx-specimen-studio"]') || matrix.os }}
     timeout-minutes: 90
     env:
       CARGO_BUILD_JOBS: 3
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.0
+      - name: Self-hosted runner Python and deployment target
+        if: matrix.os == 'macos-14'
+        # Later steps call `python` and `python -m pip`, which hosted images
+        # provide. A Mac has only python3, and Homebrew's refuses pip installs
+        # (PEP 668), so use a per-job virtual environment outside the checkout.
+        # Without a deployment target, CMake builds the helper runtimes for the
+        # host's SDK version; pin the macOS 14 floor the hosted leg produced so
+        # the packaged helpers still start on macOS 14. `tauri build` sets its
+        # own target from bundle.macOS.minimumSystemVersion (12.0).
+        run: |
+          python3 -c 'import sys; assert sys.version_info >= (3, 12), "the runner needs Python 3.12 or later as python3"'
+          python3 -m venv "$RUNNER_TEMP/desktop-venv"
+          echo "$RUNNER_TEMP/desktop-venv/bin" >> "$GITHUB_PATH"
+          echo "MACOSX_DEPLOYMENT_TARGET=14.0" >> "$GITHUB_ENV"
       - name: Linux system libraries
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev libayatana-appindicator3-dev librsvg2-dev patchelf libssl-dev xvfb
@@ -49,8 +74,10 @@ jobs:
           path: |
             work/runtimes
             src-tauri/binaries
-          key: native-runtimes-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('native/runtime-pins.json', 'scripts/build-runtimes.py') }}
-          restore-keys: native-runtimes-${{ runner.os }}-${{ runner.arch }}-
+          # CMake build trees hold absolute paths, so a self-hosted checkout
+          # must not restore a hosted runner's cache (or the reverse).
+          key: native-runtimes-${{ runner.environment == 'self-hosted' && 'self-hosted-' || '' }}${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('native/runtime-pins.json', 'scripts/build-runtimes.py') }}
+          restore-keys: native-runtimes-${{ runner.environment == 'self-hosted' && 'self-hosted-' || '' }}${{ runner.os }}-${{ runner.arch }}-
       - name: Build model runtimes
         run: python scripts/build-runtimes.py
       - name: Native warnings-denied gate

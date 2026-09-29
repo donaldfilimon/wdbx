@@ -5,10 +5,17 @@ permissions:
   contents: read
 jobs:
   ocr:
-    runs-on: macos-14
+    if: >
+      github.repository == 'donaldfilimon/wdbx-specimen-studio' &&
+      github.event_name == 'workflow_dispatch'
+    # Dispatch-only, so it always runs on the macOS arm64 self-hosted runner
+    # registered to this repository. See docs/SelfHostedRunner.md.
+    runs-on: [self-hosted, macOS, ARM64, wdbx-specimen-studio]
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Rust toolchain
         run: rustup toolchain install nightly-2026-09-01 --profile minimal
       - name: Create OCR fixture

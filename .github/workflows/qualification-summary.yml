@@ -48,12 +48,20 @@ permissions:
   actions: read
 jobs:
   consolidate:
-    runs-on: ubuntu-24.04
+    if: >
+      github.repository == 'donaldfilimon/wdbx-specimen-studio' &&
+      github.event_name == 'workflow_dispatch'
+    # Dispatch-only, so it always runs on the macOS arm64 self-hosted runner
+    # registered to this repository. It checks out and runs the collector
+    # from inputs.source_sha: dispatch it only with a commit on a branch of
+    # this repository. See docs/SelfHostedRunner.md.
+    runs-on: [self-hosted, macOS, ARM64, wdbx-specimen-studio]
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ inputs.source_sha }}
+          persist-credentials: false
       - name: Validate frozen source and inputs
         env:
           SOURCE_SHA: ${{ inputs.source_sha }}

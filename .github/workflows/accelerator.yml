@@ -5,10 +5,18 @@ permissions:
   contents: read
 jobs:
   cpu-gpu-parity:
-    runs-on: macos-14
+    if: >
+      github.repository == 'donaldfilimon/wdbx-specimen-studio' &&
+      github.event_name == 'workflow_dispatch'
+    # Dispatch-only, so it always runs on the macOS arm64 self-hosted runner
+    # registered to this repository (a real Metal GPU for the wgpu backend).
+    # See docs/SelfHostedRunner.md.
+    runs-on: [self-hosted, macOS, ARM64, wdbx-specimen-studio]
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Rust toolchain
         run: rustup toolchain install nightly-2026-09-01 --profile minimal
       - name: Require wgpu parity within tolerance
