@@ -8,6 +8,7 @@ import {
 import { NativeLab } from '@/components/native-lab';
 import { isDesktop, nativeReview } from '@/lib/specimen/native';
 import { ActivityView } from '../panels/activity-panel';
+import { EnginePanel } from '../panels/engine-panel';
 import { MemoryView } from '../panels/memory-panel';
 import { NodesView } from '../panels/nodes-panel';
 import { SettingsView } from '../panels/settings-panel';
@@ -130,6 +131,17 @@ export function ViewOutlet({
             setEditing(undefined);
             openDialog('node');
           }}
+        />
+      )}
+      {view === 'engine' && (
+        <EnginePanel
+          trace={model.activeTrace}
+          busy={busy}
+          cycle={model.cycle}
+          history={state.history}
+          nodes={state.nodes}
+          atp={state.atp}
+          threshold={state.settings.voteThreshold}
         />
       )}
       {view === 'specification' && (

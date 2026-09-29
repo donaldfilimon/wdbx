@@ -297,6 +297,12 @@ try {
       await expect(opener).toBeFocused();
     }
 
+    await navigate(page, width, '?view=engine');
+    await expect(
+      page.getByRole('list', { name: 'Live cycle trace' }),
+    ).toBeVisible();
+    await audit(page, width, 'live-engine');
+
     await navigate(page, width, '?view=specification');
     await expect(
       page.getByRole('heading', { name: 'Specification', exact: true }),

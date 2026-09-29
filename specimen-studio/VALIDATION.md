@@ -628,3 +628,23 @@ Whole-branch review fixes (each with a test that failed first):
   import boundary (`mutate::validate_records`); `engine::validate`, which also
   guards every desktop edit, is unchanged so existing desktop stores keep
   loading. Cost if wrong: a malformed desktop store is caught later.
+
+## B3 live engine views (2026-09-29)
+
+New Observe view `?view=engine` ("Live engine", `app/panels/engine-panel.tsx`)
+over pure derivations in `lib/specimen/insights.ts`: the running trace as a
+phase timeline (repeated Index Rafts checkpoints fold into one row with a
+coverage `<progress>`), per-node votes against the vote threshold, the recent
+cycle series (confidence, duration, matched), and ATP valence and intensity as
+native `<meter>` elements decayed with the kernel's `exp(-elapsed_s/180)`.
+Every chart has a paired data table behind "Show data".
+
+Evidence (aarch64 macOS 27.2, Bun 1.4.0, Chrome via Playwright):
+
+- `bun run check` exit 0: 135 Bun tests, including `tests/insights.test.js`
+  (5) and `tests/engine-panel.test.js` (server-rendered markup).
+- `bun run test:browser` passes in dark and `STUDIO_THEME=light` on a freshly
+  rebuilt preview, including the new live-engine step and a `live-engine` axe
+  state at 390, 768 and 1440 pixels.
+
+Not exercised: the view inside the desktop webview, Firefox and WebKit.

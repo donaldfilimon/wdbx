@@ -453,7 +453,10 @@ svg {
   height: 352px;
   position: relative;
   margin: 0 16px;
-  background-image: radial-gradient(var(--info-soft) 0.85px, transparent 0.85px);
+  background-image: radial-gradient(
+    var(--info-soft) 0.85px,
+    transparent 0.85px
+  );
   background-size: 18px 18px;
 }
 .topology-lines {
@@ -930,7 +933,8 @@ svg {
 .trace-empty p {
   font-size: 13px;
   max-width: 300px;
-}earch-field {
+}
+earch-field {
   display: flex;
   align-items: center;
   gap: 9px;
@@ -1053,7 +1057,8 @@ svg {
   color: var(--muted);
   font-size: 13px;
   margin: 21px 4px;
-}bsystem-tag {
+}
+bsystem-tag {
   display: inline-block;
   color: var(--ink-soft);
   background: var(--surface-2);
@@ -1093,7 +1098,8 @@ svg {
 .history-record small {
   font-size: 12px;
   color: var(--muted);
-} {
+}
+{
   text-align: center;
   padding: 65px 20px;
   display: flex;
@@ -1281,7 +1287,8 @@ svg {
 }
 .chapter-pagination a:last-child {
   text-align: right;
-}dialog {
+}
+dialog {
   width: min(540px, calc(100vw - 32px)) !important;
   max-width: 540px !important;
   max-height: calc(100dvh - 48px);
@@ -1913,14 +1920,16 @@ svg {
   .studio-footer {
     font-size: 12px;
     padding: 16px 3px;
-  }able-panel th,
+  }
+  able-panel th,
   .table-panel td {
     padding: 12px;
   }
   .table-panel table {
     font-size: 12px;
     min-width: 680px;
-  }  .workspace-footnote {
+  }
+  .workspace-footnote {
     font-size: 12px;
   }
   .reference-layout {
@@ -1971,12 +1980,14 @@ svg {
   }
   .chapter-pagination {
     font-size: 12px;
-  }oast {
+  }
+  oast {
     left: 50%;
     font-size: 12px;
     width: max-content;
     max-width: calc(100vw - 28px);
-  }udio-dialog {
+  }
+  udio-dialog {
     padding: 22px !important;
   }
   .form-columns {
@@ -3960,4 +3971,30 @@ body {
 }
 .pane-side .table-scroll table {
   min-width: 620px;
+}
+
+/* Native meter and progress in the live engine view, on theme tokens. */
+.wdbx-meter {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--surface-2);
+}
+.wdbx-meter::-webkit-meter-bar,
+.wdbx-meter::-webkit-progress-bar {
+  background: var(--surface-2);
+  border-radius: 999px;
+}
+.wdbx-meter::-webkit-meter-optimum-value,
+.wdbx-meter::-webkit-meter-suboptimum-value,
+.wdbx-meter::-webkit-meter-even-less-good-value,
+.wdbx-meter::-webkit-progress-value {
+  background: var(--teal);
+  border-radius: 999px;
+}
+.wdbx-meter::-moz-meter-bar,
+.wdbx-meter::-moz-progress-bar {
+  background: var(--teal);
+  border-radius: 999px;
 }

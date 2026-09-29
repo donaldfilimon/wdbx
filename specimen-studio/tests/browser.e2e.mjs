@@ -210,6 +210,20 @@ try {
   await expect(page.locator('.answer-text')).toHaveText('4');
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({ path: artifact('studio-desktop-final') });
+  // Live engine: the last cycle's trace, votes and ATP, with data tables.
+  await page
+    .locator('nav[aria-label="Main navigation"] a[href="?view=engine"]')
+    .click();
+  const liveTrace = page.getByRole('list', { name: 'Live cycle trace' });
+  await expect(liveTrace).toContainText('Compose');
+  await expect(page.getByRole('meter', { name: 'Valence' })).toBeVisible();
+  await page.getByText('Show data').first().click();
+  await expect(
+    page.locator('caption', { hasText: 'Votes by node' }),
+  ).toHaveCount(1);
+  await page
+    .locator('nav[aria-label="Main navigation"] a[href="?view=studio"]')
+    .click();
   // Command palette: keyboard open, filter, run; then a side pane opens.
   await page.keyboard.press('ControlOrMeta+k');
   const palette = page.getByRole('dialog', { name: 'Command palette' });
@@ -406,6 +420,7 @@ try {
           'mobile overflow',
           'mobile drawer lifecycle',
           'command palette and side pane',
+          'live engine views',
         ],
         webmcpSupported: webmcp,
         errors,
