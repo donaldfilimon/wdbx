@@ -1,15 +1,22 @@
 # Self-hosted macOS runner
 
-The account's GitHub Actions billing is locked, so GitHub-hosted jobs fail within seconds without starting. Self-hosted jobs still run. The Apple silicon jobs below therefore run on a macOS arm64 machine registered to this repository.
+The account's GitHub Actions billing is locked, so GitHub-hosted jobs fail within seconds without starting. Self-hosted jobs still run. The Apple silicon jobs below therefore run on the macOS arm64 machine registered to the wdbx repository.
 
 ## Registration
 
+Since the 2026-09-28 fold into `donaldfilimon/wdbx`, these jobs run on the wdbx
+repository's runner; there is no separate studio runner or label any more.
+
 | Field | Value |
 |-------|-------|
-| Labels | `self-hosted`, `macOS`, `ARM64`, `wdbx-specimen-studio` |
-| Register at | [Settings → Actions → Runners → New self-hosted runner](https://github.com/donaldfilimon/wdbx-specimen-studio/settings/actions/runners/new?arch=arm64) (macOS, ARM64) |
+| Labels | `self-hosted`, `macOS`, `ARM64`, `wdbx` |
+| Runner | `~/actions-runner-wdbx` on this Mac (registered to `donaldfilimon/wdbx`; see the wdbx root `docs/SelfHostedRunner.md`) |
 
-A runner is registered to one repository. If the Mac already runs a runner for another repository (for example `abi` or `gama`), install a second runner in its own directory, such as `~/actions-runner-wdbx-specimen-studio`, and follow the registration page's download and `./config.sh` steps there. Add the custom label `wdbx-specimen-studio` when `config.sh` asks for extra labels. Then run `./svc.sh install && ./svc.sh start`.
+The same runner also executes the wdbx Rust gate (`ci.yml`), so jobs from both queue on
+one machine. The studio jobs need more host tools than the Rust gate (see *Host
+requirements*); the runner captures `PATH` when `config.sh` runs, so after installing
+tools run `./env.sh` in `~/actions-runner-wdbx` and restart the service
+(`./svc.sh stop && ./svc.sh start`).
 
 `svc.sh` installs a LaunchAgent, so the runner runs in your logged-in session. The native UI tests open app windows, and code signing uses the user's keychain, so both need that session. Keep the account logged in, and use a dedicated macOS user if you can.
 
@@ -17,7 +24,7 @@ Until a runner with these labels is online, the moved jobs wait in the queue.
 
 ## Jobs on the self-hosted runner
 
-The trigger for every one of these jobs is `push` to `main` or `workflow_dispatch`. Each job keeps its id and check name.
+The trigger for every one of these jobs is `push` to `main` (browser and desktop only, filtered to `specimen-studio/**` and the workflow file) or `workflow_dispatch`. Each job keeps its id and check name. The workflow files live at the wdbx repository root as `.github/workflows/specimen-studio-<name>.yml`; the tables below use the short names.
 
 | Workflow | Job (check name) | Notes |
 |----------|------------------|-------|
@@ -67,9 +74,9 @@ The signing secrets exist only in that job's environment. Keep no other release 
 
 ## Security model
 
-This repository is public. Self-hosted runners must never run code from a fork.
+The wdbx repository is public. Self-hosted runners must never run code from a fork.
 
-- Every self-hosted job has `if: github.repository == 'donaldfilimon/wdbx-specimen-studio' && (<trusted event>)`. None of these workflows has a `pull_request`, `pull_request_target`, `issue_comment` or `workflow_run` trigger. They run only on `push` to `main` and `workflow_dispatch`, which need write access. So no GitHub-hosted fork-PR fallback job is needed.
+- Every self-hosted job has `if: github.repository == 'donaldfilimon/wdbx' && (<trusted event>)`. None of these workflows has a `pull_request`, `pull_request_target`, `issue_comment` or `workflow_run` trigger. They run only on `push` to `main` and `workflow_dispatch`, which need write access. So no GitHub-hosted fork-PR fallback job is needed.
 - `consolidate` checks out `inputs.source_sha` and runs that commit's `scripts/qualification-summary.py`. GitHub serves fork pull-request commits by SHA from this repository. Dispatch it only with a commit that is on a branch of this repository.
 - Checkouts use `persist-credentials: false`. No job pushes with the token. Workflow permissions are unchanged: `contents: read`, plus `actions: read` where artifacts from other runs are downloaded.
 - `actions/checkout` cleans the workspace on every run (`git clean -ffdx`). Rustup toolchains, Playwright browsers and Homebrew packages stay on the host between runs.

@@ -2,6 +2,12 @@
 
 Canonical project guidance for both browser and native editions.
 
+This project lives in `specimen-studio/` inside the `donaldfilimon/wdbx` repository
+(folded in with full history on 2026-09-28 from the standalone
+`donaldfilimon/wdbx-specimen-studio`, now retired). Run every command below from
+`specimen-studio/`. It stays its own Cargo workspace: the wdbx root `Cargo.toml`
+excludes it, and wdbx's `tools/check.sh` does not build or test it.
+
 ## Project Structure & Module Organization
 
 - `app/` contains the React studio, routes, and styles; `components/` contains shared controls and the native lab; `hooks/` contains React hooks.
@@ -51,9 +57,11 @@ before touching `node_modules`, `.wrangler`, or `.next`.
   `lib/specimen/native.ts` serializes durable edits with expected revisions;
   `native/specimen-core/src/persistence.rs` owns the WDBX store and recovery copies.
 - Native `abi-wdbx` and `abi-compute` are Git-revision dependencies in
-  `native/specimen-core/Cargo.toml` (pinned to wdbx rev `3ac03f0`), not sibling path
-  dependencies. Picking up WDBX changes means bumping that rev. Do not change
-  ABI/Abbey/WDBX checkouts to implement this studio's runtime behavior.
+  `native/specimen-core/Cargo.toml` (pinned to wdbx rev `3ac03f0`, which predates the
+  fold), not path dependencies on the sibling `../crates/`, even though those crates
+  now sit in the same repository. Picking up WDBX changes means bumping that rev;
+  switching to path dependencies is a deliberate decision, not a cleanup. Do not
+  change the wdbx crates, ABI or Abbey to implement this studio's runtime behavior.
 - Keep the root Cargo GLib patch and its attribution/safety rationale in
   `native/vendor/README.md`; the vendored crate is excluded from the workspace.
 - `scripts/build-runtimes.py` downloads pinned sources and compiles local CPU
@@ -70,34 +78,31 @@ Use descriptive behavior names in `tests/*.test.js` (`bun:test`) and Rust `#[tes
 
 With the preview running and Chrome installed, run `bun run test:browser`; `STUDIO_URL` overrides `http://localhost:3000`. Native interface tests use WebdriverIO/Mocha and require the instrumented build described in `README.md`.
 
-`.github/workflows/desktop.yml` separates desktop qualification from opt-in text
-inference; `image-model.yml` is manually dispatched image inference qualification.
-Native UI requires both `VITE_NATIVE_E2E=1` assets and Rust `e2e` instrumentation.
-Keep the test bridge out of production. Configured jobs are not passing receipts.
-The Apple silicon jobs (browser, `desktop (macos-14)`, `package (macos-14)`,
-accelerator, OCR, consolidation) run on a self-hosted macOS arm64 runner with the
-label `wdbx-specimen-studio`; see `docs/SelfHostedRunner.md` for host setup, the
-trust gate, and which jobs stay GitHub-hosted.
+CI lives at the wdbx repository root as `.github/workflows/specimen-studio-*.yml`
+(GitHub ignores workflows in subdirectories). Run steps default to
+`working-directory: specimen-studio`; action inputs (cache, upload-artifact,
+`hashFiles`) carry the `specimen-studio/` prefix. The workflow-path provenance
+checks in `scripts/qualification-summary.py` and `scripts/repackage-macos.py` name
+those files, so renaming a workflow means updating them and their tests together.
+`specimen-studio-desktop.yml` separates desktop qualification from opt-in text
+inference; `specimen-studio-image-model.yml` is manually dispatched image inference
+qualification. Native UI requires both `VITE_NATIVE_E2E=1` assets and Rust `e2e`
+instrumentation. Keep the test bridge out of production. Configured jobs are not
+passing receipts. The Apple silicon jobs (browser, `desktop (macos-14)`,
+`package (macos-14)`, accelerator, OCR, consolidation) run on the wdbx repository's
+self-hosted macOS arm64 runner (label `wdbx`); see `docs/SelfHostedRunner.md` for
+host setup, the trust gate, and which jobs stay GitHub-hosted.
 
-## Remotes: there are two, and the default one is dead
+## Repository and history
 
-`git remote -v` is the check here, not `git branch -vv`.
-
-- `origin` points at `git.chatgpt-team.site`, the generated Codex-app host. It is
-  **unusable from this machine**: push, fetch, and `ls-remote` all fail with
-  `could not read Username ... Device not configured`, because only GitHub has a
-  credential helper configured. It is kept only for provenance.
-- `github` points at `donaldfilimon/wdbx-specimen-studio` and **is reachable**. This is
-  the real backup and, since 2026-09-21, `main`'s tracking upstream (`github/main`).
-  Push here.
-
-`origin` used to be the upstream, so `git branch -vv` reported an ahead-count against a
-server nothing could reach, and the repository was believed unbacked-up and in need of
-rescue bundling for two days. If a branch ever tracks `origin` again, its `@{u}` answers
-off a stale cached ref and `0 ahead` proves nothing. Its bundle is
-still worth keeping for a different reason: it carries `refs/codex/turn-diffs/*` refs that
-GitHub does not have, and `git bundle list-heads` lists those first, so grep `refs/heads/`
-rather than taking the first line.
+The code is versioned by the wdbx repository; `git remote -v` there is the check.
+The retired standalone repository had two remotes: `github`
+(`donaldfilimon/wdbx-specimen-studio`, to be archived after the fold) and a dead `origin` on
+`git.chatgpt-team.site`, the generated Codex-app host, which was never reachable from
+this machine. Its `refs/codex/turn-diffs/*` refs were deliberately not imported into
+wdbx; they survive only in
+`~/at-risk-bundles/2026-09-28-consolidation/wdbx-specimen-studio.bundle`
+(`git bundle list-heads` lists them first, so grep `refs/heads/`).
 
 ## Commit & Pull Request Guidelines
 

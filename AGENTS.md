@@ -85,6 +85,22 @@ cargo test --workspace < /dev/null
 - `cluster*`, `rest/`, `spatial.rs`, `multiway/`, `fhe.rs`/`tfhe_demo.rs` and
   the compression/entropy codecs are reference subsystems beside these paths.
 
+## specimen-studio/
+
+- `specimen-studio/` is the WDBX Specimen Studio (Vinext/React Worker plus a
+  Tauri/Rust desktop half), folded in with full history on 2026-09-28 from the
+  retired `donaldfilimon/wdbx-specimen-studio`. Its own `AGENTS.md` is canonical
+  inside it; read it before editing there.
+- It is a separate Cargo workspace (`native/specimen-core`, `src-tauri`), excluded
+  from this workspace (`[workspace] exclude`) and from `tools/check_rust_sizes.sh`
+  (it vendors glib). `tools/check.sh` does not build or test it. Its gates run from
+  `specimen-studio/`: `bun run check`, `bun run lint`, `bun run test:native`,
+  `bun run check:native`.
+- It consumes `abi-wdbx` and `abi-compute` by pinned git revision of this
+  repository, not by path; changing that is a deliberate decision.
+- Its CI is `.github/workflows/specimen-studio-*.yml` (subdirectory workflows do not
+  run). Workflow-path provenance checks inside the studio name those files.
+
 ## Persistence Boundaries
 
 - `crates/abi-wdbx/tests/golden/` owns format fixtures. CLI/MCP output goldens

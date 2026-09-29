@@ -26,6 +26,19 @@ This repository is public, so the self-hosted job runs only for `push` to `main`
 
 Checkouts use `persist-credentials: false`, and the workflow token stays `contents: read`. Where you can, use a dedicated macOS user for the runner rather than your daily account, since `rustup default` changes that account's toolchain. Keep no production secrets on the host.
 
+## Specimen Studio jobs
+
+Since `specimen-studio/` was folded into this repository (2026-09-28), its
+`.github/workflows/specimen-studio-*.yml` jobs also target this runner for trusted
+events (`push` to `main` touching `specimen-studio/**`, and `workflow_dispatch`),
+behind the same `github.repository == 'donaldfilimon/wdbx'` guard. They need more
+than the Rust gate: Xcode in full, Homebrew `python@3.12` (as the first `python3`),
+`cmake`, `jq`, `gh`, Node 22.13+, and Google Chrome in `/Applications`. The full
+list and the jobs that stay GitHub-hosted are in
+`specimen-studio/docs/SelfHostedRunner.md`. The runner reads `PATH` at `config.sh`
+time, so after installing tools run `./env.sh` in the runner directory and restart
+the service.
+
 ## Not covered
 
-Every job in this repository's CI now has a self-hosted path for trusted events. `gate-hosted` (fork PRs only) still needs a GitHub-hosted runner, so fork PRs stay blocked until the billing lock is cleared.
+Every job in `ci.yml` has a self-hosted path for trusted events; the Specimen Studio Intel, Windows, Linux and inference jobs stay GitHub-hosted by design. `gate-hosted` (fork PRs only) still needs a GitHub-hosted runner, so fork PRs stay blocked until the billing lock is cleared.
