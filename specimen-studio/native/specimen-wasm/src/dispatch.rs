@@ -22,6 +22,22 @@ fn string<'a>(req: &'a Value, key: &str) -> Result<&'a str> {
         .ok_or_else(|| error("Invalid", format!("{key} must be text")))
 }
 
+/// The request's `network` (validated), or the default when absent: cycles
+/// and reviews compose with the caller's network like the desktop does.
+fn network_or_default(req: &Value) -> Result<Network> {
+    match req.get("network") {
+        None | Some(Value::Null) => Ok(Network::default()),
+        Some(value) => {
+            let network: Network =
+                serde_json::from_value(value.clone()).map_err(|e| error("InvalidNetwork", e))?;
+            network
+                .validate()
+                .map_err(|e| error("InvalidNetwork", e.message))?;
+            Ok(network)
+        }
+    }
+}
+
 fn optional<'a>(req: &'a Value, key: &str) -> Option<&'a str> {
     req[key].as_str().filter(|s| !s.is_empty())
 }
@@ -122,17 +138,23 @@ pub fn dispatch(h: &Host, req: &Value, progress: &dyn Fn(Value)) -> Result<Value
             Ok(s)
         }
         "cycle" => {
+            let network = network_or_default(req)?;
             let (s, cycle) = engine::cycle(
                 h,
                 state()?,
                 string(req, "input")?,
-                &Network::default(),
+                &network,
                 &AtomicBool::new(false),
                 progress,
             )?;
             Ok(json!({"state": s, "cycle": cycle}))
         }
-        "review" => engine::review(h, state()?, &Network::default(), &AtomicBool::new(false)),
+        "review" => engine::review(
+            h,
+            state()?,
+            &network_or_default(req)?,
+            &AtomicBool::new(false),
+        ),
         "maintain" => engine::maintain(h, state()?, string(req, "mode")?, &AtomicBool::new(false)),
         other => Err(error(
             "UnknownCommand",

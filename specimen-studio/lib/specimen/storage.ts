@@ -127,6 +127,15 @@ export async function loadNetwork(): Promise<StoredNetwork> {
   }
 }
 
+/**
+ * The network browser cycles compose with: the stored one (validated), or
+ * undefined on desktop, whose native cycles read their own snapshot.
+ */
+export async function compositionNetwork(): Promise<Network | undefined> {
+  if (isDesktop()) return undefined;
+  return (await loadNetwork()).network;
+}
+
 export async function persistNetwork(
   network: Network,
   revision?: number,

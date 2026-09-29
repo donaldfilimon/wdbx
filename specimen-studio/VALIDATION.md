@@ -861,3 +861,16 @@ mutation-checked (it was written with the fix).
 
 Evidence: `bun run check` (171), `check:native`, `test:native` exit 0;
 `test:browser` dark and light with the new assertions.
+
+## B7.1 browser cycles compose with the stored network (2026-09-29)
+
+The WASM `cycle` and `review` ops take an optional `network`, validated
+(`InvalidNetwork` otherwise); absent means `Network::default()`, so earlier
+results and the `p0-probe` goldens are unchanged. The app passes the
+browser's stored network (`compositionNetwork()` in `lib/specimen/storage.ts`)
+to every browser cycle and review; desktop keeps composing with its snapshot.
+Facade test: the default network reproduces the old `&imagine` visual
+exactly, a resampled network changes it, a malformed one is rejected.
+Evidence: `bun run check` (172), native gates, `test:browser` dark and light.
+Not exercised end to end: a Studio cycle after a Network edit (the wiring is
+covered by typecheck and the facade test, not an e2e assertion).

@@ -328,3 +328,40 @@ test('networkValidate rejects malformed networks', () => {
   expect(() => networkValidate(broken)).toThrow(/Invalid sparse layer/);
   expect(() => networkValidate({ version: 1 })).toThrow();
 });
+
+test('browser cycles compose with the network they are given', async () => {
+  const state = seedSpecimen();
+  const plain = await runCycle(state, 'imagine a red circle');
+  const same = await runCycle(
+    state,
+    'imagine a red circle',
+    undefined,
+    undefined,
+    networkDefault(),
+  );
+  expect(plain.cycle.visual?.brightnessArray).toBeDefined();
+  // The default network is what cycles used before: results are unchanged.
+  expect(same.cycle.visual.brightnessArray).toEqual(
+    plain.cycle.visual.brightnessArray,
+  );
+  const edited = networkEdit(networkDefault(), {
+    command: 'initWeights',
+    seed: 99,
+  });
+  const other = await runCycle(
+    state,
+    'imagine a red circle',
+    undefined,
+    undefined,
+    edited,
+  );
+  expect(other.cycle.visual.brightnessArray).not.toEqual(
+    plain.cycle.visual.brightnessArray,
+  );
+  expect(other.cycle.visual.synthesis.networkVersion).toBe(1);
+  const broken = structuredClone(edited);
+  broken.layers[0].columns[0] = 999;
+  await expect(
+    runCycle(state, 'imagine a red circle', undefined, undefined, broken),
+  ).rejects.toThrow(/Invalid/);
+});

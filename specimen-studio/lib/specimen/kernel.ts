@@ -406,11 +406,16 @@ async function runLong<T>(
   });
 }
 
+/**
+ * Runs one cycle. In the browser, `network` is the network composition uses
+ * (the default when omitted); desktop composes with its stored network.
+ */
 export async function runCycle(
   state: Specimen,
   input: string,
   onTrace?: (trace: TraceStep[]) => void,
   signal?: AbortSignal,
+  network?: Network,
 ): Promise<{ state: Specimen; cycle: Cycle }> {
   if (isDesktop()) return runNative(state, input, onTrace, signal);
   if (!input.trim()) throw new Error('Enter a prompt first.');
@@ -418,7 +423,7 @@ export async function runCycle(
     throw new Error('Keep prompts under 8,000 characters.');
   const trace: TraceStep[] = [];
   return runLong(
-    { op: 'cycle', state, input },
+    { op: 'cycle', state, input, network },
     (step) => {
       trace.push(step);
       onTrace?.([...trace]);
@@ -431,9 +436,10 @@ export async function runCycle(
 export async function observeContext(
   state: Specimen,
   signal?: AbortSignal,
+  network?: Network,
 ): Promise<Specimen> {
   if (isDesktop()) return nativeReview(state, 'review', undefined, signal);
-  return runLong({ op: 'review', state }, undefined, signal);
+  return runLong({ op: 'review', state, network }, undefined, signal);
 }
 
 export { KernelError };

@@ -13,6 +13,7 @@ import {
 } from '@/lib/specimen/kernel';
 import { kernelUrls } from '@/lib/specimen/kernel-url';
 import {
+  compositionNetwork,
   downloadText,
   loadWorkspace,
   persistWorkspace,
@@ -200,7 +201,8 @@ export function useStudio(nav: (v: View, section?: number) => void) {
         const snapshot = current.current,
           next = maintenance(snapshot);
         if (next.nodes.some((n) => n.type !== 'pattern'))
-          void observeContext(next)
+          void compositionNetwork()
+            .then((network) => observeContext(next, undefined, network))
             .then((reviewed) => {
               if (current.current === snapshot && !abortRef.current)
                 commit(reviewed);
@@ -220,7 +222,11 @@ export function useStudio(nav: (v: View, section?: number) => void) {
     try {
       const next = isDesktop()
         ? await nativeReview(snapshot, 'review', undefined, controller.signal)
-        : await observeContext(snapshot, controller.signal);
+        : await observeContext(
+            snapshot,
+            controller.signal,
+            await compositionNetwork(),
+          );
       if (current.current !== snapshot)
         throw new Error(
           'The workspace changed during review. Run context review again.',
@@ -321,18 +327,20 @@ export function useStudio(nav: (v: View, section?: number) => void) {
       setRunInput(input);
       try {
         const snapshot = current.current;
+        const network = await compositionNetwork();
         const result = await runCycle(
           snapshot,
           input.replace(/^\/prompt\s+/, ''),
           setTrace,
           controller.signal,
+          network,
         );
         if (current.current !== snapshot)
           throw new Error(
             'The workspace changed during this cycle. Run the prompt again.',
           );
         const finalState = result.state.nodes.some((n) => n.type === 'A')
-          ? await observeContext(result.state, controller.signal)
+          ? await observeContext(result.state, controller.signal, network)
           : result.state;
         if (current.current !== snapshot)
           throw new Error(
@@ -376,6 +384,7 @@ export function useStudio(nav: (v: View, section?: number) => void) {
           input,
           setTrace,
           controller.signal,
+          await compositionNetwork(),
         );
         if (current.current !== snapshot)
           throw new Error(

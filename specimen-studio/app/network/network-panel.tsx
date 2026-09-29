@@ -587,7 +587,7 @@ export function NetworkPanel({
       <p className="m-0 text-sm text-ink-soft">
         {desktop
           ? 'Desktop: this is the network cycles use for composition, saved in the WDBX journal.'
-          : 'Browser: this network is saved in this browser for designing and tracing. Browser cycles still compose with the built-in default network; the desktop app composes with its saved one.'}
+          : 'Browser: this network is saved in this browser, and cycles here compose with it (imagine actions). The desktop app keeps its own network in the WDBX journal.'}
       </p>
       <output className="text-sm text-ink-soft">{status}</output>
       {error && (
