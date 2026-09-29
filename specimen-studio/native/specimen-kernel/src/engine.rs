@@ -1,5 +1,6 @@
 use crate::{
     Result, error,
+    host::{Env, Host},
     language::{self, Expr, Scope},
     neural::{Network, Rng},
 };
@@ -7,7 +8,6 @@ use serde_json::{Value, json};
 use std::{
     collections::{BTreeMap, BTreeSet},
     sync::atomic::{AtomicBool, Ordering},
-    time::Instant,
 };
 pub fn rows<'a>(v: &'a Value, key: &str) -> &'a [Value] {
     v[key].as_array().map_or(&[], Vec::as_slice)
@@ -285,6 +285,7 @@ fn support(index: &ResourceIndex<'_>, input: &str, action: &str, node: &Value) -
 }
 
 struct Context<'a> {
+    host: &'a Host<'a>,
     input: &'a str,
     binding: language::Binding,
     state: &'a Value,
@@ -400,7 +401,7 @@ fn eval(expr: &[Expr], ctx: &mut Context<'_>) -> Result<String> {
                         let history = rows(ctx.state, "history").last();
                         format!(
                             "Current time: {}.{}",
-                            crate::now(),
+                            ctx.host.env.now_rfc3339(),
                             history
                                 .map(|h| format!(
                                     " Previous input at {}: {}",
@@ -446,10 +447,7 @@ fn eval(expr: &[Expr], ctx: &mut Context<'_>) -> Result<String> {
                             !ingredients.is_empty(),
                             number(&ctx.state["settings"], "seed", 104729.) as u64,
                             if ctx.state["settings"]["gpu"] == true {
-                                Some(
-                                    &crate::neural::WgpuAccelerator
-                                        as &dyn crate::neural::Accelerator,
-                                )
+                                ctx.host.accel
                             } else {
                                 None
                             },
@@ -491,11 +489,11 @@ fn eval(expr: &[Expr], ctx: &mut Context<'_>) -> Result<String> {
     }
     Ok(output)
 }
-fn append_event(s: &mut Value, kind: &str, title: &str, detail: &str) {
+fn append_event(env: &dyn Env, s: &mut Value, kind: &str, title: &str, detail: &str) {
     let events = s["events"].as_array_mut().unwrap();
-    events.insert(0,json!({"id":crate::uid(),"type":kind,"title":title,"detail":detail,"createdAt":crate::now()}));
+    events.insert(0,json!({"id":env.uid(),"type":kind,"title":title,"detail":detail,"createdAt":env.now_rfc3339()}));
     events.truncate(500);
-    s["updatedAt"] = json!(crate::now());
+    s["updatedAt"] = json!(env.now_rfc3339());
 }
 /// Initial conservative lexical profile. Only curated equivalent families may
 /// be substituted; resource authors cannot authorize arbitrary semantic changes.
@@ -566,15 +564,17 @@ fn vary_literal(
     (value.into(), None)
 }
 pub fn cycle(
+    host: &Host<'_>,
     source: &Value,
     input: &str,
     network: &Network,
     cancel: &AtomicBool,
     progress: &dyn Fn(Value),
 ) -> Result<(Value, Value)> {
-    cycle_with_visual(source, input, network, cancel, progress, None)
+    cycle_with_visual(host, source, input, network, cancel, progress, None)
 }
 pub fn cycle_with_visual(
+    host: &Host<'_>,
     source: &Value,
     input: &str,
     network: &Network,
@@ -589,13 +589,13 @@ pub fn cycle_with_visual(
             "Prompt must contain 1 to 8,000 bytes",
         ));
     }
-    let start = Instant::now();
+    let start = host.env.monotonic_ms();
     let mut state = source.clone();
     let settings = state["settings"].clone();
     let mut rng = Rng(number(&settings, "seed", 104729.) as u64);
     let mut trace = Vec::new();
     let mut step = |phase: &str, detail: String, count: usize| {
-        let value = json!({"id":crate::uid(),"phase":phase,"detail":detail,"count":count});
+        let value = json!({"id":host.env.uid(),"phase":phase,"detail":detail,"count":count});
         trace.push(value.clone());
         progress(value);
     };
@@ -703,9 +703,10 @@ pub fn cycle_with_visual(
         jobs.len(),
     );
     let candidate_count = jobs.len();
-    let eligible = crate::scheduler::raft_find_all_progress(
-        &jobs,
-        |job| {
+    let eligible = host.search.find_all(
+        jobs.len(),
+        &|index| {
+            let job = &jobs[index];
             compare_entry(&rows(&nodes[job.0], "entries")[job.1], &job.2).confidence
                 + 2.0
                 + number(&settings, "jitter", 1.5)
@@ -717,7 +718,7 @@ pub fn cycle_with_visual(
         cancel,
         &|covered, total| {
             progress(
-                json!({"id":crate::uid(),"phase":"Index Rafts","detail":format!("Checkpoint {covered} of {total}"),"count":covered,"covered":covered,"total":total,"checkpoint":covered}),
+                json!({"id":host.env.uid(),"phase":"Index Rafts","detail":format!("Checkpoint {covered} of {total}"),"count":covered,"covered":covered,"total":total,"checkpoint":covered}),
             )
         },
     )?;
@@ -783,7 +784,7 @@ pub fn cycle_with_visual(
         };
         let resources = support(&resources_index, &input, text(a, "action"), node);
         let binding = language::bind(pattern, &input);
-        votes.push(json!({"id":crate::uid(),"nodeRef":node["ref"],"entryRef":entry["id"],"action":a["action"],"base":base,"confidence":evidence.confidence,"strength":strength,"input":input,"group":group,"origin":origin,"resources":resources.iter().map(|r|r["ref"].clone()).collect::<Vec<_>>(),"evidence":evidence,"binding":binding}));
+        votes.push(json!({"id":host.env.uid(),"nodeRef":node["ref"],"entryRef":entry["id"],"action":a["action"],"base":base,"confidence":evidence.confidence,"strength":strength,"input":input,"group":group,"origin":origin,"resources":resources.iter().map(|r|r["ref"].clone()).collect::<Vec<_>>(),"evidence":evidence,"binding":binding}));
         if depth < 4 && !binding.remainder.is_empty() {
             for attach in rows(&state, "attachments") {
                 let target = if attach["from"] == node["ref"] {
@@ -864,6 +865,7 @@ pub fn cycle_with_visual(
         let node = nodes.iter().find(|n| n["ref"] == v["nodeRef"]).unwrap();
         let resources = support(&resources_index, text(v, "input"), text(v, "action"), node);
         let mut ctx = Context {
+            host,
             input: text(v, "input"),
             binding: serde_json::from_value(v["binding"].clone())?,
             state: &state,
@@ -905,7 +907,7 @@ pub fn cycle_with_visual(
                     .filter(|r| nodes.iter().any(|n| text(n, "ref") == *r)),
             )
             .collect::<BTreeSet<_>>();
-        segments.push(json!({"id":crate::uid(),"text":value,"contributors":contributors,"sourceVotes":[v["id"]],"transformations":ctx.transforms,"color":colors[segments.len()%6]}));
+        segments.push(json!({"id":host.env.uid(),"text":value,"contributors":contributors,"sourceVotes":[v["id"]],"transformations":ctx.transforms,"color":colors[segments.len()%6]}));
     }
     let status = if segments.is_empty() {
         if clauses.iter().all(|c| c.negated) {
@@ -917,14 +919,14 @@ pub fn cycle_with_visual(
         "complete"
     };
     if segments.is_empty() {
-        segments.push(json!({"id":crate::uid(),"text":if status=="inhibited"{"That action is inhibited."}else{"No stored pattern qualified. Teach this input a response."},"contributors":[],"sourceVotes":[],"transformations":["empty-match fallback"],"color":"green"}));
+        segments.push(json!({"id":host.env.uid(),"text":if status=="inhibited"{"That action is inhibited."}else{"No stored pattern qualified. Teach this input a response."},"contributors":[],"sourceVotes":[],"transformations":["empty-match fallback"],"color":"green"}));
     }
     step(
         "Compose",
         "Completed actions with explicit contributor lineage".into(),
         segments.len(),
     );
-    let time = chrono::Utc::now().timestamp_millis();
+    let time = host.env.now_millis();
     let elapsed =
         ((time as f64 - number(&state["atp"], "lastUpdate", time as f64)) / 1000.).max(0.);
     let mut valence = number(&state["atp"], "valence", 0.) * (-elapsed / 180.).exp();
@@ -970,19 +972,25 @@ pub fn cycle_with_visual(
                 .iter()
                 .any(|a| a["from"] == pair[0] && a["to"] == pair[1])
         {
-            state["attachments"].as_array_mut().unwrap().push(json!({"id":crate::uid(),"from":pair[0],"to":pair[1],"bidirectional":false,"hard":false,"affinity":0.2,"origin":"coactivation","evidence":count}));
+            state["attachments"].as_array_mut().unwrap().push(json!({"id":host.env.uid(),"from":pair[0],"to":pair[1],"bidirectional":false,"hard":false,"affinity":0.2,"origin":"coactivation","evidence":count}));
         }
     }
 
     state["settings"]["seed"] = json!((rng.0 % u32::MAX as u64).max(1));
-    let mut cycle = json!({"id":crate::uid(),"input":input,"createdAt":crate::now(),"segments":segments,"votes":votes,"trace":trace,"duration":start.elapsed().as_secs_f64()*1000.,"feedback":[],"status":status,"pinned":false,"supervisedUntil":time+90000,"clauses":clauses});
+    let mut cycle = json!({"id":host.env.uid(),"input":input,"createdAt":host.env.now_rfc3339(),"segments":segments,"votes":votes,"trace":trace,"duration":host.env.monotonic_ms()-start,"feedback":[],"status":status,"pinned":false,"supervisedUntil":time+90000,"clauses":clauses});
     if let Some(v) = visual {
         cycle["visual"] = v;
     }
     cancelled(cancel)?;
     state["history"].as_array_mut().unwrap().push(cycle.clone());
     trim(&mut state);
-    append_event(&mut state, "cycle", "Native cycle completed", input);
+    append_event(
+        host.env,
+        &mut state,
+        "cycle",
+        "Native cycle completed",
+        input,
+    );
     Ok((state, cycle))
 }
 pub fn trim(s: &mut Value) {
@@ -1002,9 +1010,14 @@ pub fn trim(s: &mut Value) {
         }
     });
 }
-pub fn review(source: &Value, network: &Network, cancel: &AtomicBool) -> Result<Value> {
+pub fn review(
+    host: &Host<'_>,
+    source: &Value,
+    network: &Network,
+    cancel: &AtomicBool,
+) -> Result<Value> {
     let mut s = source.clone();
-    let now = chrono::Utc::now().timestamp_millis() as f64;
+    let now = host.env.now_millis() as f64;
     let history = rows(&s, "history").to_vec();
     let nodes = rows(&s, "nodes").to_vec();
     for n in &nodes {
@@ -1026,7 +1039,7 @@ pub fn review(source: &Value, network: &Network, cancel: &AtomicBool) -> Result<
                 projected["nodes"] = json!([{"ref":n["ref"],"name":n["name"],"type":"pattern","patternId":n["patternId"],"strength":n["strength"],"jitter":false,"entries":[{"id":rows(n,"entries")[0]["id"],"pattern":text(h,"input"),"alternatives":rows(n,"entries")[0]["alternatives"]}]}]);
                 projected["attachments"] = json!([]);
                 let (_, mut corrected) =
-                    cycle(&projected, text(h, "input"), network, cancel, &|_| {})?;
+                    cycle(host, &projected, text(h, "input"), network, cancel, &|_| {})?;
                 corrected["correctionOf"] = h["id"].clone();
                 corrected["supervisedUntil"] = json!(0);
                 corrected["reviewed"] = json!(true);
@@ -1060,13 +1073,14 @@ pub fn review(source: &Value, network: &Network, cancel: &AtomicBool) -> Result<
                         .iter()
                         .any(|p| text(p, "pattern") == input)
                 {
-                    s["proposals"].as_array_mut().unwrap().push(json!({"id":crate::uid(),"pattern":input,"evidence":count,"status":"pending","pros":["repeated unmet input"],"cons":["no grounded response yet"],"observer":n["ref"]}));
+                    s["proposals"].as_array_mut().unwrap().push(json!({"id":host.env.uid(),"pattern":input,"evidence":count,"status":"pending","pros":["repeated unmet input"],"cons":["no grounded response yet"],"observer":n["ref"]}));
                 }
             }
         }
     }
     trim(&mut s);
     append_event(
+        host.env,
         &mut s,
         "context",
         "Context review completed",
@@ -1074,7 +1088,7 @@ pub fn review(source: &Value, network: &Network, cancel: &AtomicBool) -> Result<
     );
     Ok(s)
 }
-pub fn maintain(source: &Value, mode: &str, cancel: &AtomicBool) -> Result<Value> {
+pub fn maintain(host: &Host<'_>, source: &Value, mode: &str, cancel: &AtomicBool) -> Result<Value> {
     let mut s = source.clone();
     cancelled(cancel)?;
     if mode == "phagy" {
@@ -1089,6 +1103,7 @@ pub fn maintain(source: &Value, mode: &str, cancel: &AtomicBool) -> Result<Value
             .unwrap()
             .retain(|a| refs.contains(text(a, "from")) && refs.contains(text(a, "to")));
         append_event(
+            host.env,
             &mut s,
             "maintenance",
             "PHAGY completed",
@@ -1206,9 +1221,10 @@ pub fn maintain(source: &Value, mode: &str, cancel: &AtomicBool) -> Result<Value
                             .as_array_mut()
                             .unwrap()
                             .truncate(count);
-                        s["mutations"].as_array_mut().unwrap().push(json!({"id":crate::uid(),"recipient":w["ref"],"donor":d["ref"],"slot":a["id"],"originalPattern":e["pattern"],"originalAction":a["action"],"createdAt":crate::now()}));
+                        s["mutations"].as_array_mut().unwrap().push(json!({"id":host.env.uid(),"recipient":w["ref"],"donor":d["ref"],"slot":a["id"],"originalPattern":e["pattern"],"originalAction":a["action"],"createdAt":host.env.now_rfc3339()}));
                         validate(&s)?;
                         append_event(
+                            host.env,
                             &mut s,
                             "mutation",
                             "Markov remix committed",
@@ -1221,10 +1237,54 @@ pub fn maintain(source: &Value, mode: &str, cancel: &AtomicBool) -> Result<Value
         }
     }
     append_event(
+        host.env,
         &mut s,
         "maintenance",
         "Mutation scan completed",
         "No valid mutation; no alternative pools were shortened.",
     );
     Ok(s)
+}
+#[cfg(test)]
+mod host_tests {
+    use super::*;
+    use crate::host::FixedHost;
+    use std::sync::atomic::AtomicBool;
+    fn starter() -> Value {
+        serde_json::from_str(include_str!("../../../conformance/starter.json")).unwrap()
+    }
+    fn run_once() -> String {
+        let fixed = FixedHost::default();
+        let (state, cycle) = cycle(
+            &fixed.host(),
+            &starter(),
+            "What is 2 + 2?",
+            &Network::default(),
+            &AtomicBool::new(false),
+            &|_| {},
+        )
+        .unwrap();
+        serde_json::to_string(&(state, cycle)).unwrap()
+    }
+    #[test]
+    fn fixed_host_cycle_is_byte_deterministic() {
+        assert_eq!(run_once(), run_once());
+    }
+    #[test]
+    fn gpu_setting_without_accelerator_runs_on_cpu() {
+        let mut s = starter();
+        s["settings"]["gpu"] = serde_json::json!(true);
+        let fixed = FixedHost::default();
+        assert!(
+            cycle(
+                &fixed.host(),
+                &s,
+                "What is 2 + 2?",
+                &Network::default(),
+                &AtomicBool::new(false),
+                &|_| {},
+            )
+            .is_ok()
+        );
+    }
 }

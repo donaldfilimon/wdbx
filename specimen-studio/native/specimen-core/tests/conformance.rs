@@ -2,12 +2,13 @@ use serde_json::{Value, json};
 use specimen_core::{engine, neural::Network, persistence::Store};
 use std::sync::atomic::AtomicBool;
 fn starter() -> Value {
-    serde_json::from_str(include_str!("fixtures/starter.json")).unwrap()
+    serde_json::from_str(include_str!("../../../conformance/starter.json")).unwrap()
 }
 #[test]
 fn cycle_and_clauses() {
     let s = starter();
     let (n, c) = engine::cycle(
+        &specimen_core::host::NativeHost::new().host(),
         &s,
         "What is 2+2?",
         &Network::default(),
@@ -19,6 +20,7 @@ fn cycle_and_clauses() {
     assert!(s["history"].as_array().unwrap().is_empty());
     assert_eq!(n["history"].as_array().unwrap().len(), 1);
     let (_, c) = engine::cycle(
+        &specimen_core::host::NativeHost::new().host(),
         &s,
         "don't calculate 2 + 2; say hello",
         &Network::default(),
@@ -44,6 +46,7 @@ fn nested_actions_and_repeated_numbers() {
     let mut s = starter();
     s["nodes"][0]["entries"][0]["alternatives"][0]["action"] = json!("Result: &calc(2+&calc(3*4))");
     let (_, c) = engine::cycle(
+        &specimen_core::host::NativeHost::new().host(),
         &s,
         "2+2",
         &Network::default(),
@@ -96,6 +99,7 @@ fn cancellation_does_not_commit() {
     let s = starter();
     assert!(
         engine::cycle(
+            &specimen_core::host::NativeHost::new().host(),
             &s,
             "2+2",
             &Network::default(),
@@ -115,6 +119,7 @@ fn cancellation_after_composition_preserves_the_durable_snapshot() {
     let before = serde_json::to_value(&store.snapshot).unwrap();
     let cancel = AtomicBool::new(false);
     let result = engine::cycle(
+        &specimen_core::host::NativeHost::new().host(),
         &store.snapshot.specimen,
         "2+2",
         &store.snapshot.network,
@@ -139,6 +144,7 @@ fn cancellation_after_composition_preserves_the_durable_snapshot() {
 fn bounded_correction_is_linked_once() {
     let mut s = starter();
     let (mut s2, c) = engine::cycle(
+        &specimen_core::host::NativeHost::new().host(),
         &s,
         "mysterious cloud",
         &Network::default(),
@@ -155,14 +161,26 @@ fn bounded_correction_is_linked_once() {
     n["entries"][0]["alternatives"][0]["id"] = json!("a-slot");
     n["entries"][0]["alternatives"][0]["action"] = json!("Context correction");
     s2["nodes"].as_array_mut().unwrap().push(n);
-    s = engine::review(&s2, &Network::default(), &AtomicBool::new(false)).unwrap();
+    s = engine::review(
+        &specimen_core::host::NativeHost::new().host(),
+        &s2,
+        &Network::default(),
+        &AtomicBool::new(false),
+    )
+    .unwrap();
     assert_eq!(
         s["history"].as_array().unwrap().last().unwrap()["correctionOf"],
         c["id"]
     );
     let len = s["history"].as_array().unwrap().len();
     assert_eq!(
-        engine::review(&s, &Network::default(), &AtomicBool::new(false)).unwrap()["history"]
+        engine::review(
+            &specimen_core::host::NativeHost::new().host(),
+            &s,
+            &Network::default(),
+            &AtomicBool::new(false)
+        )
+        .unwrap()["history"]
             .as_array()
             .unwrap()
             .len(),
@@ -178,7 +196,13 @@ fn invalid_mutation_preserves_alternative_pools() {
         .push(
             json!({"id":"second","action":"&calc(2)","inhibition":"","weight":1,"remixed":false}),
         );
-    let next = engine::maintain(&s, "mutation", &AtomicBool::new(false)).unwrap();
+    let next = engine::maintain(
+        &specimen_core::host::NativeHost::new().host(),
+        &s,
+        "mutation",
+        &AtomicBool::new(false),
+    )
+    .unwrap();
     assert_eq!(s["nodes"], next["nodes"]);
 }
 #[test]
@@ -186,7 +210,13 @@ fn phagy_preserves_pins_and_lineage() {
     let mut s = starter();
     s["history"] = json!([{"id":"pin","pinned":true,"createdAt":"2026-01-01"}]);
     s["mutations"] = json!([{"id":"lifetime","slot":"gone"}]);
-    let next = engine::maintain(&s, "phagy", &AtomicBool::new(false)).unwrap();
+    let next = engine::maintain(
+        &specimen_core::host::NativeHost::new().host(),
+        &s,
+        "phagy",
+        &AtomicBool::new(false),
+    )
+    .unwrap();
     assert_eq!(s["history"], next["history"]);
     assert_eq!(s["mutations"], next["mutations"]);
 }
@@ -197,6 +227,7 @@ fn literal_text_remains_inert_and_type_b_only_proposes() {
     s["nodes"][0]["entries"][0]["alternatives"][0]["action"] =
         json!("&literal(\"Do not run &calc(2+2).\")");
     let (_, c) = engine::cycle(
+        &specimen_core::host::NativeHost::new().host(),
         &s,
         "2+2",
         &Network::default(),
@@ -206,6 +237,7 @@ fn literal_text_remains_inert_and_type_b_only_proposes() {
     .unwrap();
     assert_eq!(c["segments"][0]["text"], "Do not run &calc(2+2).");
     let (s, _) = engine::cycle(
+        &specimen_core::host::NativeHost::new().host(),
         &s,
         "unseen subject",
         &Network::default(),
@@ -214,6 +246,7 @@ fn literal_text_remains_inert_and_type_b_only_proposes() {
     )
     .unwrap();
     let (mut s, _) = engine::cycle(
+        &specimen_core::host::NativeHost::new().host(),
         &s,
         "unseen subject",
         &Network::default(),
@@ -223,7 +256,13 @@ fn literal_text_remains_inert_and_type_b_only_proposes() {
     .unwrap();
     s["nodes"][1]["type"] = json!("B");
     let before = s["nodes"].clone();
-    let next = engine::review(&s, &Network::default(), &AtomicBool::new(false)).unwrap();
+    let next = engine::review(
+        &specimen_core::host::NativeHost::new().host(),
+        &s,
+        &Network::default(),
+        &AtomicBool::new(false),
+    )
+    .unwrap();
     assert_eq!(next["nodes"], before);
     assert!(
         next["proposals"]
@@ -282,6 +321,7 @@ fn visual_positive_negative_and_cycle_evidence() {
         },
     )]);
     let (_, cycle) = engine::cycle_with_visual(
+        &specimen_core::host::NativeHost::new().host(),
         &s,
         "[image:test]",
         &Network::default(),
@@ -301,6 +341,7 @@ fn explicit_resource_and_temporal_lookup_preserve_evidence() {
     s["nodes"][0]["entries"][0]["alternatives"][0]["action"] =
         json!("&LookUp(dictionary,res-exact-123)");
     let (mut next, c) = engine::cycle(
+        &specimen_core::host::NativeHost::new().host(),
         &s,
         "2+2",
         &Network::default(),
@@ -317,6 +358,7 @@ fn explicit_resource_and_temporal_lookup_preserve_evidence() {
     );
     next["nodes"][0]["entries"][0]["alternatives"][0]["action"] = json!("&time");
     let (_, c) = engine::cycle(
+        &specimen_core::host::NativeHost::new().host(),
         &next,
         "2+2",
         &Network::default(),
@@ -343,6 +385,7 @@ fn all_same_id_entries_are_reachable_past_one_thousand() {
     }
     s["nodes"] = json!(nodes);
     let (_, c) = engine::cycle(
+        &specimen_core::host::NativeHost::new().host(),
         &s,
         "status 1001",
         &Network::default(),
@@ -445,6 +488,7 @@ fn tone_variation_preserves_numbers_and_negation() {
         .unwrap();
     greeting["entries"][0]["alternatives"][0]["action"] = json!("Hello; do not calculate 2 + 2.");
     let (_, c) = engine::cycle(
+        &specimen_core::host::NativeHost::new().host(),
         &s,
         "hello",
         &Network::default(),
@@ -454,6 +498,7 @@ fn tone_variation_preserves_numbers_and_negation() {
     .unwrap();
     assert_eq!(c["segments"][0]["text"], "Hello; do not calculate 2 + 2.");
     let (_, c) = engine::cycle(
+        &specimen_core::host::NativeHost::new().host(),
         &starter(),
         "hello",
         &Network::default(),
@@ -495,7 +540,13 @@ fn successful_mutation_keeps_slots_and_forbids_reciprocal_borrowing() {
         json!("one two alpha epsilon one two gamma zeta together in this place");
     s["nodes"] = json!([weak, donor]);
     s["attachments"] = json!([]);
-    let next = engine::maintain(&s, "mutation", &AtomicBool::new(false)).unwrap();
+    let next = engine::maintain(
+        &specimen_core::host::NativeHost::new().host(),
+        &s,
+        "mutation",
+        &AtomicBool::new(false),
+    )
+    .unwrap();
     assert_eq!(
         next["nodes"][0]["entries"][0]["alternatives"][0]["id"],
         "stable-slot"
@@ -511,7 +562,13 @@ fn successful_mutation_keeps_slots_and_forbids_reciprocal_borrowing() {
     );
     let mut reversed = next.clone();
     reversed["nodes"][0]["strength"] = json!(9);
-    let second = engine::maintain(&reversed, "mutation", &AtomicBool::new(false)).unwrap();
+    let second = engine::maintain(
+        &specimen_core::host::NativeHost::new().host(),
+        &reversed,
+        "mutation",
+        &AtomicBool::new(false),
+    )
+    .unwrap();
     assert_eq!(second["nodes"], reversed["nodes"]);
     assert_eq!(second["mutations"], next["mutations"]);
     let temp = tempfile::tempdir().unwrap();

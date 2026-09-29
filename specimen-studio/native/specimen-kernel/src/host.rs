@@ -1,3 +1,7 @@
+use crate::{
+    neural::Accelerator,
+    search::{Search, Sequential},
+};
 use std::sync::atomic::{AtomicU64, Ordering};
 
 /// Every impure value the kernel needs comes from here.
@@ -34,6 +38,29 @@ impl Env for FixedEnv {
     }
     fn monotonic_ms(&self) -> f64 {
         0.0
+    }
+}
+
+/// Everything impure the engine needs, supplied by the embedding runtime.
+pub struct Host<'a> {
+    pub env: &'a dyn Env,
+    pub search: &'a dyn Search,
+    pub accel: Option<&'a dyn Accelerator>,
+}
+
+/// Owned deterministic host: `FixedEnv`, sequential search, no accelerator.
+#[derive(Default)]
+pub struct FixedHost {
+    pub env: FixedEnv,
+}
+
+impl FixedHost {
+    pub fn host(&self) -> Host<'_> {
+        Host {
+            env: &self.env,
+            search: &Sequential,
+            accel: None,
+        }
     }
 }
 

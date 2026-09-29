@@ -1,6 +1,56 @@
 use crate::{Result, scheduler};
-use specimen_kernel::search::Search;
-use std::sync::atomic::AtomicBool;
+use specimen_kernel::{
+    host::{Env, Host},
+    search::Search,
+};
+use std::{sync::atomic::AtomicBool, time::Instant};
+
+/// Wall clock, v4 UUIDs and a monotonic origin for the desktop and TUI.
+pub struct SystemEnv {
+    origin: Instant,
+}
+
+impl Default for SystemEnv {
+    fn default() -> Self {
+        Self {
+            origin: Instant::now(),
+        }
+    }
+}
+
+impl Env for SystemEnv {
+    fn now_rfc3339(&self) -> String {
+        crate::now()
+    }
+    fn now_millis(&self) -> i64 {
+        chrono::Utc::now().timestamp_millis()
+    }
+    fn uid(&self) -> String {
+        crate::uid()
+    }
+    fn monotonic_ms(&self) -> f64 {
+        self.origin.elapsed().as_secs_f64() * 1000.0
+    }
+}
+
+/// Native services: system clock, threaded raft scan, wgpu layers.
+#[derive(Default)]
+pub struct NativeHost {
+    pub env: SystemEnv,
+}
+
+impl NativeHost {
+    pub fn new() -> Self {
+        Self::default()
+    }
+    pub fn host(&self) -> Host<'_> {
+        Host {
+            env: &self.env,
+            search: &RaftSearch,
+            accel: Some(&crate::neural::WgpuAccelerator),
+        }
+    }
+}
 
 /// The threaded raft scan behind the kernel's `Search` seam.
 pub struct RaftSearch;

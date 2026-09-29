@@ -1,4 +1,5 @@
 //! Pure specimen rules. Every impure service arrives through `host`.
+pub mod engine;
 pub mod host;
 pub mod language;
 pub mod neural;

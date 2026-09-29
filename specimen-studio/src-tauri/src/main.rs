@@ -72,6 +72,7 @@ fn invoke(state: Arc<AppState>, r: Value, progress: Channel<Value>) -> Result<Va
             next.specimen = match op {
                 "run" => {
                     let (s, c) = engine::cycle(
+                        &specimen_core::host::NativeHost::new().host(),
                         &next.specimen,
                         value(&r, "input")?,
                         &next.network,
@@ -81,14 +82,25 @@ fn invoke(state: Arc<AppState>, r: Value, progress: Channel<Value>) -> Result<Va
                     cycle = c;
                     s
                 }
-                "review" => engine::review(&next.specimen, &next.network, &job.cancel)?,
+                "review" => engine::review(
+                    &specimen_core::host::NativeHost::new().host(),
+                    &next.specimen,
+                    &next.network,
+                    &job.cancel,
+                )?,
                 _ => {
                     let maintained = engine::maintain(
+                        &specimen_core::host::NativeHost::new().host(),
                         &next.specimen,
                         r["mode"].as_str().unwrap_or("phagy"),
                         &job.cancel,
                     )?;
-                    engine::review(&maintained, &next.network, &job.cancel)?
+                    engine::review(
+                        &specimen_core::host::NativeHost::new().host(),
+                        &maintained,
+                        &next.network,
+                        &job.cancel,
+                    )?
                 }
             };
             job.check()?;
@@ -194,6 +206,7 @@ fn invoke(state: Arc<AppState>, r: Value, progress: Channel<Value>) -> Result<Va
             }
             let input = format!("[image:{}]", value(&r, "asset")?);
             let (specimen, mut cycle) = engine::cycle_with_visual(
+                &specimen_core::host::NativeHost::new().host(),
                 &next.specimen,
                 &input,
                 &next.network,
@@ -460,7 +473,7 @@ mod tests {
             std::env::temp_dir().join(format!("wdbx-invoke-cancel-{}", uuid::Uuid::new_v4()));
         let mut store = Store::open(&root).unwrap();
         let specimen = serde_json::from_str(include_str!(
-            "../../native/specimen-core/tests/fixtures/starter.json"
+            "../../conformance/starter.json"
         ))
         .unwrap();
         store.edit(0, specimen).unwrap();
