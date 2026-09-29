@@ -1,5 +1,6 @@
 //! Pure specimen rules. Every impure service arrives through `host`.
 pub mod host;
+pub mod language;
 use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize, thiserror::Error)]
 #[error("{message}")]

@@ -1,5 +1,5 @@
 pub mod engine;
-pub mod language;
+pub use specimen_kernel::language;
 pub mod models;
 pub mod neural;
 pub mod persistence;
