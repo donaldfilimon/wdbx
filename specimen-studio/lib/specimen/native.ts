@@ -175,9 +175,9 @@ export async function pickNativeFile() {
 }
 /** The desktop snapshot's network (the one cycles use) and its revision. */
 export async function loadNativeNetwork() {
-  const snapshot = acceptSnapshot(
-    await callNative<NativeSnapshot>({ op: 'snapshot' }),
-  );
+  // A read, not an accept: accepting would move the revision that this app's
+  // own specimen edits are checked against past commits it has not applied.
+  const snapshot = await callNative<NativeSnapshot>({ op: 'snapshot' });
   return { network: snapshot.network, revision: snapshot.revision };
 }
 /**

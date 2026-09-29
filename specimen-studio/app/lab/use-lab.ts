@@ -46,6 +46,8 @@ export function useLab(onSnapshot: (s: Specimen) => void) {
   const [error, setError] = useState('');
   const [pollError, setPollError] = useState('');
   const job = useRef('');
+  // Guards against two starts before a re-render shows `busy`.
+  const running = useRef(false);
 
   const refresh = () =>
     Promise.all([activeJobs(), modelStatus()]).then(
@@ -96,7 +98,8 @@ export function useLab(onSnapshot: (s: Specimen) => void) {
 
   /** Runs one labelled job; a second job is refused while one runs. */
   const work = async (label: string, fn: (jobId: string) => Promise<void>) => {
-    if (busy) return;
+    if (running.current) return;
+    running.current = true;
     const id = crypto.randomUUID();
     job.current = id;
     setBusy(label);
@@ -111,6 +114,7 @@ export function useLab(onSnapshot: (s: Specimen) => void) {
     } finally {
       setBusy('');
       job.current = '';
+      running.current = false;
       void refresh();
     }
   };

@@ -133,7 +133,14 @@ export async function loadNetwork(): Promise<StoredNetwork> {
  */
 export async function compositionNetwork(): Promise<Network | undefined> {
   if (isDesktop()) return undefined;
-  return (await loadNetwork()).network;
+  try {
+    return (await loadNetwork()).network;
+  } catch {
+    // Storage unavailable (private mode, blocked, quota): compose with the
+    // kernel default rather than failing every cycle. The Neural layers view
+    // reports the storage error when opened.
+    return undefined;
+  }
 }
 
 export async function persistNetwork(

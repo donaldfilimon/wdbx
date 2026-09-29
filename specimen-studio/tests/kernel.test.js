@@ -365,3 +365,11 @@ test('browser cycles compose with the network they are given', async () => {
     runCycle(state, 'imagine a red circle', undefined, undefined, broken),
   ).rejects.toThrow(/Invalid/);
 });
+
+test('cycles fall back to the default network when browser storage is unavailable', async () => {
+  // Bun has no IndexedDB: loading the stored network fails here, as it does
+  // in a browser with storage blocked. Cycles must still run.
+  expect(typeof globalThis.indexedDB).toBe('undefined');
+  const { compositionNetwork } = await import('../lib/specimen/storage');
+  await expect(compositionNetwork()).resolves.toBeUndefined();
+});

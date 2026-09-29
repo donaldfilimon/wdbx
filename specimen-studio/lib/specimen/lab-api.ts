@@ -1,11 +1,10 @@
 /**
  * Typed client for the desktop Lab: local models, image analysis and OCR,
  * generation and artifacts. Every call goes through the protocol-gated
- * `native_call` (see `native/specimen-core/src/protocol.rs`); results that
- * reach the UI are parsed here rather than cast.
+ * `native_call` (see `native/specimen-core/src/protocol.rs`). Artifacts are
+ * parsed; other results are typed by the native contract, not validated.
  */
 import {
-  acceptSnapshot,
   callNative,
   nativeOperation,
   persistNative,
@@ -96,8 +95,9 @@ export async function modelStatus(): Promise<ModelStatus[] | null> {
 export const capabilities = () =>
   callNative<Capabilities>({ op: 'capabilities' });
 export const activeJobs = () => callNative<string[]>({ op: 'jobs' });
-export const loadSnapshot = async () =>
-  acceptSnapshot(await callNative<NativeSnapshot>({ op: 'snapshot' }));
+/** Reads the snapshot for display without accepting it (see loadNativeNetwork). */
+export const loadSnapshot = () =>
+  callNative<NativeSnapshot>({ op: 'snapshot' });
 
 const str = (v: unknown): v is string => typeof v === 'string';
 

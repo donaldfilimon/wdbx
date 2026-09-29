@@ -17,6 +17,30 @@ import type { Lab } from './use-lab';
 const MAX_BYTES = 32 * 1024 * 1024;
 const WHOLE: Focus = { x: 0, y: 0, width: 1, height: 1 };
 
+const STEP = 0.05;
+
+/** Moves the focus box by one step for an arrow key; null for other keys. */
+export function nudgeFocus(focus: Focus, key: string): Focus | null {
+  const clamp = (v: number, size: number) =>
+    Math.round(Math.max(0, Math.min(1 - size, v)) * 1000) / 1000;
+  const [dx, dy] =
+    key === 'ArrowLeft'
+      ? [-STEP, 0]
+      : key === 'ArrowRight'
+        ? [STEP, 0]
+        : key === 'ArrowUp'
+          ? [0, -STEP]
+          : key === 'ArrowDown'
+            ? [0, STEP]
+            : [0, 0];
+  if (!dx && !dy) return null;
+  return {
+    ...focus,
+    x: clamp(focus.x + dx, focus.width),
+    y: clamp(focus.y + dy, focus.height),
+  };
+}
+
 async function readImage(
   file: File,
 ): Promise<{ bytes: number[]; name: string } | { error: string }> {
@@ -130,7 +154,7 @@ export function ImageWorkspace({
           type="button"
           aria-label={
             image
-              ? 'Image focus: click to move the focus box to that point'
+              ? 'Image focus: click a point or use the arrow keys to move the focus box'
               : 'Drop or paste an image here, or activate to open one'
           }
           className="relative grid w-full place-items-center overflow-hidden rounded-lg border border-dashed border-line-strong bg-surface-2 focus-visible:outline-2 focus-visible:outline-focus"
@@ -147,9 +171,18 @@ export function ImageWorkspace({
               void choose(f);
             }
           }}
+          onKeyDown={(e) => {
+            if (!image || busy) return;
+            const next = nudgeFocus(focus, e.key);
+            if (!next) return;
+            e.preventDefault();
+            setFocus(next);
+            setAnalysis(null);
+          }}
           onClick={(e) => {
             if (!image) return fileInput.current?.click();
-            if (busy) return;
+            // Enter/Space arrive as a click at (0, 0); arrows move the focus.
+            if (busy || e.detail === 0) return;
             const r = e.currentTarget.getBoundingClientRect();
             setFocus((f) => ({
               ...f,

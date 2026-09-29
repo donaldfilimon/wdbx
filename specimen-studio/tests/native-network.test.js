@@ -44,3 +44,13 @@ test('an import in between makes the edit stale instead of overwriting it', asyn
     persistNativeNetwork({ version: 1, layers: ['old edit'] }, loaded.revision),
   ).rejects.toMatchObject({ code: 'StaleRevision' });
 });
+
+test('reading the network does not move the revision other writes are checked against', async () => {
+  const { persistNative } = await import('../lib/specimen/native');
+  const accepted = (await loadNative(), revision); // this app has seen `accepted`
+  revision = accepted + 5; // another writer committed since
+  await loadNativeNetwork(); // must be a read, not an accept
+  sent.length = 0;
+  await persistNative({ name: 'changed', nodes: [] }).catch(() => {});
+  expect(sent.find((r) => r.op === 'edit')?.revision).toBe(accepted);
+});

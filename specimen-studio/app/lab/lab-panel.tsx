@@ -223,13 +223,13 @@ export function LabPanel({
         <TabsContent value="image" keepMounted>
           <ImageWorkspace lab={lab} specimen={specimen} inbound={inbound} />
         </TabsContent>
-        <TabsContent value="generate">
+        <TabsContent value="generate" keepMounted>
           <GeneratePanel lab={lab} specimen={specimen} />
         </TabsContent>
         <TabsContent value="models">
           <ModelsPanel lab={lab} />
         </TabsContent>
-        <TabsContent value="artifacts">
+        <TabsContent value="artifacts" keepMounted>
           <ArtifactsPanel
             lab={lab}
             specimen={specimen}

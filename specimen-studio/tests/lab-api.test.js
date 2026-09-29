@@ -56,6 +56,9 @@ mock.module('@tauri-apps/api/core', () => ({
         };
       case 'snapshot':
         return snapshot();
+      case 'edit':
+        revision += 1;
+        return snapshot();
       default:
         return true;
     }
@@ -76,8 +79,13 @@ test('model status and capabilities come back typed', async () => {
 });
 
 test('generate sends the job, model, prompt and seed and returns the artifact', async () => {
-  // native.ts keeps the newest revision it has seen across test files.
-  const { revision: base } = await lab.loadSnapshot();
+  // Writes carry the revision the app accepted (loadNative), not one merely
+  // read for display (loadSnapshot no longer accepts).
+  const { loadNative, persistNative } = await import('../lib/specimen/native');
+  await loadNative();
+  await persistNative({ name: `lab-${Math.random()}` }).catch(() => {});
+  const base = sent.findLast((r) => r.op === 'edit')?.revision;
+  expect(typeof base).toBe('number');
   const { artifact } = await lab.generate('qwen3-4b', 'p', 7, 'job-2');
   expect(sent.at(-1)).toMatchObject({
     op: 'generate',
@@ -85,8 +93,9 @@ test('generate sends the job, model, prompt and seed and returns the artifact', 
     prompt: 'p',
     seed: 7,
     jobId: 'job-2',
-    revision: base,
   });
+  // The accepted revision after that edit: never older, never missing.
+  expect(sent.at(-1).revision).toBeGreaterThanOrEqual(base);
   expect(artifact.id).toBe('a1');
 });
 

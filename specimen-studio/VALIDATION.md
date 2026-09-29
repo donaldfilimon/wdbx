@@ -932,3 +932,38 @@ one character at 800 px, making rows 215 to 295 px tall and breaking the
 `test:browser` assertion measures every rendered node row at 800 px; it
 failed on the unfixed code (rows 215-295 px) and passes now. Evidence:
 `bun run check` (181), `test:browser` dark and light.
+
+## B7 review fixes (2026-09-29)
+
+Fresh reviewer on 5f74994/b83d722.
+
+- Critical, fixed: every browser cycle awaited the stored network, so with
+  IndexedDB unavailable (private mode, blocked storage) every prompt failed
+  where it used to run in memory. `compositionNetwork()` now falls back to
+  the kernel default (tested in Bun, which has no IndexedDB).
+- Enter/Space on the image workspace arrived as a click at (0, 0) and moved
+  the focus to the corner. Keyboard clicks are ignored for positioning and
+  the arrow keys nudge the focus (`nudgeFocus`, tested).
+- The Generate and Artifacts tabs lost their state and refetched assets on
+  every switch; they stay mounted (tested).
+- Reading the snapshot for display (`loadSnapshot`, `loadNativeNetwork`)
+  accepted it, moving the revision this app's own edits are checked against
+  past commits it had not applied. Both are now reads (tested: a later edit
+  still carries the accepted revision).
+- Also: the job guard is a ref (two quick clicks cannot both start), the
+  `lab-api` header no longer claims results are parsed, and the tab test
+  checks tab roles rather than a substring.
+
+Deferred minors: drop/paste ignore `busy`; aspect ratio is not reset before
+a new image loads; a handed-over and a chosen image can race; the Models
+tab shows "Reading models" forever on a malformed reply; Cancel is offered
+for jobs that carry no job id; a dismissed import picker reports completed;
+`dispatch.rs` clones the request; desktop drop/paste untested; Generate is
+empty without explanation while the model store is busy; `maxLength` counts
+UTF-16 units. Ruling: the B7.1 facade test runs the kernel inline, not in
+the Worker production uses; the worker only forwards the request.
+
+Evidence: `bun run check` (184), `test:browser` dark and light, native
+desktop suite rebuilt and rerun: the first run's WebDriver runner was
+SIGKILLed during the first test with no assertion failure (2 m 46 s); the
+immediate rerun passed 5/5.
