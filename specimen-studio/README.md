@@ -19,7 +19,7 @@ The shell is keyboard-first. **⌘K** (Ctrl-K) opens the command palette: go to 
 
 ```sh
 bun install
-bun dev
+bun dev          # Node: vinext dev with the Cloudflare plugin (fails under Bun)
 bun test
 bunx tsc --noEmit
 bun run build

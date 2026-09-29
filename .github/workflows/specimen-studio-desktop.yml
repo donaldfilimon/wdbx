@@ -96,14 +96,14 @@ jobs:
         shell: bash
         run: |
           if [ "$RUNNER_OS" = Linux ]; then
-            bunx tauri build --bundles deb
+            bunx --bun tauri build --bundles deb
             python scripts/linux_package_evidence.py snapshot-deb \
               --root "$PWD" \
               --bundle-deb-root "$PWD/target/release/bundle/deb" \
               --output "$PWD/work/linux-deb-stage"
-            bunx tauri bundle --bundles rpm,appimage
+            bunx --bun tauri bundle --bundles rpm,appimage
           else
-            bunx tauri build
+            bunx --bun tauri build
           fi
       - name: Verify production bridge exclusion
         run: python scripts/check-production-bridge.py

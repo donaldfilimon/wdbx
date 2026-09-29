@@ -540,3 +540,28 @@ its own `--sidebar-accent` and muted tokens.
 
 Not exercised: Firefox and WebKit engines, the native desktop UI suite
 (`native.e2e.mjs`), a packaged Tauri build, and screen readers.
+
+## B0 Bun runtime spike (2026-09-29)
+
+Scratch worktree at the P2 head, Bun 1.4.0, Node 26.10.0, aarch64 macOS 27.2.
+
+| Step | Under Bun (`bun --bun`) | Evidence |
+|---|---|---|
+| `vinext build` (web) | works | exit 0; same 76 output files and identical prerendered HTML size as the Node build (only build IDs and hashes differ); 6.5 s vs 6.2 s |
+| `vite build`, desktop config | works | exit 0; warm 1.0-1.15 s under both |
+| `vite` desktop dev server | works | page hydrates (`Stored on this device`), dark theme applied |
+| `vite` web dev server (vinext + Cloudflare plugin) | fails | page never hydrates: `Failed to fetch dynamically imported module .../virtual:vinext-app-browser-entry`; Node serves that module (200) and hydrates |
+| `wrangler dev` (Worker preview) | fails | prints "Ready", but three requests each time out at 20 s; Node wrangler serves the same Bun-built `dist/` (200) |
+| Playwright e2e (both suites) | works | browser and accessibility acceptance pass against a Node-served preview |
+| Tauri CLI `build --debug --bundles app` | works | `WDBX Specimen Studio.app` bundled in 23 s (warm cache); `beforeBuildCommand` ran the Bun desktop build |
+
+Adopted in `package.json`: `build`, `desktop:dev`, `desktop:build`,
+`desktop:package`, `test:browser` on Bun; `dev` and `start` stay on Node, so
+`engines` lists both and the browser CI workflow keeps `setup-node`. The
+desktop workflow's `tauri build`/`bundle` steps use `bunx --bun`. Not
+exercised under Bun: `tauri dev` (interactive), the WebdriverIO native suite,
+Linux/Windows hosts.
+
+After the switch, in the canonical checkout: `bun run check` (117 tests, Worker
+build) exit 0, `bun run test:native` exit 0, `bun run desktop:build` exit 0,
+`bun run test:browser` passes in the dark default and `STUDIO_THEME=light`.

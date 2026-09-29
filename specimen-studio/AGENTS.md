@@ -22,6 +22,13 @@ excludes it, and wdbx's `tools/check.sh` does not build or test it.
 ## Build, Test, and Development Commands
 
 Use Bun, Node.js 22.13+, and `nightly-2026-09-01` from `rust-toolchain.toml`.
+Bun is the runtime wherever it has been proven (2026-09-29 spike, recorded in
+`VALIDATION.md`): `bun run build` (vinext), `desktop:dev`/`desktop:build` (Vite),
+`desktop:package` (Tauri CLI) and `test:browser` (Playwright) run with `bun --bun`
+or `bun`. Two steps stay on Node because they fail under Bun: `bun dev` (vinext's
+dev server with the Cloudflare plugin cannot load its virtual browser entry) and
+`bun start` (`wrangler dev` reports ready but never answers requests). Do not add
+`--bun` to those two without re-running that check.
 CI uses Bun 1.4.0; dependency resolutions live in `bun.lock` and `Cargo.lock`.
 
 - `bun install --frozen-lockfile`: install locked JavaScript dependencies.
