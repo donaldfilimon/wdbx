@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Panel, Toolbar, ToolbarSpacer, WButton } from '@/components/wdbx';
 import { GitBranch, Network, Pencil, Plus, Shield, X } from 'lucide-react';
 import { type Specimen } from '@/lib/specimen/types';
 
@@ -41,7 +42,7 @@ export function NodesView({
   );
   return (
     <>
-      <div className="workspace-tools">
+      <Toolbar label="Node library tools">
         <SearchField
           value={query}
           onChange={(value) => {
@@ -52,6 +53,7 @@ export function NodesView({
         />
         <select
           name="node-type-filter"
+          className="min-h-11 rounded-lg border border-line-strong bg-raised px-3 text-sm text-ink focus-visible:outline-2 focus-visible:outline-focus"
           aria-label="Filter node type"
           value={filter}
           onChange={(e) => {
@@ -64,20 +66,16 @@ export function NodesView({
           <option value="A">Type A · residual</option>
           <option value="B">Type B · idle</option>
         </select>
-        <span className="toolbar-spacer" />
-        <button
-          className="button outline"
-          onClick={onAttach}
-          disabled={state.nodes.length < 2}
-        >
+        <ToolbarSpacer />
+        <WButton onClick={onAttach} disabled={state.nodes.length < 2}>
           <GitBranch size={16} />
           Attach nodes
-        </button>
-        <button className="button primary" onClick={onAdd}>
+        </WButton>
+        <WButton variant="primary" onClick={onAdd}>
           <Plus size={17} />
           Add pattern
-        </button>
-      </div>
+        </WButton>
+      </Toolbar>
       <div className="panel table-panel">
         <div className="panel-heading">
           <h2>Learned nodes</h2>
@@ -211,39 +209,46 @@ export function NodesView({
           </p>
         )}
       </div>
-      <div className="workspace-footnote">
-        <Shield size={17} />
-        <p>
-          Pattern IDs may repeat. Every node keeps its own original patterns,
-          votes, and strength.
-        </p>
-      </div>
-      <div className="panel attachment-list">
-        <div className="panel-heading">
-          <h2>Semantic attachments</h2>
-          <span className="muted small">{state.attachments.length} links</span>
-        </div>
+      <p className="m-0 flex items-start gap-2 text-sm text-ink-soft">
+        <Shield size={17} className="mt-0.5 shrink-0 text-teal" />
+        Pattern IDs may repeat. Every node keeps its own original patterns,
+        votes, and strength.
+      </p>
+      <Panel
+        title="Semantic attachments"
+        description={`${state.attachments.length} links`}
+      >
         {state.attachments.length ? (
-          state.attachments.map((a) => (
-            <div className="attachment-row" key={a.id}>
-              <GitBranch size={17} />
-              <strong>{state.nodes.find((n) => n.ref === a.from)?.name}</strong>
-              <span>{a.bidirectional ? '↔' : '→'}</span>
-              <strong>{state.nodes.find((n) => n.ref === a.to)?.name}</strong>
-              <span className="muted">
-                {a.hard
-                  ? 'Hard attachment'
-                  : `${Math.round(a.affinity * 100)}% affinity`}
-              </span>
-            </div>
-          ))
+          <ul className="m-0 list-none divide-y divide-line p-0">
+            {state.attachments.map((a) => (
+              <li
+                className="flex flex-wrap items-center gap-2 px-4 py-3 text-sm text-ink"
+                key={a.id}
+              >
+                <GitBranch size={17} className="text-teal" />
+                <strong>
+                  {state.nodes.find((n) => n.ref === a.from)?.name}
+                </strong>
+                <span aria-hidden="true">{a.bidirectional ? '↔' : '→'}</span>
+                <span className="sr-only">
+                  {a.bidirectional ? 'linked both ways with' : 'links to'}
+                </span>
+                <strong>{state.nodes.find((n) => n.ref === a.to)?.name}</strong>
+                <span className="text-muted-foreground">
+                  {a.hard
+                    ? 'Hard attachment'
+                    : `${Math.round(a.affinity * 100)}% affinity`}
+                </span>
+              </li>
+            ))}
+          </ul>
         ) : (
-          <p className="panel-description">
+          <p className="m-0 px-4 py-3 text-sm text-muted-foreground">
             Connect related nodes to hand off the part of an input that did not
             match.
           </p>
         )}
-      </div>
+      </Panel>
     </>
   );
 }

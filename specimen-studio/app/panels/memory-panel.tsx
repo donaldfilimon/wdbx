@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Toolbar, ToolbarSpacer, WButton } from '@/components/wdbx';
 import { Database, MessageCircle, Pencil, Pin, Plus, X } from 'lucide-react';
 import { SUBSYSTEMS, type Specimen } from '@/lib/specimen/types';
 
@@ -43,8 +44,8 @@ export function MemoryView({
     .reverse();
   return (
     <>
-      <div className="workspace-tools">
-        <fieldset className="segmented">
+      <Toolbar label="Memory views">
+        <fieldset className="m-0 inline-flex gap-1 rounded-lg border border-line bg-surface-2 p-1">
           <legend className="sr-only">Memory view</legend>
           {[
             ['resources', 'Resources'],
@@ -53,7 +54,8 @@ export function MemoryView({
           ].map(([id, label]) => (
             <button
               key={id}
-              className={tab === id ? 'selected' : ''}
+              type="button"
+              className={`min-h-9 rounded-md px-3 text-sm font-medium focus-visible:outline-2 focus-visible:outline-focus ${tab === id ? 'bg-raised text-ink shadow-sm' : 'text-muted-foreground hover:text-ink'}`}
               aria-pressed={tab === id}
               onClick={() => setTab(id)}
             >
@@ -61,15 +63,15 @@ export function MemoryView({
             </button>
           ))}
         </fieldset>
-        <span className="toolbar-spacer" />
+        <ToolbarSpacer />
         {tab === 'resources' && (
-          <button className="button primary" onClick={onAdd}>
+          <WButton variant="primary" onClick={onAdd}>
             <Plus size={17} />
             Add memory
-          </button>
+          </WButton>
         )}
-      </div>
-      <div className="workspace-tools">
+      </Toolbar>
+      <Toolbar label="Memory search">
         <SearchField
           value={query}
           onChange={setQuery}
@@ -78,6 +80,7 @@ export function MemoryView({
         {tab === 'resources' && (
           <select
             name="subsystem-filter"
+            className="min-h-11 rounded-lg border border-line-strong bg-raised px-3 text-sm text-ink focus-visible:outline-2 focus-visible:outline-focus"
             aria-label="Memory subsystem"
             value={subsystem}
             onChange={(e) => setSubsystem(e.target.value)}
@@ -90,7 +93,7 @@ export function MemoryView({
             ))}
           </select>
         )}
-      </div>
+      </Toolbar>
       {tab === 'resources' ? (
         <div className="panel table-panel">
           <div className="table-scroll">

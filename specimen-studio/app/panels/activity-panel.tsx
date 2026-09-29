@@ -1,8 +1,14 @@
 /* oxlint-disable next/no-html-link-for-pages -- Shared browser/desktop view uses host-neutral local navigation. */
-import { Activity, GitBranch, Search, Shield } from 'lucide-react';
+import { GitBranch, Search, Shield } from 'lucide-react';
+import {
+  EmptyState,
+  EventTimeline,
+  Panel,
+  Toolbar,
+  ToolbarSpacer,
+  WButton,
+} from '@/components/wdbx';
 import { type Specimen } from '@/lib/specimen/types';
-
-import { clock } from '../state/format';
 
 export function ActivityView({
   state,
@@ -17,89 +23,78 @@ export function ActivityView({
   onReview: () => void;
   busy: boolean;
 }) {
+  const pending = state.proposals.filter((p) => p.status === 'pending');
   return (
-    <>
-      <div className="workspace-tools">
-        <button className="button outline" disabled={busy} onClick={onReview}>
+    <div className="grid gap-4">
+      <Toolbar label="Activity actions">
+        <WButton disabled={busy} onClick={onReview}>
           <Search size={16} />
           Review context
-        </button>
-        <span className="muted">
+        </WButton>
+        <span className="text-sm text-muted-foreground">
           A record of cycles, learning, and maintenance
         </span>
-        <span className="toolbar-spacer" />
-        <button
-          className="button outline"
-          disabled={busy}
-          onClick={() => onMaintenance('mutation')}
-        >
+        <ToolbarSpacer />
+        <WButton disabled={busy} onClick={() => onMaintenance('mutation')}>
           <GitBranch size={16} />
           Run mutation scan
-        </button>
-        <button
-          className="button outline"
-          disabled={busy}
-          onClick={() => onMaintenance('phagy')}
-        >
+        </WButton>
+        <WButton disabled={busy} onClick={() => onMaintenance('phagy')}>
           <Shield size={16} />
           Run PHAGY
-        </button>
-      </div>
-      {state.proposals.some((p) => p.status === 'pending') && (
-        <section className="panel proposals">
-          <div className="panel-heading">
-            <h2>Learning proposals</h2>
-          </div>
-          {state.proposals
-            .filter((p) => p.status === 'pending')
-            .map((p) => (
-              <div className="proposal" key={p.id}>
-                <div>
-                  <strong>{p.pattern}</strong>
-                  <p>
+        </WButton>
+      </Toolbar>
+      {pending.length > 0 && (
+        <Panel title="Learning proposals">
+          <ul className="m-0 list-none divide-y divide-line p-0">
+            {pending.map((p) => (
+              <li
+                key={p.id}
+                className="flex flex-wrap items-center gap-3 px-4 py-3"
+              >
+                <div className="min-w-0 flex-1">
+                  <strong className="text-sm text-ink">{p.pattern}</strong>
+                  <p className="m-0 text-sm text-ink-soft">
                     {p.evidence} unmatched prompts suggest a missing pattern.
                     Supply its response to approve learning.
                   </p>
                 </div>
-                <button
-                  className="button primary"
-                  onClick={() => onLearn(p.pattern)}
-                >
+                <WButton variant="primary" onClick={() => onLearn(p.pattern)}>
                   Review & learn
-                </button>
-              </div>
+                </WButton>
+              </li>
             ))}
-        </section>
+          </ul>
+        </Panel>
       )}
-      <section className="panel activity-panel">
-        {state.events.slice(0, 100).map((event) => (
-          <div className="activity-row" key={event.id}>
-            <span
-              className={`event-icon ${event.type === 'feedback' ? 'amber' : ''}`}
-            >
-              <Activity size={17} />
-            </span>
-            <div>
-              <strong>{event.title}</strong>
-              <p>{event.detail}</p>
-            </div>
-            <time dateTime={event.createdAt}>{clock(event.createdAt)}</time>
-          </div>
-        ))}
-      </section>
-      <section className="runtime-note">
-        <h2>About this runtime</h2>
-        <p>
-          This browser studio runs local pattern matching, procedural sigils,
-          votes, feedback, memory, attachments, and bounded maintenance. Its
-          synthesis is fixed and does not train a language model. The complete
-          design remains available in Specification. Read the{' '}
-          <a href="/RUNTIME-PROFILE.md" download>
-            browser runtime profile
+      <Panel
+        title="Activity"
+        description={`${Math.min(state.events.length, 100)} most recent of ${state.events.length} events`}
+      >
+        {state.events.length ? (
+          <EventTimeline events={state.events.slice(0, 100)} />
+        ) : (
+          <EmptyState
+            title="No activity yet"
+            text="Run a prompt or teach a pattern to start the record."
+          />
+        )}
+      </Panel>
+      <Panel title="About this runtime">
+        <p className="m-0 px-4 py-3 text-sm text-ink-soft">
+          Both editions run the same Rust specimen kernel; the browser loads it
+          as WebAssembly and keeps data in this browser. The complete design
+          remains available in Specification. Read the{' '}
+          <a
+            className="font-medium text-teal underline underline-offset-2"
+            href="/RUNTIME-PROFILE.md"
+            download
+          >
+            runtime profile
           </a>{' '}
           for exact behavior and limits.
         </p>
-      </section>
-    </>
+      </Panel>
+    </div>
   );
 }
