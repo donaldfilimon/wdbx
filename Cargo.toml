@@ -1,6 +1,9 @@
 [workspace]
 resolver = "3"
 members = ["crates/*"]
+# specimen-studio/ is a separate Cargo workspace (its own Cargo.toml, lockfile
+# and gate); it consumes abi-wdbx/abi-compute by pinned git revision.
+exclude = ["specimen-studio"]
 
 [workspace.package]
 version = "0.1.0"

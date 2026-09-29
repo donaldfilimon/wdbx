@@ -3,7 +3,9 @@
 # walking generated build output. Git supplies a NUL-delimited list so unusual
 # filenames remain one entry; untracked, non-ignored Rust sources are included
 # so a new module is checked before its first commit. Ported from ABI's
-# tools/check_rust_sizes.sh; WDBX has no per-file exceptions.
+# tools/check_rust_sizes.sh; WDBX has no per-file exceptions. specimen-studio/
+# is excluded: it is a separate Cargo workspace with its own gate and vendors
+# third-party sources (native/vendor/glib-0.18.5) this limit was never meant for.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -23,7 +25,7 @@ while IFS= read -r -d '' path; do
         printf '%q (%d lines)\n' "${path}" "${lines}" >&2
         failed=1
     fi
-done < <(git ls-files --cached --others --exclude-standard -z -- '*.rs')
+done < <(git ls-files --cached --others --exclude-standard -z -- '*.rs' ':(exclude)specimen-studio/')
 
 if ((failed != 0)); then
     exit 1
