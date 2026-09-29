@@ -418,3 +418,46 @@ Deliberate differences: responsive navigation becomes a drawer on phones; graph 
 The accessibility pass followed the fetched Vercel Web Interface Guidelines: named controls, real buttons/links, associated form labels, visible focus, reduced-motion handling, error announcements, keyboard-supported dialogs, and URL-addressable reference views.
 
 The broader specification remains distinct from this browser implementation. See RUNTIME-PROFILE.md for exact executable mechanisms and limits.
+
+## P0 kernel WASM feasibility (2026-09-28)
+
+**Verdict: GO.** The pure specimen rules (`native/specimen-kernel`) build for
+`wasm32-unknown-unknown` and run a full cycle there with output byte-identical
+to native on this host.
+
+Evidence, on aarch64 macOS 27.2, `rustc 1.100.0-nightly (0dfb098f3 2026-08-31)`,
+Bun 1.4.0:
+
+- `conformance/p0-probe.sha256` = `9577ece5…a9edcb`: the SHA-256 of one
+  `FixedHost` cycle over `conformance/starter.json` with input `What is 2 + 2?`
+  (status `complete`, answer `4`, 1 vote, 6 trace steps). The native test
+  (`cargo test -p specimen-wasm`) and the WASM test (`tests/wasm-probe.test.js`)
+  both reproduce it. The WASM test was shown to fail against a corrupted digest.
+- Probe size, release, no `wasm-opt`: 1,598,696 bytes raw, 529,256 bytes
+  `gzip -9`. Rebuild of the kernel and probe with dependencies cached: 2.2 s
+  wall. A fully cold dependency build was not measured.
+- Gates at this commit: `bun run check` exit 0 (95/95 Bun tests, Worker build
+  complete); `bun run test:native` exit 0 (all suites ok, 1 GPU test ignored);
+  `bun run check:native` exit 0.
+
+Findings:
+
+1. **JSON map ordering diverged between editions (fixed).** The pinned
+   `abi-wdbx`/`abi-foundation` enable `serde_json/preserve_order`, so the
+   desktop engine ran on insertion-ordered maps while a kernel built without
+   `specimen-core` (the browser) got sorted maps. The first golden
+   (`05ae6c2f…`) was recorded in that non-shipping configuration and the
+   combined native run disagreed with it. The kernel now enables
+   `preserve_order` itself; every build set produces `9577ece5…`.
+2. **Lane width is a parity input.** `abi-compute` dot products accumulate in
+   4 lanes for both NEON and scalar (the WASM path), so this host matches. An
+   x86_64 desktop with AVX2 (8 lanes) or AVX-512 (16 lanes) sums in a
+   different order and may differ from WASM in the last bits. Not measured;
+   no x86 host was available.
+3. **Transcendentals matched here.** `f32::exp`/`f64::exp` (macOS libm vs the
+   WASM libm port) produced identical bytes for this probe. One probe input is
+   not a proof over all inputs; the P1 conformance corpus widens it.
+
+Not exercised: the browser Worker running WASM (the probe ran under Bun only),
+wasm-bindgen, IndexedDB storage, and any x86 or Linux host. Vision and model
+tooling remain native-only by design.

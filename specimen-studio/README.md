@@ -37,7 +37,7 @@ The desktop adapter uses Tauri 2 and the Rust engine in `native/specimen-core`. 
 bun install --frozen-lockfile
 python3 scripts/build-runtimes.py
 bun run desktop
-cargo test -p specimen-core
+bun run test:native
 bun run desktop:package
 ```
 

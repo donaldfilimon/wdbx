@@ -12,7 +12,9 @@ excludes it, and wdbx's `tools/check.sh` does not build or test it.
 
 - `app/` contains the React studio, routes, and styles; `components/` contains shared controls and the native lab; `hooks/` contains React hooks.
 - `lib/specimen/` holds browser engine logic, contracts, persistence, and the native bridge. `lib/webmcp.ts` exposes optional browser tools.
-- `native/specimen-core/` contains the Rust engine and conformance tests; `src-tauri/` contains desktop integration and icons; `desktop/` provides its frontend entry point.
+- `native/specimen-kernel/` holds the pure specimen rules (`engine`, `language`, the CPU path of `neural`, `search`). It performs no I/O and builds for `wasm32-unknown-unknown`: wall clock, IDs, monotonic time (`host::Env`), the raft scan (`search::Search`) and GPU layers (`neural::Accelerator`) arrive through `host::Host`. `FixedHost` is the deterministic host for tests. Never add `chrono`, `uuid`, `std::thread`, `std::time::Instant` or `wgpu` to it. It enables `serde_json/preserve_order` itself because the native build gets it from `abi-wdbx`; without it the browser build would iterate and serialize JSON objects in a different order than desktop.
+- `native/specimen-core/` is the native host: WDBX persistence, models, vision, the threaded raft scheduler, `WgpuAccelerator`, `host::NativeHost`, and the conformance tests. It re-exports the kernel modules, so `specimen_core::engine` and friends still resolve. `src-tauri/` contains desktop integration and icons; `desktop/` provides its frontend entry point.
+- `native/specimen-wasm/` is the P0 feasibility probe: one raw-ABI export running a full cycle on `FixedHost`. `conformance/` holds the shared corpus (`starter.json`) and `p0-probe.sha256`, the golden digest that the native test and `tests/wasm-probe.test.js` must both reproduce; regenerate it only from native with `UPDATE_GOLDEN=1 cargo test -p specimen-wasm`, never from WASM. The program design is `docs/superpowers/specs/2026-09-28-specimen-studio-desktop-design.md`.
 - `tests/` contains browser unit and interface tests. `public/` holds static assets and specification Markdown; `scripts/` manages specification generation, runtimes, and packaging.
 
 ## Build, Test, and Development Commands
@@ -28,19 +30,20 @@ CI uses Bun 1.4.0; dependency resolutions live in `bun.lock` and `Cargo.lock`.
 - `bun run lint:studio`: lint studio/runtime code; `bun run lint` checks the broader project.
 - `bun run desktop`: launch Tauri; first build inference binaries with `python3 scripts/build-runtimes.py`.
 - `bun run desktop:package`: package the desktop application.
-- `bun run test:native`: test `specimen-core` (runs without `--locked`; report the `--locked` form below); `bun run check:native` runs workspace Clippy with warnings denied.
-- Single tests: `bun test tests/engine.test.js` runs one file, `bun test -t '<name pattern>'` filters by name; `cargo test -p specimen-core --locked --test conformance -- <test_name>` runs one Rust conformance test (`native/specimen-core/tests/conformance.rs`).
+- `bun run test:native`: `cargo test --locked` over `specimen-kernel`, `specimen-core` and `specimen-wasm`; `bun run check:native` runs workspace Clippy with warnings denied.
+- `bun run build:wasm`: release-build the kernel probe for `wasm32-unknown-unknown` (target installed by `rustup`); `bun test` needs it for `tests/wasm-probe.test.js`, so `bun run check` runs it first.
+- Single tests: `bun test tests/engine.test.js` runs one file, `bun test -t '<name pattern>'` filters by name; `cargo test -p specimen-core --locked --test conformance -- <test_name>` runs one Rust conformance test (`native/specimen-core/tests/conformance.rs`); `cargo test -p specimen-kernel <filter>` runs kernel unit tests.
 
 `bun run check` is the browser gate: `scripts/check-instructions.sh` (CLAUDE.md must
 stay a pointer to this file), `bunx tsc --noEmit`, `bun run lint:studio`,
-`bun test`, then `bun run build`. `bun run check:all` chains it with
+`bun run build:wasm`, `bun test`, then `bun run build`. `bun run check:all` chains it with
 `bun run check:native` (workspace Clippy). Neither runs the native tests: native CI
-uses `cargo test -p specimen-core --locked` (`bun run test:native`), and none of these
+uses `bun run test:native`, and none of these
 cover desktop UI qualification.
 
 This project has two halves and therefore two gates. Running only one half and
 calling it green is the standing mistake here: report both `bun run check` and
-`cargo test -p specimen-core --locked`.
+`bun run test:native`.
 
 It has been found running (`bun dev` + `vite` + `workerd`). Check for live processes
 before touching `node_modules`, `.wrangler`, or `.next`.
@@ -57,7 +60,7 @@ before touching `node_modules`, `.wrangler`, or `.next`.
   `lib/specimen/native.ts` serializes durable edits with expected revisions;
   `native/specimen-core/src/persistence.rs` owns the WDBX store and recovery copies.
 - Native `abi-wdbx` and `abi-compute` are Git-revision dependencies in
-  `native/specimen-core/Cargo.toml` (pinned to wdbx rev `3ac03f0`, which predates the
+  `native/specimen-core/Cargo.toml` and (`abi-compute` only) `native/specimen-kernel/Cargo.toml` (pinned to wdbx rev `3ac03f0`, which predates the
   fold), not path dependencies on the sibling `../crates/`, even though those crates
   now sit in the same repository. Picking up WDBX changes means bumping that rev;
   switching to path dependencies is a deliberate decision, not a cleanup. Do not

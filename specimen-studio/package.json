@@ -19,7 +19,7 @@
     "desktop:build": "vite build --config vite.desktop.config.ts",
     "desktop": "tauri dev",
     "desktop:package": "tauri build",
-    "test:native": "cargo test -p specimen-core",
+    "test:native": "cargo test --locked -p specimen-kernel -p specimen-core -p specimen-wasm",
     "check:native": "cargo clippy --workspace --all-targets -- -D warnings",
     "check": "sh scripts/check-instructions.sh && bunx tsc --noEmit && bun run lint:studio && bun run build:wasm && bun test && bun run build",
     "check:all": "bun run check && bun run check:native"

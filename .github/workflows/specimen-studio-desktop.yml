@@ -66,16 +66,18 @@ jobs:
           echo "$RUNNER_TEMP/desktop-venv/bin" >> "$GITHUB_PATH"
           echo "MACOSX_DEPLOYMENT_TARGET=14.0" >> "$GITHUB_ENV"
       - name: Rust toolchain
-        run: rustup toolchain install nightly-2026-09-01 --profile minimal --component rustfmt --component clippy
+        run: rustup toolchain install nightly-2026-09-01 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
       - name: Dependencies
         run: bun install --frozen-lockfile
+      - name: Kernel WASM probe
+        run: bun run build:wasm
       - name: Browser unit tests and types
         run: |
           bun test
           bunx tsc --noEmit
           bun run lint:studio
       - name: Native conformance tests
-        run: cargo test -p specimen-core --locked
+        run: bun run test:native
       - name: Reuse pinned inference builds
         uses: actions/cache@v4
         with:
