@@ -42,6 +42,29 @@ pub fn dispatch(h: &Host, req: &Value, progress: &dyn Fn(Value)) -> Result<Value
             mutate::validate_settings(field(req, "settings")?).map(|()| Value::Null)
         }
         "migrateIds" => Ok(mutate::migrate_ids(h, state()?)),
+        "networkDefault" => Ok(serde_json::to_value(Network::default())?),
+        "networkValidate" => {
+            let network: Network = serde_json::from_value(field(req, "network")?.clone())
+                .map_err(|e| error("InvalidNetwork", e))?;
+            network
+                .validate()
+                .map_err(|e| error("InvalidNetwork", e.message))?;
+            Ok(Value::Null)
+        }
+        "networkEdit" => {
+            let network: Network = serde_json::from_value(field(req, "network")?.clone())?;
+            let command = serde_json::from_value(field(req, "command")?.clone())?;
+            let next = specimen_kernel::network_edit::apply(&network, command)?;
+            Ok(serde_json::to_value(next)?)
+        }
+        "networkTrace" => {
+            let network: Network = serde_json::from_value(field(req, "network")?.clone())?;
+            let input = specimen_kernel::neural::encode(string(req, "text")?, &[], 0.0, 0.2);
+            let seed = field(req, "seed")?
+                .as_u64()
+                .ok_or_else(|| error("InvalidInput", "seed must be a whole number"))?;
+            Ok(serde_json::to_value(network.trace(&input, false, seed)?)?)
+        }
         "raftPlan" => {
             let n = |k: &str| -> Result<usize> {
                 field(req, k)?

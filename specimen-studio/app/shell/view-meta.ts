@@ -5,6 +5,7 @@ import {
   FileText,
   Gauge,
   HardDrive,
+  Waypoints,
   Network,
   Sparkles,
 } from 'lucide-react';
@@ -15,6 +16,7 @@ export const views: { id: View; label: string; icon: typeof Network }[] = [
   { id: 'studio', label: 'Studio', icon: Network },
   { id: 'nodes', label: 'Node Library', icon: BookOpen },
   { id: 'memory', label: 'Memory', icon: Database },
+  { id: 'network', label: 'Neural layers', icon: Waypoints },
   { id: 'activity', label: 'Activity', icon: Activity },
   { id: 'engine', label: 'Live engine', icon: Gauge },
   { id: 'store', label: 'Store', icon: HardDrive },
@@ -23,7 +25,7 @@ export const views: { id: View; label: string; icon: typeof Network }[] = [
 ];
 
 export const viewGroups: { label: string; ids: View[] }[] = [
-  { label: 'Build', ids: ['studio', 'nodes', 'memory'] },
+  { label: 'Build', ids: ['studio', 'nodes', 'memory', 'network'] },
   { label: 'Observe', ids: ['activity', 'engine', 'store', 'lab'] },
   { label: 'Reference', ids: ['specification'] },
 ];
@@ -36,6 +38,10 @@ export const labels: Record<View, [string, string]> = {
   ],
   nodes: ['Node library', 'Small patterns, reusable actions.'],
   memory: ['Memory', 'Supporting knowledge, close at hand.'],
+  network: [
+    'Neural layers',
+    'Build the composition network. See the specimen in 3D.',
+  ],
   activity: ['Activity', 'Follow the changes that shape your specimen.'],
   engine: [
     'Live engine',

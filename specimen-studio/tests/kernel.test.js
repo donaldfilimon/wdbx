@@ -11,6 +11,10 @@ import {
   maintenance,
   migrateIds,
   observeContext,
+  networkDefault,
+  networkEdit,
+  networkTrace,
+  networkValidate,
   raftPlan,
   removeNode,
   runCycle,
@@ -286,4 +290,41 @@ test('raftPlan returns totals and a bounded prefix of the kernel partition', () 
   // Out-of-range sizes are rejected, not trapped: the kernel stays usable.
   expect(() => raftPlan(20_000_000, 1, 1, 12)).toThrow(/at most/);
   expect(raftPlan(3, 256, 8, 12).checkpoints).toBe(1);
+});
+
+test('network commands run through the kernel and keep the decoder fixed', () => {
+  const base = networkDefault();
+  expect(base.layers.map((l) => [l.inputs, l.outputs])).toEqual([
+    [128, 64],
+    [64, 32],
+  ]);
+  const grown = networkEdit(base, {
+    command: 'addLayer',
+    at: 1,
+    outputs: 48,
+    fanIn: 6,
+    seed: 7,
+  });
+  expect(grown.layers.map((l) => l.outputs)).toEqual([64, 48, 32]);
+  expect(() => networkEdit(base, { command: 'removeLayer', index: 1 })).toThrow(
+    /decoder/,
+  );
+  // A rejected edit leaves the caller's network untouched.
+  expect(base.layers).toHaveLength(2);
+});
+
+test('networkTrace returns every layer for encoded text', () => {
+  const layers = networkTrace(networkDefault(), 'red circle', 9);
+  expect(layers.map((l) => l.length)).toEqual([64, 32]);
+  expect(layers.flat().every(Number.isFinite)).toBe(true);
+  expect(networkTrace(networkDefault(), 'red circle', 9)).toEqual(layers);
+});
+
+test('networkValidate rejects malformed networks', () => {
+  const net = networkDefault();
+  expect(() => networkValidate(net)).not.toThrow();
+  const broken = structuredClone(net);
+  broken.layers[0].columns[0] = 999;
+  expect(() => networkValidate(broken)).toThrow(/Invalid sparse layer/);
+  expect(() => networkValidate({ version: 1 })).toThrow();
 });

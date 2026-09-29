@@ -112,6 +112,25 @@ impl Network {
         seed: u64,
         accel: Option<&dyn Accelerator>,
     ) -> Result<Synthesis> {
+        self.run_observed(input, familiar, seed, accel, &mut |_| ())
+    }
+    /// Each layer's output for `input` on the CPU, with `run`'s activation
+    /// choices; the last entry equals `run(..).values`.
+    pub fn trace(&self, input: &[f32], familiar: bool, seed: u64) -> Result<Vec<Vec<f32>>> {
+        let mut layers = Vec::new();
+        self.run_observed(input, familiar, seed, None, &mut |v| {
+            layers.push(v.to_vec())
+        })?;
+        Ok(layers)
+    }
+    fn run_observed(
+        &self,
+        input: &[f32],
+        familiar: bool,
+        seed: u64,
+        accel: Option<&dyn Accelerator>,
+        observe: &mut dyn FnMut(&[f32]),
+    ) -> Result<Synthesis> {
         self.validate()?;
         if input.len() != 128 || input.iter().any(|x| !x.is_finite()) {
             return Err(error(
@@ -148,6 +167,7 @@ impl Network {
                     }
                 })
                 .collect();
+            observe(&values);
             activations.push(if sigmoid { "sigmoid" } else { "relu" }.into());
         }
         if values.iter().any(|v| !v.is_finite()) {

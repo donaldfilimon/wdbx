@@ -14,6 +14,7 @@ export const VIEW_TITLES: Record<View, string> = {
   memory: 'Memory',
   activity: 'Activity',
   engine: 'Live engine',
+  network: 'Neural layers',
   store: 'Store explorer',
   lab: 'Vision & models',
   specification: 'Specification',

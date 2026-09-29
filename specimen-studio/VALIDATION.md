@@ -782,3 +782,41 @@ commit; the Disk panel omits `models/` and `recovery/`; browser readings
 share one failure path; "Saved workspace" is JSON size; persistence copy is
 Chrome-centric; no loading or stale state on refresh; tombstones cap at 50
 silently.
+
+## B6 3D network editor (2026-09-29)
+
+Spec: `docs/superpowers/specs/2026-09-29-b6-network-3d-design.md`. New
+Build view `?view=network` ("Neural layers"; the label avoids the pinned
+"Network" button name), shadcn `Tabs`, `Table`, `Input` and `Badge`.
+
+- Kernel: `specimen_kernel::network_edit` (`addLayer`, `removeLayer`,
+  `resizeLayer`, `setConnectivity`, `initWeights`), deterministic per seed,
+  every result validated (`InvalidNetwork` otherwise), the 32-output
+  decoder protected; `Network::trace` returns each layer's output, the last
+  equal to `run`. WASM ops `networkDefault`, `networkValidate`,
+  `networkEdit`, `networkTrace`.
+- Persistence: browser IndexedDB key `network` (invalid or missing means the
+  default); desktop commits through the existing `network` op.
+- UI: a lazy-loaded three.js / @react-three/fiber scene per tab (render on
+  demand, no autonomous animation, token colours, a notice when WebGL is
+  missing or the scene fails), each paired with tables that carry the same
+  data. Layers: resize, rewire, remove, add, resample, trace. Topology:
+  shape for type, size for strength, colour for tone, solid or faint
+  attachments; selecting a node in the table highlights it in 3D.
+- Found on the way: views calling the kernel on a direct load raced the
+  WASM load (`?view=network` showed "still loading"; the raft planner would
+  keep that error). Added `kernelLoaded` / `subscribeKernel` and a
+  `useKernelReady` hook; a direct-load e2e step failed before the fix.
+- shadcn's inactive tab text measured 4.03:1 in light theme; the view
+  overrides it with `ink-soft`.
+
+Evidence: kernel `network_edit` tests (8), facade tests through WASM,
+server-rendered view tests, `bun run check` (166), `check:native` and
+`test:native` exit 0; `test:browser` in dark and light with the network
+steps, direct loads, and axe states `network-layers` and `network-topology`
+at 390, 768 and 1440 pixels (now required by `qualification-summary.py`).
+In headless Chrome the scene renders a real WebGL canvas.
+
+Not exercised: the desktop `network` commit path through the webview;
+dragging and connect-by-drag (out of scope). Browser cycles still compose
+with the built-in default network; the view says so.

@@ -13,6 +13,7 @@ import { MemoryView } from '../panels/memory-panel';
 import { NodesView } from '../panels/nodes-panel';
 import { SettingsView } from '../panels/settings-panel';
 import { StorePanel } from '../panels/store-panel';
+import { NetworkPanel } from '../network/network-panel';
 import { Specification } from '../panels/specification-panel';
 import { StudioPanel } from '../panels/studio-panel';
 import type { View } from '../state/navigation';
@@ -147,6 +148,9 @@ export function ViewOutlet({
         />
       )}
       {view === 'store' && <StorePanel desktop={isDesktop()} />}
+      {view === 'network' && (
+        <NetworkPanel specimen={state} desktop={isDesktop()} />
+      )}
       {view === 'specification' && (
         <Specification
           chapter={chapter}

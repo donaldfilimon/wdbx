@@ -1,5 +1,17 @@
-import { isDesktop, loadNative, persistNative } from './native';
-import { validateSpecimen } from './kernel';
+import {
+  isDesktop,
+  loadNative,
+  loadNativeNetwork,
+  persistNative,
+  persistNativeNetwork,
+} from './native';
+import {
+  kernelLoaded,
+  networkDefault,
+  networkValidate,
+  validateSpecimen,
+  type Network,
+} from './kernel';
 import type { Specimen } from './types';
 const database = 'wdbx-specimen-studio';
 function open(): Promise<IDBDatabase> {
@@ -77,6 +89,56 @@ export async function persistWorkspace(state: Specimen): Promise<void> {
     };
   });
 }
+/**
+ * The editable network: the desktop snapshot's, or the browser's own under
+ * the `network` key. A missing or invalid browser network is the default.
+ */
+export async function loadNetwork(): Promise<Network> {
+  if (isDesktop()) return (await loadNativeNetwork()) as Network;
+  // Validation and the default both come from the kernel.
+  await kernelLoaded;
+  const db = await open();
+  const stored = await new Promise<unknown>((resolve, reject) => {
+    const req = db
+      .transaction('workspace', 'readonly')
+      .objectStore('workspace')
+      .get('network');
+    req.onsuccess = () => {
+      db.close();
+      resolve(req.result);
+    };
+    req.onerror = () => {
+      db.close();
+      reject(req.error);
+    };
+  });
+  if (!stored) return networkDefault();
+  try {
+    networkValidate(stored as Network);
+    return stored as Network;
+  } catch {
+    return networkDefault();
+  }
+}
+
+export async function persistNetwork(network: Network): Promise<Network> {
+  if (isDesktop()) return (await persistNativeNetwork(network)) as Network;
+  const db = await open();
+  await new Promise<void>((resolve, reject) => {
+    const tx = db.transaction('workspace', 'readwrite');
+    tx.objectStore('workspace').put(network, 'network');
+    tx.oncomplete = () => {
+      db.close();
+      resolve();
+    };
+    tx.onerror = () => {
+      db.close();
+      reject(new Error('The network could not be stored on this device.'));
+    };
+  });
+  return network;
+}
+
 export function downloadText(
   filename: string,
   text: string,

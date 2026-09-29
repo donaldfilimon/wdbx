@@ -237,6 +237,28 @@ try {
   await expect(planner.locator('output')).toHaveText(
     /^10 candidates: 1 checkpoint of up to 256, each split across up to 5 rafts\.$/,
   );
+  // Network: the kernel edits layers, traces a prompt, and the topology
+  // tab pairs its 3D view with tables.
+  await page
+    .locator('nav[aria-label="Main navigation"] a[href="?view=network"]')
+    .click();
+  await expect(page.getByLabel('Layer 1 neurons')).toBeVisible();
+  await page.getByLabel('Neurons', { exact: true }).fill('48');
+  await page.getByRole('button', { name: 'Add layer', exact: true }).click();
+  await expect(
+    page.locator('output').filter({ hasText: 'Added a 48-neuron layer.' }),
+  ).toBeVisible();
+  await expect(page.getByLabel('Layer 3 neurons')).toBeDisabled();
+  await page.getByRole('button', { name: 'Trace', exact: true }).click();
+  await expect(
+    page
+      .locator('table', {
+        has: page.locator('caption', { hasText: 'Trace: output per layer' }),
+      })
+      .locator('tbody tr'),
+  ).toHaveCount(3);
+  await page.getByRole('tab', { name: 'Topology' }).click();
+  await expect(page.getByRole('region', { name: 'Nodes' })).toBeVisible();
   // Store explorer: the browser edition reports its IndexedDB record.
   await page
     .locator('nav[aria-label="Main navigation"] a[href="?view=store"]')
@@ -298,6 +320,14 @@ try {
   ).toBeVisible();
   await expect(page).toHaveURL(/view=memory.*split=specification/);
   await page.getByRole('button', { name: 'Close side pane' }).click();
+  // Kernel-backed views work on a direct load, before the kernel is ready.
+  await page.goto(`${base}?view=network`);
+  await expect(page.getByLabel('Layer 1 neurons')).toBeVisible();
+  await expect(page.getByText('still loading')).toHaveCount(0);
+  await page.goto(`${base}?view=specification&chapter=20`);
+  await expect(page.locator('[data-figure="ch20-2"] output')).toHaveText(
+    /^1,000 candidates: /,
+  );
   // Each pane keeps its own search text.
   await page.goto(`${base}?view=nodes&split=memory`);
   await page.getByPlaceholder('Find a pattern or node…').fill('zz');
@@ -460,6 +490,7 @@ try {
           'live engine views',
           'specification diagrams',
           'store explorer',
+          'network layers and topology',
         ],
         webmcpSupported: webmcp,
         errors,

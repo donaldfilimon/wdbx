@@ -30,6 +30,8 @@ function accessibilityWidth(width) {
     'spec-model',
     'spec-diagrams',
     'store-explorer',
+    'network-layers',
+    'network-topology',
   ];
   if (width === 390) states.push('mobile-drawer');
   return {

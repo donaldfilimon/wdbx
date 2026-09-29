@@ -48,6 +48,7 @@ test('every view is reachable; side targets exclude the current view and setting
     'go:studio',
     'go:nodes',
     'go:memory',
+    'go:network',
     'go:activity',
     'go:engine',
     'go:store',

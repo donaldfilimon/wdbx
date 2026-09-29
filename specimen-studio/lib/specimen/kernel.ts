@@ -32,6 +32,19 @@ let restarting: Promise<void> | undefined;
 let worker: Worker | undefined;
 let workerAllowed = true;
 let nextJob = 1;
+const readyListeners = new Set<() => void>();
+let markLoaded: () => void = () => {};
+/** Resolves once the kernel has loaded (never rejects; see `initKernel`). */
+export const kernelLoaded = new Promise<void>((resolve) => {
+  markLoaded = resolve;
+});
+/** Calls `onChange` when the kernel finishes loading; returns an unsubscribe. */
+export function subscribeKernel(onChange: () => void) {
+  readyListeners.add(onChange);
+  return () => {
+    readyListeners.delete(onChange);
+  };
+}
 
 /**
  * Loads the kernel once. `source` is the .wasm bytes or its URL; `worker` is
@@ -49,6 +62,8 @@ export async function initKernel(
     await load(source);
     workerUrl = options.worker;
     loadError = undefined;
+    markLoaded();
+    for (const listener of readyListeners) listener();
   } catch (err) {
     loadError = err instanceof Error ? err.message : String(err);
     throw new Error(`The specimen kernel failed to load: ${loadError}`);
@@ -205,6 +220,45 @@ export function validateSettings(settings: Settings): void {
 
 export const migrateIds = (state: Specimen) =>
   call<Specimen>({ op: 'migrateIds', state });
+
+/** A sparse layer in CSR form (`specimen_kernel::neural::Layer`). */
+export interface NetworkLayer {
+  inputs: number;
+  outputs: number;
+  offsets: number[];
+  columns: number[];
+  weights: number[];
+  biases: number[];
+}
+export interface Network {
+  version: number;
+  layers: NetworkLayer[];
+}
+/** `specimen_kernel::network_edit::NetworkCommand`. */
+export type NetworkCommand =
+  | {
+      command: 'addLayer';
+      at: number;
+      outputs: number;
+      fanIn: number;
+      seed: number;
+    }
+  | { command: 'removeLayer'; index: number }
+  | { command: 'resizeLayer'; index: number; outputs: number; seed: number }
+  | { command: 'setConnectivity'; index: number; fanIn: number; seed: number }
+  | { command: 'initWeights'; seed: number };
+
+export const networkDefault = () => call<Network>({ op: 'networkDefault' });
+/** Throws `InvalidNetwork` unless `network` passes the kernel's checks. */
+export function networkValidate(network: unknown): void {
+  call({ op: 'networkValidate', network });
+}
+/** Applies one command; the result always validates, or this throws. */
+export const networkEdit = (network: Network, command: NetworkCommand) =>
+  call<Network>({ op: 'networkEdit', network, command });
+/** Each layer's output for `text` (encoded as the engine encodes prompts). */
+export const networkTrace = (network: Network, text: string, seed: number) =>
+  call<number[][]>({ op: 'networkTrace', network, text, seed });
 
 /** One checkpoint chunk of a raft scan and its disjoint raft ranges. */
 export interface RaftChunk {
