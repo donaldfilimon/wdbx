@@ -1,4 +1,7 @@
-name: Windows portable runtime packaging
+# Ported from the standalone wdbx-specimen-studio repository when it was
+# folded into specimen-studio/. Run steps execute inside specimen-studio/;
+# paths given to actions (cache, upload-artifact, hashFiles) are prefixed.
+name: Specimen Studio - Windows portable runtime packaging
 on:
   workflow_dispatch:
     inputs:
@@ -9,6 +12,9 @@ on:
 permissions:
   contents: read
   actions: read
+defaults:
+  run:
+    working-directory: specimen-studio
 jobs:
   package:
     runs-on: windows-2022
@@ -38,9 +44,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            work/runtimes
-            src-tauri/binaries
-          key: native-runtimes-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('native/runtime-pins.json', 'scripts/build-runtimes.py') }}
+            specimen-studio/work/runtimes
+            specimen-studio/src-tauri/binaries
+          key: native-runtimes-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('specimen-studio/native/runtime-pins.json', 'specimen-studio/scripts/build-runtimes.py') }}
           restore-keys: native-runtimes-${{ runner.os }}-${{ runner.arch }}-
       - name: Build standalone Windows model runtimes
         run: python scripts/build-runtimes.py
@@ -48,9 +54,9 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: |
-            work/runtimes
-            src-tauri/binaries
-          key: native-runtimes-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('native/runtime-pins.json', 'scripts/build-runtimes.py') }}
+            specimen-studio/work/runtimes
+            specimen-studio/src-tauri/binaries
+          key: native-runtimes-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('specimen-studio/native/runtime-pins.json', 'specimen-studio/scripts/build-runtimes.py') }}
       - name: Verify helper imports and isolated startup
         run: python scripts/check-windows-runtimes.py
       - name: Restore current-head qualified application
@@ -86,8 +92,8 @@ jobs:
             --file-scope installers `
             --workflow-run-metadata work/qualification-run.json `
             --expected-repository $env:GITHUB_REPOSITORY `
-            --expected-workflow .github/workflows/desktop.yml `
-            --expected-workflow .github/workflows/windows.yml
+            --expected-workflow .github/workflows/specimen-studio-desktop.yml `
+            --expected-workflow .github/workflows/specimen-studio-windows.yml
           if ($LASTEXITCODE -ne 0) { throw 'Package qualification receipt was rejected' }
           $receipt = Get-Content $receiptPath -Raw | ConvertFrom-Json
           $installerRecords = @($receipt.installers | Where-Object { $_.path.EndsWith('.exe') })
@@ -368,10 +374,10 @@ jobs:
         with:
           name: wdbx-studio-windows-portable
           path: |
-            target/release/bundle/nsis/*.exe
-            work/package-qualification.json
-            work/windows-runtime-verification.json
-            work/windows-package-verification.json
+            specimen-studio/target/release/bundle/nsis/*.exe
+            specimen-studio/work/package-qualification.json
+            specimen-studio/work/windows-runtime-verification.json
+            specimen-studio/work/windows-package-verification.json
       - name: Remove temporary signing certificate
         if: always()
         shell: pwsh

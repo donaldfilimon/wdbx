@@ -1,8 +1,14 @@
-name: Real local image model qualification
+# Ported from the standalone wdbx-specimen-studio repository when it was
+# folded into specimen-studio/. Run steps execute inside specimen-studio/;
+# paths given to actions (cache, upload-artifact, hashFiles) are prefixed.
+name: Specimen Studio - Real local image model qualification
 on:
   workflow_dispatch:
 permissions:
   contents: read
+defaults:
+  run:
+    working-directory: specimen-studio
 jobs:
   image-model:
     runs-on: macos-15-large
@@ -36,4 +42,4 @@ jobs:
         if: always()
         with:
           name: real-image-inference
-          path: work/acceptance/results
+          path: specimen-studio/work/acceptance/results

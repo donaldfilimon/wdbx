@@ -62,7 +62,7 @@ async function fixture({ artifact = true, conclusion = 'success' } = {}) {
     head_sha: sourceSha,
     status: 'completed',
     conclusion,
-    path: '.github/workflows/desktop.yml',
+    path: '.github/workflows/specimen-studio-desktop.yml',
     repository: { full_name: 'studio/repo' },
   };
   await writeFile(join(root, 'desktop-run.json'), JSON.stringify(metadata));
@@ -353,7 +353,7 @@ for (const [label, mutate, message] of [
   ],
   [
     'unrelated workflow',
-    (value) => ({ ...value, path: '.github/workflows/ocr.yml' }),
+    (value) => ({ ...value, path: '.github/workflows/specimen-studio-ocr.yml' }),
     'workflow differs',
   ],
 ]) {
@@ -414,7 +414,7 @@ test('accepts the real browser-checks receipt shape without treating it as infer
   const { root, manifest } = await fixture({ artifact: false });
   const metadataPath = join(root, 'desktop-run.json');
   const metadata = JSON.parse(await readFile(metadataPath, 'utf8'));
-  metadata.path = '.github/workflows/browser.yml';
+  metadata.path = '.github/workflows/specimen-studio-browser.yml';
   await writeFile(metadataPath, JSON.stringify(metadata));
   for (const engine of ['chrome', 'firefox', 'webkit']) {
     await writeFile(
@@ -649,7 +649,7 @@ test('verifies real macOS absolute producer paths inside the receipt artifact sc
   const metadata = JSON.parse(
     await readFile(join(root, 'desktop-run.json'), 'utf8'),
   );
-  metadata.path = '.github/workflows/macos-package.yml';
+  metadata.path = '.github/workflows/specimen-studio-macos-package.yml';
   await writeFile(join(root, 'desktop-run.json'), JSON.stringify(metadata));
   const value = JSON.parse(await readFile(manifest, 'utf8'));
   value.runs[0] = {
@@ -734,7 +734,7 @@ test('verifies a real Windows backslash installer path and signature conclusions
   const metadata = JSON.parse(
     await readFile(join(root, 'desktop-run.json'), 'utf8'),
   );
-  metadata.path = '.github/workflows/windows-package.yml';
+  metadata.path = '.github/workflows/specimen-studio-windows-package.yml';
   await writeFile(join(root, 'desktop-run.json'), JSON.stringify(metadata));
   const value = JSON.parse(await readFile(manifest, 'utf8'));
   value.runs[0].kind = 'windows-signing';
@@ -815,7 +815,7 @@ test('preserves valid layers and concrete tampering errors in one summary', asyn
     head_sha: sourceSha,
     status: 'completed',
     conclusion: 'success',
-    path: '.github/workflows/desktop.yml',
+    path: '.github/workflows/specimen-studio-desktop.yml',
     repository: { full_name: 'studio/repo' },
   };
   await writeFile(join(root, 'bad-run.json'), JSON.stringify(runMetadata));
@@ -871,7 +871,7 @@ test('keeps portable macOS packaging passed while notarization is blocked', asyn
   );
   const metadataPath = join(root, 'desktop-run.json');
   const metadata = JSON.parse(await readFile(metadataPath, 'utf8'));
-  metadata.path = '.github/workflows/macos-package.yml';
+  metadata.path = '.github/workflows/specimen-studio-macos-package.yml';
   await writeFile(metadataPath, JSON.stringify(metadata));
   const value = JSON.parse(await readFile(manifest, 'utf8'));
   value.runs[0].kind = 'macos-signing';
@@ -909,7 +909,7 @@ test('rejects an accelerator receipt that substitutes a weaker threshold', async
   );
   const metadataPath = join(root, 'desktop-run.json');
   const metadata = JSON.parse(await readFile(metadataPath, 'utf8'));
-  metadata.path = '.github/workflows/accelerator.yml';
+  metadata.path = '.github/workflows/specimen-studio-accelerator.yml';
   await writeFile(metadataPath, JSON.stringify(metadata));
   const value = JSON.parse(await readFile(manifest, 'utf8'));
   value.runs[0].kind = 'accelerator';

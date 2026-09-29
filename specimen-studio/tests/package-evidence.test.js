@@ -303,7 +303,7 @@ for (const [label, change, error] of [
         status: 'completed',
         conclusion: 'success',
         repository: { full_name: 'studio/repo' },
-        path: '.github/workflows/desktop.yml',
+        path: '.github/workflows/specimen-studio-desktop.yml',
         ...change,
       }),
     );
@@ -322,7 +322,7 @@ for (const [label, change, error] of [
       '--expected-repository',
       'studio/repo',
       '--expected-workflow',
-      '.github/workflows/desktop.yml',
+      '.github/workflows/specimen-studio-desktop.yml',
     );
     expect(result.exitCode).not.toBe(0);
     expect(result.stderr.toString()).toContain(error);
@@ -340,7 +340,7 @@ test('accepts successful qualification workflow metadata for the exact source', 
       status: 'completed',
       conclusion: 'success',
       repository: { full_name: 'studio/repo' },
-      path: '.github/workflows/desktop.yml',
+      path: '.github/workflows/specimen-studio-desktop.yml',
     }),
   );
   const result = run(
@@ -358,7 +358,7 @@ test('accepts successful qualification workflow metadata for the exact source', 
     '--expected-repository',
     'studio/repo',
     '--expected-workflow',
-    '.github/workflows/desktop.yml',
+    '.github/workflows/specimen-studio-desktop.yml',
   );
   expect(result.exitCode, result.stderr.toString()).toBe(0);
 });

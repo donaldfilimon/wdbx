@@ -1,8 +1,14 @@
-name: Windows desktop qualification
+# Ported from the standalone wdbx-specimen-studio repository when it was
+# folded into specimen-studio/. Run steps execute inside specimen-studio/;
+# paths given to actions (cache, upload-artifact, hashFiles) are prefixed.
+name: Specimen Studio - Windows desktop qualification
 on:
   workflow_dispatch:
 permissions:
   contents: read
+defaults:
+  run:
+    working-directory: specimen-studio
 jobs:
   desktop:
     strategy:
@@ -36,9 +42,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            work/runtimes
-            src-tauri/binaries
-          key: native-runtimes-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('native/runtime-pins.json', 'scripts/build-runtimes.py') }}
+            specimen-studio/work/runtimes
+            specimen-studio/src-tauri/binaries
+          key: native-runtimes-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('specimen-studio/native/runtime-pins.json', 'specimen-studio/scripts/build-runtimes.py') }}
           restore-keys: native-runtimes-${{ runner.os }}-${{ runner.arch }}-
       - name: Build model runtimes
         run: python scripts/build-runtimes.py
@@ -50,9 +56,9 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: |
-            work/runtimes
-            src-tauri/binaries
-          key: native-runtimes-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('native/runtime-pins.json', 'scripts/build-runtimes.py') }}
+            specimen-studio/work/runtimes
+            specimen-studio/src-tauri/binaries
+          key: native-runtimes-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('specimen-studio/native/runtime-pins.json', 'specimen-studio/scripts/build-runtimes.py') }}
       - name: Package desktop
         run: bunx tauri build
       - name: Verify production bridge exclusion
@@ -89,14 +95,14 @@ jobs:
         with:
           name: wdbx-studio-${{ matrix.os }}
           path: |
-            target/release/bundle/**/*.dmg
-            target/release/bundle/**/*.exe
-            target/release/bundle/**/*.AppImage
-            target/release/bundle/**/*.deb
-            work/package-qualification.json
-            work/production-bridge-verification.json
-            work/native-first-screen.png
-            work/native-desktop.png
-            work/native-e2e.log
-            work/native-ui-evidence.json
+            specimen-studio/target/release/bundle/**/*.dmg
+            specimen-studio/target/release/bundle/**/*.exe
+            specimen-studio/target/release/bundle/**/*.AppImage
+            specimen-studio/target/release/bundle/**/*.deb
+            specimen-studio/work/package-qualification.json
+            specimen-studio/work/production-bridge-verification.json
+            specimen-studio/work/native-first-screen.png
+            specimen-studio/work/native-desktop.png
+            specimen-studio/work/native-e2e.log
+            specimen-studio/work/native-ui-evidence.json
           if-no-files-found: warn

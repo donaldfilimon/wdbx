@@ -1,4 +1,7 @@
-name: macOS portable runtime packaging
+# Ported from the standalone wdbx-specimen-studio repository when it was
+# folded into specimen-studio/. Run steps execute inside specimen-studio/;
+# paths given to actions (cache, upload-artifact, hashFiles) are prefixed.
+name: Specimen Studio - macOS portable runtime packaging
 on:
   workflow_dispatch:
     inputs:
@@ -14,10 +17,13 @@ on:
 permissions:
   contents: read
   actions: read
+defaults:
+  run:
+    working-directory: specimen-studio
 jobs:
   package:
     if: >
-      github.repository == 'donaldfilimon/wdbx-specimen-studio' &&
+      github.repository == 'donaldfilimon/wdbx' &&
       github.event_name == 'workflow_dispatch'
     strategy:
       fail-fast: false
@@ -27,8 +33,8 @@ jobs:
     # WDBX_RUNNER and artifact names) but runs on the macOS arm64 self-hosted
     # runner registered to this repository. The Intel leg stays GitHub-hosted.
     # Signing uses an ephemeral keychain (scripts/sign-macos-ci.py).
-    # See docs/SelfHostedRunner.md.
-    runs-on: ${{ matrix.os == 'macos-14' && fromJSON('["self-hosted","macOS","ARM64","wdbx-specimen-studio"]') || matrix.os }}
+    # See specimen-studio/docs/SelfHostedRunner.md.
+    runs-on: ${{ matrix.os == 'macos-14' && fromJSON('["self-hosted","macOS","ARM64","wdbx"]') || matrix.os }}
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
@@ -47,11 +53,11 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            work/runtimes
-            src-tauri/binaries
+            specimen-studio/work/runtimes
+            specimen-studio/src-tauri/binaries
           # CMake build trees hold absolute paths, so a self-hosted checkout
           # must not restore a hosted runner's cache (or the reverse).
-          key: native-runtimes-${{ runner.environment == 'self-hosted' && 'self-hosted-' || '' }}${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('native/runtime-pins.json', 'scripts/build-runtimes.py') }}
+          key: native-runtimes-${{ runner.environment == 'self-hosted' && 'self-hosted-' || '' }}${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('specimen-studio/native/runtime-pins.json', 'specimen-studio/scripts/build-runtimes.py') }}
           restore-keys: native-runtimes-${{ runner.environment == 'self-hosted' && 'self-hosted-' || '' }}${{ runner.os }}-${{ runner.arch }}-
       - name: Build standalone loopback text runtime
         run: python3 scripts/build-runtimes.py --only llama
@@ -79,8 +85,8 @@ jobs:
         with:
           name: wdbx-studio-${{ matrix.os }}-portable
           path: |
-            target/release/bundle/dmg/*.dmg
-            work/macos-package-verification.json
-            work/qualification-run.json
-            work/notarized/*.dmg
-            work/notarized/*.json
+            specimen-studio/target/release/bundle/dmg/*.dmg
+            specimen-studio/work/macos-package-verification.json
+            specimen-studio/work/qualification-run.json
+            specimen-studio/work/notarized/*.dmg
+            specimen-studio/work/notarized/*.json

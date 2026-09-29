@@ -13,14 +13,14 @@ from typing import Any
 GIT_SHA = re.compile(r"[0-9a-f]{40}")
 SHA256 = re.compile(r"[0-9a-f]{64}")
 WORKFLOWS = {
-    "desktop": ".github/workflows/desktop.yml",
-    "browser": ".github/workflows/browser.yml",
-    "text-inference": ".github/workflows/desktop.yml",
-    "image-inference": ".github/workflows/image-model.yml",
-    "ocr": ".github/workflows/ocr.yml",
-    "accelerator": ".github/workflows/accelerator.yml",
-    "macos-signing": ".github/workflows/macos-package.yml",
-    "windows-signing": ".github/workflows/windows-package.yml",
+    "desktop": ".github/workflows/specimen-studio-desktop.yml",
+    "browser": ".github/workflows/specimen-studio-browser.yml",
+    "text-inference": ".github/workflows/specimen-studio-desktop.yml",
+    "image-inference": ".github/workflows/specimen-studio-image-model.yml",
+    "ocr": ".github/workflows/specimen-studio-ocr.yml",
+    "accelerator": ".github/workflows/specimen-studio-accelerator.yml",
+    "macos-signing": ".github/workflows/specimen-studio-macos-package.yml",
+    "windows-signing": ".github/workflows/specimen-studio-windows-package.yml",
 }
 RECEIPTS = {
     "desktop": ("package-qualification.json",),

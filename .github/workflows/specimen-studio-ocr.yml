@@ -1,16 +1,22 @@
-name: Real OCR qualification
+# Ported from the standalone wdbx-specimen-studio repository when it was
+# folded into specimen-studio/. Run steps execute inside specimen-studio/;
+# paths given to actions (cache, upload-artifact, hashFiles) are prefixed.
+name: Specimen Studio - Real OCR qualification
 on:
   workflow_dispatch:
 permissions:
   contents: read
+defaults:
+  run:
+    working-directory: specimen-studio
 jobs:
   ocr:
     if: >
-      github.repository == 'donaldfilimon/wdbx-specimen-studio' &&
+      github.repository == 'donaldfilimon/wdbx' &&
       github.event_name == 'workflow_dispatch'
     # Dispatch-only, so it always runs on the macOS arm64 self-hosted runner
-    # registered to this repository. See docs/SelfHostedRunner.md.
-    runs-on: [self-hosted, macOS, ARM64, wdbx-specimen-studio]
+    # registered to this repository. See specimen-studio/docs/SelfHostedRunner.md.
+    runs-on: [self-hosted, macOS, ARM64, wdbx]
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
@@ -45,4 +51,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: real-ocr
-          path: work/acceptance/results
+          path: specimen-studio/work/acceptance/results

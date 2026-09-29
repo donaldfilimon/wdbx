@@ -1,20 +1,29 @@
-name: Browser qualification
+# Ported from the standalone wdbx-specimen-studio repository when it was
+# folded into specimen-studio/. Run steps execute inside specimen-studio/;
+# paths given to actions (cache, upload-artifact, hashFiles) are prefixed.
+name: Specimen Studio - Browser qualification
 on:
   push:
     branches: [main]
+    paths:
+      - 'specimen-studio/**'
+      - '.github/workflows/specimen-studio-browser.yml'
   workflow_dispatch:
 permissions:
   contents: read
+defaults:
+  run:
+    working-directory: specimen-studio
 jobs:
   browser:
     if: >
-      github.repository == 'donaldfilimon/wdbx-specimen-studio' &&
+      github.repository == 'donaldfilimon/wdbx' &&
       (github.event_name == 'push' ||
        github.event_name == 'workflow_dispatch')
     # Trusted events only (push to main, dispatch), so every leg runs on the
     # macOS arm64 self-hosted runner registered to this repository. The host
-    # provides Google Chrome for the chrome leg. See docs/SelfHostedRunner.md.
-    runs-on: [self-hosted, macOS, ARM64, wdbx-specimen-studio]
+    # provides Google Chrome for the chrome leg. See specimen-studio/docs/SelfHostedRunner.md.
+    runs-on: [self-hosted, macOS, ARM64, wdbx]
     timeout-minutes: 25
     strategy:
       fail-fast: false
@@ -72,6 +81,6 @@ jobs:
         with:
           name: browser-${{ matrix.browser }}-${{ github.sha }}
           path: |
-            work/*-${{ matrix.browser }}.json
-            work/*-${{ matrix.browser }}.png
-            work/browser-server.log
+            specimen-studio/work/*-${{ matrix.browser }}.json
+            specimen-studio/work/*-${{ matrix.browser }}.png
+            specimen-studio/work/browser-server.log

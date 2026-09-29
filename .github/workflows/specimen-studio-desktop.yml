@@ -1,7 +1,13 @@
-name: Native desktop qualification
+# Ported from the standalone wdbx-specimen-studio repository when it was
+# folded into specimen-studio/. Run steps execute inside specimen-studio/;
+# paths given to actions (cache, upload-artifact, hashFiles) are prefixed.
+name: Specimen Studio - Native desktop qualification
 on:
   push:
     branches: [main]
+    paths:
+      - 'specimen-studio/**'
+      - '.github/workflows/specimen-studio-desktop.yml'
   workflow_dispatch:
     inputs:
       models:
@@ -13,10 +19,13 @@ concurrency:
   cancel-in-progress: false
 permissions:
   contents: read
+defaults:
+  run:
+    working-directory: specimen-studio
 jobs:
   desktop:
     if: >
-      github.repository == 'donaldfilimon/wdbx-specimen-studio' &&
+      github.repository == 'donaldfilimon/wdbx' &&
       (github.event_name == 'push' ||
        github.event_name == 'workflow_dispatch') &&
       !inputs.models
@@ -28,8 +37,8 @@ jobs:
     # "desktop (macos-14)", WDBX_RUNNER_LABEL, artifact name and the
     # collector's expected matrix are unchanged, but it runs on the macOS
     # arm64 self-hosted runner registered to this repository. The Intel,
-    # Windows and Linux legs stay GitHub-hosted. See docs/SelfHostedRunner.md.
-    runs-on: ${{ matrix.os == 'macos-14' && fromJSON('["self-hosted","macOS","ARM64","wdbx-specimen-studio"]') || matrix.os }}
+    # Windows and Linux legs stay GitHub-hosted. See specimen-studio/docs/SelfHostedRunner.md.
+    runs-on: ${{ matrix.os == 'macos-14' && fromJSON('["self-hosted","macOS","ARM64","wdbx"]') || matrix.os }}
     timeout-minutes: 90
     env:
       CARGO_BUILD_JOBS: 3
@@ -72,11 +81,11 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            work/runtimes
-            src-tauri/binaries
+            specimen-studio/work/runtimes
+            specimen-studio/src-tauri/binaries
           # CMake build trees hold absolute paths, so a self-hosted checkout
           # must not restore a hosted runner's cache (or the reverse).
-          key: native-runtimes-${{ runner.environment == 'self-hosted' && 'self-hosted-' || '' }}${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('native/runtime-pins.json', 'scripts/build-runtimes.py') }}
+          key: native-runtimes-${{ runner.environment == 'self-hosted' && 'self-hosted-' || '' }}${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('specimen-studio/native/runtime-pins.json', 'specimen-studio/scripts/build-runtimes.py') }}
           restore-keys: native-runtimes-${{ runner.environment == 'self-hosted' && 'self-hosted-' || '' }}${{ runner.os }}-${{ runner.arch }}-
       - name: Build model runtimes
         run: python scripts/build-runtimes.py
@@ -200,23 +209,23 @@ jobs:
         with:
           name: wdbx-studio-${{ matrix.os }}
           path: |
-            target/release/bundle/**/*.dmg
-            target/release/bundle/**/*.exe
-            target/release/bundle/**/*.AppImage
-            target/release/bundle/**/*.deb
-            work/package-qualification.json
-            work/qualified-payload/*
-            work/production-bridge-verification.json
-            work/native-first-screen.png
-            work/native-desktop.png
-            work/native-e2e.log
-            work/native-ui-evidence.json
-            work/linux-package-verification.json
-            work/linux-appdir-qualification.json
-            work/linux-appdir-payload/*
-            work/linux-deb-qualification.json
-            work/linux-deb-payload/*
-            work/*-launch.log
+            specimen-studio/target/release/bundle/**/*.dmg
+            specimen-studio/target/release/bundle/**/*.exe
+            specimen-studio/target/release/bundle/**/*.AppImage
+            specimen-studio/target/release/bundle/**/*.deb
+            specimen-studio/work/package-qualification.json
+            specimen-studio/work/qualified-payload/*
+            specimen-studio/work/production-bridge-verification.json
+            specimen-studio/work/native-first-screen.png
+            specimen-studio/work/native-desktop.png
+            specimen-studio/work/native-e2e.log
+            specimen-studio/work/native-ui-evidence.json
+            specimen-studio/work/linux-package-verification.json
+            specimen-studio/work/linux-appdir-qualification.json
+            specimen-studio/work/linux-appdir-payload/*
+            specimen-studio/work/linux-deb-qualification.json
+            specimen-studio/work/linux-deb-payload/*
+            specimen-studio/work/*-launch.log
           if-no-files-found: warn
 
   text-model:
@@ -247,4 +256,4 @@ jobs:
         if: always()
         with:
           name: real-text-inference
-          path: work/acceptance/results
+          path: specimen-studio/work/acceptance/results

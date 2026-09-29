@@ -107,7 +107,7 @@ def main() -> None:
             "--expected-repository",
             repository,
             "--expected-workflow",
-            ".github/workflows/desktop.yml",
+            ".github/workflows/specimen-studio-desktop.yml",
         ],
         check=True,
     )
