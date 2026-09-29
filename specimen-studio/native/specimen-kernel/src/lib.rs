@@ -2,6 +2,7 @@
 pub mod engine;
 pub mod host;
 pub mod language;
+pub mod mutate;
 pub mod neural;
 pub mod search;
 use serde::{Deserialize, Serialize};
