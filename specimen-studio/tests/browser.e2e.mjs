@@ -49,12 +49,16 @@ try {
     page.getByRole('button', { name: 'Cycle trace', exact: true }),
   ).toHaveAttribute('aria-pressed', 'true');
   await expect(page.locator('.trace-step').first()).toBeVisible();
-  await expect(page.locator('.trace-step strong')).toHaveText([
+  // Native kernel phases, in order; Index Rafts repeats once per chunk.
+  const phases = (
+    await page.locator('.trace-step strong').allTextContents()
+  ).filter((phase, i, all) => phase !== all[i - 1]);
+  expect(phases).toEqual([
     'Prepare',
     'Retrieve',
+    'Index Rafts',
     'Deep scan',
     'Vote',
-    'Enrich',
     'Compose',
   ]);
   await expect(page.locator('.trace-outcome')).toContainText(
@@ -344,22 +348,30 @@ try {
       )
       .toBe(true);
   }
-  for (const [prompt, allowed] of [
-    ["don't calculate 2+2; hello", true],
-    ["don't calculate 2+2 then hello", false],
+  // Native clause scoping: ';' and 'then' both start a new clause, so the
+  // negation inhibits only the calculation and the greeting still answers.
+  for (const prompt of [
+    "don't calculate 2+2; hello",
+    "don't calculate 2+2 then hello",
   ]) {
     await page.locator('#prompt').fill(prompt);
     await page.getByRole('button', { name: 'Run cycle', exact: true }).click();
     await page
       .getByRole('button', { name: 'Cycle trace', exact: true })
       .click();
-    await expect(page.locator('.trace-step strong')).toContainText(['Scope']);
     await expect(
       page.locator('.answer-text').filter({ hasText: /^4$/ }),
     ).toHaveCount(0);
     await expect(
-      page.locator('.answer-text').filter({ hasText: /^Hello/ }),
-    ).toHaveCount(allowed ? 1 : 0);
+      page
+        .locator('.answer-text')
+        .filter({ hasText: /^(Hello|Hi|Hey|Greetings)\b/ }),
+    ).toHaveCount(1);
+    await expect(
+      page
+        .locator('.answer-text')
+        .filter({ hasText: /leave that action alone/ }),
+    ).toHaveCount(1);
   }
   const webmcp = await page.evaluate(() =>
     Boolean(document.modelContext?.registerTool),

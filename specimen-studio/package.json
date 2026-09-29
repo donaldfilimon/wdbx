@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "vite",
     "build": "bun --bun vinext build",
-    "build:wasm": "cargo build --locked -p specimen-wasm --target wasm32-unknown-unknown --release",
+    "build:wasm": "cargo build --locked -p specimen-wasm --target wasm32-unknown-unknown --release && mkdir -p lib/specimen/wasm && cp -f target/wasm32-unknown-unknown/release/specimen_wasm.wasm lib/specimen/wasm/",
     "start": "wrangler dev --config dist/server/wrangler.json",
     "lint": "oxlint",
     "format": "oxfmt",

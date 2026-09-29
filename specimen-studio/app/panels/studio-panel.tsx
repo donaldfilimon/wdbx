@@ -16,7 +16,7 @@ import {
   ZoomIn,
   ZoomOut,
 } from 'lucide-react';
-import { togglePin } from '@/lib/specimen/engine';
+import { togglePin } from '@/lib/specimen/kernel';
 
 import { NodeInspector } from './topology';
 import type { StudioModel } from '../state/use-studio';
@@ -332,7 +332,11 @@ export function StudioPanel({
                           {state.nodes.find((n) => n.ref === v.nodeRef)?.name ??
                             'Removed node'}
                         </button>
-                        <pre>
+                        <pre
+                          // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- axe requires scrollable regions to be keyboard-focusable.
+                          tabIndex={0}
+                          aria-label="Vote evidence (JSON)"
+                        >
                           {JSON.stringify(
                             {
                               input: v.input,
@@ -546,9 +550,9 @@ export function StudioPanel({
           {[
             'Prepare',
             'Retrieve',
+            'Index Rafts',
             'Deep scan',
             'Vote',
-            'Enrich',
             'Compose',
           ].map((phase, index) => {
             const complete = activeTrace.some((step) => step.phase === phase);

@@ -287,6 +287,8 @@ fn support(index: &ResourceIndex<'_>, input: &str, action: &str, node: &Value) -
 struct Context<'a> {
     host: &'a Host<'a>,
     input: &'a str,
+    /// The clause as the user typed it; `&current_input` reads this (spec ch. 8).
+    original: &'a str,
     binding: language::Binding,
     state: &'a Value,
     resources: &'a [Value],
@@ -311,7 +313,7 @@ fn eval(expr: &[Expr], ctx: &mut Context<'_>) -> Result<String> {
                 }
                 let arg = values.first().map(String::as_str).unwrap_or(ctx.input);
                 let value = match name.to_lowercase().as_str() {
-                    "current_input" => ctx.input.into(),
+                    "current_input" => ctx.original.into(),
                     "literal" => arg.into(),
                     "n" => ctx.binding.numbers.first().cloned().unwrap_or_default(),
                     "text" => ctx.binding.text.clone(),
@@ -867,6 +869,9 @@ pub fn cycle_with_visual(
         let mut ctx = Context {
             host,
             input: text(v, "input"),
+            original: clauses
+                .get(number(v, "origin", 0.) as usize)
+                .map_or(text(v, "input"), |c| c.text.as_str()),
             binding: serde_json::from_value(v["binding"].clone())?,
             state: &state,
             resources: &resources,
@@ -1269,6 +1274,30 @@ mod host_tests {
     #[test]
     fn fixed_host_cycle_is_byte_deterministic() {
         assert_eq!(run_once(), run_once());
+    }
+    #[test]
+    fn current_input_reads_the_original_text() {
+        // Spec ch. 8: `&current_input` reads the original current input.
+        let fixed = FixedHost::default();
+        let mut s = starter();
+        s["nodes"].as_array_mut().unwrap().push(serde_json::json!({
+            "ref": "echo", "name": "Echo", "patternId": "", "resolution": "low",
+            "type": "pattern", "contextId": "", "strength": 5, "jitter": false,
+            "tone": "neutral", "createdAt": "2026-01-01T00:00:00.000Z",
+            "entries": [{"id": "e", "pattern": "echo &text", "alternatives": [
+                {"id": "a", "action": "You said: &current_input", "inhibition": "",
+                 "weight": 1, "remixed": false}]}]
+        }));
+        let (_, cycle) = cycle(
+            &fixed.host(),
+            &s,
+            "echo Silver sky",
+            &Network::default(),
+            &AtomicBool::new(false),
+            &|_| {},
+        )
+        .unwrap();
+        assert_eq!(cycle["segments"][0]["text"], "You said: echo Silver sky");
     }
     #[test]
     fn gpu_setting_without_accelerator_runs_on_cpu() {

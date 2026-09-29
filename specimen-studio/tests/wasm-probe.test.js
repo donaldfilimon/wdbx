@@ -9,10 +9,10 @@ const wasmPath = new URL(
 );
 
 async function probe(text) {
-  const { instance } = await WebAssembly.instantiate(
-    readFileSync(wasmPath),
-    {},
-  );
+  const { instance } = await WebAssembly.instantiate(readFileSync(wasmPath), {
+    // The probe runs on a fixed host; these imports serve `call` only.
+    env: { now_ms: () => 0, random_u32: () => 0, progress: () => {} },
+  });
   const { memory, alloc, probe_raw } = instance.exports;
   const input = new TextEncoder().encode(text);
   const ptr = alloc(input.length);

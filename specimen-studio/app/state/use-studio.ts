@@ -7,7 +7,11 @@ import {
   runCycle,
   seedSpecimen,
   validateSpecimen,
-} from '@/lib/specimen/engine';
+  initKernel,
+  migrateIds,
+  PLACEHOLDER,
+} from '@/lib/specimen/kernel';
+import { kernelUrls } from '@/lib/specimen/kernel-url';
 import {
   downloadText,
   loadWorkspace,
@@ -26,7 +30,7 @@ import type { View } from './navigation';
 
 /** Specimen state and every handler the panels use; layout lives in Studio. */
 export function useStudio(nav: (v: View, section?: number) => void) {
-  const [state, setState] = useState<Specimen>(() => seedSpecimen());
+  const [state, setState] = useState<Specimen>(PLACEHOLDER);
   const current = useRef(state);
   const [storageEnabled, setStorageEnabled] = useState(false);
   const [hydrated, setHydrated] = useState(false),
@@ -116,9 +120,10 @@ export function useStudio(nav: (v: View, section?: number) => void) {
   }, [dialog]);
   useEffect(() => {
     lastInteraction.current = Date.now();
-    loadWorkspace()
+    initKernel(kernelUrls.wasm, { worker: kernelUrls.worker })
+      .then(loadWorkspace)
       .then((saved) => {
-        if (saved) commit(saved);
+        commit(saved ? migrateIds(saved) : seedSpecimen());
         setStorageEnabled(true);
         setSaveStatus('Stored on this device');
       })

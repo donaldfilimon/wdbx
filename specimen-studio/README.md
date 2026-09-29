@@ -33,7 +33,7 @@ The full specification is in [the downloadable Markdown](public/WDBX-Specimen-Ar
 
 ## Native desktop (0.2.0 qualification build)
 
-The desktop adapter uses Tauri 2 and the Rust engine in `native/specimen-core`. WDBX storage and compute are pinned at `e55634cbb581c1de02f946a29c34db8cf5203704`. Existing ABI/Abbey/WDBX sibling checkouts are not modified.
+The desktop adapter uses Tauri 2 and the Rust engine in `native/specimen-core`. WDBX storage and compute are pinned at `3ac03f085196dbe6e922a127ceaa37bc2368de89`. Existing ABI/Abbey/WDBX sibling checkouts are not modified.
 
 ```sh
 bun install --frozen-lockfile

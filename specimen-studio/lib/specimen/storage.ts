@@ -1,5 +1,5 @@
 import { isDesktop, loadNative, persistNative } from './native';
-import { validateSpecimen } from './engine';
+import { validateSpecimen } from './kernel';
 import type { Specimen } from './types';
 const database = 'wdbx-specimen-studio';
 function open(): Promise<IDBDatabase> {

@@ -47,3 +47,6 @@ next-env.d.ts
 /native-models/
 
 /logs/
+
+# Built by `bun run build:wasm`
+/lib/specimen/wasm/

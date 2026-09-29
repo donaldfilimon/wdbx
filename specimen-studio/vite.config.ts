@@ -46,6 +46,8 @@ export default defineConfig(async () => {
 
   return {
     css: { postcss: { plugins: [tailwindcss()] } },
+    // The kernel worker imports the WASM loader, so it must be an ES module.
+    worker: { format: 'es' as const },
     server: {
       host: '0.0.0.0',
       allowedHosts: ['terminal.local'],

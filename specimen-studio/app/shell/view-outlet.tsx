@@ -4,7 +4,7 @@ import {
   togglePin,
   validateSettings,
   validateSpecimen,
-} from '@/lib/specimen/engine';
+} from '@/lib/specimen/kernel';
 import { NativeLab } from '@/components/native-lab';
 import { isDesktop, nativeReview } from '@/lib/specimen/native';
 import { ActivityView } from '../panels/activity-panel';

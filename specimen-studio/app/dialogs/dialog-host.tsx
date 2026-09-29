@@ -3,7 +3,7 @@ import {
   log,
   saveResource,
   seedSpecimen,
-} from '@/lib/specimen/engine';
+} from '@/lib/specimen/kernel';
 import { uid } from '@/lib/specimen/types';
 import {
   Dialog,

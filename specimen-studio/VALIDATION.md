@@ -565,3 +565,41 @@ Linux/Windows hosts.
 After the switch, in the canonical checkout: `bun run check` (117 tests, Worker
 build) exit 0, `bun run test:native` exit 0, `bun run desktop:build` exit 0,
 `bun run test:browser` passes in the dark default and `STUDIO_THEME=light`.
+
+## B2 kernel parity and WASM browser engine (2026-09-29)
+
+The browser now runs the Rust kernel as WebAssembly; `lib/specimen/engine.ts`
+(1,640 lines) and its tests are deleted. Edits moved into
+`native/specimen-kernel/src/mutate.rs`; both editions use them through the
+same WASM, and desktop keeps native cycles, reviews and maintenance.
+
+Evidence (aarch64 macOS 27.2, Bun 1.4.0, Chrome via Playwright):
+
+- `cargo test` for the kernel (10 unit + 13 mutation tests), `specimen-wasm`
+  (12, including the three unchanged conformance goldens) and `specimen-core`;
+  `bun run check:native` exit 0.
+- `bun run check` exit 0: 111 Bun tests, including 18 facade tests in
+  `tests/kernel.test.js` that load the built WASM.
+- `bun run test:browser` passes in dark and `STUDIO_THEME=light`, including the
+  pinned Processing / Cancelled / Failed / Completed trace sequence, which now
+  runs through the worker behind a cooperative checkpoint.
+- `tauri build --debug --bundles app` bundles the WASM and worker.
+
+Findings:
+
+1. **Native `&current_input` returned the lowercased clause** instead of the
+   original text the spec requires (ch. 8). Fixed in the kernel with a test
+   that failed first; affects desktop too. Goldens unchanged.
+2. **vinext rewrites `import.meta.url` to a file URL** in client chunks, so
+   `new URL('./worker', import.meta.url)` could not start a worker. The worker
+   now loads through Vite's `?worker&url`.
+3. **The provenance evidence block overflowed at 390 px** with native vote
+   fields; it is now a focusable, labelled scroll region (axe).
+
+Semantic changes adopted (native semantics won; tests rewritten to match):
+Pattern IDs, feedback RNG, Type A review, settings bounds, single-operation
+arithmetic binding, clause splitting on `then`/`and`/`but`, and the trace
+phase list (see `RUNTIME-PROFILE.md`).
+
+Not exercised: the desktop webview loading the WASM under the new CSP (the
+native UI suite was not run), Firefox and WebKit.

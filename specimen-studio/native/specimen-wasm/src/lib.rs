@@ -1,5 +1,6 @@
-//! P0 feasibility probe: one full specimen cycle over a raw ABI.
-//! Replaced by a wasm-bindgen command surface in P1.
+//! The specimen kernel for the browser: a JSON command ABI (`call`) plus the
+//! P0 fixed-host probe that the conformance goldens pin.
+pub mod dispatch;
 use serde_json::{Value, json};
 use specimen_kernel::{engine, host::FixedHost, neural::Network};
 use std::sync::atomic::AtomicBool;
@@ -26,29 +27,101 @@ pub fn probe(input: &str) -> String {
     }
 }
 
-/// Reserves `len` bytes for the caller to fill before `probe_raw`.
-#[unsafe(no_mangle)]
-pub extern "C" fn alloc(len: usize) -> *mut u8 {
-    let mut buf = Vec::<u8>::with_capacity(len);
-    let ptr = buf.as_mut_ptr();
-    std::mem::forget(buf);
-    ptr
-}
+#[cfg(target_arch = "wasm32")]
+mod exports {
+    //! The WebAssembly ABI. Buffers cross as `(pointer << 32) | length`
+    //! (wasm32 pointers are 32-bit); every buffer handed to JS is released by
+    //! JS through `free`.
+    use crate::dispatch::{reply, rfc3339, uuid_v4};
+    use specimen_kernel::{
+        host::{Env, Host},
+        search::Sequential,
+    };
 
-/// Takes ownership of the input buffer and returns the output as
-/// `(pointer << 32) | length`. The output buffer is intentionally leaked.
-///
-/// # Safety
-/// `ptr` must come from `alloc(len)` and hold `len` initialized bytes.
-#[unsafe(no_mangle)]
-pub unsafe extern "C" fn probe_raw(ptr: *mut u8, len: usize) -> u64 {
-    let bytes = unsafe { Vec::from_raw_parts(ptr, len, len) };
-    let out = probe(&String::from_utf8_lossy(&bytes))
-        .into_bytes()
-        .into_boxed_slice();
-    let (p, n) = (out.as_ptr() as u64, out.len() as u64);
-    std::mem::forget(out);
-    (p << 32) | n
+    #[link(wasm_import_module = "env")]
+    unsafe extern "C" {
+        fn now_ms() -> f64;
+        fn random_u32() -> u32;
+        fn progress(ptr: *const u8, len: usize);
+    }
+
+    struct WasmEnv {
+        start: f64,
+    }
+
+    impl Env for WasmEnv {
+        fn now_rfc3339(&self) -> String {
+            rfc3339(self.now_millis())
+        }
+        fn now_millis(&self) -> i64 {
+            unsafe { now_ms() as i64 }
+        }
+        fn uid(&self) -> String {
+            unsafe { uuid_v4([random_u32(), random_u32(), random_u32(), random_u32()]) }
+        }
+        fn monotonic_ms(&self) -> f64 {
+            unsafe { now_ms() - self.start }
+        }
+    }
+
+    fn hand_out(bytes: Vec<u8>) -> u64 {
+        let out = bytes.into_boxed_slice();
+        let (p, n) = (out.as_ptr() as u64, out.len() as u64);
+        std::mem::forget(out);
+        (p << 32) | n
+    }
+
+    /// Reserves exactly `len` bytes for the caller to fill.
+    #[unsafe(no_mangle)]
+    pub extern "C" fn alloc(len: usize) -> *mut u8 {
+        Box::into_raw(vec![0u8; len].into_boxed_slice()).cast()
+    }
+
+    /// Releases a buffer from `alloc` or one returned by `call`/`probe_raw`.
+    ///
+    /// # Safety
+    /// `ptr`/`len` must describe a buffer this module handed out, once.
+    #[unsafe(no_mangle)]
+    pub unsafe extern "C" fn free(ptr: *mut u8, len: usize) {
+        drop(unsafe { Box::from_raw(std::ptr::slice_from_raw_parts_mut(ptr, len)) });
+    }
+
+    fn take(ptr: *mut u8, len: usize) -> String {
+        let bytes = unsafe { Box::from_raw(std::ptr::slice_from_raw_parts_mut(ptr, len)) };
+        String::from_utf8(bytes.into_vec()).unwrap_or_default()
+    }
+
+    /// Runs one JSON command (see `dispatch`); trace steps stream through the
+    /// imported `progress`. Takes ownership of the input buffer.
+    ///
+    /// # Safety
+    /// `ptr` must come from `alloc(len)` and hold UTF-8 JSON.
+    #[unsafe(no_mangle)]
+    pub unsafe extern "C" fn call(ptr: *mut u8, len: usize) -> u64 {
+        let input = take(ptr, len);
+        let env = WasmEnv {
+            start: unsafe { now_ms() },
+        };
+        let host = Host {
+            env: &env,
+            search: &Sequential,
+            accel: None,
+        };
+        let out = reply(&host, &input, &|step| {
+            let text = step.to_string();
+            unsafe { progress(text.as_ptr(), text.len()) };
+        });
+        hand_out(out.into_bytes())
+    }
+
+    /// P0 probe on a fixed host (conformance goldens).
+    ///
+    /// # Safety
+    /// `ptr` must come from `alloc(len)` and hold UTF-8 JSON.
+    #[unsafe(no_mangle)]
+    pub unsafe extern "C" fn probe_raw(ptr: *mut u8, len: usize) -> u64 {
+        hand_out(crate::probe(&take(ptr, len)).into_bytes())
+    }
 }
 
 #[cfg(test)]

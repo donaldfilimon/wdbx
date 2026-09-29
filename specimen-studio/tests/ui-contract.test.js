@@ -23,7 +23,7 @@ test('instrument console exposes a clear workflow and live telemetry', () => {
   expect(studio).toContain('Topology zoom');
   expect(studio).toContain('Zoom in topology');
   expect(studio).toContain("'Deep scan'");
-  expect(studio).toContain("'Enrich'");
+  expect(studio).toContain("'Index Rafts'");
 });
 
 test('instrument console retains responsive access to inspector detail', () => {

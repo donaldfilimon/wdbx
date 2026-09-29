@@ -8,7 +8,7 @@ The approved Native Runtime Expansion adds a versioned implementation profile an
 
 ## 2. Architecture and responsibility boundaries
 
-The desktop shell is Tauri 2 with bundled React assets and Geist fonts. A runtime adapter selects Rust desktop operations or the existing browser executor. The engine owns durable state in a dedicated application-data directory. WDBX abi-wdbx and abi-compute use pinned revision e55634cbb581c1de02f946a29c34db8cf5203704. ABI, Abbey and WDBX sibling repositories remain unchanged. Cycles clone a consistent snapshot and commit through revision checks. Progress and cancellation use a separate IPC channel.
+The desktop shell is Tauri 2 with bundled React assets and Geist fonts. Cycles, reviews and maintenance run in this native process; every edit runs in the same Rust kernel compiled to WebAssembly inside the webview (the CSP allows `wasm-unsafe-eval` for that). The engine owns durable state in a dedicated application-data directory. WDBX abi-wdbx and abi-compute use pinned revision 3ac03f085196dbe6e922a127ceaa37bc2368de89. ABI, Abbey and WDBX sibling repositories remain unchanged. Cycles clone a consistent snapshot and commit through revision checks. Progress and cancellation use a separate IPC channel.
 
 ## 3. Terminology and identifiers
 
