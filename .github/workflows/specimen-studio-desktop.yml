@@ -32,13 +32,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-14, macos-15-intel, windows-2022, ubuntu-24.04]
+        os: [macos-14]
     # The Apple silicon leg keeps its matrix value, so its check name
     # "desktop (macos-14)", WDBX_RUNNER_LABEL, artifact name and the
     # collector's expected matrix are unchanged, but it runs on the macOS
-    # arm64 self-hosted runner registered to this repository. The Intel,
-    # Windows and Linux legs stay GitHub-hosted. See specimen-studio/docs/SelfHostedRunner.md.
-    runs-on: ${{ matrix.os == 'macos-14' && fromJSON('["self-hosted","macOS","ARM64","wdbx"]') || matrix.os }}
+    # arm64 self-hosted runner registered to this repository. The
+    # GitHub-hosted Intel (macos-15-intel), Windows (windows-2022) and Linux
+    # (ubuntu-24.04) legs were removed on 2026-09-28: hosted Actions are
+    # billing-locked and no matching runner is registered.
+    # See specimen-studio/docs/SelfHostedRunner.md.
+    runs-on: [self-hosted, macOS, ARM64, wdbx]
     timeout-minutes: 90
     env:
       CARGO_BUILD_JOBS: 3
@@ -50,7 +53,6 @@ jobs:
         with:
           bun-version: 1.4.0
       - name: Self-hosted runner Python and deployment target
-        if: matrix.os == 'macos-14'
         # Later steps call `python` and `python -m pip`, which hosted images
         # provide. A Mac has only python3, and Homebrew's refuses pip installs
         # (PEP 668), so use a per-job virtual environment outside the checkout.
@@ -63,9 +65,6 @@ jobs:
           python3 -m venv "$RUNNER_TEMP/desktop-venv"
           echo "$RUNNER_TEMP/desktop-venv/bin" >> "$GITHUB_PATH"
           echo "MACOSX_DEPLOYMENT_TARGET=14.0" >> "$GITHUB_ENV"
-      - name: Linux system libraries
-        if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev libayatana-appindicator3-dev librsvg2-dev patchelf libssl-dev xvfb
       - name: Rust toolchain
         run: rustup toolchain install nightly-2026-09-01 --profile minimal --component rustfmt --component clippy
       - name: Dependencies
@@ -91,9 +90,6 @@ jobs:
         run: python scripts/build-runtimes.py
       - name: Native warnings-denied gate
         run: cargo clippy --workspace --all-targets --locked -- -D warnings
-      - name: Check portable Windows model runtimes
-        if: runner.os == 'Windows'
-        run: python scripts/check-windows-runtimes.py
       - name: Package desktop
         shell: bash
         run: |
@@ -180,9 +176,6 @@ jobs:
             fi
             cp -p "$payload" "$destination"
           done
-      - name: Qualify installed Linux packages
-        if: runner.os == 'Linux'
-        run: xvfb-run -a python3 scripts/check-linux-packages.py
       - name: Test application assets
         shell: bash
         run: VITE_NATIVE_E2E=1 bun run desktop:build
@@ -229,11 +222,20 @@ jobs:
           if-no-files-found: warn
 
   text-model:
-    if: ${{ inputs.models }}
-    runs-on: macos-15-intel
+    # Dispatch-only (inputs.models), so it runs on the macOS arm64 self-hosted
+    # runner registered to this repository. It moved there from GitHub-hosted
+    # Intel macos-15-intel on 2026-09-28; the receipt records the runner
+    # (macOS/ARM64). See specimen-studio/docs/SelfHostedRunner.md.
+    if: >
+      github.repository == 'donaldfilimon/wdbx' &&
+      github.event_name == 'workflow_dispatch' &&
+      inputs.models
+    runs-on: [self-hosted, macOS, ARM64, wdbx]
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Rust toolchain
         run: rustup toolchain install nightly-2026-09-01 --profile minimal
       - name: Build pinned text runtime

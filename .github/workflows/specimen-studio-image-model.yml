@@ -11,12 +11,21 @@ defaults:
     working-directory: specimen-studio
 jobs:
   image-model:
-    runs-on: macos-15-large
+    if: >
+      github.repository == 'donaldfilimon/wdbx' &&
+      github.event_name == 'workflow_dispatch'
+    # Dispatch-only, so it runs on the macOS arm64 self-hosted runner
+    # registered to this repository. It moved there from GitHub-hosted Intel
+    # macos-15-large on 2026-09-28; the receipt records the runner
+    # (macOS/ARM64). See specimen-studio/docs/SelfHostedRunner.md.
+    runs-on: [self-hosted, macOS, ARM64, wdbx]
     timeout-minutes: 45
     env:
       CARGO_BUILD_JOBS: 4
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Rust toolchain
         run: rustup toolchain install nightly-2026-09-01 --profile minimal
       - name: Build pinned CPU image runtime

@@ -91,7 +91,10 @@ instrumentation. Keep the test bridge out of production. Configured jobs are not
 passing receipts. The Apple silicon jobs (browser, `desktop (macos-14)`,
 `package (macos-14)`, accelerator, OCR, consolidation) run on the wdbx repository's
 self-hosted macOS arm64 runner (label `wdbx`); see `docs/SelfHostedRunner.md` for
-host setup, the trust gate, and which jobs stay GitHub-hosted.
+host setup, the trust gate, and the GitHub-hosted jobs removed on 2026-09-28. The
+text-model and image-model inference jobs also run on that runner now, and the
+Windows workflows are gone, so the collector's desktop matrix is `macos-14` only
+and it no longer knows the `windows-signing` kind.
 
 ## Repository and history
 

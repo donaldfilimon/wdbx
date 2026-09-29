@@ -306,14 +306,14 @@ test('consolidates exact run, artifact hash, local evidence, and signing blocker
     'https://github.com/studio/repo/actions/runs/101',
   );
 
-  await rm(join(root, 'desktop/macos-15-intel/package-qualification.json'));
+  await rm(join(root, 'desktop/macos-14/package-qualification.json'));
   const partialMatrix = run(manifest);
   expect(partialMatrix.exitCode).not.toBe(0);
   expect(
     JSON.parse(await readFile(join(root, 'summary.json'), 'utf8')).runs[0],
   ).toMatchObject({
     status: 'unverified',
-    blocker: 'required desktop evidence is missing: macos-15-intel',
+    blocker: 'required desktop evidence is missing: macos-14',
   });
 });
 
@@ -697,40 +697,11 @@ test('verifies real macOS absolute producer paths inside the receipt artifact sc
   ).toContain('macos-signing stapler evidence is missing');
 });
 
-test('verifies a real Windows backslash installer path and signature conclusions', async () => {
+test('rejects the removed windows-signing kind instead of trusting its receipt', async () => {
+  // specimen-studio-windows-package.yml was removed on 2026-09-28 (hosted
+  // Actions are billing-locked and no Windows runner is registered), so the
+  // collector no longer knows the windows-signing kind and must fail closed.
   const { root, manifest } = await fixture();
-  const bytes = 'signed exe';
-  await writeFile(join(root, 'desktop/signed.exe'), bytes);
-  await writeFile(
-    join(root, 'desktop/windows-package-verification.json'),
-    JSON.stringify({
-      schema: 1,
-      sourceSha,
-      qualificationRunId: '99',
-      qualificationRunner: 'windows-2022',
-      applicationQualifiedBeforeSigning: true,
-      finalInstaller: {
-        path: 'target\\release\\bundle\\nsis\\signed.exe',
-        sha256: sha256(bytes),
-      },
-      timestampStatus: 'verified',
-      verification: [
-        {
-          path: 'signed.exe',
-          signtool: 'passed',
-          authenticodeStatus: 'Valid',
-          timestampStatus: 'verified',
-        },
-      ],
-      installSmoke: {
-        silentInstall: 'passed',
-        installedHelperIsolatedStartup: 'passed',
-        launch: 'passed',
-        cleanShutdown: 'passed',
-        silentUninstall: 'passed',
-      },
-    }),
-  );
   const metadata = JSON.parse(
     await readFile(join(root, 'desktop-run.json'), 'utf8'),
   );
@@ -741,26 +712,10 @@ test('verifies a real Windows backslash installer path and signature conclusions
   value.runs.pop();
   await writeFile(manifest, JSON.stringify(value));
   const result = run(manifest);
-  expect(result.exitCode, result.stderr.toString()).toBe(0);
-  const summary = JSON.parse(
-    await readFile(join(root, 'summary.json'), 'utf8'),
+  expect(result.exitCode).not.toBe(0);
+  expect(result.stderr.toString()).toContain(
+    "unknown qualification kind: 'windows-signing'",
   );
-  expect(summary.runs[0].domain).toMatchObject({ timestampStatus: 'verified' });
-  expect(summary.runs[0].artifacts[0]).toMatchObject({
-    identity: 'signed.exe',
-    verification: 'passed',
-  });
-
-  const receiptPath = join(root, 'desktop/windows-package-verification.json');
-  const incomplete = JSON.parse(await readFile(receiptPath, 'utf8'));
-  incomplete.verification = [];
-  await writeFile(receiptPath, JSON.stringify(incomplete));
-  const noSignedPayloads = run(manifest);
-  expect(noSignedPayloads.exitCode).not.toBe(0);
-  expect(
-    JSON.parse(await readFile(join(root, 'summary.json'), 'utf8')).runs[0]
-      .errors[0],
-  ).toContain('windows-signing has no signature verification results');
 });
 
 test('retains valid platforms when another receipt in the same run is tampered', async () => {

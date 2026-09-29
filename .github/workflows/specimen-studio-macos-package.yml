@@ -28,20 +28,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-14, macos-15-intel]
+        os: [macos-14]
     # The Apple silicon leg keeps its matrix value (and so its check name,
     # WDBX_RUNNER and artifact names) but runs on the macOS arm64 self-hosted
-    # runner registered to this repository. The Intel leg stays GitHub-hosted.
+    # runner registered to this repository. The GitHub-hosted Intel leg
+    # (macos-15-intel) was removed on 2026-09-28 (billing lock).
     # Signing uses an ephemeral keychain (scripts/sign-macos-ci.py).
     # See specimen-studio/docs/SelfHostedRunner.md.
-    runs-on: ${{ matrix.os == 'macos-14' && fromJSON('["self-hosted","macOS","ARM64","wdbx"]') || matrix.os }}
+    runs-on: [self-hosted, macOS, ARM64, wdbx]
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
       - name: Self-hosted runner deployment target
-        if: matrix.os == 'macos-14'
         # Without a deployment target, CMake builds llama-server for the host's
         # SDK version; pin the macOS 14 floor the hosted leg produced so the
         # portable installer's helper still starts on macOS 14. The step below

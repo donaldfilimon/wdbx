@@ -37,10 +37,6 @@ on:
         description: Optional macOS portable packaging run ID (with or without notarization)
         required: false
         type: string
-      windows_package_run_id:
-        description: Optional Authenticode Windows packaging run ID
-        required: false
-        type: string
       local_manual_evidence:
         description: JSON array of external local/manual evidence records
         required: false
@@ -86,7 +82,6 @@ jobs:
           OCR_RUN_ID: ${{ inputs.ocr_run_id }}
           ACCELERATOR_RUN_ID: ${{ inputs.accelerator_run_id }}
           MACOS_PACKAGE_RUN_ID: ${{ inputs.macos_package_run_id }}
-          WINDOWS_PACKAGE_RUN_ID: ${{ inputs.windows_package_run_id }}
         run: |
           set -euo pipefail
           mkdir -p work/qualification-summary
@@ -113,7 +108,6 @@ jobs:
           fetch_run ocr "$OCR_RUN_ID" true
           fetch_run accelerator "$ACCELERATOR_RUN_ID" true
           fetch_run macos-signing "$MACOS_PACKAGE_RUN_ID" false
-          fetch_run windows-signing "$WINDOWS_PACKAGE_RUN_ID" false
       - name: Build collector manifest
         env:
           SOURCE_SHA: ${{ inputs.source_sha }}
@@ -124,7 +118,6 @@ jobs:
           OCR_RUN_ID: ${{ inputs.ocr_run_id }}
           ACCELERATOR_RUN_ID: ${{ inputs.accelerator_run_id }}
           MACOS_PACKAGE_RUN_ID: ${{ inputs.macos_package_run_id }}
-          WINDOWS_PACKAGE_RUN_ID: ${{ inputs.windows_package_run_id }}
           LOCAL_MANUAL_EVIDENCE: ${{ inputs.local_manual_evidence }}
         run: |
           jq -n \
@@ -137,7 +130,6 @@ jobs:
             --arg ocr "$OCR_RUN_ID" \
             --arg accelerator "$ACCELERATOR_RUN_ID" \
             --arg macos "$MACOS_PACKAGE_RUN_ID" \
-            --arg windows "$WINDOWS_PACKAGE_RUN_ID" \
             --argjson local "$LOCAL_MANUAL_EVIDENCE" \
             'def run($kind; $id; $required):
               {kind:$kind, runId:$id, required:$required,
@@ -152,7 +144,7 @@ jobs:
               runs:[run("desktop";$desktop;true),run("browser";$browser;true),
                 run("text-inference";$text;true),run("image-inference";$image;true),
                 run("ocr";$ocr;true),run("accelerator";$accelerator;true),
-                run("macos-signing";$macos;false),run("windows-signing";$windows;false)]}' \
+                run("macos-signing";$macos;false)]}' \
             > work/qualification-summary/manifest.json
       - name: Consolidate and verify evidence
         id: collector

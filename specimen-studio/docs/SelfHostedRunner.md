@@ -1,6 +1,6 @@
 # Self-hosted macOS runner
 
-The account's GitHub Actions billing is locked, so GitHub-hosted jobs fail within seconds without starting. Self-hosted jobs still run. The Apple silicon jobs below therefore run on the macOS arm64 machine registered to the wdbx repository.
+The account's GitHub Actions billing is locked, so GitHub-hosted jobs fail within seconds without starting. Self-hosted jobs still run. Every Specimen Studio job therefore runs on the macOS arm64 machine registered to the wdbx repository; the GitHub-hosted jobs were removed on 2026-09-28 (see *Removed GitHub-hosted jobs*).
 
 ## Registration
 
@@ -29,8 +29,10 @@ The trigger for every one of these jobs is `push` to `main` (browser and desktop
 | Workflow | Job (check name) | Notes |
 |----------|------------------|-------|
 | `browser.yml` | `browser (chrome)`, `browser (firefox)`, `browser (webkit)` | Moved from `ubuntu-24.04`. The legs run one after another on the single runner. |
-| `desktop.yml` | `desktop (macos-14)` | Only the Apple silicon matrix leg. `runs-on` maps `matrix.os == 'macos-14'` to the self-hosted labels. The matrix value stays `macos-14`, so the receipt's `runner.label`, the artifact name `wdbx-studio-macos-14` and the collector's expected matrix are unchanged. |
-| `macos-package.yml` | `package (macos-14)` | Only the Apple silicon matrix leg, mapped in the same way. `WDBX_RUNNER` stays `macos-14`. |
+| `desktop.yml` | `desktop (macos-14)` | The only matrix leg. The matrix value stays `macos-14`, so the receipt's `runner.label`, the artifact name `wdbx-studio-macos-14` and the collector's expected matrix (now `macos-14` alone) are unchanged. |
+| `desktop.yml` | `text-model` | `workflow_dispatch` with `models: true`. Moved from GitHub-hosted Intel `macos-15-intel` on 2026-09-28; its receipt now records `macOS/ARM64`. |
+| `macos-package.yml` | `package (macos-14)` | The only matrix leg. `WDBX_RUNNER` stays `macos-14`. |
+| `image-model.yml` | `image-model` | Moved from GitHub-hosted Intel `macos-15-large` on 2026-09-28; its receipt now records `macOS/ARM64`. |
 | `accelerator.yml` | `cpu-gpu-parity` | Uses the Mac's Metal GPU through wgpu. |
 | `ocr.yml` | `ocr` | |
 | `qualification-summary.yml` | `consolidate` | Moved from `ubuntu-24.04`. |
@@ -57,9 +59,9 @@ The runner sets `CI=true`. So `tauri build` skips the Finder AppleScript layout 
 ### Step changes for macOS arm64
 
 - `browser.yml`: `bunx playwright install --with-deps <browser>` is now "Provide Playwright browser". It checks the host's Chrome for the `chrome` leg and runs `bunx playwright install <browser>` for the others. `--with-deps` only installs apt packages on Linux.
-- `desktop.yml` (the `macos-14` leg only): a first step creates a per-job virtual environment in `$RUNNER_TEMP`. Later steps call unversioned `python` and `python -m pip install pillow`, and Homebrew's Python refuses pip installs (PEP 668). That step also sets `MACOSX_DEPLOYMENT_TARGET=14.0`.
-- `macos-package.yml` (the `macos-14` leg only): sets `MACOSX_DEPLOYMENT_TARGET=14.0`. Without it, CMake builds the helper runtimes for the host's SDK version, and the "portable" installer's helpers would not start on macOS 14. `tauri build` still sets its own target from `minimumSystemVersion` (12.0).
-- `desktop.yml` and `macos-package.yml`: on self-hosted runners the runtime cache key starts with `native-runtimes-self-hosted-`. CMake build trees hold absolute paths, so a hosted cache must not be restored into a self-hosted workspace. Hosted legs keep their existing keys.
+- `desktop.yml`: a first step creates a per-job virtual environment in `$RUNNER_TEMP`. Later steps call unversioned `python` and `python -m pip install pillow`, and Homebrew's Python refuses pip installs (PEP 668). That step also sets `MACOSX_DEPLOYMENT_TARGET=14.0`.
+- `macos-package.yml`: sets `MACOSX_DEPLOYMENT_TARGET=14.0`. Without it, CMake builds the helper runtimes for the host's SDK version, and the "portable" installer's helpers would not start on macOS 14. `tauri build` still sets its own target from `minimumSystemVersion` (12.0).
+- `desktop.yml` and `macos-package.yml`: on self-hosted runners the runtime cache key starts with `native-runtimes-self-hosted-`. CMake build trees hold absolute paths, so a hosted cache must not be restored into a self-hosted workspace.
 
 ## Signing on a persistent host
 
@@ -82,19 +84,17 @@ The wdbx repository is public. Self-hosted runners must never run code from a fo
 - `actions/checkout` cleans the workspace on every run (`git clean -ffdx`). Rustup toolchains, Playwright browsers and Homebrew packages stay on the host between runs.
 - Two runners on one Mac share `~/.rustup`, `~/.cargo` and `~/Library/Caches/ms-playwright`. Parallel `rustup toolchain install` runs from different repositories can collide. Retry, or give each runner its own macOS user.
 
-## Jobs that stay GitHub-hosted
+## Removed GitHub-hosted jobs
 
-These jobs wait for the billing lock to be cleared:
+Hosted jobs cannot start under the billing lock and no Intel, Windows or Linux runner is registered, so these were removed on 2026-09-28. Restore them from history if either changes:
 
-| Workflow | Job | Why |
-|----------|-----|-----|
+| Workflow | Job | What it covered |
+|----------|-----|-----------------|
 | `desktop.yml` | `desktop (macos-15-intel)` | Intel x86_64 qualification. An arm64 Mac cannot produce it. |
-| `desktop.yml` | `desktop (windows-2022)` | NSIS installer and Windows runtimes. Needs Windows. |
-| `desktop.yml` | `desktop (ubuntu-24.04)` | apt WebKitGTK, `.deb`/AppImage/RPM packaging, `xvfb`. Needs Linux. |
-| `desktop.yml` | `text-model` | Real CPU text inference qualified on Intel `macos-15-intel`. Its receipt records the runner. Moving it to arm64 would change what is qualified, which is an owner decision. |
-| `image-model.yml` | `image-model` | CPU SDXL-Turbo inference qualified on Intel `macos-15-large`. Same reason as `text-model`. |
+| `desktop.yml` | `desktop (windows-2022)` | NSIS installer and Windows runtimes. |
+| `desktop.yml` | `desktop (ubuntu-24.04)` | apt WebKitGTK, `.deb`/AppImage/RPM packaging, `xvfb`. |
 | `macos-package.yml` | `package (macos-15-intel)` | Intel x86_64 portable installer. |
 | `windows.yml` | `desktop (windows-2022)` | Windows-only NSIS build and runtime checks. |
-| `windows-package.yml` | `package` | PowerShell, Authenticode `signtool`, registry checks and a silent install. Needs Windows. |
+| `windows-package.yml` | `package` | PowerShell, Authenticode `signtool`, registry checks and a silent install. |
 
-A consolidated qualification still needs every required run, including the Intel, Windows and Linux desktop legs and the text and image inference runs. Until those can run, the collector reports the missing evidence as unverified, which is correct.
+`text-model` and `image-model` were not removed: they moved to this runner, which changes what they qualify from Intel CPU inference to Apple silicon CPU inference. `scripts/qualification-summary.py` now expects only the `macos-14` desktop leg and rejects the removed `windows-signing` kind; the Linux stage checks and `scripts/check-windows-runtimes.py`, `scripts/check-linux-packages.py` remain for manual use. A consolidated qualification therefore covers Apple silicon only.

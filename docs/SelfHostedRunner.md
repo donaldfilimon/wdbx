@@ -1,6 +1,6 @@
 # Self-hosted macOS runner
 
-The `gate (instructions, sizes, fmt, clippy, test)` job (`gate`) in `.github/workflows/ci.yml` runs on a macOS arm64 runner registered to this repository. GitHub-hosted jobs can't start while the account's Actions billing is locked, but self-hosted jobs still run.
+The `gate (instructions, sizes, fmt, clippy, test)` job (`gate`) in `.github/workflows/ci.yml` runs on a macOS arm64 runner registered to this repository. GitHub-hosted jobs can't start while the account's Actions billing is locked, so no workflow in this repository has one; self-hosted jobs still run.
 
 ## Registration
 
@@ -22,7 +22,7 @@ Until a runner with these labels is online, same-repo `gate` jobs wait in the qu
 
 ## Security
 
-This repository is public, so the self-hosted job runs only for `push` to `main`, `workflow_dispatch`, and pull requests from branches in this repository (`github.event.pull_request.head.repo.full_name == github.repository`). It also requires `github.repository == 'donaldfilimon/wdbx'`, so forks that copy the workflow never target this runner. Fork pull requests use the GitHub-hosted `gate-hosted` job, an unchanged copy of the original job on `macos-latest`. No workflow uses `pull_request_target`, `issue_comment` or `workflow_run`.
+This repository is public, so the self-hosted job runs only for `push` to `main`, `workflow_dispatch`, and pull requests from branches in this repository (`github.event.pull_request.head.repo.full_name == github.repository`). It also requires `github.repository == 'donaldfilimon/wdbx'`, so forks that copy the workflow never target this runner. Fork pull requests get no job; run `bash tools/check.sh` on a fork's branch locally before merging it. (The GitHub-hosted `gate-hosted` fork fallback on `macos-latest` was removed on 2026-09-28.) No workflow uses `pull_request_target`, `issue_comment` or `workflow_run`.
 
 Checkouts use `persist-credentials: false`, and the workflow token stays `contents: read`. Where you can, use a dedicated macOS user for the runner rather than your daily account, since `rustup default` changes that account's toolchain. Keep no production secrets on the host.
 
@@ -34,11 +34,11 @@ events (`push` to `main` touching `specimen-studio/**`, and `workflow_dispatch`)
 behind the same `github.repository == 'donaldfilimon/wdbx'` guard. They need more
 than the Rust gate: Xcode in full, Homebrew `python@3.12` (as the first `python3`),
 `cmake`, `jq`, `gh`, Node 22.13+, and Google Chrome in `/Applications`. The full
-list and the jobs that stay GitHub-hosted are in
+list and the GitHub-hosted jobs removed on 2026-09-28 are in
 `specimen-studio/docs/SelfHostedRunner.md`. The runner reads `PATH` at `config.sh`
 time, so after installing tools run `./env.sh` in the runner directory and restart
 the service.
 
 ## Not covered
 
-Every job in `ci.yml` has a self-hosted path for trusted events; the Specimen Studio Intel, Windows, Linux and inference jobs stay GitHub-hosted by design. `gate-hosted` (fork PRs only) still needs a GitHub-hosted runner, so fork PRs stay blocked until the billing lock is cleared.
+Fork pull requests are not built. The Specimen Studio Intel, Windows and Linux jobs were removed on 2026-09-28 (see `specimen-studio/docs/SelfHostedRunner.md`); the text and image inference jobs moved to this runner.

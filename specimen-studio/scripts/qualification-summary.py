@@ -20,7 +20,6 @@ WORKFLOWS = {
     "ocr": ".github/workflows/specimen-studio-ocr.yml",
     "accelerator": ".github/workflows/specimen-studio-accelerator.yml",
     "macos-signing": ".github/workflows/specimen-studio-macos-package.yml",
-    "windows-signing": ".github/workflows/specimen-studio-windows-package.yml",
 }
 RECEIPTS = {
     "desktop": ("package-qualification.json",),
@@ -30,7 +29,6 @@ RECEIPTS = {
     "ocr": ("run-receipt.json",),
     "accelerator": ("run-receipt.json",),
     "macos-signing": ("macos-package-verification.json", "-notarized.json"),
-    "windows-signing": ("windows-package-verification.json",),
 }
 
 
@@ -123,7 +121,7 @@ def receipt_artifacts(root: Path, receipt_path: Path, receipt: dict[str, Any], k
     for key in ("application", "input", "output", "finalInstaller"):
         value = receipt.get(key)
         if isinstance(value, dict) and isinstance(value.get("path"), str) and isinstance(value.get("sha256"), str):
-            strict = kind in ("macos-signing", "windows-signing") and key in ("output", "finalInstaller")
+            strict = kind == "macos-signing" and key in ("output", "finalInstaller")
             recorder = artifact_record if strict else available_artifact_record
             records.append(recorder(scope, value["path"], value["sha256"]))
     for key in ("helpers", "installers"):
@@ -271,7 +269,7 @@ def validate_domain(kind: str, receipt: dict[str, Any], source_sha: str, run_id:
     receipt_sha = receipt.get("headSha", receipt.get("sourceSha"))
     require(receipt_sha == source_sha, f"{kind} receipt must identify the frozen source SHA")
     workflow_run = receipt.get("workflowRunId")
-    if kind not in ("macos-signing", "windows-signing", "browser"):
+    if kind not in ("macos-signing", "browser"):
         require(str(workflow_run) == run_id, f"{kind} receipt run identity differs")
     if kind == "browser":
         require(receipt.get("passed") is True and isinstance(receipt.get("engine"), str), "browser receipt does not record successful browser checks")
@@ -335,16 +333,7 @@ def validate_domain(kind: str, receipt: dict[str, Any], source_sha: str, run_id:
         require(isinstance(stapler, dict) and all(isinstance(stapler.get(key), str) and bool(stapler[key].strip()) for key in ("staple", "validate")), "macos-signing stapler evidence is missing")
         require(isinstance(gatekeeper, dict) and all(isinstance(gatekeeper.get(key), str) and bool(gatekeeper[key].strip()) for key in ("application", "dmg")), "macos-signing Gatekeeper evidence is missing")
         return {"notarization": "Accepted", "finalInstallerPayloadVerification": "passed", "hardenedRuntime": True, "secureTimestamps": True, "stapler": receipt.get("stapler"), "gatekeeper": receipt.get("gatekeeper")}
-    verification = receipt.get("verification")
-    require(valid_file_record(receipt.get("finalInstaller")), "windows-signing final installer identity is missing or malformed")
-    require(receipt.get("applicationQualifiedBeforeSigning") is True, "windows-signing application was not qualification-linked")
-    require(receipt.get("timestampStatus") == "verified", "windows-signing timestamp is not verified")
-    require(isinstance(verification, list) and bool(verification), "windows-signing has no signature verification results")
-    require(all(isinstance(item.get("path"), str) and bool(item["path"]) and item.get("signtool") == "passed" and item.get("authenticodeStatus") == "Valid" and item.get("timestampStatus") == "verified" for item in verification if isinstance(item, dict)) and all(isinstance(item, dict) for item in verification), "windows-signing verification failed")
-    smoke = receipt.get("installSmoke", {})
-    required_smoke = ("silentInstall", "installedHelperIsolatedStartup", "launch", "cleanShutdown", "silentUninstall")
-    require(all(smoke.get(key) == "passed" for key in required_smoke), "windows-signing install smoke is incomplete")
-    return {"timestampStatus": "verified", "verification": verification, "installSmoke": smoke}
+    raise EvidenceError(f"unsupported qualification kind: {kind!r}")
 
 
 def inspect_run(entry: dict[str, Any], repository: str, source_sha: str, package_qualification_run_id: str | None = None) -> dict[str, Any]:
@@ -452,7 +441,7 @@ def inspect_run(entry: dict[str, Any], repository: str, source_sha: str, package
                 result.setdefault("errors", []).append(message)
     result["domain"] = domains[0] if len(domains) == 1 else {"receipts": domains}
     expected_matrix = {
-        "desktop": {"macos-14", "macos-15-intel", "windows-2022", "ubuntu-24.04"},
+        "desktop": {"macos-14"},
         "browser": {"chrome", "firefox", "webkit"},
     }.get(kind)
     if expected_matrix:
