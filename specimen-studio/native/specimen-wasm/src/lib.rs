@@ -54,19 +54,54 @@ pub unsafe extern "C" fn probe_raw(ptr: *mut u8, len: usize) -> u64 {
 #[cfg(test)]
 mod tests {
     use super::*;
-    fn request() -> String {
-        let starter: Value =
-            serde_json::from_str(include_str!("../../../conformance/starter.json")).unwrap();
-        json!({ "specimen": starter, "input": "What is 2 + 2?" }).to_string()
+    fn starter() -> Value {
+        serde_json::from_str(include_str!("../../../conformance/starter.json")).unwrap()
+    }
+    /// Arithmetic only: no neural run, no visual trigonometry, `exp` of a huge
+    /// negative number (`lastUpdate` 0) that underflows to exactly zero.
+    fn calc_request() -> String {
+        json!({ "specimen": starter(), "input": "What is 2 + 2?" }).to_string()
+    }
+    /// Reaches `f64::sin`/`cos` (visual arrays), `f32::exp` (sigmoid layer) and
+    /// a finite `f64::exp` decay (`lastUpdate` 61.234 s before `FixedEnv` now).
+    fn imagine_request() -> String {
+        let mut s = starter();
+        s["atp"]["lastUpdate"] = json!(1_767_225_538_766_i64);
+        json!({ "specimen": s, "input": "imagine a happy blue square" }).to_string()
+    }
+    fn check_golden(request: &str, file: &str) {
+        let got = specimen_kernel::digest(probe(request).as_bytes());
+        let path = format!("{}/../../conformance/{file}", env!("CARGO_MANIFEST_DIR"));
+        if std::env::var_os("UPDATE_GOLDEN").is_some() {
+            std::fs::write(&path, format!("{got}\n")).unwrap();
+        }
+        assert_eq!(got, std::fs::read_to_string(&path).unwrap().trim());
     }
     #[test]
     fn native_probe_matches_golden() {
-        let got = specimen_kernel::digest(probe(&request()).as_bytes());
-        let path = concat!(env!("CARGO_MANIFEST_DIR"), "/../../conformance/p0-probe.sha256");
-        if std::env::var_os("UPDATE_GOLDEN").is_some() {
-            std::fs::write(path, format!("{got}\n")).unwrap();
-        }
-        assert_eq!(got, std::fs::read_to_string(path).unwrap().trim());
+        check_golden(&calc_request(), "p0-probe.sha256");
+    }
+    #[test]
+    fn native_imagine_probe_matches_golden() {
+        check_golden(&imagine_request(), "p0-probe-imagine.sha256");
+    }
+    #[test]
+    fn imagine_case_exercises_transcendentals() {
+        let out: Value = serde_json::from_str(&probe(&imagine_request())).unwrap();
+        let visual = &out["cycle"]["visual"];
+        assert!(visual["yArray"].as_array().is_some_and(|a| !a.is_empty()));
+        assert!(
+            visual["synthesis"]["activationFunctions"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .any(|f| f == "sigmoid")
+        );
+        let valence = out["specimen"]["atp"]["valence"].as_f64().unwrap();
+        assert!(
+            valence > 0.0 && valence != 0.2,
+            "decay must be finite and applied"
+        );
     }
     #[test]
     fn malformed_input_is_an_error_not_a_panic() {

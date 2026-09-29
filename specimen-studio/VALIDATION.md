@@ -421,42 +421,58 @@ The broader specification remains distinct from this browser implementation. See
 
 ## P0 kernel WASM feasibility (2026-09-28)
 
-**Verdict: GO.** The pure specimen rules (`native/specimen-kernel`) build for
-`wasm32-unknown-unknown` and run a full cycle there with output byte-identical
-to native on this host.
+**Verdict: GO for building on WASM; NOT byte-identical.** The pure specimen
+rules (`native/specimen-kernel`) build for `wasm32-unknown-unknown` and run a
+full cycle there. Output matches native byte for byte on the arithmetic path,
+but differs in the last bit wherever the engine calls `f64::sin` or a finite
+`f64::exp`. Byte-exact cross-target parity is not yet achieved; how to achieve
+it is an open decision (finding 3).
 
 Evidence, on aarch64 macOS 27.2, `rustc 1.100.0-nightly (0dfb098f3 2026-08-31)`,
-Bun 1.4.0:
+Bun 1.4.0. Two goldens, both recorded from native with `FixedHost`:
 
-- `conformance/p0-probe.sha256` = `9577ece5…a9edcb`: the SHA-256 of one
-  `FixedHost` cycle over `conformance/starter.json` with input `What is 2 + 2?`
-  (status `complete`, answer `4`, 1 vote, 6 trace steps). The native test
-  (`cargo test -p specimen-wasm`) and the WASM test (`tests/wasm-probe.test.js`)
-  both reproduce it. The WASM test was shown to fail against a corrupted digest.
+- `conformance/p0-probe.sha256` = `9577ece5…a9edcb`: starter specimen, input
+  `What is 2 + 2?` (status `complete`, answer `4`, 1 vote, 6 trace steps).
+  This path runs no neural layer and no visual trigonometry, and its only
+  `exp` underflows to exactly zero (`atp.lastUpdate` 0). Native and WASM
+  (`tests/wasm-probe.test.js`) both reproduce it; the WASM test fails against a
+  corrupted digest.
+- `conformance/p0-probe-imagine.sha256` = `8f99f4ea…15cc313`: starter with
+  `atp.lastUpdate` 61.234 s before the fixed clock, input
+  `imagine a happy blue square`. It reaches `f64::sin`/`cos` (visual arrays),
+  the sigmoid layer (`f32::exp`) and a finite `f64::exp` decay; a native test
+  asserts that coverage. WASM produces `51ae9bb4…fe45b9`. The Bun test is
+  `test.failing` so the gate records the divergence instead of hiding it; it
+  turns red once the digests match and must then become a plain `test`.
 - Probe size, release, no `wasm-opt`: 1,598,696 bytes raw, 529,256 bytes
   `gzip -9`. Rebuild of the kernel and probe with dependencies cached: 2.2 s
   wall. A fully cold dependency build was not measured.
-- Gates at this commit: `bun run check` exit 0 (95/95 Bun tests, Worker build
-  complete); `bun run test:native` exit 0 (all suites ok, 1 GPU test ignored);
-  `bun run check:native` exit 0.
 
 Findings:
 
 1. **JSON map ordering diverged between editions (fixed).** The pinned
    `abi-wdbx`/`abi-foundation` enable `serde_json/preserve_order`, so the
-   desktop engine ran on insertion-ordered maps while a kernel built without
-   `specimen-core` (the browser) got sorted maps. The first golden
-   (`05ae6c2f…`) was recorded in that non-shipping configuration and the
-   combined native run disagreed with it. The kernel now enables
-   `preserve_order` itself; every build set produces `9577ece5…`.
+   desktop engine serialized JSON objects in insertion order while a kernel
+   built without `specimen-core` (the browser) serialized them sorted. The
+   engine iterates no JSON objects, so only serialized bytes were affected.
+   The first golden (`05ae6c2f…`) was recorded in that non-shipping
+   configuration. The kernel now enables `preserve_order` itself; every build
+   set produces `9577ece5…`.
 2. **Lane width is a parity input.** `abi-compute` dot products accumulate in
-   4 lanes for both NEON and scalar (the WASM path), so this host matches. An
-   x86_64 desktop with AVX2 (8 lanes) or AVX-512 (16 lanes) sums in a
-   different order and may differ from WASM in the last bits. Not measured;
+   4 lanes for both NEON and scalar (the WASM path). The imagine case's `f32`
+   synthesis values match between native and WASM on this host, which is the
+   evidence for this host only. An x86_64 desktop with AVX2 (8 lanes) or
+   AVX-512 (16 lanes) sums in a different order and may differ; not measured,
    no x86 host was available.
-3. **Transcendentals matched here.** `f32::exp`/`f64::exp` (macOS libm vs the
-   WASM libm port) produced identical bytes for this probe. One probe input is
-   not a proof over all inputs; the P1 conformance corpus widens it.
+3. **`f64::sin` and `f64::exp` differ in the last bit (open).** Reproduced by
+   the whole-branch review and by the imagine golden: `cycle.visual.yArray[22]`
+   `6.083365791431938` native vs `6.08336579143194` WASM (`sin`), and
+   `atp.valence` `0.2823271779908061` vs `0.28232717799080614` (`exp`).
+   `f64::cos` and every `f32` synthesis value matched. Options for P1, not
+   decided here: route kernel transcendentals through one portable `libm`
+   implementation on both targets (byte-exact; changes native values once,
+   deliberately re-blessed), or define an explicit last-bit tolerance for
+   cross-edition comparison. Existing exact comparisons are not loosened.
 
 Not exercised: the browser Worker running WASM (the probe ran under Bun only),
 wasm-bindgen, IndexedDB storage, and any x86 or Linux host. Vision and model

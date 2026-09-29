@@ -1275,16 +1275,15 @@ mod host_tests {
         let mut s = starter();
         s["settings"]["gpu"] = serde_json::json!(true);
         let fixed = FixedHost::default();
-        assert!(
-            cycle(
-                &fixed.host(),
-                &s,
-                "What is 2 + 2?",
-                &Network::default(),
-                &AtomicBool::new(false),
-                &|_| {},
-            )
-            .is_ok()
-        );
+        let (_, cycle) = cycle(
+            &fixed.host(),
+            &s,
+            "imagine red circle",
+            &Network::default(),
+            &AtomicBool::new(false),
+            &|_| {},
+        )
+        .unwrap();
+        assert_eq!(cycle["visual"]["synthesis"]["backend"], "cpu");
     }
 }

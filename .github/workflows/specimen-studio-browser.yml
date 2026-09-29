@@ -40,6 +40,10 @@ jobs:
         with:
           bun-version: 1.4.0
       - run: bun install --frozen-lockfile
+      - name: Kernel WASM probe
+        run: |
+          rustup toolchain install nightly-2026-09-01 --profile minimal --target wasm32-unknown-unknown
+          bun run build:wasm
       - run: bun test
       - run: bunx tsc --noEmit
       - run: bun run lint:studio
