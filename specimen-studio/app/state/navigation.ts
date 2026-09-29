@@ -4,6 +4,7 @@ export type View =
   | 'memory'
   | 'activity'
   | 'engine'
+  | 'store'
   | 'specification'
   | 'settings'
   | 'lab';
@@ -15,6 +16,7 @@ export const VIEWS: readonly View[] = [
   'memory',
   'activity',
   'engine',
+  'store',
   'lab',
   'specification',
   'settings',

@@ -12,6 +12,7 @@ import { EnginePanel } from '../panels/engine-panel';
 import { MemoryView } from '../panels/memory-panel';
 import { NodesView } from '../panels/nodes-panel';
 import { SettingsView } from '../panels/settings-panel';
+import { StorePanel } from '../panels/store-panel';
 import { Specification } from '../panels/specification-panel';
 import { StudioPanel } from '../panels/studio-panel';
 import type { View } from '../state/navigation';
@@ -146,6 +147,7 @@ export function ViewOutlet({
           runInput={model.runInput}
         />
       )}
+      {view === 'store' && <StorePanel desktop={isDesktop()} />}
       {view === 'specification' && (
         <Specification
           chapter={chapter}

@@ -38,6 +38,7 @@ fn invoke(state: Arc<AppState>, r: Value, progress: Channel<Value>) -> Result<Va
         ),
         "jobs" => Ok(json!(state.scheduler.active())),
         "snapshot" => Ok(serde_json::to_value(&state.store.lock().unwrap().snapshot)?),
+        "storeInfo" => Ok(serde_json::to_value(state.store.lock().unwrap().info()?)?),
         "edit" => Ok(serde_json::to_value(
             state
                 .store

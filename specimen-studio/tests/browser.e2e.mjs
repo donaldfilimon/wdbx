@@ -237,6 +237,19 @@ try {
   await expect(planner.locator('output')).toHaveText(
     /^10 candidates: 1 checkpoint of up to 256, each split across up to 5 rafts\.$/,
   );
+  // Store explorer: the browser edition reports its IndexedDB record.
+  await page
+    .locator('nav[aria-label="Main navigation"] a[href="?view=store"]')
+    .click();
+  await expect(page.getByText('Browser · IndexedDB')).toBeVisible();
+  await expect(
+    page
+      .getByRole('region', { name: 'Records' })
+      .getByRole('cell', { name: 'nodes', exact: true }),
+  ).toBeVisible();
+  await page
+    .locator('nav[aria-label="Main navigation"] a[href="?view=specification"]')
+    .click();
   await chapters.nth(1).click();
   await page
     .locator('[data-figure="ch2-1"]')
@@ -446,6 +459,7 @@ try {
           'command palette and side pane',
           'live engine views',
           'specification diagrams',
+          'store explorer',
         ],
         webmcpSupported: webmcp,
         errors,

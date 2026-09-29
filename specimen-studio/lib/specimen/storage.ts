@@ -36,6 +36,27 @@ export async function loadWorkspace(): Promise<Specimen | null> {
     };
   });
 }
+/**
+ * The browser's stored record as saved, without validation or migration,
+ * for the store explorer. Null when nothing is saved.
+ */
+export async function readStoredWorkspace(): Promise<Specimen | null> {
+  const db = await open();
+  return new Promise((resolve, reject) => {
+    const req = db
+      .transaction('workspace', 'readonly')
+      .objectStore('workspace')
+      .get('active');
+    req.onsuccess = () => {
+      db.close();
+      resolve((req.result as Specimen | undefined) ?? null);
+    };
+    req.onerror = () => {
+      db.close();
+      reject(req.error);
+    };
+  });
+}
 export async function persistWorkspace(state: Specimen): Promise<void> {
   if (isDesktop()) return persistNative(state);
   const db = await open();

@@ -20,26 +20,14 @@ description = "Rust bindings for the GLib library"
 homepage = "https://gtk-rs.org/"
 documentation = "https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/"
 readme = "README.md"
-keywords = [
-    "glib",
-    "gtk-rs",
-    "gnome",
-    "GUI",
-]
+keywords = ["glib", "gtk-rs", "gnome", "GUI"]
 license = "MIT"
 repository = "https://github.com/gtk-rs/gtk-rs-core"
 
 [package.metadata.docs.rs]
 all-features = true
-rustc-args = [
-    "--cfg",
-    "docsrs",
-]
-rustdoc-args = [
-    "--cfg",
-    "docsrs",
-    "--generate-link-to-definition",
-]
+rustc-args = ["--cfg", "docsrs"]
+rustdoc-args = ["--cfg", "docsrs", "--generate-link-to-definition"]
 
 [lib]
 name = "glib"
@@ -104,11 +92,7 @@ package = "log"
 
 [dependencies.smallvec]
 version = "1.0"
-features = [
-    "union",
-    "const_generics",
-    "const_new",
-]
+features = ["union", "const_generics", "const_new"]
 
 [dependencies.thiserror]
 version = "1"
@@ -131,55 +115,14 @@ default = ["gio"]
 gio = ["gio_ffi"]
 log = ["rs-log"]
 log_macros = ["log"]
-v2_58 = [
-    "ffi/v2_58",
-    "gobject_ffi/v2_58",
-]
-v2_60 = [
-    "v2_58",
-    "ffi/v2_60",
-]
-v2_62 = [
-    "v2_60",
-    "ffi/v2_62",
-    "gobject_ffi/v2_62",
-]
-v2_64 = [
-    "v2_62",
-    "ffi/v2_64",
-]
-v2_66 = [
-    "v2_64",
-    "ffi/v2_66",
-    "gobject_ffi/v2_66",
-]
-v2_68 = [
-    "v2_66",
-    "ffi/v2_68",
-    "gobject_ffi/v2_68",
-]
-v2_70 = [
-    "v2_68",
-    "ffi/v2_70",
-    "gobject_ffi/v2_70",
-]
-v2_72 = [
-    "v2_70",
-    "ffi/v2_72",
-    "gobject_ffi/v2_72",
-]
-v2_74 = [
-    "v2_72",
-    "ffi/v2_74",
-    "gobject_ffi/v2_74",
-]
-v2_76 = [
-    "v2_74",
-    "ffi/v2_76",
-    "gobject_ffi/v2_76",
-]
-v2_78 = [
-    "v2_76",
-    "ffi/v2_78",
-    "gobject_ffi/v2_78",
-]
+v2_58 = ["ffi/v2_58", "gobject_ffi/v2_58"]
+v2_60 = ["v2_58", "ffi/v2_60"]
+v2_62 = ["v2_60", "ffi/v2_62", "gobject_ffi/v2_62"]
+v2_64 = ["v2_62", "ffi/v2_64"]
+v2_66 = ["v2_64", "ffi/v2_66", "gobject_ffi/v2_66"]
+v2_68 = ["v2_66", "ffi/v2_68", "gobject_ffi/v2_68"]
+v2_70 = ["v2_68", "ffi/v2_70", "gobject_ffi/v2_70"]
+v2_72 = ["v2_70", "ffi/v2_72", "gobject_ffi/v2_72"]
+v2_74 = ["v2_72", "ffi/v2_74", "gobject_ffi/v2_74"]
+v2_76 = ["v2_74", "ffi/v2_76", "gobject_ffi/v2_76"]
+v2_78 = ["v2_76", "ffi/v2_78", "gobject_ffi/v2_78"]

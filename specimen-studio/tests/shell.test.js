@@ -50,6 +50,7 @@ test('every view is reachable; side targets exclude the current view and setting
     'go:memory',
     'go:activity',
     'go:engine',
+    'go:store',
     'go:lab',
     'go:specification',
     'go:settings',

@@ -4,6 +4,7 @@ import {
   Database,
   FileText,
   Gauge,
+  HardDrive,
   Network,
   Sparkles,
 } from 'lucide-react';
@@ -16,13 +17,14 @@ export const views: { id: View; label: string; icon: typeof Network }[] = [
   { id: 'memory', label: 'Memory', icon: Database },
   { id: 'activity', label: 'Activity', icon: Activity },
   { id: 'engine', label: 'Live engine', icon: Gauge },
+  { id: 'store', label: 'Store', icon: HardDrive },
   { id: 'lab', label: 'Vision & models', icon: Sparkles },
   { id: 'specification', label: 'Specification', icon: FileText },
 ];
 
 export const viewGroups: { label: string; ids: View[] }[] = [
   { label: 'Build', ids: ['studio', 'nodes', 'memory'] },
-  { label: 'Observe', ids: ['activity', 'engine', 'lab'] },
+  { label: 'Observe', ids: ['activity', 'engine', 'store', 'lab'] },
   { label: 'Reference', ids: ['specification'] },
 ];
 
@@ -38,6 +40,10 @@ export const labels: Record<View, [string, string]> = {
   engine: [
     'Live engine',
     'Watch the kernel work: trace, votes, history and ATP.',
+  ],
+  store: [
+    'Store explorer',
+    'What this edition keeps on disk, and how it verifies it.',
   ],
   specification: [
     'Specification',

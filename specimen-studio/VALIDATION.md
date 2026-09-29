@@ -685,3 +685,27 @@ Evidence (aarch64 macOS 27.2, Bun 1.4.0, Chrome via Playwright):
 
 Not exercised: desktop webview, Firefox and WebKit; meter/progress paint
 outside Chromium.
+
+## B5 store explorer (2026-09-29)
+
+New Observe view `?view=store` (`app/panels/store-panel.tsx`, shadcn `Table`
+and `Badge` on the WDBX components). Desktop calls the read-only native op
+`storeInfo` (`native/specimen-core/src/persistence/info.rs`): causal heads,
+transaction and record counts, the `studio/snapshot` key's current version
+and unresolved conflicts, audit DAG verification (parent existence and
+acyclicity; hashes are not recomputed, and the studio writes no audit
+blocks), tombstones, and measured on-disk usage. The pinned
+`abi_wdbx::v2::V2Snapshot` keeps only current versions, so there is no
+revision history to show; the view says so rather than inventing one. The
+browser reports its single IndexedDB record (UTF-8 size, counts, last save),
+the origin's storage estimate and persistence, and can request persistent
+storage.
+
+Evidence: `store_info` Rust tests (2, including a node deletion becoming a
+tombstone), `check:native` and `test:native` exit 0; `bun run check` exit 0
+(154 Bun tests); `bun run test:browser` passes in dark and light with the new
+store step and axe state `store-explorer` at 390, 768 and 1440 pixels.
+
+Not exercised: `storeInfo` through the desktop webview (the op is covered by
+the Rust tests, the view by server-rendered tests), and `persist()` prompts,
+which headless Chrome answers without a user.

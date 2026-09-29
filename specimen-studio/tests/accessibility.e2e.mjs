@@ -303,6 +303,11 @@ try {
     ).toBeVisible();
     await audit(page, width, 'live-engine');
 
+    await navigate(page, width, '?view=store');
+    await expect(page.getByText('Browser · IndexedDB')).toBeVisible();
+    await expect(page.getByRole('region', { name: 'Records' })).toBeVisible();
+    await audit(page, width, 'store-explorer');
+
     await navigate(page, width, '?view=specification');
     await expect(
       page.getByRole('heading', { name: 'Specification', exact: true }),

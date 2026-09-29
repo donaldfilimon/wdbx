@@ -1,3 +1,6 @@
+mod info;
+pub use info::StoreInfo;
+
 use crate::{Result, engine, error, neural::Network};
 use abi_wdbx::v2::{V2Mutation, V2Store};
 use serde::{Deserialize, Serialize};
