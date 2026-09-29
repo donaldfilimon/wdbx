@@ -14,7 +14,7 @@
     "format": "oxfmt",
     "test": "bun test",
     "test:browser": "node tests/browser.e2e.mjs && node tests/accessibility.e2e.mjs",
-    "lint:studio": "oxlint app/studio.tsx lib/specimen lib/webmcp.ts",
+    "lint:studio": "oxlint app lib/specimen lib/webmcp.ts",
     "desktop:dev": "vite --config vite.desktop.config.ts",
     "desktop:build": "vite build --config vite.desktop.config.ts",
     "desktop": "tauri dev",

@@ -1,10 +1,14 @@
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { test, expect } from 'bun:test';
 
-const studio = await readFile(
-  new URL('../app/studio.tsx', import.meta.url),
-  'utf8',
+// The studio markup spans app/studio.tsx, app/panels, app/dialogs and app/shell.
+const appDir = new URL('../app/', import.meta.url);
+const sources = (await readdir(appDir, { recursive: true })).filter((f) =>
+  f.endsWith('.tsx'),
 );
+const studio = (
+  await Promise.all(sources.map((f) => readFile(new URL(f, appDir), 'utf8')))
+).join('\n');
 const styles = await readFile(
   new URL('../app/studio.css', import.meta.url),
   'utf8',
@@ -30,4 +34,14 @@ test('instrument console retains responsive access to inspector detail', () => {
   expect(styles).not.toContain(
     '.inspector-section:nth-last-child(2) {\n    display: none;',
   );
+});
+
+test('the studio panel owns the workflow and telemetry markup', async () => {
+  const panel = await readFile(
+    new URL('../app/panels/studio-panel.tsx', import.meta.url),
+    'utf8',
+  );
+  expect(panel).toContain('className="console-telemetry"');
+  expect(panel).toContain('aria-label="Specimen workflow"');
+  expect(panel).toContain('aria-busy={busy}');
 });
