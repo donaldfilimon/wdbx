@@ -50,7 +50,7 @@ jobs:
           python3 -c 'import sys; assert sys.version_info >= (3, 12), "the runner needs Python 3.12 or later as python3"'
           echo "MACOSX_DEPLOYMENT_TARGET=14.0" >> "$GITHUB_ENV"
       - name: Reuse pinned inference builds
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             specimen-studio/work/runtimes
