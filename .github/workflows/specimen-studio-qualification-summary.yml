@@ -152,7 +152,7 @@ jobs:
         run: python3 scripts/qualification-summary.py --manifest work/qualification-summary/manifest.json
       - name: Upload consolidated qualification evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: qualification-summary-${{ inputs.source_sha }}
           path: |
