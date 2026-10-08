@@ -1,0 +1,815 @@
+{
+  "schema": "ecosystem-local-evidence-v1",
+  "recorded_at": "2026-10-03T09:00:46.414042+00:00",
+  "hardware": {
+    "hw.model": "Mac17,2",
+    "hw.memsize": "25769803776",
+    "hw.physicalcpu": "10",
+    "hw.logicalcpu": "10"
+  },
+  "os": "27.2",
+  "gates": [
+    {
+      "repository": "wdbx",
+      "head": "e45410356ceb4e96f0dc26a83b02e1c18cf94860",
+      "command": "CARGO_BUILD_JOBS=2 bash tools/check.sh",
+      "exit_code": 0,
+      "log": ".superpowers/sdd/2026-10-03-ecosystem/evidence/resolution-final-gates/wdbx-gate.log",
+      "log_sha256": "df98ee59f580f8324921c0ad445e03b055812988c7affd236cf19908899b3dbc",
+      "rust_test_executions": {
+        "passed": 647,
+        "failed": 0,
+        "ignored": 0
+      },
+      "python_policy_tests": [],
+      "scope": "fresh local full gate after per-edge resolver and benchmark wording changes; no deployment or production acceptance",
+      "retained_log": ".superpowers/sdd/2026-10-03-ecosystem/evidence/resolution-final-gates/wdbx-gate.log",
+      "source_stable": true,
+      "source_snapshots": {
+        "wdbx": {
+          "head": "e45410356ceb4e96f0dc26a83b02e1c18cf94860",
+          "file_count": 750,
+          "files_sha256": "e9bd44cee929711f7d7d1de89fcb6727f2ca81c622ac69884caf3d3138097005",
+          "index_sha256": "ddd4afb5ab90ab056d54803b26bd229ac262967acdb333049435a1b8df6a3107"
+        }
+      },
+      "receipt": ".superpowers/sdd/2026-10-03-ecosystem/evidence/resolution-final-gates/wdbx-result.json"
+    },
+    {
+      "repository": "abbey",
+      "head": "fe0cf5f143cc9c8824676f2f8762c3714ca32c8b",
+      "command": "CARGO_BUILD_JOBS=1 CARGO_INCREMENTAL=0 sh ./check.sh < /dev/null",
+      "exit_code": 0,
+      "log": "/tmp/abbey-20261003-ecosystem-gate.log",
+      "log_sha256": "b57b19de7ee68cef9dfebf8c397b1720b1defbbbe271b60ef61c85881975a4ef",
+      "rust_test_executions": {
+        "passed": 3417,
+        "failed": 0,
+        "ignored": 0
+      },
+      "python_policy_tests": [
+        82
+      ],
+      "scope": "local Rust/docs/IPC/codegen/install gate; dirty source included; cross-platform targets absent; no provider or desktop-runtime acceptance",
+      "warnings": [
+        "rust-objcopy could not resolve @rpath/libLLVM.dylib; the library exists at the toolchain lib root; a per-process DYLD_LIBRARY_PATH probe succeeds. Optional stripping failed but build/gate succeeded.",
+        "claims registry exceeds soft file-size warning threshold"
+      ],
+      "retained_log": ".superpowers/sdd/2026-10-03-ecosystem/evidence/abbey-gate.log"
+    },
+    {
+      "repository": "wdbx/specimen-studio",
+      "kind": "tests",
+      "command": "CARGO_BUILD_JOBS=1 bun run test:native",
+      "exit_code": 0,
+      "log": "/tmp/wdbx-studio-native-tests-20261003.log",
+      "log_sha256": "225e92631c97bd7b5ba6457ebf1ed6c1580ab6a98da2210f76761d833e74ec6c",
+      "rust_test_executions": {
+        "passed": 90,
+        "failed": 0,
+        "ignored": 1
+      },
+      "scope": "Separate Studio native workspace; qualified GPU parity test ignored; no packaged desktop runtime acceptance",
+      "retained_log": ".superpowers/sdd/2026-10-03-ecosystem/evidence/wdbx-specimen-studio-tests.log"
+    },
+    {
+      "repository": "wdbx/specimen-studio",
+      "kind": "clippy",
+      "command": "CARGO_BUILD_JOBS=1 bun run check:native",
+      "exit_code": 0,
+      "log": "/tmp/wdbx-studio-native-clippy-20261003.log",
+      "log_sha256": "17cecc0be4d4c8c05ca9390a64c3ef192f0af1c3501e1534f6225eb00f6afe36",
+      "rust_test_executions": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0
+      },
+      "scope": "Separate Studio native workspace; qualified GPU parity test ignored; no packaged desktop runtime acceptance",
+      "retained_log": ".superpowers/sdd/2026-10-03-ecosystem/evidence/wdbx-specimen-studio-clippy.log"
+    },
+    {
+      "repository": "abbey/zig",
+      "command": "ABBEY_ZIG_GATE_LOG_DIR=/tmp/abbey-zig-ecosystem-20261003 sh ./zig/tools/check.sh",
+      "exit_code": 0,
+      "log": "/tmp/abbey-zig-ecosystem-20261003.log",
+      "log_sha256": "90ede6faf882a294b97f736037d74c02bc580b6cc7e5b6b636e3287f65409eb0",
+      "zig_version": "0.17.0-dev.2338+b46a7f3a2",
+      "documented_minimum": "0.17.0-dev.2320+1e770dbef",
+      "rust_oracle": "../abbey/target/debug/abbey",
+      "abi_oracle": "../abi/target/release/abi",
+      "zig_test_executions": {
+        "passed": 218,
+        "failed": 0
+      },
+      "scope": "both editions, 15 help goldens,113 corpus artifacts, Rust route reader and daemon wire compatibility, real PTY restoration, scratch-state ABI end-to-end; actual installed compiler is newer than documented minimum, exact historical pin unverified",
+      "retained_log": ".superpowers/sdd/2026-10-03-ecosystem/evidence/abbey-zig-gate.log"
+    },
+    {
+      "repository": "webpress",
+      "command": "bun run check",
+      "exit_code": 0,
+      "receipt": "/Users/donaldfilimon/dev/active/webpress/.superpowers/sdd/2026-10-03-browser-exports/full-gate.json",
+      "receipt_sha256": "c27ea15570b093914329ddbc83e595466d632d1d720858cb30fbc107e4e5984c",
+      "vitest": {
+        "files": 266,
+        "passed": 2055,
+        "skipped": 11
+      },
+      "server_tests": {
+        "passed": 125,
+        "failed": 0
+      },
+      "static_export_tests": {
+        "passed": 4,
+        "failed": 0
+      },
+      "scope": "current product source with publication entry repair; actual browser runnable and publication ZIP acceptance, native platform matrix separate; later trailer metadata changes separately reviewed"
+    },
+    {
+      "repository": "abbey/desktop",
+      "recorded_at": "2026-10-03T07:05:47.406438+00:00",
+      "command": "CARGO_BUILD_JOBS=1 CARGO_INCREMENTAL=0 sh ./desktop/check.sh",
+      "exit_code": 0,
+      "source_sha256_before": "4915f8c5913ea190521de174d08bde8ece1fdb066423dfc70bff2718f8e8a280",
+      "source_sha256_after": "4915f8c5913ea190521de174d08bde8ece1fdb066423dfc70bff2718f8e8a280",
+      "source_stable": true,
+      "files": 411,
+      "changed_files": [],
+      "log_sha256": "008946f10e42135a09c713f1e454d9a5c177baed6251f874de121a80ce3564aa",
+      "scope": "local desktop gate with scratch daemon; native Routes UI opt-in not run",
+      "rust_test_executions": {
+        "passed": 49,
+        "failed": 0,
+        "ignored": 0
+      },
+      "python_tests": 13,
+      "log": "/var/folders/42/07tmt0n56jq4261xb9gz5jwm0000gn/T/abbey-desktop-gate-20261003-f7uxecpn/gate-installed.log",
+      "environment_repair": "bun install --frozen-lockfile; source/lock hashes unchanged;28 existing dependency packages installed",
+      "retained_log": ".superpowers/sdd/2026-10-03-ecosystem/evidence/abbey-desktop-gate.log"
+    },
+    {
+      "repository": "quesar.cloud",
+      "head": "ac8c24afe618f34a7ed46ea0baed477133064c40",
+      "commands": [
+        "bun run check",
+        "bun run build:static",
+        "bun run check:static",
+        "bun run test:e2e"
+      ],
+      "exit_code": 0,
+      "receipt": "/Users/donaldfilimon/dev/active/quesar.cloud/artifacts/quesar-claims-20261003/rerun/qualification.json",
+      "receipt_sha256": "04fcf26199684437ba9a3a6169e561098ad5788e6f87d7df4b3a895f02d9c08e",
+      "vitest": {
+        "passed": 744,
+        "files": 89
+      },
+      "browser": {
+        "passed": 226
+      },
+      "static_pages": 129,
+      "source_stable": true,
+      "scope": "model-vision and origin-scoped pairing copy, regenerated Quesar share card; unchanged application inputs; subsequent package-only README/manifest qualified separately; no deployment or trained-model acceptance"
+    },
+    {
+      "repository": "abbey-bot",
+      "head": "e742375ff9b3d20b97df09c7fad10c1225ae957c",
+      "command": "CARGO_BUILD_JOBS=2 ABBEY_REQUIRE_WDBX_CONFORMANCE=1 ./check.sh < /dev/null",
+      "exit_code": 0,
+      "source_sha256": "28c28ace3bc0d603857e10e3560578a8ea0fdb7883c26c8078a64a4da6db92d8",
+      "source_files": 799,
+      "source_stable": true,
+      "evidence_directory": "/Users/donaldfilimon/dev/active/abbey-bot/.superpowers/sdd/2026-10-03-yoke-derive-update",
+      "log_sha256": "8e8b0104b61b3eed104779228e1a65ee47a21633f22ce11bd1c4bffacbe66ae6",
+      "rust_tests": {
+        "passed": 2087,
+        "failed": 0,
+        "ignored": 8
+      },
+      "python_tests": {
+        "unittest_cases": 339,
+        "publication_scenarios_separate": 16
+      },
+      "swift_tests": [
+        12,
+        16
+      ],
+      "rust_test_seconds": 72.71,
+      "release_build_seconds": 198,
+      "gate_seconds": 758.702,
+      "candidate_sha256": "729cbf58db425d269316936d6ce56de35c693a8abbdb060966f730b0b92e31d9",
+      "installed_sha256": "b965ed9b11c9aa2f0ac85dd6213661c781716c5eb80a0dac11d27fba254fb5a9",
+      "scope": "full strict local qualification after yoke-derive lock-only update; not installed/deployed or provider/human acceptance",
+      "security_debt": {
+        "accepted_vulnerabilities": 5,
+        "unmaintained_warnings": 3,
+        "yanked_warnings": 0,
+        "audit_clean": false
+      }
+    },
+    {
+      "repository": "abi",
+      "head": "80dfe079ebe7413a6815c2d564be1f0aaa901267",
+      "command": "CARGO_BUILD_JOBS=2 ./tools/check.sh",
+      "exit_code": 0,
+      "duration_seconds": 65.394,
+      "log": ".superpowers/sdd/2026-10-03-ecosystem/evidence/cancellation-final-gates/abi-gate.log",
+      "log_sha256": "d6e1a22f32e731d68e0549b97aed19b375b5418aac95b95745f5d607369ceb55",
+      "rust_test_executions": {
+        "passed": 996,
+        "failed": 0,
+        "ignored": 0
+      },
+      "python_policy_tests": [
+        144
+      ],
+      "source_stable": true,
+      "source_snapshots": {
+        "abi": {
+          "head": "80dfe079ebe7413a6815c2d564be1f0aaa901267",
+          "branch": "main",
+          "index_sha256": "aad62b2ed9c13b8ecd7fea789cbdb22b373d7ba165e1ada62752ac44e3f8eae3",
+          "file_count": 1237,
+          "files_sha256": "490f5dd6cd03da63972da95ebf8c5927c7908b98dee572f00ef40b25d7f259c4"
+        },
+        "wdbx": {
+          "head": "e45410356ceb4e96f0dc26a83b02e1c18cf94860",
+          "branch": "main",
+          "index_sha256": "ddd4afb5ab90ab056d54803b26bd229ac262967acdb333049435a1b8df6a3107",
+          "file_count": 755,
+          "files_sha256": "d70944512393eb93ca5a542891d9cd93055e563c1eba41e1e740d1f72332b922"
+        }
+      },
+      "receipt": ".superpowers/sdd/2026-10-03-ecosystem/evidence/cancellation-final-gates/abi-result.json",
+      "scope": "fresh full gate after cancellation callback repair; source and sibling WDBX unchanged during run; subsequent gallery/docs changes are documentation only; no provider/deployment proof"
+    }
+  ],
+  "abi_coreml_fix": {
+    "file": "abi/crates/abi-gpu/native/metal_dot.swift",
+    "baseline_failure": "Foundation513/POSIX1 before compile on completeFileProtection temporary write",
+    "reproduction": "isolated native helper failed; changing only fixture write to atomic produced verified true",
+    "focused_tests_passed": 21,
+    "inference_scope": "Core ML inference under cpuAndNeuralEngine; no ANE residency claim"
+  },
+  "open": [
+    "Studio packaged desktop runtime",
+    "Quesar human listening, immutable neural weight provenance and final brand/rights approval",
+    "WebPress comprehensive native focus, screen reader, cross-platform/runtime and performance acceptance",
+    "4K and vertical product and ecosystem trailer sets; full brand program",
+    "Live providers, deployments and production acceptance remain distinct from local gates",
+    "Abbey live providers, packaging and remaining desktop journeys remain unverified; focused native Routes UI now passed"
+  ],
+  "benchmark": {
+    "kind": "local debug regression guard, not publication throughput",
+    "vectors": 500,
+    "runs": 5,
+    "aggregation": "best p50 across runs separately for insert and search",
+    "insert_p50_ns": [
+      627167,
+      727792,
+      684583,
+      659834,
+      593708
+    ],
+    "search_p50_ns": [
+      232041,
+      231000,
+      236625,
+      229292,
+      188458
+    ],
+    "concurrent_load": "Other repository checks and film rendering active; not an isolated benchmark"
+  },
+  "toolchain_diagnosis": {
+    "receipt": "/tmp/abi-toolchain-objcopy-diagnosis-20261003.json",
+    "failure_exit": -6,
+    "per_process_library_path_exit": 0,
+    "global_toolchain_changed": false,
+    "retained_receipt": ".superpowers/sdd/2026-10-03-ecosystem/evidence/toolchain-objcopy-diagnosis.json"
+  },
+  "media": {
+    "quesar": {
+      "movies": 6,
+      "seconds": 663,
+      "frames": 19890,
+      "cues": 110,
+      "mp4_bytes": 196123453,
+      "acceptance": "../quesar.cloud/notes/verification/2026-10-03-film-export-acceptance.md"
+    },
+    "abbey_trailer": {
+      "mp4_files": 6,
+      "formats": [
+        "1920x1080",
+        "3840x2160",
+        "1080x1920"
+      ],
+      "seconds_per_format": [
+        30,
+        15
+      ],
+      "new_profile_receipt": ".superpowers/sdd/2026-10-03-ecosystem/evidence/abbey-trailer-profiles-receipt.json",
+      "new_profiles": {
+        "4k": {
+          "videos": {
+            "abbey-trailer-4k.mp4": {
+              "sha256": "9c34b742dabf2fe17810b4f64ccb4379f9e29a44b31056dd1e9bdd396146cf22",
+              "bytes": 5258105,
+              "dimensions": [
+                3840,
+                2160
+              ],
+              "frames": 900,
+              "duration_seconds": 30.0,
+              "faststart": true,
+              "audio_channels": 2,
+              "audio_sample_rate_hz": 48000,
+              "full_decode_exit_code": 0
+            },
+            "abbey-trailer-15s-4k.mp4": {
+              "sha256": "4f8d6f568e613aa6f47deb7ba2a19852e681954f4bafb6abd0f67f2a78afb3ca",
+              "bytes": 3396225,
+              "dimensions": [
+                3840,
+                2160
+              ],
+              "frames": 450,
+              "duration_seconds": 15.0,
+              "faststart": true,
+              "audio_channels": 2,
+              "audio_sample_rate_hz": 48000,
+              "full_decode_exit_code": 0
+            }
+          },
+          "score_sha256": "8a25a5f72e06dbe36d8303b354dfd29fce250a5ee9a5b031de20fcdd9bdf620a",
+          "renderer_sha256": "8b7673f87e1eb23959a64c474fa84266a167e198073fb67219bd744a874c19f8",
+          "manifest_sha256": "4e599a5cb42928f8f27376bcf94eb91a528a6c56c62c19c7c32fa32fb0c212ad",
+          "checksums_sha256": "fc615fe4f77cada107b84d59b7a82898d481d81f5b197201eb3818e53d642a2a",
+          "artifact_count": 16
+        },
+        "vertical": {
+          "videos": {
+            "abbey-trailer-vertical.mp4": {
+              "sha256": "045803439914b3d9721eaacedfeedc61ee6e49af669ec89f40b73e93716bcd38",
+              "bytes": 2573075,
+              "dimensions": [
+                1080,
+                1920
+              ],
+              "frames": 900,
+              "duration_seconds": 30.0,
+              "faststart": true,
+              "audio_channels": 2,
+              "audio_sample_rate_hz": 48000,
+              "full_decode_exit_code": 0
+            },
+            "abbey-trailer-15s-vertical.mp4": {
+              "sha256": "488979c715639a1194b7df7eb987674e3b1e9dbcc6503257a711bca51f82c70e",
+              "bytes": 1573489,
+              "dimensions": [
+                1080,
+                1920
+              ],
+              "frames": 450,
+              "duration_seconds": 15.0,
+              "faststart": true,
+              "audio_channels": 2,
+              "audio_sample_rate_hz": 48000,
+              "full_decode_exit_code": 0
+            }
+          },
+          "score_sha256": "8a25a5f72e06dbe36d8303b354dfd29fce250a5ee9a5b031de20fcdd9bdf620a",
+          "renderer_sha256": "8b7673f87e1eb23959a64c474fa84266a167e198073fb67219bd744a874c19f8",
+          "manifest_sha256": "9ffefdf9146218e5474307b23057be63e060aa3109fe80b218c861d702e3d27c",
+          "checksums_sha256": "f9e4ba8c48ac0886b577bbf48309bac263c7c802f05cffb10850086d01fe114d",
+          "artifact_count": 16
+        }
+      },
+      "scope": "three formats of one conceptfilm, each with15secondcut; originalassets preserved, full technicaldecodes and sampledvisualreview pass; humanlistening and entireecosystemtrailerprogram separate"
+    },
+    "ecosystem": {
+      "movies": 3,
+      "seconds": 135,
+      "frames": 4050,
+      "mp4_bytes": 14347810,
+      "cuts": {
+        "90": {
+          "file": "/Users/donaldfilimon/dev/active/quesar.cloud/notes/launch/ecosystem-trailer-2026-10-03/artifacts/90s/ecosystem-90s-1080p.mp4",
+          "sha256": "3726350e923b96a062553b324e3f997f6e3e542607812caab26be4426dccb380",
+          "bytes": 8626601,
+          "frames": 2700,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "fps": 30,
+          "full_decode_exit": 0,
+          "loudness_lufs": -18.0,
+          "true_peak_dbtp": -5.86
+        },
+        "30": {
+          "file": "/Users/donaldfilimon/dev/active/quesar.cloud/notes/launch/ecosystem-trailer-2026-10-03/artifacts/30s/ecosystem-30s-1080p.mp4",
+          "sha256": "078be322735464ff2579b88211214a7ee14a965ac4e3384e0d47d4b8a2313d0c",
+          "bytes": 3603728,
+          "frames": 900,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "fps": 30,
+          "full_decode_exit": 0,
+          "loudness_lufs": -18.0,
+          "true_peak_dbtp": -7.93
+        },
+        "15": {
+          "file": "/Users/donaldfilimon/dev/active/quesar.cloud/notes/launch/ecosystem-trailer-2026-10-03/artifacts/15s/ecosystem-15s-1080p.mp4",
+          "sha256": "2190da54ada56e94ce526131a5884ec97a2866d6c37b5bb6ca5567c544c735b1",
+          "bytes": 2117481,
+          "frames": 450,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "fps": 30,
+          "full_decode_exit": 0,
+          "loudness_lufs": -18.01,
+          "true_peak_dbtp": -7.63
+        }
+      },
+      "renderer_sha256": "adb9b5a0640680f431ee0592846cbb9a466f2f6907e5aa2ec2a79ac0c264ba93",
+      "source_files": 8,
+      "claim_sources": 16,
+      "preserved_originals": 63,
+      "caption_cues": 25,
+      "playback": {
+        "browser": "Chromium153.0.8010.12",
+        "muted": true,
+        "playback_rate": 8,
+        "all_completed": true
+      },
+      "scope": "Concept illustrations and original music; all six products; no integrated production or human listening claim",
+      "review_gallery": "docs/verification/2026-10-03-ecosystem-film-review.html",
+      "final_independent_review": "pending"
+    }
+  },
+  "service_observation": {
+    "repository": "abbey-bot",
+    "recorded_at": "2026-10-03T07:10:23.249405+00:00",
+    "command": "python3 -I deploy/service-status.py",
+    "exit_code": 0,
+    "discord": "ready",
+    "scheduler": "running",
+    "telegram": "disabled",
+    "slack": "disabled",
+    "last_completed_persistence": "complete",
+    "candidate_sha256": "85232008ac29f1045714738a5dc0d7bd76238cda696b196837bc5c351995de30",
+    "installed_sha256": "b965ed9b11c9aa2f0ac85dd6213661c781716c5eb80a0dac11d27fba254fb5a9",
+    "scope": "Historical 2026-10-03 07:10 UTC observation before the fix3 build: installed service was ready and differed from the fix2 candidate. Fix3 was subsequently built and qualified; this observation is not deployment proof.",
+    "candidate_phase": "fix2, before fix3 build"
+  },
+  "brand_package": {
+    "repository": "quesar.cloud",
+    "status": "passed",
+    "archive": "notes/verification/brand-distribution-2026-10-03-claims-reviewed.tar.gz",
+    "bytes": 839614,
+    "sha256": "c5026c4c5b3b7c2ae6196cab63162b08b6c1dc91e6addce330281441a3af1f9d",
+    "identical_reproduction": "artifacts/quesar-claims-20261003/brand-reviewed-reproduced.tar.gz",
+    "regular_files": 72,
+    "checksums_verified": 71,
+    "input_pins": 69,
+    "unchanged_media_references": 54,
+    "changed_inputs": [
+      "public/og/quesar.jpg",
+      "README.md"
+    ],
+    "changed_archive_entries": [
+      "quesar-brand/README.md",
+      "quesar-brand/SHA256SUMS",
+      "quesar-brand/distribution.json",
+      "quesar-brand/public/og/quesar.jpg"
+    ],
+    "original_archive_unchanged": true,
+    "independent_review": "Standards PASS; Spec PASS; 0 findings",
+    "scope": "model-vision card correction and accurate bundled reproduction command; existing identity/font sources preserved; no new brand reuse license",
+    "review": "docs/reviews/2026-10-03-quesar-claims-correction.md"
+  },
+  "historical_gates": [
+    {
+      "repository": "wdbx",
+      "head": "e45410356ceb4e96f0dc26a83b02e1c18cf94860",
+      "command": "CARGO_BUILD_JOBS=2 bash tools/check.sh",
+      "exit_code": 0,
+      "log": "/tmp/wdbx-20261003-ecosystem-gate.log",
+      "log_sha256": "331204072a17249100057d76d41b02299035962bc00a39662acb767ad2bbe257",
+      "rust_test_executions": {
+        "passed": 646,
+        "failed": 0,
+        "ignored": 0
+      },
+      "python_policy_tests": [],
+      "scope": "local gate only; dirty source included; no remote or release acceptance",
+      "retained_log": ".superpowers/sdd/2026-10-03-ecosystem/evidence/wdbx-gate.log"
+    },
+    {
+      "repository": "abi",
+      "head": "80dfe079ebe7413a6815c2d564be1f0aaa901267",
+      "command": "CARGO_BUILD_JOBS=2 ./tools/check.sh",
+      "exit_code": 0,
+      "log": "/tmp/abi-20261003-ecosystem-gate-fixed.log",
+      "log_sha256": "929ada1a26f0c50cbe7a58ee8fb29dd094885a2f00ee432b63cf3a7a5943d9aa",
+      "rust_test_executions": {
+        "passed": 987,
+        "failed": 0,
+        "ignored": 0
+      },
+      "python_policy_tests": [
+        144
+      ],
+      "scope": "local gate only; dirty source included; no remote or release acceptance",
+      "retained_log": ".superpowers/sdd/2026-10-03-ecosystem/evidence/abi-gate.log"
+    },
+    {
+      "repository": "quesar.cloud",
+      "head": "ac8c24afe618f34a7ed46ea0baed477133064c40",
+      "commands": [
+        "bun run check",
+        "bun run build:static",
+        "bun run check:static",
+        "bun run test:e2e"
+      ],
+      "exit_code": 0,
+      "receipt": "/Users/donaldfilimon/dev/active/quesar.cloud/artifacts/film-completion-20261003/command-results.json",
+      "receipt_sha256": "9d49999c4e720b1d4721fdfe94e5b821c39c590fbfbf01c0cb0c3bcf4b07b697",
+      "vitest": {
+        "passed": 724,
+        "files": 88
+      },
+      "browser": {
+        "passed": 226
+      },
+      "static_pages": 129,
+      "scope": "local source/static/browser gate and six media exports, independently reviewed; no deployment or human listening"
+    },
+    {
+      "repository": "abbey-bot",
+      "command": "CARGO_BUILD_JOBS=2 ABBEY_REQUIRE_WDBX_CONFORMANCE=1 ./check.sh",
+      "exit_code": 0,
+      "source_sha256": "fc1cc1bb6e5c81457638dede4e712dd5c5a627127d4f51a4364189843677a457",
+      "source_files": 799,
+      "source_stable": true,
+      "evidence_directory": "/Users/donaldfilimon/dev/active/abbey-bot/.superpowers/sdd/2026-10-01-mlai-learning-quality/task5-quality-evidence-20261003/fix3-root-run",
+      "rust_tests": {
+        "passed": 2087,
+        "failed": 0,
+        "ignored": 8
+      },
+      "scope": "fix3 strict source gate; independent standards/spec reviews pass; subsequent documentation-only receipts separate; synthetic quality corpus, live/provider and security debt acceptance remain bounded",
+      "python_tests": {
+        "unittest_cases": 339,
+        "publication_scenarios_separate": 16
+      },
+      "swift_tests": [
+        12,
+        16
+      ],
+      "rust_test_seconds": 106.35,
+      "release_build_seconds": 145,
+      "candidate_sha256": "f4d76cd9e141b5ad04cba7fc9965d4a05b8b7359933d77a66d65655c1805582a",
+      "installed_sha256": "b965ed9b11c9aa2f0ac85dd6213661c781716c5eb80a0dac11d27fba254fb5a9"
+    },
+    {
+      "repository": "abi",
+      "head": "80dfe079ebe7413a6815c2d564be1f0aaa901267",
+      "command": "CARGO_BUILD_JOBS=2 ./tools/check.sh",
+      "exit_code": 0,
+      "log": ".superpowers/sdd/2026-10-03-ecosystem/evidence/resolution-abi-python314/abi-gate.log",
+      "log_sha256": "82de14ae9d6748c82b0a54f12fc910829dc7cea893669b45840a1830f89a66c6",
+      "rust_test_executions": {
+        "passed": 988,
+        "failed": 0,
+        "ignored": 0
+      },
+      "python_policy_tests": [
+        144
+      ],
+      "scope": "fresh local full gate after per-edge resolver and benchmark wording changes; no deployment or production acceptance",
+      "retained_log": ".superpowers/sdd/2026-10-03-ecosystem/evidence/resolution-abi-python314/abi-gate.log",
+      "source_stable": true,
+      "source_snapshots": {
+        "abi": {
+          "head": "80dfe079ebe7413a6815c2d564be1f0aaa901267",
+          "file_count": 1237,
+          "files_sha256": "42173db611b3d8dac04dc8748b645959316ea02c53691c3d02c451355bce6a1a",
+          "index_sha256": "aad62b2ed9c13b8ecd7fea789cbdb22b373d7ba165e1ada62752ac44e3f8eae3"
+        },
+        "wdbx": {
+          "head": "e45410356ceb4e96f0dc26a83b02e1c18cf94860",
+          "file_count": 750,
+          "files_sha256": "e9bd44cee929711f7d7d1de89fcb6727f2ca81c622ac69884caf3d3138097005",
+          "index_sha256": "ddd4afb5ab90ab056d54803b26bd229ac262967acdb333049435a1b8df6a3107"
+        }
+      },
+      "receipt": ".superpowers/sdd/2026-10-03-ecosystem/evidence/resolution-abi-python314/abi-result.json",
+      "python": "Python 3.14.8 selected with a process-local shim; initial Apple Python 3.9 failure retained in resolution-final-gates/abi-gate.log"
+    }
+  ],
+  "resolution_provenance": {
+    "status": "Current local per-edge read; wider memory semantics remain Partial",
+    "review": "docs/reviews/2026-10-03-memory-edge-resolution.md",
+    "plan": "docs/superpowers/plans/2026-10-03-memory-edge-resolution-provenance.md",
+    "focused_test_executions": {
+      "wdbx": 17,
+      "gateway": 12,
+      "cli": 2
+    },
+    "standards": "PASS",
+    "spec": "PASS",
+    "canonical_commitments_changed": false,
+    "deployed": false
+  },
+  "release_benchmark": {
+    "report": "docs/verification/2026-10-03-wdbx-release-measurements.md",
+    "observations": ".superpowers/sdd/2026-10-03-ecosystem/evidence/release-benchmark/observations.json",
+    "runs": 5,
+    "median_of_run_percentiles_ns": {
+      "insert_ns": {
+        "p50": 25625,
+        "p95": 35708,
+        "p99": 60750
+      },
+      "search_ns": {
+        "p50": 7375,
+        "p95": 7667,
+        "p99": 9291
+      }
+    },
+    "binary_sha256": "77863f103a9d0745c084bb647c63f3b50ea88f4e17dccb57dacd8419b99337c5",
+    "source_stable": true,
+    "scope": "local observations; no production throughput, recall, durability, acceleration, or comparative claims",
+    "correctness": "Search results are discarded by the existing harness. Recall/accuracy for this fixture is not measured. Repository correctness tests are separate."
+  },
+  "native_acceptance": {
+    "abbey_routes": {
+      "status": "passed",
+      "command": "bun run smoke:routes:macos",
+      "cwd": "/Users/donaldfilimon/dev/active/abbey/desktop",
+      "exit_code": 0,
+      "revision_unchanged": true,
+      "source_paths": 673,
+      "present_files": 668,
+      "existing_deleted_paths": 5,
+      "source_sha256_before": "a97624848cb22d0c3897ed132babb1e79bfd07e353ac79753a7f1effda6bfc07",
+      "source_sha256_after": "a97624848cb22d0c3897ed132babb1e79bfd07e353ac79753a7f1effda6bfc07",
+      "changed_paths": [],
+      "completed_scenarios": [
+        "authenticated-25",
+        "limit-10",
+        "limit-50",
+        "authentication-rejection",
+        "daemon-loss-no-fallback",
+        "empty-log",
+        "route-files-unchanged"
+      ],
+      "native_snapshots": 21,
+      "discarded_traversals": 1,
+      "preflight_exit_code": 0,
+      "owned_processes_remaining": [],
+      "scope": "Focused native Routes UI acceptance; root and desktop full gates not run by this command",
+      "artifact_sha256": {
+        "driver": "7dbac7cc7947f1144776b86f183295f6f23be6a1920181f49c9c975f481c9aa2",
+        "abbeyd": "0ac9118b3a7479b6a2b6bfd27108c9eabec98c811db1592c075bf2fa66df6358",
+        "desktop": "97873ecf25d78bcaae0d1671b3c0e11e888df537a013d32672d1ac7303945b1f"
+      },
+      "retained_receipt": ".superpowers/sdd/2026-10-03-ecosystem/evidence/abbey-routes-native/qualification-summary.json"
+    },
+    "studio": {
+      "status": "passed",
+      "command": [
+        "bunx",
+        "wdio",
+        "run",
+        "wdio.conf.mjs"
+      ],
+      "cwd": "/Users/donaldfilimon/dev/active/wdbx/specimen-studio",
+      "exit_code": 0,
+      "native_e2e_exit_code": 0,
+      "mocha_tests_passed": 5,
+      "scenario_ids": [
+        "native-feedback-provenance-persistence",
+        "rust-engine-scoped-response",
+        "durable-conflict-import-export-reload",
+        "native-image-analysis",
+        "store-info-network-revision-lab-tabs",
+        "virtualized-history-search"
+      ],
+      "history_search_ms": 26,
+      "initial_history_dom_rows": 9,
+      "source_paths": 439,
+      "source_sha256_before": "ba07b64113d06bc9a4c481989bda88d1395b2f311886325a3c3a218907cd31b0",
+      "source_sha256_after": "ba07b64113d06bc9a4c481989bda88d1395b2f311886325a3c3a218907cd31b0",
+      "changed_source_paths": [],
+      "head_before": "e45410356ceb4e96f0dc26a83b02e1c18cf94860",
+      "head_after": "e45410356ceb4e96f0dc26a83b02e1c18cf94860",
+      "index_sha256_before": "ddd4afb5ab90ab056d54803b26bd229ac262967acdb333049435a1b8df6a3107",
+      "index_sha256_after": "ddd4afb5ab90ab056d54803b26bd229ac262967acdb333049435a1b8df6a3107",
+      "index_mtime_ns_before": 1790890844141683499,
+      "index_mtime_ns_after": 1790890844141683499,
+      "empty_scratch_models": true,
+      "owned_processes_remaining": [],
+      "scope": "Instrumented debug macOS native integration; not production packaging, signing, OCR inference, GPU parity, full gate or cross-platform acceptance",
+      "warnings": [
+        "optional rust-objcopy strip failed locating libLLVM; build exit 0",
+        "WDIO afterSession mock-store cleanup warning after session closed; all tests and worker exit 0"
+      ],
+      "owned_wdio_process_group_remaining": [],
+      "external_studio_processes_observed": [
+        {
+          "pid": 45976,
+          "ppid": 45890,
+          "pgid": 45976,
+          "started_local": "Sat Oct 3 04:03:34 2026",
+          "started_after_test_finished": true,
+          "parent_command": "-/bin/zsh",
+          "command": "/Users/donaldfilimon/dev/active/wdbx/specimen-studio/target/debug/wdbx-studio-desktop",
+          "action": "Left untouched; separate interactive launch after WDIO finished. Absent at final process check."
+        }
+      ],
+      "cleanup_observation": "WDIO process group absent after exit. A later interactive app launch is outside test ownership and remains untouched.",
+      "visual_receipt_inspected": "native-desktop.png shows actual native Vision and local models view with Native Rust engine and WDBX transactional storage indicators.",
+      "verified_at": "2026-10-03T08:05:15.503888+00:00",
+      "external_studio_processes_at_final_check": [],
+      "retained_receipt": ".superpowers/sdd/2026-10-03-ecosystem/evidence/studio-native/qualification-summary.json",
+      "retained_receipt_sha256": "466166bb034cb95c32b49b61c9acc84c033a9eb8120a7080e60ce39f093b00da"
+    },
+    "webpress_authored_publication": {
+      "status": "Partial",
+      "build_exit_code": 0,
+      "source_stable": true,
+      "archive_restored": false,
+      "native_zip_saved": false,
+      "receipt": ".superpowers/sdd/2026-10-03-ecosystem/evidence/webpress-native-partial/receipt.json",
+      "block": "UI ownership unresolved after changed-window action rejection and externally created/edited Outline project",
+      "scratch_preserved": true,
+      "app_running_at_handoff": false
+    }
+  },
+  "consumer_recheck": {
+    "abbey_wdbx": {
+      "command": "CARGO_BUILD_JOBS=1 CARGO_INCREMENTAL=0 cargo test --locked --features wdbx --lib memory::wdbx::tests < /dev/null",
+      "pinned_toolchain": "/Users/donaldfilimon/.rustup/toolchains/nightly-2026-09-01-aarch64-apple-darwin/bin",
+      "exit_code": 0,
+      "elapsed_seconds": 61.68427109718323,
+      "scope": "focused Abbey WDBX consumer regressions after additive episode-store resolver; not a fresh full Abbey gate",
+      "tests": {
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0,
+        "filtered_out": 746
+      },
+      "log_sha256": "1a3623372168cf68a71f100730d6a113f108d1bb0cb882c7d40f3d51ab2d140e",
+      "source_matches_native_ui_snapshot": true,
+      "receipt": ".superpowers/sdd/2026-10-03-ecosystem/evidence/abbey-wdbx-consumer-recheck.json"
+    }
+  },
+  "measurement_review": {
+    "status": "scoped PASS",
+    "reviewer": "independent delivery_audit agent",
+    "scope": "five raw release logs, aggregation and units, source/binary/harness hashes, gate counts,41report/indexlinks, honest workload limitations",
+    "date": "2026-10-03",
+    "reran_benchmark": false
+  },
+  "in_progress": {
+    "ecosystem_media": {
+      "render_acceptance": "all3passed; final independent receipt and corrected gallery playback pending"
+    }
+  },
+  "historical_brand_packages": [
+    {
+      "repository": "quesar.cloud",
+      "archive": "notes/verification/brand-distribution-2026-10-03.tar.gz",
+      "bytes": 842867,
+      "sha256": "73b779ac79c37b2e5a0e48cd25d6b8db253af824f00890ea43456b20ca1b7f60",
+      "files": 72,
+      "payload_checksums": 71,
+      "media_references": 54,
+      "same_runtime_identical_reproduction": true,
+      "independent_standards": "PASS",
+      "independent_spec": "PASS",
+      "unit_tests": 744,
+      "test_files": 89,
+      "scope": "existing identity and licensed font package; no invented public brand reuse license or outlined wordmark"
+    }
+  ],
+  "abi_host_cancellation": {
+    "status": "Current local",
+    "owned_files": [
+      "abi/crates/abi-agent-host/src/host.rs",
+      "abi/crates/abi-agent-host/tests/contracts.rs"
+    ],
+    "review": "docs/reviews/2026-10-03-abi-host-cancellation.md",
+    "independent_standards": "PASS",
+    "independent_spec": "PASS",
+    "red_regressions": 6,
+    "focused_tests": 25,
+    "new_deadline_enforcement_locations": false,
+    "limits": "Cooperative boundaries; cannot preempt a synchronous call already running; full invalid-turn validation and policy audit precedence preserved"
+  }
+}

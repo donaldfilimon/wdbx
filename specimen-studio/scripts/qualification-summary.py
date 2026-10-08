@@ -257,6 +257,8 @@ def validate_accessibility_widths(widths: Any) -> list[int]:
             require(all(audit.get(key) == 0 and not isinstance(audit.get(key), bool) for key in ("seriousOrCriticalViolations", "unnamedControls", "orphanedControls")), f"browser accessibility width {width} contains violations or unlabeled controls")
             states.add(audit["state"])
         expected_states = required_states | ({"mobile-drawer"} if width == 390 else set())
+        if width == 1440:
+            expected_states.add("split-studio-nodes")
         require(expected_states <= states, f"browser accessibility width {width} is missing required audit states")
         targets = record.get("touchTargets")
         require(isinstance(targets, list) and required_targets <= set(targets), f"browser accessibility width {width} has incomplete touch-target evidence")

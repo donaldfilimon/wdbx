@@ -14,7 +14,7 @@
     "lint": "oxlint",
     "format": "oxfmt",
     "test": "bun test",
-    "test:browser": "bun tests/browser.e2e.mjs && bun tests/accessibility.e2e.mjs",
+    "test:browser": "bun tests/browser.e2e.mjs && bun tests/accessibility.e2e.mjs && bun tests/ui-components.e2e.mjs",
     "lint:studio": "oxlint app components/wdbx lib/specimen lib/webmcp.ts",
     "desktop:dev": "bun --bun vite --config vite.desktop.config.ts",
     "desktop:build": "bun --bun vite build --config vite.desktop.config.ts",

@@ -1,7 +1,7 @@
 import { afterEach, expect, test } from 'bun:test';
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { dirname, join, resolve } from 'node:path';
+import { join, resolve } from 'node:path';
 
 const repository = resolve(import.meta.dir, '..');
 const script = join(repository, 'scripts/qualification-summary.py');
@@ -35,6 +35,7 @@ function accessibilityWidth(width) {
     'lab-browser',
   ];
   if (width === 390) states.push('mobile-drawer');
+  if (width === 1440) states.push('split-studio-nodes');
   return {
     audits: states.map((state) => ({
       state,
@@ -346,8 +347,9 @@ test('rejects retained Debian stage bytes that differ from their independent rec
   expect(result.stderr.toString()).toContain('artifact digest differs');
 });
 
-for (const [label, mutate, message] of [
-  ['malformed metadata', (value) => '{', 'not valid JSON'],
+/** @type {[string, (value: Record<string, unknown>) => Record<string, unknown> | string, string][]} */
+const invalidMetadata = [
+  ['malformed metadata', () => '{', 'not valid JSON'],
   [
     'stale source',
     (value) => ({ ...value, head_sha: 'f'.repeat(40) }),
@@ -360,10 +362,14 @@ for (const [label, mutate, message] of [
   ],
   [
     'unrelated workflow',
-    (value) => ({ ...value, path: '.github/workflows/specimen-studio-ocr.yml' }),
+    (value) => ({
+      ...value,
+      path: '.github/workflows/specimen-studio-ocr.yml',
+    }),
     'workflow differs',
   ],
-]) {
+];
+for (const [label, mutate, message] of invalidMetadata) {
   test(`rejects ${label}`, async () => {
     const { root, manifest } = await fixture();
     const path = join(root, 'desktop-run.json');
@@ -518,6 +524,11 @@ test('accepts the real browser-checks receipt shape without treating it as infer
     await readFile(accessibilityPath, 'utf8'),
   );
   for (const mutate of [
+    (receipt) => {
+      receipt.widths[1440].audits = receipt.widths[1440].audits.filter(
+        (audit) => audit.state !== 'split-studio-nodes',
+      );
+    },
     (receipt) => {
       receipt.widths[390] = null;
     },

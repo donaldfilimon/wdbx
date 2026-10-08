@@ -7,6 +7,9 @@ This directory mirrors the header from the ABI repository's superpowers index. T
 ## Local Plans
 
 - [`plans/2026-08-22-program-4-canonical-commitment.md`](plans/2026-08-22-program-4-canonical-commitment.md) — C1 implementation slice for `abbey-cbor-episode-v1` commitment primitive
+- [`plans/2026-10-03-ecosystem-parallel-completion.md`](plans/2026-10-03-ecosystem-parallel-completion.md) — immediate parallel ecosystem implementation and launch program
+- [`plans/2026-10-03-ecosystem-progress.md`](plans/2026-10-03-ecosystem-progress.md) — current ownership, validation evidence and remaining requirements
+- [`plans/2026-10-03-memory-edge-resolution-provenance.md`](plans/2026-10-03-memory-edge-resolution-provenance.md) — qualified per-edge store/gateway/CLI resolver read
 
 ## Upstream Reference
 

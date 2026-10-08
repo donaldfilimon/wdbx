@@ -76,6 +76,8 @@ function Field({
 }: React.ComponentProps<'div'> & VariantProps<typeof fieldVariants>) {
   return (
     <div
+      // Field groups one control with its label and help; FieldSet owns fieldsets.
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
       role="group"
       data-slot="field"
       data-orientation={orientation}

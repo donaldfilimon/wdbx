@@ -9,6 +9,9 @@ import { Separator } from '@/components/ui/separator';
 function ItemGroup({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
+      // Items are polymorphic; callers supply listitem roles without requiring li tags.
+      // Keep the div ref contract for this ARIA list container.
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
       role="list"
       data-slot="item-group"
       className={cn(

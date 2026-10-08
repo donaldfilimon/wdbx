@@ -751,3 +751,48 @@ and append `suffix` to every `work/…` output file name (JSON receipts and scre
 - [ ] **Step 4: Docs.** README "Use the studio": sidebar collapse (⌘B), command palette (⌘K), side pane (⌘\\ or palette), activity dock (backtick), theme toggle; dark default. RUNTIME-PROFILE: interface paragraph. AGENTS.md *Project Structure*: `app/state`, `app/shell`, `app/panels`, `app/dialogs`, `app/theme.css`, the no-literal rule. VALIDATION.md: a dated section with the commands and results of Step 3 and the gates.
 - [ ] **Step 5: Gates.** `bun run check`, `bun run test:native`, `bun run check:native`, `bun run test:browser` (both themes). Expected: all exit 0.
 - [ ] **Step 6: Commit.** `test(specimen-studio): themed e2e runs and split-pane audit`
+
+
+## 2026-10-03 execution and evidence correction
+
+The seven tasks' implementation predates the current qualification pass; draft
+initial RED and commit steps above are not newly performed or fabricated.
+The current user's one-writer/no-commit instruction governs execution. Root
+preserves the existing shell and independently reviews it, repairs confirmed
+verification defects with actual RED/GREEN and runs the repository's separate
+web/native plus themed browser gates. Source acceptance is recorded in the
+ignored Superpowers execution ledger and external stable-manifest receipt
+/Users/donaldfilimon/.codex/verification/abbey-bot-continuity-20261003/wdbx-source-qualification.md.
+A successful source acceptance does not qualify packaging, signing, model
+inference, installed native UI or a broader ecosystem release.
+
+
+### Split-pane qualification correction
+
+The approved P2 Task 7 requires the split-studio-nodes audit at width 1440.
+The browser producer emitted it, but the collector and positive fixture omitted
+it from required evidence. An actual CLI regression first accepted a receipt
+missing that exact state (one failed test after valid controls). The minimal
+1440-only requirement and fixture correction now pass all 22 collector tests.
+This restores the approved evidence contract without a new field or schema.
+
+The earlier current-pass root647, web195, broad-lint and native source checks
+predate this collector repair and remain preserved as historical evidence.
+Final qualification requires new unchanged complete manifests, independent
+repair review and authoritative gates against the revised snapshot. The external
+wdbx-source-qualification.md records actual final statuses/counts only afterward.
+The new six-engine/theme browser run remains required; component-only passes
+alone do not complete P2 Task 7. No production UI, native store or dependency
+was changed by either verification repair.
+
+
+### 2026-10-08 current integration evidence
+
+The browser gate (195 tests), broad lint, native tests (90 passed, one existing
+ignored), native Clippy, and all three browser engines in both themes passed.
+The six runs include interaction, 390/768/1440 accessibility and component
+regressions; the split-studio-nodes collector requirement is now qualified.
+See [current integration receipt](../../../../docs/verification/2026-10-08-main-integration.md).
+Earlier operator restrictions are historical; Donald authorized main/origin
+integration and launcher updates on 2026-10-08. No blanket historical checkbox
+closure or native packaging/inference/hardware acceptance is asserted.

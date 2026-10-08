@@ -370,7 +370,8 @@ test('rejects an AppImage whose digest no longer matches the bound base receipt'
   );
 });
 
-for (const [label, mutate, error] of [
+/** @type {[string, (value: Awaited<ReturnType<typeof fixture>>) => Promise<void>, string][]} */
+const invalidAppDirs = [
   [
     'missing executable',
     async (value) => rm(join(value.appDir, 'usr/bin/wdbx-studio-desktop')),
@@ -382,7 +383,8 @@ for (const [label, mutate, error] of [
       writeFile(join(value.appDir, 'wdbx-studio-desktop'), 'duplicate'),
     'exactly one staged',
   ],
-]) {
+];
+for (const [label, mutate, error] of invalidAppDirs) {
   test(`rejects ${label} in the final AppDir`, async () => {
     const value = await fixture();
     await mutate(value);

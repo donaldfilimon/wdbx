@@ -273,7 +273,8 @@ test('can validate an installer-only artifact before extraction', async () => {
   });
 });
 
-for (const [label, change, error] of [
+/** @type {[string, Record<string, unknown>, string][]} */
+const invalidWorkflows = [
   ['failed workflow', { conclusion: 'failure' }, 'completed successfully'],
   ['unfinished workflow', { status: 'in_progress' }, 'completed successfully'],
   [
@@ -291,7 +292,8 @@ for (const [label, change, error] of [
     { head_sha: 'f'.repeat(40) },
     'source commit differs',
   ],
-]) {
+];
+for (const [label, change, error] of invalidWorkflows) {
   test(`rejects ${label} even with a matching package receipt`, async () => {
     const { root, files } = await createReceipt();
     const metadata = join(root, 'workflow.json');
@@ -363,7 +365,8 @@ test('accepts successful qualification workflow metadata for the exact source', 
   expect(result.exitCode, result.stderr.toString()).toBe(0);
 });
 
-for (const [label, change, error] of [
+/** @type {[string, (receipt: { installers: unknown[], helpers: { name: string }[] }) => void, string][]} */
+const invalidReceipts = [
   [
     'empty installers',
     (receipt) => {
@@ -385,7 +388,8 @@ for (const [label, change, error] of [
     },
     'name differs',
   ],
-]) {
+];
+for (const [label, change, error] of invalidReceipts) {
   test(`rejects ${label}`, async () => {
     const { root, files } = await createReceipt();
     const path = join(root, files.receipt);

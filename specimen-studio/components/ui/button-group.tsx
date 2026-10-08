@@ -29,6 +29,8 @@ function ButtonGroup({
 }: React.ComponentProps<'div'> & VariantProps<typeof buttonGroupVariants>) {
   return (
     <div
+      // Button clusters are not necessarily form fields; retain the div ref API.
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
       role="group"
       data-slot="button-group"
       data-orientation={orientation}
