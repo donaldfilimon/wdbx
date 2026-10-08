@@ -200,13 +200,23 @@ fn run_python(lines: &[String]) -> Vec<Value> {
                 python()
             )
         });
-    {
-        let mut stdin = child.stdin.take().expect("piped stdin");
-        for line in lines {
-            writeln!(stdin, "{line}").expect("write case to python");
-        }
-    }
-    let output = child.wait_with_output().expect("python exits");
+    let mut stdin = child.stdin.take().expect("piped stdin");
+    // Drain Python's output while sending cases: either pipe can fill before
+    // the complete corpus fits, so sequential writes then reads can deadlock.
+    let output = std::thread::scope(|scope| {
+        let writer = scope.spawn(move || {
+            for line in lines {
+                writeln!(stdin, "{line}")?;
+            }
+            Ok::<(), std::io::Error>(())
+        });
+        let output = child.wait_with_output();
+        writer
+            .join()
+            .expect("python stdin writer exits")
+            .expect("write cases to python");
+        output.expect("python exits")
+    });
     assert!(
         output.status.success(),
         "python differential exited with {}",

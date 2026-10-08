@@ -178,6 +178,135 @@ fn state(store: &EpisodeStore, digest: &[u8; 32]) -> MemoryEdgeState {
         .expect("admitted candidate")
 }
 
+#[test]
+fn resolution_provenance_is_per_edge_and_survives_reopen() {
+    for is_contradiction in [false, true] {
+        let scratch = Scratch::new();
+        let (first_edge, first_resolution, next_edge, next_resolution);
+        {
+            let mut store = EpisodeStore::open(scratch.path(), policy()).unwrap();
+            let a = append(&mut store, memory("candidate_a", candidate(1, true)));
+            let b = append(&mut store, memory("candidate_b", candidate(2, true)));
+            let proposal = append(
+                &mut store,
+                write(
+                    "proposal",
+                    EpisodeEvent::Proposal {
+                        requested_by: actor("subject_ref", ActorKind::HumanSubject),
+                        proposed_by: service(),
+                    },
+                ),
+            );
+            for non_edge in [a, b, proposal, [0xee; 32]] {
+                assert_eq!(
+                    store
+                        .memory_edge_resolution("guild_ref", &non_edge)
+                        .unwrap(),
+                    None
+                );
+            }
+            let edge = if is_contradiction {
+                contradiction(a, b)
+            } else {
+                quarantine(a)
+            };
+            first_edge = append(
+                &mut store,
+                edge_write("first_edge", service(), edge.clone()),
+            );
+            assert_eq!(
+                store
+                    .memory_edge_resolution("guild_ref", &first_edge)
+                    .unwrap(),
+                None
+            );
+            assert!(matches!(
+                store.memory_edge_resolution("Bad Guild", &first_edge),
+                Err(EpisodeStoreError::InvalidInput)
+            ));
+            first_resolution = append(
+                &mut store,
+                edge_write("first_resolution", admin(), resolution(first_edge)),
+            );
+            assert_eq!(
+                store
+                    .memory_edge_resolution("guild_ref", &first_edge)
+                    .unwrap(),
+                Some(first_resolution)
+            );
+            assert!(matches!(
+                rejected(
+                    &mut store,
+                    &edge_write("duplicate", admin(), resolution(first_edge))
+                ),
+                EpisodeStoreError::InvalidTransition
+            ));
+            assert_eq!(
+                store
+                    .memory_edge_resolution("other_guild", &first_edge)
+                    .unwrap(),
+                None
+            );
+            assert_eq!(
+                store
+                    .memory_edge_resolution("unknown_guild", &first_edge)
+                    .unwrap(),
+                None
+            );
+            assert_eq!(
+                store
+                    .memory_edge_resolution("guild_ref", &first_resolution)
+                    .unwrap(),
+                None
+            );
+            // The same candidates can be flagged again, but the previous
+            // edge must retain its own resolver throughout both cycles.
+            next_edge = append(&mut store, edge_write("next_edge", service(), edge));
+            assert_ne!(next_edge, first_edge);
+            assert_eq!(
+                store
+                    .memory_edge_resolution("guild_ref", &next_edge)
+                    .unwrap(),
+                None
+            );
+            assert_eq!(
+                store
+                    .memory_edge_resolution("guild_ref", &first_edge)
+                    .unwrap(),
+                Some(first_resolution)
+            );
+            next_resolution = append(
+                &mut store,
+                edge_write("next_resolution", admin(), resolution(next_edge)),
+            );
+            assert_ne!(next_resolution, first_resolution);
+        }
+        let reopened = EpisodeStore::open(scratch.path(), policy()).unwrap();
+        for (edge, resolver) in [(first_edge, first_resolution), (next_edge, next_resolution)] {
+            assert_eq!(
+                reopened.memory_edge_open("guild_ref", &edge).unwrap(),
+                Some(false)
+            );
+            assert_eq!(
+                reopened.memory_edge_resolution("guild_ref", &edge).unwrap(),
+                Some(resolver)
+            );
+            assert_eq!(
+                reopened
+                    .memory_edge_resolution("other_guild", &edge)
+                    .unwrap(),
+                None
+            );
+            assert_eq!(
+                reopened
+                    .memory_edge_resolution("guild_ref", &resolver)
+                    .unwrap(),
+                None
+            );
+        }
+    }
+}
+
 fn hex(bytes: &[u8]) -> String {
     use std::fmt::Write as _;
     bytes.iter().fold(String::new(), |mut acc, byte| {

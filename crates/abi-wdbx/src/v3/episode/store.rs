@@ -507,6 +507,35 @@ impl EpisodeStore {
         Ok(closable.then_some(false))
     }
 
+    /// Return the canonical resolution digest for a quarantine or contradiction.
+    ///
+    /// `Ok(None)` means the edge is open, unknown, belongs to another guild, or
+    /// is not closable. Each edge can be resolved only once; later edges on the
+    /// same candidate have their own resolution. Records are validated on
+    /// append and replay, so this query preserves the relationship after reopen.
+    pub fn memory_edge_resolution(
+        &self,
+        guild_ref: &str,
+        edge_digest: &[u8; 32],
+    ) -> Result<Option<[u8; 32]>, EpisodeStoreError> {
+        if !bounded_identifier(guild_ref, 128) {
+            return Err(EpisodeStoreError::InvalidInput);
+        }
+        Ok(self.records.iter().find_map(|record| {
+            if record.guild_ref != guild_ref {
+                return None;
+            }
+            match &record.event {
+                EpisodeEvent::MemoryEdge { edge, .. }
+                    if edge.kind == MemoryEdgeKind::Resolves && edge.target == *edge_digest =>
+                {
+                    Some(record.episode_digest)
+                }
+                _ => None,
+            }
+        }))
+    }
+
     fn prepare_record(&self, write: &EpisodeWrite) -> Result<StoredRecord, EpisodeStoreError> {
         validate_new_write(write, &self.policy, &self.state)?;
         let sequence = u64::try_from(self.records.len())
