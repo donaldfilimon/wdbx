@@ -200,7 +200,7 @@ jobs:
           fi
       - name: Upload installers and qualification evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: wdbx-studio-${{ matrix.os }}
           path: |
@@ -256,7 +256,7 @@ jobs:
             --arg resultSha256 "$result_sha" \
             '{schema:1,headSha:$headSha,workflowRunId:$workflowRunId,runner:$runner,mode:"text",resultSha256:$resultSha256}' \
             > work/acceptance/results/run-receipt.json
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: real-text-inference

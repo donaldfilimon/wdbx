@@ -48,7 +48,7 @@ jobs:
             > work/acceptance/results/run-receipt.json
       - name: Upload OCR result and receipt
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: real-ocr
           path: specimen-studio/work/acceptance/results
