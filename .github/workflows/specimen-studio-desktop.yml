@@ -79,7 +79,7 @@ jobs:
       - name: Native conformance tests
         run: bun run test:native
       - name: Reuse pinned inference builds
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             specimen-studio/work/runtimes
