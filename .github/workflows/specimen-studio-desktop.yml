@@ -46,7 +46,7 @@ jobs:
     env:
       CARGO_BUILD_JOBS: 3
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
       - uses: oven-sh/setup-bun@v2
@@ -235,7 +235,7 @@ jobs:
     runs-on: [self-hosted, macOS, ARM64, wdbx]
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
       - name: Rust toolchain

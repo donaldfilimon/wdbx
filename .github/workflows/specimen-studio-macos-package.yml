@@ -38,7 +38,7 @@ jobs:
     runs-on: [self-hosted, macOS, ARM64, wdbx]
     timeout-minutes: 35
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
       - name: Self-hosted runner deployment target
