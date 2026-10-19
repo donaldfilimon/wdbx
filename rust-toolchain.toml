@@ -3,5 +3,5 @@
 # `tools/cargo.sh` does not exist in this repository. Invoke this exact
 # toolchain through rustup when Homebrew cargo shadows the rustup shim.
 [toolchain]
-channel = "nightly-2026-09-01"
+channel = "1.99.1"
 components = ["rustfmt", "clippy", "rust-src"]

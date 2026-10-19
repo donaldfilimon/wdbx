@@ -1,6 +1,4 @@
-//! Deterministic portable-SIMD CPU primitives.
-
-use std::simd::{Simd, num::SimdFloat};
+//! Deterministic CPU lane primitives on stable Rust.
 use std::sync::atomic::{AtomicBool, Ordering};
 
 use crate::{
@@ -73,9 +71,9 @@ impl CpuBackend {
                 .with_executed(executed)
                 .with_runtime_verified(executed),
             if executed {
-                "deterministic CPU SIMD execution verified on this runtime"
+                "deterministic CPU lane execution verified on this runtime"
             } else {
-                "deterministic CPU SIMD implementation initialized"
+                "deterministic CPU lane implementation initialized"
             },
         )
         .expect("CPU capability state is valid")
@@ -158,15 +156,18 @@ const fn lanes_for_backend(backend: Backend) -> usize {
 }
 
 fn dot_lanes<const LANES: usize>(left: &[f32], right: &[f32]) -> f32 {
-    let mut accumulator = Simd::<f32, LANES>::splat(0.0);
+    // Independent lanes preserve the previous multiplication/addition order
+    // while allowing LLVM to vectorize on stable Rust without unsafe code.
+    let mut accumulator = [0.0_f32; LANES];
     let mut offset = 0;
     while offset + LANES <= left.len() {
-        let left_lanes = Simd::from_slice(&left[offset..offset + LANES]);
-        let right_lanes = Simd::from_slice(&right[offset..offset + LANES]);
-        accumulator += left_lanes * right_lanes;
+        for lane in 0..LANES {
+            accumulator[lane] += left[offset + lane] * right[offset + lane];
+        }
         offset += LANES;
     }
-    let mut sum = accumulator.reduce_sum();
+    // SimdFloat::reduce_sum used an ordered reduction seeded with -0.0.
+    let mut sum = accumulator.into_iter().fold(-0.0_f32, |sum, lane| sum + lane);
     for index in offset..left.len() {
         sum += left[index] * right[index];
     }

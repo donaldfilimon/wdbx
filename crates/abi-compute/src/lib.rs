@@ -1,5 +1,3 @@
-#![feature(portable_simd)]
-
 //! Shared compute contracts for ABI.
 //!
 //! This crate owns deterministic CPU vector primitives and the capability

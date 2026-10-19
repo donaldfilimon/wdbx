@@ -5,7 +5,7 @@ edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
-description = "Shared compute selection, deterministic CPU SIMD primitives, and accelerator contracts for ABI."
+description = "Shared compute selection, deterministic CPU lane primitives, and accelerator contracts for ABI."
 
 [lints]
 workspace = true

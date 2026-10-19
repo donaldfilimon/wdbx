@@ -21,7 +21,7 @@ prose. This is the Rust substrate, not the archived Workers MCP namesake.
 
 ## Gates
 
-`rust-toolchain.toml` pins `nightly-2026-09-01`; edition 2024, Rust floor 1.99.
+`rust-toolchain.toml` pins `1.99.1`; edition 2024, Rust floor 1.99.
 Run the gate as `bash tools/check.sh`; `.github/workflows/ci.yml` runs it
 verbatim on the self-hosted macOS arm64 runner labelled `wdbx` for trusted
 events; fork PRs get no job (`docs/SelfHostedRunner.md`). Its steps:

@@ -42,7 +42,7 @@ jobs:
       # The action installs rustup into ~/.cargo when the host lacks it.
       - uses: dtolnay/rust-toolchain@7e38f4b43b4db5c8dd498af069a4f6196df1d067
         with:
-          toolchain: nightly-2026-09-01
+          toolchain: 1.99.1
           components: rustfmt, clippy
 
       # A developer Mac often has Homebrew's cargo on PATH ahead of rustup's

@@ -5,11 +5,11 @@
 pub enum Backend {
     /// Portable scalar CPU.
     CpuScalar,
-    /// x86 AVX2-width CPU SIMD.
+    /// x86 AVX2-width CPU lane.
     CpuAvx2,
-    /// x86 AVX-512-width CPU SIMD.
+    /// x86 AVX-512-width CPU lane.
     CpuAvx512,
-    /// `AArch64` NEON-width CPU SIMD.
+    /// `AArch64` NEON-width CPU lane.
     CpuNeon,
     /// CUDA accelerator adapter.
     GpuCuda,
@@ -372,9 +372,9 @@ pub fn baseline_capability_states() -> [CapabilityState; 9] {
                 is_available,
                 is_available,
                 if is_available {
-                    "deterministic CPU SIMD implementation available"
+                    "deterministic CPU lane implementation available"
                 } else {
-                    "CPU SIMD width is not available on this host"
+                    "CPU lane width is not available on this host"
                 },
             )
         } else {
@@ -430,7 +430,7 @@ pub fn select(requested: Backend) -> Selection {
             requested,
             effective: requested,
             native: false,
-            message: "CPU SIMD path active",
+            message: "CPU lane path active",
         }
     }
 }
