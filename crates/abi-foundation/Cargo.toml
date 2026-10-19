@@ -23,7 +23,10 @@ security-framework = "3"
 # secret payloads on the in-process D-Bus session without an OpenSSL/libdbus
 # build dependency. This provider is additive and is not the default auth store.
 [target.'cfg(target_os = "linux")'.dependencies]
-secret-service = { version = "5.1", default-features = false, features = ["rt-async-io-crypto-rust"] }
+# Upstream PR #122 migrates off the unmaintained zbus 5 type crates while
+# retaining the blocking API used here. Pin the reviewed commit until a
+# compatible 6.x release is published: https://github.com/hwchen/secret-service-rs/pull/122
+secret-service = { git = "https://github.com/hwchen/secret-service-rs.git", rev = "7a91b597904c1847f18a06b72a19ee8153e0a578", version = "6.0.0", default-features = false, features = ["rt-async-io-crypto-rust"] }
 
 # Owner-only DACL on the credential file, replacing the hand-written advapi32
 # externs in credentials_file.zig. See src/credentials/windows_acl.rs.
