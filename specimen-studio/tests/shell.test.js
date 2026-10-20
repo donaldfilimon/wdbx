@@ -24,6 +24,9 @@ test('layout shortcuts never fire while typing', () => {
   expect(matchShortcut(key('b', { metaKey: true }, 'INPUT'))).toBeNull();
   expect(matchShortcut(key('\\', { ctrlKey: true }))).toBe('split');
   expect(matchShortcut(key('a'))).toBeNull();
+  expect(matchShortcut(key('s', { metaKey: true }, 'INPUT'))).toBe('save');
+  expect(matchShortcut(key('o', { metaKey: true }))).toBe('load');
+  expect(matchShortcut(key('o', { metaKey: true }, 'INPUT'))).toBeNull();
 });
 
 const noop = () => {};

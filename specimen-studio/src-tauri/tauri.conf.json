@@ -19,13 +19,22 @@
         "minHeight": 600,
         "titleBarStyle": "Overlay",
         "hiddenTitle": true,
-        "trafficLightPosition": { "x": 14, "y": 16 }
+        "trafficLightPosition": { "x": 14, "y": 16 },
+        "transparent": true,
+        "shadow": true,
+        "acceptFirstMouse": true,
+        "windowEffects": {
+          "effects": ["underWindowBackground", "hudWindow", "sidebar"],
+          "state": "followsWindowActiveState",
+          "radius": 16
+        }
       }
     ],
     "security": {
       "csp": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; connect-src 'self' ipc: http://ipc.localhost; font-src 'self' data:; object-src 'none'; base-uri 'self'"
     },
-    "withGlobalTauri": true
+    "withGlobalTauri": true,
+    "macOSPrivateApi": true
   },
   "bundle": {
     "active": true,

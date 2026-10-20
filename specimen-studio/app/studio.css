@@ -3665,25 +3665,116 @@ body {
   }
 }
 
-/* Desktop window: overlay title bar, flatter materials. Browser preview is unchanged. */
+/* Desktop window: liquid-glass materials. Browser preview stays opaque. */
+.native-drag {
+  display: none;
+}
+.toolbar-cluster {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.toolbar-count {
+  margin-left: 6px;
+}
+
+html.native-app,
+.native-app body,
+.native-app .app-shell {
+  background: transparent;
+}
+.native-app .main-area {
+  padding-top: 0;
+}
 .native-app .sidebar {
-  padding-top: 38px;
+  padding-top: 42px;
+  background: color-mix(in srgb, var(--sidebar-bg) 70%, transparent);
+  border-right-color: color-mix(in srgb, var(--sidebar-ink) 18%, transparent);
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(32px) saturate(1.45);
+  backdrop-filter: blur(32px) saturate(1.45);
 }
 .native-app .page-header {
-  min-height: 52px;
+  /* sticky is the containing block for the absolute drag strip. */
+  position: sticky;
+  top: 0;
+  z-index: 20;
   align-items: center;
+  min-height: 64px;
+  padding-top: 28px;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--surface) 58%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(28px) saturate(1.7);
+  backdrop-filter: blur(28px) saturate(1.7);
+}
+.native-app .native-drag {
+  /* Receives pointer events so this strip can drag the window. */
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 72px;
+  right: 0;
+  height: 28px;
+  z-index: 2;
+  pointer-events: auto;
 }
 .native-app .page-header h1 {
   font-size: 20px;
   letter-spacing: 0;
+  color: var(--ink);
+}
+/* Subtitle stays. On the desktop window it is a short secondary status line. */
+.native-app .page-header .toolbar-status {
+  max-width: 42ch;
+  margin-top: 2px;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .native-app .panel,
 .native-app .composer,
 .native-app .console-dock {
+  background: color-mix(in srgb, var(--raised) 88%, transparent);
+  border-radius: 12px;
   box-shadow: none;
-  border-radius: 8px;
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+}
+.native-app .toolbar-cluster {
+  gap: 6px;
+  padding: 4px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--surface-2) 55%, transparent);
+  border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
 }
 .native-app .sidebar-caption,
 .native-app .brand small {
   letter-spacing: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .native-app .page-header,
+  .native-app .panel,
+  .native-app .composer,
+  .native-app .console-dock,
+  .native-app .toolbar-cluster {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: var(--surface);
+  }
+  .native-app .sidebar {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: var(--sidebar-bg);
+  }
+}
+@media (max-width: 1000px) {
+  .header-actions kbd {
+    display: none;
+  }
 }

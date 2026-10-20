@@ -11,7 +11,7 @@ use std::{
     path::{Path, PathBuf},
     sync::{Arc, Mutex},
 };
-use tauri::{Manager, ipc::Channel};
+use tauri::{Emitter, Manager, ipc::Channel};
 struct AppState {
     store: Mutex<Store>,
     models: Mutex<Models>,
@@ -411,6 +411,68 @@ async fn native_call(
 fn cancel_job(state: tauri::State<'_, Arc<AppState>>, job_id: String) {
     state.scheduler.cancel(&job_id);
 }
+fn install_native_menu(app: &tauri::App) -> tauri::Result<()> {
+    use tauri::menu::{Menu, MenuItem, PredefinedMenuItem, Submenu, WINDOW_SUBMENU_ID};
+    let app_menu = Submenu::with_items(
+        app,
+        "WDBX Specimen Studio",
+        true,
+        &[
+            &PredefinedMenuItem::about(app, None, None)?,
+            &PredefinedMenuItem::separator(app)?,
+            &PredefinedMenuItem::quit(app, None)?,
+        ],
+    )?;
+    let file_menu = Submenu::with_items(
+        app,
+        "File",
+        true,
+        &[
+            &MenuItem::with_id(app, "save", "Save Specimen", true, Some("CmdOrCtrl+S"))?,
+            &MenuItem::with_id(app, "load", "Load Specimen", true, Some("CmdOrCtrl+O"))?,
+            &PredefinedMenuItem::separator(app)?,
+            &MenuItem::with_id(app, "reset", "Reset to Starter", true, None::<&str>)?,
+        ],
+    )?;
+    let view_menu = Submenu::with_items(
+        app,
+        "View",
+        true,
+        &[
+            &MenuItem::with_id(app, "palette", "Commands", true, Some("CmdOrCtrl+K"))?,
+            &MenuItem::with_id(app, "dock", "Activity Dock", true, None::<&str>)?,
+            &MenuItem::with_id(app, "sidebar", "Toggle Sidebar", true, Some("CmdOrCtrl+B"))?,
+            &MenuItem::with_id(app, "theme", "Toggle Theme", true, None::<&str>)?,
+        ],
+    )?;
+    let window_menu = Submenu::with_id_and_items(
+        app,
+        WINDOW_SUBMENU_ID,
+        "Window",
+        true,
+        &[
+            &PredefinedMenuItem::minimize(app, None)?,
+            &PredefinedMenuItem::fullscreen(app, None)?,
+            &PredefinedMenuItem::separator(app)?,
+            &PredefinedMenuItem::close_window(app, None)?,
+        ],
+    )?;
+    let menu = Menu::with_items(app, &[&app_menu, &file_menu, &view_menu, &window_menu])?;
+    app.set_menu(menu)?;
+    app.on_menu_event(|handle, event| {
+        let id = event.id().as_ref();
+        if !matches!(
+            id,
+            "save" | "load" | "reset" | "palette" | "dock" | "sidebar" | "theme"
+        ) {
+            return;
+        }
+        if let Some(window) = handle.get_webview_window("main") {
+            let _ = window.emit("native-menu", id);
+        }
+    });
+    Ok(())
+}
 fn main() {
     let builder = tauri::Builder::default().plugin(tauri_plugin_dialog::init());
     #[cfg(feature = "e2e")]
@@ -446,6 +508,9 @@ fn main() {
                 }
             });
             app.manage(state);
+            if let Err(error) = install_native_menu(app) {
+                eprintln!("native menu unavailable: {error}");
+            }
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![native_call, cancel_job])

@@ -6,6 +6,7 @@ import { AppSidebar } from './shell/app-sidebar';
 import { buildCommands, type ShellCommand } from './shell/commands';
 import { CommandPalette } from './shell/command-palette';
 import { ConsoleDock } from './shell/console-dock';
+import { bindNativeMenu } from './shell/native-menu';
 import { PaneLayout } from './shell/pane-layout';
 import { matchShortcut } from './shell/shortcuts';
 import {
@@ -96,6 +97,8 @@ export default function Studio() {
       return next;
     });
   }, []);
+  const toggleDock = useCallback(() => setDockOpen((o) => !o), []);
+  const toggleCollapsed = useCallback(() => setCollapsed((c) => !c), []);
   useEffect(() => {
     const restore = () => {
       const r = parseRoute(location.search);
@@ -195,6 +198,9 @@ export default function Studio() {
     openDialog,
     save,
   } = model;
+  const openSpecimenFile = useCallback(() => {
+    fileRef.current?.click();
+  }, [fileRef]);
   // Built when the palette opens (it is modal, so the view cannot change
   // underneath it); building during render would read refs in render.
   const [commands, setCommands] = useState<ShellCommand[]>([]);
@@ -207,12 +213,12 @@ export default function Studio() {
         openSide,
         closeSide,
         save,
-        load: () => fileRef.current?.click(),
+        load: openSpecimenFile,
         reset: () => openDialog('reset'),
         toggleTheme,
         toggleSidebar: () =>
-          mobileViewport ? setMobileNav((o) => !o) : setCollapsed((c) => !c),
-        toggleDock: () => setDockOpen((o) => !o),
+          mobileViewport ? setMobileNav((o) => !o) : toggleCollapsed(),
+        toggleDock,
       }),
     );
     setPaletteOpen(true);
@@ -223,9 +229,11 @@ export default function Studio() {
     openSide,
     closeSide,
     save,
-    fileRef,
+    openSpecimenFile,
     openDialog,
     toggleTheme,
+    toggleDock,
+    toggleCollapsed,
     mobileViewport,
   ]);
 
@@ -237,15 +245,54 @@ export default function Studio() {
       if (action === 'palette') {
         if (paletteOpen) setPaletteOpen(false);
         else openPalette();
-      } else if (action === 'sidebar')
+      } else if (action === 'save') save();
+      else if (action === 'load') openSpecimenFile();
+      else if (action === 'sidebar')
         if (mobileViewport) setMobileNav((o) => !o);
-        else setCollapsed((c) => !c);
-      else if (action === 'dock') setDockOpen((o) => !o);
+        else toggleCollapsed();
+      else if (action === 'dock') toggleDock();
       else if (action === 'split') toggleSplit();
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [mobileViewport, toggleSplit, openPalette, paletteOpen]);
+  }, [
+    mobileViewport,
+    toggleSplit,
+    openPalette,
+    paletteOpen,
+    toggleDock,
+    toggleCollapsed,
+    save,
+    openSpecimenFile,
+  ]);
+  useEffect(() => {
+    let active = true;
+    let unlisten = () => {};
+    void bindNativeMenu({
+      save,
+      load: openSpecimenFile,
+      reset: () => openDialog('reset'),
+      palette: openPalette,
+      dock: toggleDock,
+      sidebar: toggleCollapsed,
+      theme: toggleTheme,
+    }).then((cleanup) => {
+      if (active) unlisten = cleanup;
+      else cleanup();
+    });
+    return () => {
+      active = false;
+      unlisten();
+    };
+  }, [
+    save,
+    openSpecimenFile,
+    openDialog,
+    openPalette,
+    toggleDock,
+    toggleCollapsed,
+    toggleTheme,
+  ]);
   const outlet = (v: View, pane: 'primary' | 'side') => (
     <ViewOutlet
       view={v}
@@ -277,7 +324,7 @@ export default function Studio() {
         setMobileNav={setMobileNav}
         mobileViewport={mobileViewport}
         collapsed={collapsed && !mobileViewport}
-        toggleCollapsed={() => setCollapsed((c) => !c)}
+        toggleCollapsed={toggleCollapsed}
         theme={theme}
         toggleTheme={toggleTheme}
         sidebarRef={sidebarRef}
@@ -296,7 +343,8 @@ export default function Studio() {
           mobileMenuRef={mobileMenuRef}
           openPalette={openPalette}
           dockOpen={dockOpen}
-          toggleDock={() => setDockOpen((o) => !o)}
+          toggleDock={toggleDock}
+          onOpenActivity={() => nav('activity')}
         />
         <input
           ref={fileRef}

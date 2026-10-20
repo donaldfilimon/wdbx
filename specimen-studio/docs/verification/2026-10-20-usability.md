@@ -110,6 +110,11 @@ is served locally with `bun run start --ip 127.0.0.1 --port 3000`.
 - Desktop: instrumented considerations + bridge + smoke validated.
 - All browser e2e (incl. new header badge paths) and native coverage exercised. Verification updated for completeness.
 
+## Native toolbar and liquid glass (2026-10-20)
+- Overlay title bar, transparent window, and macOS vibrancy (`underWindowBackground`, `hudWindow`, `sidebar`). `macOSPrivateApi` is enabled because Tauri requires it for that material. Browser preview stays opaque.
+- Toolbar clusters group Commands, Activity, and specimen actions. A drag strip sits above the buttons. Reduced motion drops the blur and restores solid token backgrounds.
+- Native File/View/Window menu emits `native-menu`. ⌘S saves even while typing; ⌘O loads when not typing. A pending-proposal Review control opens Activity. No automatic learning was added.
+
 ## Native window and honest model lab (2026-10-20)
 - Desktop window uses an overlay title bar. `.native-app` tightens the sidebar and flattens panels. Browser selectors and labels are unchanged.
 - Models and Generate state the claim boundary: a verified download is not generation; text and image inference are CPU; the GPU line is the composition net; generation is not learned until an explicit teach.
