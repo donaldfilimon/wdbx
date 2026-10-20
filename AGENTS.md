@@ -93,9 +93,11 @@ cargo test --workspace < /dev/null
   inside it; read it before editing there.
 - It is a separate Cargo workspace (`native/specimen-core`, `src-tauri`), excluded
   from this workspace (`[workspace] exclude`) and from `tools/check_rust_sizes.sh`
-  (it vendors glib). `tools/check.sh` does not build or test it. Its gates run from
-  `specimen-studio/`: `bun run check`, `bun run lint`, `bun run test:native`,
-  `bun run check:native`.
+  (it vendors glib). `tools/check.sh` does not build or test it. From this
+  checkout's root, `cargo studio` runs the desktop app and `cargo studio-build`
+  builds it; both use `specimen-studio/Cargo.toml` and do not join the root
+  workspace. Its gates run from `specimen-studio/`: `bun run check`, `bun run lint`,
+  `bun run test:native`, `bun run check:native`.
 - It consumes `abi-wdbx` and `abi-compute` by pinned git revision of this
   repository, not by path; changing that is a deliberate decision.
 - Its CI is `.github/workflows/specimen-studio-*.yml` (subdirectory workflows do not
