@@ -63,6 +63,7 @@ impl EpisodeCommitment {
 - [ ] Add exact-boundary tests for input, value, collection, string, parent and depth limits; giant declared lengths; deterministic byte mutations must not panic.
 - [ ] Implement one-pass checked parsing with input-backed raw key comparisons, global value budget (keys+values included), finite collection/string caps and fallible reservation. Root envelope is exactly keys 0..4 with exact profile, nonzero u64 schema, map header/payload and sorted 32-byte parents. Nonzero future schema is syntactically accepted without semantic claims.
 - [ ] Defaults: 1,048,576 input bytes; 65,536 values; 16,384 collection entries; 1,048,576 string bytes; 4,096 parents. These are configurable reader policy, not retroactive encoder restrictions. Zero limit is valid and denies the applicable resource; no zero-as-unlimited convention.
+- [ ] In episode decoding, check the declared parents-array count against the parent cap before reserving/parsing its children. Generic value decoding has no envelope context and ignores this envelope-only cap; share the underlying parser.
 - [ ] Run targeted reader/canonical/store/candidate/edge/signing suites and formatting/clippy as appropriate; preserve existing tests unchanged. Commit exact paths and report evidence.
 
 ## Task 2: Independent Python decoding witness
