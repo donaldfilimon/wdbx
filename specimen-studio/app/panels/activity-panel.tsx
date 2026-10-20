@@ -9,6 +9,7 @@ import {
   WButton,
 } from '@/components/wdbx';
 import { Badge } from '@/components/ui/badge';
+import { type AgentAudit } from '@/lib/specimen/agent-policy';
 import { type Specimen } from '@/lib/specimen/types';
 import { AgentDesk } from './agent-desk';
 
@@ -22,6 +23,7 @@ export function ActivityView({
   onDismissAll,
   onReconsiderAll,
   agentAsk,
+  agentLog,
   onApprove,
   onDecline,
   busy,
@@ -35,6 +37,7 @@ export function ActivityView({
   onDismissAll?: () => void;
   onReconsiderAll?: () => void;
   agentAsk?: string | null;
+  agentLog?: AgentAudit[];
   onApprove?: () => void;
   onDecline?: () => void;
   busy: boolean;
@@ -45,6 +48,7 @@ export function ActivityView({
       <AgentDesk
         state={state}
         agentAsk={agentAsk ?? null}
+        audit={agentLog ?? []}
         busy={busy}
         onApprove={onApprove}
         onDecline={onDecline}

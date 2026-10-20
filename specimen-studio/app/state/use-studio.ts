@@ -30,6 +30,7 @@ import {
   exportNative,
   importNative,
 } from '@/lib/specimen/native';
+import { recordAgentAudit, type AgentAudit } from '@/lib/specimen/agent-policy';
 import { useStudioTools } from '@/lib/webmcp';
 import type { View } from './navigation';
 
@@ -47,6 +48,7 @@ export function useStudio(
     [prompt, setPrompt] = useState(''),
     [busy, setBusy] = useState(false),
     [agentAsk, setAgentAsk] = useState<string | null>(null),
+    [agentLog, setAgentLog] = useState<AgentAudit[]>([]),
     [trace, setTrace] = useState<TraceStep[]>([]),
     [runOutcome, setRunOutcome] = useState<
       'idle' | 'running' | 'complete' | 'cancelled' | 'failed'
@@ -467,11 +469,27 @@ export function useStudio(
       revealDock,
     ],
   );
-  const decideAgentRun = useCallback((ok: boolean) => {
-    agentDecision.current?.(ok);
-    agentDecision.current = null;
-    setAgentAsk(null);
-  }, []);
+  const auditAgent = useCallback(
+    (tool: string, outcome: AgentAudit['outcome'], detail: string) => {
+      setAgentLog((log) => recordAgentAudit(log, { tool, outcome, detail }));
+    },
+    [],
+  );
+  const decideAgentRun = useCallback(
+    (ok: boolean) => {
+      const resolve = agentDecision.current;
+      if (!resolve) return;
+      agentDecision.current = null;
+      setAgentAsk(null);
+      resolve(ok);
+      auditAgent(
+        'run_specimen_prompt',
+        ok ? 'approved' : 'declined',
+        'visible approval',
+      );
+    },
+    [auditAgent],
+  );
   useEffect(() => {
     if (!agentAsk) return;
     const timer = setTimeout(() => decideAgentRun(false), 120000);
@@ -480,6 +498,7 @@ export function useStudio(
   useStudioTools({
     read: () => current.current,
     openChapter: (n) => nav('specification', n),
+    audit: auditAgent,
     run: async (input) => {
       if (!hydrated || busy || abortRef.current)
         throw new Error('Wait for the current workspace action to finish.');
@@ -602,6 +621,7 @@ export function useStudio(
     topologyZoom,
     setTopologyZoom,
     agentAsk,
+    agentLog,
     decideAgentRun,
     notice,
     setNotice,

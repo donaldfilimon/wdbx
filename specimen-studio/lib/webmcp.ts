@@ -19,6 +19,11 @@ export function useStudioTools(actions: {
   read: () => Specimen;
   run: (input: string) => Promise<Cycle>;
   openChapter: (chapter: number) => void;
+  audit: (
+    tool: string,
+    outcome: 'read' | 'opened' | 'ran',
+    detail: string,
+  ) => void;
 }) {
   const latest = useRef(actions);
   useEffect(() => {
@@ -50,6 +55,7 @@ export function useStudioTools(actions: {
           if (Object.keys(object(input)).length)
             throw new Error('No arguments expected.');
           const s = latest.current.read();
+          latest.current.audit('read_specimen', 'read', s.name);
           return {
             name: s.name,
             nodes: s.nodes.map((n) => ({
@@ -91,6 +97,11 @@ export function useStudioTools(actions: {
               'Provide a nonempty prompt of at most 8,000 characters, without a slash command.',
             );
           const c = await latest.current.run(v.input);
+          latest.current.audit(
+            'run_specimen_prompt',
+            'ran',
+            v.input.slice(0, 80),
+          );
           return {
             cycleId: c.id,
             status: c.status,
@@ -121,6 +132,11 @@ export function useStudioTools(actions: {
           )
             throw new Error('Choose a chapter from 1 to 26.');
           latest.current.openChapter(Number(v.chapter));
+          latest.current.audit(
+            'open_specification_chapter',
+            'opened',
+            `chapter ${v.chapter}`,
+          );
           return { chapter: v.chapter };
         },
       },
@@ -139,6 +155,7 @@ export function useStudioTools(actions: {
           if (Object.keys(object(input)).length)
             throw new Error('No arguments expected.');
           const s = latest.current.read();
+          latest.current.audit('workspace_status', 'read', 'permission report');
           const count = (status: string) =>
             s.proposals.filter((p) => p.status === status).length;
           return {

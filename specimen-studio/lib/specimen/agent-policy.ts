@@ -19,3 +19,19 @@ export const AGENT_MAY_NOT = [
 ] as const;
 
 export type AgentTool = (typeof AGENT_MAY)[number];
+
+export type AgentAudit = {
+  id: number;
+  tool: string;
+  outcome: 'read' | 'approved' | 'declined' | 'opened' | 'ran';
+  detail: string;
+};
+
+/** Newest first, capped so the desk stays readable. */
+export function recordAgentAudit(
+  log: AgentAudit[],
+  entry: Omit<AgentAudit, 'id'>,
+): AgentAudit[] {
+  const id = (log[0]?.id ?? 0) + 1;
+  return [{ id, ...entry }, ...log].slice(0, 12);
+}

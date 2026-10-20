@@ -52,6 +52,7 @@ export function ViewOutlet({
     current,
     pushUndo,
     agentAsk,
+    agentLog,
     decideAgentRun,
   } = model;
   return (
@@ -183,6 +184,7 @@ export function ViewOutlet({
             })
           }
           agentAsk={agentAsk}
+          agentLog={agentLog}
           onApprove={() => decideAgentRun(true)}
           onDecline={() => decideAgentRun(false)}
           onDismiss={(id) =>

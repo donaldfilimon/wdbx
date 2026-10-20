@@ -1,18 +1,24 @@
 import { Badge } from '@/components/ui/badge';
 import { Panel, WButton } from '@/components/wdbx';
-import { AGENT_MAY, AGENT_MAY_NOT } from '@/lib/specimen/agent-policy';
+import {
+  AGENT_MAY,
+  AGENT_MAY_NOT,
+  type AgentAudit,
+} from '@/lib/specimen/agent-policy';
 import type { Specimen } from '@/lib/specimen/types';
 
 /** The specimen agent desk. Approval stays visible; sibling stores stay untouched. */
 export function AgentDesk({
   state,
   agentAsk,
+  audit,
   busy,
   onApprove,
   onDecline,
 }: {
   state: Specimen;
   agentAsk: string | null;
+  audit: AgentAudit[];
   busy: boolean;
   onApprove?: () => void;
   onDecline?: () => void;
@@ -69,6 +75,26 @@ export function AgentDesk({
           </ul>
         </section>
       </div>
+      <section
+        className="border-t border-line px-4 py-3"
+        aria-label="Agent audit"
+      >
+        <h3 className="m-0 text-sm text-ink">Audit</h3>
+        {audit.length ? (
+          <ol className="m-0 mt-2 list-none p-0 text-sm text-ink-soft">
+            {audit.map((entry) => (
+              <li key={entry.id}>
+                {entry.outcome} · {entry.tool}
+                {entry.detail ? ` · ${entry.detail}` : ''}
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <p className="m-0 mt-2 text-sm text-muted-foreground">
+            No agent call has been recorded this visit.
+          </p>
+        )}
+      </section>
     </Panel>
   );
 }
