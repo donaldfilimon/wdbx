@@ -71,6 +71,12 @@ bytes unchanged. This is C1 source evidence plus local deterministic
 replay test evidence; it is not a claim-registry promotion or deployed
 federation evidence.
 
+**Private prototype.** A crate-private complete-episode model now has bounded
+canonical encoding and an independent Python encoding witness. Its domain remains
+provisional pending ABI agreement; it adds no typed complete decoder, admission,
+persistence or signature verification. See the
+[prototype qualification receipt](docs/superpowers/plans/2026-10-20-complete-episode-prototype-receipt.md).
+
 **Not implemented, and not claimed.** No complete constitutional v3
 `EpisodeBlock`, general canonical-CBOR reader, or COSE envelope. Episode
 signing exists only as a detached per-record Ed25519 signature over the v3

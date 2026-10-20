@@ -207,5 +207,20 @@
     "platform installation and signing receipts",
     "private staging and recovery drills",
     "elapsed C7 operation"
-  ]
+  ],
+  "private_complete_episode": {
+    "state": "reviewed_private_prototype",
+    "source_base": "e02834f65d8e94bc93b558fa1305903fc43e4246",
+    "receipt": "docs/superpowers/plans/2026-10-20-complete-episode-prototype-receipt.md",
+    "gate": {
+      "command": "bash tools/check.sh",
+      "passed": 697,
+      "failed": 0,
+      "ignored": 0,
+      "summaries": 27
+    },
+    "abi_ratification": "open",
+    "typed_decoding": "not_implemented",
+    "evidence": "Local source and finite cross-language encoding only; no frozen requirement or research promotion."
+  }
 }

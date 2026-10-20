@@ -227,6 +227,8 @@ fn walk(
     Ok(())
 }
 pub(super) fn reject_self_reference(input: &CompleteEpisodeInput, digest: [u8; 32]) -> Result<()> {
+    #[cfg(test)]
+    self_reference_probe::observe(digest)?;
     walk(
         input,
         |reference| {
@@ -242,4 +244,57 @@ pub(super) fn reject_self_reference(input: &CompleteEpisodeInput, digest: [u8; 3
             Ok(())
         },
     )
+}
+
+// Observe the real validator boundary without substituting the production hash
+// or requiring an infeasible SHA-256 fixed point. State is isolated per test thread.
+#[cfg(test)]
+pub(super) mod self_reference_probe {
+    use super::{E, Result};
+    use std::cell::RefCell;
+
+    struct Probe {
+        expected: [u8; 32],
+        calls: usize,
+        reject: bool,
+    }
+    thread_local! {
+        static ACTIVE: RefCell<Option<Probe>> = const { RefCell::new(None) };
+    }
+    struct Reset;
+    impl Drop for Reset {
+        fn drop(&mut self) {
+            ACTIVE.with(|active| *active.borrow_mut() = None);
+        }
+    }
+    pub(super) fn observe(digest: [u8; 32]) -> Result<()> {
+        ACTIVE.with(|active| {
+            if let Some(probe) = active.borrow_mut().as_mut() {
+                assert_eq!(digest, probe.expected);
+                probe.calls += 1;
+                if probe.reject {
+                    return Err(E::SelfReference);
+                }
+            }
+            Ok(())
+        })
+    }
+    pub(in super::super) fn run<T>(
+        expected: [u8; 32],
+        reject: bool,
+        operation: impl FnOnce() -> T,
+    ) -> (T, usize) {
+        ACTIVE.with(|active| {
+            assert!(active.borrow().is_none());
+            *active.borrow_mut() = Some(Probe {
+                expected,
+                calls: 0,
+                reject,
+            });
+        });
+        let _reset = Reset;
+        let result = operation();
+        let calls = ACTIVE.with(|active| active.borrow().as_ref().unwrap().calls);
+        (result, calls)
+    }
 }

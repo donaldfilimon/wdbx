@@ -273,3 +273,22 @@ fn foreign_origin_consistency_and_distinct_import_claims() {
         .push(ConsultedRef::Foreign(other));
     assert!(CompleteEpisode::try_new(input).is_ok());
 }
+
+#[test]
+fn constructor_checks_computed_digest_and_propagates_self_reference_rejection() {
+    let input = populated();
+    let expected: [u8; 32] = Sha256::digest(encode_test(&input)).into();
+    for reject in [false, true] {
+        let (result, calls) = validate::self_reference_probe::run(expected, reject, || {
+            CompleteEpisode::try_new(input.clone())
+        });
+        assert_eq!(calls, 1);
+        if reject {
+            assert_eq!(result.unwrap_err(), CompleteEpisodeError::SelfReference);
+        } else {
+            assert_eq!(result.unwrap().digest().unwrap(), expected);
+        }
+    }
+    // The scoped probe is gone and cannot affect later constructor calls.
+    assert!(CompleteEpisode::try_new(input).is_ok());
+}

@@ -105,3 +105,13 @@ fn draft_vectors() {
         assert_eq!(actual, expected.trim());
     }
 }
+
+mod draft_witness;
+
+mod draft_adapter;
+
+mod draft_corpus;
+
+mod draft_shape;
+
+mod draft_mapping;
