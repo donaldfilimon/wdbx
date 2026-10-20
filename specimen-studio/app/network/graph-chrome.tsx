@@ -44,6 +44,7 @@ export function GraphChrome({
         className="graph-chrome-tools"
         role="toolbar"
         aria-label="Graph view"
+        tabIndex={0}
         onKeyDown={(event) => {
           const target = event.target;
           if (

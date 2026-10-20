@@ -393,11 +393,7 @@ export default function Studio() {
         )}
       </main>
       {agentAsk && (
-        <div
-          className="agent-approval"
-          role="region"
-          aria-label="Agent approval"
-        >
+        <section className="agent-approval" aria-label="Agent approval">
           <p>
             An agent asked to run this prompt. Approving appends one cycle. It
             does not teach or train.
@@ -421,7 +417,7 @@ export default function Studio() {
               Decline agent run
             </button>
           </div>
-        </div>
+        </section>
       )}
       <div aria-live="polite" className={`toast ${notice ? 'visible' : ''}`}>
         <Check size={17} />

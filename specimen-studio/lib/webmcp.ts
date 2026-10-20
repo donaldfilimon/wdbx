@@ -131,13 +131,14 @@ export function useStudioTools(actions: {
             Number(v.chapter) > 26
           )
             throw new Error('Choose a chapter from 1 to 26.');
-          latest.current.openChapter(Number(v.chapter));
+          const chapter = Number(v.chapter);
+          latest.current.openChapter(chapter);
           latest.current.audit(
             'open_specification_chapter',
             'opened',
-            `chapter ${v.chapter}`,
+            `chapter ${chapter}`,
           );
-          return { chapter: v.chapter };
+          return { chapter };
         },
       },
       {
