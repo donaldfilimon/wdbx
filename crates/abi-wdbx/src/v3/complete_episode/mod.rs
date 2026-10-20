@@ -14,7 +14,9 @@ macro_rules! redacted {
     })*};
 }
 mod canonical;
+mod decode;
 mod primitives;
+pub(crate) use decode::{CompleteEpisodeDecodeError, DecodedCompleteEpisode};
 mod types;
 mod validate;
 use canonical::{Wire, counted_size};

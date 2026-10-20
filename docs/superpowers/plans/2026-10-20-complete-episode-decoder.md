@@ -4,7 +4,7 @@
 
 ## Goal and owned surface
 
-Decode the exact current provisional complete envelope into retained typed input and a validated complete value. Keep `v3::complete_episode` crate-private and all bytes/domain provisional. No public API, serde, transport, store/admission behavior, signing, key administration, ABI/corpus/Studio changes, new dependencies or feature. Implementer does not commit; controller commits exact reviewed paths on main. Preserve old formats, signatures, goldens and encoders.
+Decode the exact current provisional complete envelope into retained typed input and a validated complete value. Keep `v3::complete_episode` crate-private and all bytes/domain provisional. No public API, serde, transport, store/admission behavior, signing, key administration, ABI/corpus/Studio changes, new dependencies or feature. No agent or controller commits or pushes under the current direct user instruction; keep reviewed changes on main. Preserve old formats, signatures, goldens and encoders.
 
 Own new `complete_episode/decode.rs` plus sibling `decode/` helper modules and tests; add the minimum module/re-export wiring in `complete_episode/mod.rs` and test declarations. No production type-visibility changes needed. Split Rust files before 1000 lines. Do not edit encoder mapping, field/tag tables, validation rules or hex pins to make decoder tests pass; report any mapping discrepancy for separate review.
 

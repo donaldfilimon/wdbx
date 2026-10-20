@@ -1,0 +1,37 @@
+{
+  "root_lock_sha256": "e2fac4f3f125cecc771a0dc7d6f33eb1629972b3979ac0771849fdf61368680e",
+  "fuzz_lock_sha256": "b02d27422795c1785c9f4119f5e6a1b57e296bb74d543c908f7f285928a2aa83",
+  "suites": [
+    {
+      "suite": "default",
+      "exit": 0,
+      "passed": 735,
+      "failed": 0,
+      "ignored": 0,
+      "summaries": 32,
+      "log_sha256": "4b8b44db2293d6572a5dba5e77103a37eef7e27a5dc02dd86a92fb7b6f138d36",
+      "log_path": "/tmp/wdbx-20261020-refreshed-lock-gate.log"
+    },
+    {
+      "suite": "full-fhe",
+      "exit": 0,
+      "passed": 467,
+      "failed": 0,
+      "ignored": 0,
+      "summaries": 24,
+      "log_sha256": "0c1baee376f8e07a40366c38d6cb76814cb81c79ea33336fa558d0499e8fad70",
+      "log_path": "/tmp/wdbx-20261020-refreshed-lock-full-fhe.log"
+    },
+    {
+      "suite": "experimental-dghv-bootstrap",
+      "exit": 0,
+      "passed": 467,
+      "failed": 0,
+      "ignored": 0,
+      "summaries": 24,
+      "log_sha256": "a9f661e04a66f2486dedad62285e9604dad4e8c9def67a0f5b13c2be6f0891ed",
+      "log_path": "/tmp/wdbx-20261020-refreshed-lock-dghv.log"
+    }
+  ],
+  "scope": "pre-decoder dependency cohort; no Studio or platform inference"
+}

@@ -115,3 +115,5 @@ mod draft_corpus;
 mod draft_shape;
 
 mod draft_mapping;
+
+mod decode_roundtrip;
