@@ -101,3 +101,11 @@ is served locally with `bun run start --ip 127.0.0.1 --port 3000`.
 - ABI: `complete --learn` / SEA hardened (rejects live/bridge; requires unique scratch, evidence_count, adaptation; 8+ regressions + 2-process smoke). See tasks/todo.md.
 - Abbey: `learn.rs` (corrections/routes/activity → memory); memory-sqlite-self-learn; TUI/fm verification.
 - Coordinated 2026-10-20 receipts (rust-1991, CLI hardening, tui-fm-learning, this usability). Specimen verification refs siblings. No source mixing per ownership.
+
+## Follow-up execution (post initial)
+- Additional polish: pending count in top-bar header (specimen name area), observer display in activity proposals, cleaned proposal count logic.
+- Full re-gates: `bun run check:all` (build + native clippy pass), `bun run test:native`, full `bun run test:browser` (4/4 usability incl. proposals + accessibility + core), production-bridge 11/11, desktop smoke 1/1.
+- ABI/Abbey: focused learn/cli/tui tests + clippy pass.
+- WDBX root key: instructions, sizes, fmt, clippy (pre-existing warnings only).
+- Desktop: instrumented considerations + bridge + smoke validated.
+- All browser e2e (incl. new header badge paths) and native coverage exercised. Verification updated for completeness.

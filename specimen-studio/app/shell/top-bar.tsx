@@ -34,6 +34,10 @@ export function TopBar({
   toggleDock: () => void;
 }) {
   const { state, busy, openDialog, setDialogReturn, fileRef, save } = model;
+  const pendingProposals =
+    view === 'studio'
+      ? state.proposals.filter((p) => p.status === 'pending').length
+      : 0;
   return (
     <header className="page-header">
       <div className="heading-wrap">
@@ -56,20 +60,15 @@ export function TopBar({
                 {state.name}
                 <i className={`status-dot ${busy ? 'busy' : ''}`} />
                 <small>{busy ? 'Running' : 'Ready'}</small>
-                {(() => {
-                  const pending = state.proposals.filter(
-                    (p) => p.status === 'pending',
-                  ).length;
-                  return pending > 0 ? (
-                    <span
-                      className="nav-count"
-                      title={`${pending} pending learning proposals`}
-                      style={{ marginLeft: 6 }}
-                    >
-                      {pending}
-                    </span>
-                  ) : null;
-                })()}
+                {pendingProposals > 0 && (
+                  <span
+                    className="nav-count"
+                    title={`${pendingProposals} pending learning proposals`}
+                    style={{ marginLeft: 6 }}
+                  >
+                    {pendingProposals}
+                  </span>
+                )}
               </span>
             )}
           </div>

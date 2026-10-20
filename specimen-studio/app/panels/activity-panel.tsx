@@ -94,6 +94,11 @@ export function ActivityView({
                       ) : null}
                     </div>
                   )}
+                  {p.observer && (
+                    <div className="mt-0.5 text-[10px] text-muted-foreground">
+                      Observer: {p.observer}
+                    </div>
+                  )}
                 </div>
                 {p.status === 'pending' && (
                   <>
