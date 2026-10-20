@@ -4,8 +4,8 @@ version = "0.2.0"
 edition = "2024"
 [dependencies]
 specimen-kernel = { path = "../specimen-kernel" }
-abi-wdbx = { git = "https://github.com/donaldfilimon/wdbx", rev = "3ac03f085196dbe6e922a127ceaa37bc2368de89" }
-abi-compute = { git = "https://github.com/donaldfilimon/wdbx", rev = "3ac03f085196dbe6e922a127ceaa37bc2368de89" }
+abi-wdbx = { path = "../../../crates/abi-wdbx" }
+abi-compute = { path = "../../../crates/abi-compute" }
 serde.workspace = true
 serde_json.workspace = true
 thiserror.workspace = true

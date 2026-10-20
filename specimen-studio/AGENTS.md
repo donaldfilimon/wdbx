@@ -68,12 +68,13 @@ before touching `node_modules`, `.wrangler`, or `.next`.
 - `lib/specimen/storage.ts` selects origin-local IndexedDB or the native bridge.
   `lib/specimen/native.ts` serializes durable edits with expected revisions;
   `native/specimen-core/src/persistence.rs` owns the WDBX store and recovery copies.
-- Native `abi-wdbx` and `abi-compute` are Git-revision dependencies in
-  `native/specimen-core/Cargo.toml` and (`abi-compute` only) `native/specimen-kernel/Cargo.toml` (pinned to wdbx rev `3ac03f0`, which predates the
-  fold), not path dependencies on the sibling `../crates/`, even though those crates
-  now sit in the same repository. Picking up WDBX changes means bumping that rev;
-  switching to path dependencies is a deliberate decision, not a cleanup. Do not
-  change the wdbx crates, ABI or Abbey to implement this studio's runtime behavior.
+- Native `abi-wdbx` and `abi-compute` compile from this checkout's `crates/`,
+  through path dependencies in `native/specimen-core/Cargo.toml` and
+  (`abi-compute` only) `native/specimen-kernel/Cargo.toml`. The old git revision
+  `3ac03f0` starts `abi-compute` with `#![feature(portable_simd)]`, which stable
+  Rust 1.99.1 rejects (E0554). The local crates are the source that builds on
+  that compiler. Do not change the wdbx crates, ABI, or Abbey to implement this
+  studio's runtime behavior.
 - Keep the root Cargo GLib patch and its attribution/safety rationale in
   `native/vendor/README.md`; the vendored crate is excluded from the workspace.
 - `scripts/build-runtimes.py` downloads pinned sources and compiles local CPU

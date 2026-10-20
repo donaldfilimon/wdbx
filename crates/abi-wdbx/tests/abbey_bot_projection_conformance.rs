@@ -8,12 +8,11 @@
 //! was asserted in prose and gated by nothing.
 //!
 //! Why a checked-in fixture rather than a dependency in either direction:
-//! `abbey-bot` pins **stable 1.97.1** in its `rust-toolchain.toml`, while
-//! `abi-compute` — which this crate depends on — requires
-//! `#![feature(portable_simd)]` on nightly. No single toolchain compiles both
-//! crates, so neither can link the other even as a dev-dependency. The fixture
-//! is therefore duplicated in the two repositories on purpose, and each side
-//! pins its own copy:
+//! `abbey-bot` pins **stable 1.97.1** in its `rust-toolchain.toml`. The claim
+//! that `abi-compute` requires `#![feature(portable_simd)]` on nightly, and
+//! that no single toolchain compiles both crates, is obsolete. The fixture
+//! split remains. The fixture is therefore duplicated in the two repositories
+//! on purpose, and each side pins its own copy:
 //!
 //! - `abbey-bot/tests/fixtures/wdbx_v1_conformance.seg.jsonl` is asserted
 //!   byte-identical to its writer's output.

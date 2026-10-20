@@ -1,0 +1,6 @@
+    Updating crates.io index
+    Updating git repository `https://github.com/hwchen/secret-service-rs.git`
+     Locking 204 packages to highest Rust 1.99 compatible versions
+      Adding generic-array v0.14.7 (available: v0.14.9)
+      Adding jsonschema v0.58.6 (available: v0.59.0)
+      Adding tfhe v1.8.1 (available: v1.8.2)
