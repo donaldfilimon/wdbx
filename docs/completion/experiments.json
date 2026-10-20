@@ -2,7 +2,7 @@
   "version": 1,
   "status": "frozen-proposed-protocol-not-results",
   "corpus": "synthetic-corpus-v1.jsonl",
-  "corpus_sha256": "5b3f5bb45c51bbb65aeef28555cbc5469bf1951720cadb228947ec1b3855736a",
+  "corpus_sha256": "044da91e58c90c067137a733b6eb86e49376b73bb05b9b7dfebbc1cb089d2232",
   "records": 2400,
   "splits": {
     "train": [
@@ -858,7 +858,7 @@
     "Language: existing normalization/bind pipeline. Vision: existing native analyze/renderer CPU reference, plus untransformed input for instruction tests. Supervision: existing review; mutation: no-mutation and current mutation."
   ],
   "analysis": "Freeze commit and reviewer signoff before efficacy execution. Developer sees train only; independent runner holds test and oracle artifact, uses family-level splits (all variants stay together). Validation may select <=5 candidates after <=20 train configurations; choose one before test. Seeds paired across alternatives; report per-suite denominator, timeout/abstention/error as failure. Compute 10000 family-cluster paired bootstrap resamples with seed 104729; lower two-sided 95% CI of gain must be strictly >0 and point gains meet thresholds. For bounded safety constraints every case must pass; zero observed errors is not universal proof. No pooling suites to hide regression. Require nonzero baseline failure denominator for relative retrieval gains; otherwise inconclusive, not pass. Correction/proposal precision also require recall>=0.8; abstention cannot game precision. Mutation novelty requires distinct from either source and semantic oracle pass. Latency median/p95 and max memory recorded, no more than 2x baseline p95 and within case timeout. Immutable hashes before/after prove no training from calls.",
-  "oracle_review": "Synthetic structured oracles are reproducible structural checks, not a natural language efficacy certification. Independent reviewer verifies arithmetic/constraint/shape labels and blind-scores all held-out composition/tone/mutation outputs with two raters, adjudicating disagreement; preserve ratings. Vision OCR requires rasterize the given equation in an independently frozen font+renderer artifact before experiments; no OCR claims until that artifact is pinned. Current rectangular corpus cannot establish general visual or arbitrary-language efficacy. Expansion requires new corpus version, preregistration and independent holdout; never retune this test.",
+  "oracle_review": "Synthetic structured oracles are reproducible structural checks, not a natural language efficacy certification. Independent reviewer verifies arithmetic/constraint/shape labels and blind-scores all held-out composition/tone/mutation outputs with two raters, adjudicating disagreement; preserve ratings. Vision OCR input PBM bytes and their SHA256 are frozen inside each vision case (base64): black 3x5 bitmap numeral/operator glyphs scaled 4x with white padding. Independently review decoded rasters and transcription labels before execution. This narrow font is not a real-world OCR certification. Current rectangular corpus cannot establish general visual or arbitrary-language efficacy. Expansion requires new corpus version, preregistration and independent holdout; never retune this test.",
   "result_schema": [
     "protocol_digest",
     "implementation_commit",

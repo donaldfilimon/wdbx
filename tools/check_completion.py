@@ -24,8 +24,8 @@ SOURCE_PATHS = {
     'constitution': '../abi/docs/superpowers/specs/2026-08-22-abbey-system-constitution.md',
     'episodes': '../abi/docs/superpowers/specs/2026-08-22-spec-canonical-wdbx-episodes.md',
 }
-CORPUS_PIN = '5b3f5bb45c51bbb65aeef28555cbc5469bf1951720cadb228947ec1b3855736a'
-PROTOCOL_PIN = '4017e1c49c8b249c6b4998585c13cbd12e88455447f3d4ad0893e9ec40041697'
+CORPUS_PIN = '044da91e58c90c067137a733b6eb86e49376b73bb05b9b7dfebbc1cb089d2232'
+PROTOCOL_PIN = 'a5a1bde6c53e2efeb69ba61ac632092629704e985004474f50f186d8f85b3809'
 
 
 def digest(data):
