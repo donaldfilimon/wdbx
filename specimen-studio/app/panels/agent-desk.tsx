@@ -33,10 +33,19 @@ export function AgentDesk({
       <div className="grid gap-3 p-4 md:grid-cols-3">
         <section aria-label="Agent may">
           <h3 className="m-0 text-sm text-ink">May do</h3>
-          <ul className="m-0 mt-2 list-none p-0 text-sm text-ink-soft">
+          <ul className="m-0 mt-2 grid list-none gap-2 p-0 text-sm text-ink">
             {AGENT_MAY.map((tool) => (
               <li key={tool}>
-                <Badge variant="outline">{tool}</Badge>
+                {tool === 'read_specimen'
+                  ? 'Read this specimen'
+                  : tool === 'workspace_status'
+                    ? 'See what an agent may do'
+                    : tool === 'run_specimen_prompt'
+                      ? 'Run one prompt after you approve'
+                      : 'Open a specification chapter'}
+                <div>
+                  <Badge variant="outline">{tool}</Badge>
+                </div>
               </li>
             ))}
           </ul>
