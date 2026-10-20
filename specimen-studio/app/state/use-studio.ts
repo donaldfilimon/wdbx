@@ -46,6 +46,7 @@ export function useStudio(
     [selected, setSelected] = useState(''),
     [prompt, setPrompt] = useState(''),
     [busy, setBusy] = useState(false),
+    [agentAsk, setAgentAsk] = useState<string | null>(null),
     [trace, setTrace] = useState<TraceStep[]>([]),
     [runOutcome, setRunOutcome] = useState<
       'idle' | 'running' | 'complete' | 'cancelled' | 'failed'
@@ -71,7 +72,8 @@ export function useStudio(
     prevPendingRef = useRef(0),
     noticeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined),
     undoStack = useRef<Undo[]>([]),
-    replySeq = useRef(0);
+    replySeq = useRef(0),
+    agentDecision = useRef<((ok: boolean) => void) | null>(null);
   const selectedNode =
     state.nodes.find((n) => n.ref === selected) ?? state.nodes[0];
   const cycle = state.history.at(-1);
@@ -465,12 +467,28 @@ export function useStudio(
       revealDock,
     ],
   );
+  const decideAgentRun = useCallback((ok: boolean) => {
+    agentDecision.current?.(ok);
+    agentDecision.current = null;
+    setAgentAsk(null);
+  }, []);
+  useEffect(() => {
+    if (!agentAsk) return;
+    const timer = setTimeout(() => decideAgentRun(false), 120000);
+    return () => clearTimeout(timer);
+  }, [agentAsk, decideAgentRun]);
   useStudioTools({
     read: () => current.current,
     openChapter: (n) => nav('specification', n),
     run: async (input) => {
       if (!hydrated || busy || abortRef.current)
         throw new Error('Wait for the current workspace action to finish.');
+      const allowed = await new Promise<boolean>((resolve) => {
+        agentDecision.current = resolve;
+        setAgentAsk(input);
+      });
+      if (!allowed)
+        throw new Error('Visible approval was declined. No cycle was run.');
       const snapshot = current.current,
         controller = new AbortController();
       abortRef.current = controller;
@@ -583,6 +601,8 @@ export function useStudio(
     setNetworkMode,
     topologyZoom,
     setTopologyZoom,
+    agentAsk,
+    decideAgentRun,
     notice,
     setNotice,
     error,

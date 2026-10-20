@@ -186,6 +186,8 @@ export default function Studio() {
   const model = useStudio(nav, revealDock);
   const {
     state,
+    agentAsk,
+    decideAgentRun,
     notice,
     error,
     setError,
@@ -381,6 +383,35 @@ export default function Studio() {
           />
         )}
       </main>
+      {agentAsk && (
+        <div
+          className="agent-approval"
+          role="region"
+          aria-label="Agent approval"
+        >
+          <p>
+            An agent asked to run this prompt. Approving appends one cycle. It
+            does not teach or train.
+          </p>
+          <p className="agent-approval-prompt">{agentAsk}</p>
+          <div className="graph-chrome-tools">
+            <button
+              type="button"
+              className="button primary"
+              onClick={() => decideAgentRun(true)}
+            >
+              Approve agent run
+            </button>
+            <button
+              type="button"
+              className="button outline"
+              onClick={() => decideAgentRun(false)}
+            >
+              Decline agent run
+            </button>
+          </div>
+        </div>
+      )}
       <div aria-live="polite" className={`toast ${notice ? 'visible' : ''}`}>
         <Check size={17} />
         <span>{notice}</span>

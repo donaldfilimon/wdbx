@@ -3823,3 +3823,25 @@ html.native-app,
 .agent-rail p {
   margin: 0;
 }
+.agent-approval {
+  position: fixed;
+  z-index: 40;
+  right: 16px;
+  bottom: 16px;
+  display: grid;
+  gap: 8px;
+  width: min(420px, calc(100% - 32px));
+  padding: 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  background: var(--raised);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+}
+.agent-approval p {
+  margin: 0;
+}
+.agent-approval-prompt {
+  color: var(--ink-soft);
+  overflow-wrap: anywhere;
+}

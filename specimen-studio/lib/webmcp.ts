@@ -67,7 +67,7 @@ export function useStudioTools(actions: {
         name: 'run_specimen_prompt',
         title: 'Run specimen prompt',
         description:
-          'Write: run one visible cycle and append it to history. Does not accept slash commands, teach a pattern, dismiss a proposal, install a model, or change weights.',
+          'Write, after visible approval: run one cycle and append it to history. Declining runs nothing. Does not accept slash commands, teach, dismiss, install a model, or change weights.',
         inputSchema: {
           type: 'object',
           properties: {
