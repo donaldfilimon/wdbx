@@ -210,6 +210,13 @@ pub fn dispatch(h: &Host, req: &Value, progress: &dyn Fn(Value)) -> Result<Value
             &AtomicBool::new(false),
         ),
         "maintain" => engine::maintain(h, state()?, string(req, "mode")?, &AtomicBool::new(false)),
+        "adaptImport" => {
+            let text = string(req, "text")?;
+            let name = req["name"].as_str().unwrap_or("");
+            Ok(serde_json::to_value(
+                specimen_kernel::import_adapt::adapt_import(h, text, name)?,
+            )?)
+        }
         other => Err(error(
             "UnknownCommand",
             format!("Unknown operation {other}"),
@@ -283,11 +290,11 @@ mod tests {
     #[test]
     fn seed_then_mutate_through_the_envelope() {
         let s = call(json!({"op": "seed"}))["ok"].clone();
-        assert_eq!(s["nodes"].as_array().unwrap().len(), 8);
+        assert_eq!(s["nodes"].as_array().unwrap().len(), 15);
         let next = call(
             json!({"op": "addNode", "state": s, "input": {"name": "Color", "pattern": "favorite color", "action": "Teal."}}),
         );
-        assert_eq!(next["ok"]["nodes"].as_array().unwrap().len(), 9);
+        assert_eq!(next["ok"]["nodes"].as_array().unwrap().len(), 16);
         assert_eq!(
             call(json!({"op": "validate", "state": next["ok"]}))["ok"],
             Value::Null
@@ -326,7 +333,10 @@ mod tests {
             "state": state,
             "command": {"command": "addNode", "input": {"name": "Color", "pattern": "favorite color", "action": "Teal."}}
         }));
-        assert_eq!(applied["ok"]["state"]["nodes"].as_array().unwrap().len(), 9);
+        assert_eq!(
+            applied["ok"]["state"]["nodes"].as_array().unwrap().len(),
+            16
+        );
         let undone = call(json!({
             "op": "apply",
             "state": applied["ok"]["state"],

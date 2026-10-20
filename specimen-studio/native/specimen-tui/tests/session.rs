@@ -25,9 +25,9 @@ fn a_fresh_store_renders_the_seed_and_a_writable_status() {
     assert!(!session.is_read_only());
     assert_eq!(session.revision(), 1);
     let lines = frame(&session, "");
-    assert_eq!(lines[0], "Specimen 001  ·  revision 1  ·  8 nodes");
+    assert_eq!(lines[0], "Specimen 001  ·  revision 1  ·  15 nodes");
     assert_eq!(
-        &lines[1..9],
+        &lines[1..16],
         [
             "Calculate",
             "Greeting",
@@ -37,9 +37,16 @@ fn a_fresh_store_renders_the_seed_and_a_writable_status() {
             "Imagine",
             "Tone",
             "Negation",
+            "Identity",
+            "Capability",
+            "Help",
+            "Teach",
+            "Thanks",
+            "Farewell",
+            "Observer",
         ]
     );
-    assert!(lines[9..18].iter().all(|line| line.is_empty()));
+    assert!(lines[16..18].iter().all(|line| line.is_empty()));
     assert_eq!(lines[18], "writable");
     assert_eq!(lines[19], ">");
 }

@@ -855,7 +855,9 @@ pub fn validate_records(s: &Value) -> Result<()> {
     Ok(())
 }
 
-/// The starter specimen: eight pattern nodes and twelve supporting memories.
+/// The starter specimen: fifteen nodes and twenty supporting memories.
+/// The first eight patterns stay Calculate, Greeting, Repeat, Time, Recall,
+/// Imagine, Tone, and Negation, in that order. Recall remains index 4.
 pub fn seed(h: &Host) -> Value {
     let settings = json!({
         "voteThreshold": 62, "jitter": 1.5, "maxStrength": 10, "initialStrength": 5,
@@ -949,6 +951,30 @@ pub fn seed(h: &Host) -> Value {
             "&current_input",
             "Read the original input; never execute it as arbitrary code.",
         ),
+        (
+            "dictionary",
+            "pattern",
+            "A stored phrase and the action it should take.",
+        ),
+        (
+            "dictionary",
+            "node",
+            "One named pattern, its votes, and its strength.",
+        ),
+        (
+            "dictionary",
+            "network",
+            "The composition decoder that reads 128 inputs and writes 32 outputs. It is not trained.",
+        ),
+        (
+            "dictionary",
+            "layer",
+            "One sparse width inside the composition network.",
+        ),
+        ("thesaurus", "goodbye", "bye, farewell"),
+        ("thesaurus", "help", "assist, aid"),
+        ("chargebook", "curious", "interested, attentive"),
+        ("morphology", "taught", "teach"),
     ];
     for (subsystem, t, value) in memories {
         s["resources"]
@@ -966,12 +992,70 @@ pub fn seed(h: &Host) -> Value {
             }));
     }
     s["events"] = json!([]);
+    // After the first twelve memories, so those UIDs stay stable.
+    let conversational = [
+        (
+            "Identity",
+            "who are you",
+            "I am Specimen 001, a pattern specimen stored on this device.",
+            "warm",
+            "pattern",
+        ),
+        (
+            "Capability",
+            "what can you do",
+            "I can calculate, recall, imagine, repeat, and learn a pattern you teach.",
+            "neutral",
+            "pattern",
+        ),
+        (
+            "Help",
+            "help",
+            "Ask a question, or teach a pattern: a short phrase and the action it should take.",
+            "neutral",
+            "pattern",
+        ),
+        (
+            "Teach",
+            "how do I teach you",
+            "Open Teach a pattern, enter a phrase and an action, then save. I keep it on this device.",
+            "neutral",
+            "pattern",
+        ),
+        ("Thanks", "thank you", "You are welcome.", "warm", "pattern"),
+        (
+            "Farewell",
+            "goodbye",
+            "Goodbye. I will keep what you taught me.",
+            "warm",
+            "pattern",
+        ),
+        (
+            "Observer",
+            "observe repeated questions",
+            "Note a question that arrives twice without an answer.",
+            "neutral",
+            "B",
+        ),
+    ];
+    for (name, pattern, action, tone, kind) in conversational {
+        let input = NodeInput {
+            name: name.into(),
+            pattern: pattern.into(),
+            action: action.into(),
+            tone: Some(tone.into()),
+            kind: Some(kind.into()),
+            ..Default::default()
+        };
+        s = add_node(h, &s, &input, None).expect("starter node");
+    }
+    s["events"] = json!([]);
     log(
         h.env,
         &mut s,
         "system",
         "Starter specimen created",
-        "8 pattern nodes and 12 supporting memories.",
+        "15 nodes and 20 supporting memories. The first eight patterns are unchanged.",
     );
     s
 }
