@@ -6,6 +6,7 @@ when live authoritative sources are present their hashes must also agree.
 Updating pins is a reviewed contract-version change, never an automatic repair.
 """
 import argparse
+from collections import Counter
 import hashlib
 import json
 from pathlib import Path
@@ -24,12 +25,80 @@ SOURCE_PATHS = {
     'constitution': '../abi/docs/superpowers/specs/2026-08-22-abbey-system-constitution.md',
     'episodes': '../abi/docs/superpowers/specs/2026-08-22-spec-canonical-wdbx-episodes.md',
 }
-CORPUS_PIN = '044da91e58c90c067137a733b6eb86e49376b73bb05b9b7dfebbc1cb089d2232'
-PROTOCOL_PIN = 'a5a1bde6c53e2efeb69ba61ac632092629704e985004474f50f186d8f85b3809'
+CORPUS_PIN = '901afe708b7b4ffe50d1a0f89b9c2aad3425e0b1e77e8617987b6b19c216fec9'
+PROTOCOL_PIN = 'c8a387eae542e047da64473c2f3a852e23caa6cf8b56f96d82f20e46d877ab9c'
+OWNERS = {
+    1: 'WDBX contracts', 2: 'WDBX', 3: 'WDBX', 4: 'WDBX',
+    5: 'ABI with Abbey consumers', 6: 'ABI federation and WDBX',
+    7: 'Studio sync and ABI', 8: 'Studio kernel/native',
+    9: 'Studio and WDBX', 10: 'platform operators',
+}
+DEPENDENCIES = {
+    1: [], 2: [1], 3: [2], 4: [2, 3], 5: [2, 3, 4],
+    6: [2, 3, 5], 7: [3, 5], 8: [1], 9: [3, 5, 7, 8],
+    10: [5, 6, 7, 9],
+}
+CONTRACT_PINS = {
+    'experiments-v1.json': 'a5a1bde6c53e2efeb69ba61ac632092629704e985004474f50f186d8f85b3809',
+    'synthetic-corpus-v1.jsonl': '044da91e58c90c067137a733b6eb86e49376b73bb05b9b7dfebbc1cb089d2232',
+    'synthesis-network-v1.json': 'e667909e9acf8e75f01e876ae43513f955eee2b94bf681be545dc141ef19359c',
+    'synthesis-operations-v1.json': 'a8317ba47e35b98bfa9eb15392ab65c49c1f16ae2bd5296bf3c817c2f0c76c63',
+    'synthesis-worked-v1.json': '57c85c6d10be20ba9698598cb95e5a0b4680d34ec0e16275a5352ea2923c1adc',
+    'synthesis-contract-v1.md': '45f6ef7f13f278dc537aec66354d0aa40ec174939b34a7edca13e0f948607c75',
+    'inhibition-contract-v1.md': 'cd8511f32edd410a7fb083f8612c1e52b556f91991cc8ef5b2caea5e99578481',
+    'inhibition-vectors-v1.json': 'e935e2b8f62d87cbd8c3c23ae4b4c6051aea6acbcf88ab14868a82d0a69cb2d4',
+    'shared-types-v1.json': '5d51d33a6ce4adc8628f780bd913520f65e9d7f5ae6b875fe03027bd408d527b',
+    'contract_vectors.py': '85f298d0e0a8ae24410c25e7d91ee98dae43cc805affa0d720122fd040842c3e',
+    'contract_vectors_v1.py': 'c5379c39d21b3e7491383ecb3b19e7716838aafac4ea117d0a01165185e6a412',
+    'experiments-v2.json': '02aaef494407922f7ed4234b9165bb261a59345586f65021dab7677c6b563efa',
+    'synthesis-contract-v2.md': 'd66500bd4bac7d4602c69377b0d96a096bfd7984d88c498f9ac4e744b9af868f',
+    'inhibition-contract-v2.md': '50905e7090b8d1453fdb9681520907001b6644ac13834f308bd4d4d04e902472',
+    'synthesis-operations-v2.json': 'e17d7b752cb68730757f9e224cae835048333644f7b6fbe750894fcb781ceeb4',
+    'synthesis-worked-v2.json': '6b547b8cb4ec86e369fc4f667a9069b1f15c4c145b6971b802d487292450f507',
+    'synthesis-near-ties-v2.json': 'a23588bd4dd697532bc55c751f5b1966045ebc16d68a1a32e2076d0cb609a92c',
+    'inhibition-vectors-v2.json': 'b88e1bcd751dae35518a3cf3ce90fe69a9c13f4236edb97e1e7fadaafdb44d42',
+}
 
 
 def digest(data):
     return hashlib.sha256(data).hexdigest()
+
+
+def metric_errors(protocol, records):
+    """A frozen threshold without usable case inputs/oracles is not executable."""
+    errors = []
+    metrics = protocol['metric_contracts']
+    if set(metrics) != set(protocol['thresholds']):
+        errors.append('metric/threshold closure')
+    for name, metric in metrics.items():
+        if not metric.get('denominator') or not metric.get('pass'):
+            errors.append(name + ': metric lacks denominator/pass rule')
+        suites = metric['suite'].split(',')
+        cases = [r for r in records if r['suite'] in suites or metric['suite'] == 'all']
+        if not cases or not any(r['split'] == 'test' for r in cases):
+            errors.append(name + ': no held-out cases')
+        for case in cases:
+            for section in ('input', 'oracle'):
+                for field in metric[section]:
+                    value = case[section]
+                    for key in field.split('.'):
+                        value = value.get(key) if isinstance(value, dict) else None
+                    if value is None or value == [] or value == '':
+                        errors.append(name + ': missing ' + section + '.' + field)
+    # Variant labels and opaque IDs cannot turn replicated inputs into families.
+    signatures = {}
+    for record in records:
+        if record['suite'] != 'retrieval':
+            continue
+        query = {k: v for k, v in record['input']['query'].items() if k != 'question'}
+        candidates = [{k: v for k, v in c.items() if k != 'id'} for c in record['input']['candidates']]
+        candidates.sort(key=lambda c: json.dumps(c, sort_keys=True))
+        signature = json.dumps([query, candidates], sort_keys=True)
+        family = record['family']
+        if signature in signatures and signatures[signature] != family:
+            errors.append('retrieval: replicated scenario assigned independent families')
+        signatures[signature] = family
+    return errors
 
 
 def source_rows(lines, section, header):
@@ -126,17 +195,27 @@ def validate(root, live_sources=True):
         check(manifest['version'] == 1 and len(expected) == 163, 'manifest version/cardinality')
         for row in rows:
             rid = row['id']
+            check(type(row['task']) is int, rid + ': task must be an integer')
             check(row.get('status') == 'proposed' and row.get('evidence_level') == 'C0' and row.get('evidence') == [], rid + ': unsupported claim promotion/evidence')
             check(all(nonempty(row.get(f)) for f in ('owner', 'plan', 'expected_evidence', 'completion_condition')), rid + ': missing owner/plan/condition/evidence expectation')
             if rid in expected:
                 check(tuple(row.get(k) for k in ('source', 'line', 'text', 'task')) == expected[rid], rid + ': source/task provenance mismatch')
             check(row['plan'] == 'task-%02d' % row['task'], rid + ': wrong plan routing')
+            check(row['owner'] == OWNERS.get(row['task']), rid + ': wrong owner')
         platforms = {r.get('platform') for r in rows if r['id'].startswith('OS')}
         check(platforms == {'desktop:macos-arm64', 'desktop:macos-x86_64', 'desktop:windows-x86_64', 'desktop:linux-x86_64', 'service:linux-x86_64', 'service:macos-arm64'}, 'platform closure')
         plans = load('plans.json')['plans']
         check([p['id'] for p in plans] == ['task-%02d' % n for n in range(1, 11)], 'plan closure/order')
-        for plan in plans:
+        check([p['task'] for p in plans] == list(range(1, 11)), 'plan numeric task closure/order')
+        routed = [rid for plan in plans for rid in plan['requirement_ids']]
+        check(Counter(routed) == Counter(ids), 'requirements must be routed exactly once')
+        for position, plan in enumerate(plans, 1):
             n = plan['task']
+            check(type(n) is int, plan['id'] + ': task must be an integer')
+            check(n == position and plan['id'] == 'task-%02d' % n, 'task ID/number mismatch')
+            check(plan.get('owner') == OWNERS.get(n), plan['id'] + ': wrong plan owner')
+            check(set(DEPENDENCIES.get(n, [])) <= set(plan['depends_on']), plan['id'] + ': mandatory prerequisite missing')
+            check(plan.get('schema_gate') == 'shared-types-v1.json#' + plan['id'], plan['id'] + ': missing schema gate')
             check(plan['status'] == 'proposed' and plan['evidence_level'] == 'C0', plan['id'] + ': plan promotion')
             check(all(nonempty(plan.get(f)) for f in ('interfaces', 'steps', 'acceptance', 'expected_evidence')), plan['id'] + ': incomplete execution contract')
             check(set(plan['requirement_ids']) == {r['id'] for r in rows if r['task'] == n}, plan['id'] + ': missing requirement routing')
@@ -150,7 +229,8 @@ def validate(root, live_sources=True):
             check(all(nonempty(design.get(f)) for f in ('language','interface','algorithm','limits','failure_behavior','acceptance')), design['id'] + ': incomplete design')
         protocol = load('experiments.json')
         check(digest((directory / 'experiments.json').read_bytes()) == PROTOCOL_PIN, 'frozen protocol changed; versioned review required')
-        corpus = (directory / 'synthetic-corpus-v1.jsonl').read_bytes()
+        check(protocol['version'] == 3 and protocol['corpus'] == 'synthetic-corpus-v2.jsonl', 'active experiment version')
+        corpus = (directory / 'synthetic-corpus-v2.jsonl').read_bytes()
         check(digest(corpus) == CORPUS_PIN == protocol['corpus_sha256'], 'frozen corpus digest mismatch')
         records = [json.loads(line) for line in corpus.decode('utf-8').splitlines()]
         check(len(records) == protocol['records'] == 2400, 'corpus count')
@@ -161,6 +241,14 @@ def validate(root, live_sources=True):
         check({r['family'] for r in records} == set(families), 'corpus family closure')
         for record in records:
             check(record['family'] in protocol['splits'][record['split']], 'corpus split mismatch')
+        errors.extend(metric_errors(protocol, records))
+        for filename, pin in CONTRACT_PINS.items():
+            check(digest((directory / filename).read_bytes()) == pin, filename + ': contract artifact drift')
+        shared = load('shared-types-v1.json')
+        check(shared['status'] == 'proposed', 'shared type claim promotion')
+        check([g['id'] for g in shared['gates']] == [p['id'] for p in plans], 'shared schema gate closure')
+        for gate, plan in zip(shared['gates'], plans):
+            check(gate['owner'] == plan['owner'] and gate['status'] == 'proposed', 'schema gate ownership/status')
         baseline = load('baseline.json')
         check(set(baseline['repositories']) == {'wdbx','abi','abbey'}, 'baseline repositories')
         for repo in baseline['repositories'].values():

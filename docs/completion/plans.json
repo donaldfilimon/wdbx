@@ -43,7 +43,9 @@
         "P01.03",
         "P01.04",
         "P01.05"
-      ]
+      ],
+      "owner": "WDBX contracts",
+      "schema_gate": "shared-types-v1.json#task-01"
     },
     {
       "id": "task-02",
@@ -94,7 +96,9 @@
         "C14",
         "C15",
         "C16"
-      ]
+      ],
+      "owner": "WDBX",
+      "schema_gate": "shared-types-v1.json#task-02"
     },
     {
       "id": "task-03",
@@ -106,7 +110,8 @@
       "evidence_level": "C0",
       "interfaces": [
         "propose(Candidate,AuthSnapshot,Quota,OperationId)->WriteDecision{class,reason,receipt?}",
-        "lifecycle(ObjectRef,Action,PolicyEpoch)->LifecycleReceipt; erase(ObjectKey)->KeyDestructionReceipt"
+        "lifecycle(ObjectRef,Action,PolicyEpoch)->LifecycleReceipt; erase(ObjectKey)->KeyDestructionReceipt",
+        "InhibitionCommitmentV1: inhibition-contract-v2.md, separate tenant MAC epochs survive object-key erasure; scoped historical-epoch matching must pass synthetic vectors."
       ],
       "steps": [
         "Admission classifies ephemeral/session/TTL/durable/minimal incident; bind current consent/policy and quota atomically.",
@@ -134,7 +139,9 @@
         "C19",
         "C20",
         "C21"
-      ]
+      ],
+      "owner": "WDBX",
+      "schema_gate": "shared-types-v1.json#task-03"
     },
     {
       "id": "task-04",
@@ -176,7 +183,9 @@
         "E06",
         "E07",
         "E08"
-      ]
+      ],
+      "owner": "WDBX",
+      "schema_gate": "shared-types-v1.json#task-04"
     },
     {
       "id": "task-05",
@@ -213,7 +222,9 @@
         "P05.02",
         "P05.03",
         "P05.04"
-      ]
+      ],
+      "owner": "ABI with Abbey consumers",
+      "schema_gate": "shared-types-v1.json#task-05"
     },
     {
       "id": "task-06",
@@ -247,7 +258,9 @@
         "P06.01",
         "P06.02",
         "P06.03"
-      ]
+      ],
+      "owner": "ABI federation and WDBX",
+      "schema_gate": "shared-types-v1.json#task-06"
     },
     {
       "id": "task-07",
@@ -260,7 +273,7 @@
       "evidence_level": "C0",
       "interfaces": [
         "Outbox.enqueue(OperationId,Dependencies,Schema,BaseRevision,Delta)->ProvisionalReceipt",
-        "sync(Cursor,CurrentAuth)->TerminalReceipt{accepted,rejected,conflicted}; transfer(BlobDigest,Range)->VerifiedChunk"
+        "sync(Cursor,CurrentAuth)->TerminalReceipt tagged union in shared-types-v1.json; transfer(BlobDigest,Range)->VerifiedChunk"
       ],
       "steps": [
         "Implement transactional IndexedDB/native outboxes; operation dependencies and receipts survive restart.",
@@ -283,7 +296,9 @@
         "P07.02",
         "P07.03",
         "P07.04"
-      ]
+      ],
+      "owner": "Studio sync and ABI",
+      "schema_gate": "shared-types-v1.json#task-07"
     },
     {
       "id": "task-08",
@@ -397,7 +412,9 @@
         "S45",
         "S46",
         "CH26"
-      ]
+      ],
+      "owner": "Studio kernel/native",
+      "schema_gate": "shared-types-v1.json#task-08"
     },
     {
       "id": "task-09",
@@ -433,7 +450,9 @@
         "P09.01",
         "P09.02",
         "P09.03"
-      ]
+      ],
+      "owner": "Studio and WDBX",
+      "schema_gate": "shared-types-v1.json#task-09"
     },
     {
       "id": "task-10",
@@ -477,7 +496,9 @@
         "OS04",
         "OS05",
         "OS06"
-      ]
+      ],
+      "owner": "platform operators",
+      "schema_gate": "shared-types-v1.json#task-10"
     }
   ]
 }

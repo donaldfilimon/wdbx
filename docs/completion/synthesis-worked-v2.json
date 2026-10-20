@@ -1,0 +1,359 @@
+{
+  "public_input": {
+    "facts": [
+      [
+        "train_entity_0",
+        "owns",
+        "train_entity_0_box"
+      ],
+      [
+        "train_entity_0_box",
+        "contains",
+        2
+      ],
+      [
+        "train_entity_0_box",
+        "added",
+        3
+      ]
+    ],
+    "query": "what does train_entity_0 own and how many items after adding?"
+  },
+  "graph": {
+    "tokens": [
+      [
+        "subject",
+        "train_entity_0"
+      ],
+      [
+        "predicate",
+        "owns"
+      ],
+      [
+        "object",
+        "train_entity_0_box"
+      ],
+      [
+        "subject",
+        "train_entity_0_box"
+      ],
+      [
+        "predicate",
+        "contains"
+      ],
+      [
+        "object",
+        "2"
+      ],
+      [
+        "subject",
+        "train_entity_0_box"
+      ],
+      [
+        "predicate",
+        "added"
+      ],
+      [
+        "object",
+        "3"
+      ]
+    ],
+    "context": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "atp_features": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "seed": 104729,
+    "familiar": false,
+    "ingredients": [
+      {
+        "ref": "input/facts/0",
+        "kind": "fact",
+        "fact": [
+          "train_entity_0",
+          "owns",
+          "train_entity_0_box"
+        ]
+      },
+      {
+        "ref": "input/facts/1",
+        "kind": "fact",
+        "fact": [
+          "train_entity_0_box",
+          "contains",
+          2
+        ]
+      },
+      {
+        "ref": "input/facts/2",
+        "kind": "fact",
+        "fact": [
+          "train_entity_0_box",
+          "added",
+          3
+        ]
+      }
+    ],
+    "query": {
+      "kind": "owner_count_after_add",
+      "subject": "train_entity_0"
+    }
+  },
+  "encoded": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.1111111119389534,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    -0.1111111119389534,
+    0.1111111119389534,
+    0.1111111119389534,
+    0.0,
+    0.0,
+    0.1111111119389534,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.1111111119389534,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.1111111119389534,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "activations": [
+    "sigmoid",
+    "relu"
+  ],
+  "network_output": [
+    0.0,
+    0.23415659368038177,
+    0.0,
+    0.0,
+    0.278784841299057,
+    0.2825901508331299,
+    0.09018120914697647,
+    0.08372892439365387,
+    0.466793954372406,
+    0.6621185541152954,
+    0.0,
+    0.0,
+    0.033116571605205536,
+    0.0,
+    0.05078501254320145,
+    0.2834463119506836,
+    0.0,
+    0.013729000464081764,
+    0.0,
+    0.0,
+    0.569429874420166,
+    0.6153914332389832,
+    0.13999667763710022,
+    0.19855061173439026,
+    0.03802035003900528,
+    0.09903531521558762,
+    0.2905198931694031,
+    0.0,
+    0.0,
+    0.0,
+    0.07066960632801056,
+    0.0
+  ],
+  "raw_ranking": [
+    {
+      "name": "shape",
+      "score": 0.2825901508331299
+    },
+    {
+      "name": "join",
+      "score": 0.278784841299057
+    },
+    {
+      "name": "concatenate",
+      "score": 0.23415659368038177
+    },
+    {
+      "name": "report",
+      "score": 0.09018120914697647
+    },
+    {
+      "name": "arithmetic",
+      "score": 0.0
+    },
+    {
+      "name": "equivalent",
+      "score": 0.0
+    },
+    {
+      "name": "select",
+      "score": 0.0
+    }
+  ],
+  "decoded": {
+    "name": "[\"report\",\"input/facts/0\",[\"arithmetic\",\"+\",\"input/facts/1\",\"input/facts/2\"]]",
+    "score": 0.035090604573488234,
+    "ast": [
+      "report",
+      "input/facts/0",
+      [
+        "arithmetic",
+        "+",
+        "input/facts/1",
+        "input/facts/2"
+      ]
+    ],
+    "fields": {
+      "owner": "train_entity_0",
+      "object": "train_entity_0_box",
+      "count": 5
+    },
+    "source_refs": [
+      "input/facts/0",
+      "input/facts/1",
+      "input/facts/2"
+    ],
+    "output_text": "train_entity_0 owns train_entity_0_box; train_entity_0_box contains 5 after adding.",
+    "status": "complete",
+    "attempted": 1,
+    "bucket": 8772
+  }
+}

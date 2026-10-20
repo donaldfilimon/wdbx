@@ -1,0 +1,58 @@
+{
+  "synthetic_keys_only": true,
+  "key_epoch_0_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+  "key_epoch_1_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+  "canonical_input": {
+    "tenant": "tenant-A",
+    "scope": "specimen-1",
+    "pattern_class": "pattern:add-two:v1",
+    "action_class": "action:sum-two:v1",
+    "inhibition": [
+      "deny:network"
+    ]
+  },
+  "preimage_hex": "00000016776462782f696e686962697465642d706169722f76320000000c7075626c69632d636c617373000000027631000000127061747465726e3a6164642d74776f3a763100000011616374696f6e3a73756d2d74776f3a7631",
+  "epoch_0_tag": "1c5a4a512aabcaf84ba40bcaecd0aeb38df2ae8416b435044582b80d2f86904b",
+  "epoch_1_tag": "a734a5f739b685c6e0393974c20e4049b4fbbb284d59d0b7bafd0ba1bc5cc1d8",
+  "other_tenant_tag": "252e6676df9301e20a8714d7bab17a6de2394025c4dc13d1e424efe980a5fc52",
+  "other_scope_tag": "1cbc77b7dd6cb9bc8725987ce2e7cb504f2dc707842cd1d3ddcad65e27d704d0",
+  "equivalent_attempts": [
+    "two plus two -> four",
+    "2 + 2 -> 4"
+  ],
+  "after_payload_key_destruction": {
+    "match_epoch": 0,
+    "rejected": true,
+    "tag": "1c5a4a512aabcaf84ba40bcaecd0aeb38df2ae8416b435044582b80d2f86904b"
+  },
+  "after_mac_rotation": {
+    "query_epochs": [
+      0,
+      1
+    ],
+    "stored_epoch": 0,
+    "rejected": true
+  },
+  "policy_variations": [
+    {
+      "codes": [
+        "deny:network"
+      ],
+      "epoch_0_tag": "1c5a4a512aabcaf84ba40bcaecd0aeb38df2ae8416b435044582b80d2f86904b",
+      "epoch_1_tag": "a734a5f739b685c6e0393974c20e4049b4fbbb284d59d0b7bafd0ba1bc5cc1d8"
+    },
+    {
+      "codes": [],
+      "epoch_0_tag": "1c5a4a512aabcaf84ba40bcaecd0aeb38df2ae8416b435044582b80d2f86904b",
+      "epoch_1_tag": "a734a5f739b685c6e0393974c20e4049b4fbbb284d59d0b7bafd0ba1bc5cc1d8"
+    },
+    {
+      "codes": [
+        "deny:write"
+      ],
+      "epoch_0_tag": "1c5a4a512aabcaf84ba40bcaecd0aeb38df2ae8416b435044582b80d2f86904b",
+      "epoch_1_tag": "a734a5f739b685c6e0393974c20e4049b4fbbb284d59d0b7bafd0ba1bc5cc1d8"
+    }
+  ],
+  "non_equivalent_tag": "7b76ddf02edaad39bbc0821a0cc63bd509969645763e8cab5ebffc1d80c2180b"
+}

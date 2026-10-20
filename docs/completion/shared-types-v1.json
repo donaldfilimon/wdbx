@@ -1,0 +1,177 @@
+{
+  "version": 1,
+  "status": "proposed",
+  "authority": "Local dependency gates only. ABI owns normative schemas and wire version publication; these sketches do not replace it.",
+  "types": {
+    "AtpState": {
+      "kind": "record",
+      "fields": {
+        "v": "finite f32 [-1,1]",
+        "a": "finite f32 [0,1]",
+        "cooldown_seconds": "finite f32 [0,30]"
+      },
+      "aliases": "valence/intensity prose mean v/a, never alternate wire names"
+    },
+    "TerminalReceipt": {
+      "kind": "tagged_union",
+      "tag_field": "status",
+      "variants": {
+        "accepted": {
+          "operation_id": "OperationId",
+          "canonical_receipt": "CanonicalReceiptRef",
+          "writer_epoch": "u64"
+        },
+        "rejected": {
+          "operation_id": "OperationId",
+          "reason": "ReasonCode",
+          "policy_epoch": "u64"
+        },
+        "conflicted": {
+          "operation_id": "OperationId",
+          "branch_refs": "nonempty list<BranchRef>",
+          "base_revision": "Revision"
+        }
+      },
+      "rule": "Exactly one variant; unknown tags/extra fields reject. Pending is local outbox state, not a terminal receipt."
+    },
+    "OperationId": {
+      "kind": "opaque",
+      "format": "128-bit random identifier, canonical lowercase 32 hexadecimal; scoped uniqueness checked; retries reuse ID"
+    },
+    "Revision": {
+      "kind": "opaque",
+      "format": "canonical content digest plus writer epoch; exact wire encoding gated by ABI task-02 schema review"
+    },
+    "CanonicalReceiptRef": {
+      "kind": "opaque",
+      "format": "tenant/scope-bound digest reference; consumers may not manufacture"
+    },
+    "BranchRef": {
+      "kind": "opaque",
+      "format": "tenant/scope-bound provisional branch ID, never a canonical receipt"
+    },
+    "ReasonCode": {
+      "kind": "enum",
+      "values": [
+        "stale_policy",
+        "stale_consent",
+        "unauthorized",
+        "quota",
+        "schema_mismatch",
+        "invalid_input",
+        "deleted",
+        "dependency_rejected"
+      ]
+    }
+  },
+  "gates": [
+    {
+      "id": "task-01",
+      "owner": "WDBX contracts",
+      "status": "proposed",
+      "required_before": "Implementing or serializing cross-package interfaces of this task",
+      "artifacts": [
+        "Reviewed task-specific interface and evidence schema"
+      ],
+      "acceptance": "Named owner signs schema diff; producer/consumer decode the same positive/negative synthetic vectors; no unknown variant accepted. Attach exact artifact hash and independent review. Until then implementation may prototype privately but no dependent merge or wire freeze."
+    },
+    {
+      "id": "task-02",
+      "owner": "WDBX",
+      "status": "proposed",
+      "required_before": "Implementing or serializing cross-package interfaces of this task",
+      "artifacts": [
+        "ABI-reviewed versioned envelope/receipt/authority schema and malformed vectors",
+        "WDBX canonical domain and crypto review"
+      ],
+      "acceptance": "Named owner signs schema diff; producer/consumer decode the same positive/negative synthetic vectors; no unknown variant accepted. Attach exact artifact hash and independent review. Until then implementation may prototype privately but no dependent merge or wire freeze."
+    },
+    {
+      "id": "task-03",
+      "owner": "WDBX",
+      "status": "proposed",
+      "required_before": "Implementing or serializing cross-package interfaces of this task",
+      "artifacts": [
+        "ABI-reviewed versioned envelope/receipt/authority schema and malformed vectors",
+        "WDBX canonical domain and crypto review"
+      ],
+      "acceptance": "Named owner signs schema diff; producer/consumer decode the same positive/negative synthetic vectors; no unknown variant accepted. Attach exact artifact hash and independent review. Until then implementation may prototype privately but no dependent merge or wire freeze."
+    },
+    {
+      "id": "task-04",
+      "owner": "WDBX",
+      "status": "proposed",
+      "required_before": "Implementing or serializing cross-package interfaces of this task",
+      "artifacts": [
+        "ABI-reviewed versioned envelope/receipt/authority schema and malformed vectors",
+        "WDBX canonical domain and crypto review"
+      ],
+      "acceptance": "Named owner signs schema diff; producer/consumer decode the same positive/negative synthetic vectors; no unknown variant accepted. Attach exact artifact hash and independent review. Until then implementation may prototype privately but no dependent merge or wire freeze."
+    },
+    {
+      "id": "task-05",
+      "owner": "ABI with Abbey consumers",
+      "status": "proposed",
+      "required_before": "Implementing or serializing cross-package interfaces of this task",
+      "artifacts": [
+        "ABI-reviewed versioned envelope/receipt/authority schema and malformed vectors",
+        "WDBX canonical domain and crypto review"
+      ],
+      "acceptance": "Named owner signs schema diff; producer/consumer decode the same positive/negative synthetic vectors; no unknown variant accepted. Attach exact artifact hash and independent review. Until then implementation may prototype privately but no dependent merge or wire freeze."
+    },
+    {
+      "id": "task-06",
+      "owner": "ABI federation and WDBX",
+      "status": "proposed",
+      "required_before": "Implementing or serializing cross-package interfaces of this task",
+      "artifacts": [
+        "ABI-reviewed versioned envelope/receipt/authority schema and malformed vectors",
+        "WDBX canonical domain and crypto review"
+      ],
+      "acceptance": "Named owner signs schema diff; producer/consumer decode the same positive/negative synthetic vectors; no unknown variant accepted. Attach exact artifact hash and independent review. Until then implementation may prototype privately but no dependent merge or wire freeze."
+    },
+    {
+      "id": "task-07",
+      "owner": "Studio sync and ABI",
+      "status": "proposed",
+      "required_before": "Implementing or serializing cross-package interfaces of this task",
+      "artifacts": [
+        "Reviewed tagged command/result schema with version negotiation",
+        "Native/WASM or browser/native shared fixture vectors"
+      ],
+      "acceptance": "Named owner signs schema diff; producer/consumer decode the same positive/negative synthetic vectors; no unknown variant accepted. Attach exact artifact hash and independent review. Until then implementation may prototype privately but no dependent merge or wire freeze."
+    },
+    {
+      "id": "task-08",
+      "owner": "Studio kernel/native",
+      "status": "proposed",
+      "required_before": "Implementing or serializing cross-package interfaces of this task",
+      "artifacts": [
+        "Reviewed tagged command/result schema with version negotiation",
+        "Native/WASM or browser/native shared fixture vectors"
+      ],
+      "acceptance": "Named owner signs schema diff; producer/consumer decode the same positive/negative synthetic vectors; no unknown variant accepted. Attach exact artifact hash and independent review. Until then implementation may prototype privately but no dependent merge or wire freeze."
+    },
+    {
+      "id": "task-09",
+      "owner": "Studio and WDBX",
+      "status": "proposed",
+      "required_before": "Implementing or serializing cross-package interfaces of this task",
+      "artifacts": [
+        "Reviewed tagged command/result schema with version negotiation",
+        "Native/WASM or browser/native shared fixture vectors"
+      ],
+      "acceptance": "Named owner signs schema diff; producer/consumer decode the same positive/negative synthetic vectors; no unknown variant accepted. Attach exact artifact hash and independent review. Until then implementation may prototype privately but no dependent merge or wire freeze."
+    },
+    {
+      "id": "task-10",
+      "owner": "platform operators",
+      "status": "proposed",
+      "required_before": "Implementing or serializing cross-package interfaces of this task",
+      "artifacts": [
+        "Reviewed task-specific interface and evidence schema"
+      ],
+      "acceptance": "Named owner signs schema diff; producer/consumer decode the same positive/negative synthetic vectors; no unknown variant accepted. Attach exact artifact hash and independent review. Until then implementation may prototype privately but no dependent merge or wire freeze."
+    }
+  ]
+}

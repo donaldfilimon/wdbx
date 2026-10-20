@@ -1,8 +1,8 @@
 {
-  "version": 1,
+  "version": 3,
   "status": "frozen-proposed-protocol-not-results",
-  "corpus": "synthetic-corpus-v1.jsonl",
-  "corpus_sha256": "044da91e58c90c067137a733b6eb86e49376b73bb05b9b7dfebbc1cb089d2232",
+  "corpus": "synthetic-corpus-v2.jsonl",
+  "corpus_sha256": "901afe708b7b4ffe50d1a0f89b9c2aad3425e0b1e77e8617987b6b19c216fec9",
   "records": 2400,
   "splits": {
     "train": [
@@ -849,7 +849,9 @@
     "mutation_semantic_preservation": 0.95,
     "mutation_novel_valid_rate": 0.25,
     "safety_failures": 0,
-    "paired_bootstrap_lower_gain": 0.0
+    "paired_bootstrap_lower_gain": 0.0,
+    "retrieval_applicability_accuracy": 0.95,
+    "tone_preferred_rate": 0.9
   },
   "baselines": [
     "Exact source baseline at baseline.json WDBX HEAD using existing kernel and fixed seed; build failures are recorded, never assigned score zero.",
@@ -857,7 +859,7 @@
     "Retrieval: pure cosine ranking with identical frozen candidate IDs, vectors, storage and count; shared tenant authorization and cryptographic rejection. Equal memory/time caps; dimension-aware ranker must not win by more candidates.",
     "Language: existing normalization/bind pipeline. Vision: existing native analyze/renderer CPU reference, plus untransformed input for instruction tests. Supervision: existing review; mutation: no-mutation and current mutation."
   ],
-  "analysis": "Freeze commit and reviewer signoff before efficacy execution. Developer sees train only; independent runner holds test and oracle artifact, uses family-level splits (all variants stay together). Validation may select <=5 candidates after <=20 train configurations; choose one before test. Seeds paired across alternatives; report per-suite denominator, timeout/abstention/error as failure. Compute 10000 family-cluster paired bootstrap resamples with seed 104729; lower two-sided 95% CI of gain must be strictly >0 and point gains meet thresholds. For bounded safety constraints every case must pass; zero observed errors is not universal proof. No pooling suites to hide regression. Require nonzero baseline failure denominator for relative retrieval gains; otherwise inconclusive, not pass. Correction/proposal precision also require recall>=0.8; abstention cannot game precision. Mutation novelty requires distinct from either source and semantic oracle pass. Latency median/p95 and max memory recorded, no more than 2x baseline p95 and within case timeout. Immutable hashes before/after prove no training from calls.",
+  "analysis": "Freeze commit and reviewer signoff before efficacy execution. Developer sees train only; independent runner holds test and oracle artifact, uses family-level splits (all variants stay together). Validation may select <=5 candidates after <=20 train configurations; choose one before test. Seeds paired across alternatives; report per-suite denominator, timeout/abstention/error as failure. Average variants within each family first. Compute 10000 family-cluster paired bootstrap resamples with seed 104729; lower two-sided 95% CI of gain must be strictly >0 and point gains meet thresholds. For bounded safety constraints every case must pass; zero observed errors is not universal proof. No pooling suites to hide regression. Require nonzero baseline failure denominator for relative retrieval gains; otherwise inconclusive, not pass. Correction/proposal precision also require recall>=0.8; abstention cannot game precision. Mutation novelty requires distinct from either source and semantic oracle pass. Latency median/p95 and max memory recorded, no more than 2x baseline p95 and within case timeout. Immutable hashes before/after prove no training from calls.",
   "oracle_review": "Synthetic structured oracles are reproducible structural checks, not a natural language efficacy certification. Independent reviewer verifies arithmetic/constraint/shape labels and blind-scores all held-out composition/tone/mutation outputs with two raters, adjudicating disagreement; preserve ratings. Vision OCR input PBM bytes and their SHA256 are frozen inside each vision case (base64): black 3x5 bitmap numeral/operator glyphs scaled 4x with white padding. Independently review decoded rasters and transcription labels before execution. This narrow font is not a real-world OCR certification. Current rectangular corpus cannot establish general visual or arbitrary-language efficacy. Expansion requires new corpus version, preregistration and independent holdout; never retune this test.",
   "result_schema": [
     "protocol_digest",
@@ -880,5 +882,237 @@
     "stderr",
     "outcome"
   ],
-  "retention": "Append-only result files including every failed/timeout/negative run and configuration; never overwrite prior results or relabel a failed experiment. No results are present in this contract. Public synthetic fixture knowledge does not make test blind: independent custodianship and contamination attestation are required."
+  "retention": "Append-only result files including every failed/timeout/negative run and configuration; never overwrite prior results or relabel a failed experiment. No results are present in this contract. Public synthetic fixture knowledge does not make test blind: independent custodianship and contamination attestation are required.",
+  "supersedes": "experiments-v2.json (I3 decoder/order and I5 pair-wide matching revised before any efficacy run)",
+  "metric_contracts": {
+    "language_semantic_accuracy": {
+      "suite": "language",
+      "input": [
+        "prompt"
+      ],
+      "oracle": [
+        "allowed_result",
+        "forbidden_result"
+      ],
+      "denominator": "all test cases",
+      "pass": "correct allowed result and no forbidden action"
+    },
+    "composition_semantic_accuracy": {
+      "suite": "composition",
+      "input": [
+        "facts",
+        "query"
+      ],
+      "oracle": [
+        "owner",
+        "object",
+        "count",
+        "required_sources"
+      ],
+      "denominator": "all test cases",
+      "pass": "all oracle fields correct"
+    },
+    "composition_absolute_gain": {
+      "suite": "composition",
+      "input": [
+        "facts",
+        "query"
+      ],
+      "oracle": [
+        "owner",
+        "object",
+        "count"
+      ],
+      "denominator": "all paired test cases",
+      "pass": "candidate accuracy minus stronger baseline accuracy >= .10"
+    },
+    "groundedness": {
+      "suite": "composition",
+      "input": [
+        "facts"
+      ],
+      "oracle": [
+        "required_sources"
+      ],
+      "denominator": "all output factual spans; abstention fails semantic accuracy",
+      "pass": "every fact derivable from referenced ingredients"
+    },
+    "retrieval_relative_failure_reduction": {
+      "suite": "retrieval",
+      "input": [
+        "query.vector",
+        "candidates"
+      ],
+      "oracle": [
+        "failure_ids",
+        "applicable"
+      ],
+      "denominator": "failure count divided by all test families, three variant indicators averaged per family; relative (baseline-candidate)/baseline; baseline must be >0",
+      "pass": "chosen top1 not failure_ids, abstention is failure"
+    },
+    "retrieval_stale_reuse_reduction": {
+      "suite": "retrieval",
+      "input": [
+        "query.vector",
+        "query.policy",
+        "query.regime",
+        "candidates"
+      ],
+      "oracle": [
+        "stale_ids",
+        "applicable"
+      ],
+      "denominator": "stale count divided by all test families, variants averaged; relative (baseline-candidate)/baseline; baseline must be >0",
+      "pass": "chosen top1 not stale_ids; abstention is failure"
+    },
+    "retrieval_applicability_accuracy": {
+      "suite": "retrieval",
+      "input": [
+        "query.vector",
+        "candidates"
+      ],
+      "oracle": [
+        "applicable"
+      ],
+      "denominator": "all test families, variants averaged",
+      "pass": "chosen top1 belongs to applicable"
+    },
+    "tone_semantic_preservation": {
+      "suite": "atp",
+      "input": [
+        "source_text",
+        "tone_request",
+        "equivalence_alternatives"
+      ],
+      "oracle": [
+        "meaning",
+        "admissible_outputs",
+        "rating_rule"
+      ],
+      "denominator": "all test outputs including fallback originals; errors/timeouts fail",
+      "pass": "exact meaning preserved and tolerance respected"
+    },
+    "tone_preferred_rate": {
+      "suite": "atp",
+      "input": [
+        "source_text",
+        "tone_request",
+        "equivalence_alternatives"
+      ],
+      "oracle": [
+        "preferred_output"
+      ],
+      "denominator": "all test cases",
+      "pass": "preferred valid warm output, not unchanged fallback"
+    },
+    "vision_mask_iou": {
+      "suite": "vision",
+      "input": [
+        "shape",
+        "instruction"
+      ],
+      "oracle": [
+        "foreground_pixels"
+      ],
+      "denominator": "mean intersection/union over all test images",
+      "pass": "IoU >= .9"
+    },
+    "ocr_character_accuracy": {
+      "suite": "vision",
+      "input": [
+        "ocr_pbm_base64",
+        "ocr_pbm_sha256"
+      ],
+      "oracle": [
+        "ocr_text"
+      ],
+      "denominator": "1 - aggregate Levenshtein errors / reference character count; floor at zero",
+      "pass": ">= .95"
+    },
+    "correction_precision": {
+      "suite": "supervision",
+      "input": [
+        "output",
+        "residual"
+      ],
+      "oracle": [
+        "corrected",
+        "correction_parent_required"
+      ],
+      "denominator": "all emitted corrections; zero emitted inconclusive; recall>=.8 of correctable inputs also required",
+      "pass": "arithmetic result and parent attribution correct"
+    },
+    "proposal_precision": {
+      "suite": "supervision",
+      "input": [
+        "proposal",
+        "approved"
+      ],
+      "oracle": [
+        "proposal_required",
+        "knowledge_delta"
+      ],
+      "denominator": "all emitted proposals; zero emitted inconclusive; recall>=.8 required",
+      "pass": "inference follows declared relation join and no unapproved knowledge delta"
+    },
+    "mutation_semantic_preservation": {
+      "suite": "mutation",
+      "input": [
+        "recipient_slots",
+        "donor_slots",
+        "semantic_contract"
+      ],
+      "oracle": [
+        "meaning",
+        "rating_rule"
+      ],
+      "denominator": "all emitted changed texts in structurally eligible events; zero emitted inconclusive; ineligible events are safety-only",
+      "pass": "blind semantic fields preserved, parse/scope valid"
+    },
+    "mutation_novel_valid_rate": {
+      "suite": "mutation",
+      "input": [
+        "recipient_slots",
+        "donor_slots",
+        "semantic_contract"
+      ],
+      "oracle": [
+        "novelty_rule",
+        "meaning",
+        "reject"
+      ],
+      "denominator": "all structurally eligible test events (variant0 and1); no-op/abstention/timeout counts zero; reject=true events excluded from efficacy and must stay unchanged",
+      "pass": "at least one semantically valid changed slot unlike recipient and selected donor"
+    },
+    "safety_failures": {
+      "suite": "all",
+      "input": [],
+      "oracle": [],
+      "denominator": "all source case/invariant assertions, including ineligible mutation rows",
+      "pass": "zero violated safety assertions"
+    },
+    "paired_bootstrap_lower_gain": {
+      "suite": "retrieval,composition",
+      "input": [],
+      "oracle": [],
+      "denominator": "10000 resamples of unique families with variants averaged; shared input replicas must not become families",
+      "pass": "95% lower bound strictly >0 for each required gain independently"
+    }
+  },
+  "retrieval_baseline": {
+    "embedding": "No learned embedding function: exact integer query/candidate vectors are corpus inputs, used identically by both rankers. No replacement/re-embedding.",
+    "filter": "Filter candidate tenant, scope and crypto=valid only; both arms share this filter. No outcome/policy/regime filter in vector baseline. relevance labels are oracle-only, not supplied to rankers.",
+    "rank": "Cosine q dot x / sqrt((q dot q)*(x dot x)), binary64 mathematical reference, nonzero vectors; descending; scores within1e-12 tie by candidate ID ASCII ascending. Top1 only. Record score and tie list.",
+    "information_boundary": "Remove oracle, baseline_scenario, relevant and presentation_variant from model inputs; candidate ID is opaque hash. Both arms receive all other metadata but vector baseline ranks solely cosine.",
+    "candidate_count": "12 total before shared filter; identical surviving ID lists and vectors per paired run.",
+    "families": "100 distinct base scenarios with unique numeric query vectors and candidate metadata. Each has three storage-order variants; average variants before bootstrap. Training60/validation20/test20 groups. Scenario classes are shared but exact query/vector/fact combinations differ; bounded generalization only.",
+    "failure_metrics": "Use explicit per-metric oracle ID lists/denominators. Also require applicability>=.95, no cross-tenant/invalid-crypto selection, and top1 output on every case; abstention never improves efficacy."
+  },
+  "text_rating_rubric": "Two independent blind raters extract every named proposition field without candidate/baseline labels. Changes of quantity, negation, entity, relation, color or introduced factual claims fail. Greetings and explicitly optional location adjectives may vary. Resolve disagreements with third adjudicator; retain all ratings. Exact table outputs receive structural oracle checks plus audited rating sample; novel text requires both raters. No word-overlap surrogate.",
+  "algorithm_contracts": {
+    "synthesis": "synthesis-contract-v2.md",
+    "inhibition": "inhibition-contract-v2.md",
+    "witness": "contract_vectors.py",
+    "corpus": "synthetic-corpus-v2.jsonl unchanged"
+  }
 }

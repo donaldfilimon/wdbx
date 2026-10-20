@@ -1,0 +1,38 @@
+{
+  "input": [
+    {
+      "name": "a",
+      "score": 0.0
+    },
+    {
+      "name": "b",
+      "score": 3e-06
+    },
+    {
+      "name": "c",
+      "score": 6e-06
+    },
+    {
+      "name": "d",
+      "score": -1e-06
+    },
+    {
+      "name": "e",
+      "score": 8e-06
+    }
+  ],
+  "buckets": {
+    "a": 0,
+    "b": 0,
+    "c": 1,
+    "d": -1,
+    "e": 1
+  },
+  "ordered_names": [
+    "c",
+    "e",
+    "a",
+    "b",
+    "d"
+  ]
+}

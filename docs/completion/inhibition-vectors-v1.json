@@ -1,0 +1,37 @@
+{
+  "synthetic_keys_only": true,
+  "key_epoch_0_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+  "key_epoch_1_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+  "canonical_input": {
+    "tenant": "tenant-A",
+    "scope": "specimen-1",
+    "pattern_class": "pattern:add-two:v1",
+    "action_class": "action:sum-two:v1",
+    "inhibition": [
+      "deny:network"
+    ]
+  },
+  "preimage_hex": "00000016776462782f696e686962697465642d706169722f76310000000c7075626c69632d636c617373000000027631000000127061747465726e3a6164642d74776f3a763100000011616374696f6e3a73756d2d74776f3a76310000000c64656e793a6e6574776f726b",
+  "epoch_0_tag": "34c0aeaa4bf4606cd1b4ec0fc4d954eadb3aee75980d665177027803e884d356",
+  "epoch_1_tag": "97ec92787d1ecefec50a9494c770ec6207ab99c28eaf0c0534aa1449a9b85695",
+  "other_tenant_tag": "752261333f37b72231eb78804b2519da83f938a12d9bfc0f1bce0410cd7b3ae5",
+  "other_scope_tag": "e7dc65d1d4eec1ae6a22572aa3e19ed8405e9b8aee8760d5b83ff4d95e671ba4",
+  "equivalent_attempts": [
+    "two plus two -> four",
+    "2 + 2 -> 4"
+  ],
+  "after_payload_key_destruction": {
+    "match_epoch": 0,
+    "rejected": true,
+    "tag": "34c0aeaa4bf4606cd1b4ec0fc4d954eadb3aee75980d665177027803e884d356"
+  },
+  "after_mac_rotation": {
+    "query_epochs": [
+      0,
+      1
+    ],
+    "stored_epoch": 0,
+    "rejected": true
+  },
+  "non_equivalent_tag": "46c0d23712c86e9e2d58300158d3ab90d9ec6e18592d9f97a32d3ee93d630244"
+}
