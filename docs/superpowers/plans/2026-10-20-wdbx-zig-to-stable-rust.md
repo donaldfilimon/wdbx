@@ -23,6 +23,18 @@ The installed `/opt/homebrew/bin/zig` is a compiler, not the old ABI project CLI
 - [x] **Z-0 Inventory:** no project Zig source files or active Zig gate/build invocations identified; two optional external-oracle tests and historical fixtures classified separately.
 - [x] **Z-1 Root toolchain:** installed `rustc 1.99.1 (58cf8f9c3 2026-10-13)` and `cargo 1.99.1 (5f94df478 2026-08-27)` verified through the pinned toolchain directory, without installation. The baseline root gate passed 647 tests, zero failures/ignored, on the preserved working source. Optional Zig-oracle branches were not exercised and are not counted as cross-language execution evidence.
 - [ ] **Z-2 Oracle retirement:** locate already-retained independently produced checkpoint/WAL/multiway byte fixtures or an authorized historical project-binary receipt. Add always-running Rust 1.99.1 regression coverage against those independent bytes. Check record counts/order, chain validity, WAL frames and exact multiway export. Only then retire active external-Zig test invocation; keep reference provenance. If no independent oracle artifact is available, record that limit rather than generating a self-comparison.
+
+### Z-2 observed limit (2026-10-20)
+
+Searched the WDBX tree for a checkpoint, WAL, or multiway export that was not produced by the Rust encoder under test. None is retained.
+
+- `crates/abi-wdbx/tests/zig_writer_compat.rs` builds a temporary store and, only when `ABI_ZIG_BIN` is set, asks that external CLI to verify it. The expected stderr lines are not stored bytes.
+- `crates/abi-wdbx/tests/multiway_zig_compat.rs` asks the same external CLI to write JSON and then compares that process output with `export_multiway_json`. No frozen Zig export is in the tree.
+- `crates/abi-wdbx/tests/golden/` holds segment JSONL and `abbey-cbor-episode-v1` fixtures. Those are not the checkpoint/WAL pair or the multiway export these two tests construct.
+- `crates/abi-foundation/tests/wyhash_zig_refs.txt` remains a historical hash reference. It is not a checkpoint, WAL, or multiway fixture.
+- No legacy project binary was present at `../abi/zig-out/bin/abi` or `../abi/bin/abi`. The installed Zig compiler is not that CLI.
+
+The opt-in `ABI_ZIG_BIN` tests stay. They are not default-gate parity evidence. No self-comparison fixture was generated, and the process spawn was not removed. A later retirement needs an independently produced byte fixture or a historical project-binary receipt.
 - [ ] **Z-3 Studio stable alignment:** select an available qualified immutable WDBX/compute revision with the stable CPU path; update both Git pins and lockfile together; qualify pure kernel, native host and WASM before changing the Studio pin/profile claims to 1.99.1. Keep Git sources rather than silently changing to paths. Qualification must cover archive/save compatibility, IDs, numerical/native-WASM parity and unchanged kernels/providers. No dependency install or publication is authorized by this checkpoint.
 - [ ] **Z-4 Consumer handoff:** WDBX supplies exact qualified source and fixture/corpus identities; ABI/Abbey owners qualify their named revisions under their reservations. Do not silently update consumers or claim a moving sibling HEAD is qualified.
 
