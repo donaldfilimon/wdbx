@@ -392,6 +392,27 @@ describe('Native specimen desktop', () => {
     });
     if (pending < 2)
       throw Error(`review must create pending proposals, got ${pending}`);
+    await browser.refresh();
+    await browser.waitUntil(
+      async () => !(await $('body').getText()).includes('Opening workspace'),
+      { timeout: 30000 },
+    );
+    await $(
+      'nav[aria-label="Main navigation"] a[href="?view=activity"]',
+    ).click();
+    const dismissAll = $('button=Dismiss all pending');
+    await dismissAll.waitForDisplayed({ timeout: 15000 });
+    await dismissAll.click();
+    await browser.waitUntil(
+      async () =>
+        (await browser.tauri.execute(async () => {
+          const snap = await window.__wdbxTestCall({ op: 'snapshot' });
+          return (snap.specimen.proposals ?? []).filter(
+            (row) => row.status === 'pending',
+          ).length;
+        })) === 0,
+      { timeout: 15000 },
+    );
     evidence.scenarios.push('proposal-lifecycle-via-review');
   });
   it('searches a virtualized 100,000-record history', async () => {

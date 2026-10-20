@@ -22,6 +22,12 @@ async function scenario(name, exercise) {
   });
   await context.addInitScript((value) => {
     localStorage.setItem('wdbx-studio-theme', value);
+    window.__wdbxTools = {};
+    document.modelContext = {
+      registerTool(tool) {
+        window.__wdbxTools[tool.name] = tool;
+      },
+    };
   }, theme);
   const page = await context.newPage();
   const errors = [];
@@ -270,6 +276,37 @@ try {
       if (await bulkBtn.isVisible()) {
         await bulkBtn.click();
       }
+    },
+  );
+
+  await scenario(
+    'an agent run waits for visible decline and records it',
+    async (page) => {
+      await page.setViewportSize({ width: 1280, height: 900 });
+      const declined = page.evaluate(async () => {
+        const tool = window.__wdbxTools?.run_specimen_prompt;
+        if (!tool) throw new Error('agent tool did not register');
+        try {
+          await tool.execute({ input: 'agent approval probe' });
+          return 'ran';
+        } catch (error) {
+          return error instanceof Error ? error.message : String(error);
+        }
+      });
+      const approval = page.getByRole('region', { name: 'Agent approval' });
+      await expect(approval).toBeVisible({ timeout: 10000 });
+      await approval
+        .getByRole('button', { name: 'Decline agent run', exact: true })
+        .click();
+      expect(await declined).toMatch(/declined/i);
+      await expect(approval).toHaveCount(0);
+      await page
+        .locator('nav[aria-label="Main navigation"] a[href="?view=activity"]')
+        .click();
+      await expect(page.getByLabel('Agent audit')).toContainText(
+        'not an ABI, Abbey, or specimen receipt',
+      );
+      await expect(page.getByLabel('Agent audit')).toContainText('declined');
     },
   );
 
