@@ -110,6 +110,11 @@ is served locally with `bun run start --ip 127.0.0.1 --port 3000`.
 - Desktop: instrumented considerations + bridge + smoke validated.
 - All browser e2e (incl. new header badge paths) and native coverage exercised. Verification updated for completeness.
 
+## Agent control and 3D (2026-10-20)
+- WebMCP stays least-privilege. `workspace_status` is read-only and lists what an agent may not do: dismiss, teach, model install, weight updates, or ABI/Abbey store writes. `run_specimen_prompt` remains one visible cycle, not training.
+- Network scenes already render on demand with instanced meshes. Device pixel ratio is capped at 1.5. No new 3D library was added.
+- Liquid Glass (`NSGlassEffectView`, macOS 26) was not added. The desktop uses Tauri's existing vibrancy materials on the window, and CSS glass only on the toolbar and sidebar. Reduced transparency uses the same solid fallback as reduced motion.
+
 ## Native toolbar and liquid glass (2026-10-20)
 - Overlay title bar, transparent window, and macOS vibrancy (`underWindowBackground`, `hudWindow`, `sidebar`). `macOSPrivateApi` is enabled because Tauri requires it for that material. Browser preview stays opaque.
 - Toolbar clusters group Commands, Activity, and specimen actions. A drag strip sits above the buttons. Reduced motion drops the blur and restores solid token backgrounds.

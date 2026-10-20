@@ -67,7 +67,7 @@ export function useStudioTools(actions: {
         name: 'run_specimen_prompt',
         title: 'Run specimen prompt',
         description:
-          'Run one pattern retrieval and composition cycle, adding its result to visible conversation history. Does not accept slash commands.',
+          'Write: run one visible cycle and append it to history. Does not accept slash commands, teach a pattern, dismiss a proposal, install a model, or change weights.',
         inputSchema: {
           type: 'object',
           properties: {
@@ -121,6 +121,47 @@ export function useStudioTools(actions: {
             throw new Error('Choose a chapter from 1 to 26.');
           latest.current.openChapter(Number(v.chapter));
           return { chapter: v.chapter };
+        },
+      },
+      {
+        name: 'workspace_status',
+        title: 'Workspace control status',
+        description:
+          'Read-only permission report. Lists counts and the actions an agent must not take. Dismiss, teach, model install, and weight changes stay on visible controls. Does not write this specimen or any ABI or Abbey store.',
+        inputSchema: {
+          type: 'object',
+          properties: {},
+          additionalProperties: false,
+        },
+        annotations: { readOnlyHint: true, untrustedContentHint: true },
+        execute(input) {
+          if (Object.keys(object(input)).length)
+            throw new Error('No arguments expected.');
+          const s = latest.current.read();
+          const count = (status: string) =>
+            s.proposals.filter((p) => p.status === status).length;
+          return {
+            permission: 'read',
+            writesRequireVisibleApproval: true,
+            nodes: s.nodes.length,
+            memories: s.resources.length,
+            pendingProposals: count('pending'),
+            learnedProposals: count('learned'),
+            dismissedProposals: count('dismissed'),
+            agentMay: [
+              'read_specimen',
+              'workspace_status',
+              'run_specimen_prompt',
+              'open_specification_chapter',
+            ],
+            agentMayNot: [
+              'dismiss or reconsider proposals',
+              'teach a pattern',
+              'install or generate with a model',
+              'train or update weights',
+              'write an ABI or Abbey store',
+            ],
+          };
         },
       },
     ];

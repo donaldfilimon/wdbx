@@ -156,7 +156,12 @@ export function LayersScene({
     [network, columns],
   );
   return (
-    <Canvas frameloop="demand" camera={{ position: [0, 3, 10], fov: 45 }}>
+    <Canvas
+      frameloop="demand"
+      dpr={[1, 1.5]}
+      gl={{ antialias: true, powerPreference: 'high-performance', alpha: true }}
+      camera={{ position: [0, 3, 10], fov: 45 }}
+    >
       <ThemePaint frame={frame} />
       <Controls />
       {columns.map((points, i) => (
@@ -258,7 +263,11 @@ function NodeMesh({
         }}
         onPointerMove={(event: ThreeEvent<PointerEvent>) => {
           const current = drag.current;
-          if (!current || current.connect || event.pointerId !== current.pointer)
+          if (
+            !current ||
+            current.connect ||
+            event.pointerId !== current.pointer
+          )
             return;
           event.stopPropagation();
           const hit = new THREE.Vector3();
@@ -345,13 +354,12 @@ export function TopologyScene({
     (a) => !a.hard && positions[a.from] && positions[a.to],
   );
   const pairs = (list: Attachment[]) =>
-    list.map(
-      (a) =>
-        [positions[a.from], positions[a.to]] as [Vec3, Vec3],
-    );
+    list.map((a) => [positions[a.from], positions[a.to]] as [Vec3, Vec3]);
   return (
     <Canvas
       frameloop="demand"
+      dpr={[1, 1.5]}
+      gl={{ antialias: true, powerPreference: 'high-performance', alpha: true }}
       camera={{ position: [0, 0, 10], fov: 45 }}
       onPointerMissed={() => setLinking(null)}
     >

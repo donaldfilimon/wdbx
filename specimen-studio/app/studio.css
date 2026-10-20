@@ -3757,7 +3757,7 @@ html.native-app,
 .native-app .brand small {
   letter-spacing: 0;
 }
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce), (prefers-reduced-transparency: reduce) {
   .native-app .page-header,
   .native-app .panel,
   .native-app .composer,
