@@ -3678,10 +3678,14 @@ body {
   margin-left: 6px;
 }
 
-html.native-app,
+/* html stays clear for vibrancy. body and the shell keep a readable wash
+   if macOS vibrancy fails, so text does not sit on the desktop. */
+html.native-app {
+  background: transparent;
+}
 .native-app body,
 .native-app .app-shell {
-  background: transparent;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
 }
 .native-app .main-area {
   padding-top: 0;

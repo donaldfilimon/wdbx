@@ -243,6 +243,15 @@ export default function Studio() {
     const onKey = (event: KeyboardEvent) => {
       const action = matchShortcut(event);
       if (!action || action === 'close') return;
+      // The native menu already binds these and emits native-menu.
+      if (
+        '__TAURI_INTERNALS__' in window &&
+        (action === 'save' ||
+          action === 'load' ||
+          action === 'palette' ||
+          action === 'sidebar')
+      )
+        return;
       event.preventDefault();
       if (action === 'palette') {
         if (paletteOpen) setPaletteOpen(false);
@@ -393,7 +402,9 @@ export default function Studio() {
             An agent asked to run this prompt. Approving appends one cycle. It
             does not teach or train.
           </p>
-          <p className="agent-approval-prompt">{agentAsk}</p>
+          <p className="agent-approval-prompt">
+            {agentAsk.length > 240 ? `${agentAsk.slice(0, 240)}…` : agentAsk}
+          </p>
           <div className="graph-chrome-tools">
             <button
               type="button"

@@ -45,6 +45,13 @@ export function GraphChrome({
         role="toolbar"
         aria-label="Graph view"
         onKeyDown={(event) => {
+          const target = event.target;
+          if (
+            target instanceof HTMLInputElement ||
+            target instanceof HTMLSelectElement ||
+            target instanceof HTMLTextAreaElement
+          )
+            return;
           if (event.metaKey || event.ctrlKey || event.altKey) return;
           const key = event.key.toLowerCase();
           if (key === '1') set({ camera: 'orbit' });

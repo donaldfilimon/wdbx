@@ -50,7 +50,11 @@ export function AgentDesk({
           </p>
           {agentAsk ? (
             <div className="mt-3 grid gap-2">
-              <p className="m-0 text-sm text-ink">{agentAsk}</p>
+              <p className="m-0 text-sm text-ink">
+                {agentAsk.length > 240
+                  ? `${agentAsk.slice(0, 240)}…`
+                  : agentAsk}
+              </p>
               <div className="flex flex-wrap gap-2">
                 <WButton disabled={busy} onClick={onApprove}>
                   Approve agent run
@@ -80,6 +84,10 @@ export function AgentDesk({
         aria-label="Agent audit"
       >
         <h3 className="m-0 text-sm text-ink">Audit</h3>
+        <p className="m-0 mt-2 text-sm text-muted-foreground">
+          This list is for the current visit only, is not saved, and is not an
+          ABI, Abbey, or specimen receipt.
+        </p>
         {audit.length ? (
           <ol className="m-0 mt-2 list-none p-0 text-sm text-ink-soft">
             {audit.map((entry) => (

@@ -1,5 +1,6 @@
-//! Graph-view policy shared by the browser WASM kernel and the desktop process.
-//! Camera and density choices never change stored weights.
+//! Graph-view policy. The webview calls this through WASM. The Tauri process
+//! does not expose graphView. Camera and density choices never change stored
+//! weights.
 
 use std::collections::BTreeSet;
 
