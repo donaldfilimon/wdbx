@@ -16,6 +16,7 @@ macro_rules! redacted {
 mod canonical;
 mod decode;
 mod primitives;
+#[allow(unused_imports)]
 pub(crate) use decode::{CompleteEpisodeDecodeError, DecodedCompleteEpisode};
 mod types;
 mod validate;
