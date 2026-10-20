@@ -1,6 +1,7 @@
 'use client';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
+  adaptImport,
   applyCommand,
   formatKernelError,
   maintenance,
@@ -9,17 +10,19 @@ import {
   querySpecimen,
   runCycle,
   seedSpecimen,
-  validateSpecimen,
   initKernel,
   migrateIds,
   PLACEHOLDER,
+  type Network,
   type Undo,
 } from '@/lib/specimen/kernel';
 import { kernelUrls } from '@/lib/specimen/kernel-url';
 import {
   compositionNetwork,
   downloadText,
+  loadNetwork,
   loadWorkspace,
+  persistNetwork,
   persistWorkspace,
 } from '@/lib/specimen/storage';
 import { type Specimen, type TraceStep } from '@/lib/specimen/types';
@@ -65,6 +68,10 @@ export function useStudio(
     [nodePattern, setNodePattern] = useState<string | undefined>(),
     [editing, setEditing] = useState<string | undefined>(),
     [pendingLoad, setPendingLoad] = useState<Specimen | null>(null),
+    [pendingNetwork, setPendingNetwork] = useState<Network | null>(null),
+    [pendingSummary, setPendingSummary] = useState(''),
+    [pendingKind, setPendingKind] = useState('specimen'),
+    [networkEpoch, setNetworkEpoch] = useState(0),
     [replies, setReplies] = useState<{ id: number; text: string }[]>([]);
   const fileRef = useRef<HTMLInputElement>(null),
     promptRef = useRef<HTMLInputElement>(null),
@@ -75,7 +82,8 @@ export function useStudio(
     noticeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined),
     undoStack = useRef<Undo[]>([]),
     replySeq = useRef(0),
-    agentDecision = useRef<((ok: boolean) => void) | null>(null);
+    agentDecision = useRef<((ok: boolean) => void) | null>(null),
+    confirmingLoad = useRef(false);
   const selectedNode =
     state.nodes.find((n) => n.ref === selected) ?? state.nodes[0];
   const cycle = state.history.at(-1);
@@ -576,13 +584,40 @@ export function useStudio(
     try {
       if (file.size > 20 * 1024 * 1024)
         throw new Error('Choose a specimen file smaller than 20 MB.');
-      const loaded = validateSpecimen(JSON.parse(await file.text()));
-      setPendingLoad(loaded);
+      const adapted = adaptImport(await file.text(), file.name);
+      setPendingLoad(adapted.specimen);
+      setPendingNetwork(adapted.network);
+      setPendingSummary(adapted.summary);
+      setPendingKind(adapted.kind);
       openDialog('load', true);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Could not read the specimen.');
     } finally {
       if (fileRef.current) fileRef.current.value = '';
+    }
+  };
+  const confirmLoad = async () => {
+    if (!pendingLoad || confirmingLoad.current) return;
+    confirmingLoad.current = true;
+    try {
+      // Persist first so a desktop revision advances before the specimen
+      // autosave writes against the previous revision.
+      if (pendingNetwork) {
+        const stored = await loadNetwork();
+        await persistNetwork(pendingNetwork, stored.revision);
+        setNetworkEpoch((epoch) => epoch + 1);
+      }
+      setRunOutcome('idle');
+      setTrace([]);
+      commit(pendingLoad);
+      setStorageEnabled(true);
+      setDialog(null);
+      setSelected('');
+      announce(pendingSummary || 'Specimen loaded.');
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Could not load the specimen.');
+    } finally {
+      confirmingLoad.current = false;
     }
   };
   const setDialogReturn = (target: HTMLElement | null) => {
@@ -601,6 +636,11 @@ export function useStudio(
     setEditing,
     pendingLoad,
     setPendingLoad,
+    pendingNetwork,
+    pendingSummary,
+    pendingKind,
+    networkEpoch,
+    confirmLoad,
     saveStatus,
     storageEnabled,
     setStorageEnabled,

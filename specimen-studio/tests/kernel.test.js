@@ -3,6 +3,7 @@
 import { beforeAll, expect, test } from 'bun:test';
 import { readFileSync } from 'node:fs';
 import {
+  adaptImport,
   addEntry,
   addNode,
   applyCommand,
@@ -45,8 +46,18 @@ const answer = async (state, input) =>
 
 test('the seed is a valid native specimen', () => {
   const s = seedSpecimen();
-  expect(s.nodes).toHaveLength(8);
-  expect(s.resources).toHaveLength(12);
+  expect(s.nodes).toHaveLength(15);
+  expect(s.resources).toHaveLength(20);
+  expect(s.nodes.slice(0, 8).map((n) => n.name)).toEqual([
+    'Calculate',
+    'Greeting',
+    'Repeat',
+    'Time',
+    'Recall',
+    'Imagine',
+    'Tone',
+    'Negation',
+  ]);
   expect(s.nodes[0].patternId.startsWith('text-v2:')).toBe(true);
   expect(() => validateSpecimen(s)).not.toThrow();
 });
@@ -60,6 +71,16 @@ test('the starter arithmetic node answers one binary operation', async () => {
   expect(await answer(s, 'What is 2 + 2?')).toEqual(['4']);
   expect(await answer(s, '7 * 6')).toEqual(['42']);
   expect((await runCycle(s, '2+3*4')).cycle.status).toBe('unmatched');
+});
+
+test('the starter guides keep answering with the added pattern nodes', async () => {
+  const s = seedSpecimen();
+  expect(await answer(s, 'who are you')).toEqual([
+    'I am Specimen 001, a pattern specimen stored on this device.',
+  ]);
+  expect(await answer(s, 'thank you')).toEqual(['You are welcome.']);
+  // The guides must not steal the arithmetic vote.
+  expect(await answer(s, 'What is 2 + 2?')).toEqual(['4']);
 });
 
 test('cycles are pure: the source specimen is untouched', async () => {
@@ -164,7 +185,7 @@ test('removing a node drops its attachments', () => {
     affinity: 0.5,
   });
   const next = removeNode(s, s.nodes[0].ref);
-  expect(next.nodes).toHaveLength(7);
+  expect(next.nodes).toHaveLength(14);
   expect(next.attachments).toHaveLength(0);
 });
 
@@ -191,6 +212,70 @@ test('settings use native bounds', () => {
   expect(() => validateSettings({ ...settings, jitter: 101 })).toThrow(
     'Set jitter between 0 and 100.',
   );
+});
+
+test('adaptImport turns markdown into a specimen and an untrained network', () => {
+  const adapted = adaptImport('# Color\n\nTeal, like this studio.', 'color.md');
+  expect(adapted.specimen.nodes.length).toBeGreaterThanOrEqual(1);
+  expect(adapted.network.layers[0].inputs).toBe(128);
+  expect(adapted.network.layers.at(-1).outputs).toBe(32);
+  expect(adapted.summary).toMatch(/not trained/i);
+  expect(() => networkValidate(adapted.network)).not.toThrow();
+  expect(() => adaptImport('{"schema":"broken"}', 'broken.json')).toThrow(
+    /not a supported/,
+  );
+});
+
+test('adaptImport understands question and answer pairs', () => {
+  const adapted = adaptImport(
+    'Q: favorite color\nA: Teal, like this studio.',
+    'faq.txt',
+  );
+  expect(adapted.kind).toBe('prose');
+  expect(adapted.specimen.nodes).toHaveLength(1);
+  expect(adapted.specimen.nodes[0].entries[0].pattern).toBe('favorite color');
+  expect(adapted.specimen.nodes[0].entries[0].alternatives[0].action).toBe(
+    'Teal, like this studio.',
+  );
+  expect(adapted.network.layers.at(-1).outputs).toBe(32);
+});
+
+test('adaptImport reads a named pattern table from CSV', () => {
+  const adapted = adaptImport(
+    'Name,Pattern,Action\nColor,favorite color,"Teal, like this studio."',
+    'rows.csv',
+  );
+  expect(adapted.kind).toBe('prose');
+  expect(adapted.specimen.nodes[0].name).toBe('Color');
+  expect(adapted.specimen.nodes[0].entries[0].pattern).toBe('favorite color');
+});
+
+test('adaptImport reads pattern rows from JSON memory lists', () => {
+  const patterned = adaptImport(
+    '[{"name":"Color","pattern":"favorite color","action":"Teal, like this studio."}]',
+    'rows.json',
+  );
+  expect(patterned.kind).toBe('patterns');
+  expect(patterned.specimen.name).toBe('rows');
+  expect(patterned.network.layers.at(-1).outputs).toBe(32);
+  expect(() => networkValidate(patterned.network)).not.toThrow();
+
+  const stored = adaptImport(
+    '[{"subsystem":"dictionary","text":"specimen","value":"patterns and organs"}]',
+    'vocabulary.json',
+  );
+  expect(stored.specimen.nodes.map((n) => n.name)).toContain('Recall');
+  expect(stored.specimen.resources).toHaveLength(1);
+  expect(stored.specimen.resources[0].resourceId).toBe(
+    stored.specimen.nodes.find((n) => n.name === 'Recall')?.patternId,
+  );
+});
+
+test('a saved specimen file keeps the network already on this device', () => {
+  const adapted = adaptImport(JSON.stringify(seedSpecimen()), 'copy.json');
+  expect(adapted.kind).toBe('specimen');
+  expect(adapted.network).toBeNull();
+  expect(adapted.summary).toMatch(/already on this device/);
 });
 
 test('malformed files are rejected before replacement', () => {
@@ -412,7 +497,7 @@ test('parse accepts the composer spellings and rejects unknown commands', () => 
       input: { name: '', pattern: 'x', action: 'y' },
     }),
   ).toThrow(/Enter a name, pattern, and action/);
-  expect(before.nodes).toHaveLength(8);
+  expect(before.nodes).toHaveLength(15);
 });
 
 test('undo restores the specimen after a command', () => {
@@ -421,7 +506,7 @@ test('undo restores the specimen after a command', () => {
     command: 'addNode',
     input: { name: 'Color', pattern: 'favorite color', action: 'Teal.' },
   });
-  expect(applied.state.nodes).toHaveLength(9);
+  expect(applied.state.nodes).toHaveLength(16);
   const undone = applyCommand(applied.state, {
     command: 'revert',
     undo: applied.undo,

@@ -361,7 +361,7 @@ export default function Studio() {
           ref={fileRef}
           className="sr-only"
           type="file"
-          accept=".json,application/json"
+          accept=".json,application/json,.txt,.md,.markdown,.csv,text/plain,text/markdown,text/csv"
           aria-label="Load specimen file"
           onChange={(e) => void load(e.target.files?.[0])}
         />

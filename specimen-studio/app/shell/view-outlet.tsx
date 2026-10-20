@@ -228,6 +228,7 @@ export function ViewOutlet({
         <NetworkPanel
           specimen={state}
           desktop={isDesktop()}
+          reloadKey={model.networkEpoch}
           onReview={() => nav('activity')}
           onTeach={() => nav('studio')}
           onSpecimenCommand={(command) =>

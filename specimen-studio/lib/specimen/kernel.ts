@@ -515,6 +515,24 @@ export function validateSpecimen(value: unknown): Specimen {
   return migrated;
 }
 
+/** A file turned into a specimen and an untrained composition network. */
+export interface AdaptedImport {
+  specimen: Specimen;
+  /** Absent when a specimen file did not include a network. */
+  network: Network | null;
+  summary: string;
+  kind: string;
+}
+
+/**
+ * Interprets file text as a specimen, a pattern table, or prose. The
+ * specimen is migrated through `validateSpecimen` before the UI sees it.
+ */
+export function adaptImport(text: string, name = ''): AdaptedImport {
+  const adapted = call<AdaptedImport>({ op: 'adaptImport', text, name });
+  return { ...adapted, specimen: validateSpecimen(adapted.specimen) };
+}
+
 /** Runs PHAGY or vote mutation (a coin flip when `mode` is omitted). */
 export const maintenance = (
   state: Specimen,

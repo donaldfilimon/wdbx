@@ -875,12 +875,15 @@ export function NetworkPanel({
   onSpecimenCommand = () => {},
   onReview,
   onTeach,
+  reloadKey = 0,
 }: {
   specimen: Specimen;
   desktop: boolean;
   onSpecimenCommand?: (command: SpecimenCommand) => void;
   onReview?: () => void;
   onTeach?: () => void;
+  /** Bumped after an import persists a network, so this view reloads it. */
+  reloadKey?: number;
 }) {
   const [stored, setStored] = useState<StoredNetwork | null>(null);
   // Bumped on every successful edit: remounts the builder so drafts and the
@@ -906,7 +909,7 @@ export function NetworkPanel({
     return () => {
       live = false;
     };
-  }, [reads]);
+  }, [reads, reloadKey]);
   const command = (cmd: NetworkCommand, done: string) => {
     if (!stored) return;
     let next: Network;

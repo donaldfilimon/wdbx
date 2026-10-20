@@ -21,6 +21,10 @@ export function DialogHost({ m }: { m: StudioModel }) {
     setDialog,
     editing,
     pendingLoad,
+    pendingNetwork,
+    pendingSummary,
+    pendingKind,
+    confirmLoad,
     setStorageEnabled,
     setSelected,
     prompt,
@@ -48,7 +52,9 @@ export function DialogHost({ m }: { m: StudioModel }) {
                 ? 'Edit memory'
                 : 'Add a memory'
               : dialog === 'load'
-                ? 'Load this specimen?'
+                ? pendingKind === 'specimen'
+                  ? 'Load this specimen?'
+                  : 'Create a specimen from this file?'
                 : dialog === 'attach'
                   ? 'Attach two nodes'
                   : 'Start a fresh specimen?'}
@@ -107,23 +113,26 @@ export function DialogHost({ m }: { m: StudioModel }) {
                 {pendingLoad.resources.length} memories ·{' '}
                 {pendingLoad.history.length} conversations
               </p>
+              {pendingSummary && (
+                <p className="m-0 mt-2 text-sm text-muted-foreground">
+                  {pendingSummary}
+                </p>
+              )}
+              {pendingNetwork ? (
+                <p className="m-0 mt-1 text-sm text-muted-foreground">
+                  {pendingNetwork.layers.length} layers · not trained
+                </p>
+              ) : (
+                <p className="m-0 mt-1 text-sm text-muted-foreground">
+                  Keeps the composition network already on this device.
+                </p>
+              )}
             </div>
             <div className="mt-4 flex flex-wrap justify-end gap-3">
               <WButton variant="outline" onClick={save}>
                 Save current specimen
               </WButton>
-              <WButton
-                variant="primary"
-                onClick={() => {
-                  setRunOutcome('idle');
-                  setTrace([]);
-                  commit(pendingLoad);
-                  setStorageEnabled(true);
-                  setDialog(null);
-                  setSelected('');
-                  announce('Specimen loaded.');
-                }}
-              >
+              <WButton variant="primary" onClick={() => void confirmLoad()}>
                 Load specimen
               </WButton>
             </div>

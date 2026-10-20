@@ -224,7 +224,7 @@ try {
   if (
     saved.name !== 'QA specimen' ||
     saved.settings.voteThreshold !== 70 ||
-    saved.nodes.length !== 9
+    saved.nodes.length !== 16
   )
     throw Error('Save mismatch');
   await page.locator('input[type=file]').setInputFiles({
