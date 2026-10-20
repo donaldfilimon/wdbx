@@ -153,6 +153,19 @@ pub(super) fn compare(values: &[Value]) {
                 digest
             }
         );
+        let typed = super::DecodedCompleteEpisode::from_canonical_bytes(
+            &bytes,
+            CanonicalDecodeLimits::default(),
+        )
+        .expect("private bounded typed inverse");
+        assert_eq!(
+            typed.input(),
+            &super::decode_normalize::normalize(
+                draft_adapter::input(v).expect("synthetic fixture construction"),
+            )
+        );
+        assert_eq!(typed.episode().canonical_bytes().unwrap(), bytes);
+        assert_eq!(typed.episode().digest().unwrap(), digest);
         let limits = CanonicalDecodeLimits::default();
         let decoded = CanonicalValue::from_canonical_bytes(&bytes, limits)
             .expect("bounded generic syntax only");

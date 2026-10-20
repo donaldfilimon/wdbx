@@ -49,7 +49,7 @@ The receipt's `runner.label` for the desktop and packaging legs is the matrix le
   - `jq` for the receipts and the collector.
   - `gh` for `scripts/repackage-macos.py` and the collector. The token reaches `gh` only through `GH_TOKEN`.
   - `node` 22.13 or later (`engines.node`). Hosted images have Node, and `bunx` runs Node-shebang tools such as `tauri` and `wdio` under it in the desktop job. The browser job installs its own Node with `actions/setup-node`.
-- `rustup` (from rustup.rs). The jobs install `nightly-2026-09-01` from `rust-toolchain.toml`.
+- `rustup` (from rustup.rs). The jobs install stable Rust `1.99.1` from `rust-toolchain.toml`.
 - Google Chrome in `/Applications` for `browser (chrome)`. Playwright's `install chrome` on macOS runs `sudo rm -rf "/Applications/Google Chrome.app"` and reinstalls it, so the job checks that the host's Chrome exists instead. Firefox and WebKit are downloaded per user into `~/Library/Caches/ms-playwright`.
 - Bun needs no host install. `oven-sh/setup-bun` fetches the pinned 1.4.0.
 - The runner reads `PATH` when `config.sh` runs (in `.path` inside the runner directory). If you install tools later, run `./env.sh` in the runner directory and then `./svc.sh stop && ./svc.sh start`.

@@ -1,5 +1,7 @@
 mod info;
+mod lock;
 pub use info::StoreInfo;
+use lock::WriterLock;
 
 use crate::{Result, engine, error, neural::Network};
 use abi_wdbx::v2::{V2Mutation, V2Store};
@@ -129,10 +131,26 @@ pub struct Store {
     root: PathBuf,
     store: V2Store,
     pub snapshot: Snapshot,
+    read_only: bool,
+    _lock: Option<WriterLock>,
 }
 impl Store {
     pub fn open(root: impl Into<PathBuf>) -> Result<Self> {
         let root = root.into();
+        let lock = WriterLock::acquire(&root)?;
+        Self::load(root, Some(lock), false)
+    }
+
+    /// Reads the same directory without the writer lock. Writes return `ReadOnly`.
+    pub fn open_read_only(root: impl Into<PathBuf>) -> Result<Self> {
+        Self::load(root.into(), None, true)
+    }
+
+    pub fn is_read_only(&self) -> bool {
+        self.read_only
+    }
+
+    fn load(root: PathBuf, lock: Option<WriterLock>, read_only: bool) -> Result<Self> {
         fs::create_dir_all(root.join("assets"))?;
         let store = V2Store::open(root.join("store")).map_err(|e| error("Storage", e))?;
         let snapshot = store
@@ -145,16 +163,27 @@ impl Store {
             root,
             store,
             snapshot,
+            read_only,
+            _lock: lock,
         };
         if instance.snapshot.revision > 0 {
             instance.snapshot.validate()?;
         }
         Ok(instance)
     }
+
+    fn ensure_writable(&self) -> Result<()> {
+        if self.read_only {
+            Err(error("ReadOnly", "This store is open read-only."))
+        } else {
+            Ok(())
+        }
+    }
     pub fn root(&self) -> &Path {
         &self.root
     }
     pub fn commit(&mut self, expected: u64, mut next: Snapshot) -> Result<Snapshot> {
+        self.ensure_writable()?;
         if expected != self.snapshot.revision {
             return Err(error(
                 "StaleRevision",
@@ -230,6 +259,7 @@ impl Store {
     }
     /// Reclaim expired unreferenced assets only when no recovery snapshot needs them.
     pub fn cleanup(&self, cancel: &std::sync::atomic::AtomicBool) -> Result<usize> {
+        self.ensure_writable()?;
         use std::sync::atomic::Ordering;
         fn assets(value: &Value, keep: &mut std::collections::BTreeSet<String>) {
             match value {
@@ -295,6 +325,7 @@ impl Store {
         Ok(removed)
     }
     pub fn put_asset(&self, bytes: &[u8]) -> Result<String> {
+        self.ensure_writable()?;
         if bytes.len() > 32 * 1024 * 1024 {
             return Err(error("BudgetExceeded", "Asset exceeds 32 MiB"));
         }
@@ -344,6 +375,7 @@ impl Store {
         result
     }
     pub fn import(&mut self, path: &Path, expected: u64) -> Result<Snapshot> {
+        self.ensure_writable()?;
         if expected != self.snapshot.revision {
             return Err(error("StaleRevision", "Workspace changed during import"));
         }

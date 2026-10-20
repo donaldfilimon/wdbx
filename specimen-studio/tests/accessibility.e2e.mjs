@@ -314,6 +314,12 @@ try {
     await expect(page.locator('.native-lab')).toBeVisible();
     await audit(page, width, 'lab-browser');
 
+    await navigate(page, width, '?view=notes');
+    await expect(
+      page.getByRole('heading', { name: 'Notes', exact: true }),
+    ).toBeVisible();
+    await audit(page, width, 'notes');
+
     await navigate(page, width, '?view=store');
     await expect(page.getByText('Browser · IndexedDB')).toBeVisible();
     await expect(page.getByRole('region', { name: 'Records' })).toBeVisible();

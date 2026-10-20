@@ -1,0 +1,62 @@
+{
+  "scope": "Private provisional Rust decoder; no ABI ratification",
+  "files": [
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/mod.rs",
+      "sha256": "0ca9e13865c14206b8851633adda185c1c75659a997a3e582302f38676c2534a"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/tests.rs",
+      "sha256": "1a3a382195989d91a7b27684aa1efc894256a7e420dd2fd40ae1e2858531cee9"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/decode.rs",
+      "sha256": "43ee0cf34743b16c45d60de8c93fb85f444760748f3af65b7cbcd44ee018b8a1"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/decode/containers.rs",
+      "sha256": "49bf8075eb5f61ae19d643968af70ad17ab1bb554a0a8a57ba7766bf290fbec3"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/decode/groups.rs",
+      "sha256": "416f347a394d5fdc48b2bd4ef0fa3b044cca9aefb5d38efc24c9901907d6ef68"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/decode/references.rs",
+      "sha256": "bbe7c60fb5d9ac0b13da0cba619e7f491d08ac6c1bb052620e4aa1676325aa4a"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/decode/vocabulary.rs",
+      "sha256": "768f2d7f35d6ecb85ce86d827115882b0043e18dd331a4c728eccdaa0a78fc62"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/tests/decode_bounds.rs",
+      "sha256": "300375a3a7d5e3ee085bfb02aa0009d3af9041bb78366ca6c46835ca1a9ee1a5"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/tests/decode_malformed.rs",
+      "sha256": "f19aa3f8dd541138d3ff6a8ca68e007029e4575964243320f4e50b60521f1d57"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/tests/decode_normalize.rs",
+      "sha256": "ea21755ea528789f42cec908f77c18ca62d6f6679e7240ded51dcf638058534c"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/tests/decode_roundtrip.rs",
+      "sha256": "98e2e49a6b9eac7d01894a4198756059b1b96baf0ee4e10f6475cec1d4313f4a"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/tests/decode_semantics.rs",
+      "sha256": "9f54e44e1560f41c233d2009dd871bab26d297741a39266141d4dfb6a37c4494"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/tests/draft_witness.rs",
+      "sha256": "15eb8085e502857dc83b0088868552046429fb73311dfd8831e783d1d03df8b6"
+    }
+  ],
+  "root_lock_sha256": "e2fac4f3f125cecc771a0dc7d6f33eb1629972b3979ac0771849fdf61368680e",
+  "full_gate_cohort": "/Users/donald/.codex/verification/abi-abbey-canonical-20261020/latest-canonical/cohort-1/wdbx",
+  "passed": 774,
+  "failed": 0,
+  "ignored": 0
+}

@@ -10,7 +10,7 @@ use crate::{
     language,
     neural::Rng,
 };
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
 
@@ -44,7 +44,7 @@ pub fn log(env: &dyn Env, s: &mut Value, kind: &str, title: &str, detail: &str) 
     s["updatedAt"] = json!(env.now_rfc3339());
 }
 
-#[derive(Debug, Clone, Default, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeInput {
     pub name: String,
@@ -319,7 +319,7 @@ pub fn remove_node(h: &Host, source: &Value, node_ref: &str) -> Value {
     s
 }
 
-#[derive(Debug, Clone, Default, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ResourceInput {
     pub subsystem: String,
@@ -730,6 +730,7 @@ pub fn validate_records(s: &Value) -> Result<()> {
         {
             return Err(invalid("A node is invalid or repeated."));
         }
+        crate::place::validate_position(n)?;
         for e in entries {
             let p = text(e, "pattern");
             let alts = rows(e, "alternatives");
@@ -840,6 +841,7 @@ pub fn validate_records(s: &Value) -> Result<()> {
     if !v.is_finite() || v.abs() > 1. || !i.is_finite() || !(0. ..=1.).contains(&i) {
         return Err(invalid("ATP state is invalid."));
     }
+    crate::notes::validate_notes(s)?;
     Ok(())
 }
 

@@ -1,6 +1,6 @@
 use crate::{Result, error};
 use serde::{Deserialize, Serialize};
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Layer {
     pub inputs: usize,
@@ -10,7 +10,7 @@ pub struct Layer {
     pub weights: Vec<f32>,
     pub biases: Vec<f32>,
 }
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Network {
     pub version: u32,
     pub layers: Vec<Layer>,

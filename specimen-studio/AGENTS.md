@@ -21,7 +21,7 @@ excludes it, and wdbx's `tools/check.sh` does not build or test it.
 
 ## Build, Test, and Development Commands
 
-Use Bun, Node.js 22.13+, and `nightly-2026-09-01` from `rust-toolchain.toml`.
+Use Bun, Node.js 22.13+, and stable Rust `1.99.1` from `rust-toolchain.toml`.
 Bun is the runtime wherever it has been proven (2026-09-29 spike, recorded in
 `VALIDATION.md`): `bun run build` (vinext), `desktop:dev`/`desktop:build` (Vite),
 `desktop:package` (Tauri CLI) and `test:browser` (Playwright) run with `bun --bun`
@@ -38,6 +38,7 @@ CI uses Bun 1.4.0; dependency resolutions live in `bun.lock` and `Cargo.lock`.
 - `bunx tsc --noEmit`: check TypeScript types.
 - `bun run lint:studio`: lint studio/runtime code; `bun run lint` checks the broader project.
 - `bun run desktop`: launch Tauri; first build inference binaries with `python3 scripts/build-runtimes.py`.
+- `cargo run --locked`: build and launch the embedded desktop app without a dev server; automatically builds WASM, Vite assets and missing inference executables. Nested WASM compilation uses `target/desktop-wasm` to avoid the outer Cargo lock. `bun run desktop` disables the default `custom-protocol` feature for live reload.
 - `bun run desktop:package`: package the desktop application.
 - `bun run test:native`: `cargo test --locked` over `specimen-kernel`, `specimen-core` and `specimen-wasm`; `bun run check:native` runs workspace Clippy with warnings denied.
 - `bun run build:wasm`: release-build the kernel probe for `wasm32-unknown-unknown` (target installed by `rustup`); `bun test` needs it for `tests/wasm-probe.test.js`, so `bun run check` runs it first.

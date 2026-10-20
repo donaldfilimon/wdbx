@@ -1,7 +1,6 @@
 use super::*;
 use crate::StorePaths;
-use std::io::{Read as _, Write as _};
-use std::net::Shutdown;
+use std::io::Write as _;
 use std::path::PathBuf;
 use std::thread;
 
@@ -459,6 +458,54 @@ fn slow_reader_does_not_hold_the_rest_accept_loop() {
 }
 
 #[test]
+fn overload_delivers_503_even_with_unread_invalid_request_bytes() {
+    let listener = TcpListener::bind((Ipv4Addr::LOCALHOST, 0)).expect("bind");
+    let mut client = TcpStream::connect(listener.local_addr().expect("address")).expect("connect");
+    client
+        .set_read_timeout(Some(Duration::from_secs(2)))
+        .expect("read timeout");
+    let (mut stream, _) = listener.accept().expect("accept");
+    // Framing fails in the original parser's first read, leaving bytes queued
+    // in TCP. More than the discard cap also verifies that FIN, not an
+    // unbounded drain of everything the peer sends, protects the response.
+    let mut request = b"POST /insert HTTP/1.1\r\nTransfer-Encoding: chunked\r\n\r\n".to_vec();
+    request.resize(MAX_REQUEST_SIZE * 2, b'x');
+    client.write_all(&request).expect("queue rejected request");
+    client.shutdown(Shutdown::Write).expect("finish request");
+    let handle = thread::spawn(move || {
+        reject_overloaded(&mut stream, &AtomicBool::new(false)).expect("reject overload");
+    });
+    let mut response = Vec::new();
+    let result = client.read_to_end(&mut response);
+    handle.join().expect("reject joins");
+    result.expect("complete 503 followed by clean EOF, not TCP reset");
+    assert_eq!(response, OVERLOADED);
+}
+
+#[test]
+fn overload_rejection_does_not_wait_for_peer_eof() {
+    let listener = TcpListener::bind((Ipv4Addr::LOCALHOST, 0)).expect("bind");
+    let mut client = TcpStream::connect(listener.local_addr().expect("address")).expect("connect");
+    client
+        .set_read_timeout(Some(Duration::from_secs(2)))
+        .expect("read timeout");
+    let (mut stream, _) = listener.accept().expect("accept");
+    let started = std::time::Instant::now();
+    let handle = thread::spawn(move || {
+        reject_overloaded(&mut stream, &AtomicBool::new(false)).expect("reject idle peer");
+    });
+    // Keep the peer's write side open throughout rejection. Neither the 503
+    // nor completion of the bounded discard may require a cooperative peer.
+    let mut response = Vec::new();
+    client
+        .read_to_end(&mut response)
+        .expect("503 and clean EOF");
+    handle.join().expect("reject joins");
+    assert_eq!(response, OVERLOADED);
+    assert!(started.elapsed() < Duration::from_secs(1));
+}
+
+#[test]
 fn saturated_rest_readers_get_503_without_store_routing() {
     let fixture = Fixture::new("abi_rest_reader_overload");
     let config = RestConfig {
@@ -484,7 +531,12 @@ fn saturated_rest_readers_get_503_without_store_routing() {
         slow_peers.push(stream);
     }
     thread::sleep(Duration::from_millis(100));
-    let overloaded = exchange(port, &[b"GET /health HTTP/1.1\r\nHost: localhost\r\n\r\n"]);
+    let body = br#"{"key":"overloaded","value":"must not persist"}"#;
+    let header = format!(
+        "POST /insert HTTP/1.1\r\nHost: localhost\r\nContent-Length: {}\r\n\r\n",
+        body.len()
+    );
+    let overloaded = exchange(port, &[header.as_bytes(), body]);
     assert!(
         overloaded.starts_with("HTTP/1.1 503 Service Unavailable"),
         "{overloaded}"
@@ -492,6 +544,7 @@ fn saturated_rest_readers_get_503_without_store_routing() {
     stop.store(true, Ordering::SeqCst);
     let server = handle.join().expect("server joins");
     assert_eq!(server.config.rate_limiter.stats().allowed, 0);
+    assert_eq!(server.store().get("overloaded"), None);
     drop(slow_peers);
 }
 

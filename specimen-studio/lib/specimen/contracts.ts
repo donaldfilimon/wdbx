@@ -47,6 +47,20 @@ export function validateCollections(s: Specimen): void {
       !list(n.entries, 100)
     )
       fail('node metadata');
+    if (
+      n.pinned != null ||
+      n.x != null ||
+      n.y != null ||
+      n.z != null
+    ) {
+      const placed = [n.x, n.y, n.z].every(
+        (value) =>
+          typeof value === 'number' &&
+          Number.isFinite(value) &&
+          Math.abs(value) <= 100,
+      );
+      if (n.pinned !== true || !placed) fail('node position');
+    }
     for (const e of n.entries) {
       if (!e || !id(e.id) || entries.has(e.id) || !list(e.alternatives, 100))
         fail('entry identity');
@@ -187,4 +201,28 @@ export function validateCollections(s: Specimen): void {
       !['pending', 'learned', 'dismissed'].includes(p.status)
     )
       fail('learning proposal');
+  if (s.notes != null) {
+    if (!list(s.notes, 200) || !unique(s.notes)) fail('notes');
+    const titles = new Set<string>();
+    for (const note of s.notes) {
+      if (
+        !note ||
+        !id(note.id) ||
+        !str(note.title, 200) ||
+        !note.title.trim() ||
+        note.title.includes('|') ||
+        note.title.includes('[') ||
+        note.title.includes(']') ||
+        !str(note.body, 20000) ||
+        !date(note.createdAt) ||
+        !date(note.updatedAt) ||
+        !list(note.tags, 16) ||
+        titles.has(note.title)
+      )
+        fail('note');
+      titles.add(note.title);
+      for (const tag of note.tags)
+        if (!str(tag, 40) || !tag.trim()) fail('note tag');
+    }
+  }
 }

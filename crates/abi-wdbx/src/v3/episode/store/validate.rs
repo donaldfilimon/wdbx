@@ -384,12 +384,85 @@ fn memory_edge_admitted(guild_ref: &str, edge: &MemoryEdge, state: &LedgerState)
 fn terminal_follows(status: TerminalStatus, stage: Stage) -> bool {
     match status {
         TerminalStatus::Completed => stage == Stage::Executed,
-        TerminalStatus::Compensated => stage == Stage::Compensated,
+        TerminalStatus::Compensated => stage == Stage::Compensated(true),
         TerminalStatus::Failed | TerminalStatus::Expired | TerminalStatus::Revoked => {
             matches!(
                 stage,
-                Stage::Proposed | Stage::Approved | Stage::Executed | Stage::Compensated
+                Stage::Proposed | Stage::Approved | Stage::Executed | Stage::Compensated(_)
             )
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::v3::episode::types::{ActorRef, EvidenceLevel, TerminalReason};
+
+    #[test]
+    fn replay_rejects_digest_correct_success_after_inexact_compensation() {
+        let actor = |principal_id: &str, kind| ActorRef {
+            principal_id: principal_id.into(),
+            kind,
+        };
+        let events = [
+            EpisodeEvent::Proposal {
+                requested_by: actor("requester", ActorKind::HumanSubject),
+                proposed_by: actor("proposer", ActorKind::Service),
+            },
+            EpisodeEvent::Approval {
+                approved_by: actor("admin", ActorKind::GuildAdministrator),
+            },
+            EpisodeEvent::Execution {
+                executed_by: actor("executor", ActorKind::Service),
+                voice: None,
+            },
+            EpisodeEvent::Compensation {
+                compensated_by: actor("executor", ActorKind::Service),
+                exact_restore_observed: false,
+            },
+            // Older validation admitted this chain despite the failed restore.
+            EpisodeEvent::Terminal {
+                status: TerminalStatus::Compensated,
+                reason: TerminalReason::Completed,
+            },
+        ];
+        let mut state = LedgerState::default();
+        let mut previous_digest = None;
+        for (index, event) in events.into_iter().enumerate() {
+            let mut record = StoredRecord {
+                sequence: u64::try_from(index + 1).unwrap(),
+                request_id: format!("request_{index}"),
+                operation_id: "operation".into(),
+                contract_revision: 2,
+                contract_digest: [9; 32],
+                guild_ref: "guild".into(),
+                consent_epoch: Some(7),
+                source_type: EpisodeSource::DiscordVoice,
+                policy_version: "policy_v1".into(),
+                evidence_level: EvidenceLevel::C2,
+                event,
+                token_cost: 3,
+                previous_digest,
+                episode_digest: [0; 32],
+                signature: None,
+            };
+            record.episode_digest = record.computed_digest().expect("canonical digest");
+            // Round-trip persisted JSON so this exercises replay's actual record shape.
+            let line = super::super::serialized_line(&record).expect("ledger line");
+            let decoded: StoredRecord = serde_json::from_slice(&line).expect("stored JSON");
+            assert_eq!(decoded.computed_digest().unwrap(), decoded.episode_digest);
+            if index == 4 {
+                assert!(matches!(
+                    validate_stored_record(&decoded, &state, 0),
+                    Err(EpisodeStoreError::Corrupt)
+                ));
+            } else {
+                validate_stored_record(&decoded, &state, 0).expect("valid replay prefix");
+                super::super::apply_record(&decoded, line.len(), &mut state)
+                    .expect("rebuild replay state");
+                previous_digest = Some(decoded.episode_digest);
+            }
         }
     }
 }

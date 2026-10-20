@@ -12,6 +12,7 @@ export const VIEW_TITLES: Record<View, string> = {
   studio: 'Studio',
   nodes: 'Node library',
   memory: 'Memory',
+  notes: 'Notes',
   activity: 'Activity',
   engine: 'Live engine',
   network: 'Neural layers',

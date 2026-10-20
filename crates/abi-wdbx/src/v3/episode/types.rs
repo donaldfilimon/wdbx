@@ -551,7 +551,7 @@ impl EpisodeEvent {
 pub enum TerminalStatus {
     /// Operation completed.
     Completed,
-    /// Operation was compensated.
+    /// Operation was compensated with exact prior-state restoration observed.
     Compensated,
     /// Operation failed closed.
     Failed,

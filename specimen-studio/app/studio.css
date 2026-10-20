@@ -3458,6 +3458,43 @@ body {
   color: var(--teal-strong);
   font-weight: 600;
 }
+.console-replies {
+  max-height: 16vh;
+  overflow: auto;
+  padding: 8px 14px 0;
+  color: var(--ink-soft);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12px;
+  white-space: pre-wrap;
+}
+.console-replies p {
+  margin: 0 0 8px;
+}
+.console-dock-form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 14px 12px;
+  border-top: 1px solid var(--line);
+}
+.console-dock-form input {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-2);
+  color: var(--ink);
+  padding: 0 10px;
+  font: inherit;
+}
+.console-dock-form input:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.console-dock-form button {
+  min-height: 44px;
+}
 .command-palette {
   background: var(--popover);
   color: var(--popover-foreground);
@@ -3511,4 +3548,73 @@ body {
 .wdbx-meter::-moz-progress-bar {
   background: var(--teal);
   border-radius: 999px;
+}
+
+/* Enlarged text wraps or scrolls. Zoom stays in the heading, not over the graph. */
+.panel-heading,
+.network-controls,
+.composer-heading,
+.composer-row,
+.segmented,
+.zoom-controls,
+.answer-footer,
+.provenance-detail,
+.trace-step {
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.zoom-controls {
+  position: static;
+  top: auto;
+  right: auto;
+  max-width: 100%;
+  overflow: visible;
+}
+.segmented {
+  max-width: 100%;
+}
+.conversation-panel .panel-heading h2,
+.conversation-panel .panel-heading .text-button,
+.telemetry-label,
+.workflow-step strong,
+.workflow-step small,
+.trace-step p,
+.trace-step strong,
+.composer-heading span,
+.panel-title-stack {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.workflow-rail {
+  overflow: visible;
+}
+.workflow-step {
+  height: auto;
+  align-items: start;
+}
+.trace-list {
+  height: auto;
+  min-height: 12rem;
+  max-height: 40rem;
+  overflow: auto;
+}
+.trace-step div,
+.dossier-summary,
+.result-context,
+.telemetry-stat {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.studio-console.has-cycle .studio-grid {
+  order: 2;
+}
+.studio-console.has-cycle .composer {
+  order: 3;
+}
+.studio-console.has-cycle .workflow-rail {
+  order: 4;
+}
+.studio-console.has-cycle .workflow-step {
+  min-height: 44px;
+  padding-block: 8px;
 }

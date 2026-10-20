@@ -473,10 +473,8 @@ mod tests {
         let root =
             std::env::temp_dir().join(format!("wdbx-invoke-cancel-{}", uuid::Uuid::new_v4()));
         let mut store = Store::open(&root).unwrap();
-        let specimen = serde_json::from_str(include_str!(
-            "../../conformance/starter.json"
-        ))
-        .unwrap();
+        let specimen =
+            serde_json::from_str(include_str!("../../conformance/starter.json")).unwrap();
         store.edit(0, specimen).unwrap();
         let before = serde_json::to_value(&store.snapshot).unwrap();
         let state = Arc::new(AppState {

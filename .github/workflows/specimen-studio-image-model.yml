@@ -27,7 +27,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Rust toolchain
-        run: rustup toolchain install nightly-2026-09-01 --profile minimal
+        run: rustup toolchain install 1.99.1 --profile minimal
       - name: Build pinned CPU image runtime
         run: python3 scripts/build-runtimes.py --only diffusion
       - name: Download and verify SDXL-Turbo

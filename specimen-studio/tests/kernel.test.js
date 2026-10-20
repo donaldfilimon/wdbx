@@ -5,7 +5,9 @@ import { readFileSync } from 'node:fs';
 import {
   addEntry,
   addNode,
+  applyCommand,
   feedback,
+  parseLine,
   initKernel,
   log,
   maintenance,
@@ -19,6 +21,7 @@ import {
   removeNode,
   runCycle,
   saveResource,
+  querySpecimen,
   seedSpecimen,
   togglePin,
   useKernelWorker,
@@ -372,4 +375,105 @@ test('cycles fall back to the default network when browser storage is unavailabl
   expect(typeof globalThis.indexedDB).toBe('undefined');
   const { compositionNetwork } = await import('../lib/specimen/storage');
   await expect(compositionNetwork()).resolves.toBeUndefined();
+});
+
+test('parse accepts the composer spellings and rejects unknown commands', () => {
+  expect(parseLine('What is 2 + 2?')).toEqual({
+    kind: 'prompt',
+    text: 'What is 2 + 2?',
+  });
+  expect(parseLine('/wrng red').kind).toBe('command');
+  const help = parseLine('/help');
+  expect(help.kind).toBe('help');
+  for (const spelling of [
+    '/prompt',
+    '/right',
+    '/wrong',
+    '/wrng',
+    '/contributorfractal',
+    '/saveSpecimen',
+    '/loadSpecimen',
+    '/addPattern',
+    '/learn',
+    '/undo',
+    '/help',
+  ])
+    expect(help.text).toContain(spelling);
+  expect(() => parseLine('/nope')).toThrow(/Unknown command/);
+  const before = seedSpecimen();
+  expect(() =>
+    applyCommand(before, {
+      command: 'addNode',
+      input: { name: '', pattern: 'x', action: 'y' },
+    }),
+  ).toThrow(/Enter a name, pattern, and action/);
+  expect(before.nodes).toHaveLength(8);
+});
+
+test('undo restores the specimen after a command', () => {
+  const before = seedSpecimen();
+  const applied = applyCommand(before, {
+    command: 'addNode',
+    input: { name: 'Color', pattern: 'favorite color', action: 'Teal.' },
+  });
+  expect(applied.state.nodes).toHaveLength(9);
+  const undone = applyCommand(applied.state, {
+    command: 'revert',
+    undo: applied.undo,
+  });
+  expect(undone.state).toEqual(before);
+});
+
+test('notes round-trip through the kernel and drop raw html', () => {
+  const before = seedSpecimen();
+  expect(before.notes).toBeUndefined();
+  const applied = applyCommand(before, {
+    command: 'createNote',
+    title: 'Studio',
+    body: '<script>alert(1)</script>\n\nSee [[Missing]]',
+  });
+  expect(applied.state.notes).toHaveLength(1);
+  const undone = applyCommand(applied.state, {
+    command: 'revert',
+    undo: applied.undo,
+  });
+  expect(undone.state).toEqual(before);
+  const rendered = querySpecimen(applied.state, {
+    query: 'render',
+    id: applied.state.notes[0].id,
+  });
+  expect(rendered.kind).toBe('document');
+  expect(JSON.stringify(rendered)).not.toContain('script');
+  const unresolved = querySpecimen(applied.state, { query: 'unresolved' });
+  expect(unresolved.summary).toContain('Missing');
+});
+
+test('move pins a node and a missing connect leaves attachments', () => {
+  const before = seedSpecimen();
+  const ref = before.nodes[0].ref;
+  const moved = applyCommand(before, {
+    command: 'moveNode',
+    nodeRef: ref,
+    x: 1,
+    y: 2,
+    z: 3,
+  });
+  expect(moved.state.nodes[0].pinned).toBe(true);
+  expect(moved.state.nodes[0]).toMatchObject({ x: 1, y: 2, z: 3 });
+  const undone = applyCommand(moved.state, {
+    command: 'revert',
+    undo: moved.undo,
+  });
+  expect(undone.state).toEqual(before);
+  expect(() =>
+    applyCommand(before, {
+      command: 'connect',
+      from: 'missing',
+      to: ref,
+      bidirectional: false,
+      hard: false,
+      affinity: 0.5,
+    }),
+  ).toThrow(/Choose a node that exists/);
+  expect(before.attachments).toEqual(seedSpecimen().attachments);
 });

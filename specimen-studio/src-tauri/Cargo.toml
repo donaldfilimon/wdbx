@@ -13,6 +13,7 @@ uuid.workspace = true
 tauri-plugin-dialog = "2"
 
 [features]
+default = ["custom-protocol"]
 custom-protocol = ["tauri/custom-protocol"]
 e2e = ["dep:tauri-plugin-wdio", "dep:tauri-plugin-wdio-webdriver"]
 [dependencies.tauri-plugin-wdio]

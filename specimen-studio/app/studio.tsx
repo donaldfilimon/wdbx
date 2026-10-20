@@ -179,7 +179,8 @@ export default function Studio() {
       return () => cancelAnimationFrame(frame);
     }
   }, [mobileNav, mobileViewport]);
-  const model = useStudio(nav);
+  const revealDock = useCallback(() => setDockOpen(true), []);
+  const model = useStudio(nav, revealDock);
   const {
     state,
     notice,
@@ -188,6 +189,7 @@ export default function Studio() {
     commit,
     announce,
     popUndo,
+    replies,
     load,
     fileRef,
     openDialog,
@@ -320,7 +322,13 @@ export default function Studio() {
           wide={wide}
           onCloseSide={closeSide}
         />
-        {dockOpen && <ConsoleDock events={state.events} />}
+        {dockOpen && (
+          <ConsoleDock
+            events={state.events}
+            replies={replies}
+            onCommand={(line) => void model.run(line)}
+          />
+        )}
       </main>
       <div aria-live="polite" className={`toast ${notice ? 'visible' : ''}`}>
         <Check size={17} />

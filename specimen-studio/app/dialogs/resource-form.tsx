@@ -7,6 +7,7 @@ import {
   FormError,
   WButton,
 } from '@/components/wdbx';
+import { formatKernelError } from '@/lib/specimen/kernel';
 import { SUBSYSTEMS, type Resource, type Specimen } from '@/lib/specimen/types';
 
 import { formText } from '../state/format';
@@ -37,9 +38,7 @@ export function ResourceForm({
             intensity: Number(f.get('intensity')),
           });
         } catch (err) {
-          setError(
-            err instanceof Error ? err.message : 'Check the memory fields.',
-          );
+          setError(formatKernelError(err));
         }
       }}
     >

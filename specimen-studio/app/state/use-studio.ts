@@ -1,15 +1,19 @@
 'use client';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  feedback,
+  applyCommand,
+  formatKernelError,
   maintenance,
   observeContext,
+  parseLine,
+  querySpecimen,
   runCycle,
   seedSpecimen,
   validateSpecimen,
   initKernel,
   migrateIds,
   PLACEHOLDER,
+  type Undo,
 } from '@/lib/specimen/kernel';
 import { kernelUrls } from '@/lib/specimen/kernel-url';
 import {
@@ -30,7 +34,10 @@ import { useStudioTools } from '@/lib/webmcp';
 import type { View } from './navigation';
 
 /** Specimen state and every handler the panels use; layout lives in Studio. */
-export function useStudio(nav: (v: View, section?: number) => void) {
+export function useStudio(
+  nav: (v: View, section?: number) => void,
+  revealDock?: () => void,
+) {
   const [state, setState] = useState<Specimen>(PLACEHOLDER);
   const current = useRef(state);
   const [storageEnabled, setStorageEnabled] = useState(false);
@@ -53,14 +60,16 @@ export function useStudio(nav: (v: View, section?: number) => void) {
       'node' | 'resource' | 'load' | 'reset' | 'attach' | null
     >(null),
     [editing, setEditing] = useState<string | undefined>(),
-    [pendingLoad, setPendingLoad] = useState<Specimen | null>(null);
+    [pendingLoad, setPendingLoad] = useState<Specimen | null>(null),
+    [replies, setReplies] = useState<{ id: number; text: string }[]>([]);
   const fileRef = useRef<HTMLInputElement>(null),
     promptRef = useRef<HTMLInputElement>(null),
     dialogReturnRef = useRef<HTMLElement | null>(null),
     abortRef = useRef<AbortController | null>(null),
     lastInteraction = useRef(0),
     noticeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined),
-    undo = useRef<Specimen | null>(null);
+    undoStack = useRef<Undo[]>([]),
+    replySeq = useRef(0);
   const selectedNode =
     state.nodes.find((n) => n.ref === selected) ?? state.nodes[0];
   const cycle = state.history.at(-1);
@@ -94,9 +103,7 @@ export function useStudio(nav: (v: View, section?: number) => void) {
       setError('');
       fn();
     } catch (e) {
-      setError(
-        e instanceof Error ? e.message : 'This action could not complete.',
-      );
+      setError(formatKernelError(e));
     }
   }, []);
   const openDialog = useCallback(
@@ -240,6 +247,25 @@ export function useStudio(nav: (v: View, section?: number) => void) {
       abortRef.current = null;
     }
   }, [busy, commit, announce]);
+  const reply = useCallback((text: string) => {
+    const id = ++replySeq.current;
+    setReplies((lines) => [{ id, text }, ...lines].slice(0, 40));
+  }, []);
+  const pushUndo = useCallback((undo: Undo) => {
+    undoStack.current.push(undo);
+    if (undoStack.current.length > 32) undoStack.current.shift();
+  }, []);
+  const popUndo = useCallback(() => {
+    const undo = undoStack.current.pop();
+    if (!undo) return null;
+    try {
+      return applyCommand(current.current, { command: 'revert', undo }).state;
+    } catch (e) {
+      undoStack.current.push(undo);
+      setError(formatKernelError(e));
+      return null;
+    }
+  }, []);
   const run = useCallback(
     async (raw: string) => {
       if (!hydrated || busy) return;
@@ -251,86 +277,133 @@ export function useStudio(nav: (v: View, section?: number) => void) {
       if (!input) return;
       setError('');
       lastInteraction.current = Date.now();
-      if (input === '/contributorfractal') {
-        setShowProvenance(true);
+      let parsed;
+      try {
+        parsed = parseLine(input);
+      } catch (e) {
+        const message = formatKernelError(e);
+        setError(message);
+        reply(message);
+        revealDock?.();
+        return;
+      }
+      if (parsed.kind === 'help') {
+        reply(parsed.text);
+        revealDock?.();
         setPrompt('');
         return;
       }
-      if (/^\/(right|wrong|wrng)(?:\s|$)/.test(input)) {
+      if (parsed.kind === 'undo') {
+        const previous = popUndo();
+        if (!previous) {
+          const message = 'Nothing to undo.';
+          setError(message);
+          reply(message);
+        } else {
+          commit(previous);
+          announce('Restored.');
+          reply('Restored.');
+        }
+        setPrompt('');
+        return;
+      }
+      if (parsed.kind === 'directive') {
+        const directive = parsed.directive;
+        if (directive.name === 'showProvenance') {
+          setShowProvenance(true);
+          setPrompt('');
+          return;
+        }
+        if (directive.name === 'saveSpecimen') {
+          if (isDesktop()) {
+            void persistWorkspace(current.current)
+              .then(exportNative)
+              .then((saved) => saved && announce('Portable specimen saved.'))
+              .catch((e) => setError(formatKernelError(e)));
+            setPrompt('');
+            return;
+          }
+          downloadText(
+            'specimen.json',
+            JSON.stringify(current.current, null, 2),
+          );
+          announce('Specimen downloaded.');
+          setPrompt('');
+          return;
+        }
+        if (directive.name === 'loadSpecimen') {
+          if (isDesktop()) {
+            void importNative()
+              .then((snapshot) => {
+                if (snapshot?.specimen) commit(snapshot.specimen);
+              })
+              .catch((e) => setError(formatKernelError(e)));
+          } else fileRef.current?.click();
+          setPrompt('');
+          return;
+        }
+        if (directive.name === 'learn') {
+          const id = directive.id ?? '';
+          const p =
+            current.current.proposals.find(
+              (p) => p.id === id || p.pattern === id,
+            ) ?? current.current.proposals.find((p) => p.status === 'pending');
+          if (!p) {
+            setError(
+              'No pending learning proposal. Open Activity to run a context review.',
+            );
+            return;
+          }
+          setPrompt(p.pattern);
+          setEditing(undefined);
+          openDialog('node');
+          return;
+        }
+        setEditing(undefined);
+        openDialog('node');
+        setPrompt('');
+        return;
+      }
+      if (parsed.kind === 'query') {
+        try {
+          const answer = querySpecimen(current.current, parsed.query);
+          reply(answer.summary);
+          revealDock?.();
+        } catch (e) {
+          const message = formatKernelError(e);
+          setError(message);
+          reply(message);
+          revealDock?.();
+        }
+        setPrompt('');
+        return;
+      }
+      if (parsed.kind === 'command') {
+        const command = parsed.command;
         act(() => {
-          const [cmd, color] = input.slice(1).split(/\s+/);
-          const c = current.current.history.at(-1);
-          if (!c) throw new Error('Run a cycle before giving feedback.');
-          const result = feedback(
-            current.current,
-            c.id,
-            cmd === 'right',
-            color,
-          );
-          commit(result.state);
-          announce(result.message);
-          setPrompt('');
+          const applied = applyCommand(current.current, command);
+          pushUndo(applied.undo);
+          commit(applied.state);
+          announce(applied.message);
+          reply(applied.message);
         });
-        return;
-      }
-      if (input.startsWith('/saveSpecimen')) {
-        if (isDesktop()) {
-          void persistWorkspace(current.current)
-            .then(exportNative)
-            .then((saved) => saved && announce('Portable specimen saved.'))
-            .catch((e) => setError(e.message));
-          setPrompt('');
-          return;
-        }
-        downloadText('specimen.json', JSON.stringify(current.current, null, 2));
-        announce('Specimen downloaded.');
         setPrompt('');
         return;
       }
-      if (input.startsWith('/loadSpecimen')) {
-        if (isDesktop()) {
-          void importNative()
-            .then((snapshot) => {
-              if (snapshot?.specimen) commit(snapshot.specimen);
-            })
-            .catch((e) => setError(e.message));
-        } else fileRef.current?.click();
-        return;
-      }
-      if (input.startsWith('/learn')) {
-        const id = input.slice(6).trim();
-        const p =
-          current.current.proposals.find(
-            (p) => p.id === id || p.pattern === id,
-          ) ?? current.current.proposals.find((p) => p.status === 'pending');
-        if (!p) {
-          setError(
-            'No pending learning proposal. Open Activity to run a context review.',
-          );
-          return;
-        }
-        setPrompt(p.pattern);
-        setEditing(undefined);
-        openDialog('node');
-        return;
-      }
-      if (input.startsWith('/addPattern')) {
-        setEditing(undefined);
-        openDialog('node');
-        return;
-      }
+      if (!parsed.text.trim()) return;
+      const promptText = parsed.text;
       const controller = new AbortController();
       abortRef.current = controller;
       setBusy(true);
       setTrace([]);
       setRunOutcome('running');
-      setRunInput(input);
+      setRunInput(promptText);
       try {
         const snapshot = current.current;
         const network = await compositionNetwork();
         const result = await runCycle(
           snapshot,
-          input.replace(/^\/prompt\s+/, ''),
+          promptText,
           setTrace,
           controller.signal,
           network,
@@ -356,14 +429,26 @@ export function useStudio(nav: (v: View, section?: number) => void) {
             ? 'cancelled'
             : 'failed',
         );
-        if (e instanceof Error && e.name !== 'AbortError') setError(e.message);
+        if (e instanceof Error && e.name !== 'AbortError')
+          setError(formatKernelError(e));
         else announce('Cycle cancelled. No partial changes were saved.');
       } finally {
         setBusy(false);
         abortRef.current = null;
       }
     },
-    [act, announce, busy, commit, hydrated, openDialog],
+    [
+      act,
+      announce,
+      busy,
+      commit,
+      hydrated,
+      openDialog,
+      popUndo,
+      pushUndo,
+      reply,
+      revealDock,
+    ],
   );
   useStudioTools({
     read: () => current.current,
@@ -410,9 +495,15 @@ export function useStudio(nav: (v: View, section?: number) => void) {
   const giveFeedback = (right: boolean, color?: string) =>
     act(() => {
       if (!cycle) return;
-      const result = feedback(state, cycle.id, right, color);
-      commit(result.state);
-      announce(result.message);
+      const applied = applyCommand(state, {
+        command: 'feedback',
+        cycleId: cycle.id,
+        right,
+        color,
+      });
+      pushUndo(applied.undo);
+      commit(applied.state);
+      announce(applied.message);
     });
   const save = () => {
     if (isDesktop()) {
@@ -441,14 +532,6 @@ export function useStudio(nav: (v: View, section?: number) => void) {
     } finally {
       if (fileRef.current) fileRef.current.value = '';
     }
-  };
-  const setUndo = (previous: Specimen | null) => {
-    undo.current = previous;
-  };
-  const popUndo = () => {
-    const previous = undo.current;
-    undo.current = null;
-    return previous;
   };
   const setDialogReturn = (target: HTMLElement | null) => {
     dialogReturnRef.current = target;
@@ -503,8 +586,9 @@ export function useStudio(nav: (v: View, section?: number) => void) {
     abortRef,
     current,
     setDialogReturn,
-    setUndo,
+    pushUndo,
     popUndo,
+    replies,
     setRunOutcome,
     setTrace,
   };

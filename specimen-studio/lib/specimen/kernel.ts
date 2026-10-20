@@ -9,9 +9,12 @@
 import {
   instantiateKernel,
   KernelError,
+  formatKernelError,
   unwrap,
   type KernelInstance,
 } from './kernel-core';
+
+export { formatKernelError };
 import { validateCollections } from './contracts';
 import { createReadiness, type LoadStatus } from './readiness';
 export type { LoadStatus };
@@ -198,6 +201,187 @@ export const feedback = (
 
 export const togglePin = (state: Specimen, id: string) =>
   call<Specimen>({ op: 'togglePin', state, id });
+
+/** A composer command that opens a visible editor or file chooser. */
+export type Directive =
+  | { name: 'addPattern' }
+  | { name: 'loadSpecimen' }
+  | { name: 'saveSpecimen' }
+  | { name: 'learn'; id?: string }
+  | { name: 'showProvenance' };
+
+/** Previous values of the keys one command changed. */
+export type Undo = {
+  restore: { key: string; value: unknown }[];
+  dropEvent?: string;
+  /** Top-level keys the command created. Revert removes them. */
+  dropKeys?: string[];
+  updatedAt: string;
+  network?: Network;
+};
+
+/** An edit the kernel applies. `revert` is produced by `applyCommand`. */
+export type SpecimenCommand =
+  | {
+      command: 'addNode';
+      input: {
+        name: string;
+        pattern: string;
+        action: string;
+        tone?: SpecimenNode['tone'];
+        type?: SpecimenNode['type'];
+        contextId?: string;
+        entries?: Entry[];
+      };
+      nodeRef?: string;
+    }
+  | {
+      command: 'addEntry';
+      nodeRef: string;
+      pattern: string;
+      action: string;
+    }
+  | { command: 'removeNode'; nodeRef: string }
+  | {
+      command: 'saveResource';
+      input: Omit<Resource, 'ref' | 'patternId'>;
+      resourceRef?: string;
+    }
+  | { command: 'removeResource'; resourceRef: string }
+  | { command: 'feedback'; cycleId?: string; right: boolean; color?: string }
+  | { command: 'togglePin'; cycleId: string }
+  | { command: 'setSettings'; settings: Settings; name?: string }
+  | {
+      command: 'connect';
+      from: string;
+      to: string;
+      bidirectional: boolean;
+      hard: boolean;
+      affinity: number;
+    }
+  | {
+      command: 'updateAttachment';
+      id: string;
+      bidirectional: boolean;
+      hard: boolean;
+      affinity: number;
+    }
+  | { command: 'disconnect'; id: string }
+  | { command: 'moveNode'; nodeRef: string; x: number; y: number; z: number }
+  | { command: 'unpinNode'; nodeRef: string }
+  | { command: 'editNetwork'; edit: NetworkCommand }
+  | {
+      command: 'createNote';
+      title: string;
+      body?: string;
+      tags?: string[];
+      id?: string;
+    }
+  | { command: 'editNote'; id: string; body: string }
+  | { command: 'renameNote'; id: string; title: string }
+  | { command: 'deleteNote'; id: string; force?: boolean }
+  | { command: 'tagNote'; id: string; tags: string[] }
+  | { command: 'revert'; undo: Undo };
+
+export type SpecimenQuery =
+  | { query: 'backlinks'; target: string }
+  | { query: 'outgoing'; note: string }
+  | { query: 'unresolved' }
+  | { query: 'search'; text: string; regex?: boolean }
+  | { query: 'graph'; focus?: string; depth?: number }
+  | { query: 'render'; id: string };
+
+export type WikiTarget =
+  | { kind: 'note'; title: string }
+  | { kind: 'node'; nodeRef: string }
+  | { kind: 'pattern'; id: string }
+  | { kind: 'memory'; resourceRef: string };
+
+export type Wikilink = { target: WikiTarget; label: string };
+
+export type NoteInline =
+  | { type: 'text'; text: string }
+  | { type: 'code'; text: string }
+  | { type: 'em'; inlines: NoteInline[] }
+  | { type: 'strong'; inlines: NoteInline[] }
+  | { type: 'break' }
+  | {
+      type: 'link';
+      label: string;
+      href: string;
+      kind: string;
+      target: string;
+      resolved: boolean;
+    };
+
+export type NoteBlock =
+  | { type: 'heading'; level: number; inlines: NoteInline[] }
+  | { type: 'paragraph'; inlines: NoteInline[] }
+  | { type: 'list'; ordered: boolean; items: NoteInline[][] }
+  | { type: 'code'; text: string }
+  | { type: 'quote'; inlines: NoteInline[] }
+  | { type: 'rule' };
+
+export type NoteHit = { id: string; title: string };
+
+export type QueryAnswer =
+  | { kind: 'notes'; summary: string; notes: NoteHit[] }
+  | { kind: 'links'; summary: string; links: Wikilink[] }
+  | {
+      kind: 'unresolved';
+      summary: string;
+      links: {
+        noteId: string;
+        noteTitle: string;
+        title: string;
+        target: string;
+      }[];
+    }
+  | {
+      kind: 'graph';
+      summary: string;
+      nodes: { id: string; title: string; x: number; y: number }[];
+      edges: { from: string; to: string }[];
+    }
+  | { kind: 'document'; summary: string; blocks: NoteBlock[] };
+
+export type Applied = {
+  state: Specimen;
+  network?: Network;
+  message: string;
+  undo: Undo;
+};
+
+export type Parsed =
+  | { kind: 'prompt'; text: string }
+  | { kind: 'help'; text: string }
+  | { kind: 'undo' }
+  | { kind: 'directive'; directive: Directive }
+  | { kind: 'command'; command: SpecimenCommand }
+  | { kind: 'query'; query: SpecimenQuery };
+
+/** Parses one composer or console line. Unknown slash commands throw. */
+export const parseLine = (line: string) => call<Parsed>({ op: 'parse', line });
+
+/**
+ * Applies one command. A failure throws and leaves `state` untouched.
+ * `network` is required for `editNetwork` and returned only when it changed.
+ */
+export const applyCommand = (
+  state: Specimen,
+  command: SpecimenCommand,
+  network?: Network,
+) =>
+  call<Applied>({
+    op: 'apply',
+    state,
+    command,
+    network,
+  });
+
+/** Reads notes, links, or the rendered body. Does not change the specimen. */
+export const querySpecimen = (state: Specimen, query: SpecimenQuery) =>
+  call<QueryAnswer>({ op: 'query', state, query });
 
 /** Appends an event to `state` in place (newest first, 500 kept). */
 export function log(

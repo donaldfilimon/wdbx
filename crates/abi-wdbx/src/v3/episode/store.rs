@@ -10,14 +10,19 @@ use super::types::{
 use crate::v3::commitment::CanonicalCborError;
 use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, BTreeSet};
-use std::fs::{self, File, OpenOptions, TryLockError};
+use std::fs::{File, OpenOptions};
 use std::io::Write;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use thiserror::Error;
 
 mod canonical;
+mod filesystem;
 mod validate;
 
+use filesystem::{
+    acquire_writer_lock, owner_file, prepare_directory, read_bounded_ledger,
+    reject_symlink_if_present, sync_directory,
+};
 use validate::{
     payload_bytes, validate_new_write, validate_store_policy, validate_stored_record,
     validate_transition,
@@ -75,6 +80,10 @@ pub enum EpisodeStoreError {
 }
 
 /// Durable, single-writer, append-only episode store.
+///
+/// Appends synchronize ledger data. Unix initialization also synchronizes
+/// directory entries; other platforms retain file-only synchronization and
+/// provide no directory-entry crash-durability guarantee.
 #[derive(Debug)]
 pub struct EpisodeStore {
     _writer_lock: File,
@@ -172,7 +181,8 @@ enum Stage {
     Proposed,
     Approved,
     Executed,
-    Compensated,
+    /// Compensation was attempted; the flag records exact restoration.
+    Compensated(bool),
     Terminal,
 }
 
@@ -184,6 +194,9 @@ struct GuildUsage {
 
 impl EpisodeStore {
     /// Open and replay-verify a store, truncating only an incomplete final line.
+    ///
+    /// Writer-lock contention is retried for up to 50 ms to tolerate transient
+    /// inherited descriptors; persistent contention returns `WriterBusy`.
     ///
     /// A store opened this way appends unsigned records. Existing signed
     /// records remain readable; use [`Self::signature_status`] to check them.
@@ -225,18 +238,19 @@ impl EpisodeStore {
         reject_symlink_if_present(&ledger_path)?;
 
         let writer_lock = owner_file(&lock_path)?;
-        match writer_lock.try_lock() {
-            Ok(()) => {}
-            Err(TryLockError::WouldBlock) => return Err(EpisodeStoreError::WriterBusy),
-            Err(TryLockError::Error(_)) => return Err(EpisodeStoreError::Io),
-        }
+        acquire_writer_lock(&writer_lock)?;
         let raw = read_bounded_ledger(&ledger_path)?;
         let (records, valid_bytes) = decode_complete_records(&raw)?;
 
         let mut state = LedgerState::default();
         let mut offset = 0_usize;
-        for record in &records {
-            let line_bytes = serialized_line(record)?.len();
+        for (record, line) in records
+            .iter()
+            .zip(raw.split_inclusive(|byte| *byte == b'\n'))
+        {
+            // Transport JSON need not use our serializer's whitespace or escape
+            // spelling. Charge the bytes actually persisted, including newline.
+            let line_bytes = line.len();
             validate_stored_record(record, &state, offset)?;
             if let Some(signer) = &signer {
                 validate_own_signature(record, signer)?;
@@ -257,6 +271,9 @@ impl EpisodeStore {
             repair.sync_data().map_err(|_| EpisodeStoreError::Io)?;
         }
         let ledger = owner_file(&ledger_path)?;
+        // On Unix, fence the ledger name (including retries after failed sync)
+        // before writes. Other platforms retain file-only synchronization.
+        sync_directory(&directory)?;
         Ok(Self {
             _writer_lock: writer_lock,
             ledger,
@@ -418,9 +435,10 @@ impl EpisodeStore {
 
     /// Return cumulative token and byte usage for a guild.
     ///
-    /// Bytes count every serialized ledger line plus the `payload_bytes` of
-    /// every admitted memory candidate, so a guild's memory footprint is
-    /// bounded by the same policy that bounds its ledger.
+    /// Bytes count every persisted ledger line (including whitespace and its
+    /// newline) plus the `payload_bytes` of every admitted memory candidate,
+    /// so a guild's memory footprint is bounded by the same policy that bounds
+    /// its ledger. Incomplete final lines discarded during recovery do not count.
     #[must_use]
     pub fn guild_usage(&self, guild_ref: &str) -> Option<(u64, u64)> {
         self.state
@@ -646,7 +664,10 @@ fn apply_record(
                     Stage::Approved
                 }
                 EpisodeEvent::Execution { .. } => Stage::Executed,
-                EpisodeEvent::Compensation { .. } => Stage::Compensated,
+                EpisodeEvent::Compensation {
+                    exact_restore_observed,
+                    ..
+                } => Stage::Compensated(*exact_restore_observed),
                 EpisodeEvent::Terminal { .. } => Stage::Terminal,
                 EpisodeEvent::Proposal { .. }
                 | EpisodeEvent::MemoryCandidate { .. }
@@ -775,59 +796,4 @@ fn decode_complete_records(raw: &[u8]) -> Result<(Vec<StoredRecord>, usize), Epi
         start = end + 1;
     }
     Ok((records, start))
-}
-
-fn prepare_directory(path: &Path) -> Result<PathBuf, EpisodeStoreError> {
-    if let Ok(metadata) = fs::symlink_metadata(path) {
-        if metadata.file_type().is_symlink() || !metadata.is_dir() {
-            return Err(EpisodeStoreError::Io);
-        }
-    } else {
-        fs::create_dir_all(path).map_err(|_| EpisodeStoreError::Io)?;
-    }
-    #[cfg(unix)]
-    {
-        use std::os::unix::fs::PermissionsExt;
-        fs::set_permissions(path, fs::Permissions::from_mode(0o700))
-            .map_err(|_| EpisodeStoreError::Io)?;
-    }
-    Ok(path.to_path_buf())
-}
-
-fn reject_symlink_if_present(path: &Path) -> Result<(), EpisodeStoreError> {
-    if let Ok(metadata) = fs::symlink_metadata(path)
-        && (metadata.file_type().is_symlink() || !metadata.is_file())
-    {
-        return Err(EpisodeStoreError::Io);
-    }
-    Ok(())
-}
-
-fn owner_file(path: &Path) -> Result<File, EpisodeStoreError> {
-    let file = OpenOptions::new()
-        .create(true)
-        .read(true)
-        .append(true)
-        .open(path)
-        .map_err(|_| EpisodeStoreError::Io)?;
-    #[cfg(unix)]
-    {
-        use std::os::unix::fs::PermissionsExt;
-        file.set_permissions(fs::Permissions::from_mode(0o600))
-            .map_err(|_| EpisodeStoreError::Io)?;
-    }
-    Ok(file)
-}
-
-fn read_bounded_ledger(path: &Path) -> Result<Vec<u8>, EpisodeStoreError> {
-    if !path.exists() {
-        let file = owner_file(path)?;
-        file.sync_data().map_err(|_| EpisodeStoreError::Io)?;
-    }
-    let metadata = fs::symlink_metadata(path).map_err(|_| EpisodeStoreError::Io)?;
-    if metadata.file_type().is_symlink() || !metadata.is_file() || metadata.len() > MAX_LEDGER_BYTES
-    {
-        return Err(EpisodeStoreError::Io);
-    }
-    fs::read(path).map_err(|_| EpisodeStoreError::Io)
 }

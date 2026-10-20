@@ -8,6 +8,7 @@ import {
   Waypoints,
   Network,
   Sparkles,
+  StickyNote,
 } from 'lucide-react';
 
 import type { View } from '../state/navigation';
@@ -16,6 +17,7 @@ export const views: { id: View; label: string; icon: typeof Network }[] = [
   { id: 'studio', label: 'Studio', icon: Network },
   { id: 'nodes', label: 'Node Library', icon: BookOpen },
   { id: 'memory', label: 'Memory', icon: Database },
+  { id: 'notes', label: 'Notes', icon: StickyNote },
   { id: 'network', label: 'Neural layers', icon: Waypoints },
   { id: 'activity', label: 'Activity', icon: Activity },
   { id: 'engine', label: 'Live engine', icon: Gauge },
@@ -25,7 +27,7 @@ export const views: { id: View; label: string; icon: typeof Network }[] = [
 ];
 
 export const viewGroups: { label: string; ids: View[] }[] = [
-  { label: 'Build', ids: ['studio', 'nodes', 'memory', 'network'] },
+  { label: 'Build', ids: ['studio', 'nodes', 'memory', 'notes', 'network'] },
   { label: 'Observe', ids: ['activity', 'engine', 'store', 'lab'] },
   { label: 'Reference', ids: ['specification'] },
 ];
@@ -38,6 +40,7 @@ export const labels: Record<View, [string, string]> = {
   ],
   nodes: ['Node library', 'Small patterns, reusable actions.'],
   memory: ['Memory', 'Supporting knowledge, close at hand.'],
+  notes: ['Notes', 'Linked notes beside the specimen.'],
   network: [
     'Neural layers',
     'Build the composition network. See the specimen in 3D.',

@@ -152,6 +152,45 @@ try {
   await expect(page.locator('.answer-text')).toHaveText(
     'Teal, like this studio.',
   );
+  await page
+    .getByRole('button', { name: 'Show activity dock', exact: true })
+    .click();
+  const dock = page.getByRole('region', { name: 'Activity dock' });
+  await dock.getByLabel('Command line', { exact: true }).fill('/help');
+  await dock.getByRole('button', { name: 'Run command', exact: true }).click();
+  await expect(
+    dock.getByRole('log', { name: 'Console replies' }),
+  ).toContainText('/wrng');
+  await dock.getByLabel('Command line', { exact: true }).fill('/right');
+  await dock.getByRole('button', { name: 'Run command', exact: true }).click();
+  await expect(
+    dock.getByRole('log', { name: 'Activity events' }),
+  ).toContainText('Positive feedback');
+  await page
+    .getByRole('button', { name: 'Hide activity dock', exact: true })
+    .click();
+  await page
+    .locator('nav[aria-label="Main navigation"] a[href="?view=notes"]')
+    .click();
+  await page.getByLabel('Title', { exact: true }).fill('Studio note');
+  await page.getByLabel('Body', { exact: true }).fill('See the calculator.');
+  await page
+    .getByLabel('Link a node', { exact: true })
+    .selectOption({ label: 'Calculate' });
+  await page.getByRole('button', { name: 'Save note', exact: true }).click();
+  await expect(
+    page.getByRole('region', { name: 'Outgoing links' }),
+  ).toContainText('Calculate');
+  await page
+    .locator('nav[aria-label="Main navigation"] a[href="?view=studio"]')
+    .click();
+  await page.getByRole('button', { name: 'Network', exact: true }).click();
+  await page
+    .getByRole('button', { name: 'Inspect Calculate', exact: true })
+    .click();
+  await expect(
+    page.getByRole('region', { name: 'Notes that mention this node' }),
+  ).toContainText('Studio note');
   await page.locator('a[href="?view=settings"]').click();
   await page.getByLabel('Specimen name', { exact: true }).fill('QA specimen');
   await page.getByLabel('Vote threshold', { exact: true }).fill('70');
@@ -289,6 +328,30 @@ try {
   ).toHaveCount(0);
   await page.getByRole('tab', { name: 'Topology' }).click();
   await expect(page.getByRole('region', { name: 'Nodes' })).toBeVisible();
+  await page.getByRole('button', { name: 'Calculate', exact: true }).click();
+  await page.getByRole('button', { name: 'Move right', exact: true }).click();
+  await expect(
+    page.getByRole('row', { name: /Calculate/ }),
+  ).toContainText('Pinned');
+  await page.waitForFunction(async () => {
+    const open = indexedDB.open('wdbx-specimen-studio');
+    const db = await new Promise((resolve, reject) => {
+      open.onsuccess = () => resolve(open.result);
+      open.onerror = () => reject(open.error);
+    });
+    const req = db.transaction('workspace', 'readonly').objectStore('workspace').get('active');
+    const record = await new Promise((resolve, reject) => {
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+    db.close();
+    return record?.nodes?.find((item) => item.name === 'Calculate')?.pinned === true;
+  });
+  await page.reload();
+  await page.getByRole('tab', { name: 'Topology' }).click();
+  await expect(
+    page.getByRole('row', { name: /Calculate/ }),
+  ).toContainText('Pinned');
   // Vision & models: the browser edition explains what the desktop adds.
   await page
     .locator('nav[aria-label="Main navigation"] a[href="?view=lab"]')

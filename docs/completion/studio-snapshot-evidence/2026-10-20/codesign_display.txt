@@ -1,0 +1,9 @@
+Executable=/Users/donald/.codex/verification/wdbx-studio-20261020-snapshot/wdbx/specimen-studio/target/release/bundle/macos/WDBX Specimen Studio.app/Contents/MacOS/wdbx-studio-desktop
+Identifier=wdbx_studio_desktop-05e79f7bb84a56e8
+Format=app bundle with Mach-O thin (arm64)
+CodeDirectory v=20400 size=228733 flags=0x20002(adhoc,linker-signed) hashes=7144+0 location=embedded
+Signature=adhoc
+Info.plist=not bound
+TeamIdentifier=not set
+Sealed Resources=none
+Internal requirements=none

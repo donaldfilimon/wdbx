@@ -33,7 +33,9 @@ The full specification is in [the downloadable Markdown](public/WDBX-Specimen-Ar
 
 ## Native desktop (0.2.0 qualification build)
 
-The desktop adapter uses Tauri 2 and the Rust engine in `native/specimen-core`. WDBX storage and compute are pinned at `3ac03f085196dbe6e922a127ceaa37bc2368de89`. Existing ABI/Abbey/WDBX sibling checkouts are not modified.
+The desktop adapter uses Tauri 2 and the Rust engine in `native/specimen-core`.
+WDBX storage and compute use this checkout's `crates/` through path dependencies;
+both workspaces use stable Rust 1.99.1. ABI/Abbey sibling checkouts are not modified.
 
 ```sh
 bun install --frozen-lockfile
@@ -43,7 +45,15 @@ bun run test:native
 bun run desktop:package
 ```
 
-Linux builds additionally require WebKitGTK 4.1, AppIndicator, librsvg and OpenSSL development packages. Windows builds require the Visual Studio C++ toolchain and WebView2; macOS builds require Xcode command-line tools. The pinned nightly toolchain is selected by `rust-toolchain.toml`. Inference binaries build for the current machine. Models are installed separately through Vision & models; model downloads, licenses, hashes and resource estimates are visible there.
+From `specimen-studio/`, `cargo run --locked` also builds and launches the
+complete desktop app: the WASM kernel, embedded Vite frontend, and Rust host.
+Missing inference executables are built automatically (requires CMake and a C++
+compiler); model downloads remain separate. Install Bun dependencies and the
+`wasm32-unknown-unknown` Rust target first. Nested WASM builds use
+`target/desktop-wasm` so they cannot deadlock on Cargo's native build lock.
+Use `bun run desktop` for the live-reloading Vite development server instead.
+
+Linux builds additionally require WebKitGTK 4.1, AppIndicator, librsvg and OpenSSL development packages. Windows builds require the Visual Studio C++ toolchain and WebView2; macOS builds require Xcode command-line tools. Stable Rust 1.99.1 is selected by `rust-toolchain.toml`, matching the parent workspace. Inference binaries build for the current machine. Models are installed separately through Vision & models; model downloads, licenses, hashes and resource estimates are visible there.
 
 Native saves use a dedicated app-data directory and transactional WDBX storage. Export `.wdbxspecimen` for portable records and assets; pretrained models remain referenced by digest. Existing browser JSON imports retain an original recovery copy. The browser edition keeps IndexedDB and its bounded JavaScript profile.
 

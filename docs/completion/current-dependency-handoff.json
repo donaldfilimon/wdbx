@@ -1,0 +1,76 @@
+{
+  "date": "2026-10-20",
+  "scope": "Current canonical manifests unchanged by this lane; consumer owners resolve their own path-based lockfiles",
+  "inputs": [
+    {
+      "path": "Cargo.toml",
+      "sha256": "6f65609201205000f806e84fe1812df23d81a4631e6366a46dd0386b4fb2bf5c"
+    },
+    {
+      "path": "Cargo.lock",
+      "sha256": "e2fac4f3f125cecc771a0dc7d6f33eb1629972b3979ac0771849fdf61368680e"
+    },
+    {
+      "path": "rust-toolchain.toml",
+      "sha256": "511d40d52e2c79df3d3b5c724f47325141ee83c74a6c112a37cb8114e8fb7698"
+    },
+    {
+      "path": "crates/abi-compute/Cargo.toml",
+      "sha256": "bf92bf8f08da40854eb4bcc1e5599c020f10521cf60e9832cecc1d590a944361"
+    },
+    {
+      "path": "crates/abi-core/Cargo.toml",
+      "sha256": "a4a734cb846b8103030d27faa4d6dbb1dceee10fb149fc52b91204b9282787d9"
+    },
+    {
+      "path": "crates/abi-foundation/Cargo.toml",
+      "sha256": "44c710c2f042509c3dbc29f601c00e57fca072150eeda670c9731e079d8e2c98"
+    },
+    {
+      "path": "crates/abi-telemetry/Cargo.toml",
+      "sha256": "0c76f4ae22ba7bab51a891abc366f6146a70566a0139855013f03413f8e1e5ae"
+    },
+    {
+      "path": "crates/abi-wdbx/Cargo.toml",
+      "sha256": "f4263a0b62e6243a266038e6aa939a24a868c7cb74da7fde6bb92d980f63d31f"
+    }
+  ],
+  "requirements": {
+    "tfhe": {
+      "version": "=1.8.1",
+      "default-features": false,
+      "features": [
+        "boolean",
+        "integer",
+        "shortint"
+      ]
+    },
+    "jsonschema": {
+      "version": "0.58.4",
+      "default-features": false
+    }
+  },
+  "resolved": {
+    "tfhe": [
+      "1.8.1"
+    ],
+    "jsonschema": [
+      "0.58.6"
+    ]
+  },
+  "abi_wdbx_features": {
+    "default": [],
+    "experimental-dghv-bootstrap": [],
+    "full-fhe": [
+      "dep:tfhe"
+    ]
+  },
+  "root_lock_sha256": "e2fac4f3f125cecc771a0dc7d6f33eb1629972b3979ac0771849fdf61368680e",
+  "qualification_receipt": "docs/superpowers/plans/2026-10-20-wdbx-compatible-dependency-refresh-receipt.md",
+  "limits": "Earlier optional-feature gates qualify their recorded cohort only; ABI/Abbey own manifests/locks and consumer feature negotiation. No independent manual corpus or lock copying.",
+  "abi_wdbx_dependency_usage": {
+    "jsonschema": "dev-dependency: not part of a normal ABI/Abbey consumer resolve graph",
+    "tfhe": "optional runtime dependency, enabled only by full-fhe; exact workspace version 1.8.1"
+  },
+  "consumer_alignment_note": "Different independently used consumer validators do not require version alignment. Verify one local path identity, actual enabled features and locked metadata; do not copy producer dev-dependencies into consumer lock rows."
+}

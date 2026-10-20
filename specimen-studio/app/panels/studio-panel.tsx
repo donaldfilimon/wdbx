@@ -16,8 +16,7 @@ import {
   ZoomIn,
   ZoomOut,
 } from 'lucide-react';
-import { togglePin } from '@/lib/specimen/kernel';
-
+import { querySpecimen, togglePin } from '@/lib/specimen/kernel';
 import { NodeInspector } from './topology';
 import type { StudioModel } from '../state/use-studio';
 import { Topology } from './topology';
@@ -26,6 +25,18 @@ import type { View } from '../state/navigation';
 import { VisualOutput } from './topology';
 import { clock } from '../state/format';
 import { fmt } from '../state/format';
+
+function mentionTitles(state: StudioModel['state'], ref: string) {
+  try {
+    const answer = querySpecimen(state, {
+      query: 'backlinks',
+      target: `node:${ref}`,
+    });
+    return answer.kind === 'notes' ? answer.notes : [];
+  } catch {
+    return [];
+  }
+}
 
 export function StudioPanel({
   m,
@@ -65,7 +76,10 @@ export function StudioPanel({
   } = m;
   return (
     <>
-      <div className="studio-console" aria-busy={busy}>
+      <div
+        className={cycle ? 'studio-console has-cycle' : 'studio-console'}
+        aria-busy={busy}
+      >
         <section className="console-telemetry" aria-label="Workspace overview">
           <div className="console-identity">
             <span className={`status-beacon ${busy ? 'is-running' : ''}`}>
@@ -532,6 +546,9 @@ export function StudioPanel({
               (vote) => vote.nodeRef === selectedNode?.ref,
             )}
             maxStrength={state.settings.maxStrength}
+            mentions={
+              selectedNode ? mentionTitles(state, selectedNode.ref) : []
+            }
             onEdit={() => {
               setEditing(selectedNode?.ref);
               openDialog('node');

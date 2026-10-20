@@ -1,10 +1,4 @@
-import {
-  addNode,
-  log,
-  saveResource,
-  seedSpecimen,
-} from '@/lib/specimen/kernel';
-import { uid } from '@/lib/specimen/types';
+import { applyCommand, seedSpecimen } from '@/lib/specimen/kernel';
 import { WButton } from '@/components/wdbx';
 import {
   Dialog,
@@ -30,6 +24,7 @@ export function DialogHost({ m }: { m: StudioModel }) {
     setStorageEnabled,
     setSelected,
     prompt,
+    pushUndo,
     save,
     setRunOutcome,
     setTrace,
@@ -73,16 +68,19 @@ export function DialogHost({ m }: { m: StudioModel }) {
             node={state.nodes.find((n) => n.ref === editing)}
             defaultPattern={!editing ? prompt : ''}
             onSubmit={(value) => {
-              {
-                const next = addNode(state, value, editing);
-                const proposal = next.proposals.find(
-                  (p) => p.pattern === value.pattern,
-                );
-                if (proposal) proposal.status = 'learned';
-                commit(next);
-                setDialog(null);
-                announce(editing ? 'Node updated.' : 'Pattern learned.');
-              }
+              const applied = applyCommand(state, {
+                command: 'addNode',
+                input: value,
+                nodeRef: editing,
+              });
+              const proposal = applied.state.proposals.find(
+                (p) => p.pattern === value.pattern,
+              );
+              if (proposal) proposal.status = 'learned';
+              pushUndo(applied.undo);
+              commit(applied.state);
+              setDialog(null);
+              announce(applied.message);
             }}
           />
         )}
@@ -91,9 +89,15 @@ export function DialogHost({ m }: { m: StudioModel }) {
             resource={state.resources.find((r) => r.ref === editing)}
             state={state}
             onSubmit={(value) => {
-              commit(saveResource(state, value, editing));
+              const applied = applyCommand(state, {
+                command: 'saveResource',
+                input: value,
+                resourceRef: editing,
+              });
+              pushUndo(applied.undo);
+              commit(applied.state);
               setDialog(null);
-              announce('Memory saved.');
+              announce(applied.message);
             }}
           />
         )}
@@ -153,17 +157,18 @@ export function DialogHost({ m }: { m: StudioModel }) {
           <AttachmentForm
             state={state}
             onSave={(a) => {
-              const s = structuredClone(state);
-              s.attachments.push({ ...a, id: uid() });
-              log(
-                s,
-                'attachment',
-                'Nodes attached',
-                'A semantic handoff was configured.',
-              );
-              commit(s);
+              const applied = applyCommand(state, {
+                command: 'connect',
+                from: a.from,
+                to: a.to,
+                bidirectional: a.bidirectional,
+                hard: a.hard,
+                affinity: a.affinity,
+              });
+              pushUndo(applied.undo);
+              commit(applied.state);
               setDialog(null);
-              announce('Attachment added.');
+              announce(applied.message);
             }}
           />
         )}

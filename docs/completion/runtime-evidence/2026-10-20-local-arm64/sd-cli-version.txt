@@ -1,0 +1,1 @@
+stable-diffusion.cpp version unknown, commit 6b3edaaf32cc19e5bb2d819c788bd557eddc8eba

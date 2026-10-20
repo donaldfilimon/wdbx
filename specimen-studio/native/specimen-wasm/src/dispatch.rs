@@ -2,7 +2,7 @@
 //! A request is `{"op": …, …}`; the reply is `{"ok": …}` or `{"error": {…}}`.
 use serde_json::{Value, json};
 use specimen_kernel::{
-    Result, engine, error,
+    Result, command, engine, error,
     host::Host,
     mutate::{self, NodeInput, ResourceInput},
     neural::Network,
@@ -126,6 +126,26 @@ pub fn dispatch(h: &Host, req: &Value, progress: &dyn Fn(Value)) -> Result<Value
             Ok(json!({"state": s, "message": message}))
         }
         "togglePin" => mutate::toggle_pin(h, state()?, string(req, "id")?),
+        "parse" => Ok(serde_json::to_value(command::parse(string(req, "line")?)?)?),
+        "apply" => {
+            let cmd = serde_json::from_value(field(req, "command")?.clone())?;
+            let network = match req.get("network") {
+                None | Some(Value::Null) => None,
+                Some(value) => Some(
+                    serde_json::from_value::<Network>(value.clone())
+                        .map_err(|e| error("InvalidNetwork", e))?,
+                ),
+            };
+            let applied = command::apply(h, state()?, network.as_ref(), cmd)?;
+            Ok(serde_json::to_value(applied)?)
+        }
+        "query" => {
+            let query = serde_json::from_value(field(req, "query")?.clone())?;
+            Ok(serde_json::to_value(specimen_kernel::notes::query(
+                state()?,
+                &query,
+            )?)?)
+        }
         "log" => {
             let mut s = state()?.clone();
             mutate::log(
@@ -258,6 +278,27 @@ mod tests {
         let fixed = FixedHost::default();
         let bad: Value = serde_json::from_str(&reply(&fixed.host(), "{not json", &|_| {})).unwrap();
         assert_eq!(bad["error"]["code"], "MalformedSave");
+    }
+
+    #[test]
+    fn parse_and_apply_round_trip_through_the_envelope() {
+        let help = call(json!({"op": "parse", "line": "/help"}));
+        assert!(help["ok"]["text"].as_str().unwrap().contains("/wrng"));
+        let unknown = call(json!({"op": "parse", "line": "/nope"}));
+        assert_eq!(unknown["error"]["code"], "UnknownCommand");
+        let state = call(json!({"op": "seed"}))["ok"].clone();
+        let applied = call(json!({
+            "op": "apply",
+            "state": state,
+            "command": {"command": "addNode", "input": {"name": "Color", "pattern": "favorite color", "action": "Teal."}}
+        }));
+        assert_eq!(applied["ok"]["state"]["nodes"].as_array().unwrap().len(), 9);
+        let undone = call(json!({
+            "op": "apply",
+            "state": applied["ok"]["state"],
+            "command": {"command": "revert", "undo": applied["ok"]["undo"]}
+        }));
+        assert_eq!(undone["ok"]["state"], state);
     }
 
     #[test]

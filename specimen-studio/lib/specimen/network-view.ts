@@ -88,6 +88,16 @@ export function traceStats(layers: number[][]): TraceStat[] {
   }));
 }
 
+/**
+ * The layer a new hidden layer is inserted before. After a remove, a stored
+ * choice past the last layer falls back to that last layer.
+ */
+export function layerInsertAt(indexes: number[], at: string): string {
+  if (indexes.some((index) => String(index) === at)) return at;
+  const last = indexes.at(-1);
+  return last === undefined ? '0' : String(last);
+}
+
 /** Specimen nodes on a Fibonacci sphere of radius 3, in list order. */
 export function topologyLayout(
   nodes: { ref: string }[],

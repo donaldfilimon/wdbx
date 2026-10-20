@@ -24,7 +24,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Rust toolchain
-        run: rustup toolchain install nightly-2026-09-01 --profile minimal
+        run: rustup toolchain install 1.99.1 --profile minimal
       - name: Require wgpu parity within tolerance
         run: |
           mkdir -p work/accelerator
@@ -52,4 +52,3 @@ jobs:
         with:
           name: apple-silicon-cpu-gpu-parity
           path: specimen-studio/work/accelerator
-

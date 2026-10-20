@@ -116,4 +116,8 @@ mod draft_shape;
 
 mod draft_mapping;
 
+mod decode_bounds;
+mod decode_malformed;
+mod decode_normalize;
 mod decode_roundtrip;
+mod decode_semantics;

@@ -71,6 +71,20 @@ bytes unchanged. This is C1 source evidence plus local deterministic
 replay test evidence; it is not a claim-registry promotion or deployed
 federation evidence.
 
+Ledger recovery charges original JSONL byte lengths, not reserialized sizes,
+so equivalent JSON whitespace and escapes cannot evade guild storage budgets.
+On Unix, initialization synchronizes ledger directory entries before admitting
+writes; other platforms retain file-only synchronization and do not gain that
+directory-entry durability guarantee.
+Episode writer-lock acquisition tolerates transient inherited descriptors with
+a bounded 50 ms contention retry; persistent contention remains `WriterBusy`.
+A `compensated` terminal status requires observed exact prior-state restoration;
+an unsuccessful compensation attempt may still be recorded and terminated as
+failed. Previously admitted chains claiming successful compensation after a
+failed restore now fail replay rather than being rewritten. These are source
+and local regression-test guarantees, not empirical power-loss or
+deployed-system qualification.
+
 **Private prototype.** A crate-private complete-episode model now has bounded
 canonical encoding and an independent Python encoding witness. Its domain remains
 provisional pending ABI agreement; it adds no typed complete decoder, admission,
