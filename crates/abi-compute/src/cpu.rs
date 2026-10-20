@@ -167,7 +167,9 @@ fn dot_lanes<const LANES: usize>(left: &[f32], right: &[f32]) -> f32 {
         offset += LANES;
     }
     // SimdFloat::reduce_sum used an ordered reduction seeded with -0.0.
-    let mut sum = accumulator.into_iter().fold(-0.0_f32, |sum, lane| sum + lane);
+    let mut sum = accumulator
+        .into_iter()
+        .fold(-0.0_f32, |sum, lane| sum + lane);
     for index in offset..left.len() {
         sum += left[index] * right[index];
     }

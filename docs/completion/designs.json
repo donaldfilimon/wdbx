@@ -1,0 +1,141 @@
+{
+  "version": 1,
+  "scope": "Selected proposed algorithms for implementation and falsification, not amendments to the authoritative spec or evidence of efficacy. General research claims remain open beyond these bounded profiles.",
+  "designs": [
+    {
+      "id": "identity",
+      "decisions": [
+        "D01",
+        "D02",
+        "D03",
+        "D04"
+      ],
+      "language": "Rust pure specimen-kernel; host-owned I/O through explicit capabilities",
+      "interface": "HybridTable.insert(scope, NodeRef, EntryRef, Original, ActionAst, Optional<ResourceId>) -> Inserted|Duplicate|Full; find_all(PatternKey)->ordered Vec<EntryRef>; PatternKey={encoder_version,modality,resolution,digest}; all references 128-bit host-generated and collision checked.",
+      "algorithm": "Version text-v3 separately from existing text-v2. Preserve original UTF-8 bytes. Complexity is AST token count: <=6 low, <=16 medium, else high. Low transform sorts unique lemmas and replaces numeric literals with #; medium retains role-labelled lemmas and operator sequence; high retains complete normalized AST. SHA256 of length-prefixed transform+class+modality forms key. Explicit grammar/wildcard indexes supplement equality routes. Equality is original bytes+canonical bind AST+canonical ordered alternatives including inhibition/weights, within one tenant/specimen/node type; compare full structures after hash collision. Equal logical IDs never imply equal record refs. At 20 entries, insertion creates a fresh same-key node atomically; no overwrite. Optional resource links remain distinct from generated structural keys. Small tables <=64 use arrays; larger tables use multi-value hash indexes rebuilt from records; always return every matching ref in stable order.",
+      "limits": "20 entries/node default; 10,000 supporting resources; 2,000 pattern chars; collision buckets compare originals; reference uniqueness checked on import.",
+      "failure_behavior": "Reject malformed weights, duplicate refs or cross-scope linkage before mutation; exact repeat returns existing ref; old encoder IDs migrate as projections while originals survive.",
+      "acceptance": "S01-S05,S16-S18,S39-S40,S44-S45; collision fixtures and capacity+1 transactions; native/WASM identical ordered refs.",
+      "status": "proposed",
+      "evidence_level": "C0"
+    },
+    {
+      "id": "language",
+      "decisions": [
+        "D05",
+        "D17"
+      ],
+      "language": "Rust pure specimen-kernel; host-owned I/O through explicit capabilities",
+      "interface": "prepare(Input, ContextSnapshot, UtilityTables, Budget)->Prepared{clauses,roles,negated_action_ids,captures,routes,provenance}|BudgetExceeded; compile(script, Scope)->Ast; execute(Ast, CapabilityLedger, Budget)->EffectPlan.",
+      "algorithm": "Nine versioned tables: Dictionary definitions; Thesaurus equivalence classes/intensities; Anti-Thesaurus sense+required context; Chargebook valence/intensity; Verb Semantics required frames; conjunction AST rules; negation scope; finite morphology suffix table; grammatical frame role mapper. UTF-8 tokenization preserves offsets. Normalize case and numeric words only in permitted AST positions; never erase negation or quotes. Longest phrase match then explicit sense context; ambiguous senses remain alternatives capped at 16 with origin refs. Build if/and/or/but clause AST, attach negation to action subtree; missing frame slots yield unresolved rather than guessed roles. Arithmetic uses Pratt parsing with explicit precedence and captured decimal operands. Wildcards indexed by literal prefix+scope; automata use an explicit bounded candidate bucket, never literal hash coincidence. Sigils compile to typed scopes and declared subsystem capabilities; nested execution intersects parent capabilities and cannot widen them.",
+      "limits": "8,000 input chars; 64 clauses; 16 variants/clause; AST depth 16; arithmetic 500 steps; automata 10,000 steps and 1,024 bytes tape; fan-out and capability checks before evaluation.",
+      "failure_behavior": "BudgetExceeded is explicit with no effects; division by zero/type mismatch is typed; undeclared contacts reject; uncertain negation conservatively inhibits affected action.",
+      "acceptance": "S19-S21,S46; nine-utility fixture families, quoted negation/conditional cases, undeclared nested sigils, bounded runaway automata; held-out language semantic exact match protocol.",
+      "status": "proposed",
+      "evidence_level": "C0"
+    },
+    {
+      "id": "scoring",
+      "decisions": [
+        "D06",
+        "D07",
+        "D08"
+      ],
+      "language": "Rust pure specimen-kernel; host-owned I/O through explicit capabilities",
+      "interface": "scan(Original, Prepared, ScannerVersion)->Evidence{similarity,dissimilarity,features}; vote(Evidence, Strength, ATP, Seed)->VoteTrace; group(Vec<Contribution>)->Vec<Group>.",
+      "algorithm": "Text scanner uses multiset lemma overlap 40, ordered bigram overlap 20, role agreement 20 and exact bound operand/operator agreement 20 points; absent components contribute zero to S and their available weight to D. Conflicting explicit negation or unequal numeric operands contributes its corresponding dissimilarity, never similarity. Compute rational feature fractions with signed i128 accumulators then S-D once, clamp to [-100,100]. Scanner scores are not probabilities. Cbase=clamp(Cscan-10*ATP.intensity*max(0,-ATP.valence),-100,100); strength gates admission at >0 and contributes only arbitration weight. Default vote threshold 50, max strength 100. Jitter default uniform magnitude [0,1], brainstorm [0,5], independent sign, except disabled/endpoints/max-strength-qualified baselines. Gate after jitter with >=. Redundancy only for same origin chunk+fanout lineage+canonical action AST+inhibition set+captures. All other contributions, especially attached groups and distinct intermediate facts, survive. Redundant selection weight=max(0,Ceff)*strength in f64 after finite validation; zero total chooses no action. Provenance retains candidates, draw and winner.",
+      "limits": "All feature sums checked; 1,000 global scan permits including attachments/maintenance; queue all admitted work up to admission budget rather than silently truncate; trace seed and scanner version.",
+      "failure_behavior": "Nonfinite evidence/weights rejected; unsupported modality explicit, no text-score fallback; cancelled queue releases permits and emits no effects.",
+      "acceptance": "S05-S15; extreme accumulator and zero-weight cases; empirical scanner ranking and retrieval failure-reduction protocol, not probability calibration claims.",
+      "status": "proposed",
+      "evidence_level": "C0"
+    },
+    {
+      "id": "synthesis",
+      "decisions": [
+        "D09"
+      ],
+      "language": "Rust pure specimen-kernel; host-owned I/O through explicit capabilities",
+      "interface": "compose(IngredientGraph, Constraints, FixedNetworkDigest, Seed, Budget)->Composition{Ast,source_spans,transforms,backend}|Abstain.",
+      "algorithm": "Select fixed sparse feed-forward composition, no attention and no training. Freeze existing 128/64/32 CSR network weights under digest; encoding is versioned signed SHA256 feature hashing of role-labelled ingredient tokens into 96 buckets plus 16 context and 16 ATP/familiarity features, each normalized by max(1,token_count). Seed chooses sigmoid with p=.75 if familiar (exact compatible key), else .25; otherwise ReLU; libm reference operations. Network outputs rank bounded typed operations: select, concatenate, substitute-equivalent, arithmetic AST evaluation, role-preserving join and shape composition. Decoder beam width 8, depth 4, max 32 ingredient spans and 512 output tokens. Scores use fixed output dot operation-feature vectors, tie-break by operation ID; constraints enforce source-backed facts/operands, inhibition and type compatibility before ranking. Only literals from ingredients or fixed grammar glue may appear; any arbitrary-language generalization remains open pending separate protocol. Each output span carries all causal source refs and transformations. Repeated calls may differ under seed but fixed weights/durable knowledge hashes must not change.",
+      "limits": "100,000 multiply-adds/call; 256 decoder expansions; 32 ingredients; 512 tokens; 64 KiB ephemeral graph; no I/O or persistent writes; optional learned model remains separately qualified extension.",
+      "failure_behavior": "No admissible AST => Abstain with constraint reason, no fabricated completion. GPU failure explicitly reports CPU fallback and cannot count as GPU evidence.",
+      "acceptance": "S22-S23,S26; immutable state hashes and held-out multi-ingredient composition vs extractive and current-engine baseline; must meet groundedness, coverage, semantic preservation and gain thresholds.",
+      "status": "proposed",
+      "evidence_level": "C0"
+    },
+    {
+      "id": "atp",
+      "decisions": [
+        "D10"
+      ],
+      "language": "Rust pure specimen-kernel; host-owned I/O through explicit capabilities",
+      "interface": "advance(AtpState{v,a,cooldown}, Stimulus{valence,intensity,urgency}, elapsed_seconds)->AtpState; tonal_view(state,seed)->EphemeralTone; vary(text,EquivalenceTable,tone)->text+trace.",
+      "algorithm": "Clamp dt to [0,3600]; d=exp(-dt/180). v0=d*v, a0=d*a. Urgency is explicit user urgent flag or negative-valence <=-.7 and intensity >=.8 matched in Chargebook within active clause (negated/quoted stimuli excluded); never infer emergency authority. If cooldown>0, decay only and subtract dt. Else v1=clamp(v0+.2*stimulus.valence*stimulus.intensity,-1,1), a1=clamp(a0+.2*intensity+.1*urgency,0,1). At a1>=.85 release a=.5*a1, v=.8*v1 and set cooldown=30 seconds; otherwise keep v1,a1. Ephemeral jitter +/- uniform[0,.01], brainstorm max .05, never integrated. Tone substitutions only table-equivalent AST meanings with charge distance <=.5; try at most 3 ranked synonyms then original. Numeric, negated, quoted/code and procedural spans are immutable. Autonomy disabled by default; enabling requires internal-stimulus trace and same capabilities/inhibition.",
+      "limits": "Finite state and inputs required; host monotonic time; backwards elapsed rejected; user reward clamped [-.1,.1] before integration; native/WASM libm parity.",
+      "failure_behavior": "Unknown phrase has zero charge; uncertain equivalence retains original; no literal urgency can widen scope or budgets.",
+      "acceptance": "S24-S25; repeated idle decay to baseline, buildup/release/cooldown, zero jitter drift, tone semantic preservation paired trials and held-out lexical families.",
+      "status": "proposed",
+      "evidence_level": "C0"
+    },
+    {
+      "id": "vision",
+      "decisions": [
+        "D11"
+      ],
+      "language": "Rust pure specimen-kernel; host-owned I/O through explicit capabilities",
+      "interface": "analyze(ImageRef,Focus,arousal,Backend)->VisualRecord{original_digest,samples,DistanceField,contours,ocr}; render(VisualParameters,InstructionAst,Budget)->EphemeralArtifact.",
+      "algorithm": "Original bytes remain host-owned content-addressed resources. Coordinates normalized [-1,1], top-left (-1,-1), position={x,y} center-relative; RGBA8 sRGB colors and linear luminance brightness [0,1]. Max input 4096x4096, downsample reference 64x64; focus circle radius .25, Gaussian blur sigma=2 outside radius. At arousal>=.6 process center outward. Binary foreground luminance>=.5; marching squares at .5 with ambiguous saddle ties chosen top-left first; holes by winding, convex/concave by signed cross product of consecutive edges. True distance field d(p)=signed min Euclidean distance to contour (negative inside); nonlinear value f(d)=sign(d)*log1p(abs(d))/log1p(diagonal). Keep field as separate typed array, never repurpose color/brightness. CPU reference libm; GPU acceleration must report executed adapter and compare within 1e-4. OCR host uses pinned existing detector/recognizer; offsets/boxes/source digest preserved, explicit Learn only. Fuzzy art supports typed translate/scale/rotate/color/union/intersection/subtract with max 64 operations on retrieved shapes; inverse sample fields and alpha composite. Output not learned unless authorized explicit save/learn.",
+      "limits": "Equal sample arrays <=4096; finite coordinates and positive bounded dimensions; render <=1024x1024 pixels; 64 instruction nodes, depth 8; host cancellation every scanline; GPU absence explicit CPU profile.",
+      "failure_behavior": "Reject mismatched arrays/NaN/unknown commands before allocation; OCR failure distinct from empty text; originals never overwritten by descriptors.",
+      "acceptance": "S42 and visual-pattern vote lifecycle; independent synthetic contour/SDF/holes/occlusion, OCR exact transcription and instruction image IoU; CPU pass does not qualify actual GPU/OCR hardware.",
+      "status": "proposed",
+      "evidence_level": "C0"
+    },
+    {
+      "id": "supervision",
+      "decisions": [
+        "D12"
+      ],
+      "language": "Rust pure specimen-kernel; host-owned I/O through explicit capabilities",
+      "interface": "review(OutputId,Residual,Capabilities)->Correction{parent_output,spans,expiry}|Proposal{id,evidence,delta}; approve(ProposalId,ExpectedRevision,Actor)->ValidatedDelta.",
+      "algorithm": "Type A can append one attributable correction to an existing output inside 60 seconds or next user cycle, whichever first; cannot trigger review of its own correction and cannot edit knowledge. Type B forms proposals by joining two compatible observed relations on identical typed subject refs, rejects conflicts and labels inference rule+parents; correlations alone remain tentative. Proposals expire after 24 hours or parent/policy revision change; approval /learn id revalidates current authority, parents, inhibition and scope before one atomic insertion. Unapproved proposals stored in separate bounded proposal queue, never knowledge indexes. Feedback deduplicates contributor NodeRef within an event after tracing paraphrases; independent seeded Bernoulli(.5) trials per concrete node. Zero strength graves that node only; crystallization derived from strength, attachment mode independent.",
+      "limits": "At most 100 proposals, 2 inferred edges/proposal, 1 review/output, 60-second supervision; no background autonomous promotion.",
+      "failure_behavior": "Stale approval returns Conflict; duplicate approval same operation id returns original receipt; malformed residual is rejected without state mutation.",
+      "acceptance": "S26-S31; attribution through paraphrase and duplicate spans, timeout, self-review loop rejection, policy change between proposal/approval; held-out correction precision and inferred-relation precision.",
+      "status": "proposed",
+      "evidence_level": "C0"
+    },
+    {
+      "id": "mutation",
+      "decisions": [
+        "D13",
+        "D14"
+      ],
+      "language": "Rust pure specimen-kernel; host-owned I/O through explicit capabilities",
+      "interface": "plan_mutation(snapshot,seed)->MutationDelta{stable_slots,lineage,inhibitions}; claim_job(kind,object,revision,lease)->Lease; execute_job(Lease)->Outcome; grave(NodeRef)->Grave.",
+      "algorithm": "Sample <=8 nodes; recipient strength < donor, pattern score>=80, action score>=20. Compute maximum-weight one-to-one slot alignment using exhaustive assignment for <=8 alternatives, otherwise deterministic greedy descending similarity with stable refs as tie-break; persist mapping. aligned_count=min(counts), reject shortening if it removes any remixed slot; tombstone all retired unremixed slot refs. Up to 2 eligible literal slots/event; programs excluded. Markov order 2 on whitespace tokens from original+donor, frequency-proportional sampling with seed, preserve first two recipient tokens, stop at 64; reject identical originals/donors, invalid scopes or changed negation/numeric semantics. Independent .5 weight inheritance. Permanent node-pair donor ban in either direction plus ancestor DFS rejects cycles; no horizon eviction. Commit text, marker, lineage and original-pair inhibition atomically after validation. Grave contains concrete ref, retired slot refs+markers, non-content lineage IDs, deletion generation and inhibition commitments scoped by tenant; no automatic resurrection. Authorized explicit restore may reuse archived payload only if not erased; preserves same refs/markers, revalidates current policy. Deleted content never resurrects. PHAGY catalog: trim unpinned history/activity, remove dangling derived attachment refs, rebuild indexes, collect unreferenced scratch/assets after 24h and recovery-copy reachability. Each job CAS claims (kind,object,revision), 30-second renewable lease, fencing token; stale workers cannot publish. On timeout release resources; retry idempotently from committed state. Grave/lineage/inhibition metadata not ordinary PHAGY deletion targets; privacy erasure replaces content with scoped opaque commitments.",
+      "limits": "8 sampled nodes; <=64 comparisons charged to global cap; 2 slots/event; 64 tokens; job work chunks <=100 records and cancellation between chunks; 24h asset grace.",
+      "failure_behavior": "Failed remix does not consume marker; snapshot conflict aborts entire delta; lease expiry prevents late commit; holds and deletion generations checked before GC.",
+      "acceptance": "S32-S38; save/load, renumber, node removal, multi-hop cycles, timeout races, duplicated claims, restore after key destruction; conservation assertions and held-out valid remix novelty/semantic preservation.",
+      "status": "proposed",
+      "evidence_level": "C0"
+    },
+    {
+      "id": "scheduler",
+      "decisions": [
+        "D15",
+        "D16",
+        "D18"
+      ],
+      "language": "Rust pure specimen-kernel; host-owned I/O through explicit capabilities",
+      "interface": "Scheduler.admit(work,priority,scope)->Permit|Backpressure; poll(deadline,cancel)->Progress; save(snapshot,ExpectedRevision)->Receipt; load(bytes)->ValidatedSnapshot.",
+      "algorithm": "History is 100,000 input/output records (each role record counts once), separate pins max 1,000 records/16 MiB, reject extra pins. Total decoded snapshot max 20 MiB; capacity is an upper count, byte ceiling can refuse growth earlier with clear error. Idle clock pauses during foreground, each completed event draws fresh uniform [60,120] seconds then fair .5 mutation/PHAGY. Global 1,000 scan semaphore covers foreground, attachments and maintenance; weighted round-robin 8 foreground quanta to 1 maintenance, FIFO within queue, max queue 100,000 comparisons; all admitted comparisons run, over-limit job admission explicitly Backpressure. Each raft covers half-open range until next start or table length, chunk max4096; checkpoint/cancel every chunk; no first-hit termination. Sandbox compares loop/hash/raft over frozen identical synthetic workloads, picks lowest median latency among correct candidates, tie <5% keeps simpler loop; never overrides caps. Versioned JSON envelope includes all durable organs/refs/markers/pins/network digest; validate entire candidate and derived-index rebuild before atomic replacement. Unknown major versions fail closed. Migration pure old->new with original bytes retained in recoverable export; running jobs/ephemeral vectors are never resumed after load.",
+      "limits": "1,000 permits; 100,000 pending; maintenance receives one quantum per 9 dispatches while active; leases host monotonic; maximum snapshot and pins bytes checked before decode/allocation.",
+      "failure_behavior": "Cancellation returns unused permits; failed save keeps previous snapshot and recoverable outbox; incompatible import never replaces active specimen; process restart clears active leases only after fencing generation increments.",
+      "acceptance": "S14-S15,S37-S41,S43-S45; fairness under permanent foreground load, exact range coverage, snapshot failures and complete roundtrip; workload-specific tuning with parity before speed.",
+      "status": "proposed",
+      "evidence_level": "C0"
+    }
+  ]
+}

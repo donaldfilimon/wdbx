@@ -1,0 +1,328 @@
+{
+  "version": 1,
+  "source_sha256": "82aa6347e264efb789b21e915eb802802d1b3771c31d1a63f1fb85ee2a0c4c88",
+  "cases": [
+    {
+      "id": "S01",
+      "line": 1496,
+      "row": "| Two original paraphrases share a compatible key | Both remain distinct entries; both can independently qualify |"
+    },
+    {
+      "id": "S02",
+      "line": 1497,
+      "row": "| Two nodes share a logical ID | Lookup returns both; feedback/removal can target one concrete contributor |"
+    },
+    {
+      "id": "S03",
+      "line": 1498,
+      "row": "| A node's 21st unique same-key entry arrives at default capacity | Apply the explicit full-node policy without overwriting existing entries |"
+    },
+    {
+      "id": "S04",
+      "line": 1499,
+      "row": "| Identical ID strings use different resolution classes | They do not compare equal as complete Pattern keys |"
+    },
+    {
+      "id": "S05",
+      "line": 1500,
+      "row": "| A low-resolution candidate is retrieved | Its secondary comparison still uses high-resolution scanning |"
+    },
+    {
+      "id": "S06",
+      "line": 1501,
+      "row": "| Similarity and dissimilarity sums exceed narrow integer capacity | Safe arithmetic preserves their difference; confidence remains bounded |"
+    },
+    {
+      "id": "S07",
+      "line": 1502,
+      "row": "| Confidence is exactly +100 or -100 | No jitter applies |"
+    },
+    {
+      "id": "S08",
+      "line": 1503,
+      "row": "| Maximum-strength node has a qualified baseline | Its score does not jitter; below-threshold entries retain jitter eligibility |"
+    },
+    {
+      "id": "S09",
+      "line": 1504,
+      "row": "| One node has several matching entries | Every qualified entry may emit its vote |"
+    },
+    {
+      "id": "S10",
+      "line": 1505,
+      "row": "| Several complementary nodes use the same triple | Their contributions survive; no global election removes them |"
+    },
+    {
+      "id": "S11",
+      "line": 1506,
+      "row": "| Fan-outs produce redundant alternative contributions | Scoped spin-bottle selection resolves the redundancy with valid weights |"
+    },
+    {
+      "id": "S12",
+      "line": 1507,
+      "row": "| A hard attachment triggers a below-threshold target | Target is evaluated but emits no forced vote |"
+    },
+    {
+      "id": "S13",
+      "line": 1508,
+      "row": "| A bidirectional attachment cycles without consuming remainder | Visit/depth policy stops repeated non-progressing work |"
+    },
+    {
+      "id": "S14",
+      "line": 1509,
+      "row": "| Lookup returns more than 1,000 deep comparisons | Queue all admitted work; peak simultaneous comparisons stays within the cap |"
+    },
+    {
+      "id": "S15",
+      "line": 1510,
+      "row": "| Foreground and maintenance scans coexist | They share the same cap, including attachments |"
+    },
+    {
+      "id": "S16",
+      "line": 1511,
+      "row": "| A vote and activator reference different supporting keys | Both query paths are used; only contextually relevant returned subdata is consumed |"
+    },
+    {
+      "id": "S17",
+      "line": 1512,
+      "row": "| Two resources share a linked resource ID | Both are retrieved; absence of a resource link does not remove structural indexing |"
+    },
+    {
+      "id": "S18",
+      "line": 1513,
+      "row": "| Side-resource retrieval is traced | No global semantic scan or node-style confidence calculation appears in that path |"
+    },
+    {
+      "id": "S19",
+      "line": 1514,
+      "row": "| `two plus two` and `2+2` | Bind compatible procedural structure and preserve operands; permitted action yields 4 |"
+    },
+    {
+      "id": "S20",
+      "line": 1515,
+      "row": "| `don't solve 2+2` | Negation/inhibition survives preparation and blocks the prohibited action |"
+    },
+    {
+      "id": "S21",
+      "line": 1516,
+      "row": "| User automaton exceeds its execution budget | It terminates with an explicit bounded-execution result |"
+    },
+    {
+      "id": "S22",
+      "line": 1517,
+      "row": "| Imagination runs on retrieved material | Temporary synthesis uses source ingredients; persistent learned state is unchanged |"
+    },
+    {
+      "id": "S23",
+      "line": 1518,
+      "row": "| Transient execution is repeated | Weight/knowledge state does not train or drift merely from invocation |"
+    },
+    {
+      "id": "S24",
+      "line": 1519,
+      "row": "| ATP spans two related cycles | Intended buildup/release persists; last-cycle random jitter does not |"
+    },
+    {
+      "id": "S25",
+      "line": 1520,
+      "row": "| Thesaurus replacement changes tone beyond tolerance | Retry within budget or use the original phrase |"
+    },
+    {
+      "id": "S26",
+      "line": 1521,
+      "row": "| An output combines several nodes and later gets paraphrased | Provenance still identifies all causal voting contributors and transformations |"
+    },
+    {
+      "id": "S27",
+      "line": 1522,
+      "row": "| `/right green` with one contributor appearing in several spans | That node receives one independent feedback trial for the event |"
+    },
+    {
+      "id": "S28",
+      "line": 1523,
+      "row": "| A node falls from maximum strength | Node crystallization is removed; attachment mode is not accidentally changed |"
+    },
+    {
+      "id": "S29",
+      "line": 1524,
+      "row": "| One same-ID node reaches zero | Remove only that active record; its peers remain |"
+    },
+    {
+      "id": "S30",
+      "line": 1525,
+      "row": "| A Type A node detects a residual error | Correction is attributable to the original output and expires within bounded supervision |"
+    },
+    {
+      "id": "S31",
+      "line": 1526,
+      "row": "| Type B finds new knowledge | Present an identified proposal; no persistent knowledge promotion until `/learn id` |"
+    },
+    {
+      "id": "S32",
+      "line": 1527,
+      "row": "| Mutation pairs five weak alternatives with four strong alternatives | Recipient count becomes four only under valid history-preserving shortening rules |"
+    },
+    {
+      "id": "S33",
+      "line": 1528,
+      "row": "| Mutation pairs four weak alternatives with five strong alternatives | Recipient remains four; no fifth alternative is added |"
+    },
+    {
+      "id": "S34",
+      "line": 1529,
+      "row": "| A recipient slot already remixed | It is ineligible, including after save/load or slot renumbering |"
+    },
+    {
+      "id": "S35",
+      "line": 1530,
+      "row": "| A prohibited donor relationship is selected through another slot | Lineage policy rejects the pathological reuse |"
+    },
+    {
+      "id": "S36",
+      "line": 1531,
+      "row": "| Growth proposes an original inhibited pattern/vote pairing | Reject it, including configured relevant fan-out equivalents |"
+    },
+    {
+      "id": "S37",
+      "line": 1532,
+      "row": "| Idle timer fires repeatedly | Each event draws a fresh interval and chooses tag or PHAGY |"
+    },
+    {
+      "id": "S38",
+      "line": 1533,
+      "row": "| PHAGY jobs overlap or time out | Unique job claims prevent duplicate active work; timed-out agents release resources |"
+    },
+    {
+      "id": "S39",
+      "line": 1534,
+      "row": "| Rafts start at 0, 20, and 50 | Exactly the assigned ranges are covered with no overlap/gaps and per-step yielding |"
+    },
+    {
+      "id": "S40",
+      "line": 1535,
+      "row": "| Duplicate-ID matches span several chunks | `find_all` completes every chunk; a first hit does not terminate the search |"
+    },
+    {
+      "id": "S41",
+      "line": 1536,
+      "row": "| The sandbox prefers a simple loop | HybridTable uses that choice within limits; raft dispatch is not mandatory |"
+    },
+    {
+      "id": "S42",
+      "line": 1537,
+      "row": "| A visual record has unequal array lengths | Reject it before scanning/rendering |"
+    },
+    {
+      "id": "S43",
+      "line": 1538,
+      "row": "| A history record is pinned | Ordinary rolling overwrite preserves it under the pin policy |"
+    },
+    {
+      "id": "S44",
+      "line": 1539,
+      "row": "| A complete specimen is saved and loaded | All durable organs, duplicate IDs, strengths, links, scripts, history, and mutation markers survive |"
+    },
+    {
+      "id": "S45",
+      "line": 1540,
+      "row": "| A saved specimen is malformed or incompatible | Load fails without replacing the current specimen |"
+    },
+    {
+      "id": "S46",
+      "line": 1541,
+      "row": "| A sigil calls an undeclared subsystem | The scope/contact boundary rejects the call |"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "D01",
+      "line": 1450,
+      "row": "| Complexity classification and class-specific feature transforms | Defines which related inputs share a key and what retrieval can miss |"
+    },
+    {
+      "id": "D02",
+      "line": 1451,
+      "row": "| Structural duplicate equality and its population scope | Must allow paraphrases/duplicate IDs while reliably rejecting exact repeats |"
+    },
+    {
+      "id": "D03",
+      "line": 1452,
+      "row": "| Non-unique logical IDs versus concrete internal references | Needed for attachments, feedback, mutation, and scoped deletion |"
+    },
+    {
+      "id": "D04",
+      "line": 1453,
+      "row": "| Optional resource linkage versus generated Pattern key | R05 is an explicit two-field reconciliation; the wire schema must preserve it |"
+    },
+    {
+      "id": "D05",
+      "line": 1454,
+      "row": "| Bind normalization and wildcard/automaton candidate routing | General macros cannot rely on literal text hashing by coincidence |"
+    },
+    {
+      "id": "D06",
+      "line": 1455,
+      "row": "| Deep scanner evidence and confidence calibration | Required to make ±100 scores reproducible; confidence is not probability |"
+    },
+    {
+      "id": "D07",
+      "line": 1456,
+      "row": "| Threshold, jitter, ATP order, and eligibility | R09/R10 and §9 give a coherent ordering that must be implemented consistently |"
+    },
+    {
+      "id": "D08",
+      "line": 1457,
+      "row": "| Runtime redundancy classification | Prevents same-triple arbitration from suppressing complementary votes |"
+    },
+    {
+      "id": "D09",
+      "line": 1458,
+      "row": "| Fixed non-learning synthesis design | Encoding, operations/weights, attention choice, decoder, and quality criteria are unspecified |"
+    },
+    {
+      "id": "D10",
+      "line": 1459,
+      "row": "| ATP curve and urgency detection | “Lorenz-like” and “lazy-conservative” are not executable equations |"
+    },
+    {
+      "id": "D11",
+      "line": 1460,
+      "row": "| Visual representation/contour extraction | The named nonlinear SDF format needs a mathematical definition |"
+    },
+    {
+      "id": "D12",
+      "line": 1461,
+      "row": "| Type A correction and Type B write boundaries | Prevents self-triggering corrections and unapproved learned knowledge |"
+    },
+    {
+      "id": "D13",
+      "line": 1462,
+      "row": "| Markov slot alignment, pool shortening, and history policy | Must preserve one-remix lifetime restrictions across edits/removal |"
+    },
+    {
+      "id": "D14",
+      "line": 1463,
+      "row": "| PHAGY job catalog and grave lifecycle | Cleanup and resurrection behavior are explicitly unfinished in the source |"
+    },
+    {
+      "id": "D15",
+      "line": 1464,
+      "row": "| History count/granularity and pin limits | `100,00` is ambiguous and pins need an explicit bounded policy |"
+    },
+    {
+      "id": "D16",
+      "line": 1465,
+      "row": "| Idle timing and scheduler fairness | Default timing is reconciled; load and starvation behavior still need implementation |"
+    },
+    {
+      "id": "D17",
+      "line": 1466,
+      "row": "| Contact-ledger enforcement | Theoretical isolation must become actual checked access boundaries |"
+    },
+    {
+      "id": "D18",
+      "line": 1467,
+      "row": "| Save format and migration | Complete system restoration needs versioned definitions and index validation |"
+    }
+  ]
+}
