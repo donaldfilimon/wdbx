@@ -1,0 +1,3 @@
+$ git diff --check
+exit=0
+Note: new execution files are untracked; this command does not validate their contents.

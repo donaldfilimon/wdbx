@@ -1,0 +1,219 @@
+#[path = "support/dyadic_reference.rs"]
+mod dyadic_reference;
+#[path = "support/spatial_oracle.rs"]
+mod spatial_oracle;
+use abi_wdbx::{
+    spatial::{Point3D, euclidean_distance},
+    spatial3d::{Point3, Radius},
+};
+use spatial_oracle::{OraclePoint, reference_knn, reference_radius};
+fn p(x: f64, y: f64, z: f64) -> Point3 {
+    Point3::try_new(x, y, z).unwrap()
+}
+fn row(id: u32, ordinal: usize, point: Point3) -> OraclePoint {
+    OraclePoint { point, id, ordinal }
+}
+fn keys(hits: Vec<spatial_oracle::OracleHit>) -> Vec<(u32, usize)> {
+    hits.into_iter().map(|h| (h.id, h.ordinal)).collect()
+}
+#[test]
+fn boundary_neighbors_are_distinct() {
+    let o = p(0., 0., 0.);
+    let r = Radius::try_new(1.).unwrap();
+    let points = [
+        row(1, 0, p(f64::from_bits(1f64.to_bits() - 1), 0., 0.)),
+        row(2, 1, p(1., 0., 0.)),
+        row(3, 2, p(f64::from_bits(1f64.to_bits() + 1), 0., 0.)),
+    ];
+    assert_eq!(keys(reference_radius(&points, o, r)), vec![(1, 0), (2, 1)]);
+    assert!(dyadic_reference::in_radius(points[0].point, o, r));
+    assert!(dyadic_reference::in_radius(points[1].point, o, r));
+    assert!(!dyadic_reference::in_radius(points[2].point, o, r));
+}
+#[test]
+fn extreme_coordinates_have_finite_reported_distance() {
+    let a = Point3::from_legacy(Point3D {
+        x: f32::MAX,
+        y: 0.,
+        z: 0.,
+    })
+    .unwrap();
+    let b = Point3::from_legacy(Point3D {
+        x: -f32::MAX,
+        y: 0.,
+        z: 0.,
+    })
+    .unwrap();
+    let hits = reference_knn(&[row(7, 0, a)], b, 1);
+    assert_eq!(hits.len(), 1);
+    assert!(hits[0].distance.is_finite());
+    assert_eq!(hits[0].distance, 2. * f64::from(f32::MAX));
+}
+#[test]
+fn oracle_does_not_call_production_kernel() {
+    let a = Point3D {
+        x: f32::MAX,
+        y: 0.,
+        z: 0.,
+    };
+    let b = Point3D {
+        x: -f32::MAX,
+        y: 0.,
+        z: 0.,
+    };
+    assert!(euclidean_distance(a, b).is_infinite());
+    let hits = reference_radius(
+        &[row(9, 0, Point3::from_legacy(a).unwrap())],
+        Point3::from_legacy(b).unwrap(),
+        Radius::try_new(1e40).unwrap(),
+    );
+    assert_eq!(hits.len(), 1);
+    assert_eq!(hits[0].distance, 2. * f64::from(f32::MAX));
+}
+#[test]
+fn identity_breaks_true_metric_ties() {
+    let o = p(0., 0., 0.);
+    let mut points = vec![
+        row(9, 0, p(1., 0., 0.)),
+        row(2, 8, p(-1., 0., 0.)),
+        row(2, 3, p(0., 1., 0.)),
+    ];
+    let expected = vec![(2, 3), (2, 8), (9, 0)];
+    assert_eq!(keys(reference_knn(&points, o, 99)), expected);
+    points.reverse();
+    assert_eq!(keys(reference_knn(&points, o, 99)), expected);
+    assert!(reference_knn(&points, o, 0).is_empty());
+}
+#[test]
+fn defined_float_and_exact_dyadic_intentionally_disagree() {
+    let o = p(0., 0., 0.);
+    let q = p(1., 2f64.powi(-27), 0.);
+    let r = Radius::try_new(1.).unwrap();
+    let hits = reference_radius(&[row(1, 0, q)], o, r);
+    assert_eq!(hits.len(), 1);
+    assert_eq!(hits[0].squared_distance, 1.);
+    assert!(!dyadic_reference::in_radius(q, o, r));
+    assert!(
+        dyadic_reference::squared_distance(q, o)
+            > dyadic_reference::squared_distance(p(1., 0., 0.), o)
+    );
+}
+#[test]
+fn known_answers_degenerate_extreme_and_subnormal() {
+    let o = p(0., 0., 0.);
+    let r = Radius::try_new(1.).unwrap();
+    let points: Vec<_> = [
+        (10, o),
+        (20, p(1., 0., 0.)),
+        (30, p(-1., 0., 0.)),
+        (40, p(0., 1., 0.)),
+        (50, p(0., 0., 1.)),
+        (60, p(2., 0., 0.)),
+    ]
+    .into_iter()
+    .enumerate()
+    .map(|(i, (id, q))| row(id, i, q))
+    .collect();
+    assert_eq!(
+        keys(reference_radius(&points, o, r)),
+        vec![(10, 0), (20, 1), (30, 2), (40, 3), (50, 4)]
+    );
+    assert_eq!(
+        keys(reference_radius(&points, o, Radius::try_new(0.).unwrap())),
+        vec![(10, 0)]
+    );
+    assert!(reference_radius(&[], o, r).is_empty());
+    let sub = p(f64::from_bits(1), 0., 0.);
+    // Float square underflows, while exact dyadic membership excludes it.
+    assert_eq!(
+        reference_radius(&[row(1, 0, sub)], o, Radius::try_new(0.).unwrap()).len(),
+        1
+    );
+    assert!(!dyadic_reference::in_radius(
+        sub,
+        o,
+        Radius::try_new(0.).unwrap()
+    ));
+    let maximum = p(1e150, 1e150, 1e150);
+    assert!(
+        reference_knn(&[row(1, 0, maximum)], p(-1e150, -1e150, -1e150), 1)[0]
+            .distance
+            .is_finite()
+    );
+    assert!(dyadic_reference::in_radius(
+        p(-0., 0., 0.),
+        o,
+        Radius::try_new(-0.).unwrap()
+    ));
+}
+#[test]
+fn squared_key_precedes_rounded_distance() {
+    // sqrt(1 + 2^-52) rounds to 1: IDs must not override distinct d2 keys.
+    let points = [
+        row(9, 0, p(1., 0., 0.)),
+        row(1, 1, p(1., 2f64.powi(-26), 0.)),
+    ];
+    let hits = reference_knn(&points, p(0., 0., 0.), 2);
+    assert_eq!(hits[0].distance, hits[1].distance);
+    assert!(hits[0].squared_distance < hits[1].squared_distance);
+    assert_eq!(hits[0].id, 9);
+}
+#[test]
+fn seeded_integer_corpus_agrees_with_exact_reference() {
+    // Generator v1: xorshift64, 1000 seeds, 16 points/seed. Coordinates
+    // [-32,32], radii [0,32], integer squares/sums exactly representable.
+    for seed in 1..=1000u64 {
+        let mut state = seed;
+        let mut next = || {
+            state ^= state << 13;
+            state ^= state >> 7;
+            state ^= state << 17;
+            state
+        };
+        let center = p(
+            (next() % 65) as f64 - 32.,
+            (next() % 65) as f64 - 32.,
+            (next() % 65) as f64 - 32.,
+        );
+        let radius = Radius::try_new((next() % 33) as f64).unwrap();
+        let points: Vec<_> = (0..16)
+            .map(|i| {
+                row(
+                    (next() % 8) as u32,
+                    i,
+                    p(
+                        (next() % 65) as f64 - 32.,
+                        (next() % 65) as f64 - 32.,
+                        (next() % 65) as f64 - 32.,
+                    ),
+                )
+            })
+            .collect();
+        let mut exact: Vec<_> = points.iter().collect();
+        exact.sort_by(|a, b| {
+            dyadic_reference::squared_distance(a.point, center)
+                .cmp(&dyadic_reference::squared_distance(b.point, center))
+                .then(a.id.cmp(&b.id))
+                .then(a.ordinal.cmp(&b.ordinal))
+        });
+        let expected: Vec<_> = exact
+            .iter()
+            .filter(|r| dyadic_reference::in_radius(r.point, center, radius))
+            .map(|r| (r.id, r.ordinal))
+            .collect();
+        assert_eq!(
+            keys(reference_radius(&points, center, radius)),
+            expected,
+            "seed={seed} points={points:?} center={center:?} radius={radius:?}"
+        );
+        assert_eq!(
+            keys(reference_knn(&points, center, 7)),
+            exact
+                .iter()
+                .take(7)
+                .map(|r| (r.id, r.ordinal))
+                .collect::<Vec<_>>(),
+            "seed={seed}"
+        );
+    }
+}

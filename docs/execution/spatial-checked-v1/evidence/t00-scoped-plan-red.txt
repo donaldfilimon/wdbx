@@ -1,0 +1,21 @@
+...F.....
+======================================================================
+FAIL: test_plan_can_qualify_only_the_first_packet_read_scope (test_wdbx_3d_evidence.SourceManifestTests.test_plan_can_qualify_only_the_first_packet_read_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/donald/sources/repos/wdbx-spatial-checked-v1/tools/tests/test_wdbx_3d_evidence.py", line 79, in test_plan_can_qualify_only_the_first_packet_read_scope
+    self.assertEqual(module.validate_source_manifest(doc), [])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['sources[13]: complete read ranges required'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'sources[13]: complete read ranges required'
+
+- ['sources[13]: complete read ranges required']
++ []
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.001s
+
+FAILED (failures=1)

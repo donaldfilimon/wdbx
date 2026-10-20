@@ -1,0 +1,1308 @@
+diff --git a/crates/abi-wdbx/src/spatial.rs b/crates/abi-wdbx/src/spatial.rs
+index 9583147..87aa854 100644
+--- a/crates/abi-wdbx/src/spatial.rs
++++ b/crates/abi-wdbx/src/spatial.rs
+@@ -2,10 +2,10 @@
+ 
+ use std::cmp::Ordering;
+ 
+-const OCTREE_MIN_POINTS: usize = 64;
+-const OCTREE_LEAF_CAPACITY: usize = 8;
+-const OCTREE_MAX_DEPTH: u32 = 16;
+-const BOUNDS_EPSILON: f32 = 1e-3;
++pub(crate) const OCTREE_MIN_POINTS: usize = 64;
++pub(crate) const OCTREE_LEAF_CAPACITY: usize = 8;
++pub(crate) const OCTREE_MAX_DEPTH: u32 = 16;
++pub(crate) const BOUNDS_EPSILON: f32 = 1e-3;
+ 
+ /// A point in three-dimensional space.
+ #[derive(Clone, Copy, Debug, Default, PartialEq)]
+@@ -92,13 +92,13 @@ pub fn calculate_distance(left: Point3D, right: Point3D, metric: DistanceMetric)
+ }
+ 
+ #[derive(Clone, Copy, Debug)]
+-struct BoundingBox {
+-    min: Point3D,
+-    max: Point3D,
++pub(crate) struct BoundingBox {
++    pub(crate) min: Point3D,
++    pub(crate) max: Point3D,
+ }
+ 
+ impl BoundingBox {
+-    fn center(self) -> Point3D {
++    pub(crate) fn center(self) -> Point3D {
+         Point3D {
+             x: self.min.x.midpoint(self.max.x),
+             y: self.min.y.midpoint(self.max.y),
+@@ -143,13 +143,13 @@ fn compute_bounds(records: &[SpatialRecord3D]) -> BoundingBox {
+     }
+ }
+ 
+-fn octant_of(point: Point3D, center: Point3D) -> usize {
++pub(crate) fn octant_of(point: Point3D, center: Point3D) -> usize {
+     usize::from(point.x >= center.x)
+         | (usize::from(point.y >= center.y) << 1)
+         | (usize::from(point.z >= center.z) << 2)
+ }
+ 
+-fn child_bounds(bounds: BoundingBox, center: Point3D, octant: usize) -> BoundingBox {
++pub(crate) fn child_bounds(bounds: BoundingBox, center: Point3D, octant: usize) -> BoundingBox {
+     let x_high = octant & 1 != 0;
+     let y_high = octant & 2 != 0;
+     let z_high = octant & 4 != 0;
+@@ -345,6 +345,35 @@ impl SpatialIndex3D {
+         self.octree_dirty = true;
+     }
+ 
++    /// Validate and atomically append one legacy record, allocating fallibly.
++    pub fn try_insert(
++        &mut self,
++        id: u32,
++        point: Point3D,
++        payload: &[u8],
++    ) -> Result<(), crate::spatial3d::SpatialError> {
++        crate::spatial3d::Point3::from_legacy(point)?;
++        let mut owned_payload = Vec::new();
++        owned_payload
++            .try_reserve_exact(payload.len())
++            .map_err(|_| crate::spatial3d::SpatialError::BudgetExceeded)?;
++        owned_payload.extend_from_slice(payload);
++        self.records
++            .try_reserve(1)
++            .map_err(|_| crate::spatial3d::SpatialError::BudgetExceeded)?;
++        self.records.push(SpatialRecord3D {
++            id,
++            point,
++            payload: owned_payload,
++        });
++        self.octree_dirty = true;
++        Ok(())
++    }
++
++    pub(crate) fn checked_records(&self) -> &[SpatialRecord3D] {
++        &self.records
++    }
++
+     /// Number of indexed points.
+     #[must_use]
+     pub fn count(&self) -> usize {
+diff --git a/crates/abi-wdbx/src/spatial3d/octree_checked.rs b/crates/abi-wdbx/src/spatial3d/octree_checked.rs
+new file mode 100644
+index 0000000..9d29863
+--- /dev/null
++++ b/crates/abi-wdbx/src/spatial3d/octree_checked.rs
+@@ -0,0 +1,509 @@
++//! Transient checked adapter of the legacy octree; no durable generation or frame.
++use super::{CheckedSpatialHit, Point3, QueryLimits, Radius, SpatialError};
++use crate::spatial::{DistanceMetric, SpatialIndex3D};
++use std::sync::atomic::AtomicBool;
++/// Complete point selection.
++#[derive(Clone, Copy, Debug)]
++pub enum PointSelection {
++    /// Closed radius selection.
++    Radius(Radius),
++    /// Nearest k observations, including a complete empty k=0 selection.
++    Knn(usize),
++}
++/// Scoped transient index ceilings, separate from returned output bytes.
++#[derive(Clone, Copy, Debug)]
++pub struct OctreeBuildLimits {
++    /// Maximum transient topology nodes, including empty children.
++    pub max_nodes: usize,
++    /// Maximum cumulative requested logical tree and partition heap bytes.
++    pub max_scratch_bytes: usize,
++}
++/// Checked query over explicitly unitless legacy Cartesian coordinates.
++#[derive(Debug)]
++pub struct CheckedPointQuery<'a> {
++    /// Validated center in the explicitly unitless legacy coordinate space.
++    pub center: Point3,
++    /// Radius enumeration or nearest selection.
++    pub selection: PointSelection,
++    /// Euclidean, Manhattan, or complete-scan cosine.
++    pub metric: DistanceMetric,
++    /// Cumulative observation work and returned result ceilings.
++    pub limits: QueryLimits,
++    /// Transient index ceilings independent of output bytes.
++    pub build_limits: OctreeBuildLimits,
++    /// Optional cooperative cancellation flag.
++    pub cancellation: Option<&'a AtomicBool>,
++}
++/// Why a full scan was selected.
++#[derive(Clone, Copy, Debug, Eq, PartialEq)]
++pub enum ScanReason {
++    /// Population is smaller than the original 64-point threshold.
++    BelowThreshold,
++    /// Cosine pruning has no qualified bound.
++    UnsupportedCosineBound,
++    /// Transient build exceeded its scoped allocation or work ceiling.
++    IndexBudget,
++}
++/// Actual candidate execution path.
++#[derive(Clone, Copy, Debug, Eq, PartialEq)]
++pub enum PointQueryPath {
++    /// Original octant partition and topology with conservative checked bounds.
++    Octree,
++    /// Exhaustive population scan with explicit reason.
++    CompleteScan(ScanReason),
++    /// Zero-k selection without population access.
++    EmptySelection,
++}
++/// Local complete outcome; metadata makes no durable snapshot/generation claim.
++#[derive(Debug)]
++pub struct CheckedPointOutcome<'a> {
++    /// Borrowed original observations in authoritative metric-key order.
++    pub hits: Vec<CheckedSpatialHit<'a>>,
++    /// Pinned arithmetic kernel identifier.
++    pub numeric_profile: &'static str,
++    /// Defined floating-point accuracy, without exact-real predicate claims.
++    pub numeric_accuracy: &'static str,
++    /// Actual execution path.
++    pub path_used: PointQueryPath,
++    /// Exhaustive coverage on every successful query.
++    pub candidate_coverage: &'static str,
++    /// Complete on every successful query; incomplete execution returns an error.
++    pub completion: &'static str,
++    /// Exclusive local borrow only, without durable snapshot semantics.
++    pub consistency: &'static str,
++    /// Metric key, numeric ID, and insertion ordinal ordering.
++    pub ranking_policy_id: &'static str,
++    /// Empty: this transient index has no durable generations.
++    pub observed_generations: [(); 0],
++    /// Cumulative admission, partition, bounds, and leaf record inspections.
++    pub work_observations: usize,
++    /// Absent: partial output is unsupported.
++    pub partial_reason: Option<&'static str>,
++    /// Absent: this adapter does not issue cursors.
++    pub continuation: Option<()>,
++    /// Scope and resource explanation.
++    pub explanation_summary: &'static str,
++    /// Nodes retained in a successful transient tree; zero on scan fallback.
++    pub built_nodes: usize,
++    /// Conservative cumulative logical build reservations, excluding allocator metadata.
++    pub reserved_scratch_bytes: usize,
++}
++use super::legacy_checked::{hit_with_distance, metric_key, order, sift_down, squared};
++use crate::spatial::{
++    BOUNDS_EPSILON, BoundingBox, OCTREE_LEAF_CAPACITY, OCTREE_MAX_DEPTH, OCTREE_MIN_POINTS,
++    SpatialRecord3D, child_bounds, octant_of,
++};
++use std::cmp::Ordering;
++use std::sync::atomic::Ordering as AtomicOrdering;
++struct Work<'a> {
++    used: usize,
++    max: usize,
++    cancel: Option<&'a AtomicBool>,
++}
++impl Work<'_> {
++    fn poll(&self) -> Result<(), SpatialError> {
++        if self.cancel.is_some_and(|v| v.load(AtomicOrdering::Relaxed)) {
++            Err(SpatialError::Cancelled)
++        } else {
++            Ok(())
++        }
++    }
++    fn visit(&mut self) -> Result<(), SpatialError> {
++        self.poll()?;
++        if self.used >= self.max {
++            return Err(SpatialError::BudgetExceeded);
++        }
++        self.used += 1;
++        Ok(())
++    }
++}
++struct Node {
++    bounds: BoundingBox,
++    children: Option<[usize; 8]>,
++    indices: Vec<usize>,
++}
++struct Tree {
++    nodes: Vec<Node>,
++    bytes: usize,
++    limits: OctreeBuildLimits,
++}
++impl Tree {
++    fn charge(&mut self, bytes: usize) -> Result<(), SpatialError> {
++        let total = self
++            .bytes
++            .checked_add(bytes)
++            .ok_or(SpatialError::BudgetExceeded)?;
++        if total > self.limits.max_scratch_bytes {
++            Err(SpatialError::BudgetExceeded)
++        } else {
++            self.bytes = total;
++            Ok(())
++        }
++    }
++    fn node(
++        &mut self,
++        records: &[SpatialRecord3D],
++        indices: Vec<usize>,
++        bounds: BoundingBox,
++        depth: u32,
++        work: &mut Work<'_>,
++    ) -> Result<usize, SpatialError> {
++        work.poll()?;
++        if self.nodes.len() >= self.limits.max_nodes {
++            return Err(SpatialError::BudgetExceeded);
++        }
++        self.charge(std::mem::size_of::<Node>())?;
++        self.nodes
++            .try_reserve_exact(1)
++            .map_err(|_| SpatialError::BudgetExceeded)?;
++        let id = self.nodes.len();
++        self.nodes.push(Node {
++            bounds,
++            children: None,
++            indices: Vec::new(),
++        });
++        if indices.len() <= OCTREE_LEAF_CAPACITY || depth >= OCTREE_MAX_DEPTH {
++            self.nodes[id].indices = indices;
++            return Ok(id);
++        }
++        let first = records[indices[0]].point;
++        let mut coincident = true;
++        let center = bounds.center();
++        let mut counts = [0usize; 8];
++        for &i in &indices {
++            work.visit()?;
++            let p = records[i].point;
++            coincident &= p == first;
++            counts[octant_of(p, center)] += 1;
++        }
++        if coincident {
++            self.nodes[id].indices = indices;
++            return Ok(id);
++        }
++        self.charge(
++            indices
++                .len()
++                .checked_mul(std::mem::size_of::<usize>())
++                .ok_or(SpatialError::BudgetExceeded)?,
++        )?;
++        let mut buckets: [Vec<usize>; 8] = std::array::from_fn(|_| Vec::new());
++        for (bucket, count) in buckets.iter_mut().zip(counts) {
++            bucket
++                .try_reserve_exact(count)
++                .map_err(|_| SpatialError::BudgetExceeded)?;
++        }
++        for &i in &indices {
++            work.visit()?;
++            buckets[octant_of(records[i].point, center)].push(i);
++        }
++        let mut children = [0; 8];
++        for (octant, bucket) in buckets.into_iter().enumerate() {
++            children[octant] = self.node(
++                records,
++                bucket,
++                child_bounds(bounds, center, octant),
++                depth + 1,
++                work,
++            )?;
++        }
++        self.nodes[id].children = Some(children);
++        Ok(id)
++    }
++}
++// Each box encloses its assigned represented coordinates (the legacy midpoint
++// split partitions with >=). Widening f32 endpoints is exact. For an external
++// query coordinate, the nearest endpoint difference has magnitude <= every
++// descendant difference. Correctly rounded subtraction, nonnegative square,
++// and left-to-right addition are monotone. Thus this uses exactly the point
++// kernel's reduction order and is a conservative defined-float lower bound.
++// Strict > pruning retains boundary hits and all ID/ordinal tie contenders.
++fn bound(bounds: BoundingBox, center: Point3, metric: DistanceMetric) -> f64 {
++    let lo = [bounds.min.x, bounds.min.y, bounds.min.z].map(f64::from);
++    let hi = [bounds.max.x, bounds.max.y, bounds.max.z].map(f64::from);
++    let q = center.coordinates();
++    let d: [f64; 3] = std::array::from_fn(|i| {
++        if q[i] < lo[i] {
++            lo[i] - q[i]
++        } else if q[i] > hi[i] {
++            q[i] - hi[i]
++        } else {
++            0.
++        }
++    });
++    if metric == DistanceMetric::Euclidean {
++        (d[0] * d[0] + d[1] * d[1]) + d[2] * d[2]
++    } else {
++        (d[0] + d[1]) + d[2]
++    }
++}
++fn key(center: Point3, point: Point3, metric: DistanceMetric) -> f64 {
++    match metric {
++        DistanceMetric::Euclidean => squared(center, point),
++        DistanceMetric::Manhattan => {
++            let a = center.coordinates();
++            let b = point.coordinates();
++            ((a[0] - b[0]).abs() + (a[1] - b[1]).abs()) + (a[2] - b[2]).abs()
++        }
++        DistanceMetric::Cosine => {
++            let a = center.coordinates();
++            let b = point.coordinates();
++            let dot = (a[0] * b[0] + a[1] * b[1]) + a[2] * b[2];
++            let na = ((a[0] * a[0] + a[1] * a[1]) + a[2] * a[2]).sqrt();
++            let nb = ((b[0] * b[0] + b[1] * b[1]) + b[2] * b[2]).sqrt();
++            if na == 0. || nb == 0. {
++                1.
++            } else {
++                1. - dot / (na * nb)
++            }
++        }
++    }
++}
++struct Selection<'a> {
++    hits: Vec<CheckedSpatialHit<'a>>,
++    count: usize,
++    ceiling: f64,
++    radius: bool,
++    metric: DistanceMetric,
++    limits: QueryLimits,
++}
++impl<'a> Selection<'a> {
++    fn consider(
++        &mut self,
++        record: &'a SpatialRecord3D,
++        ordinal: usize,
++        center: Point3,
++    ) -> Result<(), SpatialError> {
++        let value = key(center, Point3::from_legacy(record.point)?, self.metric);
++        if self.radius && value > self.ceiling {
++            return Ok(());
++        }
++        let hit = hit_with_distance(
++            record,
++            ordinal,
++            value,
++            if self.metric == DistanceMetric::Euclidean {
++                value.sqrt()
++            } else {
++                value
++            },
++        );
++        if self.radius {
++            if self.hits.len() >= self.limits.max_results {
++                return Err(SpatialError::BudgetExceeded);
++            }
++            let bytes = (self.hits.len() + 1)
++                .checked_mul(std::mem::size_of::<CheckedSpatialHit<'_>>())
++                .ok_or(SpatialError::BudgetExceeded)?;
++            if bytes > self.limits.max_output_bytes {
++                return Err(SpatialError::BudgetExceeded);
++            }
++            self.hits
++                .try_reserve_exact(1)
++                .map_err(|_| SpatialError::BudgetExceeded)?;
++            self.hits.push(hit);
++        } else if self.hits.len() < self.count {
++            self.hits.push(hit);
++            let mut child = self.hits.len() - 1;
++            while child > 0 {
++                let parent = (child - 1) / 2;
++                if order(&self.hits[child], &self.hits[parent]) != Ordering::Greater {
++                    break;
++                }
++                self.hits.swap(child, parent);
++                child = parent;
++            }
++        } else if self.count > 0 && order(&hit, &self.hits[0]) == Ordering::Less {
++            self.hits[0] = hit;
++            sift_down(&mut self.hits);
++        }
++        Ok(())
++    }
++}
++fn walk<'a>(
++    tree: &Tree,
++    id: usize,
++    records: &'a [SpatialRecord3D],
++    query: &CheckedPointQuery<'_>,
++    selected: &mut Selection<'a>,
++    work: &mut Work<'_>,
++) -> Result<(), SpatialError> {
++    work.poll()?;
++    let node = &tree.nodes[id];
++    // Use the retained authoritative metric key, never rounded display sqrt.
++    let threshold = if !selected.radius && selected.hits.len() == selected.count {
++        selected.hits.first().map_or(f64::INFINITY, metric_key)
++    } else if selected.radius {
++        selected.ceiling
++    } else {
++        f64::INFINITY
++    };
++    if bound(node.bounds, query.center, query.metric) > threshold {
++        return Ok(());
++    }
++    if let Some(children) = node.children {
++        for child in children {
++            walk(tree, child, records, query, selected, work)?;
++        }
++    } else {
++        for &i in &node.indices {
++            work.visit()?;
++            selected.consider(&records[i], i, query.center)?;
++        }
++    }
++    Ok(())
++}
++/// Execute with cumulative observation work (admission, build, execution),
++/// cooperative per-node/per-observation cancellation and complete-or-error output.
++/// The transient topology is rebuilt under the exclusive local borrow each call.
++/// Scratch accounting is conservative cumulative requested bytes, including freed
++/// partitions; allocator metadata is excluded. No acceleration is presumed.
++pub fn checked_octree_query<'a>(
++    index: &'a mut SpatialIndex3D,
++    query: &CheckedPointQuery<'_>,
++) -> Result<CheckedPointOutcome<'a>, SpatialError> {
++    let mut work = Work {
++        used: 0,
++        max: query.limits.max_work,
++        cancel: query.cancellation,
++    };
++    work.poll()?;
++    let records = index.checked_records();
++    let empty = matches!(query.selection, PointSelection::Knn(0));
++    let mut path = PointQueryPath::EmptySelection;
++    let mut tree = Tree {
++        nodes: Vec::new(),
++        bytes: 0,
++        limits: query.build_limits,
++    };
++    if !empty {
++        for record in records {
++            work.visit()?;
++            Point3::from_legacy(record.point)?;
++        }
++        path = if query.metric == DistanceMetric::Cosine {
++            PointQueryPath::CompleteScan(ScanReason::UnsupportedCosineBound)
++        } else if records.len() < OCTREE_MIN_POINTS {
++            PointQueryPath::CompleteScan(ScanReason::BelowThreshold)
++        } else {
++            PointQueryPath::Octree
++        };
++        if path == PointQueryPath::Octree {
++            let attempt = (|| {
++                tree.charge(
++                    records
++                        .len()
++                        .checked_mul(std::mem::size_of::<usize>())
++                        .ok_or(SpatialError::BudgetExceeded)?,
++                )?;
++                let mut indices = Vec::new();
++                indices
++                    .try_reserve_exact(records.len())
++                    .map_err(|_| SpatialError::BudgetExceeded)?;
++                // Bounds are the existing legacy outward f32 bounds; account its inspections.
++                let mut min = records[0].point;
++                let mut max = min;
++                for (i, r) in records.iter().enumerate() {
++                    work.visit()?;
++                    indices.push(i);
++                    min.x = min.x.min(r.point.x);
++                    min.y = min.y.min(r.point.y);
++                    min.z = min.z.min(r.point.z);
++                    max.x = max.x.max(r.point.x);
++                    max.y = max.y.max(r.point.y);
++                    max.z = max.z.max(r.point.z);
++                }
++                let bounds = BoundingBox {
++                    min: crate::spatial::Point3D {
++                        x: min.x - BOUNDS_EPSILON,
++                        y: min.y - BOUNDS_EPSILON,
++                        z: min.z - BOUNDS_EPSILON,
++                    },
++                    max: crate::spatial::Point3D {
++                        x: max.x + BOUNDS_EPSILON,
++                        y: max.y + BOUNDS_EPSILON,
++                        z: max.z + BOUNDS_EPSILON,
++                    },
++                };
++                tree.node(records, indices, bounds, 0, &mut work)?;
++                Ok(())
++            })();
++            match attempt {
++                Ok(()) => {}
++                Err(SpatialError::BudgetExceeded) => {
++                    path = PointQueryPath::CompleteScan(ScanReason::IndexBudget);
++                    tree.nodes.clear();
++                }
++                Err(e) => return Err(e),
++            }
++        }
++    }
++    let (radius, count, ceiling) = match query.selection {
++        PointSelection::Radius(r) => (
++            true,
++            records.len(),
++            if query.metric == DistanceMetric::Euclidean {
++                r.get() * r.get()
++            } else {
++                r.get()
++            },
++        ),
++        PointSelection::Knn(k) => (false, k.min(records.len()), f64::INFINITY),
++    };
++    let mut selected = Selection {
++        hits: Vec::new(),
++        count,
++        ceiling,
++        radius,
++        metric: query.metric,
++        limits: query.limits,
++    };
++    if !empty {
++        if !radius {
++            let bytes = count
++                .checked_mul(std::mem::size_of::<CheckedSpatialHit<'_>>())
++                .ok_or(SpatialError::BudgetExceeded)?;
++            if count > query.limits.max_results || bytes > query.limits.max_output_bytes {
++                return Err(SpatialError::BudgetExceeded);
++            }
++            selected
++                .hits
++                .try_reserve_exact(count)
++                .map_err(|_| SpatialError::BudgetExceeded)?;
++        }
++        if path == PointQueryPath::Octree {
++            walk(&tree, 0, records, query, &mut selected, &mut work)?;
++        } else {
++            for (i, record) in records.iter().enumerate() {
++                work.visit()?;
++                selected.consider(record, i, query.center)?;
++            }
++        }
++    }
++    let bytes = selected.hits.iter().try_fold(0usize, |sum, h| {
++        sum.checked_add(std::mem::size_of::<CheckedSpatialHit<'_>>())
++            .and_then(|v| v.checked_add(h.payload.len()))
++            .ok_or(SpatialError::BudgetExceeded)
++    })?;
++    if bytes > query.limits.max_output_bytes {
++        return Err(SpatialError::BudgetExceeded);
++    }
++    selected.hits.sort_unstable_by(order);
++    work.poll()?;
++    Ok(CheckedPointOutcome {
++        hits: selected.hits,
++        numeric_profile: "cartesian-f64-v1/nonfma-xyz-v1",
++        numeric_accuracy: "defined_float_profile",
++        path_used: path,
++        candidate_coverage: "exhaustive",
++        completion: "complete",
++        consistency: "exclusive_local_borrow",
++        ranking_policy_id: "metric-key-id-insertion-ordinal-v1",
++        observed_generations: [],
++        work_observations: work.used,
++        partial_reason: None,
++        continuation: None,
++        explanation_summary: "Unitless legacy population under exclusive local borrow; transient legacy-partition tree or reported complete fallback, bounded cumulative observation work and requested heap bytes.",
++        built_nodes: tree.nodes.len(),
++        reserved_scratch_bytes: tree.bytes,
++    })
++}
+diff --git a/crates/abi-wdbx/src/spatial3d/legacy_checked.rs b/crates/abi-wdbx/src/spatial3d/legacy_checked.rs
+new file mode 100644
+index 0000000..0fe8d02
+--- /dev/null
++++ b/crates/abi-wdbx/src/spatial3d/legacy_checked.rs
+@@ -0,0 +1,251 @@
++//! Complete-or-error Euclidean queries over the legacy point population.
++use super::{Point3, Radius, SpatialError};
++use crate::spatial::SpatialRecord3D;
++use crate::spatial::{Point3D, SpatialIndex3D};
++use std::cmp::Ordering;
++use std::sync::atomic::{AtomicBool, Ordering as AtomicOrdering};
++/// Explicit local query resource ceilings.
++#[derive(Clone, Copy, Debug)]
++pub struct QueryLimits {
++    /// Maximum population observation examinations (validation plus execution).
++    pub max_work: usize,
++    /// Maximum returned observations.
++    pub max_results: usize,
++    /// Hit storage plus borrowed payload logical bytes; excludes allocator metadata.
++    pub max_output_bytes: usize,
++}
++/// One borrowed hit; identity is local ID plus insertion ordinal only.
++#[derive(Clone, Copy, Debug, PartialEq)]
++pub struct CheckedSpatialHit<'a> {
++    /// Legacy numeric identifier.
++    pub id: u32,
++    /// Zero-based index-local insertion ordinal.
++    pub insertion_ordinal: usize,
++    /// Unmodified original point.
++    pub point: Point3D,
++    /// Rounded display distance, not the ordering key.
++    pub distance_f64: f64,
++    /// Borrowed original payload.
++    pub payload: &'a [u8],
++    squared_distance: f64,
++}
++impl SpatialIndex3D {
++    /// Closed-radius complete scan under the defined-float profile.
++    pub fn try_radius_search_checked(
++        &self,
++        center: Point3D,
++        radius: f32,
++        limits: QueryLimits,
++    ) -> Result<Vec<CheckedSpatialHit<'_>>, SpatialError> {
++        self.try_radius_search_checked_with_cancel(center, radius, limits, &AtomicBool::new(false))
++    }
++    /// Closed-radius scan with cooperative cancellation, polled per examination.
++    /// Work is exactly twice the population size, including validation. Errors
++    /// return no partial vector. Sorting costs are bounded by the result cap.
++    pub fn try_radius_search_checked_with_cancel(
++        &self,
++        center: Point3D,
++        radius: f32,
++        limits: QueryLimits,
++        cancel: &AtomicBool,
++    ) -> Result<Vec<CheckedSpatialHit<'_>>, SpatialError> {
++        let center = Point3::from_legacy(center)?;
++        let radius = Radius::try_new(f64::from(radius))?;
++        poll(cancel)?;
++        let records = self.checked_records();
++        admission(records.len(), limits)?;
++        let radius_squared = radius.get() * radius.get();
++        let mut count = 0usize;
++        let mut bytes = 0usize;
++        for record in records {
++            poll(cancel)?;
++            let point = Point3::from_legacy(record.point)?;
++            if squared(center, point) <= radius_squared {
++                count = count.checked_add(1).ok_or(SpatialError::BudgetExceeded)?;
++                bytes = charge(bytes, record.payload.len())?;
++                if count > limits.max_results || bytes > limits.max_output_bytes {
++                    return Err(SpatialError::BudgetExceeded);
++                }
++            }
++        }
++        let mut hits = Vec::new();
++        hits.try_reserve_exact(count)
++            .map_err(|_| SpatialError::BudgetExceeded)?;
++        for (ordinal, record) in records.iter().enumerate() {
++            poll(cancel)?;
++            let key = squared(center, Point3::from_legacy(record.point)?);
++            if key <= radius_squared {
++                hits.push(hit(record, ordinal, key));
++            }
++        }
++        hits.sort_unstable_by(order);
++        poll(cancel)?;
++        Ok(hits)
++    }
++    /// Complete nearest selection ordered by squared distance, ID, then ordinal.
++    pub fn try_nearest_neighbors_checked(
++        &self,
++        center: Point3D,
++        k: usize,
++        limits: QueryLimits,
++    ) -> Result<Vec<CheckedSpatialHit<'_>>, SpatialError> {
++        self.try_nearest_neighbors_checked_with_cancel(center, k, limits, &AtomicBool::new(false))
++    }
++    /// Complete nearest selection with cooperative cancellation.
++    /// Query validation precedes the zero-k fast path (no population access or
++    /// allocation). Otherwise work is twice the population size; heap selection
++    /// costs O(n log min(k,n)), with at most min(k,n) allocated hit slots. Byte
++    /// admission charges those slots before allocation and final payload lengths
++    /// after selection, never the lengths of discarded candidates.
++    pub fn try_nearest_neighbors_checked_with_cancel(
++        &self,
++        center: Point3D,
++        k: usize,
++        limits: QueryLimits,
++        cancel: &AtomicBool,
++    ) -> Result<Vec<CheckedSpatialHit<'_>>, SpatialError> {
++        let center = Point3::from_legacy(center)?;
++        poll(cancel)?;
++        if k == 0 {
++            return Ok(Vec::new());
++        }
++        let records = self.checked_records();
++        admission(records.len(), limits)?;
++        for record in records {
++            poll(cancel)?;
++            Point3::from_legacy(record.point)?;
++        }
++        let count = k.min(records.len());
++        let slots = count
++            .checked_mul(std::mem::size_of::<CheckedSpatialHit<'_>>())
++            .ok_or(SpatialError::BudgetExceeded)?;
++        if count > limits.max_results || slots > limits.max_output_bytes {
++            return Err(SpatialError::BudgetExceeded);
++        }
++        let mut hits = Vec::new();
++        hits.try_reserve_exact(count)
++            .map_err(|_| SpatialError::BudgetExceeded)?;
++        for (ordinal, record) in records.iter().enumerate() {
++            poll(cancel)?;
++            let candidate = hit(
++                record,
++                ordinal,
++                squared(center, Point3::from_legacy(record.point)?),
++            );
++            if hits.len() < count {
++                hits.push(candidate);
++                let mut child = hits.len() - 1;
++                while child > 0 {
++                    let parent = (child - 1) / 2;
++                    if order(&hits[child], &hits[parent]) != Ordering::Greater {
++                        break;
++                    }
++                    hits.swap(child, parent);
++                    child = parent;
++                }
++            } else if count > 0 && order(&candidate, &hits[0]) == Ordering::Less {
++                hits[0] = candidate;
++                sift_down(&mut hits);
++            }
++        }
++        let bytes = hits
++            .iter()
++            .try_fold(0usize, |sum, h| charge(sum, h.payload.len()))?;
++        if bytes > limits.max_output_bytes {
++            return Err(SpatialError::BudgetExceeded);
++        }
++        hits.sort_unstable_by(order);
++        poll(cancel)?;
++        Ok(hits)
++    }
++}
++fn admission(population: usize, limits: QueryLimits) -> Result<(), SpatialError> {
++    if population
++        .checked_mul(2)
++        .ok_or(SpatialError::BudgetExceeded)?
++        > limits.max_work
++    {
++        return Err(SpatialError::BudgetExceeded);
++    }
++    Ok(())
++}
++fn poll(cancel: &AtomicBool) -> Result<(), SpatialError> {
++    if cancel.load(AtomicOrdering::Relaxed) {
++        Err(SpatialError::Cancelled)
++    } else {
++        Ok(())
++    }
++}
++fn charge(sum: usize, payload: usize) -> Result<usize, SpatialError> {
++    sum.checked_add(std::mem::size_of::<CheckedSpatialHit<'_>>())
++        .and_then(|v| v.checked_add(payload))
++        .ok_or(SpatialError::BudgetExceeded)
++}
++// Defined float profile: widen before subtraction, ordinary multiply/add in
++// exactly this reduction order, no FMA; preserve IEEE subnormals. All finite
++// legacy f32 differences and squared sums are representable as finite f64.
++pub(super) fn squared(left: Point3, right: Point3) -> f64 {
++    let dx = left.x() - right.x();
++    let dy = left.y() - right.y();
++    let dz = left.z() - right.z();
++    (dx * dx + dy * dy) + dz * dz
++}
++pub(super) fn hit(
++    record: &SpatialRecord3D,
++    insertion_ordinal: usize,
++    squared_distance: f64,
++) -> CheckedSpatialHit<'_> {
++    hit_with_distance(
++        record,
++        insertion_ordinal,
++        squared_distance,
++        squared_distance.sqrt(),
++    )
++}
++// Shared internal constructor: T05 supplies squared Euclidean keys. Future
++// metric-qualified callers must supply their authoritative key and display
++// separately; the private field name does not define their metric contract.
++pub(super) fn hit_with_distance(
++    record: &SpatialRecord3D,
++    insertion_ordinal: usize,
++    key: f64,
++    distance_f64: f64,
++) -> CheckedSpatialHit<'_> {
++    CheckedSpatialHit {
++        id: record.id,
++        insertion_ordinal,
++        point: record.point,
++        distance_f64,
++        payload: &record.payload,
++        squared_distance: key,
++    }
++}
++pub(super) fn order(a: &CheckedSpatialHit<'_>, b: &CheckedSpatialHit<'_>) -> Ordering {
++    a.squared_distance
++        .total_cmp(&b.squared_distance)
++        .then(a.id.cmp(&b.id))
++        .then(a.insertion_ordinal.cmp(&b.insertion_ordinal))
++}
++// In-place bounded max heap: the root is the worst retained observation.
++pub(super) fn sift_down(hits: &mut [CheckedSpatialHit<'_>]) {
++    let mut parent = 0usize;
++    while parent < hits.len() / 2 {
++        let left = parent * 2 + 1;
++        let right = left + 1;
++        let child = if right < hits.len() && order(&hits[right], &hits[left]) == Ordering::Greater {
++            right
++        } else {
++            left
++        };
++        if order(&hits[parent], &hits[child]) != Ordering::Less {
++            break;
++        }
++        hits.swap(parent, child);
++        parent = child;
++    }
++}
++
++// Authoritative metric key, distinct from rounded display distance.
++pub(super) fn metric_key(hit: &CheckedSpatialHit<'_>) -> f64 {
++    hit.squared_distance
++}
+diff --git a/crates/abi-wdbx/src/spatial3d/mod.rs b/crates/abi-wdbx/src/spatial3d/mod.rs
+new file mode 100644
+index 0000000..3281b13
+--- /dev/null
++++ b/crates/abi-wdbx/src/spatial3d/mod.rs
+@@ -0,0 +1,11 @@
++//! Additive checked Cartesian geometry; legacy storage remains unchanged.
++
++mod numeric;
++
++pub use numeric::{Point3, Radius, SpatialError};
++
++pub(super) mod legacy_checked;
++pub use legacy_checked::{CheckedSpatialHit, QueryLimits};
++
++mod octree_checked;
++pub use octree_checked::*;
+diff --git a/crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs b/crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs
+new file mode 100644
+index 0000000..5583d40
+--- /dev/null
++++ b/crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs
+@@ -0,0 +1,424 @@
++//! Deterministic checked octree parity, resources, and compatibility boundaries.
++#[path = "support/spatial_oracle.rs"]
++mod spatial_oracle;
++use abi_wdbx::spatial::{DistanceMetric, Point3D, SpatialIndex3D};
++use abi_wdbx::spatial3d::*;
++fn query(selection: PointSelection) -> CheckedPointQuery<'static> {
++    CheckedPointQuery {
++        center: Point3::try_new(0., 0., 0.).unwrap(),
++        selection,
++        metric: DistanceMetric::Euclidean,
++        limits: QueryLimits {
++            max_work: 1_000_000,
++            max_results: 10000,
++            max_output_bytes: 1_000_000,
++        },
++        build_limits: OctreeBuildLimits {
++            max_nodes: 10000,
++            max_scratch_bytes: 10_000_000,
++        },
++        cancellation: None,
++    }
++}
++fn data(n: usize) -> SpatialIndex3D {
++    let mut i = SpatialIndex3D::new();
++    for j in 0..n {
++        i.insert(
++            j as u32,
++            Point3D {
++                x: j as f32,
++                y: 0.,
++                z: 0.,
++            },
++            &[7],
++        );
++    }
++    i
++}
++#[test]
++fn threshold_63_64_65_has_same_semantics() {
++    for n in [63, 64, 65] {
++        let mut i = data(n);
++        let o = checked_octree_query(&mut i, &query(PointSelection::Knn(5))).unwrap();
++        assert_eq!(
++            o.hits.iter().map(|h| h.id).collect::<Vec<_>>(),
++            vec![0, 1, 2, 3, 4]
++        );
++        assert_eq!(
++            o.path_used,
++            if n < 64 {
++                PointQueryPath::CompleteScan(ScanReason::BelowThreshold)
++            } else {
++                PointQueryPath::Octree
++            }
++        );
++    }
++}
++#[test]
++fn degenerate_points_do_not_explode_tree() {
++    let mut i = SpatialIndex3D::new();
++    for j in 0..1000 {
++        i.insert(j, Point3D::default(), &[]);
++    }
++    let mut q = query(PointSelection::Knn(3));
++    q.build_limits.max_nodes = 1;
++    let o = checked_octree_query(&mut i, &q).unwrap();
++    assert_eq!(o.path_used, PointQueryPath::Octree);
++    assert_eq!(o.built_nodes, 1);
++}
++#[test]
++fn conservative_bounds_do_not_drop_boundary_hits() {
++    let mut i = data(65);
++    let o = checked_octree_query(
++        &mut i,
++        &query(PointSelection::Radius(Radius::try_new(8.).unwrap())),
++    )
++    .unwrap();
++    assert_eq!(o.hits.len(), 9);
++    assert_eq!(o.hits[8].id, 8);
++}
++#[test]
++fn insert_after_build_invalidates_correctly() {
++    let mut i = data(65);
++    let q = query(PointSelection::Knn(2));
++    assert_eq!(checked_octree_query(&mut i, &q).unwrap().hits[1].id, 1);
++    i.insert(999, Point3D::default(), &[9]);
++    let o = checked_octree_query(&mut i, &q).unwrap();
++    assert_eq!(o.hits[1].id, 999);
++}
++#[test]
++fn unsupported_cosine_pruning_falls_back() {
++    let mut i = data(65);
++    let mut q = query(PointSelection::Knn(2));
++    q.metric = DistanceMetric::Cosine;
++    let o = checked_octree_query(&mut i, &q).unwrap();
++    assert_eq!(
++        o.path_used,
++        PointQueryPath::CompleteScan(ScanReason::UnsupportedCosineBound)
++    );
++}
++#[test]
++fn thousand_seeded_independent_cases() {
++    use spatial_oracle::{OraclePoint, reference_knn, reference_radius};
++    let mut accelerated = 0;
++    for seed in 0..1000u64 {
++        let n = [63, 64, 65][seed as usize % 3];
++        let mut state = seed + 1;
++        let mut index = SpatialIndex3D::new();
++        let mut rows = Vec::new();
++        for ordinal in 0..n {
++            state = state
++                .wrapping_mul(6364136223846793005)
++                .wrapping_add(1442695040888963407);
++            let a = ((state >> 32) as i32 % 1024) as f32 / 16.;
++            state = state.rotate_left(17);
++            let b = ((state >> 32) as i32 % 1024) as f32 / 16.;
++            let p = match seed % 8 {
++                0 => Point3D::default(),
++                1 => Point3D { x: a, y: 0., z: 0. },
++                2 => Point3D { x: a, y: b, z: 0. },
++                3 => Point3D {
++                    x: a / 1024.,
++                    y: b / 1024.,
++                    z: a / 2048.,
++                },
++                4 => Point3D {
++                    x: if ordinal % 2 == 0 {
++                        f32::MAX
++                    } else {
++                        -f32::MAX
++                    },
++                    y: b,
++                    z: 0.,
++                },
++                5 => Point3D {
++                    x: f32::from_bits((ordinal % 5) as u32),
++                    y: -0.,
++                    z: 0.,
++                },
++                6 => Point3D {
++                    x: if ordinal % 2 == 0 { 1. } else { -1. },
++                    y: 0.,
++                    z: 0.,
++                },
++                _ => Point3D {
++                    x: a,
++                    y: b,
++                    z: (ordinal % 7) as f32,
++                },
++            };
++            let id = (ordinal % 11) as u32;
++            index.insert(id, p, &[(ordinal % 251) as u8]);
++            rows.push(OraclePoint {
++                point: Point3::from_legacy(p).unwrap(),
++                id,
++                ordinal,
++            });
++        }
++        for radius in [false, true] {
++            let selection = if radius {
++                PointSelection::Radius(
++                    Radius::try_new(if seed % 5 == 0 { 0. } else { 32. }).unwrap(),
++                )
++            } else {
++                PointSelection::Knn((seed % 70) as usize)
++            };
++            let mut q = query(selection);
++            if seed % 13 == 0 {
++                q.center = Point3::try_new(1e150, -1e150, 1e150).unwrap();
++            }
++            let expected = match selection {
++                PointSelection::Knn(k) => reference_knn(&rows, q.center, k),
++                PointSelection::Radius(r) => reference_radius(&rows, q.center, r),
++            };
++            let out = checked_octree_query(&mut index, &q).unwrap();
++            accelerated += usize::from(out.path_used == PointQueryPath::Octree);
++            assert_eq!(
++                out.hits.len(),
++                expected.len(),
++                "seed {seed} radius {radius}"
++            );
++            for (actual, want) in out.hits.iter().zip(&expected) {
++                assert_eq!(
++                    (actual.id, actual.insertion_ordinal, actual.distance_f64),
++                    (want.id, want.ordinal, want.distance),
++                    "seed {seed} radius {radius}"
++                );
++                assert_eq!(actual.payload, &[(want.ordinal % 251) as u8]);
++            }
++            assert_eq!(out.numeric_accuracy, "defined_float_profile");
++            assert_eq!(out.candidate_coverage, "exhaustive");
++            assert_eq!(out.completion, "complete");
++            assert!(out.partial_reason.is_none() && out.continuation.is_none());
++            assert_eq!(out.observed_generations, []);
++            assert!(out.built_nodes <= q.build_limits.max_nodes);
++            assert!(out.reserved_scratch_bytes <= q.build_limits.max_scratch_bytes);
++        }
++        index.insert(9000, Point3D::default(), &[99]);
++        rows.push(OraclePoint {
++            point: Point3::from_legacy(Point3D::default()).unwrap(),
++            id: 9000,
++            ordinal: n,
++        });
++        let q = query(PointSelection::Knn(7));
++        let expected = reference_knn(&rows, q.center, 7);
++        let rebuilt = checked_octree_query(&mut index, &q).unwrap();
++        assert_eq!(
++            rebuilt
++                .hits
++                .iter()
++                .map(|h| (h.id, h.insertion_ordinal))
++                .collect::<Vec<_>>(),
++            expected
++                .iter()
++                .map(|h| (h.id, h.ordinal))
++                .collect::<Vec<_>>(),
++            "rebuild seed {seed}"
++        );
++    }
++    assert!(accelerated > 1000, "actual accelerated cases {accelerated}");
++}
++#[test]
++fn resource_caps_fallback_and_cumulative_work() {
++    let mut index = data(65);
++    let mut q = query(PointSelection::Knn(4));
++    q.build_limits.max_nodes = 0;
++    let o = checked_octree_query(&mut index, &q).unwrap();
++    assert_eq!(
++        o.path_used,
++        PointQueryPath::CompleteScan(ScanReason::IndexBudget)
++    );
++    assert_eq!(o.work_observations, 195);
++    q.limits.max_work = 130;
++    assert!(matches!(
++        checked_octree_query(&mut index, &q),
++        Err(SpatialError::BudgetExceeded)
++    ));
++    q.limits.max_work = 1_000_000;
++    q.build_limits.max_scratch_bytes = 0;
++    let o = checked_octree_query(&mut index, &q).unwrap();
++    assert_eq!(o.work_observations, 130);
++    assert_eq!(o.reserved_scratch_bytes, 0);
++    q.limits.max_output_bytes = 0;
++    assert!(matches!(
++        checked_octree_query(&mut index, &q),
++        Err(SpatialError::BudgetExceeded)
++    ));
++}
++#[test]
++fn invalid_legacy_and_cancelled_queries_fail_closed() {
++    use std::sync::atomic::AtomicBool;
++    let mut index = data(65);
++    index.insert(
++        8,
++        Point3D {
++            x: f32::NAN,
++            y: 0.,
++            z: 0.,
++        },
++        &[],
++    );
++    let q = query(PointSelection::Knn(1));
++    assert!(matches!(
++        checked_octree_query(&mut index, &q),
++        Err(SpatialError::NonFinite)
++    ));
++    let cancel = AtomicBool::new(true);
++    let mut q = query(PointSelection::Knn(1));
++    q.cancellation = Some(&cancel);
++    assert!(matches!(
++        checked_octree_query(&mut index, &q),
++        Err(SpatialError::Cancelled)
++    ));
++    q.cancellation = None;
++    q.selection = PointSelection::Knn(0);
++    q.limits.max_work = 0;
++    assert_eq!(
++        checked_octree_query(&mut index, &q).unwrap().path_used,
++        PointQueryPath::EmptySelection
++    );
++}
++#[test]
++fn manhattan_and_cosine_have_independent_ordering() {
++    for metric in [DistanceMetric::Manhattan, DistanceMetric::Cosine] {
++        let mut index = data(65);
++        let mut q = query(PointSelection::Knn(65));
++        q.center = Point3::try_new(0., 2., 3.).unwrap();
++        q.metric = metric;
++        let out = checked_octree_query(&mut index, &q).unwrap();
++        let mut expected: Vec<_> = (0..65u32)
++            .map(|id| {
++                let distance = if metric == DistanceMetric::Manhattan {
++                    f64::from(id) + 5.
++                } else {
++                    1.
++                };
++                (distance, id)
++            })
++            .collect();
++        expected.sort_by(|a, b| a.0.total_cmp(&b.0).then(a.1.cmp(&b.1)));
++        assert_eq!(
++            out.hits
++                .iter()
++                .map(|h| (h.distance_f64, h.id))
++                .collect::<Vec<_>>(),
++            expected
++        );
++        if metric == DistanceMetric::Manhattan {
++            assert_eq!(out.path_used, PointQueryPath::Octree);
++        }
++    }
++}
++#[test]
++fn cosine_nontrivial_normalization_and_payloads() {
++    let mut index = SpatialIndex3D::new();
++    for (id, p) in [
++        (1, [1., 0., 0.]),
++        (2, [4., 3., 0.]),
++        (3, [3., 4., 0.]),
++        (4, [0., 0., 0.]),
++        (5, [-1., 0., 0.]),
++    ] {
++        index.insert(
++            id,
++            Point3D {
++                x: p[0],
++                y: p[1],
++                z: p[2],
++            },
++            &[id as u8],
++        );
++    }
++    for id in 6..70 {
++        index.insert(
++            id,
++            Point3D {
++                x: -1.,
++                y: 0.,
++                z: 0.,
++            },
++            &[id as u8],
++        );
++    }
++    let mut q = query(PointSelection::Knn(5));
++    q.center = Point3::try_new(1., 0., 0.).unwrap();
++    q.metric = DistanceMetric::Cosine;
++    let out = checked_octree_query(&mut index, &q).unwrap();
++    assert_eq!(
++        out.path_used,
++        PointQueryPath::CompleteScan(ScanReason::UnsupportedCosineBound)
++    );
++    assert_eq!(
++        out.hits
++            .iter()
++            .map(|h| (h.id, h.distance_f64))
++            .collect::<Vec<_>>(),
++        vec![(1, 0.), (2, 1. - 0.8), (3, 1. - 0.6), (4, 1.), (5, 2.)]
++    );
++    for h in out.hits {
++        assert_eq!(h.payload, &[h.id as u8]);
++    }
++}
++#[test]
++fn fifty_seeded_manhattan_radius_and_knn_oracles() {
++    for seed in 0..50usize {
++        let mut index = SpatialIndex3D::new();
++        let mut expected = Vec::new();
++        for ordinal in 0..65usize {
++            let p = [
++                ((ordinal * 17 + seed * 3) % 21) as f32 - 10.,
++                ((ordinal * 7 + seed) % 17) as f32 - 8.,
++                ((ordinal * 3 + seed * 11) % 13) as f32 - 6.,
++            ];
++            let id = (ordinal % 9) as u32;
++            index.insert(
++                id,
++                Point3D {
++                    x: p[0],
++                    y: p[1],
++                    z: p[2],
++                },
++                &[ordinal as u8],
++            );
++            let distance = (f64::from(p[0]) - 1.).abs()
++                + (f64::from(p[1]) + 2.).abs()
++                + (f64::from(p[2]) - 3.).abs();
++            expected.push((distance, id, ordinal));
++        }
++        expected.sort_by(|a, b| a.0.total_cmp(&b.0).then(a.1.cmp(&b.1)).then(a.2.cmp(&b.2)));
++        for selection in [
++            PointSelection::Knn(seed % 70),
++            PointSelection::Radius(Radius::try_new(12.).unwrap()),
++        ] {
++            let mut q = query(selection);
++            q.metric = DistanceMetric::Manhattan;
++            q.center = Point3::try_new(1., -2., 3.).unwrap();
++            let mut want = expected.clone();
++            match selection {
++                PointSelection::Knn(k) => want.truncate(k),
++                PointSelection::Radius(_) => want.retain(|h| h.0 <= 12.),
++            }
++            let out = checked_octree_query(&mut index, &q).unwrap();
++            assert_eq!(
++                out.hits
++                    .iter()
++                    .map(|h| (h.distance_f64, h.id, h.insertion_ordinal))
++                    .collect::<Vec<_>>(),
++                want,
++                "Manhattan seed {seed}"
++            );
++            if !matches!(selection, PointSelection::Knn(0)) {
++                assert_eq!(out.path_used, PointQueryPath::Octree);
++            }
++        }
++    }
++    let mut index = data(65);
++    let mut q = query(PointSelection::Radius(Radius::try_new(3.).unwrap()));
++    q.metric = DistanceMetric::Manhattan;
++    q.center = Point3::try_new(1., 1., 1.).unwrap();
++    let out = checked_octree_query(&mut index, &q).unwrap();
++    assert_eq!(
++        out.hits.iter().map(|h| h.id).collect::<Vec<_>>(),
++        vec![1, 0, 2]
++    );
++}

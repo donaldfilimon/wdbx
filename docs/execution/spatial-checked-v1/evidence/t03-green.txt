@@ -1,0 +1,45 @@
+   Compiling abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx-spatial-checked-v1/crates/abi-wdbx)
+warning: missing documentation for the crate
+   --> crates/abi-wdbx/tests/wdbx_3d_numeric.rs:1:1
+    |
+  1 | / use abi_wdbx::{
+  2 | |     Point3D,
+  3 | |     spatial3d::{Point3, Radius, SpatialError},
+  4 | | };
+...   |
+114 | |     );
+115 | | }
+    | |_^
+    |
+    = note: requested on the command line with `-W missing-docs`
+
+warning: `abi-wdbx` (test "wdbx_3d_numeric") generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.02s
+     Running tests/wdbx_3d_numeric.rs (target/debug/deps/wdbx_3d_numeric-6dce56fd4be631eb)
+
+running 4 tests
+test normalizes_only_new_geometric_zero ... ok
+test radius_domain_is_closed ... ok
+test rejects_nonfinite_and_out_of_domain ... ok
+test widens_all_finite_f32 ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+        3.08 real         2.15 user         0.79 sys
+           579616768  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               71572  page reclaims
+               12553  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   3  signals received
+                 654  voluntary context switches
+               19666  involuntary context switches
+           949117383  instructions retired
+           491883540  cycles elapsed
+            37831376  peak memory footprint

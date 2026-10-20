@@ -1,0 +1,38 @@
+$ cargo check --workspace --all-targets --locked
+    Checking abi-foundation v0.1.0 (/Users/donald/sources/repos/wdbx-spatial-checked-v1/crates/abi-foundation)
+    Checking abi-compute v0.1.0 (/Users/donald/sources/repos/wdbx-spatial-checked-v1/crates/abi-compute)
+    Checking abi-telemetry v0.1.0 (/Users/donald/sources/repos/wdbx-spatial-checked-v1/crates/abi-telemetry)
+    Checking abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx-spatial-checked-v1/crates/abi-wdbx)
+    Checking abi-core v0.1.0 (/Users/donald/sources/repos/wdbx-spatial-checked-v1/crates/abi-core)
+warning: missing documentation for the crate
+   --> crates/abi-wdbx/tests/wdbx_3d_numeric.rs:1:1
+    |
+  1 | / use abi_wdbx::{
+  2 | |     Point3D,
+  3 | |     spatial3d::{Point3, Radius, SpatialError},
+  4 | | };
+...   |
+114 | |     );
+115 | | }
+    | |_^
+    |
+    = note: requested on the command line with `-W missing-docs`
+
+warning: `abi-wdbx` (test "wdbx_3d_numeric") generated 1 warning
+warning: missing documentation for the crate
+   --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:1:1
+    |
+  1 | / #[path = "support/dyadic_reference.rs"]
+  2 | | mod dyadic_reference;
+  3 | | #[path = "support/spatial_oracle.rs"]
+  4 | | mod spatial_oracle;
+...   |
+219 | | }
+    | |_^
+    |
+    = note: requested on the command line with `-W missing-docs`
+
+warning: `abi-wdbx` (test "wdbx_3d_oracle") generated 1 warning
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.05s
+
+exit=0

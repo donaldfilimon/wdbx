@@ -1,0 +1,6 @@
+test_zero_tests_do_not_qualify (tools.tests.test_wdbx_3d_evidence.SourceManifestTests.test_zero_tests_do_not_qualify) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK

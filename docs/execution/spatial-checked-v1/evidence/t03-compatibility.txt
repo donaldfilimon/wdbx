@@ -1,0 +1,29 @@
+   Compiling abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx-spatial-checked-v1/crates/abi-wdbx)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.47s
+     Running tests/wdbx_3d_compatibility.rs (target/debug/deps/wdbx_3d_compatibility-6a84b02da7f12cff)
+
+running 3 tests
+test legacy_api_order_is_characterized ... ok
+test legacy_reader_is_nonmutating ... ok
+test signed_bytes_remain_identical ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+        0.54 real         0.35 user         0.27 sys
+           163102720  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               30753  page reclaims
+                 831  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   2  signals received
+                  36  voluntary context switches
+                3924  involuntary context switches
+           825167925  instructions retired
+           371169625  cycles elapsed
+            37651128  peak memory footprint

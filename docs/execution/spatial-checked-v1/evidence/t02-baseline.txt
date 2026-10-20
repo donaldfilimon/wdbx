@@ -1,0 +1,25 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running tests/wdbx_3d_compatibility.rs (target/debug/deps/wdbx_3d_compatibility-6a84b02da7f12cff)
+
+running 3 tests
+test legacy_api_order_is_characterized ... ok
+
+thread 'legacy_reader_is_nonmutating' (342626) panicked at crates/abi-wdbx/tests/wdbx_3d_compatibility.rs:91:9:
+assertion `left == right` failed
+  left: 0
+ right: 2
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test legacy_reader_is_nonmutating ... FAILED
+signed-v2-object 48e59e116a2f30a0d9998dda44e247fd0d5a304773f634d04df991529ca26b5e
+signed-v3-ledger 25ddcefbbebc646ecc240151d4f42507246525877d082dd0bc17deed83ee28cc
+v3-episode-digest b5f06be593fe61fcbe6c4d9655e7b203d26cc2f0036dd77a5407ec88aeb34925
+test signed_bytes_remain_identical ... ok
+
+failures:
+
+failures:
+    legacy_reader_is_nonmutating
+
+test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `-p abi-wdbx --test wdbx_3d_compatibility`

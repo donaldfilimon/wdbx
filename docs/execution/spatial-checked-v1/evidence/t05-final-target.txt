@@ -1,0 +1,36 @@
+   Compiling abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx-spatial-checked-v1/crates/abi-wdbx)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.50s
+     Running tests/wdbx_3d_checked_points.rs (target/debug/deps/wdbx_3d_checked_points-4e5e6e86d8b1d240)
+
+running 10 tests
+test rounded_display_distance_does_not_replace_squared_order_key ... ok
+test invalid_insert_is_atomic ... ok
+test legacy_duplicates_are_retained ... ok
+test invalid_legacy_population_is_not_silently_skipped ... ok
+test invalid_queries_empty_and_cancellation ... ok
+test zero_k_returns_no_hits ... ok
+test equal_distance_uses_checked_total_order ... ok
+test resource_caps_are_complete_or_error ... ok
+test widening_extrema_subnormals_and_closed_boundaries_match_independent_scan ... ok
+test bounded_topk_matches_independent_scan_across_thresholds ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+        1.55 real         0.89 user         0.57 sys
+           463093760  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               66696  page reclaims
+                3893  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   3  signals received
+                  43  voluntary context switches
+                7502  involuntary context switches
+           853266899  instructions retired
+           350213139  cycles elapsed
+            37847760  peak memory footprint

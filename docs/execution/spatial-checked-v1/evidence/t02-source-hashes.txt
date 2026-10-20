@@ -1,0 +1,2 @@
+9409908b2c7639005afc942049af8ed17875daf8483882c434f2da63999cee10  crates/abi-wdbx/tests/wdbx_3d_compatibility.rs
+6e295032ec50c91f3ccb85635c4424b48fe52b237f0fddfb0e703a84730d68c1  crates/abi-wdbx/tests/fixtures/wdbx_3d/compatibility-manifest.json

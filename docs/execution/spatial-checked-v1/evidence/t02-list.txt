@@ -1,0 +1,8 @@
+   Compiling abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx-spatial-checked-v1/crates/abi-wdbx)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.29s
+     Running tests/wdbx_3d_compatibility.rs (target/debug/deps/wdbx_3d_compatibility-6a84b02da7f12cff)
+legacy_api_order_is_characterized: test
+legacy_reader_is_nonmutating: test
+signed_bytes_remain_identical: test
+
+3 tests, 0 benchmarks

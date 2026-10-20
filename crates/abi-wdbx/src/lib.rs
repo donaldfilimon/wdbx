@@ -56,6 +56,7 @@ pub mod retrieval;
 pub mod segment;
 pub mod segments;
 pub mod spatial;
+pub mod spatial3d;
 pub mod store;
 pub mod store_path;
 pub mod temporal;

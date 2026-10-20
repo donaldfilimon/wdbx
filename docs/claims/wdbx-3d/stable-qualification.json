@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "kind": "StableQualification",
+  "status": "passed_baseline_default_workspace",
+  "recorded_at": "2026-10-20T07:43:49.168956+00:00",
+  "authorization": {
+    "earlier": "Tests were previously paused; earlier source qualification is not this executed gate.",
+    "current": "User authorized local tests for execution packet; CI remains paused. No live stores, consumer model workloads, commits or push."
+  },
+  "source": {
+    "head": "08a69b3f22db61093e06527b3308b10589687022",
+    "scope": "Preimplementation baseline plus formatting-only cpu.rs ordered-fold correction; not final checked-spatial diff qualification.",
+    "hash_manifest": "docs/execution/spatial-checked-v1/evidence/t01-source-hashes.json",
+    "files_changed_during_gate": [],
+    "cpu_rs_sha256": "ed8c872ca71dbf097ae42e020310d0f0123a516257c7b66c63e7bb6809a48ca6"
+  },
+  "toolchain": {
+    "release": "1.99.1",
+    "rustc_verbose": "rustc 1.99.1 (58cf8f9c3 2026-10-13)\nbinary: rustc\ncommit-hash: 58cf8f9c35b355199727627d07ae34a4e2846d67\ncommit-date: 2026-10-13\nhost: aarch64-apple-darwin\nrelease: 1.99.1\nLLVM version: 23.1.1",
+    "cargo": "cargo 1.99.1 (5f94df478 2026-08-27)",
+    "target": "aarch64-apple-darwin",
+    "environment": {
+      "RUSTUP_TOOLCHAIN": "1.99.1",
+      "PATH_prefix": "<rustup-toolchain-bin>:/usr/bin:/bin:/usr/sbin:/sbin",
+      "note": "Pinned toolchain location verified locally; operator path omitted from public projection. Raw receipt retains the local command environment."
+    },
+    "script_overrides_toolchain": false
+  },
+  "lockfile": {
+    "sha256": "4900d9f3e71f6915b0a3fb88a74a357772151b82975cb2dd0be07099262f9f54",
+    "unchanged": true
+  },
+  "features": {
+    "qualified": [
+      "workspace defaults (abi-wdbx default=[])"
+    ],
+    "manifest_optional": [
+      "abi-wdbx/full-fhe",
+      "abi-wdbx/experimental-dghv-bootstrap"
+    ],
+    "optional_status": "unverified; optional FHE outside spatial packet; no all-features union run",
+    "abi_compute_features": []
+  },
+  "commands": [
+    {
+      "command": "cargo check --workspace --all-targets --locked",
+      "exit_status": 0,
+      "log": "docs/execution/spatial-checked-v1/evidence/t01-check.txt",
+      "test_count": null,
+      "evidence_kind": "compile_only"
+    },
+    {
+      "command": "bash tools/check.sh",
+      "exit_status": 0,
+      "log": "docs/execution/spatial-checked-v1/evidence/t01-workspace-gate.txt",
+      "test_summary_count": 24,
+      "nonzero_test_summaries": 19,
+      "zero_test_summaries": 5,
+      "passed": 647,
+      "failed": 0,
+      "ignored": 0,
+      "warning_count": 1,
+      "warning": "clippy pedantic too_many_lines in v3_memory_edge (123/100); policy permits warning",
+      "profile": "dev clippy; test unoptimized + debuginfo",
+      "resource_usage": {
+        "clippy_reported_seconds": 6.66,
+        "test_build_reported_seconds": 12.28,
+        "peak_memory": null,
+        "cpu_usage": null
+      },
+      "locked_flag": false,
+      "lock_preservation": "hash compared before/after"
+    }
+  ],
+  "prior_failure": {
+    "command": "bash tools/check.sh",
+    "log": "docs/execution/spatial-checked-v1/evidence/workspace-gate.txt",
+    "result": "failed fmt at cpu.rs ordered fold before formatting-only correction; retained as red evidence"
+  },
+  "acceptance_cases": {
+    "compiler_is_requested_release": "pass: pinned executable and rustc -Vv",
+    "check_is_not_test_evidence": "pass: compile result test_count is null; test counts derived only from gate test summaries",
+    "feature_matrix_is_supported": "pass: no blanket union; only defaults qualified"
+  },
+  "untested_consumers": [
+    {
+      "name": "ABI",
+      "toolchain": "nightly-2026-09-01",
+      "dependency_identity": "path ../wdbx/crates/{abi-compute,abi-wdbx}; canonical sibling checkout, not this worktree",
+      "status": "read-only inspected, not built or tested"
+    },
+    {
+      "name": "Specimen Studio",
+      "toolchain": "nightly-2026-09-01",
+      "dependency_identity": "git https://github.com/donaldfilimon/wdbx rev 3ac03f085196dbe6e922a127ceaa37bc2368de89",
+      "status": "read-only inspected, excluded separate workspace; native/model workloads not executed"
+    },
+    {
+      "name": "Abbey",
+      "status": "not present among sibling checkout directories; untested"
+    }
+  ],
+  "limits": [
+    "No optional FHE runtime evidence.",
+    "No SIMD ISA, speedup, performance, CI or integrated consumer qualification.",
+    "Final implementation requires a fresh default gate.",
+    "real_store::reads_the_real_store_when_opted_in can return early without opt-in; harness ok is not live-store evidence. Environment presence was checked post-run only."
+  ],
+  "environment_post_run_presence": {
+    "ABI_WDBX_REAL_STORE_TEST": false,
+    "ABI_ZIG_BIN": false
+  }
+}

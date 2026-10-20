@@ -1,0 +1,14 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.06s
+     Running tests/wdbx_3d_checked_points.rs (target/debug/deps/wdbx_3d_checked_points-4e5e6e86d8b1d240)
+bounded_topk_matches_independent_scan_across_thresholds: test
+equal_distance_uses_checked_total_order: test
+invalid_insert_is_atomic: test
+invalid_legacy_population_is_not_silently_skipped: test
+invalid_queries_empty_and_cancellation: test
+legacy_duplicates_are_retained: test
+resource_caps_are_complete_or_error: test
+rounded_display_distance_does_not_replace_squared_order_key: test
+widening_extrema_subnormals_and_closed_boundaries_match_independent_scan: test
+zero_k_returns_no_hits: test
+
+10 tests, 0 benchmarks

@@ -1,0 +1,104 @@
+.FFFFFFFFFFF
+======================================================================
+FAIL: test_distinguishes_reported_and_executed (test_wdbx_3d_evidence.SourceManifestTests.test_distinguishes_reported_and_executed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/donald/sources/repos/wdbx-spatial-checked-v1/tools/tests/test_wdbx_3d_evidence.py", line 43, in test_distinguishes_reported_and_executed
+    self.assertTrue(module.validate_source_manifest(doc))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_rejects_incomplete_read_ranges (test_wdbx_3d_evidence.SourceManifestTests.test_rejects_incomplete_read_ranges)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/donald/sources/repos/wdbx-spatial-checked-v1/tools/tests/test_wdbx_3d_evidence.py", line 53, in test_rejects_incomplete_read_ranges
+    self.assertTrue(module.validate_source_manifest(doc))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_rejects_malformed_types_without_crashing (test_wdbx_3d_evidence.SourceManifestTests.test_rejects_malformed_types_without_crashing) (doc=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/donald/sources/repos/wdbx-spatial-checked-v1/tools/tests/test_wdbx_3d_evidence.py", line 68, in test_rejects_malformed_types_without_crashing
+    self.assertTrue(module.validate_source_manifest(doc))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_rejects_malformed_types_without_crashing (test_wdbx_3d_evidence.SourceManifestTests.test_rejects_malformed_types_without_crashing) (doc=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/donald/sources/repos/wdbx-spatial-checked-v1/tools/tests/test_wdbx_3d_evidence.py", line 68, in test_rejects_malformed_types_without_crashing
+    self.assertTrue(module.validate_source_manifest(doc))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_rejects_malformed_types_without_crashing (test_wdbx_3d_evidence.SourceManifestTests.test_rejects_malformed_types_without_crashing) (doc={})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/donald/sources/repos/wdbx-spatial-checked-v1/tools/tests/test_wdbx_3d_evidence.py", line 68, in test_rejects_malformed_types_without_crashing
+    self.assertTrue(module.validate_source_manifest(doc))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_rejects_malformed_types_without_crashing (test_wdbx_3d_evidence.SourceManifestTests.test_rejects_malformed_types_without_crashing) (doc={'sources': [None]})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/donald/sources/repos/wdbx-spatial-checked-v1/tools/tests/test_wdbx_3d_evidence.py", line 68, in test_rejects_malformed_types_without_crashing
+    self.assertTrue(module.validate_source_manifest(doc))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_rejects_malformed_types_without_crashing (test_wdbx_3d_evidence.SourceManifestTests.test_rejects_malformed_types_without_crashing) (doc={'sources': 'invalid'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/donald/sources/repos/wdbx-spatial-checked-v1/tools/tests/test_wdbx_3d_evidence.py", line 68, in test_rejects_malformed_types_without_crashing
+    self.assertTrue(module.validate_source_manifest(doc))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_rejects_malformed_types_without_crashing (test_wdbx_3d_evidence.SourceManifestTests.test_rejects_malformed_types_without_crashing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/donald/sources/repos/wdbx-spatial-checked-v1/tools/tests/test_wdbx_3d_evidence.py", line 73, in test_rejects_malformed_types_without_crashing
+    self.assertTrue(module.validate_source_manifest(doc))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_rejects_missing_original_authority (test_wdbx_3d_evidence.SourceManifestTests.test_rejects_missing_original_authority)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/donald/sources/repos/wdbx-spatial-checked-v1/tools/tests/test_wdbx_3d_evidence.py", line 48, in test_rejects_missing_original_authority
+    self.assertTrue(module.validate_source_manifest(doc))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_rejects_mutable_only_source (test_wdbx_3d_evidence.SourceManifestTests.test_rejects_mutable_only_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/donald/sources/repos/wdbx-spatial-checked-v1/tools/tests/test_wdbx_3d_evidence.py", line 34, in test_rejects_mutable_only_source
+    self.assertTrue(module.validate_source_manifest(doc))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_zero_tests_do_not_qualify (test_wdbx_3d_evidence.SourceManifestTests.test_zero_tests_do_not_qualify)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/donald/sources/repos/wdbx-spatial-checked-v1/tools/tests/test_wdbx_3d_evidence.py", line 61, in test_zero_tests_do_not_qualify
+    self.assertTrue(module.validate_source_manifest(doc))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.001s
+
+FAILED (failures=11)

@@ -1,0 +1,15 @@
+   Compiling abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx-spatial-checked-v1/crates/abi-wdbx)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.60s
+     Running tests/v3_episode_signing.rs (target/debug/deps/v3_episode_signing-c673bdf3375425ac)
+
+running 7 tests
+test a_signing_key_file_must_be_owner_only_and_32_bytes ... ok
+test a_malformed_key_id_on_disk_is_corruption_for_every_reader ... ok
+test a_relabelled_key_id_does_not_let_another_key_vouch_for_the_record ... ok
+test a_signed_store_reports_valid_and_survives_reopen ... ok
+test a_tampered_own_signature_fails_replay_but_a_foreign_one_is_left_to_the_verifier ... ok
+test an_existing_unsigned_ledger_opens_with_a_signer_and_mixes_states ... ok
+test signing_leaves_the_digest_and_the_unsigned_ledger_bytes_unchanged ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+

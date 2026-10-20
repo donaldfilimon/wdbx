@@ -1,0 +1,45 @@
+   Compiling abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx-spatial-checked-v1/crates/abi-wdbx)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.59s
+     Running tests/wdbx_3d_checked_points.rs (target/debug/deps/wdbx_3d_checked_points-4e5e6e86d8b1d240)
+
+running 10 tests
+test equal_distance_uses_checked_total_order ... ok
+test invalid_insert_is_atomic ... ok
+test invalid_legacy_population_is_not_silently_skipped ... ok
+test invalid_queries_empty_and_cancellation ... ok
+test legacy_duplicates_are_retained ... ok
+test resource_caps_are_complete_or_error ... ok
+test rounded_display_distance_does_not_replace_squared_order_key ... ok
+test zero_k_returns_no_hits ... ok
+test widening_extrema_subnormals_and_closed_boundaries_match_independent_scan ... ok
+test bounded_topk_matches_independent_scan_across_thresholds ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/wdbx_3d_compatibility.rs (target/debug/deps/wdbx_3d_compatibility-6a84b02da7f12cff)
+
+running 3 tests
+test legacy_api_order_is_characterized ... ok
+test legacy_reader_is_nonmutating ... ok
+test signed_bytes_remain_identical ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/wdbx_3d_octree_parity.rs (target/debug/deps/wdbx_3d_octree_parity-0478e6e1e2d55987)
+
+running 12 tests
+test cosine_nontrivial_normalization_and_payloads ... ok
+test invalid_legacy_and_cancelled_queries_fail_closed ... ok
+test conservative_bounds_do_not_drop_boundary_hits ... ok
+test resource_caps_fallback_and_cumulative_work ... ok
+test insert_after_build_invalidates_correctly ... ok
+test radius_payload_budget_exact_and_one_byte_under_on_both_paths ... ok
+test manhattan_and_cosine_have_independent_ordering ... ok
+test unsupported_cosine_pruning_falls_back ... ok
+test threshold_63_64_65_has_same_semantics ... ok
+test degenerate_points_do_not_explode_tree ... ok
+test fifty_seeded_manhattan_radius_and_knn_oracles ... ok
+test thousand_seeded_independent_cases ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.80s
+

@@ -1,0 +1,242 @@
+diff --git a/crates/abi-wdbx/src/lib.rs b/crates/abi-wdbx/src/lib.rs
+index eac013f..73c68ce 100644
+--- a/crates/abi-wdbx/src/lib.rs
++++ b/crates/abi-wdbx/src/lib.rs
+@@ -56,6 +56,7 @@ pub mod retrieval;
+ pub mod segment;
+ pub mod segments;
+ pub mod spatial;
++pub mod spatial3d;
+ pub mod store;
+ pub mod store_path;
+ pub mod temporal;
+diff --git a/crates/abi-wdbx/src/spatial3d/mod.rs b/crates/abi-wdbx/src/spatial3d/mod.rs
+new file mode 100644
+index 0000000..ecc1dd0
+--- /dev/null
++++ b/crates/abi-wdbx/src/spatial3d/mod.rs
+@@ -0,0 +1,5 @@
++//! Additive checked Cartesian geometry; legacy storage remains unchanged.
++
++mod numeric;
++
++pub use numeric::{Point3, Radius, SpatialError};
+diff --git a/crates/abi-wdbx/src/spatial3d/numeric.rs b/crates/abi-wdbx/src/spatial3d/numeric.rs
+new file mode 100644
+index 0000000..bd07c4f
+--- /dev/null
++++ b/crates/abi-wdbx/src/spatial3d/numeric.rs
+@@ -0,0 +1,92 @@
++//! Validated numeric primitives for the `cartesian-f64-v1` profile.
++use crate::spatial::Point3D;
++
++/// Validation or execution failure in the checked spatial API.
++#[derive(Clone, Copy, Debug, Eq, PartialEq)]
++pub enum SpatialError {
++    /// An input is NaN or infinite.
++    NonFinite,
++    /// A coordinate or radius exceeds the profile magnitude limit.
++    CoordinateOutOfRange,
++    /// A radius is strictly negative.
++    NegativeRadius,
++    /// A bound minimum exceeds its maximum.
++    InvalidBounds,
++    /// A work or memory budget would be exceeded.
++    BudgetExceeded,
++    /// The requested metric is unsupported.
++    UnsupportedMetric,
++}
++
++/// A finite Cartesian point with coordinate magnitudes at most `1e150`.
++#[derive(Clone, Copy, Debug, PartialEq)]
++pub struct Point3 {
++    coordinates: [f64; 3],
++}
++impl Point3 {
++    /// Validate coordinates, normalizing geometric signed zeros to positive zero.
++    pub fn try_new(x: f64, y: f64, z: f64) -> Result<Self, SpatialError> {
++        let coordinates = [x, y, z];
++        if coordinates.iter().any(|value| !value.is_finite()) {
++            return Err(SpatialError::NonFinite);
++        }
++        if coordinates.iter().any(|value| value.abs() > 1e150) {
++            return Err(SpatialError::CoordinateOutOfRange);
++        }
++        Ok(Self {
++            coordinates: coordinates.map(normalize_zero),
++        })
++    }
++    /// Explicitly widen a legacy point without modifying its original bits.
++    pub fn from_legacy(point: Point3D) -> Result<Self, SpatialError> {
++        Self::try_new(f64::from(point.x), f64::from(point.y), f64::from(point.z))
++    }
++    /// X coordinate.
++    #[must_use]
++    pub fn x(self) -> f64 {
++        self.coordinates[0]
++    }
++    /// Y coordinate.
++    #[must_use]
++    pub fn y(self) -> f64 {
++        self.coordinates[1]
++    }
++    /// Z coordinate.
++    #[must_use]
++    pub fn z(self) -> f64 {
++        self.coordinates[2]
++    }
++    /// Coordinates in X, Y, Z order, returned by value.
++    #[must_use]
++    pub fn coordinates(self) -> [f64; 3] {
++        self.coordinates
++    }
++}
++
++/// A finite radius in the closed interval `[0, 1e150]`.
++#[derive(Clone, Copy, Debug, PartialEq)]
++pub struct Radius(f64);
++impl Radius {
++    /// Validate a radius, normalizing negative zero to positive zero.
++    pub fn try_new(radius: f64) -> Result<Self, SpatialError> {
++        if !radius.is_finite() {
++            return Err(SpatialError::NonFinite);
++        }
++        if radius < 0.0 {
++            return Err(SpatialError::NegativeRadius);
++        }
++        if radius > 1e150 {
++            return Err(SpatialError::CoordinateOutOfRange);
++        }
++        Ok(Self(normalize_zero(radius)))
++    }
++    /// Return the validated radius value.
++    #[must_use]
++    pub fn get(self) -> f64 {
++        self.0
++    }
++}
++
++fn normalize_zero(value: f64) -> f64 {
++    if value == 0.0 { 0.0 } else { value }
++}
+diff --git a/crates/abi-wdbx/tests/wdbx_3d_numeric.rs b/crates/abi-wdbx/tests/wdbx_3d_numeric.rs
+new file mode 100644
+index 0000000..b4390f1
+--- /dev/null
++++ b/crates/abi-wdbx/tests/wdbx_3d_numeric.rs
+@@ -0,0 +1,115 @@
++use abi_wdbx::{
++    Point3D,
++    spatial3d::{Point3, Radius, SpatialError},
++};
++
++#[test]
++fn rejects_nonfinite_and_out_of_domain() {
++    for bad in [f64::NAN, f64::INFINITY, f64::NEG_INFINITY] {
++        for axis in 0..3 {
++            let mut xyz = [0.0; 3];
++            xyz[axis] = bad;
++            assert_eq!(
++                Point3::try_new(xyz[0], xyz[1], xyz[2]),
++                Err(SpatialError::NonFinite)
++            );
++        }
++    }
++    let outside = f64::from_bits(1e150_f64.to_bits() + 1);
++    for bad in [outside, -outside, f64::MAX, -f64::MAX] {
++        for axis in 0..3 {
++            let mut xyz = [0.0; 3];
++            xyz[axis] = bad;
++            assert_eq!(
++                Point3::try_new(xyz[0], xyz[1], xyz[2]),
++                Err(SpatialError::CoordinateOutOfRange)
++            );
++        }
++    }
++    assert_eq!(
++        Point3::try_new(-1e150, 1e150, f64::from_bits(1))
++            .unwrap()
++            .coordinates(),
++        [-1e150, 1e150, f64::from_bits(1)]
++    );
++}
++
++#[test]
++fn widens_all_finite_f32() {
++    for value in [
++        f32::MIN,
++        f32::MAX,
++        f32::MIN_POSITIVE,
++        -f32::MIN_POSITIVE,
++        f32::from_bits(1),
++        -f32::from_bits(1),
++        f32::from_bits(0x007f_ffff),
++        1.234_567,
++    ] {
++        let old = Point3D {
++            x: value,
++            y: -value,
++            z: value,
++        };
++        let bits = [old.x.to_bits(), old.y.to_bits(), old.z.to_bits()];
++        let point = Point3::from_legacy(old).unwrap();
++        assert_eq!(
++            point.coordinates(),
++            [f64::from(value), f64::from(-value), f64::from(value)]
++        );
++        assert_eq!([point.x(), point.y(), point.z()], point.coordinates());
++        assert_eq!([old.x.to_bits(), old.y.to_bits(), old.z.to_bits()], bits);
++    }
++    for value in [f32::NAN, f32::INFINITY, f32::NEG_INFINITY] {
++        assert_eq!(
++            Point3::from_legacy(Point3D {
++                x: value,
++                y: 0.0,
++                z: 0.0
++            }),
++            Err(SpatialError::NonFinite)
++        );
++    }
++}
++
++#[test]
++fn normalizes_only_new_geometric_zero() {
++    let old = Point3D {
++        x: -0.0,
++        y: 0.0,
++        z: -0.0,
++    };
++    let old_bytes = [
++        old.x.to_le_bytes(),
++        old.y.to_le_bytes(),
++        old.z.to_le_bytes(),
++    ];
++    let point = Point3::from_legacy(old).unwrap();
++    assert_eq!(point, Point3::try_new(0.0, -0.0, 0.0).unwrap());
++    assert_eq!(point.coordinates().map(f64::to_bits), [0; 3]);
++    assert_eq!(
++        [
++            old.x.to_le_bytes(),
++            old.y.to_le_bytes(),
++            old.z.to_le_bytes()
++        ],
++        old_bytes
++    );
++    assert_eq!(old.x.to_bits(), 0x8000_0000);
++}
++
++#[test]
++fn radius_domain_is_closed() {
++    assert_eq!(Radius::try_new(-1.0), Err(SpatialError::NegativeRadius));
++    for value in [-0.0, 0.0, 1e150, f64::from_bits(1)] {
++        assert_eq!(Radius::try_new(value).unwrap().get(), value);
++    }
++    assert_eq!(Radius::try_new(-0.0).unwrap().get().to_bits(), 0);
++    for value in [f64::NAN, f64::INFINITY, f64::NEG_INFINITY] {
++        assert_eq!(Radius::try_new(value), Err(SpatialError::NonFinite));
++    }
++    assert_eq!(
++        Radius::try_new(f64::from_bits(1e150_f64.to_bits() + 1)),
++        Err(SpatialError::CoordinateOutOfRange)
++    );
++}

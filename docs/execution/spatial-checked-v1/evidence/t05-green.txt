@@ -1,0 +1,48 @@
+   Compiling abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx-spatial-checked-v1/crates/abi-wdbx)
+warning: missing documentation for the crate
+   --> crates/abi-wdbx/tests/wdbx_3d_checked_points.rs:1:1
+    |
+  1 | / #[path = "support/spatial_oracle.rs"]
+  2 | | mod spatial_oracle;
+  3 | | use abi_wdbx::{
+  4 | |     spatial::{DistanceMetric, Point3D, SpatialIndex3D},
+...   |
+276 | | }
+    | |_^
+    |
+    = note: requested on the command line with `-W missing-docs`
+
+warning: `abi-wdbx` (test "wdbx_3d_checked_points") generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.48s
+     Running tests/wdbx_3d_checked_points.rs (target/debug/deps/wdbx_3d_checked_points-4e5e6e86d8b1d240)
+
+running 8 tests
+test invalid_queries_empty_and_cancellation ... ok
+test invalid_legacy_population_is_not_silently_skipped ... ok
+test resource_caps_are_complete_or_error ... ok
+test legacy_duplicates_are_retained ... ok
+test invalid_insert_is_atomic ... ok
+test equal_distance_uses_checked_total_order ... ok
+test zero_k_returns_no_hits ... ok
+test widening_extrema_subnormals_and_closed_boundaries_match_independent_scan ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+        1.50 real         1.92 user         0.54 sys
+           626212864  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               99722  page reclaims
+                 498  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   3  signals received
+                  48  voluntary context switches
+               17773  involuntary context switches
+           837050332  instructions retired
+           266061222  cycles elapsed
+            37733072  peak memory footprint
