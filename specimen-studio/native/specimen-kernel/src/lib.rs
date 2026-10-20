@@ -1,6 +1,7 @@
 //! Pure specimen rules. Every impure service arrives through `host`.
 pub mod command;
 pub mod engine;
+pub mod graph;
 pub mod host;
 pub mod language;
 pub mod mutate;

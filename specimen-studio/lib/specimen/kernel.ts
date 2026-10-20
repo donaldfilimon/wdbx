@@ -155,6 +155,21 @@ export const PLACEHOLDER: Specimen = {
 
 export const seedSpecimen = () => call<Specimen>({ op: 'seed' });
 
+/** Graph-view policy from the compiled kernel. Does not change stored weights. */
+export const graphView = (input: {
+  camera: string;
+  edges: string;
+  edgeBudget: number;
+  refs: string[];
+  selected?: string;
+  links: { from: string; to: string }[];
+  advance?: boolean;
+}) =>
+  call<{ camera: string; edgeBudget: number; refs: string[] }>({
+    op: 'graphView',
+    ...input,
+  });
+
 export const addNode = (
   state: Specimen,
   input: {

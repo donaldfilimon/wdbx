@@ -297,6 +297,19 @@ try {
     .locator('nav[aria-label="Main navigation"] a[href="?view=network"]')
     .click();
   await expect(page.getByLabel('Layer 1 neurons')).toBeVisible();
+  const graph = page
+    .getByRole('toolbar', { name: 'Graph view', exact: true })
+    .first();
+  await expect(
+    graph.getByRole('button', { name: 'Orbit', exact: true }),
+  ).toHaveAttribute('aria-pressed', 'true');
+  await graph.getByRole('button', { name: 'Next view', exact: true }).click();
+  await expect(
+    graph.getByRole('button', { name: 'Top', exact: true }),
+  ).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('region', { name: 'Agent approval' })).toHaveCount(
+    0,
+  );
   await page.getByLabel('Neurons', { exact: true }).fill('48');
   await page.getByRole('button', { name: 'Add layer', exact: true }).click();
   await expect(

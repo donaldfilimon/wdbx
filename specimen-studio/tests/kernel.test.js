@@ -13,6 +13,7 @@ import {
   maintenance,
   migrateIds,
   observeContext,
+  graphView,
   networkDefault,
   networkEdit,
   networkTrace,
@@ -487,6 +488,21 @@ test('review with Type B on repeated unmatched produces proposals; dismiss/recon
   expect(
     allRe.state.proposals.filter((pp) => pp.status === 'pending').length,
   ).toBeGreaterThanOrEqual(2);
+});
+
+test('graph view policy comes from the compiled kernel', () => {
+  const viewed = graphView({
+    camera: 'orbit',
+    edges: 'local',
+    edgeBudget: 12,
+    refs: ['a', 'b', 'c'],
+    selected: 'a',
+    links: [{ from: 'a', to: 'b' }],
+    advance: true,
+  });
+  expect(viewed.camera).toBe('top');
+  expect(viewed.edgeBudget).toBe(80);
+  expect(viewed.refs).toEqual(['a', 'b']);
 });
 
 test('notes round-trip through the kernel and drop raw html', () => {

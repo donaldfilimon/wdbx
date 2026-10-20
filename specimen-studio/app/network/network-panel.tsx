@@ -14,6 +14,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { EmptyState, Panel, WButton } from '@/components/wdbx';
 import {
+  graphView,
   networkEdit,
   networkTrace,
   type Network,
@@ -550,12 +551,25 @@ export function TopologyView({
     () => topologyLayout(specimen.nodes),
     [specimen.nodes],
   );
-  const shownRefs = visibleNodeRefs(
-    specimen.nodes.map((item) => item.ref),
-    selected,
-    prefs.edges,
-    specimen.attachments,
-  );
+  const shownRefs = (() => {
+    const refs = specimen.nodes.map((item) => item.ref);
+    const links = specimen.attachments.map((item) => ({
+      from: item.from,
+      to: item.to,
+    }));
+    try {
+      return graphView({
+        camera: prefs.camera,
+        edges: prefs.edges,
+        edgeBudget: prefs.edgeBudget,
+        refs,
+        selected,
+        links,
+      }).refs;
+    } catch {
+      return visibleNodeRefs(refs, selected, prefs.edges, specimen.attachments);
+    }
+  })();
   const shown = new Set(shownRefs);
   const nodes = specimen.nodes.filter((item) => shown.has(item.ref));
   const attachments = specimen.attachments.filter(

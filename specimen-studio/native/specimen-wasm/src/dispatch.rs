@@ -81,6 +81,40 @@ pub fn dispatch(h: &Host, req: &Value, progress: &dyn Fn(Value)) -> Result<Value
                 .ok_or_else(|| error("InvalidInput", "seed must be a whole number"))?;
             Ok(serde_json::to_value(network.trace(&input, false, seed)?)?)
         }
+        "graphView" => {
+            let refs: Vec<String> =
+                serde_json::from_value(field(req, "refs")?.clone()).unwrap_or_default();
+            let links: Vec<(String, String)> = req["links"]
+                .as_array()
+                .map(|rows| {
+                    rows.iter()
+                        .filter_map(|row| {
+                            Some((
+                                row["from"].as_str()?.to_owned(),
+                                row["to"].as_str()?.to_owned(),
+                            ))
+                        })
+                        .collect()
+                })
+                .unwrap_or_default();
+            let budget = req["edgeBudget"].as_i64().unwrap_or(600);
+            let camera = specimen_kernel::graph::camera(req["camera"].as_str().unwrap_or("orbit"));
+            let camera = if req["advance"].as_bool().unwrap_or(false) {
+                specimen_kernel::graph::next_camera(camera)
+            } else {
+                camera
+            };
+            Ok(json!({
+                "camera": camera,
+                "edgeBudget": specimen_kernel::graph::clamp_edge_budget(budget),
+                "refs": specimen_kernel::graph::visible_refs(
+                    &refs,
+                    req["selected"].as_str(),
+                    req["edges"].as_str().unwrap_or("all"),
+                    &links,
+                ),
+            }))
+        }
         "raftPlan" => {
             let n = |k: &str| -> Result<usize> {
                 field(req, k)?

@@ -1,5 +1,26 @@
-import type { NetworkViewPrefs } from './view-prefs';
-import { nextCamera } from './view-prefs';
+import { graphView } from '@/lib/specimen/kernel';
+import { nextCamera, type NetworkViewPrefs } from './view-prefs';
+
+function kernelCamera(
+  prefs: NetworkViewPrefs,
+  advance: boolean,
+): NetworkViewPrefs['camera'] {
+  try {
+    const camera = graphView({
+      camera: prefs.camera,
+      edges: prefs.edges,
+      edgeBudget: prefs.edgeBudget,
+      refs: [],
+      links: [],
+      advance,
+    }).camera;
+    if (camera === 'top' || camera === 'side' || camera === 'orbit')
+      return camera;
+  } catch {
+    // The kernel is still loading; the local cycle matches it.
+  }
+  return advance ? nextCamera(prefs.camera) : prefs.camera;
+}
 
 /** Obsidian-style graph controls plus a Cursor-like assistant. View automation only. */
 export function GraphChrome({
@@ -30,7 +51,10 @@ export function GraphChrome({
           else if (key === '2') set({ camera: 'top' });
           else if (key === '3') set({ camera: 'side' });
           else if (key === 'f') set({ follow: !prefs.follow });
-          else if (key === 'n') set({ camera: nextCamera(prefs.camera) });
+          else if (key === 'n')
+            set({
+              camera: kernelCamera(prefs, true),
+            });
           else return;
           event.preventDefault();
         }}
@@ -57,7 +81,11 @@ export function GraphChrome({
         <button
           type="button"
           className="button utility"
-          onClick={() => set({ camera: nextCamera(prefs.camera) })}
+          onClick={() =>
+            set({
+              camera: kernelCamera(prefs, true),
+            })
+          }
         >
           Next view
         </button>
