@@ -56,6 +56,10 @@ export function ModelsPanel({ lab }: { lab: Lab }) {
                 loaded
               </p>
             ) : null}
+            <p className="m-0 text-xs text-ink-soft">
+              Install checks size and SHA-256. That is not a run and not
+              training.
+            </p>
             <details className="text-xs">
               <summary className="min-h-11 cursor-pointer content-center font-semibold text-ink-soft">
                 Source and verification

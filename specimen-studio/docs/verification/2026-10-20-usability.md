@@ -110,6 +110,10 @@ is served locally with `bun run start --ip 127.0.0.1 --port 3000`.
 - Desktop: instrumented considerations + bridge + smoke validated.
 - All browser e2e (incl. new header badge paths) and native coverage exercised. Verification updated for completeness.
 
+## Graph editor (2026-10-20)
+- Neural layers and specimen topology share a graph chrome: orbit/top/side cameras, follow selection, edge filter, and connection density. Choices persist in `wdbx-network-view` on this device.
+- The graph assistant explains the selection and the next explicit action. Camera automation does not teach, review, or train weights. The studio topology zoom controls are unchanged.
+
 ## Agent control and 3D (2026-10-20)
 - WebMCP stays least-privilege. `workspace_status` is read-only and lists what an agent may not do: dismiss, teach, model install, weight updates, or ABI/Abbey store writes. `run_specimen_prompt` remains one visible cycle, not training.
 - Network scenes already render on demand with instanced meshes. Device pixel ratio is capped at 1.5. No new 3D library was added.

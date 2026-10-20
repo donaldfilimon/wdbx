@@ -43,10 +43,28 @@ function ThemePaint({ frame }: { frame: number }) {
 }
 
 /** Orbit controls that request a frame only when the camera moves. */
-function Controls() {
+function Controls({
+  preset = 'orbit',
+  focus = null,
+}: {
+  preset?: 'orbit' | 'top' | 'side';
+  focus?: [number, number, number] | null;
+}) {
   const { camera, gl, invalidate } = useThree();
+  const focusKey = focus ? focus.join(',') : '';
   useLayoutEffect(() => {
     const controls = new OrbitControls(camera, gl.domElement);
+    const target = focus
+      ? new THREE.Vector3(focus[0], focus[1], focus[2])
+      : new THREE.Vector3();
+    if (preset === 'top')
+      camera.position.set(target.x, target.y + 12, target.z + 0.01);
+    else if (preset === 'side')
+      camera.position.set(target.x + 12, target.y + 1, target.z);
+    else camera.position.set(target.x, target.y + 3, target.z + 10);
+    controls.target.copy(target);
+    controls.update();
+    invalidate();
     // Reduced motion keeps the camera still: no damping and no auto-rotate.
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     const holdStill = () => {
@@ -63,7 +81,7 @@ function Controls() {
       controls.removeEventListener('change', redraw);
       controls.dispose();
     };
-  }, [camera, gl, invalidate]);
+  }, [camera, gl, invalidate, preset, focusKey, focus]);
   return null;
 }
 
@@ -136,16 +154,20 @@ function Segments({
 export function LayersScene({
   network,
   trace,
+  camera = 'orbit',
+  edgeBudget = EDGES_PER_LAYER,
 }: {
   network: Network;
   trace?: number[][];
+  camera?: 'orbit' | 'top' | 'side';
+  edgeBudget?: number;
 }) {
   const frame = useThemeFrame();
   const columns = useMemo(() => neuronPositions(network, CAP), [network]);
   const edges = useMemo(
     () =>
       network.layers.flatMap((layer, i) =>
-        sampledEdges(layer, CAP, EDGES_PER_LAYER).map(
+        sampledEdges(layer, CAP, edgeBudget).map(
           ([from, to]) =>
             [columns[i][from], columns[i + 1][to]] as [
               [number, number, number],
@@ -153,7 +175,7 @@ export function LayersScene({
             ],
         ),
       ),
-    [network, columns],
+    [network, columns, edgeBudget],
   );
   return (
     <Canvas
@@ -163,7 +185,7 @@ export function LayersScene({
       camera={{ position: [0, 3, 10], fov: 45 }}
     >
       <ThemePaint frame={frame} />
-      <Controls />
+      <Controls preset={camera} />
       {columns.map((points, i) => (
         <Neurons
           key={`${i}-${points.length}`}
@@ -335,6 +357,8 @@ export function TopologyScene({
   onSelect,
   onMove,
   onConnect,
+  camera = 'orbit',
+  follow = false,
 }: {
   nodes: SpecimenNode[];
   attachments: Attachment[];
@@ -344,6 +368,8 @@ export function TopologyScene({
   onSelect: (ref: string) => void;
   onMove: (ref: string, x: number, y: number, z: number) => void;
   onConnect: (from: string, to: string) => void;
+  camera?: 'orbit' | 'top' | 'side';
+  follow?: boolean;
 }) {
   const frame = useThemeFrame();
   const [linking, setLinking] = useState<string | null>(null);
@@ -364,7 +390,10 @@ export function TopologyScene({
       onPointerMissed={() => setLinking(null)}
     >
       <ThemePaint frame={frame} />
-      <Controls />
+      <Controls
+        preset={camera}
+        focus={follow && selected ? (positions[selected] ?? null) : null}
+      />
       {nodes.map((node) => (
         <NodeMesh
           key={node.ref}

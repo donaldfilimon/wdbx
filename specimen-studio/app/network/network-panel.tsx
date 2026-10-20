@@ -33,7 +33,13 @@ import {
   type StoredNetwork,
 } from '@/lib/specimen/storage';
 import type { Attachment, Specimen, SpecimenNode } from '@/lib/specimen/types';
+import { GraphChrome } from './graph-chrome';
 import { Viewport } from './viewport';
+import {
+  parseNetworkViewPrefs,
+  visibleNodeRefs,
+  type NetworkViewPrefs,
+} from './view-prefs';
 
 const LayersScene = lazy(() =>
   import('./scene').then((m) => ({ default: m.LayersScene })),
@@ -41,6 +47,24 @@ const LayersScene = lazy(() =>
 const TopologyScene = lazy(() =>
   import('./scene').then((m) => ({ default: m.TopologyScene })),
 );
+
+function useGraphPrefs() {
+  const [prefs, setPrefs] = useState<NetworkViewPrefs>(() => {
+    try {
+      return parseNetworkViewPrefs(localStorage.getItem('wdbx-network-view'));
+    } catch {
+      return parseNetworkViewPrefs(null);
+    }
+  });
+  useEffect(() => {
+    try {
+      localStorage.setItem('wdbx-network-view', JSON.stringify(prefs));
+    } catch {
+      // A blocked store still keeps the choice for this visit.
+    }
+  }, [prefs]);
+  return [prefs, setPrefs] as const;
+}
 
 const field =
   'grid gap-1 text-xs font-semibold text-ink [&_input]:min-h-11 [&_input]:font-mono';
@@ -69,6 +93,7 @@ export function LayersView({
   const [trace, setTrace] = useState<number[][] | undefined>();
   const [traceError, setTraceError] = useState('');
   const stats = trace ? traceStats(trace) : [];
+  const [prefs, setPrefs] = useGraphPrefs();
   const seedValue = whole(seed) ?? 1;
   const atValue = layerInsertAt(
     rows.map((row) => row.index),
@@ -76,11 +101,21 @@ export function LayersView({
   );
   return (
     <div className="grid gap-4">
+      <GraphChrome
+        prefs={prefs}
+        onChange={setPrefs}
+        note="Layer columns stay sampled. Density only changes how many connections are drawn, not the stored weights."
+      />
       <Viewport
         label="Network layers in 3D: an input column of 128 features, then one column of neurons per layer, with sampled connections"
         tableHint="The Layers table lists every layer."
       >
-        <LayersScene network={network} trace={trace} />
+        <LayersScene
+          network={network}
+          trace={trace}
+          camera={prefs.camera}
+          edgeBudget={prefs.edgeBudget}
+        />
       </Viewport>
       <Panel
         title="Layers"
@@ -476,7 +511,11 @@ function AttachmentEditor({
         />
         Both ways
       </label>
-      <WButton type="submit" variant="outline" disabled={!Number.isFinite(value)}>
+      <WButton
+        type="submit"
+        variant="outline"
+        disabled={!Number.isFinite(value)}
+      >
         Update attachment
       </WButton>
     </form>
@@ -496,9 +535,27 @@ export function TopologyView({
   const [target, setTarget] = useState('');
   const byRef = new Map(specimen.nodes.map((n) => [n.ref, n]));
   const node = selected ? byRef.get(selected) : undefined;
-  const layout = useMemo(() => topologyLayout(specimen.nodes), [specimen.nodes]);
+  const [prefs, setPrefs] = useGraphPrefs();
+  const layout = useMemo(
+    () => topologyLayout(specimen.nodes),
+    [specimen.nodes],
+  );
+  const shownRefs = visibleNodeRefs(
+    specimen.nodes.map((item) => item.ref),
+    selected,
+    prefs.edges,
+    specimen.attachments,
+  );
+  const shown = new Set(shownRefs);
+  const nodes = specimen.nodes.filter((item) => shown.has(item.ref));
+  const attachments = specimen.attachments.filter(
+    (item) =>
+      shown.has(item.from) &&
+      shown.has(item.to) &&
+      (prefs.edges !== 'hard' || item.hard),
+  );
   const positions = Object.fromEntries(
-    specimen.nodes.map((item) => [item.ref, placed(item, layout)]),
+    nodes.map((item) => [item.ref, placed(item, layout)]),
   );
   const editing = specimen.attachments.find((item) => item.id === attachmentId);
   const nudge = (item: SpecimenNode, dx: number, dy: number, dz: number) => {
@@ -520,13 +577,26 @@ export function TopologyView({
     );
   return (
     <div className="grid gap-4">
+      <GraphChrome
+        prefs={prefs}
+        onChange={setPrefs}
+        note={
+          prefs.edges === 'local' && !selected
+            ? 'Select a node to isolate its neighborhood. The full tables stay below.'
+            : node
+              ? `${node.name} is type ${node.type}. Open Activity to review proposals, or Studio to teach. This graph does not train weights.`
+              : 'Drag a node to pin it. Drag its handle to connect. The assistant only frames the view.'
+        }
+      />
       <Viewport
         label="Specimen topology in 3D: node shape shows type, size shows strength, colour shows tone; attachments are lines, solid when hard"
         tableHint="The Nodes and Attachments tables list the same data."
       >
         <TopologyScene
-          nodes={specimen.nodes}
-          attachments={specimen.attachments}
+          nodes={nodes}
+          attachments={attachments}
+          camera={prefs.camera}
+          follow={prefs.follow}
           maxStrength={specimen.settings.maxStrength}
           selected={selected}
           positions={positions}
