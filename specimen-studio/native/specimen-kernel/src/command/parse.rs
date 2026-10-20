@@ -58,6 +58,22 @@ pub const SPELLINGS: &[Spelling] = &[
         summary: "Alias of /reconsider.",
     },
     Spelling {
+        name: "/dismissAll",
+        summary: "Dismiss all pending learning proposals.",
+    },
+    Spelling {
+        name: "/dismissAllProposals",
+        summary: "Alias of /dismissAll.",
+    },
+    Spelling {
+        name: "/reconsiderAll",
+        summary: "Reconsider all dismissed learning proposals.",
+    },
+    Spelling {
+        name: "/reconsiderAllProposals",
+        summary: "Alias of /reconsiderAll.",
+    },
+    Spelling {
         name: "/undo",
         summary: "Undo the last command.",
     },
@@ -185,6 +201,18 @@ pub fn parse(line: &str) -> Result<Parsed> {
                 command: Box::new(Command::ReconsiderProposal {
                     id: rest.to_owned(),
                 }),
+            })
+        }
+        "/dismissAll" | "/dismissAllProposals" => {
+            no_args(token, rest)?;
+            Ok(Parsed::Command {
+                command: Box::new(Command::DismissAllProposals),
+            })
+        }
+        "/reconsiderAll" | "/reconsiderAllProposals" => {
+            no_args(token, rest)?;
+            Ok(Parsed::Command {
+                command: Box::new(Command::ReconsiderAllProposals),
             })
         }
         "/undo" => {

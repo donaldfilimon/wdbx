@@ -160,6 +160,26 @@ export function ViewOutlet({
             setEditing(undefined);
             openDialog('node');
           }}
+          onDismissAll={() =>
+            act(() => {
+              const applied = applyCommand(state, {
+                command: 'dismissAllProposals',
+              });
+              pushUndo(applied.undo);
+              commit(applied.state);
+              announce(applied.message);
+            })
+          }
+          onReconsiderAll={() =>
+            act(() => {
+              const applied = applyCommand(state, {
+                command: 'reconsiderAllProposals',
+              });
+              pushUndo(applied.undo);
+              commit(applied.state);
+              announce(applied.message);
+            })
+          }
           onDismiss={(id) =>
             act(() => {
               const applied = applyCommand(state, {

@@ -109,3 +109,14 @@ is served locally with `bun run start --ip 127.0.0.1 --port 3000`.
 - WDBX root key: instructions, sizes, fmt, clippy (pre-existing warnings only).
 - Desktop: instrumented considerations + bridge + smoke validated.
 - All browser e2e (incl. new header badge paths) and native coverage exercised. Verification updated for completeness.
+
+## Native window and honest model lab (2026-10-20)
+- Desktop window uses an overlay title bar. `.native-app` tightens the sidebar and flattens panels. Browser selectors and labels are unchanged.
+- Models and Generate state the claim boundary: a verified download is not generation; text and image inference are CPU; the GPU line is the composition net; generation is not learned until an explicit teach.
+- No weight training, LoRA, hosted inference, or silent learning was added.
+
+## Bulk proposal actions (2026-10-20 follow-up)
+- Kernel commands `dismissAllProposals` and `reconsiderAllProposals` (composer `/dismissAll`, `/reconsiderAll` and aliases) change only matching statuses and refuse when nothing matches.
+- Activity shows **Dismiss all pending** and **Reconsider all dismissed** only when that status is present. One undo restores the whole batch.
+- Learned proposals are left unchanged. No automatic learning was added.
+- Native instrumented UI: 7 passing on scratch data. The desktop proposal check seeds history through the test bridge and asserts review creates at least two pending proposals. Activity dismiss/reconsider stays covered by the browser usability suite and kernel tests.

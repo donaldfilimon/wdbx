@@ -160,6 +160,8 @@ pub enum Command {
     ReconsiderProposal {
         id: String,
     },
+    DismissAllProposals,
+    ReconsiderAllProposals,
 }
 
 /// Previous values needed to reverse one successful command.
@@ -546,6 +548,33 @@ mod tests {
     }
 
     #[test]
+    fn bulk_proposal_commands_change_matching_statuses() {
+        let (fixed, mut state) = host_state();
+        state["proposals"] = json!([
+            {"id":"p1","pattern":"one","evidence":2,"status":"pending"},
+            {"id":"p2","pattern":"two","evidence":3,"status":"pending"},
+            {"id":"p3","pattern":"three","evidence":1,"status":"learned"}
+        ]);
+        let dismissed = apply(&fixed.host(), &state, None, Command::DismissAllProposals).unwrap();
+        assert_eq!(dismissed.state["proposals"][0]["status"], "dismissed");
+        assert_eq!(dismissed.state["proposals"][1]["status"], "dismissed");
+        assert_eq!(dismissed.state["proposals"][2]["status"], "learned");
+        let reconsidered = apply(
+            &fixed.host(),
+            &dismissed.state,
+            None,
+            Command::ReconsiderAllProposals,
+        )
+        .unwrap();
+        assert_eq!(reconsidered.state["proposals"][0]["status"], "pending");
+        assert_eq!(reconsidered.state["proposals"][1]["status"], "pending");
+        assert_eq!(reconsidered.state["proposals"][2]["status"], "learned");
+        let empty =
+            apply(&fixed.host(), &state, None, Command::ReconsiderAllProposals).unwrap_err();
+        assert!(empty.message.contains("dismissed"));
+    }
+
+    #[test]
     fn network_edit_undo_restores_the_previous_network() {
         let (fixed, state) = host_state();
         let network = Network::default();
@@ -633,6 +662,14 @@ mod tests {
             },
             other => panic!("unexpected {other:?}"),
         }
+        assert!(matches!(
+            parse("/dismissAll").unwrap(),
+            Parsed::Command { command } if matches!(*command, Command::DismissAllProposals)
+        ));
+        assert!(matches!(
+            parse("/reconsiderAllProposals").unwrap(),
+            Parsed::Command { command } if matches!(*command, Command::ReconsiderAllProposals)
+        ));
         assert!(matches!(
             parse("/contributorfractal").unwrap(),
             Parsed::Directive {

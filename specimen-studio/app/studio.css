@@ -3664,3 +3664,26 @@ body {
     display: none;
   }
 }
+
+/* Desktop window: overlay title bar, flatter materials. Browser preview is unchanged. */
+.native-app .sidebar {
+  padding-top: 38px;
+}
+.native-app .page-header {
+  min-height: 52px;
+  align-items: center;
+}
+.native-app .page-header h1 {
+  font-size: 20px;
+  letter-spacing: 0;
+}
+.native-app .panel,
+.native-app .composer,
+.native-app .console-dock {
+  box-shadow: none;
+  border-radius: 8px;
+}
+.native-app .sidebar-caption,
+.native-app .brand small {
+  letter-spacing: 0;
+}

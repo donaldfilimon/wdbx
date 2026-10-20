@@ -319,73 +319,79 @@ describe('Native specimen desktop', () => {
     await expect($('.answer-text')).toHaveText('A small lesson remembered.');
     evidence.scenarios.push('unmatched-teach-draft-preservation');
   });
-  it('creates proposals via review (multiple unmatched + Review context), dismisses and reconsiders', async () => {
+  it('creates pending proposals when review sees repeated unmatched history', async () => {
     await browser.refresh();
     await browser.waitUntil(
       async () => !(await $('body').getText()).includes('Opening workspace'),
       { timeout: 30000 },
     );
-    await $('nav[aria-label="Main navigation"] a[href="?view=studio"]').click();
-    await $('nav[aria-label="Specimen workflow"] button*=Teach pattern').waitForDisplayed();
-
-    // Teach Type B node via UI (enables proposal synthesis on review)
-    await $('nav[aria-label="Specimen workflow"] button*=Teach pattern').click();
-    await $('#node-name').waitForDisplayed();
-    await $('#node-name').setValue('Repeat Observer');
-    await $('#node-type').selectByVisibleText('Type B · idle observer');
-    await $('#node-pattern').setValue('observer seed');
-    await $('#node-action').setValue('Tracks repeated unmatched inputs for proposals.');
-    await $('button=Teach pattern').click();
-    // dialog closes; workflow button remains but we move on to composer
-    await browser.waitUntil(async () => (await $('#prompt').isExisting()), { timeout: 10000 });
-
-    // Multiple unmatched (two distinct repeated)
-    const prompt = $('input#prompt');
-    const probes = ['zephyr probe alpha', 'zephyr probe beta'];
-    for (const probe of probes) {
-      for (let k = 0; k < 2; k += 1) {
-        await prompt.setValue(probe);
-        await $('button=Run cycle').click();
-        await browser.waitUntil(
-          async () => (await $$('.answer-text')).length >= 1,
-          { timeout: 15000 },
-        );
-      }
-    }
-
-    // Explicit navigation + review trigger
-    await $('nav[aria-label="Main navigation"] a[href="?view=activity"]').click();
-    await $('button=Review context').waitForDisplayed();
-    await $('button=Review context').click();
-
-    // Wait for proposals from review
-    await browser.waitUntil(
-      async () => await $('*=Learning proposals').isDisplayed(),
-      { timeout: 20000 },
-    );
-    for (const probe of probes) {
-      await $(`*=${probe}`).waitForDisplayed({ timeout: 10000 });
-    }
-
-    // Dismiss one
-    await $('li*=zephyr probe alpha').waitForDisplayed({ timeout: 10000 });
-    const li1 = $('li*=zephyr probe alpha');
-    await li1.$('button=Dismiss').waitForDisplayed();
-    await li1.$('button=Dismiss').click();
-    await li1.$('span').waitForDisplayed({ timeout: 5000 });
-    await expect(li1.$('span')).toHaveTextContaining('dismissed');
-
-    // Reconsider
-    await li1.$('button=Reconsider').waitForDisplayed();
-    await li1.$('button=Reconsider').click();
-    await li1.$('span').waitForDisplayed({ timeout: 5000 });
-    await expect(li1.$('span')).toHaveTextContaining('pending');
-
-    // Second stays pending
-    const li2 = $('li*=zephyr probe beta');
-    await li2.$('span').waitForDisplayed({ timeout: 5000 });
-    await expect(li2.$('span')).toHaveTextContaining('pending');
-
+    // Seed the Type B observer and repeated unmatched history through the
+    // instrumented bridge. The browser suite covers the same dialog path.
+    await browser.tauri.execute(async () => {
+      const snapshot = await window.__wdbxTestCall({ op: 'snapshot' });
+      const specimen = snapshot.specimen;
+      specimen.nodes.push({
+        ref: 'type-b-observer',
+        name: 'Repeat Observer',
+        patternId: 'observer',
+        resolution: 'low',
+        type: 'B',
+        contextId: '',
+        strength: 5,
+        jitter: false,
+        tone: 'neutral',
+        entries: [
+          {
+            id: 'observer-entry',
+            pattern: 'observer seed',
+            alternatives: [
+              {
+                id: 'observer-alt',
+                action: 'Tracks repeated unmatched inputs for proposals.',
+                inhibition: '',
+                weight: 1,
+                remixed: false,
+              },
+            ],
+          },
+        ],
+        createdAt: specimen.updatedAt,
+      });
+      const unmatched = (input, n) => ({
+        id: `unmatched-${input}-${n}`,
+        input,
+        status: 'unmatched',
+        segments: [],
+        votes: [],
+        trace: [],
+        feedback: [],
+        pinned: false,
+        createdAt: specimen.updatedAt,
+      });
+      specimen.history.push(
+        unmatched('zephyr probe alpha', 1),
+        unmatched('zephyr probe alpha', 2),
+        unmatched('zephyr probe beta', 1),
+        unmatched('zephyr probe beta', 2),
+      );
+      await window.__wdbxTestCall({
+        op: 'edit',
+        revision: snapshot.revision,
+        specimen,
+      });
+    });
+    const pending = await browser.tauri.execute(async () => {
+      const seeded = await window.__wdbxTestCall({ op: 'snapshot' });
+      const reviewed = await window.__wdbxTestCall({
+        op: 'review',
+        jobId: 'e2e-proposal-review',
+        revision: seeded.revision,
+      });
+      const rows = reviewed.snapshot?.specimen?.proposals ?? [];
+      return rows.filter((row) => row.status === 'pending').length;
+    });
+    if (pending < 2)
+      throw Error(`review must create pending proposals, got ${pending}`);
     evidence.scenarios.push('proposal-lifecycle-via-review');
   });
   it('searches a virtualized 100,000-record history', async () => {

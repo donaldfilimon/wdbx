@@ -475,6 +475,18 @@ test('review with Type B on repeated unmatched produces proposals; dismiss/recon
   const d2 = applyCommand(reviewed, { command: 'dismissProposal', id: p.id });
   const u3 = applyCommand(d2.state, { command: 'revert', undo: d2.undo });
   expect(u3.state.proposals.find((x) => x.id === p.id).status).toBe('pending');
+
+  // bulk actions roundtrip
+  const allDismiss = applyCommand(reviewed, { command: 'dismissAllProposals' });
+  expect(
+    allDismiss.state.proposals.filter((pp) => pp.status === 'dismissed').length,
+  ).toBeGreaterThanOrEqual(2);
+  const allRe = applyCommand(allDismiss.state, {
+    command: 'reconsiderAllProposals',
+  });
+  expect(
+    allRe.state.proposals.filter((pp) => pp.status === 'pending').length,
+  ).toBeGreaterThanOrEqual(2);
 });
 
 test('notes round-trip through the kernel and drop raw html', () => {

@@ -31,7 +31,7 @@ export function ModelsPanel({ lab }: { lab: Lab }) {
   return (
     <Panel
       title="Local models"
-      description="Pinned sources, verified by size and SHA-256 on install."
+      description="Pinned sources, verified by size and SHA-256 on install. A verified download is not a generation receipt. Text and image inference stay on CPU; the GPU line is the composition net only."
     >
       <ul className="m-0 grid list-none gap-3 p-4">
         {lab.models.map(({ model, installed, loaded }) => (
@@ -190,7 +190,7 @@ export function GeneratePanel({
   return (
     <Panel
       title="Local generation"
-      description="Runs on this machine with the bundled runtimes."
+      description="CPU inference on this machine. Text is capped at 512 tokens; images are 512² and one step. Generation is not learned until you teach it."
     >
       <form
         className="grid gap-3 p-4"

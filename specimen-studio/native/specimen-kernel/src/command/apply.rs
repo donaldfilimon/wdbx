@@ -143,6 +143,14 @@ pub fn apply(
             let next = reconsider_proposal(h, state, &id)?;
             (next, "Proposal reconsidered.".into())
         }
+        Command::DismissAllProposals => {
+            let next = dismiss_all_proposals(h, state)?;
+            (next, "All pending proposals dismissed.".into())
+        }
+        Command::ReconsiderAllProposals => {
+            let next = reconsider_all_proposals(h, state)?;
+            (next, "All dismissed proposals reconsidered.".into())
+        }
         Command::EditNetwork { .. } | Command::Revert { .. } => unreachable!(),
     };
     Ok(Applied {
@@ -413,6 +421,56 @@ fn reconsider_proposal(h: &Host, state: &Value, id: &str) -> Result<Value> {
         "proposal",
         "Proposal reconsidered",
         "The unmatched pattern is now pending for learning again.",
+    );
+    Ok(next)
+}
+
+fn dismiss_all_proposals(h: &Host, state: &Value) -> Result<Value> {
+    let mut next = state.clone();
+    let proposals = next["proposals"]
+        .as_array_mut()
+        .ok_or_else(|| error("Invalid", "The specimen has no proposals."))?;
+    let mut changed = 0;
+    for p in proposals.iter_mut() {
+        if text(p, "status") == "pending" {
+            p["status"] = json!("dismissed");
+            changed += 1;
+        }
+    }
+    if changed == 0 {
+        return Err(error("Invalid", "No pending proposals to dismiss."));
+    }
+    log(
+        h.env,
+        &mut next,
+        "proposal",
+        "All pending proposals dismissed",
+        &format!("{} proposals no longer suggest learning.", changed),
+    );
+    Ok(next)
+}
+
+fn reconsider_all_proposals(h: &Host, state: &Value) -> Result<Value> {
+    let mut next = state.clone();
+    let proposals = next["proposals"]
+        .as_array_mut()
+        .ok_or_else(|| error("Invalid", "The specimen has no proposals."))?;
+    let mut changed = 0;
+    for p in proposals.iter_mut() {
+        if text(p, "status") == "dismissed" {
+            p["status"] = json!("pending");
+            changed += 1;
+        }
+    }
+    if changed == 0 {
+        return Err(error("Invalid", "No dismissed proposals to reconsider."));
+    }
+    log(
+        h.env,
+        &mut next,
+        "proposal",
+        "All dismissed proposals reconsidered",
+        &format!("{} proposals are now pending for learning again.", changed),
     );
     Ok(next)
 }

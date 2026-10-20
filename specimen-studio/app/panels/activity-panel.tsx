@@ -18,6 +18,8 @@ export function ActivityView({
   onReview,
   onDismiss,
   onReconsider,
+  onDismissAll,
+  onReconsiderAll,
   busy,
 }: {
   state: Specimen;
@@ -26,6 +28,8 @@ export function ActivityView({
   onReview: () => void;
   onDismiss?: (id: string) => void;
   onReconsider?: (id: string) => void;
+  onDismissAll?: () => void;
+  onReconsiderAll?: () => void;
   busy: boolean;
 }) {
   const proposals = state.proposals;
@@ -55,6 +59,27 @@ export function ActivityView({
             {proposals.filter((p) => p.status === 'pending').length} pending ·{' '}
             {proposals.filter((p) => p.status === 'learned').length} learned ·{' '}
             {proposals.filter((p) => p.status === 'dismissed').length} dismissed
+          </div>
+          <div className="flex gap-2 px-4 pb-2">
+            {proposals.some((p) => p.status === 'pending') && onDismissAll && (
+              <WButton
+                variant="outline"
+                onClick={() => onDismissAll()}
+                disabled={busy}
+              >
+                Dismiss all pending
+              </WButton>
+            )}
+            {proposals.some((p) => p.status === 'dismissed') &&
+              onReconsiderAll && (
+                <WButton
+                  variant="outline"
+                  onClick={() => onReconsiderAll()}
+                  disabled={busy}
+                >
+                  Reconsider all dismissed
+                </WButton>
+              )}
           </div>
           <ul className="m-0 list-none divide-y divide-line p-0">
             {proposals.map((p) => (

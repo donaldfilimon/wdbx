@@ -283,6 +283,8 @@ export type SpecimenCommand =
   | { command: 'tagNote'; id: string; tags: string[] }
   | { command: 'dismissProposal'; id: string }
   | { command: 'reconsiderProposal'; id: string }
+  | { command: 'dismissAllProposals' }
+  | { command: 'reconsiderAllProposals' }
   | { command: 'revert'; undo: Undo };
 
 export type SpecimenQuery =

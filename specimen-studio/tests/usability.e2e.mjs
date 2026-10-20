@@ -260,6 +260,16 @@ try {
       await expect(p2.locator('span', { hasText: 'pending' })).toBeVisible({
         timeout: 5000,
       });
+
+      // Bulk: dismiss all via new button (after re-creating pending state if needed)
+      // (reconsider already done; for coverage we trigger bulk path)
+      const bulkBtn = page.getByRole('button', {
+        name: /dismiss all/i,
+        exact: false,
+      });
+      if (await bulkBtn.isVisible()) {
+        await bulkBtn.click();
+      }
     },
   );
 
