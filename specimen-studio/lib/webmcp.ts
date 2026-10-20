@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { AGENT_MAY, AGENT_MAY_NOT } from './specimen/agent-policy';
 import type { Cycle, Specimen } from './specimen/types';
 type Tool = {
   name: string;
@@ -148,19 +149,8 @@ export function useStudioTools(actions: {
             pendingProposals: count('pending'),
             learnedProposals: count('learned'),
             dismissedProposals: count('dismissed'),
-            agentMay: [
-              'read_specimen',
-              'workspace_status',
-              'run_specimen_prompt',
-              'open_specification_chapter',
-            ],
-            agentMayNot: [
-              'dismiss or reconsider proposals',
-              'teach a pattern',
-              'install or generate with a model',
-              'train or update weights',
-              'write an ABI or Abbey store',
-            ],
+            agentMay: AGENT_MAY,
+            agentMayNot: AGENT_MAY_NOT,
           };
         },
       },

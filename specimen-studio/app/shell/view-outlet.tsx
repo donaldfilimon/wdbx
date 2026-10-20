@@ -51,6 +51,8 @@ export function ViewOutlet({
     reviewContext,
     current,
     pushUndo,
+    agentAsk,
+    decideAgentRun,
   } = model;
   return (
     <>
@@ -180,6 +182,9 @@ export function ViewOutlet({
               announce(applied.message);
             })
           }
+          agentAsk={agentAsk}
+          onApprove={() => decideAgentRun(true)}
+          onDecline={() => decideAgentRun(false)}
           onDismiss={(id) =>
             act(() => {
               const applied = applyCommand(state, {

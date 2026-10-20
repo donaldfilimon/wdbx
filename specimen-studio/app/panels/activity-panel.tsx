@@ -10,6 +10,7 @@ import {
 } from '@/components/wdbx';
 import { Badge } from '@/components/ui/badge';
 import { type Specimen } from '@/lib/specimen/types';
+import { AgentDesk } from './agent-desk';
 
 export function ActivityView({
   state,
@@ -20,6 +21,9 @@ export function ActivityView({
   onReconsider,
   onDismissAll,
   onReconsiderAll,
+  agentAsk,
+  onApprove,
+  onDecline,
   busy,
 }: {
   state: Specimen;
@@ -30,11 +34,21 @@ export function ActivityView({
   onReconsider?: (id: string) => void;
   onDismissAll?: () => void;
   onReconsiderAll?: () => void;
+  agentAsk?: string | null;
+  onApprove?: () => void;
+  onDecline?: () => void;
   busy: boolean;
 }) {
   const proposals = state.proposals;
   return (
     <div className="grid gap-4">
+      <AgentDesk
+        state={state}
+        agentAsk={agentAsk ?? null}
+        busy={busy}
+        onApprove={onApprove}
+        onDecline={onDecline}
+      />
       <Toolbar label="Activity actions">
         <WButton disabled={busy} onClick={onReview}>
           <Search size={16} />

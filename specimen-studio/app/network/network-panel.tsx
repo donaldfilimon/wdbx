@@ -551,7 +551,7 @@ export function TopologyView({
     () => topologyLayout(specimen.nodes),
     [specimen.nodes],
   );
-  const shownRefs = (() => {
+  const shownRefs = useMemo(() => {
     const refs = specimen.nodes.map((item) => item.ref);
     const links = specimen.attachments.map((item) => ({
       from: item.from,
@@ -569,7 +569,14 @@ export function TopologyView({
     } catch {
       return visibleNodeRefs(refs, selected, prefs.edges, specimen.attachments);
     }
-  })();
+  }, [
+    specimen.nodes,
+    specimen.attachments,
+    selected,
+    prefs.camera,
+    prefs.edges,
+    prefs.edgeBudget,
+  ]);
   const shown = new Set(shownRefs);
   const nodes = specimen.nodes.filter((item) => shown.has(item.ref));
   const attachments = specimen.attachments.filter(
