@@ -318,6 +318,17 @@ function NodeMesh({
         )}
         <meshBasicMaterial color={color} key={frame} />
       </mesh>
+      {selected && (
+        <mesh>
+          <sphereGeometry args={[size * 1.7, 16, 16]} />
+          <meshBasicMaterial
+            color={token('--teal', '#2ec4b6')}
+            transparent
+            opacity={0.18}
+            key={frame}
+          />
+        </mesh>
+      )}
       <mesh
         position={[size, size, 0]}
         onPointerDown={(event: ThreeEvent<PointerEvent>) => {

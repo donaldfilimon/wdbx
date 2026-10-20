@@ -1,14 +1,19 @@
 import type { NetworkViewPrefs } from './view-prefs';
+import { nextCamera } from './view-prefs';
 
 /** Obsidian-style graph controls plus a Cursor-like assistant. View automation only. */
 export function GraphChrome({
   prefs,
   onChange,
   note,
+  onReview,
+  onTeach,
 }: {
   prefs: NetworkViewPrefs;
   onChange: (next: NetworkViewPrefs) => void;
   note: string;
+  onReview?: () => void;
+  onTeach?: () => void;
 }) {
   const set = (patch: Partial<NetworkViewPrefs>) =>
     onChange({ ...prefs, ...patch });
@@ -18,6 +23,17 @@ export function GraphChrome({
         className="graph-chrome-tools"
         role="toolbar"
         aria-label="Graph view"
+        onKeyDown={(event) => {
+          if (event.metaKey || event.ctrlKey || event.altKey) return;
+          const key = event.key.toLowerCase();
+          if (key === '1') set({ camera: 'orbit' });
+          else if (key === '2') set({ camera: 'top' });
+          else if (key === '3') set({ camera: 'side' });
+          else if (key === 'f') set({ follow: !prefs.follow });
+          else if (key === 'n') set({ camera: nextCamera(prefs.camera) });
+          else return;
+          event.preventDefault();
+        }}
       >
         {(['orbit', 'top', 'side'] as const).map((camera) => (
           <button
@@ -37,6 +53,13 @@ export function GraphChrome({
           onClick={() => set({ follow: !prefs.follow })}
         >
           Follow selection
+        </button>
+        <button
+          type="button"
+          className="button utility"
+          onClick={() => set({ camera: nextCamera(prefs.camera) })}
+        >
+          Next view
         </button>
         <label className="graph-chrome-field">
           Edges
@@ -71,9 +94,22 @@ export function GraphChrome({
         <strong>Graph assistant</strong>
         <p>{note}</p>
         <p>
-          Follow selection and the camera presets only move the view. Teaching,
-          review, and any weight change stay on the visible controls.
+          Keys 1, 2, and 3 set the camera while this toolbar is focused. N
+          cycles the view. F follows the selection. None of these teach or
+          train.
         </p>
+        <div className="graph-chrome-tools">
+          {onReview && (
+            <button type="button" className="button outline" onClick={onReview}>
+              Review in Activity
+            </button>
+          )}
+          {onTeach && (
+            <button type="button" className="button outline" onClick={onTeach}>
+              Teach in Studio
+            </button>
+          )}
+        </div>
       </aside>
     </div>
   );

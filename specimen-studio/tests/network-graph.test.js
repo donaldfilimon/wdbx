@@ -1,5 +1,6 @@
 import { expect, test } from 'bun:test';
 import {
+  nextCamera,
   parseNetworkViewPrefs,
   visibleNodeRefs,
 } from '../app/network/view-prefs';
@@ -22,6 +23,12 @@ test('network view prefs fall back when storage is empty or corrupt', () => {
     follow: false,
     edgeBudget: 200,
   });
+});
+
+test('next camera cycles orbit, top, then side', () => {
+  expect(nextCamera('orbit')).toBe('top');
+  expect(nextCamera('top')).toBe('side');
+  expect(nextCamera('side')).toBe('orbit');
 });
 
 test('neighborhood filter keeps the selection and its neighbors', () => {

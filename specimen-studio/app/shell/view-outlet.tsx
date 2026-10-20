@@ -221,6 +221,8 @@ export function ViewOutlet({
         <NetworkPanel
           specimen={state}
           desktop={isDesktop()}
+          onReview={() => nav('activity')}
+          onTeach={() => nav('studio')}
           onSpecimenCommand={(command) =>
             act(() => {
               const applied = applyCommand(state, command);

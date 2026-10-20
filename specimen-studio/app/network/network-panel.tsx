@@ -78,10 +78,14 @@ export function LayersView({
   network,
   onCommand,
   busy,
+  onReview,
+  onTeach,
 }: {
   network: Network;
   onCommand: (command: NetworkCommand, done: string) => void;
   busy: boolean;
+  onReview?: () => void;
+  onTeach?: () => void;
 }) {
   const id = useId();
   const rows = layerRows(network);
@@ -104,6 +108,8 @@ export function LayersView({
       <GraphChrome
         prefs={prefs}
         onChange={setPrefs}
+        onReview={onReview}
+        onTeach={onTeach}
         note="Layer columns stay sampled. Density only changes how many connections are drawn, not the stored weights."
       />
       <Viewport
@@ -526,9 +532,13 @@ function AttachmentEditor({
 export function TopologyView({
   specimen,
   onCommand = () => {},
+  onReview,
+  onTeach,
 }: {
   specimen: Specimen;
   onCommand?: (command: SpecimenCommand) => void;
+  onReview?: () => void;
+  onTeach?: () => void;
 }) {
   const [selected, setSelected] = useState<string | undefined>();
   const [attachmentId, setAttachmentId] = useState<string | undefined>();
@@ -580,6 +590,8 @@ export function TopologyView({
       <GraphChrome
         prefs={prefs}
         onChange={setPrefs}
+        onReview={onReview}
+        onTeach={onTeach}
         note={
           prefs.edges === 'local' && !selected
             ? 'Select a node to isolate its neighborhood. The full tables stay below.'
@@ -840,10 +852,14 @@ export function NetworkPanel({
   specimen,
   desktop,
   onSpecimenCommand = () => {},
+  onReview,
+  onTeach,
 }: {
   specimen: Specimen;
   desktop: boolean;
   onSpecimenCommand?: (command: SpecimenCommand) => void;
+  onReview?: () => void;
+  onTeach?: () => void;
 }) {
   const [stored, setStored] = useState<StoredNetwork | null>(null);
   // Bumped on every successful edit: remounts the builder so drafts and the
@@ -946,6 +962,8 @@ export function NetworkPanel({
               network={network}
               onCommand={command}
               busy={busy}
+              onReview={onReview}
+              onTeach={onTeach}
             />
           ) : (
             !error && (
@@ -956,7 +974,12 @@ export function NetworkPanel({
           )}
         </TabsContent>
         <TabsContent value="topology">
-          <TopologyView specimen={specimen} onCommand={onSpecimenCommand} />
+          <TopologyView
+            specimen={specimen}
+            onCommand={onSpecimenCommand}
+            onReview={onReview}
+            onTeach={onTeach}
+          />
         </TabsContent>
       </Tabs>
     </div>

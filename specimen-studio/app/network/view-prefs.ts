@@ -10,6 +10,14 @@ export type NetworkViewPrefs = {
   edgeBudget: number;
 };
 
+const PRESETS: CameraPreset[] = ['orbit', 'top', 'side'];
+
+/** Cycles the camera. Visual automation only. */
+export function nextCamera(current: CameraPreset): CameraPreset {
+  const index = PRESETS.indexOf(current);
+  return PRESETS[(index + 1) % PRESETS.length];
+}
+
 export const DEFAULT_NETWORK_VIEW: NetworkViewPrefs = {
   camera: 'orbit',
   edges: 'all',
