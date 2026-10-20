@@ -137,6 +137,9 @@ export interface Proposal {
   pattern: string;
   evidence: number;
   status: 'pending' | 'learned' | 'dismissed';
+  pros?: string[];
+  cons?: string[];
+  observer?: string;
 }
 export interface Settings {
   gpu?: boolean;
