@@ -64,6 +64,10 @@ cargo test --workspace < /dev/null
   `tests/v3_memory_candidate.rs` / `tests/v3_memory_edge.rs` are mirrored by
   `EPISODE_GOLDENS` in the script, so a deliberate golden regeneration updates
   all three.
+- The gate runs the complete-episode decode witness's own unittest suite
+  (`tools/tests/test_wdbx_complete_episode_decode*.py`) as a dedicated step
+  before `cargo test`, via `"${WDBX_PYTHON:-python3}" -m unittest discover`.
+  A missing or failing interpreter fails the gate, never skips.
 - Docs-only changes: compare claims with source/tests and run `git diff --check`.
   There is no dedicated Markdown validator. Do not call this a full Rust gate.
 

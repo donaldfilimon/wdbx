@@ -11,6 +11,9 @@
 #
 # `cargo test --workspace` shells out to python3 (or $WDBX_PYTHON) for the
 # cross-language episode goldens; a missing interpreter fails, never skips.
+#
+# The complete-episode decode witness's own unittest suite runs directly as a
+# gate step; a missing or failing interpreter fails here, never skips.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -30,6 +33,10 @@ cargo fmt --all --check
 
 step "clippy (workspace lints; no -D warnings)"
 cargo clippy --workspace --all-targets
+
+step "python complete-episode decode witness tests (unittest)"
+"${WDBX_PYTHON:-python3}" -m unittest discover -s tools/tests \
+    -p 'test_wdbx_complete_episode_decode*.py'
 
 step "tests"
 cargo test --workspace < /dev/null
