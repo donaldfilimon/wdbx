@@ -44,21 +44,21 @@ A moving sibling HEAD is not a qualification target. Read-only planning snapshot
 
 ## Current evidence and open gates
 
-- WDBX baseline: `08a69b3f22db61093e06527b3308b10589687022` plus the pre-existing CPU formatting change; `bash tools/check.sh` completed locally with 647 passed, zero failed/ignored. This is baseline source evidence, not qualification of future reader/complete-envelope changes or of consumer revisions.
-- The 163-requirement contract handoff is independently approved at C0 after two fix rounds; 36 checker/vector tests pass on Python 3.9 and 3.15. The approved working snapshot's 24 hashes and review receipts are in the execution ledger/report. Research efficacy and product qualification remain open.
-- The Rust reader implementation has started on its reserved paths using offline/locked local checks. Existing encoder/goldens stay frozen; decoder qualification and its independent Python witness remain pending.
+- Current committed WDBX source: `5182bc3a60300e1dd152611025e774c4b906638b`, containing the bounded reader and C0 contract fixes. The earlier `08a69b3f22db61093e06527b3308b10589687022` baseline had 647 passing Rust tests; this remains historical baseline evidence.
+- The 163-requirement contract handoff is independently approved at C0 after two fix rounds. Its 46 acceptance cases, 18 design decisions, nine design bundles, ten work packages, ownership, prerequisite edges and frozen experiments are checked by `tools/check_completion.py`. Requirement/design/plan records remain `proposed`/`C0`; no research efficacy or product qualification is implied. Current reconciliation results and exact source identity are recorded in [execution status](../../completion/execution-status.json).
+- The bounded restricted-profile reader and independent Python witness are committed. The [reader receipt](2026-10-20-canonical-cbor-reader-receipt.md) records 667 passed, zero failed/ignored in the historical final offline Rust gate; all seven reader source hashes match the committed source. This is local syntax/interoperability evidence, not a general CBOR, complete-envelope, COSE/signature or consumer qualification claim.
 - ABI and Abbey source/lockfiles are concurrently changing under their owners. No paired exact-revision gate or consumer cutover is claimed here.
 - The completion manifest's experiment-integrity checker is separate from measured efficacy. Independent crypto review, separate-host federation, platform installs/signing, private staging and elapsed C7 operation remain separate gates.
 - Public launch, signup, billing and commercial SLA remain deferred.
 
 This receipt is local planning state. It does not send a message to another chat or claim an owner has accepted a checkpoint.
 
-## Bounded implementation checkpoint (09:17 UTC continuation)
+## Bounded implementation checkpoint (reconciled 2026-10-20)
 
-Selected from the existing program: the strict reader for the frozen `abbey-cbor-episode-v1` domain. Owned implementation paths are `crates/abi-wdbx/src/v3/commitment.rs`, new `crates/abi-wdbx/src/v3/commitment/decode.rs`, and new `crates/abi-wdbx/tests/v3_canonical_decode*.rs`; its separate Python witness follows after Rust review. No new competing program or consumer edits.
+The selected strict reader for the frozen `abbey-cbor-episode-v1` domain is committed in `5182bc3a60300e1dd152611025e774c4b906638b`. The seven exact source identities, independent reviews and historical test attribution are in the [reader receipt](2026-10-20-canonical-cbor-reader-receipt.md).
 
-Acceptance: exact golden reencoding/digests; shortest encodings and full input consumption; bounded allocation, depth and values; compound keys; preserved duplicate sorted parents; content-free malformed-input rejection. Baseline evidence is the 647-test source gate above. Source implementation and independent review are still pending at this checkpoint's creation.
+Accepted local coverage includes exact golden reencoding/digests; shortest encodings and full input consumption; bounded declared resources, depth and values; compound keys; preserved duplicate sorted parents; content-free malformed-input rejection; and an independent Python witness. Parent Task 2 remains open for complete envelopes, COSE, key administration and further qualification. No consumer owner acceptance or cutover follows from this checkpoint.
 
-Subsequent work stays uncommitted for this handoff, with exact path/content hashes in the execution ledger and frozen review packages. Earlier commits/history remain intact. No push, CI, dependency install, destructive operation or deployment is introduced. The reader adds syntax validation only: no wire schema, store migration, authorization, signature trust, efficacy or federation claim.
+The reconciliation changes documentation/status only. The reader adds syntax validation without establishing wire schemas, store migration, authorization, signer trust, efficacy or federation.
 
 The separate [Zig/stable-Rust checkpoint](2026-10-20-wdbx-zig-to-stable-rust.md) records the root's existing 1.99.1 toolchain, retained historical oracles and the selected Studio alignment prerequisites. It introduces no consumer source update or extra implementation writer.
