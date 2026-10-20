@@ -59,6 +59,7 @@ export function useStudio(
     [dialog, setDialog] = useState<
       'node' | 'resource' | 'load' | 'reset' | 'attach' | null
     >(null),
+    [nodePattern, setNodePattern] = useState<string | undefined>(),
     [editing, setEditing] = useState<string | undefined>(),
     [pendingLoad, setPendingLoad] = useState<Specimen | null>(null),
     [replies, setReplies] = useState<{ id: number; text: string }[]>([]);
@@ -67,6 +68,7 @@ export function useStudio(
     dialogReturnRef = useRef<HTMLElement | null>(null),
     abortRef = useRef<AbortController | null>(null),
     lastInteraction = useRef(0),
+    prevPendingRef = useRef(0),
     noticeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined),
     undoStack = useRef<Undo[]>([]),
     replySeq = useRef(0);
@@ -110,9 +112,11 @@ export function useStudio(
     (
       next: 'node' | 'resource' | 'load' | 'reset' | 'attach',
       preserveReturn = false,
+      pattern?: string,
     ) => {
       if (!preserveReturn && document.activeElement instanceof HTMLElement)
         dialogReturnRef.current = document.activeElement;
+      setNodePattern(next === 'node' ? pattern : undefined);
       setDialog(next);
     },
     [],
@@ -239,6 +243,17 @@ export function useStudio(
           'The workspace changed during review. Run context review again.',
         );
       commit(next);
+      const newPending = next.proposals.filter(
+        (p) => p.status === 'pending',
+      ).length;
+      const prevPending = prevPendingRef.current;
+      if (newPending > prevPending) {
+        const created = newPending - prevPending;
+        announce(
+          `${created} new learning proposal${created > 1 ? 's' : ''} added. Open Activity to review.`,
+        );
+      }
+      prevPendingRef.current = newPending;
       announce('Context review completed.');
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Review could not complete.');
@@ -542,6 +557,7 @@ export function useStudio(
     act,
     announce,
     openDialog,
+    nodePattern,
     dialog,
     setDialog,
     editing,

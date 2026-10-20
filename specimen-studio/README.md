@@ -11,9 +11,16 @@ A working local specimen studio with the complete 26-chapter WDBX architecture s
 5. **Save specimen** exports browser JSON or a native `.wdbxspecimen` archive, depending on the runtime. **Load** validates before replacement. Browser data saves through IndexedDB; desktop data saves transactionally through WDBX. Native import retains recovery copies.
 6. Read or search **Specification**, and download the full Markdown document from the reader.
 
+If a prompt has no matching pattern, choose **Teach this prompt** beside the
+result. Its text is filled into the pattern editor; add a name and response,
+then run the same prompt again. Opening or cancelling that editor leaves any
+unfinished next prompt intact. On phones and tablets, the prompt stays above
+the diagnostic panels after a run. The Run button enables when you enter text;
+press Enter or choose a starter prompt to begin.
+
 The shell is keyboard-first. **⌘K** (Ctrl-K) opens the command palette: go to any view, open a second view beside the current one, save, load, reset, or switch theme. **⌘\\** opens or closes that side pane (it appears at 1024 px and wider, and stays in the URL as `?split=`). **⌘B** collapses the sidebar to an icon rail. The backtick key toggles the activity dock. The sun/moon button at the bottom of the sidebar switches between the dark and light themes; the choice is remembered on this device.
 
-`/prompt`, `/right`, `/wrong`, `/wrng`, `/contributorfractal`, `/saveSpecimen`, `/loadSpecimen`, `/addPattern`, and `/learn` are recognized by the studio composer. Add/load/learn commands open the corresponding visible editor or file chooser. `/learn` accepts a pending proposal ID or exact proposal text, or defaults to the first pending proposal.
+`/prompt`, `/right`, `/wrong`, `/wrng`, `/contributorfractal`, `/saveSpecimen`, `/loadSpecimen`, `/addPattern`, `/learn`, `/dismiss`, `/reconsider` are recognized by the studio composer. Add/load/learn commands open the corresponding visible editor or file chooser. `/learn` accepts a pending proposal ID or exact proposal text, or defaults to the first pending proposal. Use `/dismiss <id>` or button to remove from suggestions; `/reconsider <id>` to re-activate a dismissed proposal for learning. Activity view shows all proposals with status and controls for full self-learning cycle.
 
 ## Local development
 
@@ -57,7 +64,15 @@ Linux builds additionally require WebKitGTK 4.1, AppIndicator, librsvg and OpenS
 
 Native saves use a dedicated app-data directory and transactional WDBX storage. Export `.wdbxspecimen` for portable records and assets; pretrained models remain referenced by digest. Existing browser JSON imports retain an original recovery copy. The browser edition keeps IndexedDB and its bounded JavaScript profile.
 
-Native UI tests use instrumented builds only: build assets with `VITE_NATIVE_E2E=1`, then `bunx tauri build --debug --features e2e --config src-tauri/tauri.e2e.conf.json --bundles app` on macOS and run `bunx wdio run wdio.conf.mjs`. Production builds omit the test feature and bridge. The desktop qualification workflow covers macOS ARM/Intel, Windows x64 and Linux x64. A configured job is not evidence of a passing platform; consult the [acceptance ledger](VALIDATION.md).
+Native UI tests use instrumented builds only: build assets with `VITE_NATIVE_E2E=1`, then `bunx tauri build --debug --features e2e --config src-tauri/tauri.e2e.conf.json --bundles app` on macOS and run `bunx wdio run wdio.conf.mjs`. Production builds omit the test feature and bridge. The current desktop qualification workflow targets the self-hosted macOS ARM64 runner; Intel macOS, Windows and Linux require separate runtime evidence. A configured job is not evidence of a passing platform; consult the [acceptance ledger](VALIDATION.md).
+
+For local native UI tests, set `WDBX_STUDIO_TEST_DATA` to a newly created scratch
+directory (for example, `mktemp -d "$PWD/work/native-ui-XXXXXX"`) before running
+WebdriverIO. Run that test runner under Node, not `bunx --bun`; its matcher
+dependencies do not currently initialize under Bun. Never use your normal
+desktop app-data directory for acceptance tests. `bun run test:browser` uses
+disposable browser contexts and includes the mobile and teaching-flow
+regressions; repeat with `STUDIO_THEME=light` for the light theme.
 
 After `desktop:package` on macOS, run `python3 scripts/seal-macos-package.py` to seal the application bundle ad hoc and recreate the DMG. The script stages outside FileProvider-managed folders so injected Finder metadata cannot invalidate the resource seal. Developer ID signing and notarization remain separate release operations requiring the appropriate identity.
 

@@ -243,6 +243,16 @@ pub fn add_node(
         },
         name,
     );
+    // Mark any matching pending proposal learned (improves self-learn UX, no stale pending)
+    if let Some(props) = s.get_mut("proposals").and_then(|p| p.as_array_mut()) {
+        for p in props.iter_mut() {
+            if p.get("status").and_then(|st| st.as_str()) == Some("pending")
+                && p.get("pattern").and_then(|pat| pat.as_str()) == Some(pattern)
+            {
+                p["status"] = json!("learned");
+            }
+        }
+    }
     Ok(s)
 }
 

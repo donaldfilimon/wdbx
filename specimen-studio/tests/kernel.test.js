@@ -395,6 +395,10 @@ test('parse accepts the composer spellings and rejects unknown commands', () => 
     '/loadSpecimen',
     '/addPattern',
     '/learn',
+    '/dismiss',
+    '/dismissProposal',
+    '/reconsider',
+    '/reconsiderProposal',
     '/undo',
     '/help',
   ])
@@ -422,6 +426,55 @@ test('undo restores the specimen after a command', () => {
     undo: applied.undo,
   });
   expect(undone.state).toEqual(before);
+});
+
+test('review with Type B on repeated unmatched produces proposals; dismiss/reconsider round trip and undo', async () => {
+  let before = seedSpecimen();
+  before = addNode(before, {
+    name: 'Repeat Observer',
+    pattern: 'observer context',
+    action: 'note repeats',
+    type: 'B',
+  });
+  // produce multiple unmatched for distinct inputs (each repeated)
+  let s = (await runCycle(before, 'rep unmatched foo')).state;
+  s = (await runCycle(s, 'rep unmatched foo')).state;
+  s = (await runCycle(s, 'rep unmatched bar')).state;
+  s = (await runCycle(s, 'rep unmatched bar')).state;
+  const reviewed = await observeContext(s);
+  expect(
+    reviewed.proposals.filter((p) => p.status === 'pending').length,
+  ).toBeGreaterThanOrEqual(2);
+  const p = reviewed.proposals.find((pp) => pp.pattern === 'rep unmatched foo');
+  expect(p).toBeTruthy();
+  expect(p.evidence).toBe(2);
+
+  const dismissed = applyCommand(reviewed, {
+    command: 'dismissProposal',
+    id: p.id,
+  });
+  expect(dismissed.state.proposals.find((x) => x.id === p.id).status).toBe(
+    'dismissed',
+  );
+  const reconsidered = applyCommand(dismissed.state, {
+    command: 'reconsiderProposal',
+    id: p.id,
+  });
+  expect(reconsidered.state.proposals.find((x) => x.id === p.id).status).toBe(
+    'pending',
+  );
+  const undone = applyCommand(reconsidered.state, {
+    command: 'revert',
+    undo: reconsidered.undo,
+  });
+  expect(undone.state.proposals.find((x) => x.id === p.id).status).toBe(
+    'dismissed',
+  );
+
+  // direct undo of a dismiss also restores pending (ensures new command undos)
+  const d2 = applyCommand(reviewed, { command: 'dismissProposal', id: p.id });
+  const u3 = applyCommand(d2.state, { command: 'revert', undo: d2.undo });
+  expect(u3.state.proposals.find((x) => x.id === p.id).status).toBe('pending');
 });
 
 test('notes round-trip through the kernel and drop raw html', () => {

@@ -281,6 +281,8 @@ export type SpecimenCommand =
   | { command: 'renameNote'; id: string; title: string }
   | { command: 'deleteNote'; id: string; force?: boolean }
   | { command: 'tagNote'; id: string; tags: string[] }
+  | { command: 'dismissProposal'; id: string }
+  | { command: 'reconsiderProposal'; id: string }
   | { command: 'revert'; undo: Undo };
 
 export type SpecimenQuery =

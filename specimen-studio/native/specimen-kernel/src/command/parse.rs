@@ -42,6 +42,22 @@ pub const SPELLINGS: &[Spelling] = &[
         summary: "Open a learning proposal by id or exact text, or the first pending one.",
     },
     Spelling {
+        name: "/dismiss",
+        summary: "Dismiss a learning proposal by id (or exact pattern text).",
+    },
+    Spelling {
+        name: "/dismissProposal",
+        summary: "Alias of /dismiss.",
+    },
+    Spelling {
+        name: "/reconsider",
+        summary: "Reconsider (re-activate) a dismissed learning proposal by id.",
+    },
+    Spelling {
+        name: "/reconsiderProposal",
+        summary: "Alias of /reconsider.",
+    },
+    Spelling {
         name: "/undo",
         summary: "Undo the last command.",
     },
@@ -145,6 +161,32 @@ pub fn parse(line: &str) -> Result<Parsed> {
                 },
             },
         }),
+        "/dismiss" | "/dismissProposal" => {
+            if rest.is_empty() {
+                return Err(error(
+                    "ParseError",
+                    "Enter a proposal id or exact pattern text to dismiss.",
+                ));
+            }
+            Ok(Parsed::Command {
+                command: Box::new(Command::DismissProposal {
+                    id: rest.to_owned(),
+                }),
+            })
+        }
+        "/reconsider" | "/reconsiderProposal" => {
+            if rest.is_empty() {
+                return Err(error(
+                    "ParseError",
+                    "Enter a proposal id or exact pattern text to reconsider.",
+                ));
+            }
+            Ok(Parsed::Command {
+                command: Box::new(Command::ReconsiderProposal {
+                    id: rest.to_owned(),
+                }),
+            })
+        }
         "/undo" => {
             no_args(token, rest)?;
             Ok(Parsed::Undo)

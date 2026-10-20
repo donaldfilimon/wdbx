@@ -154,6 +154,12 @@ pub enum Command {
         id: String,
         tags: Vec<String>,
     },
+    DismissProposal {
+        id: String,
+    },
+    ReconsiderProposal {
+        id: String,
+    },
 }
 
 /// Previous values needed to reverse one successful command.
@@ -486,6 +492,60 @@ mod tests {
     }
 
     #[test]
+    fn dismiss_proposal_marks_and_errors() {
+        let (fixed, mut state) = host_state();
+        state["proposals"] =
+            json!([{"id":"p1","pattern":"foo bar","evidence":2,"status":"pending"}]);
+        let dismissed = apply(
+            &fixed.host(),
+            &state,
+            None,
+            Command::DismissProposal { id: "p1".into() },
+        )
+        .unwrap();
+        assert_eq!(dismissed.state["proposals"][0]["status"], "dismissed");
+        let err = apply(
+            &fixed.host(),
+            &dismissed.state,
+            None,
+            Command::DismissProposal { id: "p1".into() },
+        )
+        .unwrap_err();
+        assert!(err.message.contains("pending"));
+        let notfound = apply(
+            &fixed.host(),
+            &state,
+            None,
+            Command::DismissProposal { id: "nope".into() },
+        )
+        .unwrap_err();
+        assert_eq!(notfound.code, "NotFound");
+    }
+
+    #[test]
+    fn reconsider_proposal_roundtrips() {
+        let (fixed, mut state) = host_state();
+        state["proposals"] =
+            json!([{"id":"p1","pattern":"foo bar","evidence":2,"status":"dismissed"}]);
+        let reconsidered = apply(
+            &fixed.host(),
+            &state,
+            None,
+            Command::ReconsiderProposal { id: "p1".into() },
+        )
+        .unwrap();
+        assert_eq!(reconsidered.state["proposals"][0]["status"], "pending");
+        let err = apply(
+            &fixed.host(),
+            &reconsidered.state,
+            None,
+            Command::ReconsiderProposal { id: "p1".into() },
+        )
+        .unwrap_err();
+        assert!(err.message.contains("dismissed"));
+    }
+
+    #[test]
     fn network_edit_undo_restores_the_previous_network() {
         let (fixed, state) = host_state();
         let network = Network::default();
@@ -559,6 +619,20 @@ mod tests {
             parse("/addPattern").unwrap(),
             Parsed::Directive { .. }
         ));
+        match parse("/dismiss abc-123").unwrap() {
+            Parsed::Command { command } => match *command {
+                Command::DismissProposal { id } => assert_eq!(id, "abc-123"),
+                other => panic!("unexpected {other:?}"),
+            },
+            other => panic!("unexpected {other:?}"),
+        }
+        match parse("/reconsider p1").unwrap() {
+            Parsed::Command { command } => match *command {
+                Command::ReconsiderProposal { id } => assert_eq!(id, "p1"),
+                other => panic!("unexpected {other:?}"),
+            },
+            other => panic!("unexpected {other:?}"),
+        }
         assert!(matches!(
             parse("/contributorfractal").unwrap(),
             Parsed::Directive {

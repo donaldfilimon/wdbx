@@ -270,6 +270,9 @@ export default function Studio() {
         view={view}
         nav={nav}
         nodeCount={state.nodes.length}
+        pendingProposals={
+          state.proposals.filter((p) => p.status === 'pending').length
+        }
         mobileNav={mobileNav}
         setMobileNav={setMobileNav}
         mobileViewport={mobileViewport}

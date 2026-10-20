@@ -24,6 +24,7 @@ export function DialogHost({ m }: { m: StudioModel }) {
     setStorageEnabled,
     setSelected,
     prompt,
+    nodePattern,
     pushUndo,
     save,
     setRunOutcome,
@@ -66,17 +67,13 @@ export function DialogHost({ m }: { m: StudioModel }) {
         {dialog === 'node' && (
           <NodeForm
             node={state.nodes.find((n) => n.ref === editing)}
-            defaultPattern={!editing ? prompt : ''}
+            defaultPattern={!editing ? (nodePattern ?? prompt) : ''}
             onSubmit={(value) => {
               const applied = applyCommand(state, {
                 command: 'addNode',
                 input: value,
                 nodeRef: editing,
               });
-              const proposal = applied.state.proposals.find(
-                (p) => p.pattern === value.pattern,
-              );
-              if (proposal) proposal.status = 'learned';
               pushUndo(applied.undo);
               commit(applied.state);
               setDialog(null);

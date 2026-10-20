@@ -58,6 +58,7 @@ export function StudioPanel({
     setPrompt,
     promptRef,
     busy,
+    hydrated,
     activeTrace,
     runOutcome,
     runInput,
@@ -219,7 +220,11 @@ export function StudioPanel({
                 Cancel
               </button>
             ) : (
-              <button className="button primary" type="submit">
+              <button
+                className="button primary"
+                type="submit"
+                disabled={!hydrated || !prompt.trim()}
+              >
                 Run cycle
                 <ArrowRight size={18} />
               </button>
@@ -235,7 +240,7 @@ export function StudioPanel({
               <button
                 key={starter}
                 type="button"
-                disabled={busy}
+                disabled={busy || !hydrated}
                 onClick={() => void run(starter)}
               >
                 {starter}
@@ -328,6 +333,26 @@ export function StudioPanel({
                     </div>
                   ))}
                 </div>
+                {cycle.status === 'unmatched' && (
+                  <div className="unmatched-help">
+                    <p>
+                      No pattern matched. Teach a response, then try this prompt
+                      again.
+                    </p>
+                    <button
+                      type="button"
+                      className="button outline small-button"
+                      disabled={busy}
+                      onClick={() => {
+                        setEditing(undefined);
+                        openDialog('node', false, cycle.input);
+                      }}
+                    >
+                      <Plus size={15} aria-hidden="true" />
+                      Teach this prompt
+                    </button>
+                  </div>
+                )}
                 {showProvenance && cycle.visual?.synthesis && (
                   <details>
                     <summary>Transient computation evidence</summary>

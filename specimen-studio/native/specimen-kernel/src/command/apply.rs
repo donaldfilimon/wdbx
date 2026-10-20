@@ -135,6 +135,14 @@ pub fn apply(
         Command::RenameNote { id, title } => crate::notes::rename(h, state, &id, &title)?,
         Command::DeleteNote { id, force } => crate::notes::delete(h, state, &id, force)?,
         Command::TagNote { id, tags } => crate::notes::tag(h, state, &id, &tags)?,
+        Command::DismissProposal { id } => {
+            let next = dismiss_proposal(h, state, &id)?;
+            (next, "Proposal dismissed.".into())
+        }
+        Command::ReconsiderProposal { id } => {
+            let next = reconsider_proposal(h, state, &id)?;
+            (next, "Proposal reconsidered.".into())
+        }
         Command::EditNetwork { .. } | Command::Revert { .. } => unreachable!(),
     };
     Ok(Applied {
@@ -338,6 +346,73 @@ fn set_settings(h: &Host, state: &Value, settings: Value, name: Option<String>) 
         "settings",
         "Settings saved",
         "Boundaries updated.",
+    );
+    Ok(next)
+}
+
+fn dismiss_proposal(h: &Host, state: &Value, id: &str) -> Result<Value> {
+    let mut next = state.clone();
+    let proposals = next["proposals"]
+        .as_array_mut()
+        .ok_or_else(|| error("Invalid", "The specimen has no proposals."))?;
+    let mut found = false;
+    for p in proposals.iter_mut() {
+        if text(p, "id") == id || text(p, "pattern") == id {
+            if text(p, "status") != "pending" {
+                return Err(error("Invalid", "Only pending proposals can be dismissed."));
+            }
+            p["status"] = json!("dismissed");
+            found = true;
+            break;
+        }
+    }
+    if !found {
+        return Err(error(
+            "NotFound",
+            "That proposal id or pattern was not found.",
+        ));
+    }
+    log(
+        h.env,
+        &mut next,
+        "proposal",
+        "Proposal dismissed",
+        "The unmatched pattern will no longer suggest learning.",
+    );
+    Ok(next)
+}
+
+fn reconsider_proposal(h: &Host, state: &Value, id: &str) -> Result<Value> {
+    let mut next = state.clone();
+    let proposals = next["proposals"]
+        .as_array_mut()
+        .ok_or_else(|| error("Invalid", "The specimen has no proposals."))?;
+    let mut found = false;
+    for p in proposals.iter_mut() {
+        if text(p, "id") == id || text(p, "pattern") == id {
+            if text(p, "status") != "dismissed" {
+                return Err(error(
+                    "Invalid",
+                    "Only dismissed proposals can be reconsidered.",
+                ));
+            }
+            p["status"] = json!("pending");
+            found = true;
+            break;
+        }
+    }
+    if !found {
+        return Err(error(
+            "NotFound",
+            "That proposal id or pattern was not found.",
+        ));
+    }
+    log(
+        h.env,
+        &mut next,
+        "proposal",
+        "Proposal reconsidered",
+        "The unmatched pattern is now pending for learning again.",
     );
     Ok(next)
 }

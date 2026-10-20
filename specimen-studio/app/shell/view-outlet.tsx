@@ -160,6 +160,28 @@ export function ViewOutlet({
             setEditing(undefined);
             openDialog('node');
           }}
+          onDismiss={(id) =>
+            act(() => {
+              const applied = applyCommand(state, {
+                command: 'dismissProposal',
+                id,
+              });
+              pushUndo(applied.undo);
+              commit(applied.state);
+              announce(applied.message);
+            })
+          }
+          onReconsider={(id) =>
+            act(() => {
+              const applied = applyCommand(state, {
+                command: 'reconsiderProposal',
+                id,
+              });
+              pushUndo(applied.undo);
+              commit(applied.state);
+              announce(applied.message);
+            })
+          }
         />
       )}
       {view === 'engine' && (

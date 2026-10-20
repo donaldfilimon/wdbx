@@ -38,6 +38,7 @@ describe('Native specimen desktop', () => {
       'nav[aria-label="Main navigation"] a[href="?view=studio"]',
     ).waitForDisplayed();
     await $('nav[aria-label="Main navigation"] a[href="?view=studio"]').click();
+    await expect($('button=Run cycle')).toBeDisabled();
     await $('button=What is 2 + 2?').waitForDisplayed();
     await $('button=What is 2 + 2?').click();
     await expect($('.answer-text')).toHaveText('4');
@@ -245,27 +246,147 @@ describe('Native specimen desktop', () => {
       });
       let stale = 'accepted';
       try {
-        await call({ op: 'network', revision: snapshot.revision, network: snapshot.network });
+        await call({
+          op: 'network',
+          revision: snapshot.revision,
+          network: snapshot.network,
+        });
       } catch (e) {
         stale = e.code;
       }
       return { info, before: snapshot.revision, after: saved.revision, stale };
     });
     if (typeof result.info.revision !== 'number' || !result.info.auditDag.ok)
-      throw Error('storeInfo must report a revision and a verified audit DAG: ' + JSON.stringify(result.info));
-    if (result.info.snapshotKey && result.info.snapshotKey.key !== 'studio/snapshot')
+      throw Error(
+        'storeInfo must report a revision and a verified audit DAG: ' +
+          JSON.stringify(result.info),
+      );
+    if (
+      result.info.snapshotKey &&
+      result.info.snapshotKey.key !== 'studio/snapshot'
+    )
       throw Error('storeInfo must describe the studio snapshot key');
-    if (result.after !== result.before + 1) throw Error('network edit must advance the revision');
+    if (result.after !== result.before + 1)
+      throw Error('network edit must advance the revision');
     if (result.stale !== 'StaleRevision')
-      throw Error('a network edit at an old revision must be StaleRevision, got ' + result.stale);
+      throw Error(
+        'a network edit at an old revision must be StaleRevision, got ' +
+          result.stale,
+      );
     await $('nav[aria-label="Main navigation"] a[href="?view=store"]').click();
-    await expect($('main')).toHaveText(expect.stringContaining('Desktop · WDBX v2 journal'));
+    await expect($('main')).toHaveText(
+      expect.stringContaining('Desktop · WDBX v2 journal'),
+    );
     await $('nav[aria-label="Main navigation"] a[href="?view=lab"]').click();
     for (const tab of ['Image', 'Generate', 'Models'])
       await expect($(`button=${tab}`)).toBeDisplayed();
     await $('button=Models').click();
     await expect($('.model-card')).toBeDisplayed();
     evidence.scenarios.push('store-info-network-revision-lab-tabs');
+  });
+  it('teaches an unmatched prompt while preserving an unfinished composer draft', async () => {
+    await browser.refresh();
+    await $('nav[aria-label="Main navigation"] a[href="?view=studio"]').click();
+    const prompt = $('input#prompt');
+    const input = 'cobalt orchard lantern';
+    await prompt.setValue(input);
+    await $('button=Run cycle').click();
+    await $('button=Teach this prompt').waitForDisplayed();
+    await prompt.setValue('unfinished next question');
+    await $('button=Teach this prompt').click();
+    await expect($('#node-pattern')).toHaveValue(input);
+    await browser.keys('Escape');
+    await expect(prompt).toHaveValue('unfinished next question');
+    await $('button=Teach this prompt').click();
+    await $('#node-name').setValue('Orchard response');
+    await $('#node-action').setValue('A small lesson remembered.');
+    await $('button=Teach pattern').click();
+    await expect(prompt).toHaveValue('unfinished next question');
+    await prompt.setValue(input);
+    await $('button=Run cycle').click();
+    await expect($('.answer-text')).toHaveText('A small lesson remembered.');
+    await expect($('button=Teach this prompt')).not.toBeExisting();
+    await browser.waitUntil(async () =>
+      browser.tauri.execute(async () => {
+        const snapshot = await window.__wdbxTestCall({ op: 'snapshot' });
+        return (
+          snapshot.specimen.history.at(-1)?.segments[0]?.text ===
+          'A small lesson remembered.'
+        );
+      }),
+    );
+    await browser.refresh();
+    await expect($('.answer-text')).toHaveText('A small lesson remembered.');
+    evidence.scenarios.push('unmatched-teach-draft-preservation');
+  });
+  it('creates proposals via review (multiple unmatched + Review context), dismisses and reconsiders', async () => {
+    await browser.refresh();
+    await browser.waitUntil(
+      async () => !(await $('body').getText()).includes('Opening workspace'),
+      { timeout: 30000 },
+    );
+    await $('nav[aria-label="Main navigation"] a[href="?view=studio"]').click();
+    await $('nav[aria-label="Specimen workflow"] button*=Teach pattern').waitForDisplayed();
+
+    // Teach Type B node via UI (enables proposal synthesis on review)
+    await $('nav[aria-label="Specimen workflow"] button*=Teach pattern').click();
+    await $('#node-name').waitForDisplayed();
+    await $('#node-name').setValue('Repeat Observer');
+    await $('#node-type').selectByVisibleText('Type B · idle observer');
+    await $('#node-pattern').setValue('observer seed');
+    await $('#node-action').setValue('Tracks repeated unmatched inputs for proposals.');
+    await $('button=Teach pattern').click();
+    // dialog closes; workflow button remains but we move on to composer
+    await browser.waitUntil(async () => (await $('#prompt').isExisting()), { timeout: 10000 });
+
+    // Multiple unmatched (two distinct repeated)
+    const prompt = $('input#prompt');
+    const probes = ['zephyr probe alpha', 'zephyr probe beta'];
+    for (const probe of probes) {
+      for (let k = 0; k < 2; k += 1) {
+        await prompt.setValue(probe);
+        await $('button=Run cycle').click();
+        await browser.waitUntil(
+          async () => (await $$('.answer-text')).length >= 1,
+          { timeout: 15000 },
+        );
+      }
+    }
+
+    // Explicit navigation + review trigger
+    await $('nav[aria-label="Main navigation"] a[href="?view=activity"]').click();
+    await $('button=Review context').waitForDisplayed();
+    await $('button=Review context').click();
+
+    // Wait for proposals from review
+    await browser.waitUntil(
+      async () => await $('*=Learning proposals').isDisplayed(),
+      { timeout: 20000 },
+    );
+    for (const probe of probes) {
+      await $(`*=${probe}`).waitForDisplayed({ timeout: 10000 });
+    }
+
+    // Dismiss one
+    await $('li*=zephyr probe alpha').waitForDisplayed({ timeout: 10000 });
+    const li1 = $('li*=zephyr probe alpha');
+    await li1.$('button=Dismiss').waitForDisplayed();
+    await li1.$('button=Dismiss').click();
+    await li1.$('span').waitForDisplayed({ timeout: 5000 });
+    await expect(li1.$('span')).toHaveTextContaining('dismissed');
+
+    // Reconsider
+    await li1.$('button=Reconsider').waitForDisplayed();
+    await li1.$('button=Reconsider').click();
+    await li1.$('span').waitForDisplayed({ timeout: 5000 });
+    await expect(li1.$('span')).toHaveTextContaining('pending');
+
+    // Second stays pending
+    const li2 = $('li*=zephyr probe beta');
+    await li2.$('span').waitForDisplayed({ timeout: 5000 });
+    await expect(li2.$('span')).toHaveTextContaining('pending');
+
+    evidence.scenarios.push('proposal-lifecycle-via-review');
   });
   it('searches a virtualized 100,000-record history', async () => {
     // Embedded direct-eval has its own short timeout. Poll the asynchronous
