@@ -16,6 +16,7 @@ macro_rules! redacted {
 mod canonical;
 mod decode;
 mod primitives;
+// Gated forward access (see header note); only the module's own test tree reads it.
 #[allow(unused_imports)]
 pub(crate) use decode::{CompleteEpisodeDecodeError, DecodedCompleteEpisode};
 mod types;
