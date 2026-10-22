@@ -57,6 +57,8 @@ cargo test --workspace < /dev/null
 - There is no `tools/cargo.sh` here. Select the pinned rustup
   toolchain, not a Homebrew Cargo/rustc pair; keep the toolchain bin directory
   and `/usr/bin` ahead of Homebrew Rust and Swiftly's compiler shims on macOS.
+  `rust-toolchain.toml` also requests `rustfmt`, `clippy`, and `rust-src`; use
+  `RUSTUP_TOOLCHAIN=1.99.1`.
 - Unlike ABI, this clippy gate does not pass `-D warnings`: workspace lints deny
   unsafe code and clippy `all`, but `missing_docs` and pedantic remain warnings.
 - The default gate does not exercise `abi-wdbx`'s `full-fhe` or
