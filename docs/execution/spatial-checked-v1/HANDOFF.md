@@ -11,6 +11,12 @@ ABI is its sibling `/Users/donald/sources/repos/abi` (inspected baseline
 `specimen-studio/`, separate workspace, with its existing pinned git dependency;
 no dependency sources were changed.
 
+> **Superseded.** The studio now consumes `abi-wdbx` and `abi-compute` by path
+> dependency into this checkout's `crates/` (the git pin was removed on
+> 2026-10-20 because that revision's `abi-compute` required the nightly-only
+> `#![feature(portable_simd)]` gate, which stable Rust 1.99.1 rejects), so the
+> studio's `Cargo.lock` pins nothing for those crates.
+
 The 61-row immutable inspection inventory is
 `../../claims/wdbx-3d/source-manifest.json`. It pins commits, SHA-256 digests,
 authority read coverage, reported versus executed evidence and explicit scoped

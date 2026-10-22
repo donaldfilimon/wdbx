@@ -33,6 +33,11 @@ designs. This plan does not turn reference subsystems into production claims.
   discover additional skills only for a concrete capability gap.
 - Keep WDBX's frozen v2 and v3 commitment contracts compatible. Specimen Studio
   remains a separate workspace with a pinned git dependency.
+  > **Superseded.** The studio now consumes `abi-wdbx` and `abi-compute` by
+  > path dependency into this checkout's `crates/` (the git pin was removed on
+  > 2026-10-20 because that revision's `abi-compute` required the nightly-only
+  > `#![feature(portable_simd)]` gate, which stable Rust 1.99.1 rejects), so the
+  > studio's `Cargo.lock` pins nothing for those crates.
 - Keep heavy gates resource-bounded. Do not run Abbey's Rust and Zig gates
   simultaneously or build against actively changing shared dependency files.
 - Existing dirty work is a baseline, not this team's accomplishment.

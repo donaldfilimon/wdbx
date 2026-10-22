@@ -76,6 +76,27 @@ before touching `node_modules`, `.wrangler`, or `.next`.
   Rust 1.99.1 rejects (E0554). The local crates are the source that builds on
   that compiler. Do not change the wdbx crates, ABI, or Abbey to implement this
   studio's runtime behavior.
+- `native/specimen-core/src/canonical/` is the studio's adapter over the
+  substrate's v3 episode ledger, and `native/specimen-core/src/persistence/canonical.rs`
+  is the write-through that uses it. The adapter is OPT-IN at the store level
+  (`persistence::Store::open_with_canonical`): the default store, the desktop
+  app and the TUI still open the plain store. The studio records under one
+  scope (`studio_workspace`), its candidates are not per-member
+  (`member_scoped` is false), and it binds its own contract digest
+  (`canonical::contract_digest()`), not the Abbey corpus. The episode sources
+  are the studio's own: `LocalRuntime` for an edit or an erasure,
+  `Proposal` for a learned fact, so a learned proposal reads `Uncertain` by
+  design and never `Accepted`. The studio's snapshot is a projection of the
+  ledger there — `Store::rebuild_from_ledger` reconstructs the document from
+  the ledger, and a content blob the studio no longer holds is a declared
+  gap, never a partial document. The ledger is opened UNSIGNED, so every
+  episode's cryptographic dimension reads `Unsigned`, and it is one local
+  writer: the substrate's v3 profile is unratified, and no quorum, no
+  federation and no cross-language verification stand behind these episodes.
+  The declared losses are `canonical::LossManifest` for the native edition
+  (`native/specimen-core/src/canonical/manifest.rs`) and
+  `lib/specimen/canonical-loss.json` for the browser edition, which has no
+  ledger at all.
 - Keep the root Cargo GLib patch and its attribution/safety rationale in
   `native/vendor/README.md`; the vendored crate is excluded from the workspace.
 - `scripts/build-runtimes.py` downloads pinned sources and compiles local CPU

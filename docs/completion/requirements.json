@@ -216,7 +216,7 @@
       "kind": "constraint",
       "source": "program",
       "line": 26,
-      "text": "- WDBX Rust source files <=1000 lines. Studio remains a separate workspace with pinned Git WDBX dependencies.",
+      "text": "- WDBX Rust source files <=1000 lines. Studio remains a separate workspace, with path dependencies on this checkout's `crates/` for `abi-wdbx` and `abi-compute`, so its `Cargo.lock` pins nothing for them. This line previously conflicted with `2026-10-20-wdbx-completion-remaining.md` (current execution tranche 1), which preserves the studio's intentional path dependencies; that later document is the operative coordination for this point.",
       "owner": "WDBX contracts",
       "task": 1,
       "plan": "task-01",
@@ -228,7 +228,7 @@
         "test command, environment, raw assertion results and failure logs",
         "independent reviewer identity and scope"
       ],
-      "completion_condition": "- WDBX Rust source files <=1000 lines. Studio remains a separate workspace with pinned Git WDBX dependencies."
+      "completion_condition": "- WDBX Rust source files <=1000 lines. Studio remains a separate workspace, with path dependencies on this checkout's `crates/` for `abi-wdbx` and `abi-compute`, so its `Cargo.lock` pins nothing for them. This line previously conflicted with `2026-10-20-wdbx-completion-remaining.md` (current execution tranche 1), which preserves the studio's intentional path dependencies; that later document is the operative coordination for this point."
     },
     {
       "id": "G13",
@@ -938,7 +938,7 @@
       "kind": "program",
       "source": "program",
       "line": 99,
-      "text": "- [ ] Canonical adapter for edits/learning/outcomes/lifecycle; snapshots remain projections. Update pinned Git dependency revisions and lockfiles together.",
+      "text": "- [ ] Canonical adapter for edits/learning/outcomes/lifecycle; snapshots remain projections. The studio builds against this checkout's `crates/` through path dependencies, so a substrate change is picked up by the studio's own gates without a revision bump; regenerate the studio's `Cargo.lock` together with any manifest change, as its own `--locked` gate requires.",
       "owner": "Studio and WDBX",
       "task": 9,
       "plan": "task-09",
@@ -950,7 +950,7 @@
         "test command, environment, raw assertion results and failure logs",
         "independent reviewer identity and scope"
       ],
-      "completion_condition": "- [ ] Canonical adapter for edits/learning/outcomes/lifecycle; snapshots remain projections. Update pinned Git dependency revisions and lockfiles together."
+      "completion_condition": "- [ ] Canonical adapter for edits/learning/outcomes/lifecycle; snapshots remain projections. The studio builds against this checkout's `crates/` through path dependencies, so a substrate change is picked up by the studio's own gates without a revision bump; regenerate the studio's `Cargo.lock` together with any manifest change, as its own `--locked` gate requires."
     },
     {
       "id": "P09.02",

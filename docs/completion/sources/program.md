@@ -23,7 +23,7 @@
 - No fixed offline expiry. Retain minimal anti-resurrection deletion metadata indefinitely. Resnapshot/revalidate old clients; never silently discard their unsent work.
 - Desktop targets: macOS ARM64/x86-64, Windows x86-64, Linux x86-64. Service targets: Linux x86-64 and macOS ARM64.
 - Operational acceptance: no loss of quorum-acknowledged writes after one voter fails; service recovery <=15 minutes; backup restore <=4 hours. Capacity is measured, not a commercial SLA.
-- WDBX Rust source files <=1000 lines. Studio remains a separate workspace with pinned Git WDBX dependencies.
+- WDBX Rust source files <=1000 lines. Studio remains a separate workspace, with path dependencies on this checkout's `crates/` for `abi-wdbx` and `abi-compute`, so its `Cargo.lock` pins nothing for them. This line previously conflicted with `2026-10-20-wdbx-completion-remaining.md` (current execution tranche 1), which preserves the studio's intentional path dependencies; that later document is the operative coordination for this point.
 - Evidence levels C0-C7 are separate. Research failure leaves the relevant completion claim open. Independent crypto review precedes production qualification.
 
 ## Review Focus
@@ -96,7 +96,7 @@
 
 ## Task 9: Studio canonical integration
 
-- [ ] Canonical adapter for edits/learning/outcomes/lifecycle; snapshots remain projections. Update pinned Git dependency revisions and lockfiles together.
+- [ ] Canonical adapter for edits/learning/outcomes/lifecycle; snapshots remain projections. The studio builds against this checkout's `crates/` through path dependencies, so a substrate change is picked up by the studio's own gates without a revision bump; regenerate the studio's `Cargo.lock` together with any manifest change, as its own `--locked` gate requires.
 - [ ] Complete busy/cancel/malformed-response/import/storage-failure/recovery behavior; regenerate specification assets after authoritative text changes.
 - [ ] Qualify save/reopen/import/export, provenance, conflict resolution, deletion and offline recovery in both editions.
 
