@@ -28,7 +28,7 @@
 //! * the whole path works against a real episode store.
 
 #[path = "support/dimension_ranking.rs"]
-#[allow(dead_code)]
+//#[allow(dead_code)]
 mod support;
 
 use abi_wdbx::v3::episode::{ConstitutionalQuery, EvidenceDimension, MemoryResults};
