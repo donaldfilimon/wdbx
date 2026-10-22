@@ -2,13 +2,13 @@
   "program": {
     "path": "docs/superpowers/plans/2026-10-20-wdbx-full-completion.md",
     "snapshot": "sources/program.md",
-    "sha256": "af90b08cf0fa30e889c46afef0c361ba5e28d9d4ad53a441e286965ea09c058d",
+    "sha256": "bf0b774c5b66e8a164b72d636c064ca40274851da2f07265f2c48fd451a47e1e",
     "authority": "reference snapshot only; upstream remains normative"
   },
   "studio": {
     "path": "specimen-studio/public/WDBX-Specimen-Architecture-Specification.md",
     "snapshot": "sources/studio.md",
-    "sha256": "82aa6347e264efb789b21e915eb802802d1b3771c31d1a63f1fb85ee2a0c4c88",
+    "sha256": "9064df9a034e381945a4fa11560609df9c3c9dbe7e3431aea7cd9fd19319f32c",
     "authority": "reference snapshot only; upstream remains normative"
   },
   "constitution": {

@@ -11,6 +11,11 @@
 #
 # `cargo test --workspace` shells out to python3 (or $WDBX_PYTHON) for the
 # cross-language episode goldens; a missing interpreter fails, never skips.
+#
+# The complete-episode decode witness's own unittest suite runs directly as a
+# gate step; a missing or failing interpreter fails here, never skips. The
+# COSE encoding witness's suite runs the same way, under its own narrow
+# pattern so no unrelated suite is pulled in.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -31,7 +36,21 @@ cargo fmt --all --check
 step "clippy (workspace lints; no -D warnings)"
 cargo clippy --workspace --all-targets
 
+step "python complete-episode decode witness tests (unittest)"
+"${WDBX_PYTHON:-python3}" -m unittest discover -s tools/tests \
+    -p 'test_wdbx_complete_episode_decode*.py'
+
+step "python cose-sign1-p1 encoding witness tests (unittest)"
+"${WDBX_PYTHON:-python3}" -m unittest discover -s tools/tests \
+    -p 'test_wdbx_cose_sign1_p1.py'
+
 step "tests"
+# The pinned retrieval-baseline expectation is asserted, never rewritten by
+# the gate. Unsetting both regeneration opt-ins here means a stray
+# WDBX_WRITE_EXPECTED (or WDBX_REGENERATE_EXPECTED) in the environment
+# cannot repin a measured metric behind the gate's back.
+unset WDBX_WRITE_EXPECTED
+unset WDBX_REGENERATE_EXPECTED
 cargo test --workspace < /dev/null
 
 printf '\ncheck: all green\n'

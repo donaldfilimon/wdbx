@@ -1,0 +1,25 @@
+{
+  "edition": "browser",
+  "declarations": [
+    {
+      "id": "canonical_ledger",
+      "dropped": "The canonical episode ledger and every answer only it can give: episode digests, content-free receipts, the constitutional disposition of each record, the eight evidence dimensions kept apart, the admission decisions, the supersession and forgetting lineage, quarantine and contradiction state, holds and revocations, retention deadlines, and the guild quota state.",
+      "reason": "The browser edition persists to IndexedDB and owns no canonical ledger. The native edition owns the ledger, and this edition is a lossy projection of it: a browser store never decides trust, supersession, contradiction, quarantine, or deletion, because it holds no episode that could decide them."
+    },
+    {
+      "id": "payload_commitment",
+      "dropped": "The digest that binds the stored specimen to a canonical episode, and the byte count the substrate charges for it.",
+      "reason": "The browser edition stores the specimen's content without a commitment over it, so a stored record cannot be shown to be the content the canonical ledger admitted."
+    },
+    {
+      "id": "signature_evidence",
+      "dropped": "The detached episode signature and the status of the key it names.",
+      "reason": "Episode signing belongs to the native writer. This edition holds no key, no signature, and no key status, so it can say nothing about who wrote a record."
+    },
+    {
+      "id": "replication_scope",
+      "dropped": "Quorum attestations, federation grants, and cross-language verification.",
+      "reason": "The canonical ledger is one local writer on this machine. Neither edition replicates it, so this edition cannot show that a record survived anything but this device."
+    }
+  ]
+}

@@ -1,4 +1,11 @@
-export type ShortcutAction = 'palette' | 'sidebar' | 'dock' | 'split' | 'close';
+export type ShortcutAction =
+  | 'palette'
+  | 'sidebar'
+  | 'dock'
+  | 'split'
+  | 'close'
+  | 'save'
+  | 'load';
 
 function editing(target: EventTarget | null): boolean {
   const el = target as { tagName?: string; isContentEditable?: boolean } | null;
@@ -19,8 +26,11 @@ export function matchShortcut(e: {
 }): ShortcutAction | null {
   const mod = e.metaKey || e.ctrlKey;
   if (mod && !e.altKey && e.key.toLowerCase() === 'k') return 'palette';
+  // Save stays available while typing, same as the command palette.
+  if (mod && !e.altKey && e.key.toLowerCase() === 's') return 'save';
   if (e.key === 'Escape') return 'close';
   if (editing(e.target)) return null;
+  if (mod && !e.altKey && e.key.toLowerCase() === 'o') return 'load';
   if (mod && !e.altKey && e.key.toLowerCase() === 'b') return 'sidebar';
   if (mod && !e.altKey && e.key === '\\') return 'split';
   if (!mod && !e.altKey && e.key === '`') return 'dock';

@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Consolidate frozen-SHA GitHub qualification evidence without overstating it."""
 
+from __future__ import annotations
+
 import argparse
 import hashlib
 import json
@@ -241,6 +243,7 @@ def validate_accessibility_widths(widths: Any) -> list[int]:
         "disabled-contributor-feedback", "zoomed-keyboard-scrollable-topology",
         "specification-reader", "live-engine", "spec-model", "spec-diagrams",
         "store-explorer", "network-layers", "network-topology", "lab-browser",
+        "notes",
     }
     required_targets = {
         "Network", "Cycle trace", "Zoom out topology", "Fit topology to canvas",

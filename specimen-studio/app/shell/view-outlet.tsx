@@ -1,8 +1,6 @@
 import {
+  applyCommand,
   maintenance,
-  removeNode,
-  togglePin,
-  validateSettings,
   validateSpecimen,
 } from '@/lib/specimen/kernel';
 import { isDesktop, nativeReview } from '@/lib/specimen/native';
@@ -15,6 +13,7 @@ import { StorePanel } from '../panels/store-panel';
 import { BrowserLabIntro, LabPanel } from '../lab/lab-panel';
 import { NetworkPanel } from '../network/network-panel';
 import { Specification } from '../panels/specification-panel';
+import { NotesView } from '../panels/notes-panel';
 import { StudioPanel } from '../panels/studio-panel';
 import type { View } from '../state/navigation';
 import type { StudioModel } from '../state/use-studio';
@@ -51,7 +50,10 @@ export function ViewOutlet({
     setError,
     reviewContext,
     current,
-    setUndo,
+    pushUndo,
+    agentAsk,
+    agentLog,
+    decideAgentRun,
   } = model;
   return (
     <>
@@ -77,10 +79,13 @@ export function ViewOutlet({
           }}
           onRemove={(ref) =>
             act(() => {
-              const previous = state;
-              commit(removeNode(state, ref));
+              const applied = applyCommand(state, {
+                command: 'removeNode',
+                nodeRef: ref,
+              });
+              pushUndo(applied.undo);
+              commit(applied.state);
               announce('Node removed. Use Undo to restore it.');
-              setUndo(previous);
             })
           }
           onAttach={() => openDialog('attach')}
@@ -88,6 +93,15 @@ export function ViewOutlet({
             setSelected(ref);
             nav('studio');
           }}
+        />
+      )}
+      {view === 'notes' && (
+        <NotesView
+          state={state}
+          commit={commit}
+          pushUndo={pushUndo}
+          announce={announce}
+          act={act}
         />
       )}
       {view === 'memory' && (
@@ -103,13 +117,24 @@ export function ViewOutlet({
             setEditing(ref);
             openDialog('resource');
           }}
-          onPin={(id) => act(() => commit(togglePin(state, id)))}
+          onPin={(id) =>
+            act(() => {
+              const applied = applyCommand(state, {
+                command: 'togglePin',
+                cycleId: id,
+              });
+              pushUndo(applied.undo);
+              commit(applied.state);
+            })
+          }
           onRemove={(ref) =>
             act(() => {
-              setUndo(state);
-              const s = structuredClone(state);
-              s.resources = s.resources.filter((r) => r.ref !== ref);
-              commit(s);
+              const applied = applyCommand(state, {
+                command: 'removeResource',
+                resourceRef: ref,
+              });
+              pushUndo(applied.undo);
+              commit(applied.state);
               announce('Memory removed. Use Undo to restore it.');
             })
           }
@@ -138,6 +163,52 @@ export function ViewOutlet({
             setEditing(undefined);
             openDialog('node');
           }}
+          onDismissAll={() =>
+            act(() => {
+              const applied = applyCommand(state, {
+                command: 'dismissAllProposals',
+              });
+              pushUndo(applied.undo);
+              commit(applied.state);
+              announce(applied.message);
+            })
+          }
+          onReconsiderAll={() =>
+            act(() => {
+              const applied = applyCommand(state, {
+                command: 'reconsiderAllProposals',
+              });
+              pushUndo(applied.undo);
+              commit(applied.state);
+              announce(applied.message);
+            })
+          }
+          agentAsk={agentAsk}
+          agentLog={agentLog}
+          onApprove={() => decideAgentRun(true)}
+          onDecline={() => decideAgentRun(false)}
+          onDismiss={(id) =>
+            act(() => {
+              const applied = applyCommand(state, {
+                command: 'dismissProposal',
+                id,
+              });
+              pushUndo(applied.undo);
+              commit(applied.state);
+              announce(applied.message);
+            })
+          }
+          onReconsider={(id) =>
+            act(() => {
+              const applied = applyCommand(state, {
+                command: 'reconsiderProposal',
+                id,
+              });
+              pushUndo(applied.undo);
+              commit(applied.state);
+              announce(applied.message);
+            })
+          }
         />
       )}
       {view === 'engine' && (
@@ -154,7 +225,21 @@ export function ViewOutlet({
       )}
       {view === 'store' && <StorePanel desktop={isDesktop()} />}
       {view === 'network' && (
-        <NetworkPanel specimen={state} desktop={isDesktop()} />
+        <NetworkPanel
+          specimen={state}
+          desktop={isDesktop()}
+          reloadKey={model.networkEpoch}
+          onReview={() => nav('activity')}
+          onTeach={() => nav('studio')}
+          onSpecimenCommand={(command) =>
+            act(() => {
+              const applied = applyCommand(state, command);
+              pushUndo(applied.undo);
+              commit(applied.state);
+              announce(applied.message);
+            })
+          }
+        />
       )}
       {view === 'specification' && (
         <Specification
@@ -176,21 +261,15 @@ export function ViewOutlet({
           state={state}
           onSave={(settings, name) =>
             act(() => {
-              validateSettings(settings);
-              if (
-                state.nodes.some(
-                  (n) =>
-                    n.entries.length > settings.entryLimit ||
-                    n.strength > settings.maxStrength,
-                )
-              )
-                throw new Error(
-                  'Existing nodes exceed those limits. Adjust them before reducing the limits.',
-                );
-              const next = { ...state, settings, name: name.trim() };
-              validateSpecimen(next);
-              commit(next);
-              announce('Settings saved.');
+              const applied = applyCommand(state, {
+                command: 'setSettings',
+                settings,
+                name,
+              });
+              validateSpecimen(applied.state);
+              pushUndo(applied.undo);
+              commit(applied.state);
+              announce(applied.message);
             })
           }
         />

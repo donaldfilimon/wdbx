@@ -8,6 +8,7 @@ import {
   FormError,
   WButton,
 } from '@/components/wdbx';
+import { formatKernelError } from '@/lib/specimen/kernel';
 import { type SpecimenNode } from '@/lib/specimen/types';
 
 import { formText } from '../state/format';
@@ -52,9 +53,7 @@ export function NodeForm({
                 : undefined,
           });
         } catch (err) {
-          setError(
-            err instanceof Error ? err.message : 'Check the node fields.',
-          );
+          setError(formatKernelError(err));
         }
       }}
     >

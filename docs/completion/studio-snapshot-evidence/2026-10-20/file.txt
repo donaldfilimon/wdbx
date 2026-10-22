@@ -1,0 +1,1 @@
+/Users/donald/.codex/verification/wdbx-studio-20261020-snapshot/wdbx/specimen-studio/target/release/bundle/macos/WDBX Specimen Studio.app/Contents/MacOS/wdbx-studio-desktop: Mach-O 64-bit executable arm64

@@ -139,3 +139,21 @@ pub(super) fn variant(value: C) -> DResult<(u64, C)> {
     }
     Ok((tag, fields))
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn cap_rejection_never_invokes_child_mapper() {
+        let mut calls = 0;
+        let result = list(C::Array(vec![C::Null; 33]), 32, |_| {
+            calls += 1;
+            Ok(())
+        });
+        assert_eq!(
+            result.unwrap_err(),
+            E::InvalidValue(CompleteEpisodeError::CollectionLimit)
+        );
+        assert_eq!(calls, 0);
+    }
+}

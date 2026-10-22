@@ -89,9 +89,16 @@ Outputs must match within the tolerance already implied by the fallback
 (conformance compares CPU results exactly; GPU results are checked only on
 native, against CPU, with an explicit epsilon).
 
-The `abi-wdbx` git pin (`3ac03f0`) does not move as part of this program
-unless a phase needs a newer store API; that would be its own recorded
-decision.
+The `abi-wdbx` and `abi-compute` dependencies are path dependencies on this
+checkout's `crates/`, so a WDBX change is picked up by the studio's own gates
+without a revision bump, and the studio's `Cargo.lock` pins nothing for them.
+Returning to a pinned git revision would be its own recorded decision.
+
+> **Status note, 2026-10-21.** This replaces the original "the `abi-wdbx` git
+> pin (`3ac03f0`) does not move as part of this program unless a phase needs a
+> newer store API" decision. The pin was removed on 2026-10-20 because that
+> revision's `abi-compute` starts with `#![feature(portable_simd)]`, which
+> stable Rust 1.99.1 rejects (E0554).
 
 ## Section 2: command layer and data flow
 

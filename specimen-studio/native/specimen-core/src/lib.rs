@@ -1,4 +1,5 @@
 pub use specimen_kernel::engine;
+pub mod canonical;
 pub mod host;
 pub use specimen_kernel::language;
 pub mod models;

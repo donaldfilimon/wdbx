@@ -1,6 +1,7 @@
 import { expect, test } from 'bun:test';
 import {
   describeRewiring,
+  layerInsertAt,
   layerRows,
   neuronPositions,
   sampledEdges,
@@ -71,6 +72,12 @@ test('topologyLayout is deterministic and spreads nodes on a sphere', () => {
   for (const [x, y, z] of Object.values(a))
     expect(Math.hypot(x, y, z)).toBeCloseTo(3, 5);
   expect(topologyLayout([{ ref: 'solo' }]).solo).toEqual([0, 0, 0]);
+});
+
+test('layer insert point stays on a real layer after a remove', () => {
+  expect(layerInsertAt([0, 1, 2], '1')).toBe('1');
+  expect(layerInsertAt([0, 1], '2')).toBe('1');
+  expect(layerInsertAt([], '4')).toBe('0');
 });
 
 test('describeRewiring names layers an edit rewired as a side effect', () => {

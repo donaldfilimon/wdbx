@@ -1,0 +1,124 @@
+{
+  "snapshot": "/Users/donald/.codex/verification/wdbx-studio-20261020-snapshot/wdbx",
+  "source_manifest": "/Users/donald/.codex/verification/wdbx-studio-20261020-snapshot/source-inventory.json",
+  "source_manifest_sha256": "d21e14afed9180488d53aa7628ff6fd132fcb3c41075ff49e0d43bbb73a5cc1f",
+  "scope": "Captured local macOS ARM64 source/build evidence; no app launch, inference, installed UI or distribution qualification by this lane",
+  "gates": {
+    "test_native": {
+      "exit_code": 0,
+      "passed": 90,
+      "failed": 0,
+      "ignored": 1,
+      "ignored_case": "neural::tests::cpu_gpu_parity requires qualified GPU"
+    },
+    "check_native": {
+      "exit_code": 0
+    },
+    "check": {
+      "exit_code": 0,
+      "passed": 195,
+      "failed": 0,
+      "assertions": 853,
+      "files": 29
+    },
+    "package": {
+      "exit_code": 1,
+      "release_executable_built": true,
+      "app_built": true,
+      "dmg_completed": false
+    }
+  },
+  "logs": {
+    "native_test": {
+      "path": "/tmp/wdbx-20261020-studio-snapshot-native-test.log",
+      "sha256": "7cd2033cfbb21b5de1d38d8f7cda46d4b08e3c9631fea5bbe9d5dc7e7b90ec2a"
+    },
+    "native_clippy": {
+      "path": "/tmp/wdbx-20261020-studio-snapshot-native-clippy.log",
+      "sha256": "36a2366d27765de30fe8470994d07b981f00637271b81170f8a4e13cba272a6c"
+    },
+    "check": {
+      "path": "/tmp/wdbx-20261020-studio-snapshot-check.log",
+      "sha256": "edb89e6167104688f8facaa5f41e5fb2045240cc70f348298b70ffeea05d2a87"
+    },
+    "package": {
+      "path": "/tmp/wdbx-20261020-studio-snapshot-package.log",
+      "sha256": "81581b8e884d6ba11fd613b4c5e36be6ef43292175a58896059a2be82f95f25e"
+    },
+    "dmg_debug": {
+      "path": "/tmp/wdbx-20261020-studio-snapshot-dmg-debug.log",
+      "sha256": "c5d66b82e0120734112ef8debd4a05bd6833102fc2cc82808e6dcff92d77b921"
+    }
+  },
+  "probes": {
+    "codesign_verify": {
+      "command": [
+        "/usr/bin/codesign",
+        "--verify",
+        "--deep",
+        "--strict",
+        "--verbose=2",
+        "/Users/donald/.codex/verification/wdbx-studio-20261020-snapshot/wdbx/specimen-studio/target/release/bundle/macos/WDBX Specimen Studio.app"
+      ],
+      "exit_code": 1,
+      "log": "docs/completion/studio-snapshot-evidence/2026-10-20/codesign_verify.txt",
+      "log_sha256": "83e5cb75d121bf7b8e81b83a827b1e577d39176ca4a279cb29f14c5929c01f87"
+    },
+    "codesign_display": {
+      "command": [
+        "/usr/bin/codesign",
+        "-d",
+        "--verbose=2",
+        "/Users/donald/.codex/verification/wdbx-studio-20261020-snapshot/wdbx/specimen-studio/target/release/bundle/macos/WDBX Specimen Studio.app"
+      ],
+      "exit_code": 0,
+      "log": "docs/completion/studio-snapshot-evidence/2026-10-20/codesign_display.txt",
+      "log_sha256": "3222059265aac6a9a7cbae5fef85a3801a5de73a202fb8585b93946cf66ac32c"
+    },
+    "loader": {
+      "command": [
+        "/usr/bin/otool",
+        "-L",
+        "/Users/donald/.codex/verification/wdbx-studio-20261020-snapshot/wdbx/specimen-studio/target/release/bundle/macos/WDBX Specimen Studio.app/Contents/MacOS/wdbx-studio-desktop"
+      ],
+      "exit_code": 0,
+      "log": "docs/completion/studio-snapshot-evidence/2026-10-20/loader.txt",
+      "log_sha256": "fbf8706d17482cd505cdf24455197db428c4eaaf483f73c513df435267982216"
+    },
+    "file": {
+      "command": [
+        "/usr/bin/file",
+        "/Users/donald/.codex/verification/wdbx-studio-20261020-snapshot/wdbx/specimen-studio/target/release/bundle/macos/WDBX Specimen Studio.app/Contents/MacOS/wdbx-studio-desktop"
+      ],
+      "exit_code": 0,
+      "log": "docs/completion/studio-snapshot-evidence/2026-10-20/file.txt",
+      "log_sha256": "31b85965fbe220291ea18d63a070dd77501878751c82b48ebc280677074cf3db"
+    }
+  },
+  "app_files": {
+    "Contents/MacOS/wdbx-studio-desktop": {
+      "sha256": "d2b584ba3a7bf3da6381a7e8b7149b7a222351189ad7ffb1ef90bfe0c087c194",
+      "size_bytes": 29488808
+    },
+    "Contents/Resources/binaries/sd-cli": {
+      "sha256": "2029b8957791b5f944c6604757d8966ceed85fde1c2642a1e5c7314622f5b787",
+      "size_bytes": 56769656
+    },
+    "Contents/Resources/binaries/llama-server": {
+      "sha256": "d52b8fb0c2e0dbfbe47236d4f89ca8cba10dac103614dc99d05e676b1f0e2e9f",
+      "size_bytes": 15703456
+    }
+  },
+  "dmg_blocker": {
+    "reason": "Running app from temporary packaging image prevented normal detach",
+    "normal_detach_exit_code": 16,
+    "origin": "unknown; not launched by this lane",
+    "action": "no kill or forced unmount",
+    "private_diagnostic": "/Users/donald/.codex/verification/wdbx-studio-20261020-snapshot/dmg-blocker.json"
+  },
+  "warnings": [
+    "Pinned rust-objcopy failed to find libLLVM during native/package commands; direct process library-path probe succeeds but this did not eliminate warnings from the actual gate logs.",
+    "Upstream block future incompatibility warning retained.",
+    "App strict signature verification fails; linker ad hoc signature lacks sealed resources; no Developer ID/notarization claim."
+  ]
+}

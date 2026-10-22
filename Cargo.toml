@@ -2,7 +2,9 @@
 resolver = "3"
 members = ["crates/*"]
 # specimen-studio/ is a separate Cargo workspace (its own Cargo.toml, lockfile
-# and gate); it consumes abi-wdbx/abi-compute by pinned git revision.
+# and gate). It stays excluded so this workspace's fmt/clippy/test gate does
+# not build it. From this directory, `cargo studio` runs the desktop app and
+# `cargo studio-build` builds it.
 exclude = ["specimen-studio"]
 
 [workspace.package]

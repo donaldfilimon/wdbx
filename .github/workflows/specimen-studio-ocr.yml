@@ -23,7 +23,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Rust toolchain
-        run: rustup toolchain install nightly-2026-09-01 --profile minimal
+        run: rustup toolchain install 1.99.1 --profile minimal
       - name: Create OCR fixture
         run: |
           python3 -m venv "$RUNNER_TEMP/ocr-fixture-venv"

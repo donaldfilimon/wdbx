@@ -1,5 +1,9 @@
+mod canonical;
 mod info;
+mod lock;
+pub use canonical::{CanonicalOperationReport, CanonicalReport};
 pub use info::StoreInfo;
+use lock::WriterLock;
 
 use crate::{Result, engine, error, neural::Network};
 use abi_wdbx::v2::{V2Mutation, V2Store};
@@ -129,10 +133,36 @@ pub struct Store {
     root: PathBuf,
     store: V2Store,
     pub snapshot: Snapshot,
+    read_only: bool,
+    _lock: Option<WriterLock>,
+    /// The canonical episode ledger, when the studio opened one.
+    ///
+    /// The store without an adapter is the studio's default path, and it is
+    /// unchanged: the adapter is opt-in.
+    canonical: Option<crate::canonical::CanonicalAdapter>,
+    /// The studio's canonical journal: the map from every episode the studio
+    /// recorded to the content it committed to.
+    journal: crate::canonical::Journal,
+    /// What the last canonical write-through did.
+    canonical_report: Option<CanonicalReport>,
 }
 impl Store {
     pub fn open(root: impl Into<PathBuf>) -> Result<Self> {
         let root = root.into();
+        let lock = WriterLock::acquire(&root)?;
+        Self::load(root, Some(lock), false)
+    }
+
+    /// Reads the same directory without the writer lock. Writes return `ReadOnly`.
+    pub fn open_read_only(root: impl Into<PathBuf>) -> Result<Self> {
+        Self::load(root.into(), None, true)
+    }
+
+    pub fn is_read_only(&self) -> bool {
+        self.read_only
+    }
+
+    fn load(root: PathBuf, lock: Option<WriterLock>, read_only: bool) -> Result<Self> {
         fs::create_dir_all(root.join("assets"))?;
         let store = V2Store::open(root.join("store")).map_err(|e| error("Storage", e))?;
         let snapshot = store
@@ -141,20 +171,35 @@ impl Store {
             .map(serde_json::from_str)
             .transpose()?
             .unwrap_or_default();
+        let journal = instance_journal(&store);
         let instance = Self {
             root,
             store,
             snapshot,
+            read_only,
+            _lock: lock,
+            canonical: None,
+            journal,
+            canonical_report: None,
         };
         if instance.snapshot.revision > 0 {
             instance.snapshot.validate()?;
         }
         Ok(instance)
     }
+
+    fn ensure_writable(&self) -> Result<()> {
+        if self.read_only {
+            Err(error("ReadOnly", "This store is open read-only."))
+        } else {
+            Ok(())
+        }
+    }
     pub fn root(&self) -> &Path {
         &self.root
     }
     pub fn commit(&mut self, expected: u64, mut next: Snapshot) -> Result<Snapshot> {
+        self.ensure_writable()?;
         if expected != self.snapshot.revision {
             return Err(error(
                 "StaleRevision",
@@ -166,17 +211,30 @@ impl Store {
         next.revision = expected
             .checked_add(1)
             .ok_or_else(|| error("BudgetExceeded", "Revision counter exhausted"))?;
+        // The canonical write-through comes first: the ledger is the record
+        // of what happened, and the studio's snapshot is a projection of it.
+        // The publication may add the studio's own erasure rows to the
+        // snapshot, so the snapshot is serialized after it.
+        let publication = self.publish_canonical(&mut next)?;
         let data = serde_json::to_string(&next)?;
         if data.len() > 64 * 1024 * 1024 {
             return Err(error("BudgetExceeded", "Snapshot exceeds 64 MiB"));
         }
+        let mut mutations = vec![V2Mutation::PutKv {
+            key: "studio/snapshot".into(),
+            value: data,
+        }];
+        mutations.extend(publication.mutations);
         self.store
-            .commit(vec![V2Mutation::PutKv {
-                key: "studio/snapshot".into(),
-                value: data,
-            }])
+            .commit(mutations)
             .map_err(|e| error("Storage", e))?;
         self.snapshot = next;
+        self.journal = publication.journal;
+        self.canonical_report = if publication.report.operations.is_empty() {
+            None
+        } else {
+            Some(publication.report)
+        };
         if self.snapshot.revision.is_multiple_of(50) {
             let _ = self.store.compact();
         }
@@ -194,13 +252,17 @@ impl Store {
                 ));
             }
         }
-        for n in engine::rows(&next.specimen, "nodes") {
-            if !engine::rows(&specimen, "nodes")
-                .iter()
-                .any(|v| v["ref"] == n["ref"])
-            {
-                next.tombstones
-                    .push(json!({"node":n,"deletedAt":crate::now()}));
+        // The canonical ledger records the erasure, so the studio's own rows
+        // are computed once, by the write-through, when a ledger is present.
+        if self.canonical.is_none() {
+            for n in engine::rows(&next.specimen, "nodes") {
+                if !engine::rows(&specimen, "nodes")
+                    .iter()
+                    .any(|v| v["ref"] == n["ref"])
+                {
+                    next.tombstones
+                        .push(json!({"node":n,"deletedAt":crate::now()}));
+                }
             }
         }
         for m in engine::rows(&specimen, "mutations") {
@@ -230,6 +292,7 @@ impl Store {
     }
     /// Reclaim expired unreferenced assets only when no recovery snapshot needs them.
     pub fn cleanup(&self, cancel: &std::sync::atomic::AtomicBool) -> Result<usize> {
+        self.ensure_writable()?;
         use std::sync::atomic::Ordering;
         fn assets(value: &Value, keep: &mut std::collections::BTreeSet<String>) {
             match value {
@@ -253,6 +316,15 @@ impl Store {
         }
         let mut keep = std::collections::BTreeSet::new();
         assets(&serde_json::to_value(&self.snapshot)?, &mut keep);
+        // The canonical ledger commits to content the studio keeps in its own
+        // blob store. That content is not referenced by the snapshot, so the
+        // cleanup would reclaim it and leave the rebuild with a gap; the
+        // journal names every commitment the ledger still holds.
+        for entry in &self.journal.entries {
+            if let Some(content) = entry.content {
+                keep.insert(content.to_hex());
+            }
+        }
         // Recovery imports may refer to assets not embedded in a JSON file. Keep asset files
         // conservatively while recovery copies exist; partial scratch files remain eligible.
         let recovery = self.root.join("recovery");
@@ -295,6 +367,7 @@ impl Store {
         Ok(removed)
     }
     pub fn put_asset(&self, bytes: &[u8]) -> Result<String> {
+        self.ensure_writable()?;
         if bytes.len() > 32 * 1024 * 1024 {
             return Err(error("BudgetExceeded", "Asset exceeds 32 MiB"));
         }
@@ -344,6 +417,7 @@ impl Store {
         result
     }
     pub fn import(&mut self, path: &Path, expected: u64) -> Result<Snapshot> {
+        self.ensure_writable()?;
         if expected != self.snapshot.revision {
             return Err(error("StaleRevision", "Workspace changed during import"));
         }
@@ -436,6 +510,20 @@ impl Store {
         self.commit(expected, next)
     }
 }
+/// The studio's canonical journal, as the store holds it.
+///
+/// The journal is a derived sidecar beside the snapshot: it maps every
+/// canonical episode the studio recorded to the content that episode
+/// committed to. A store without one has never published anything
+/// canonically.
+fn instance_journal(store: &V2Store) -> crate::canonical::Journal {
+    store
+        .snapshot()
+        .preferred_value(crate::canonical::JOURNAL_KEY)
+        .and_then(|value| serde_json::from_str(value).ok())
+        .unwrap_or_default()
+}
+
 pub fn check_digest(id: &str) -> Result<()> {
     if id.len() != 64
         || !id

@@ -160,7 +160,7 @@ export function LabPanel({
   const [inbound, setInbound] = useState<File | null>(null);
   const others = lab.jobs.filter((id) => id !== lab.currentJob());
   return (
-    <div className="native-lab grid gap-4">
+    <div className="native-lab native-lab-desk grid gap-4">
       <p className="runtime-pills m-0 flex flex-wrap gap-2">
         <Badge variant="outline">
           <Check aria-hidden="true" /> Native Rust engine
@@ -172,7 +172,7 @@ export function LabPanel({
         {lab.caps?.gpu && <Badge variant="outline">GPU: {lab.caps.gpu}</Badge>}
       </p>
       <div className="flex flex-wrap items-center gap-3 text-sm">
-        <output className="text-ink-soft">
+        <output aria-live="polite" className="text-ink-soft">
           {lab.status || 'Ready to inspect or compose'}
         </output>
         {lab.busy && (

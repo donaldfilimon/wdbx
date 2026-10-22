@@ -1,0 +1,7 @@
+# Studio stays out of this workspace so `tools/check.sh` does not build it.
+# These aliases are relative to the repository root. From a subdirectory, use
+# `--manifest-path` against `specimen-studio/Cargo.toml` instead.
+[alias]
+studio = "run --manifest-path specimen-studio/Cargo.toml --locked -p wdbx-studio-desktop"
+studio-build = "build --manifest-path specimen-studio/Cargo.toml --locked -p wdbx-studio-desktop"
+studio-test = "test --manifest-path specimen-studio/Cargo.toml --locked --workspace"

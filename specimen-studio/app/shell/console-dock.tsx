@@ -1,8 +1,16 @@
 import type { Specimen } from '@/lib/specimen/types';
 import { clock } from '../state/format';
 
-/** Live activity journal; the WDBX console joins it in P3. */
-export function ConsoleDock({ events }: { events: Specimen['events'] }) {
+/** Activity journal plus the command line. Both call the kernel parser. */
+export function ConsoleDock({
+  events,
+  replies,
+  onCommand,
+}: {
+  events: Specimen['events'];
+  replies: { id: number; text: string }[];
+  onCommand: (line: string) => void;
+}) {
   const latest = events.slice(0, 50);
   return (
     <section className="console-dock" aria-label="Activity dock">
@@ -32,6 +40,42 @@ export function ConsoleDock({ events }: { events: Specimen['events'] }) {
           ))}
         </ol>
       </div>
+      {replies.length > 0 && (
+        <div
+          className="console-replies"
+          role="log"
+          aria-label="Console replies"
+          aria-live="polite"
+        >
+          {replies.map((line) => (
+            <p key={line.id}>{line.text}</p>
+          ))}
+        </div>
+      )}
+      <form
+        className="console-dock-form"
+        onSubmit={(event) => {
+          event.preventDefault();
+          const value = new FormData(event.currentTarget).get('command');
+          const line = (typeof value === 'string' ? value : '').trim();
+          if (!line) return;
+          onCommand(line);
+          event.currentTarget.reset();
+        }}
+      >
+        <label className="sr-only" htmlFor="console-command">
+          Command line
+        </label>
+        <input
+          id="console-command"
+          name="command"
+          autoComplete="off"
+          placeholder="Run a command…"
+        />
+        <button className="button outline" type="submit">
+          Run command
+        </button>
+      </form>
     </section>
   );
 }

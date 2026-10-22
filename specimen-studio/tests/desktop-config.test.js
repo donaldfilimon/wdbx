@@ -21,3 +21,16 @@ test('desktop hooks build the kernel WASM before the web assets', () => {
   for (const hook of ['beforeDevCommand', 'beforeBuildCommand'])
     expect(conf.build[hook].startsWith('bun run build:wasm && ')).toBe(true);
 });
+
+test('plain cargo run selects the desktop with embedded assets', () => {
+  const read = (path) =>
+    readFileSync(new URL(path, import.meta.url), 'utf8');
+  expect(read('../Cargo.toml')).toContain('default-members = ["src-tauri"]');
+  expect(read('../src-tauri/Cargo.toml')).toContain(
+    'default = ["custom-protocol"]',
+  );
+  expect(read('../src-tauri/build.rs')).toContain('scripts/build-desktop.py');
+  expect(JSON.parse(read('../package.json')).scripts.desktop).toContain(
+    '--no-default-features',
+  );
+});

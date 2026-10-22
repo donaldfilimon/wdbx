@@ -10,3 +10,4 @@ sha2.workspace = true
 regex = "1"
 abi-compute = { path = "../../../crates/abi-compute" }
 libm = { version = "0.2.16", default-features = false }
+pulldown-cmark = { version = "0.13.4", default-features = false }

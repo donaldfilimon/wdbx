@@ -11,6 +11,9 @@ use std::io::Write as _;
 use std::path::{Path, PathBuf};
 use uuid::Uuid;
 
+#[path = "v3_episode_store/compensation.rs"]
+mod compensation;
+
 struct Scratch(PathBuf);
 
 impl Scratch {
@@ -48,6 +51,9 @@ fn policy(enabled: bool, tokens: u64, bytes: u64) -> StorePolicy {
                 token_budget: tokens,
                 storage_budget_bytes: bytes,
                 current_consent_epoch: Some(7),
+                retention_ttl_ms: None,
+                retention_windows: None,
+                authorized_principals: None,
             },
         )]),
     }
@@ -235,6 +241,111 @@ fn quiet_opt_out_stale_bindings_and_budgets_fail_before_append() {
         byte_limited.propose_write(&proposal("request_1", "operation_1")),
         Err(EpisodeStoreError::StorageBudget)
     ));
+}
+
+#[test]
+fn replay_charges_original_json_bytes_and_enforces_remaining_storage_budget() {
+    let scratch = Scratch::new();
+    let store_policy = policy(true, 100, 1024 * 1024);
+    let expected_receipts;
+    {
+        let mut store = EpisodeStore::open(scratch.path(), store_policy.clone()).expect("open");
+        append(&mut store, proposal("request_1", "operation_1"));
+        append(&mut store, proposal("request_2", "operation_2"));
+        expected_receipts = store.retrieve("guild_ref", 10).expect("receipts");
+    }
+
+    let ledger_path = scratch.path().join("episodes.v1.jsonl");
+    let original = fs::read(&ledger_path).expect("read ledger");
+    let original_len = u64::try_from(original.len()).expect("length");
+    // Equivalent JSON spelling must not change commitments or hide actual
+    // storage use. Include CRLF, whitespace, and an escaped identifier.
+    let padded = String::from_utf8(original)
+        .expect("JSON UTF-8")
+        .replace("guild_ref", "guild_\\u0072ef")
+        .replace('\n', &format!("{}\r\n", " ".repeat(4096)));
+    let persisted_len = u64::try_from(padded.len()).expect("length");
+    fs::write(&ledger_path, &padded).expect("write equivalent JSON");
+
+    let mut limited_policy = store_policy.clone();
+    limited_policy
+        .guilds
+        .get_mut("guild_ref")
+        .expect("guild")
+        .storage_budget_bytes = persisted_len + 1;
+    let mut reopened = EpisodeStore::open(scratch.path(), limited_policy).expect("verified reopen");
+    assert_eq!(reopened.guild_usage("guild_ref"), Some((6, persisted_len)));
+    assert_eq!(
+        reopened.retrieve("guild_ref", 10).unwrap(),
+        expected_receipts
+    );
+    assert!(persisted_len > original_len + 4096);
+    assert!(matches!(
+        reopened.propose_write(&proposal("request_3", "operation_3")),
+        Err(EpisodeStoreError::StorageBudget)
+    ));
+    assert_eq!(fs::read(&ledger_path).unwrap(), padded.as_bytes());
+    assert_eq!(reopened.guild_usage("guild_ref"), Some((6, persisted_len)));
+    drop(reopened);
+
+    // Incomplete crash tails are discarded, not charged as a complete record.
+    OpenOptions::new()
+        .append(true)
+        .open(&ledger_path)
+        .unwrap()
+        .write_all(b"{\"incomplete\":")
+        .unwrap();
+    let mut reopened = EpisodeStore::open(scratch.path(), store_policy.clone()).expect("repair");
+    assert_eq!(reopened.guild_usage("guild_ref"), Some((6, persisted_len)));
+    assert_eq!(fs::read(&ledger_path).unwrap(), padded.as_bytes());
+    append(&mut reopened, proposal("request_3", "operation_3"));
+    let usage = reopened.guild_usage("guild_ref");
+    assert_eq!(usage, Some((9, fs::metadata(&ledger_path).unwrap().len())));
+    drop(reopened);
+    let reopened = EpisodeStore::open(scratch.path(), store_policy).expect("reopen after append");
+    assert_eq!(reopened.guild_usage("guild_ref"), usage);
+}
+
+#[test]
+fn replay_attributes_each_persisted_line_to_its_own_guild() {
+    let scratch = Scratch::new();
+    let mut store_policy = policy(true, 100, 1024 * 1024);
+    let guild_policy = store_policy.guilds["guild_ref"].clone();
+    store_policy
+        .guilds
+        .insert("other_guild".into(), guild_policy);
+    {
+        let mut store = EpisodeStore::open(scratch.path(), store_policy.clone()).expect("open");
+        append(&mut store, proposal("request_1", "operation_1"));
+        let mut other = proposal("request_2", "operation_2");
+        other.guild_ref = "other_guild".into();
+        append(&mut store, other);
+        append(&mut store, proposal("request_3", "operation_3"));
+    }
+
+    let ledger_path = scratch.path().join("episodes.v1.jsonl");
+    let raw = fs::read_to_string(&ledger_path).expect("ledger");
+    let mut padded = String::new();
+    let mut guild_bytes = 0;
+    let mut other_bytes = 0;
+    for (index, line) in raw.lines().enumerate() {
+        let line = format!("{line}{}\n", " ".repeat((index + 1) * 17));
+        let bytes = u64::try_from(line.len()).unwrap();
+        if index == 1 {
+            other_bytes += bytes;
+        } else {
+            guild_bytes += bytes;
+        }
+        padded.push_str(&line);
+    }
+    fs::write(&ledger_path, &padded).expect("equivalent JSON");
+    let reopened = EpisodeStore::open(scratch.path(), store_policy).expect("reopen");
+    assert_eq!(reopened.guild_usage("guild_ref"), Some((6, guild_bytes)));
+    assert_eq!(reopened.guild_usage("other_guild"), Some((3, other_bytes)));
+    assert_eq!(
+        guild_bytes + other_bytes,
+        u64::try_from(padded.len()).unwrap()
+    );
 }
 
 #[test]

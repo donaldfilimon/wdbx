@@ -22,6 +22,7 @@ export function AppSidebar({
   view,
   nav,
   nodeCount,
+  pendingProposals,
   mobileNav,
   setMobileNav,
   mobileViewport,
@@ -35,6 +36,7 @@ export function AppSidebar({
   view: View;
   nav: (v: View) => void;
   nodeCount: number;
+  pendingProposals: number;
   mobileNav: boolean;
   setMobileNav: (open: boolean) => void;
   mobileViewport: boolean;
@@ -104,6 +106,9 @@ export function AppSidebar({
                     <span className="nav-label">{item.label}</span>
                     {id === 'nodes' && (
                       <span className="nav-count">{nodeCount}</span>
+                    )}
+                    {id === 'activity' && pendingProposals > 0 && (
+                      <span className="nav-count">{pendingProposals}</span>
                     )}
                   </a>
                 );

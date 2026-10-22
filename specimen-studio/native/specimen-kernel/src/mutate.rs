@@ -10,7 +10,7 @@ use crate::{
     language,
     neural::Rng,
 };
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
 
@@ -44,7 +44,7 @@ pub fn log(env: &dyn Env, s: &mut Value, kind: &str, title: &str, detail: &str) 
     s["updatedAt"] = json!(env.now_rfc3339());
 }
 
-#[derive(Debug, Clone, Default, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeInput {
     pub name: String,
@@ -243,6 +243,16 @@ pub fn add_node(
         },
         name,
     );
+    // Mark any matching pending proposal learned (improves self-learn UX, no stale pending)
+    if let Some(props) = s.get_mut("proposals").and_then(|p| p.as_array_mut()) {
+        for p in props.iter_mut() {
+            if p.get("status").and_then(|st| st.as_str()) == Some("pending")
+                && p.get("pattern").and_then(|pat| pat.as_str()) == Some(pattern)
+            {
+                p["status"] = json!("learned");
+            }
+        }
+    }
     Ok(s)
 }
 
@@ -319,7 +329,7 @@ pub fn remove_node(h: &Host, source: &Value, node_ref: &str) -> Value {
     s
 }
 
-#[derive(Debug, Clone, Default, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ResourceInput {
     pub subsystem: String,
@@ -730,6 +740,7 @@ pub fn validate_records(s: &Value) -> Result<()> {
         {
             return Err(invalid("A node is invalid or repeated."));
         }
+        crate::place::validate_position(n)?;
         for e in entries {
             let p = text(e, "pattern");
             let alts = rows(e, "alternatives");
@@ -840,10 +851,13 @@ pub fn validate_records(s: &Value) -> Result<()> {
     if !v.is_finite() || v.abs() > 1. || !i.is_finite() || !(0. ..=1.).contains(&i) {
         return Err(invalid("ATP state is invalid."));
     }
+    crate::notes::validate_notes(s)?;
     Ok(())
 }
 
-/// The starter specimen: eight pattern nodes and twelve supporting memories.
+/// The starter specimen: fifteen nodes and twenty supporting memories.
+/// The first eight patterns stay Calculate, Greeting, Repeat, Time, Recall,
+/// Imagine, Tone, and Negation, in that order. Recall remains index 4.
 pub fn seed(h: &Host) -> Value {
     let settings = json!({
         "voteThreshold": 62, "jitter": 1.5, "maxStrength": 10, "initialStrength": 5,
@@ -937,6 +951,30 @@ pub fn seed(h: &Host) -> Value {
             "&current_input",
             "Read the original input; never execute it as arbitrary code.",
         ),
+        (
+            "dictionary",
+            "pattern",
+            "A stored phrase and the action it should take.",
+        ),
+        (
+            "dictionary",
+            "node",
+            "One named pattern, its votes, and its strength.",
+        ),
+        (
+            "dictionary",
+            "network",
+            "The composition decoder that reads 128 inputs and writes 32 outputs. It is not trained.",
+        ),
+        (
+            "dictionary",
+            "layer",
+            "One sparse width inside the composition network.",
+        ),
+        ("thesaurus", "goodbye", "bye, farewell"),
+        ("thesaurus", "help", "assist, aid"),
+        ("chargebook", "curious", "interested, attentive"),
+        ("morphology", "taught", "teach"),
     ];
     for (subsystem, t, value) in memories {
         s["resources"]
@@ -954,12 +992,70 @@ pub fn seed(h: &Host) -> Value {
             }));
     }
     s["events"] = json!([]);
+    // After the first twelve memories, so those UIDs stay stable.
+    let conversational = [
+        (
+            "Identity",
+            "who are you",
+            "I am Specimen 001, a pattern specimen stored on this device.",
+            "warm",
+            "pattern",
+        ),
+        (
+            "Capability",
+            "what can you do",
+            "I can calculate, recall, imagine, repeat, and learn a pattern you teach.",
+            "neutral",
+            "pattern",
+        ),
+        (
+            "Help",
+            "help",
+            "Ask a question, or teach a pattern: a short phrase and the action it should take.",
+            "neutral",
+            "pattern",
+        ),
+        (
+            "Teach",
+            "how do I teach you",
+            "Open Teach a pattern, enter a phrase and an action, then save. I keep it on this device.",
+            "neutral",
+            "pattern",
+        ),
+        ("Thanks", "thank you", "You are welcome.", "warm", "pattern"),
+        (
+            "Farewell",
+            "goodbye",
+            "Goodbye. I will keep what you taught me.",
+            "warm",
+            "pattern",
+        ),
+        (
+            "Observer",
+            "observe repeated questions",
+            "Note a question that arrives twice without an answer.",
+            "neutral",
+            "B",
+        ),
+    ];
+    for (name, pattern, action, tone, kind) in conversational {
+        let input = NodeInput {
+            name: name.into(),
+            pattern: pattern.into(),
+            action: action.into(),
+            tone: Some(tone.into()),
+            kind: Some(kind.into()),
+            ..Default::default()
+        };
+        s = add_node(h, &s, &input, None).expect("starter node");
+    }
+    s["events"] = json!([]);
     log(
         h.env,
         &mut s,
         "system",
         "Starter specimen created",
-        "8 pattern nodes and 12 supporting memories.",
+        "15 nodes and 20 supporting memories. The first eight patterns are unchanged.",
     );
     s
 }

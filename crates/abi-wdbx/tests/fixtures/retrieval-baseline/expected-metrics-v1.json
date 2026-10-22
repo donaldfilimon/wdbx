@@ -1,0 +1,149 @@
+{
+  "schema": "wdbx.evaluation.expected.v1",
+  "corpus_id": "synthetic-guild-retrieval-baseline-v1",
+  "corpus_sha256": "0a8567711d920fb24ac07cc6b9c79a8d7de8e2ff7bc1dffe17662b82891b8f9d",
+  "outcome": "benefit",
+  "measurement": {
+    "corpus_id": "synthetic-guild-retrieval-baseline-v1",
+    "corpus_sha256": "0a8567711d920fb24ac07cc6b9c79a8d7de8e2ff7bc1dffe17662b82891b8f9d",
+    "families": 12,
+    "candidate_count_before_filter": 12,
+    "binary64_ordering_agrees": true,
+    "arms": {
+      "baseline": {
+        "families": 12,
+        "repeated_failures": 8,
+        "stale_reuses": 8,
+        "strict_failures": 8,
+        "unsigned_reuses": 1,
+        "applicable_top1": 3,
+        "repeated_failure_rate": 0.666667,
+        "stale_reuse_rate": 0.666667,
+        "strict_failure_rate": 0.666667,
+        "unsigned_reuse_rate": 0.083333,
+        "applicability_accuracy": 0.25
+      },
+      "constitutional": {
+        "families": 12,
+        "repeated_failures": 0,
+        "stale_reuses": 0,
+        "strict_failures": 0,
+        "unsigned_reuses": 7,
+        "applicable_top1": 5,
+        "repeated_failure_rate": 0.0,
+        "stale_reuse_rate": 0.0,
+        "strict_failure_rate": 0.0,
+        "unsigned_reuse_rate": 0.583333,
+        "applicability_accuracy": 0.416667
+      }
+    },
+    "relative_reduction": {
+      "repeated_failure": 1.0,
+      "stale_reuse": 1.0,
+      "strict_failure": 1.0
+    },
+    "ablation": [
+      {
+        "dropped_dimension": "cryptographic",
+        "repeated_failure_rate": 0.0,
+        "stale_reuse_rate": 0.0,
+        "strict_failure_rate": 0.0,
+        "unsigned_reuse_rate": 0.583333,
+        "top1_changed": 0,
+        "carries_benefit": false
+      },
+      {
+        "dropped_dimension": "source",
+        "repeated_failure_rate": 0.0,
+        "stale_reuse_rate": 0.0,
+        "strict_failure_rate": 0.0,
+        "unsigned_reuse_rate": 0.583333,
+        "top1_changed": 0,
+        "carries_benefit": false
+      },
+      {
+        "dropped_dimension": "calibration",
+        "repeated_failure_rate": 0.0,
+        "stale_reuse_rate": 0.0,
+        "strict_failure_rate": 0.0,
+        "unsigned_reuse_rate": 0.583333,
+        "top1_changed": 0,
+        "carries_benefit": false
+      },
+      {
+        "dropped_dimension": "outcome",
+        "repeated_failure_rate": 0.5,
+        "stale_reuse_rate": 0.0,
+        "strict_failure_rate": 0.5,
+        "unsigned_reuse_rate": 0.083333,
+        "top1_changed": 6,
+        "carries_benefit": true
+      },
+      {
+        "dropped_dimension": "compatibility",
+        "repeated_failure_rate": 0.666667,
+        "stale_reuse_rate": 0.666667,
+        "strict_failure_rate": 0.666667,
+        "unsigned_reuse_rate": 0.083333,
+        "top1_changed": 8,
+        "carries_benefit": true
+      },
+      {
+        "dropped_dimension": "regime",
+        "repeated_failure_rate": 0.0,
+        "stale_reuse_rate": 0.0,
+        "strict_failure_rate": 0.0,
+        "unsigned_reuse_rate": 0.583333,
+        "top1_changed": 0,
+        "carries_benefit": false
+      },
+      {
+        "dropped_dimension": "lifecycle",
+        "repeated_failure_rate": 0.5,
+        "stale_reuse_rate": 0.0,
+        "strict_failure_rate": 0.5,
+        "unsigned_reuse_rate": 0.083333,
+        "top1_changed": 6,
+        "carries_benefit": true
+      },
+      {
+        "dropped_dimension": "confidence",
+        "repeated_failure_rate": 0.0,
+        "stale_reuse_rate": 0.0,
+        "strict_failure_rate": 0.0,
+        "unsigned_reuse_rate": 0.583333,
+        "top1_changed": 0,
+        "carries_benefit": false
+      }
+    ],
+    "paired_bootstrap": {
+      "resamples": 10000,
+      "seed": 104729,
+      "failure_gain_mean": 0.666667,
+      "failure_gain_lower_95": 0.416667,
+      "stale_gain_mean": 0.666667,
+      "stale_gain_lower_95": 0.416667,
+      "strictly_positive": true,
+      "note": "the frozen protocol asks for 10000 family-cluster paired resamples with seed 104729 over the headline metrics; a lower bound of zero would mean the corpus is too small to separate the arms at the 95% level, which is a limitation of this local corpus and not a pass"
+    },
+    "verdict": {
+      "outcome": "benefit",
+      "statement": "on this frozen corpus the constitutional arm reduced both the repeated-failure rate and the stale-policy reuse rate against the plain vector baseline by at least the frozen threshold",
+      "thresholds": {
+        "relative_failure_reduction": 0.25,
+        "relative_stale_reduction": 0.25
+      },
+      "criteria": {
+        "baseline_failures_nonzero": true,
+        "relative_failure_reduction_met": true,
+        "relative_stale_reduction_met": true,
+        "paired_bootstrap_lower_gain_strictly_positive": true,
+        "unsigned_reuse_not_worse": false,
+        "evidence_grade": "C1_deterministic_local_comparison_synthetic_corpus"
+      },
+      "caveats": [
+        "the constitutional arm handed back an unattributed record in 7 of 12 families, against 1 of 12 for the plain vector baseline: the constitutional query accepts an unsigned record on its commitment, and the cryptographic dimension reports the missing signature without withholding the record"
+      ]
+    }
+  }
+}
