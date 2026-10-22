@@ -5,19 +5,47 @@ use super::signing::{
 };
 use super::types::{
     ActorRef, EpisodeEvent, EpisodeReceipt, EpisodeSource, EpisodeWrite, MemoryEdge,
-    MemoryEdgeKind, MemoryEdgeState, OpenContradiction, StorePolicy, TerminalStatus,
+    MemoryEdgeKind, MemoryEdgeState, OpenContradiction, RetentionClass, StorePolicy,
+    TerminalStatus,
 };
 use crate::v3::commitment::CanonicalCborError;
 use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, BTreeSet};
 use std::fs::{File, OpenOptions};
 use std::io::Write;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use thiserror::Error;
 
+mod admission_gate;
+mod authority;
 mod canonical;
+pub(crate) mod deletion;
+pub(crate) mod expiry;
 mod filesystem;
+pub(crate) mod gc;
+pub(crate) mod holds;
+pub(crate) mod lineage;
+pub(crate) mod query;
+pub(crate) mod quota;
 mod validate;
+
+pub use deletion::{
+    DerivedCopyKind, ObjectKeyDestructionDecision, ObjectKeyDestructionReceipt,
+    ObjectKeyDestructionRequest, ObjectKeyDestructionState, ObjectKeyRef, RedactionDecision,
+    RedactionReceipt, RedactionRequest, RedactionState,
+};
+pub use expiry::RetentionState;
+pub use gc::{GcPlan, GcReport};
+pub use holds::{
+    Hold, HoldDecision, HoldKind, HoldReceipt, HoldReleaseReceipt, HoldReleaseRequest, HoldRequest,
+    HoldState, HoldStatus, RevocationDecision, RevocationReceipt, RevocationRequest,
+    RevocationState,
+};
+pub use lineage::SupersessionLineage;
+pub use quota::{
+    QuotaAdjustmentDecision, QuotaAdjustmentReceipt, QuotaAdjustmentRecord, QuotaAdjustmentRequest,
+    QuotaResetReceipt, QuotaState,
+};
 
 use filesystem::{
     acquire_writer_lock, owner_file, prepare_directory, read_bounded_ledger,
@@ -30,6 +58,13 @@ use validate::{
 
 const LEDGER_FILE: &str = "episodes.v1.jsonl";
 const LOCK_FILE: &str = "episodes.v1.lock";
+const RETENTION_FILE: &str = "episodes.v1.retention.jsonl";
+const REDACTION_FILE: &str = "episodes.v1.redaction.jsonl";
+const OBJECT_KEY_FILE: &str = "episodes.v1.object_keys.jsonl";
+const RECLAIMED_FILE: &str = "episodes.v1.reclaimed.jsonl";
+const HOLDS_FILE: &str = "episodes.v1.holds.jsonl";
+const REVOCATION_FILE: &str = "episodes.v1.revocations.jsonl";
+const QUOTA_FILE: &str = "episodes.v1.quotas.jsonl";
 const MAX_LEDGER_BYTES: u64 = 64 * 1024 * 1024;
 const MAX_RECORD_BYTES: usize = 1024 * 1024;
 const MAX_TOKEN_COST: u64 = 1_000_000;
@@ -88,11 +123,34 @@ pub enum EpisodeStoreError {
 pub struct EpisodeStore {
     _writer_lock: File,
     ledger: File,
+    /// The directory the store owns, for the ledger rewrite of a
+    /// garbage-collection round.
+    directory: PathBuf,
     policy: StorePolicy,
     records: Vec<StoredRecord>,
     state: LedgerState,
     poisoned: bool,
     signer: Option<EpisodeSigner>,
+    /// The committed retention deadlines of the TTL-bound candidates.
+    retention: expiry::RetentionIndex,
+    /// The committed redaction requests for derived copies.
+    redaction: deletion::RedactionIndex,
+    /// The committed object-key destruction requests.
+    object_keys: deletion::ObjectKeyIndex,
+    /// The candidates the store has reclaimed from the ledger.
+    reclaimed: gc::ReclaimedIndex,
+    /// The committed holds on memory candidates.
+    holds: holds::HoldIndex,
+    /// The committed candidate revocations.
+    revocations: holds::RevocationIndex,
+    /// The adjusted budgets of the guilds whose quota was administered.
+    quotas: quota::QuotaIndex,
+    /// The principals that some guild's authority map names.
+    ///
+    /// A named principal is scoped to the guilds that name it, so the store
+    /// derives the set from the policy when it opens. See
+    /// [`authority::scoped_principals`].
+    scoped_principals: BTreeSet<String>,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
@@ -135,6 +193,10 @@ struct LedgerState {
 struct GuildMemories {
     /// Admitted candidate digests, with each candidate's `member_scoped`.
     admitted: BTreeMap<[u8; 32], bool>,
+    /// The retention class each admitted candidate was admitted with.
+    retention: BTreeMap<[u8; 32], RetentionClass>,
+    /// The committed retention deadline of each TTL-bound candidate.
+    expires_at: BTreeMap<[u8; 32], u64>,
     /// Zero-payload forgetting records are durable tombstones, not live memories.
     tombstones: BTreeSet<[u8; 32]>,
     forgotten: BTreeSet<[u8; 32]>,
@@ -144,6 +206,24 @@ struct GuildMemories {
     contradictions: BTreeMap<([u8; 32], [u8; 32]), [u8; 32]>,
     /// Open `quarantines`/`contradicts` edge episodes and what each holds.
     open_edges: BTreeMap<[u8; 32], OpenEdge>,
+    /// Superseded candidate to the candidate that supersedes it.
+    ///
+    /// Two maps, because the two directions are not symmetric. A candidate
+    /// names at most one `supersedes` target, so `supersedes` (candidate to
+    /// target) is exact. Two corrections of one memory are two edges, so
+    /// several candidates may supersede the same target and `superseded_by`
+    /// (target to candidate) keeps the most recent one. Both are rebuilt from
+    /// the ledger on open, so the live and the replay path answer alike.
+    superseded_by: BTreeMap<[u8; 32], [u8; 32]>,
+    /// Superseding candidate to the candidate it supersedes.
+    supersedes: BTreeMap<[u8; 32], [u8; 32]>,
+    /// The candidates this guild revoked.
+    ///
+    /// A revoked candidate is withdrawn by authority: it is not live, no
+    /// later `supersedes` may name it, and it is never resurrected. The set
+    /// is not rebuilt from the ledger — a revocation is not an episode — but
+    /// from the store's revocation index, after the ledger has been replayed.
+    revoked: BTreeSet<[u8; 32]>,
 }
 
 #[derive(Clone, Copy, Debug)]
@@ -157,6 +237,7 @@ impl GuildMemories {
         self.admitted.contains_key(digest)
             && !self.tombstones.contains(digest)
             && !self.forgotten.contains(digest)
+            && !self.revoked.contains(digest)
     }
 }
 
@@ -234,15 +315,54 @@ impl EpisodeStore {
         let directory = prepare_directory(directory)?;
         let lock_path = directory.join(LOCK_FILE);
         let ledger_path = directory.join(LEDGER_FILE);
+        let retention_path = directory.join(RETENTION_FILE);
+        let redaction_path = directory.join(REDACTION_FILE);
+        let object_key_path = directory.join(OBJECT_KEY_FILE);
+        let reclaimed_path = directory.join(RECLAIMED_FILE);
+        let holds_path = directory.join(HOLDS_FILE);
+        let revocation_path = directory.join(REVOCATION_FILE);
+        let quota_path = directory.join(QUOTA_FILE);
         reject_symlink_if_present(&lock_path)?;
         reject_symlink_if_present(&ledger_path)?;
+        reject_symlink_if_present(&retention_path)?;
+        reject_symlink_if_present(&redaction_path)?;
+        reject_symlink_if_present(&object_key_path)?;
+        reject_symlink_if_present(&reclaimed_path)?;
+        reject_symlink_if_present(&holds_path)?;
+        reject_symlink_if_present(&revocation_path)?;
+        reject_symlink_if_present(&quota_path)?;
 
         let writer_lock = owner_file(&lock_path)?;
         acquire_writer_lock(&writer_lock)?;
         let raw = read_bounded_ledger(&ledger_path)?;
         let (records, valid_bytes) = decode_complete_records(&raw)?;
+        // The retention index is read before the ledger is replayed: a
+        // candidate's deadline is part of the state the replay rebuilds.
+        let retention = expiry::RetentionIndex::open(&retention_path)?;
+        // The deletion-lifecycle indexes are read for the same reason: the
+        // requests and the reclamations are part of the state the store
+        // answers from.
+        let redaction = deletion::RedactionIndex::open(&redaction_path)?;
+        let object_keys = deletion::ObjectKeyIndex::open(&object_key_path)?;
+        let reclaimed = gc::ReclaimedIndex::open(&reclaimed_path)?;
+        // The holds and the revocations are read for the same reason: they are
+        // decisions the store answers from, not episodes it replays.
+        let holds = holds::HoldIndex::open(&holds_path)?;
+        let revocations = holds::RevocationIndex::open(&revocation_path)?;
+        // The quota index is read for the same reason: the adjusted budgets
+        // are part of the state the write gate judges a write against.
+        let mut quotas = quota::QuotaIndex::open(&quota_path)?;
+        // The principals some guild's authority map names are scoped to the
+        // guilds that name them. The set is derived from the policy, so the
+        // store's authority answers never depend on a clock or on the
+        // ledger.
+        let scoped_principals = authority::scoped_principals(&policy);
 
         let mut state = LedgerState::default();
+        // A reclaimed candidate has no record of its own any more, but the
+        // ledger's tombstones still name it. The index restores the
+        // admission the tombstone replays against.
+        reclaimed.inject(&mut state, &retention);
         let mut offset = 0_usize;
         for (record, line) in records
             .iter()
@@ -255,9 +375,20 @@ impl EpisodeStore {
             if let Some(signer) = &signer {
                 validate_own_signature(record, signer)?;
             }
-            apply_record(record, line_bytes, &mut state)?;
+            apply_record(record, line_bytes, &mut state, &retention)?;
             offset = offset.saturating_add(line_bytes);
         }
+        // A reclaimed candidate must never be live again.
+        reclaimed.verify(&state)?;
+        // A revoked candidate is not live either. The revocations are applied
+        // after the replay, never before it: a ledger written before the
+        // revocation must still replay, and the replay's own liveness checks
+        // are about the ledger's consistency, not about a later decision.
+        revocations.inject(&mut state);
+        // A host policy lowered below the recorded usage leaves the store
+        // over its own budget. The store surfaces that state instead of
+        // refusing to open, which would brick the store.
+        quotas.detect_over_budget(&policy, &state.guild_usage);
         // A failed replay must not repair the file. Only a fully verified
         // prefix permits discarding an incomplete final line.
         if valid_bytes != raw.len() {
@@ -277,11 +408,20 @@ impl EpisodeStore {
         Ok(Self {
             _writer_lock: writer_lock,
             ledger,
+            directory,
             policy,
             records,
             state,
             poisoned: false,
             signer,
+            retention,
+            redaction,
+            object_keys,
+            reclaimed,
+            holds,
+            revocations,
+            quotas,
+            scoped_principals,
         })
     }
 
@@ -292,11 +432,23 @@ impl EpisodeStore {
     }
 
     /// Compute the exact commitment WDBX would append without mutating the store.
+    ///
+    /// The preview runs the same write gate as [`Self::propose_write`],
+    /// including the budget checks and the retention index's own size
+    /// ceiling, so a write this refuses is one the store would not append.
+    /// It still appends nothing and consumes no request identifier.
     pub fn preview_commitment(&self, write: &EpisodeWrite) -> Result<[u8; 32], EpisodeStoreError> {
         if self.poisoned {
             return Err(EpisodeStoreError::Io);
         }
-        let record = self.prepare_record(write)?;
+        let mut record = self.prepare_record(write)?;
+        // The appended line carries the signature, so the preview measures
+        // the same line the append path writes. The signature is detached
+        // and never moves the commitment.
+        self.sign_record(&mut record);
+        let line = serialized_line(&record)?;
+        let line_bytes = u64::try_from(line.len()).map_err(|_| EpisodeStoreError::InvalidInput)?;
+        self.check_quotas(&record, line_bytes)?;
         Ok(record.episode_digest)
     }
 
@@ -309,10 +461,7 @@ impl EpisodeStore {
             return Err(EpisodeStoreError::Io);
         }
         let mut record = self.prepare_record(write)?;
-        record.signature = self
-            .signer
-            .as_ref()
-            .map(|signer| signer.sign_digest(&record.episode_digest));
+        self.sign_record(&mut record);
         if write
             .expected_commitment
             .is_some_and(|expected| expected != record.episode_digest)
@@ -320,48 +469,18 @@ impl EpisodeStore {
             return Err(EpisodeStoreError::CommitmentMismatch);
         }
         let line = serialized_line(&record)?;
-        let guild_policy = self
-            .policy
-            .guilds
-            .get(&record.guild_ref)
-            .ok_or(EpisodeStoreError::StaleBinding)?;
-        let usage = self
-            .state
-            .guild_usage
-            .get(&record.guild_ref)
-            .copied()
-            .unwrap_or_default();
-        if usage.tokens.saturating_add(record.token_cost) > guild_policy.token_budget {
-            return Err(EpisodeStoreError::TokenBudget);
-        }
         let line_bytes = u64::try_from(line.len()).map_err(|_| EpisodeStoreError::InvalidInput)?;
-        if usage
-            .bytes
-            .saturating_add(line_bytes)
-            .saturating_add(payload_bytes(&record.event))
-            > guild_policy.storage_budget_bytes
-        {
-            return Err(EpisodeStoreError::StorageBudget);
-        }
-        // Replay refuses ledgers larger than this bound, even when no single
-        // guild has exhausted its own budget. Never append an unreopenable file.
-        let ledger_bytes = self
-            .ledger
-            .metadata()
-            .map_err(|_| EpisodeStoreError::Io)?
-            .len();
-        if ledger_bytes
-            .checked_add(line_bytes)
-            .is_none_or(|total| total > MAX_LEDGER_BYTES)
-        {
-            return Err(EpisodeStoreError::StorageBudget);
-        }
+        self.check_quotas(&record, line_bytes)?;
+        // The retention deadline is committed before the ledger line it
+        // describes, so a candidate that reaches the ledger always carries
+        // the deadline its TTL bound. A failure here fails the append.
+        self.bind_retention(&record)?;
 
         if self.ledger.write_all(&line).is_err() || self.ledger.sync_data().is_err() {
             self.poisoned = true;
             return Err(EpisodeStoreError::Io);
         }
-        apply_record(&record, line.len(), &mut self.state)?;
+        apply_record(&record, line.len(), &mut self.state, &self.retention)?;
         let receipt = receipt(&record);
         self.records.push(record);
         Ok(receipt)
@@ -584,7 +703,56 @@ impl EpisodeStore {
         };
         record.episode_digest = record.computed_digest()?;
         validate_transition(&record, &self.state)?;
+        // A held candidate is not silently superseded: the correction waits
+        // for the explicit resolution that releases its hold.
+        self.refuse_held_target(&record)?;
         Ok(record)
+    }
+
+    /// Bind the retention deadline of one record, if its class has one.
+    ///
+    /// The deadline is the candidate's arrival plus the guild policy's TTL,
+    /// and it is bound once, here, at admission: a later policy change never
+    /// rewrites the deadline of a record the ledger already holds. A
+    /// `durable` candidate and a `forgets` tombstone never get one.
+    fn bind_retention(&mut self, record: &StoredRecord) -> Result<(), EpisodeStoreError> {
+        let Some(expires_at) = self.retention_deadline(record) else {
+            return Ok(());
+        };
+        self.retention.commit(record.episode_digest, expires_at)
+    }
+
+    /// The retention deadline one record would be bound, if any.
+    ///
+    /// The deadline is the candidate's arrival plus the window the *policy*
+    /// gives its retention class — the explicit per-class window when the
+    /// policy names one, and the guild's single time-to-live otherwise — read
+    /// from the store's own clock at this instant. It is `None` for a
+    /// `durable` candidate, a `forgets` tombstone, a guild with no
+    /// applicable window, and an unreadable clock.
+    ///
+    /// The write gate reads it too, so that the decision, the preview and
+    /// the append all agree on whether this write adds a line to the
+    /// retention index.
+    fn retention_deadline(&self, record: &StoredRecord) -> Option<u64> {
+        let EpisodeEvent::MemoryCandidate { candidate, .. } = &record.event else {
+            return None;
+        };
+        let guild = self.policy.guilds.get(&record.guild_ref)?;
+        expiry::bound_deadline(candidate, guild, expiry::now_ms())
+    }
+
+    /// The signature the store would put on one record, if it signs at all.
+    ///
+    /// The signature is detached: it is not covered by the episode digest,
+    /// so signing a record never moves its commitment. The write gate signs
+    /// the record it checks for exactly this reason: the byte budget must
+    /// be charged for the same line the append path writes.
+    fn sign_record(&self, record: &mut StoredRecord) {
+        record.signature = self
+            .signer
+            .as_ref()
+            .map(|signer| signer.sign_digest(&record.episode_digest));
     }
 }
 
@@ -592,6 +760,7 @@ fn apply_record(
     record: &StoredRecord,
     line_bytes: usize,
     state: &mut LedgerState,
+    retention: &expiry::RetentionIndex,
 ) -> Result<(), EpisodeStoreError> {
     state.request_ids.insert(record.request_id.clone());
     let usage = state
@@ -640,9 +809,27 @@ fn apply_record(
             memories
                 .admitted
                 .insert(record.episode_digest, candidate.member_scoped);
+            memories
+                .retention
+                .insert(record.episode_digest, candidate.retention);
+            // The deadline was committed before the record reached the
+            // ledger, so the live path and the replay path read the same one.
+            if let Some(deadline) = retention.deadline(&record.episode_digest) {
+                memories.expires_at.insert(record.episode_digest, deadline);
+            }
             if let Some(forgotten) = candidate.forgets {
                 memories.tombstones.insert(record.episode_digest);
                 memories.forgotten.insert(forgotten);
+            }
+            if let Some(superseded) = candidate.supersedes {
+                // The target is an admitted candidate of this guild: the write
+                // gate and the replay check both refuse any other.
+                memories
+                    .superseded_by
+                    .insert(superseded, record.episode_digest);
+                memories
+                    .supersedes
+                    .insert(record.episode_digest, superseded);
             }
         }
         EpisodeEvent::MemoryEdge { recorded_by, edge } => {

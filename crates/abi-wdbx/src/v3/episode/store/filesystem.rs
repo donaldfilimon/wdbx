@@ -185,6 +185,15 @@ pub(super) fn owner_file(path: &Path) -> Result<File, EpisodeStoreError> {
 }
 
 pub(super) fn read_bounded_ledger(path: &Path) -> Result<Vec<u8>, EpisodeStoreError> {
+    read_bounded_file(path)
+}
+
+/// Read a store file whole, bounded, creating it when it does not exist.
+///
+/// The retention index is read exactly like the ledger: the file is created
+/// when it is missing, its size is bounded, and a symlink in its place is
+/// refused.
+pub(super) fn read_bounded_file(path: &Path) -> Result<Vec<u8>, EpisodeStoreError> {
     reject_symlink_if_present(path)?;
     match fs::symlink_metadata(path) {
         Ok(_) => {}
@@ -212,6 +221,40 @@ pub(super) fn read_bounded_ledger(path: &Path) -> Result<Vec<u8>, EpisodeStoreEr
         return Err(EpisodeStoreError::Io);
     }
     Ok(raw)
+}
+
+/// Read a store file whole, bounded, when it exists.
+///
+/// The retention index is derived state: a store that never bound a TTL has
+/// no index file at all, and one that lost its index keeps its ledger. This
+/// reads the file when it is there and reports its absence otherwise, without
+/// creating anything.
+pub(super) fn read_bounded_file_if_present(
+    path: &Path,
+) -> Result<Option<Vec<u8>>, EpisodeStoreError> {
+    reject_symlink_if_present(path)?;
+    match fs::symlink_metadata(path) {
+        Ok(metadata) => {
+            if metadata.file_type().is_symlink()
+                || !metadata.is_file()
+                || metadata.len() > MAX_LEDGER_BYTES
+            {
+                return Err(EpisodeStoreError::Io);
+            }
+        }
+        Err(error) if error.kind() == io::ErrorKind::NotFound => return Ok(None),
+        Err(_) => return Err(EpisodeStoreError::Io),
+    }
+    let mut raw = Vec::new();
+    File::open(path)
+        .map_err(|_| EpisodeStoreError::Io)?
+        .take(MAX_LEDGER_BYTES + 1)
+        .read_to_end(&mut raw)
+        .map_err(|_| EpisodeStoreError::Io)?;
+    if u64::try_from(raw.len()).map_err(|_| EpisodeStoreError::Io)? > MAX_LEDGER_BYTES {
+        return Err(EpisodeStoreError::Io);
+    }
+    Ok(Some(raw))
 }
 
 #[cfg(test)]

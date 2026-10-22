@@ -14,8 +14,8 @@ import re
 import sys
 
 PINS = {
-    'program': 'af90b08cf0fa30e889c46afef0c361ba5e28d9d4ad53a441e286965ea09c058d',
-    'studio': '82aa6347e264efb789b21e915eb802802d1b3771c31d1a63f1fb85ee2a0c4c88',
+    'program': 'bf0b774c5b66e8a164b72d636c064ca40274851da2f07265f2c48fd451a47e1e',
+    'studio': '9064df9a034e381945a4fa11560609df9c3c9dbe7e3431aea7cd9fd19319f32c',
     'constitution': '7b3f932a08f55bb4bcf0dfe2b45ea356da84bc79d6103101f70900738b4c5bcc',
     'episodes': '8c0c6295d9956290b45f0180a13ddfd42546911ad5bf5bc83e57f06868681526',
 }
@@ -198,6 +198,8 @@ def validate(root, live_sources=True):
             check(type(row['task']) is int, rid + ': task must be an integer')
             check(row.get('status') == 'proposed' and row.get('evidence_level') == 'C0' and row.get('evidence') == [], rid + ': unsupported claim promotion/evidence')
             check(all(nonempty(row.get(f)) for f in ('owner', 'plan', 'expected_evidence', 'completion_condition')), rid + ': missing owner/plan/condition/evidence expectation')
+            if re.match(r'^(P\d\d\.\d\d|G\d\d)$', rid):
+                check(row.get('completion_condition') == row.get('text'), rid + ': completion condition drifted from the source text')
             if rid in expected:
                 check(tuple(row.get(k) for k in ('source', 'line', 'text', 'task')) == expected[rid], rid + ': source/task provenance mismatch')
             check(row['plan'] == 'task-%02d' % row['task'], rid + ': wrong plan routing')

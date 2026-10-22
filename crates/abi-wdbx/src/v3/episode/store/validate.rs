@@ -7,12 +7,12 @@
 
 use super::super::types::{
     ActorKind, EpisodeEvent, EpisodeSource, EpisodeWrite, GuildEpisodePolicy,
-    MAX_VOICE_TRANSITIONS, MemoryCandidate, MemoryClass, MemoryEdge, MemoryEdgeKind, StorePolicy,
-    TerminalStatus, VoiceEvidence,
+    MAX_AUTHORIZED_PRINCIPALS, MAX_VOICE_TRANSITIONS, MemoryCandidate, MemoryClass, MemoryEdge,
+    MemoryEdgeKind, RetentionClass, StorePolicy, TerminalStatus, VoiceEvidence,
 };
 use super::{
-    EpisodeStoreError, LedgerState, MAX_LEDGER_BYTES, MAX_RECEIPTS, MAX_TOKEN_COST, Stage,
-    StoredRecord, bounded_identifier, valid_actor,
+    EpisodeStore, EpisodeStoreError, LedgerState, MAX_LEDGER_BYTES, MAX_RECEIPTS, MAX_TOKEN_COST,
+    Stage, StoredRecord, bounded_identifier, valid_actor,
 };
 
 pub(super) fn validate_store_policy(policy: &StorePolicy) -> Result<(), EpisodeStoreError> {
@@ -24,11 +24,29 @@ pub(super) fn validate_store_policy(policy: &StorePolicy) -> Result<(), EpisodeS
                 || !bounded_identifier(&item.policy_version, 64)
                 || item.token_budget > 1_000_000_000
                 || item.storage_budget_bytes > MAX_LEDGER_BYTES
+                || !valid_authority_map(item.authorized_principals.as_deref())
         })
     {
         return Err(EpisodeStoreError::InvalidInput);
     }
     Ok(())
+}
+
+/// Whether one guild's authority map is well formed.
+///
+/// A named principal must be a bounded identifier, exactly like the
+/// `principal_id` of an actor: a name that could never be presented is a
+/// configuration mistake, and the store refuses it at open rather than
+/// carrying a map that can never match. The list is bounded so the check
+/// stays a bounded scan.
+fn valid_authority_map(principals: Option<&[String]>) -> bool {
+    let Some(principals) = principals else {
+        return true;
+    };
+    principals.len() <= MAX_AUTHORIZED_PRINCIPALS
+        && principals
+            .iter()
+            .all(|principal| bounded_identifier(principal, 64))
 }
 
 pub(super) fn validate_new_write(
@@ -67,7 +85,49 @@ pub(super) fn validate_new_write(
     }
     validate_voice_binding(write.source_type, write.consent_epoch, &write.event, guild)?;
     validate_event_shape(write.source_type, &write.event)?;
+    validate_retention(&write.event, guild)?;
     Ok(())
+}
+
+/// The retention gate: a zero window is refused outright.
+///
+/// The window that applies to a candidate is the policy's: the explicit
+/// per-class window when the policy names one for the candidate's class, and
+/// the guild's single time-to-live otherwise. A zero window is the only way a
+/// deadline can be closed at admission, because `arrival + 0` is the arrival
+/// itself. The gate refuses it instead of admitting a candidate that is
+/// already expired.
+///
+/// The deadline a candidate gets is bound *after* this gate, from the store's
+/// own clock at the instant of admission (`store::expiry::bound_deadline`).
+///
+/// A positive window is admitted, and it may expire immediately afterwards:
+/// the gate never compares a candidate's deadline against a caller-supplied
+/// clock, and it never reads a clock at all.
+///
+/// A `durable` candidate never expires and is never refused here, whatever
+/// the window says. A `forgets` tombstone is not a memory and is never given
+/// a deadline, so it is never refused here either.
+fn validate_retention(
+    event: &EpisodeEvent,
+    policy: &GuildEpisodePolicy,
+) -> Result<(), EpisodeStoreError> {
+    let EpisodeEvent::MemoryCandidate { candidate, .. } = event else {
+        return Ok(());
+    };
+    if candidate.forgets.is_some() {
+        return Ok(());
+    }
+    if !matches!(
+        candidate.retention,
+        RetentionClass::Session | RetentionClass::Operational
+    ) {
+        return Ok(());
+    }
+    match policy.retention_ttl_for(candidate.retention) {
+        Some(0) => Err(EpisodeStoreError::InvalidInput),
+        _ => Ok(()),
+    }
 }
 
 /// Source and field rules an event must satisfy regardless of lifecycle position.
@@ -394,6 +454,91 @@ fn terminal_follows(status: TerminalStatus, stage: Stage) -> bool {
     }
 }
 
+impl EpisodeStore {
+    /// The three budget checks of the write gate, shared by every caller.
+    ///
+    /// The guild token budget, the guild storage budget, and the
+    /// whole-ledger ceiling are judged against the state the store holds
+    /// right now, so the append path, the commitment preview, and the
+    /// non-mutating admission decision reach the same verdict for the same
+    /// write. `line_bytes` is the serialized length of the line the write
+    /// would append, including its newline.
+    ///
+    /// The two guild budgets are the *effective* ones: the host policy's
+    /// budget, overridden where a quota adjustment applies
+    /// (`store::quota`). An adjustment therefore changes what the store
+    /// accepts, and it changes it for every path at once.
+    ///
+    /// The retention index has a ceiling of its own, and this check accounts
+    /// for it: a TTL-bound candidate adds one line to the retention sidecar
+    /// before it reaches the ledger, and that line is charged here, before
+    /// it is written. Without this the decision and the preview could admit
+    /// a write the append path refuses when the sidecar is full.
+    pub(super) fn check_quotas(
+        &self,
+        record: &StoredRecord,
+        line_bytes: u64,
+    ) -> Result<(), EpisodeStoreError> {
+        let Some((token_budget, storage_budget_bytes)) = self.effective_budgets(&record.guild_ref)
+        else {
+            return Err(EpisodeStoreError::StaleBinding);
+        };
+        let usage = self
+            .state
+            .guild_usage
+            .get(&record.guild_ref)
+            .copied()
+            .unwrap_or_default();
+        if usage.tokens.saturating_add(record.token_cost) > token_budget {
+            return Err(EpisodeStoreError::TokenBudget);
+        }
+        if usage
+            .bytes
+            .saturating_add(line_bytes)
+            .saturating_add(payload_bytes(&record.event))
+            > storage_budget_bytes
+        {
+            return Err(EpisodeStoreError::StorageBudget);
+        }
+        // Replay refuses ledgers larger than this bound, even when no single
+        // guild has exhausted its own budget. Never append an unreopenable file.
+        let ledger_bytes = self
+            .ledger
+            .metadata()
+            .map_err(|_| EpisodeStoreError::Io)?
+            .len();
+        if ledger_bytes
+            .checked_add(line_bytes)
+            .is_none_or(|total| total > MAX_LEDGER_BYTES)
+        {
+            return Err(EpisodeStoreError::StorageBudget);
+        }
+        // The retention sidecar has the same whole-ledger ceiling, and this
+        // write would add one line to it. The line is charged at its
+        // greatest possible size, so the check is an upper bound: the
+        // append path can never refuse a line this check admitted.
+        if let Some(projected) = self.projected_retention_bytes(record)
+            && projected > MAX_LEDGER_BYTES
+        {
+            return Err(EpisodeStoreError::StorageBudget);
+        }
+        Ok(())
+    }
+
+    /// The number of bytes the retention index would hold after this write.
+    ///
+    /// `None` when the write binds no deadline: a `durable` candidate, a
+    /// `forgets` tombstone, a guild without a TTL, or an unreadable clock.
+    fn projected_retention_bytes(&self, record: &StoredRecord) -> Option<u64> {
+        self.retention_deadline(record)?;
+        Some(
+            self.retention
+                .byte_len()
+                .saturating_add(super::expiry::max_stamp_line_bytes()),
+        )
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -459,8 +604,13 @@ mod tests {
                 ));
             } else {
                 validate_stored_record(&decoded, &state, 0).expect("valid replay prefix");
-                super::super::apply_record(&decoded, line.len(), &mut state)
-                    .expect("rebuild replay state");
+                super::super::apply_record(
+                    &decoded,
+                    line.len(),
+                    &mut state,
+                    &super::super::expiry::RetentionIndex::empty(),
+                )
+                .expect("rebuild replay state");
                 previous_digest = Some(decoded.episode_digest);
             }
         }

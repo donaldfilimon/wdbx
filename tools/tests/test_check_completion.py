@@ -111,6 +111,14 @@ class CompletionContracts(unittest.TestCase):
         self.mutate('requirements.json', lambda x: x['requirements'][0].update(completion_condition=''))
         self.rejected()
 
+    def test_drifted_completion_condition_rejected(self):
+        def drift(x):
+            for row in x['requirements']:
+                if row['id'] in ('G12', 'P09.01'):
+                    row['completion_condition'] = 'a condition that no longer quotes the source text'
+        self.mutate('requirements.json', drift)
+        self.rejected()
+
     def test_live_source_drift(self):
         source = self.root / checker.SOURCE_PATHS['studio']
         source.parent.mkdir(parents=True)

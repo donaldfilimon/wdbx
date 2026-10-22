@@ -49,6 +49,9 @@ fn guild_policy(bytes: u64) -> GuildEpisodePolicy {
         token_budget: 1_000,
         storage_budget_bytes: bytes,
         current_consent_epoch: Some(7),
+        retention_ttl_ms: None,
+        retention_windows: None,
+        authorized_principals: None,
     }
 }
 
@@ -516,6 +519,9 @@ fn golden_policy() -> StorePolicy {
                 token_budget: 1_000,
                 storage_budget_bytes: 1024 * 1024,
                 current_consent_epoch: None,
+                retention_ttl_ms: None,
+                retention_windows: None,
+                authorized_principals: None,
             },
         )]),
     }

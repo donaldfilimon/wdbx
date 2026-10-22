@@ -51,6 +51,9 @@ fn policy(enabled: bool, tokens: u64, bytes: u64) -> StorePolicy {
                 token_budget: tokens,
                 storage_budget_bytes: bytes,
                 current_consent_epoch: Some(7),
+                retention_ttl_ms: None,
+                retention_windows: None,
+                authorized_principals: None,
             },
         )]),
     }
