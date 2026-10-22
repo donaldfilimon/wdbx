@@ -3458,6 +3458,43 @@ body {
   color: var(--teal-strong);
   font-weight: 600;
 }
+.console-replies {
+  max-height: 16vh;
+  overflow: auto;
+  padding: 8px 14px 0;
+  color: var(--ink-soft);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12px;
+  white-space: pre-wrap;
+}
+.console-replies p {
+  margin: 0 0 8px;
+}
+.console-dock-form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 14px 12px;
+  border-top: 1px solid var(--line);
+}
+.console-dock-form input {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-2);
+  color: var(--ink);
+  padding: 0 10px;
+  font: inherit;
+}
+.console-dock-form input:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.console-dock-form button {
+  min-height: 44px;
+}
 .command-palette {
   background: var(--popover);
   color: var(--popover-foreground);
@@ -3511,4 +3548,353 @@ body {
 .wdbx-meter::-moz-progress-bar {
   background: var(--teal);
   border-radius: 999px;
+}
+
+/* Enlarged text wraps or scrolls. Zoom stays in the heading, not over the graph. */
+.panel-heading,
+.network-controls,
+.composer-heading,
+.composer-row,
+.segmented,
+.zoom-controls,
+.answer-footer,
+.provenance-detail,
+.trace-step {
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.zoom-controls {
+  position: static;
+  top: auto;
+  right: auto;
+  max-width: 100%;
+  overflow: visible;
+}
+.segmented {
+  max-width: 100%;
+}
+.conversation-panel .panel-heading h2,
+.conversation-panel .panel-heading .text-button,
+.telemetry-label,
+.workflow-step strong,
+.workflow-step small,
+.trace-step p,
+.trace-step strong,
+.composer-heading span,
+.panel-title-stack {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.workflow-rail {
+  overflow: visible;
+}
+.workflow-step {
+  height: auto;
+  align-items: start;
+}
+.trace-list {
+  height: auto;
+  min-height: 12rem;
+  max-height: 40rem;
+  overflow: auto;
+}
+.trace-step div,
+.dossier-summary,
+.result-context,
+.telemetry-stat {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.studio-console.has-cycle .studio-grid {
+  order: 2;
+}
+.studio-console.has-cycle .composer {
+  order: 3;
+}
+.studio-console.has-cycle .workflow-rail {
+  order: 4;
+}
+.studio-console.has-cycle .workflow-step {
+  min-height: 44px;
+  padding-block: 8px;
+}
+
+.unmatched-help {
+  padding-block: 12px;
+}
+.unmatched-help p {
+  margin: 0 0 12px;
+  color: var(--muted);
+}
+
+/* On stacked layouts, keep the next prompt ahead of the long diagnostics. */
+@media (max-width: 1000px) {
+  .studio-console.has-cycle .composer {
+    order: 2;
+  }
+  .studio-console.has-cycle .studio-grid {
+    order: 3;
+  }
+}
+
+/* Tablet keeps the sidebar, so the header actions drop their labels and wrap. */
+@media (max-width: 1000px) {
+  .page-header {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    min-width: 0;
+  }
+  .heading-wrap,
+  .page-title-row,
+  .header-actions,
+  .header-specimen {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .header-actions {
+    flex-wrap: wrap;
+    flex-shrink: 1;
+    justify-content: flex-end;
+  }
+  .header-specimen {
+    overflow-wrap: anywhere;
+  }
+  .header-actions .button > span,
+  .palette-trigger kbd {
+    display: none;
+  }
+}
+
+/* Desktop window: liquid-glass materials. Browser preview stays opaque. */
+.native-drag {
+  display: none;
+}
+.toolbar-cluster {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.toolbar-count {
+  margin-left: 6px;
+}
+
+/* html stays clear for vibrancy. body and the shell keep a readable wash
+   if macOS vibrancy fails, so text does not sit on the desktop. */
+html.native-app {
+  background: transparent;
+}
+.native-app body,
+.native-app .app-shell {
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+}
+.native-app .main-area {
+  padding-top: 0;
+}
+.native-app .sidebar {
+  padding-top: 42px;
+  background: color-mix(in srgb, var(--sidebar-bg) 70%, transparent);
+  border-right-color: color-mix(in srgb, var(--sidebar-ink) 18%, transparent);
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(32px) saturate(1.45);
+  backdrop-filter: blur(32px) saturate(1.45);
+}
+.native-app .page-header {
+  /* sticky is the containing block for the absolute drag strip. */
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  align-items: center;
+  min-height: 64px;
+  padding-top: 28px;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--surface) 58%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(28px) saturate(1.7);
+  backdrop-filter: blur(28px) saturate(1.7);
+}
+.native-app .native-drag {
+  /* Receives pointer events so this strip can drag the window. */
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 72px;
+  right: 0;
+  height: 28px;
+  z-index: 2;
+  pointer-events: auto;
+}
+.native-app .page-header h1 {
+  font-size: 20px;
+  letter-spacing: 0;
+  color: var(--ink);
+}
+/* Subtitle stays. On the desktop window it is a short secondary status line. */
+.native-app .page-header .toolbar-status {
+  max-width: 42ch;
+  margin-top: 2px;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.native-app .panel,
+.native-app .composer,
+.native-app .console-dock {
+  background: color-mix(in srgb, var(--raised) 88%, transparent);
+  border-radius: 12px;
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+}
+.native-app .toolbar-cluster {
+  gap: 6px;
+  padding: 4px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--surface-2) 55%, transparent);
+  border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+}
+.native-app .sidebar-caption,
+.native-app .brand small {
+  letter-spacing: 0;
+}
+.native-app {
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    sans-serif;
+}
+.native-app .brand {
+  margin-bottom: 8px;
+  padding-top: 0;
+}
+.native-app .brand > svg {
+  width: 22px;
+  height: 22px;
+}
+.native-app .brand strong {
+  font-size: 15px;
+  letter-spacing: 0;
+}
+.native-app .nav-group-label {
+  margin: 10px 8px 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--sidebar-muted);
+}
+.native-app .nav-link {
+  min-height: 36px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+.native-app .page-header h1 {
+  font-size: 15px;
+  font-weight: 600;
+}
+.native-app .page-header .toolbar-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.native-app .composer {
+  border-radius: 16px;
+}
+.native-app .agent-approval {
+  background: var(--raised);
+}
+@media (prefers-reduced-motion: reduce), (prefers-reduced-transparency: reduce) {
+  .native-app .page-header,
+  .native-app .panel,
+  .native-app .composer,
+  .native-app .console-dock,
+  .native-app .toolbar-cluster {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: var(--surface);
+  }
+  .native-app .sidebar {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: var(--sidebar-bg);
+  }
+}
+@media (max-width: 1000px) {
+  .header-actions kbd {
+    display: none;
+  }
+}
+
+/* Graph editor chrome. Tokens only; browser and desktop share it. */
+.graph-chrome {
+  display: grid;
+  gap: 10px;
+}
+.graph-chrome-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.graph-chrome-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: var(--ink-soft);
+  font-size: 12px;
+  font-weight: 600;
+}
+.graph-chrome-field select,
+.graph-chrome-field input[type='range'] {
+  min-height: 44px;
+  color: var(--ink);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.agent-rail {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid color-mix(in srgb, var(--teal) 35%, var(--line));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface) 88%, var(--teal-soft));
+  color: var(--ink-soft);
+  font-size: 13px;
+}
+.agent-rail strong {
+  color: var(--ink);
+}
+.agent-rail p {
+  margin: 0;
+}
+.agent-approval {
+  position: fixed;
+  z-index: 40;
+  right: 16px;
+  bottom: 16px;
+  display: grid;
+  gap: 8px;
+  width: min(420px, calc(100% - 32px));
+  padding: 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  background: var(--raised);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+}
+.agent-approval p {
+  margin: 0;
+}
+.agent-approval-prompt {
+  color: var(--ink-soft);
+  overflow-wrap: anywhere;
 }

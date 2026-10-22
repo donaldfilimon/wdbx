@@ -1,0 +1,206 @@
+{
+  "platform": "macOS ARM64",
+  "scope": "CPU static source builds and non-serving probes only; no inference, acceleration, installed packages or production qualification",
+  "pins": {
+    "llama": {
+      "repo": "ggml-org/llama.cpp",
+      "revision": "163a40796f0ebaae246325f8d2e15028b413fa9d"
+    },
+    "diffusion": {
+      "repo": "leejet/stable-diffusion.cpp",
+      "revision": "6b3edaaf32cc19e5bb2d819c788bd557eddc8eba"
+    },
+    "ggml": {
+      "repo": "ggml-org/ggml",
+      "revision": "e20c3a14aa70ee84ca58499814206dd08d8026bc"
+    }
+  },
+  "artifacts": {
+    "sd-cli": {
+      "sha256": "2029b8957791b5f944c6604757d8966ceed85fde1c2642a1e5c7314622f5b787",
+      "size_bytes": 56769656,
+      "probes": {
+        "version": {
+          "command": [
+            "/Users/donald/sources/repos/wdbx/specimen-studio/src-tauri/binaries/sd-cli",
+            "--version"
+          ],
+          "exit_code": 0,
+          "log": "docs/completion/runtime-evidence/2026-10-20-local-arm64/sd-cli-version.txt",
+          "log_sha256": "d085be7283379bf1b77662b2e159272a7660b279377905cab2152bbb576ef5b3"
+        },
+        "help": {
+          "command": [
+            "/Users/donald/sources/repos/wdbx/specimen-studio/src-tauri/binaries/sd-cli",
+            "--help"
+          ],
+          "exit_code": 0,
+          "log": "docs/completion/runtime-evidence/2026-10-20-local-arm64/sd-cli-help.txt",
+          "log_sha256": "8541d16bc269b8e9586a51cdb440cd7fc9ff57d6a96ea3c13ac6cbc42f87c958"
+        },
+        "loader": {
+          "command": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/donald/sources/repos/wdbx/specimen-studio/src-tauri/binaries/sd-cli"
+          ],
+          "exit_code": 0,
+          "log": "docs/completion/runtime-evidence/2026-10-20-local-arm64/sd-cli-loader.txt",
+          "log_sha256": "c1b8378d8f5a35b39ee3ffb3beb7458bb3a457fad97d2c1db8260b81e9d83378"
+        }
+      },
+      "version": "stable-diffusion.cpp version unknown, commit 6b3edaaf32cc19e5bb2d819c788bd557eddc8eba"
+    },
+    "llama-server": {
+      "sha256": "d52b8fb0c2e0dbfbe47236d4f89ca8cba10dac103614dc99d05e676b1f0e2e9f",
+      "size_bytes": 15703456,
+      "probes": {
+        "version": {
+          "command": [
+            "/Users/donald/sources/repos/wdbx/specimen-studio/src-tauri/binaries/llama-server",
+            "--version"
+          ],
+          "exit_code": 0,
+          "log": "docs/completion/runtime-evidence/2026-10-20-local-arm64/llama-server-version.txt",
+          "log_sha256": "3f2a0e48bf471d426457a5363f4966fbeab641186605746b5c1f4b3a518c4bb8"
+        },
+        "help": {
+          "command": [
+            "/Users/donald/sources/repos/wdbx/specimen-studio/src-tauri/binaries/llama-server",
+            "--help"
+          ],
+          "exit_code": 0,
+          "log": "docs/completion/runtime-evidence/2026-10-20-local-arm64/llama-server-help.txt",
+          "log_sha256": "09691f244a5210b8ffea57396b5e3bf657c282bd3401a1529ab2bfc2b295becb"
+        },
+        "loader": {
+          "command": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/donald/sources/repos/wdbx/specimen-studio/src-tauri/binaries/llama-server"
+          ],
+          "exit_code": 0,
+          "log": "docs/completion/runtime-evidence/2026-10-20-local-arm64/llama-server-loader.txt",
+          "log_sha256": "705547df88a393686881e7bb56381f5719a1f9557241acfb2fe2f5921aaf10c5"
+        }
+      },
+      "version": "version: 0.3.0-dev (build 0, commit 163a40796f0ebaae246325f8d2e15028b413fa9d)\nbuilt with AppleClang 21.0.0.21000334 for Darwin arm64"
+    }
+  },
+  "archives": {
+    "llama": {
+      "sha256": "efa991ddaf5ccd24e24adb154fb923d75b690f404e9f50e2a1bf64d81b8de21f",
+      "size_bytes": 37302088,
+      "source_url": "https://codeload.github.com/ggml-org/llama.cpp/tar.gz/163a40796f0ebaae246325f8d2e15028b413fa9d"
+    },
+    "diffusion": {
+      "sha256": "9c49328f746ac75cc6b97272187bb974127c050e7a0bc0e31d6f516319435bff",
+      "size_bytes": 129382476,
+      "source_url": "https://codeload.github.com/leejet/stable-diffusion.cpp/tar.gz/6b3edaaf32cc19e5bb2d819c788bd557eddc8eba"
+    },
+    "ggml": {
+      "sha256": "3dde7c76c0dc2bce436ab16258baafbf3f1a1dbf933a3583ca32471aadb0e160",
+      "size_bytes": 3682580,
+      "source_url": "https://codeload.github.com/ggml-org/ggml/tar.gz/e20c3a14aa70ee84ca58499814206dd08d8026bc"
+    }
+  },
+  "inputs": {
+    "Cargo.lock": "e2fac4f3f125cecc771a0dc7d6f33eb1629972b3979ac0771849fdf61368680e",
+    "crates/abi-wdbx/fuzz/Cargo.lock": "b02d27422795c1785c9f4119f5e6a1b57e296bb74d543c908f7f285928a2aa83",
+    "specimen-studio/Cargo.lock": "36ff8bdfd1a18872b0ef2132e10d72c4ee4babda31ba897eb72c428a6febf48b",
+    "specimen-studio/bun.lock": "d1de54eaca2ced931b7133387b53e573372665f963fb022fec40ac7c81e628eb",
+    "specimen-studio/native/runtime-pins.json": "ce0d308c455cb288470c760d2e40a286546651f5f109967ee1d1ac7ed5774e93",
+    "specimen-studio/scripts/build-runtimes.py": "7d1cbd41491b6ad5bf8d5a872cd2f207923c1aa1037067bf7032f77f79e54ef1"
+  },
+  "build_logs": {
+    "diffusion": {
+      "path": "/tmp/wdbx-20261020-studio-diffusion-provenance-build.log",
+      "sha256": "7f95a530f1dff7abcb217ce963cbd9d631ccb899aa978689dc8868821744a670"
+    },
+    "llama": {
+      "path": "/tmp/wdbx-20261020-studio-llama-provenance-build.log",
+      "sha256": "b1c5026f7fcf59ce685ba5bf46be1477f79edc63f692928b765517533cbfa657"
+    }
+  },
+  "tools": {
+    "cmake": {
+      "command": [
+        "/opt/homebrew/bin/cmake",
+        "--version"
+      ],
+      "exit_code": 0,
+      "output": "cmake version 4.4.4\n\nCMake suite maintained and supported by Kitware (kitware.com/cmake)."
+    },
+    "python": {
+      "command": [
+        "/opt/homebrew/bin/python3",
+        "--version"
+      ],
+      "exit_code": 0,
+      "output": "Python 3.15.0"
+    },
+    "clang": {
+      "command": [
+        "/usr/bin/clang",
+        "--version"
+      ],
+      "exit_code": 0,
+      "output": "Apple clang version 21.0.0 (clang-2100.3.34.1)\nTarget: arm64-apple-darwin27.0.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin"
+    },
+    "bun": {
+      "command": [
+        "/opt/homebrew/bin/bun",
+        "--version"
+      ],
+      "exit_code": 0,
+      "output": "1.4.4"
+    }
+  },
+  "cmake_metadata": {
+    "llama": [
+      "BUILD_SHARED_LIBS:BOOL=OFF",
+      "CMAKE_BUILD_TYPE:STRING=Release",
+      "CMAKE_DISABLE_FIND_PACKAGE_Git:BOOL=TRUE",
+      "GGML_METAL:BOOL=OFF",
+      "GGML_NATIVE:BOOL=OFF",
+      "GGML_OPENMP:BOOL=OFF",
+      "GGML_VULKAN:BOOL=OFF",
+      "GIT_EXE:FILEPATH=OFF",
+      "GIT_EXECUTABLE:FILEPATH=OFF",
+      "LLAMA_BUILD_COMMIT:STRING=163a40796f0ebaae246325f8d2e15028b413fa9d",
+      "LLAMA_BUILD_NUMBER:STRING=0"
+    ],
+    "diffusion": [
+      "BUILD_SHARED_LIBS:UNINITIALIZED=OFF",
+      "CMAKE_BUILD_TYPE:STRING=Release",
+      "CMAKE_DISABLE_FIND_PACKAGE_Git:BOOL=TRUE",
+      "GGML_BUILD_COMMIT:STRING=e20c3a14aa70ee84ca58499814206dd08d8026bc",
+      "GGML_BUILD_NUMBER:STRING=0",
+      "GGML_METAL:BOOL=OFF",
+      "GGML_NATIVE:BOOL=OFF",
+      "GGML_OPENMP:BOOL=OFF",
+      "GGML_VULKAN:BOOL=OFF",
+      "GIT_EXE:FILEPATH=OFF",
+      "GIT_EXECUTABLE:FILEPATH=OFF",
+      "SDCPP_BUILD_COMMIT:STRING=6b3edaaf32cc19e5bb2d819c788bd557eddc8eba",
+      "SDCPP_BUILD_VERSION:STRING=unknown"
+    ]
+  },
+  "source_trees": {
+    "llama": {
+      "file_count": 3527,
+      "manifest": "docs/completion/runtime-evidence/2026-10-20-local-arm64/llama-source-sha256.json",
+      "manifest_sha256": "a39e816549ee295c41e35d740f248d8c8f244660e595fdcce5bb460ee130bb4b"
+    },
+    "diffusion": {
+      "file_count": 2542,
+      "manifest": "docs/completion/runtime-evidence/2026-10-20-local-arm64/diffusion-source-sha256.json",
+      "manifest_sha256": "beb3f310e4b10a0398f39fd14b7aaa2619195a5fbe120970cfac615b11f18e0e"
+    },
+    "ggml": {
+      "file_count": 2157,
+      "manifest": "docs/completion/runtime-evidence/2026-10-20-local-arm64/ggml-source-sha256.json",
+      "manifest_sha256": "992028c87b6313d62cfd5b8890eed3c8511965962c94fe454f901d382321ebc0"
+    }
+  }
+}

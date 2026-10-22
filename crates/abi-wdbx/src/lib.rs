@@ -37,6 +37,7 @@ pub mod compute;
 pub mod crypto_he;
 pub mod durable;
 pub mod entropy;
+pub mod evaluation;
 pub mod fhe;
 pub mod format;
 pub mod hash;

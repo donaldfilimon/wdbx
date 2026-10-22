@@ -1,4 +1,4 @@
-import { lazy, useEffect, useId, useState } from 'react';
+import { lazy, useEffect, useId, useMemo, useState } from 'react';
 import { Minus, Play, Plus, Shuffle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -14,14 +14,18 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { EmptyState, Panel, WButton } from '@/components/wdbx';
 import {
+  graphView,
   networkEdit,
   networkTrace,
   type Network,
   type NetworkCommand,
+  type SpecimenCommand,
 } from '@/lib/specimen/kernel';
 import {
   describeRewiring,
+  layerInsertAt,
   layerRows,
+  topologyLayout,
   traceStats,
 } from '@/lib/specimen/network-view';
 import {
@@ -29,8 +33,14 @@ import {
   persistNetwork,
   type StoredNetwork,
 } from '@/lib/specimen/storage';
-import type { Specimen } from '@/lib/specimen/types';
+import type { Attachment, Specimen, SpecimenNode } from '@/lib/specimen/types';
+import { GraphChrome } from './graph-chrome';
 import { Viewport } from './viewport';
+import {
+  parseNetworkViewPrefs,
+  visibleNodeRefs,
+  type NetworkViewPrefs,
+} from './view-prefs';
 
 const LayersScene = lazy(() =>
   import('./scene').then((m) => ({ default: m.LayersScene })),
@@ -38,6 +48,24 @@ const LayersScene = lazy(() =>
 const TopologyScene = lazy(() =>
   import('./scene').then((m) => ({ default: m.TopologyScene })),
 );
+
+function useGraphPrefs() {
+  const [prefs, setPrefs] = useState<NetworkViewPrefs>(() => {
+    try {
+      return parseNetworkViewPrefs(localStorage.getItem('wdbx-network-view'));
+    } catch {
+      return parseNetworkViewPrefs(null);
+    }
+  });
+  useEffect(() => {
+    try {
+      localStorage.setItem('wdbx-network-view', JSON.stringify(prefs));
+    } catch {
+      // A blocked store still keeps the choice for this visit.
+    }
+  }, [prefs]);
+  return [prefs, setPrefs] as const;
+}
 
 const field =
   'grid gap-1 text-xs font-semibold text-ink [&_input]:min-h-11 [&_input]:font-mono';
@@ -51,10 +79,14 @@ export function LayersView({
   network,
   onCommand,
   busy,
+  onReview,
+  onTeach,
 }: {
   network: Network;
   onCommand: (command: NetworkCommand, done: string) => void;
   busy: boolean;
+  onReview?: () => void;
+  onTeach?: () => void;
 }) {
   const id = useId();
   const rows = layerRows(network);
@@ -66,14 +98,31 @@ export function LayersView({
   const [trace, setTrace] = useState<number[][] | undefined>();
   const [traceError, setTraceError] = useState('');
   const stats = trace ? traceStats(trace) : [];
+  const [prefs, setPrefs] = useGraphPrefs();
   const seedValue = whole(seed) ?? 1;
+  const atValue = layerInsertAt(
+    rows.map((row) => row.index),
+    add.at,
+  );
   return (
     <div className="grid gap-4">
+      <GraphChrome
+        prefs={prefs}
+        onChange={setPrefs}
+        onReview={onReview}
+        onTeach={onTeach}
+        note="Layer columns stay sampled. Density only changes how many connections are drawn, not the stored weights."
+      />
       <Viewport
         label="Network layers in 3D: an input column of 128 features, then one column of neurons per layer, with sampled connections"
         tableHint="The Layers table lists every layer."
       >
-        <LayersScene network={network} trace={trace} />
+        <LayersScene
+          network={network}
+          trace={trace}
+          camera={prefs.camera}
+          edgeBudget={prefs.edgeBudget}
+        />
       </Viewport>
       <Panel
         title="Layers"
@@ -227,7 +276,7 @@ export function LayersView({
             className="flex flex-wrap items-end gap-3 p-4"
             onSubmit={(e) => {
               e.preventDefault();
-              const at = whole(add.at);
+              const at = whole(atValue);
               const outputs = whole(add.outputs);
               const fanIn = whole(add.fanIn);
               if (at === null || outputs === null || fanIn === null) return;
@@ -240,7 +289,7 @@ export function LayersView({
             <label className={field}>
               Before layer
               <select
-                value={add.at}
+                value={atValue}
                 onChange={(e) => setAdd({ ...add, at: e.target.value })}
                 className="min-h-11 rounded-lg border border-line bg-surface-2 px-2 font-mono"
               >
@@ -395,11 +444,161 @@ export function LayersView({
   );
 }
 
+type Vec3 = [number, number, number];
+
+function clampCoord(n: number) {
+  return Math.max(-100, Math.min(100, Math.round(n * 1000) / 1000));
+}
+
+/** Pinned nodes keep stored coordinates. Others use the sphere layout. */
+function placed(node: SpecimenNode, layout: Record<string, Vec3>): Vec3 {
+  if (
+    node.pinned === true &&
+    [node.x, node.y, node.z].every(
+      (value) => typeof value === 'number' && Number.isFinite(value),
+    )
+  )
+    return [node.x as number, node.y as number, node.z as number];
+  return layout[node.ref];
+}
+
+function AttachmentEditor({
+  attachment,
+  onCommand,
+}: {
+  attachment: Attachment;
+  onCommand: (command: SpecimenCommand) => void;
+}) {
+  const id = useId();
+  const [affinity, setAffinity] = useState(String(attachment.affinity));
+  const [hard, setHard] = useState(attachment.hard);
+  const [both, setBoth] = useState(attachment.bidirectional);
+  const value = Number(affinity);
+  return (
+    <form
+      className="flex flex-wrap items-end gap-3 border-t border-line p-4"
+      onSubmit={(event) => {
+        event.preventDefault();
+        if (!Number.isFinite(value)) return;
+        onCommand({
+          command: 'updateAttachment',
+          id: attachment.id,
+          bidirectional: both,
+          hard,
+          affinity: value,
+        });
+      }}
+    >
+      <label className={field} htmlFor={id}>
+        Affinity
+        <Input
+          id={id}
+          type="number"
+          min={0}
+          max={1}
+          step={0.1}
+          value={affinity}
+          onChange={(event) => setAffinity(event.target.value)}
+          className="w-24"
+        />
+      </label>
+      <label className="flex min-h-11 items-center gap-2 text-sm text-ink">
+        <input
+          type="checkbox"
+          checked={hard}
+          onChange={(event) => setHard(event.target.checked)}
+        />
+        Hard
+      </label>
+      <label className="flex min-h-11 items-center gap-2 text-sm text-ink">
+        <input
+          type="checkbox"
+          checked={both}
+          onChange={(event) => setBoth(event.target.checked)}
+        />
+        Both ways
+      </label>
+      <WButton
+        type="submit"
+        variant="outline"
+        disabled={!Number.isFinite(value)}
+      >
+        Update attachment
+      </WButton>
+    </form>
+  );
+}
+
 /** Specimen topology in 3D with paired node and attachment tables. */
-export function TopologyView({ specimen }: { specimen: Specimen }) {
+export function TopologyView({
+  specimen,
+  onCommand = () => {},
+  onReview,
+  onTeach,
+}: {
+  specimen: Specimen;
+  onCommand?: (command: SpecimenCommand) => void;
+  onReview?: () => void;
+  onTeach?: () => void;
+}) {
   const [selected, setSelected] = useState<string | undefined>();
+  const [attachmentId, setAttachmentId] = useState<string | undefined>();
+  const [target, setTarget] = useState('');
   const byRef = new Map(specimen.nodes.map((n) => [n.ref, n]));
   const node = selected ? byRef.get(selected) : undefined;
+  const [prefs, setPrefs] = useGraphPrefs();
+  const layout = useMemo(
+    () => topologyLayout(specimen.nodes),
+    [specimen.nodes],
+  );
+  const shownRefs = useMemo(() => {
+    const refs = specimen.nodes.map((item) => item.ref);
+    const links = specimen.attachments.map((item) => ({
+      from: item.from,
+      to: item.to,
+    }));
+    try {
+      return graphView({
+        camera: prefs.camera,
+        edges: prefs.edges,
+        edgeBudget: prefs.edgeBudget,
+        refs,
+        selected,
+        links,
+      }).refs;
+    } catch {
+      return visibleNodeRefs(refs, selected, prefs.edges, specimen.attachments);
+    }
+  }, [
+    specimen.nodes,
+    specimen.attachments,
+    selected,
+    prefs.camera,
+    prefs.edges,
+    prefs.edgeBudget,
+  ]);
+  const shown = new Set(shownRefs);
+  const nodes = specimen.nodes.filter((item) => shown.has(item.ref));
+  const attachments = specimen.attachments.filter(
+    (item) =>
+      shown.has(item.from) &&
+      shown.has(item.to) &&
+      (prefs.edges !== 'hard' || item.hard),
+  );
+  const positions = Object.fromEntries(
+    nodes.map((item) => [item.ref, placed(item, layout)]),
+  );
+  const editing = specimen.attachments.find((item) => item.id === attachmentId);
+  const nudge = (item: SpecimenNode, dx: number, dy: number, dz: number) => {
+    const [x, y, z] = positions[item.ref];
+    onCommand({
+      command: 'moveNode',
+      nodeRef: item.ref,
+      x: clampCoord(x + dx),
+      y: clampCoord(y + dy),
+      z: clampCoord(z + dz),
+    });
+  };
   if (!specimen.nodes.length)
     return (
       <EmptyState
@@ -409,16 +608,51 @@ export function TopologyView({ specimen }: { specimen: Specimen }) {
     );
   return (
     <div className="grid gap-4">
+      <GraphChrome
+        prefs={prefs}
+        onChange={setPrefs}
+        onReview={onReview}
+        onTeach={onTeach}
+        note={
+          prefs.edges === 'local' && !selected
+            ? 'Select a node to isolate its neighborhood. The full tables stay below.'
+            : node
+              ? `${node.name} is type ${node.type}. Open Activity to review proposals, or Studio to teach. This graph does not train weights.`
+              : 'Drag a node to pin it. Drag its handle to connect. The assistant only frames the view.'
+        }
+      />
       <Viewport
         label="Specimen topology in 3D: node shape shows type, size shows strength, colour shows tone; attachments are lines, solid when hard"
         tableHint="The Nodes and Attachments tables list the same data."
       >
         <TopologyScene
-          nodes={specimen.nodes}
-          attachments={specimen.attachments}
+          nodes={nodes}
+          attachments={attachments}
+          camera={prefs.camera}
+          follow={prefs.follow}
           maxStrength={specimen.settings.maxStrength}
           selected={selected}
+          positions={positions}
           onSelect={setSelected}
+          onMove={(ref, x, y, z) =>
+            onCommand({
+              command: 'moveNode',
+              nodeRef: ref,
+              x: clampCoord(x),
+              y: clampCoord(y),
+              z: clampCoord(z),
+            })
+          }
+          onConnect={(from, to) =>
+            onCommand({
+              command: 'connect',
+              from,
+              to,
+              bidirectional: false,
+              hard: false,
+              affinity: 0.5,
+            })
+          }
         />
       </Viewport>
       {node && (
@@ -427,6 +661,73 @@ export function TopologyView({ specimen }: { specimen: Specimen }) {
           {node.strength}, tone {node.tone}, {node.entries.length} entr
           {node.entries.length === 1 ? 'y' : 'ies'}
         </output>
+      )}
+      {node && (
+        <Panel
+          title="Placement"
+          description="Arrow keys move the selected row. Moving pins the node."
+        >
+          <div className="flex flex-wrap items-center gap-2 p-4">
+            <WButton variant="outline" onClick={() => nudge(node, -0.5, 0, 0)}>
+              Move left
+            </WButton>
+            <WButton variant="outline" onClick={() => nudge(node, 0.5, 0, 0)}>
+              Move right
+            </WButton>
+            <WButton variant="outline" onClick={() => nudge(node, 0, 0.5, 0)}>
+              Move up
+            </WButton>
+            <WButton variant="outline" onClick={() => nudge(node, 0, -0.5, 0)}>
+              Move down
+            </WButton>
+            <WButton
+              variant="outline"
+              disabled={!node.pinned}
+              onClick={() =>
+                onCommand({ command: 'unpinNode', nodeRef: node.ref })
+              }
+            >
+              Unpin node
+            </WButton>
+          </div>
+          <form
+            className="flex flex-wrap items-end gap-3 border-t border-line p-4"
+            onSubmit={(event) => {
+              event.preventDefault();
+              if (!target) return;
+              onCommand({
+                command: 'connect',
+                from: node.ref,
+                to: target,
+                bidirectional: false,
+                hard: false,
+                affinity: 0.5,
+              });
+              setTarget('');
+            }}
+          >
+            <label className={field}>
+              Connect to
+              <select
+                value={target}
+                onChange={(event) => setTarget(event.target.value)}
+                className="min-h-11 rounded-lg border border-line bg-surface-2 px-2"
+              >
+                <option value="">Choose a node</option>
+                {specimen.nodes
+                  .filter((item) => item.ref !== node.ref)
+                  .map((item) => (
+                    <option key={item.ref} value={item.ref}>
+                      {item.name}
+                    </option>
+                  ))}
+              </select>
+            </label>
+            <WButton type="submit" variant="primary" disabled={!target}>
+              Connect nodes
+            </WButton>
+          </form>
+        </Panel>
       )}
       <div className="grid gap-4 lg:grid-cols-2">
         <Panel title="Nodes" description="Select a node to highlight it in 3D.">
@@ -440,6 +741,7 @@ export function TopologyView({ specimen }: { specimen: Specimen }) {
                   Strength
                 </TableHead>
                 <TableHead scope="col">Tone</TableHead>
+                <TableHead scope="col">Place</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -455,6 +757,18 @@ export function TopologyView({ specimen }: { specimen: Specimen }) {
                       onClick={() =>
                         setSelected(n.ref === selected ? undefined : n.ref)
                       }
+                      onKeyDown={(event) => {
+                        const step = {
+                          ArrowLeft: [-0.5, 0, 0],
+                          ArrowRight: [0.5, 0, 0],
+                          ArrowUp: [0, 0.5, 0],
+                          ArrowDown: [0, -0.5, 0],
+                        }[event.key];
+                        if (!step) return;
+                        event.preventDefault();
+                        setSelected(n.ref);
+                        nudge(n, step[0], step[1], step[2]);
+                      }}
                     >
                       {n.name}
                     </WButton>
@@ -464,6 +778,7 @@ export function TopologyView({ specimen }: { specimen: Specimen }) {
                     {n.strength}
                   </TableCell>
                   <TableCell>{n.tone}</TableCell>
+                  <TableCell>{n.pinned ? 'Pinned' : 'Laid out'}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -474,34 +789,73 @@ export function TopologyView({ specimen }: { specimen: Specimen }) {
           description="Affinity sets how strongly a pair is wired."
         >
           {specimen.attachments.length ? (
-            <Table>
-              <TableCaption className="sr-only">Attachments</TableCaption>
-              <TableHeader>
-                <TableRow>
-                  <TableHead scope="col">From</TableHead>
-                  <TableHead scope="col">To</TableHead>
-                  <TableHead scope="col" className="text-right">
-                    Affinity
-                  </TableHead>
-                  <TableHead scope="col">Kind</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {specimen.attachments.map((a) => (
-                  <TableRow key={a.id}>
-                    <TableCell>{byRef.get(a.from)?.name ?? a.from}</TableCell>
-                    <TableCell>{byRef.get(a.to)?.name ?? a.to}</TableCell>
-                    <TableCell className="text-right tabular-nums">
-                      {a.affinity}
-                    </TableCell>
-                    <TableCell>
-                      {a.hard ? 'hard' : 'soft'}
-                      {a.bidirectional ? ', both ways' : ''}
-                    </TableCell>
+            <>
+              <Table>
+                <TableCaption className="sr-only">Attachments</TableCaption>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead scope="col">From</TableHead>
+                    <TableHead scope="col">To</TableHead>
+                    <TableHead scope="col" className="text-right">
+                      Affinity
+                    </TableHead>
+                    <TableHead scope="col">Kind</TableHead>
+                    <TableHead scope="col">
+                      <span className="sr-only">Actions</span>
+                    </TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {specimen.attachments.map((a) => {
+                    const from = byRef.get(a.from)?.name ?? a.from;
+                    const to = byRef.get(a.to)?.name ?? a.to;
+                    return (
+                      <TableRow key={a.id}>
+                        <TableCell>{from}</TableCell>
+                        <TableCell>{to}</TableCell>
+                        <TableCell className="text-right tabular-nums">
+                          {a.affinity}
+                        </TableCell>
+                        <TableCell>
+                          {a.hard ? 'hard' : 'soft'}
+                          {a.bidirectional ? ', both ways' : ''}
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex flex-wrap gap-2">
+                            <WButton
+                              variant="ghost"
+                              aria-pressed={a.id === attachmentId}
+                              onClick={() =>
+                                setAttachmentId(
+                                  a.id === attachmentId ? undefined : a.id,
+                                )
+                              }
+                            >
+                              Edit {from}
+                            </WButton>
+                            <WButton
+                              variant="ghost"
+                              onClick={() =>
+                                onCommand({ command: 'disconnect', id: a.id })
+                              }
+                            >
+                              Disconnect {from}
+                            </WButton>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+              {editing && (
+                <AttachmentEditor
+                  key={editing.id}
+                  attachment={editing}
+                  onCommand={onCommand}
+                />
+              )}
+            </>
           ) : (
             <EmptyState
               title="No attachments"
@@ -518,9 +872,18 @@ export function TopologyView({ specimen }: { specimen: Specimen }) {
 export function NetworkPanel({
   specimen,
   desktop,
+  onSpecimenCommand = () => {},
+  onReview,
+  onTeach,
+  reloadKey = 0,
 }: {
   specimen: Specimen;
   desktop: boolean;
+  onSpecimenCommand?: (command: SpecimenCommand) => void;
+  onReview?: () => void;
+  onTeach?: () => void;
+  /** Bumped after an import persists a network, so this view reloads it. */
+  reloadKey?: number;
 }) {
   const [stored, setStored] = useState<StoredNetwork | null>(null);
   // Bumped on every successful edit: remounts the builder so drafts and the
@@ -546,7 +909,7 @@ export function NetworkPanel({
     return () => {
       live = false;
     };
-  }, [reads]);
+  }, [reads, reloadKey]);
   const command = (cmd: NetworkCommand, done: string) => {
     if (!stored) return;
     let next: Network;
@@ -623,6 +986,8 @@ export function NetworkPanel({
               network={network}
               onCommand={command}
               busy={busy}
+              onReview={onReview}
+              onTeach={onTeach}
             />
           ) : (
             !error && (
@@ -633,7 +998,12 @@ export function NetworkPanel({
           )}
         </TabsContent>
         <TabsContent value="topology">
-          <TopologyView specimen={specimen} />
+          <TopologyView
+            specimen={specimen}
+            onCommand={onSpecimenCommand}
+            onReview={onReview}
+            onTeach={onTeach}
+          />
         </TabsContent>
       </Tabs>
     </div>

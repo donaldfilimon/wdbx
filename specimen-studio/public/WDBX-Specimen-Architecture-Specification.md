@@ -139,7 +139,7 @@ No central winner is elected during the ordinary voter phase. Nodes decide what 
 
 ### Native implementation profile · 0.2
 
-The desktop shell is Tauri 2 with bundled React assets and Geist fonts. A runtime adapter selects Rust desktop operations or the existing browser executor. The engine owns durable state in a dedicated application-data directory. WDBX abi-wdbx and abi-compute use pinned revision e55634cbb581c1de02f946a29c34db8cf5203704. ABI, Abbey and WDBX sibling repositories remain unchanged. Cycles clone a consistent snapshot and commit through revision checks. Progress and cancellation use a separate IPC channel.
+The desktop shell is Tauri 2 with bundled React assets and Geist fonts. A runtime adapter selects Rust desktop operations or the existing browser executor. The engine owns durable state in a dedicated application-data directory. WDBX abi-wdbx and abi-compute compile from this checkout's `crates/` through path dependencies in `native/specimen-core/Cargo.toml` and (`abi-compute` only) `native/specimen-kernel/Cargo.toml`; the studio's previous git pin (`3ac03f0`) required a nightly-only `#![feature(portable_simd)]` gate in `abi-compute` that stable Rust 1.99.1 rejects (E0554), so the studio's `Cargo.lock` pins nothing for these two crates. ABI, Abbey and WDBX sibling repositories remain unchanged. Cycles clone a consistent snapshot and commit through revision checks. Progress and cancellation use a separate IPC channel.
 
 ## 3. Terminology and identifiers
 

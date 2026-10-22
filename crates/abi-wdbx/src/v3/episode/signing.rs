@@ -174,6 +174,17 @@ impl EpisodeSigner {
             signature: self.key.sign(digest).to_bytes(),
         }
     }
+
+    /// Sign an arbitrary message with this signer's key.
+    ///
+    /// Crate-internal: the private COSE prototype signs an RFC 9052
+    /// `Sig_structure` rather than a bare digest, and RFC 9052 binds the
+    /// protected header and the external AAD into the signed bytes. This
+    /// never changes the detached [`EpisodeSignature`] the ledger stores,
+    /// which still signs exactly the 32-byte episode digest.
+    pub(crate) fn sign_message(&self, message: &[u8]) -> [u8; 64] {
+        self.key.sign(message).to_bytes()
+    }
 }
 
 /// Verify a signature over a digest under a given verifying key.

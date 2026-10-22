@@ -31,8 +31,7 @@ fn rebind(v: &mut Value, old: &Value, new: &Value) {
         _ => {}
     }
 }
-#[test]
-fn every_vocabulary_scope_and_integer_mapping() {
+pub(super) fn vocabulary_cases() -> Vec<Value> {
     let base = fixture(true);
     let minimal = fixture(false);
     let mut cases = vec![];
@@ -254,7 +253,7 @@ fn every_vocabulary_scope_and_integer_mapping() {
         v["evidence"]["dimensions"][key] = json!({"known":a});
         cases.push(v);
     }
-    compare(&cases);
+    cases
 }
 fn bytes(v: &Value) -> Vec<u8> {
     super::super::CompleteEpisode::try_new(super::draft_adapter::input(v).unwrap())
@@ -262,8 +261,7 @@ fn bytes(v: &Value) -> Vec<u8> {
         .canonical_bytes()
         .unwrap()
 }
-#[test]
-fn independent_set_reversals_and_action_sequence() {
+pub(super) fn set_reversal_cases() -> Vec<Value> {
     let mut base = fixture(true);
     // Give every set at least two distinct members so every reversal is meaningful.
     for path in ["/authority/models", "/authority/calibrations"] {
@@ -334,5 +332,13 @@ fn independent_set_reversals_and_action_sequence() {
         .unwrap()
         .push(action);
     cases.extend([sequence, reverse, repeated]);
-    compare(&cases);
+    cases
+}
+#[test]
+fn every_vocabulary_scope_and_integer_mapping() {
+    compare(&vocabulary_cases());
+}
+#[test]
+fn independent_set_reversals_and_action_sequence() {
+    compare(&set_reversal_cases());
 }

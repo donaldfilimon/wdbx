@@ -1,10 +1,15 @@
 //! Pure specimen rules. Every impure service arrives through `host`.
+pub mod command;
 pub mod engine;
+pub mod graph;
 pub mod host;
+pub mod import_adapt;
 pub mod language;
 pub mod mutate;
 pub mod network_edit;
 pub mod neural;
+pub mod notes;
+pub mod place;
 pub mod search;
 use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize, thiserror::Error)]

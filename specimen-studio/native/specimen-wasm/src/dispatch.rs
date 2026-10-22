@@ -2,7 +2,7 @@
 //! A request is `{"op": …, …}`; the reply is `{"ok": …}` or `{"error": {…}}`.
 use serde_json::{Value, json};
 use specimen_kernel::{
-    Result, engine, error,
+    Result, command, engine, error,
     host::Host,
     mutate::{self, NodeInput, ResourceInput},
     neural::Network,
@@ -81,6 +81,40 @@ pub fn dispatch(h: &Host, req: &Value, progress: &dyn Fn(Value)) -> Result<Value
                 .ok_or_else(|| error("InvalidInput", "seed must be a whole number"))?;
             Ok(serde_json::to_value(network.trace(&input, false, seed)?)?)
         }
+        "graphView" => {
+            let refs: Vec<String> =
+                serde_json::from_value(field(req, "refs")?.clone()).unwrap_or_default();
+            let links: Vec<(String, String)> = req["links"]
+                .as_array()
+                .map(|rows| {
+                    rows.iter()
+                        .filter_map(|row| {
+                            Some((
+                                row["from"].as_str()?.to_owned(),
+                                row["to"].as_str()?.to_owned(),
+                            ))
+                        })
+                        .collect()
+                })
+                .unwrap_or_default();
+            let budget = req["edgeBudget"].as_i64().unwrap_or(600);
+            let camera = specimen_kernel::graph::camera(req["camera"].as_str().unwrap_or("orbit"));
+            let camera = if req["advance"].as_bool().unwrap_or(false) {
+                specimen_kernel::graph::next_camera(camera)
+            } else {
+                camera
+            };
+            Ok(json!({
+                "camera": camera,
+                "edgeBudget": specimen_kernel::graph::clamp_edge_budget(budget),
+                "refs": specimen_kernel::graph::visible_refs(
+                    &refs,
+                    req["selected"].as_str(),
+                    req["edges"].as_str().unwrap_or("all"),
+                    &links,
+                ),
+            }))
+        }
         "raftPlan" => {
             let n = |k: &str| -> Result<usize> {
                 field(req, k)?
@@ -126,6 +160,26 @@ pub fn dispatch(h: &Host, req: &Value, progress: &dyn Fn(Value)) -> Result<Value
             Ok(json!({"state": s, "message": message}))
         }
         "togglePin" => mutate::toggle_pin(h, state()?, string(req, "id")?),
+        "parse" => Ok(serde_json::to_value(command::parse(string(req, "line")?)?)?),
+        "apply" => {
+            let cmd = serde_json::from_value(field(req, "command")?.clone())?;
+            let network = match req.get("network") {
+                None | Some(Value::Null) => None,
+                Some(value) => Some(
+                    serde_json::from_value::<Network>(value.clone())
+                        .map_err(|e| error("InvalidNetwork", e))?,
+                ),
+            };
+            let applied = command::apply(h, state()?, network.as_ref(), cmd)?;
+            Ok(serde_json::to_value(applied)?)
+        }
+        "query" => {
+            let query = serde_json::from_value(field(req, "query")?.clone())?;
+            Ok(serde_json::to_value(specimen_kernel::notes::query(
+                state()?,
+                &query,
+            )?)?)
+        }
         "log" => {
             let mut s = state()?.clone();
             mutate::log(
@@ -156,6 +210,13 @@ pub fn dispatch(h: &Host, req: &Value, progress: &dyn Fn(Value)) -> Result<Value
             &AtomicBool::new(false),
         ),
         "maintain" => engine::maintain(h, state()?, string(req, "mode")?, &AtomicBool::new(false)),
+        "adaptImport" => {
+            let text = string(req, "text")?;
+            let name = req["name"].as_str().unwrap_or("");
+            Ok(serde_json::to_value(
+                specimen_kernel::import_adapt::adapt_import(h, text, name)?,
+            )?)
+        }
         other => Err(error(
             "UnknownCommand",
             format!("Unknown operation {other}"),
@@ -229,11 +290,11 @@ mod tests {
     #[test]
     fn seed_then_mutate_through_the_envelope() {
         let s = call(json!({"op": "seed"}))["ok"].clone();
-        assert_eq!(s["nodes"].as_array().unwrap().len(), 8);
+        assert_eq!(s["nodes"].as_array().unwrap().len(), 15);
         let next = call(
             json!({"op": "addNode", "state": s, "input": {"name": "Color", "pattern": "favorite color", "action": "Teal."}}),
         );
-        assert_eq!(next["ok"]["nodes"].as_array().unwrap().len(), 9);
+        assert_eq!(next["ok"]["nodes"].as_array().unwrap().len(), 16);
         assert_eq!(
             call(json!({"op": "validate", "state": next["ok"]}))["ok"],
             Value::Null
@@ -258,6 +319,30 @@ mod tests {
         let fixed = FixedHost::default();
         let bad: Value = serde_json::from_str(&reply(&fixed.host(), "{not json", &|_| {})).unwrap();
         assert_eq!(bad["error"]["code"], "MalformedSave");
+    }
+
+    #[test]
+    fn parse_and_apply_round_trip_through_the_envelope() {
+        let help = call(json!({"op": "parse", "line": "/help"}));
+        assert!(help["ok"]["text"].as_str().unwrap().contains("/wrng"));
+        let unknown = call(json!({"op": "parse", "line": "/nope"}));
+        assert_eq!(unknown["error"]["code"], "UnknownCommand");
+        let state = call(json!({"op": "seed"}))["ok"].clone();
+        let applied = call(json!({
+            "op": "apply",
+            "state": state,
+            "command": {"command": "addNode", "input": {"name": "Color", "pattern": "favorite color", "action": "Teal."}}
+        }));
+        assert_eq!(
+            applied["ok"]["state"]["nodes"].as_array().unwrap().len(),
+            16
+        );
+        let undone = call(json!({
+            "op": "apply",
+            "state": applied["ok"]["state"],
+            "command": {"command": "revert", "undo": applied["ok"]["undo"]}
+        }));
+        assert_eq!(undone["ok"]["state"], state);
     }
 
     #[test]

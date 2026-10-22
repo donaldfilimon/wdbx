@@ -6,6 +6,13 @@ use std::collections::BTreeMap;
 /// Maximum number of bounded voice state transitions retained in one event.
 pub const MAX_VOICE_TRANSITIONS: usize = 32;
 
+/// Maximum number of principals one guild's authority map may name.
+///
+/// The map is host policy, and the host is trusted, but an unbounded list
+/// would make every authority check a scan of an unbounded list. The ceiling
+/// keeps the check bounded and cheap.
+pub const MAX_AUTHORIZED_PRINCIPALS: usize = 256;
+
 /// Identity classes admitted to constitutional episode events.
 #[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "snake_case")]
@@ -323,6 +330,55 @@ impl RetentionClass {
     }
 }
 
+/// The per-class retention windows of one guild.
+///
+/// A window is a duration in milliseconds, and it is optional per class: a
+/// class without an explicit window falls back to the guild's single
+/// [`GuildEpisodePolicy::retention_ttl_ms`], and a class with neither has no
+/// window at all and never expires.
+///
+/// The windows are chosen by the *policy*, never by the candidate. A
+/// candidate-chosen window would have to be bound into the candidate's own
+/// canonical digest, and the frozen v3 record format cannot carry it: a new
+/// field on `MemoryCandidate` would change every candidate digest and break
+/// the pinned goldens and the cross-language Python witness, and a new
+/// `EpisodeEvent` variant would change the canonical event encoder, the
+/// witness, and every pinned golden with it.
+///
+/// `durable` candidates never expire, whatever this says. The field exists so
+/// that the vocabulary is complete and so a host that states a durable window
+/// is not silently refused for it.
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(deny_unknown_fields)]
+pub struct RetentionWindows {
+    /// The window for `session` candidates, in milliseconds.
+    #[serde(default)]
+    pub session_ttl_ms: Option<u64>,
+    /// The window for `operational` candidates, in milliseconds.
+    #[serde(default)]
+    pub operational_ttl_ms: Option<u64>,
+    /// The window for `durable` candidates, in milliseconds.
+    ///
+    /// A `durable` candidate never expires. The store ignores this value.
+    #[serde(default)]
+    pub durable_ttl_ms: Option<u64>,
+}
+
+impl RetentionWindows {
+    /// The window this struct names for one retention class.
+    ///
+    /// `None` means the class has no explicit window, and the guild's single
+    /// time-to-live applies instead.
+    #[must_use]
+    pub fn ttl_for(&self, class: RetentionClass) -> Option<u64> {
+        match class {
+            RetentionClass::Session => self.session_ttl_ms,
+            RetentionClass::Operational => self.operational_ttl_ms,
+            RetentionClass::Durable => self.durable_ttl_ms,
+        }
+    }
+}
+
 /// Content-free description of one adapter memory write. Never the payload.
 ///
 /// `supersedes` and `forgets` are mutually exclusive and must each name a
@@ -551,7 +607,7 @@ impl EpisodeEvent {
 pub enum TerminalStatus {
     /// Operation completed.
     Completed,
-    /// Operation was compensated.
+    /// Operation was compensated with exact prior-state restoration observed.
     Compensated,
     /// Operation failed closed.
     Failed,
@@ -621,8 +677,119 @@ pub struct GuildEpisodePolicy {
     pub storage_budget_bytes: u64,
     /// Current active consent epoch for voice writes.
     pub current_consent_epoch: Option<u64>,
+    /// Retention time-to-live for `session` and `operational` candidates.
+    ///
+    /// The TTL is a duration in milliseconds. It is bound when the candidate
+    /// is admitted: the store records the deadline of that candidate once, so
+    /// a later policy change never rewrites the deadline of a record the
+    /// ledger already holds. `durable` candidates never expire, whatever this
+    /// says, and a `durable` candidate is never given a deadline.
+    ///
+    /// This is the *fallback* window: a class with an explicit entry in
+    /// [`Self::retention_windows`] uses that entry instead. See
+    /// [`Self::retention_ttl_for`] for the precedence rule.
+    ///
+    /// `None` means the guild configured no TTL: no candidate of that guild
+    /// ever expires, unless the class has an explicit window. The field is
+    /// optional, so a host policy that omits it keeps parsing and keeps its
+    /// previous meaning.
+    #[serde(default)]
+    pub retention_ttl_ms: Option<u64>,
+    /// Per-class retention windows.
+    ///
+    /// An explicit window for a class wins over the single
+    /// [`Self::retention_ttl_ms`], which stays the fallback for every class
+    /// without an explicit window. A class with neither never expires.
+    ///
+    /// The field is optional, so a host policy that omits it keeps parsing
+    /// and keeps its previous meaning: the single time-to-live applies to
+    /// every expiring class, exactly as before.
+    #[serde(default)]
+    pub retention_windows: Option<RetentionWindows>,
+    /// The principals this guild authorizes to act for it.
+    ///
+    /// The map is **guild-scoped**: it names the principals that may act as
+    /// authorities for *this* guild and for no other. A principal named here
+    /// is not authorized for any other guild, whatever class it carries.
+    ///
+    /// The field is optional and `#[serde(default)]`, so a host policy that
+    /// omits it keeps parsing and keeps its previous meaning.
+    ///
+    /// # The three states
+    ///
+    /// - `None` — the guild states no map. The store's class rule alone
+    ///   decides, exactly as before. This is a **compatibility behaviour,
+    ///   not a security guarantee**: a host that wants a guild closed to
+    ///   unknown principals has to name them.
+    /// - `Some(list)` with at least one entry — the map constrains the
+    ///   guild. An actor whose `principal_id` is not named is refused every
+    ///   governance action for this guild, whatever class it carries.
+    /// - `Some(vec![])` — an empty map constrains nobody, exactly like an
+    ///   absent map. An empty list is therefore *not* a closed guild; a host
+    ///   that means to close a guild names at least one principal.
+    ///
+    /// # The store-wide scope
+    ///
+    /// Naming a principal also *scopes* it: a principal that some guild's
+    /// map names holds no class-only authority anywhere else, so it is
+    /// refused for a guild whose policy names no map of its own. Without
+    /// that, naming the owner of one guild would leave that owner free to
+    /// act for every other guild — which is the hole this map exists to
+    /// close. The scope is derived from the whole policy when the store
+    /// opens, so a store whose policy names no principal anywhere keeps the
+    /// class rule alone, exactly as before.
+    ///
+    /// The map constrains the **principal**, never the class. A principal
+    /// named here is still refused an action its class forbids: a service may
+    /// never place a hold, revoke a candidate, or raise a budget.
+    ///
+    /// The map is host policy, not episode content. It is not bound into any
+    /// canonical commitment, so naming a principal never moves a committed
+    /// episode digest, and the frozen v3 record format is untouched.
+    #[serde(default)]
+    pub authorized_principals: Option<Vec<String>>,
 }
 
+impl GuildEpisodePolicy {
+    /// The retention window that applies to one retention class.
+    ///
+    /// The precedence is fixed and documented here, because it decides which
+    /// deadline a candidate is bound:
+    ///
+    /// 1. an explicit per-class window wins;
+    /// 2. the guild's single [`Self::retention_ttl_ms`] is the fallback;
+    /// 3. a class with neither has no window, and never expires.
+    ///
+    /// A `durable` candidate never expires, whatever the policy says, so
+    /// this returns `None` for it even when a durable window is configured.
+    #[must_use]
+    pub fn retention_ttl_for(&self, class: RetentionClass) -> Option<u64> {
+        if class == RetentionClass::Durable {
+            return None;
+        }
+        self.retention_windows
+            .as_ref()
+            .and_then(|windows| windows.ttl_for(class))
+            .or(self.retention_ttl_ms)
+    }
+
+    /// The principals this guild's own authority map names, if it names any.
+    ///
+    /// `None` means the guild states no map of its own. An absent map and an
+    /// empty map are the same state: both name nobody, and both leave the
+    /// guild to the store's class rule. See [`Self::authorized_principals`].
+    ///
+    /// The store-wide scope — a principal some guild names is confined to the
+    /// guilds that name it — is not visible here: it needs every guild's
+    /// policy, and the store applies it
+    /// (`store/authority.rs`).
+    #[must_use]
+    pub fn authorized_principal_list(&self) -> Option<&[String]> {
+        self.authorized_principals
+            .as_deref()
+            .filter(|principals| !principals.is_empty())
+    }
+}
 /// Exact contract and guild policy snapshot for one store session.
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(deny_unknown_fields)]

@@ -1,10 +1,4 @@
-import {
-  addNode,
-  log,
-  saveResource,
-  seedSpecimen,
-} from '@/lib/specimen/kernel';
-import { uid } from '@/lib/specimen/types';
+import { applyCommand, seedSpecimen } from '@/lib/specimen/kernel';
 import { WButton } from '@/components/wdbx';
 import {
   Dialog,
@@ -27,9 +21,15 @@ export function DialogHost({ m }: { m: StudioModel }) {
     setDialog,
     editing,
     pendingLoad,
+    pendingNetwork,
+    pendingSummary,
+    pendingKind,
+    confirmLoad,
     setStorageEnabled,
     setSelected,
     prompt,
+    nodePattern,
+    pushUndo,
     save,
     setRunOutcome,
     setTrace,
@@ -52,7 +52,9 @@ export function DialogHost({ m }: { m: StudioModel }) {
                 ? 'Edit memory'
                 : 'Add a memory'
               : dialog === 'load'
-                ? 'Load this specimen?'
+                ? pendingKind === 'specimen'
+                  ? 'Load this specimen?'
+                  : 'Create a specimen from this file?'
                 : dialog === 'attach'
                   ? 'Attach two nodes'
                   : 'Start a fresh specimen?'}
@@ -71,18 +73,17 @@ export function DialogHost({ m }: { m: StudioModel }) {
         {dialog === 'node' && (
           <NodeForm
             node={state.nodes.find((n) => n.ref === editing)}
-            defaultPattern={!editing ? prompt : ''}
+            defaultPattern={!editing ? (nodePattern ?? prompt) : ''}
             onSubmit={(value) => {
-              {
-                const next = addNode(state, value, editing);
-                const proposal = next.proposals.find(
-                  (p) => p.pattern === value.pattern,
-                );
-                if (proposal) proposal.status = 'learned';
-                commit(next);
-                setDialog(null);
-                announce(editing ? 'Node updated.' : 'Pattern learned.');
-              }
+              const applied = applyCommand(state, {
+                command: 'addNode',
+                input: value,
+                nodeRef: editing,
+              });
+              pushUndo(applied.undo);
+              commit(applied.state);
+              setDialog(null);
+              announce(applied.message);
             }}
           />
         )}
@@ -91,9 +92,15 @@ export function DialogHost({ m }: { m: StudioModel }) {
             resource={state.resources.find((r) => r.ref === editing)}
             state={state}
             onSubmit={(value) => {
-              commit(saveResource(state, value, editing));
+              const applied = applyCommand(state, {
+                command: 'saveResource',
+                input: value,
+                resourceRef: editing,
+              });
+              pushUndo(applied.undo);
+              commit(applied.state);
               setDialog(null);
-              announce('Memory saved.');
+              announce(applied.message);
             }}
           />
         )}
@@ -106,23 +113,26 @@ export function DialogHost({ m }: { m: StudioModel }) {
                 {pendingLoad.resources.length} memories ·{' '}
                 {pendingLoad.history.length} conversations
               </p>
+              {pendingSummary && (
+                <p className="m-0 mt-2 text-sm text-muted-foreground">
+                  {pendingSummary}
+                </p>
+              )}
+              {pendingNetwork ? (
+                <p className="m-0 mt-1 text-sm text-muted-foreground">
+                  {pendingNetwork.layers.length} layers · not trained
+                </p>
+              ) : (
+                <p className="m-0 mt-1 text-sm text-muted-foreground">
+                  Keeps the composition network already on this device.
+                </p>
+              )}
             </div>
             <div className="mt-4 flex flex-wrap justify-end gap-3">
               <WButton variant="outline" onClick={save}>
                 Save current specimen
               </WButton>
-              <WButton
-                variant="primary"
-                onClick={() => {
-                  setRunOutcome('idle');
-                  setTrace([]);
-                  commit(pendingLoad);
-                  setStorageEnabled(true);
-                  setDialog(null);
-                  setSelected('');
-                  announce('Specimen loaded.');
-                }}
-              >
+              <WButton variant="primary" onClick={() => void confirmLoad()}>
                 Load specimen
               </WButton>
             </div>
@@ -153,17 +163,18 @@ export function DialogHost({ m }: { m: StudioModel }) {
           <AttachmentForm
             state={state}
             onSave={(a) => {
-              const s = structuredClone(state);
-              s.attachments.push({ ...a, id: uid() });
-              log(
-                s,
-                'attachment',
-                'Nodes attached',
-                'A semantic handoff was configured.',
-              );
-              commit(s);
+              const applied = applyCommand(state, {
+                command: 'connect',
+                from: a.from,
+                to: a.to,
+                bidirectional: a.bidirectional,
+                hard: a.hard,
+                affinity: a.affinity,
+              });
+              pushUndo(applied.undo);
+              commit(applied.state);
               setDialog(null);
-              announce('Attachment added.');
+              announce(applied.message);
             }}
           />
         )}

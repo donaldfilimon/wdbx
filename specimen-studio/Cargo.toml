@@ -1,6 +1,7 @@
 [workspace]
-members = ["native/specimen-kernel", "native/specimen-core", "native/specimen-wasm", "src-tauri"]
+members = ["native/specimen-kernel", "native/specimen-core", "native/specimen-wasm", "native/specimen-tui", "src-tauri"]
 resolver = "2"
+default-members = ["src-tauri"]
 exclude = ["native/vendor/glib-0.18.5"]
 [workspace.dependencies]
 serde = { version = "1", features = ["derive"] }

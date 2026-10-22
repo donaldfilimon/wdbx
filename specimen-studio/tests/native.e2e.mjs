@@ -38,6 +38,7 @@ describe('Native specimen desktop', () => {
       'nav[aria-label="Main navigation"] a[href="?view=studio"]',
     ).waitForDisplayed();
     await $('nav[aria-label="Main navigation"] a[href="?view=studio"]').click();
+    await expect($('button=Run cycle')).toBeDisabled();
     await $('button=What is 2 + 2?').waitForDisplayed();
     await $('button=What is 2 + 2?').click();
     await expect($('.answer-text')).toHaveText('4');
@@ -245,27 +246,174 @@ describe('Native specimen desktop', () => {
       });
       let stale = 'accepted';
       try {
-        await call({ op: 'network', revision: snapshot.revision, network: snapshot.network });
+        await call({
+          op: 'network',
+          revision: snapshot.revision,
+          network: snapshot.network,
+        });
       } catch (e) {
         stale = e.code;
       }
       return { info, before: snapshot.revision, after: saved.revision, stale };
     });
     if (typeof result.info.revision !== 'number' || !result.info.auditDag.ok)
-      throw Error('storeInfo must report a revision and a verified audit DAG: ' + JSON.stringify(result.info));
-    if (result.info.snapshotKey && result.info.snapshotKey.key !== 'studio/snapshot')
+      throw Error(
+        'storeInfo must report a revision and a verified audit DAG: ' +
+          JSON.stringify(result.info),
+      );
+    if (
+      result.info.snapshotKey &&
+      result.info.snapshotKey.key !== 'studio/snapshot'
+    )
       throw Error('storeInfo must describe the studio snapshot key');
-    if (result.after !== result.before + 1) throw Error('network edit must advance the revision');
+    if (result.after !== result.before + 1)
+      throw Error('network edit must advance the revision');
     if (result.stale !== 'StaleRevision')
-      throw Error('a network edit at an old revision must be StaleRevision, got ' + result.stale);
+      throw Error(
+        'a network edit at an old revision must be StaleRevision, got ' +
+          result.stale,
+      );
     await $('nav[aria-label="Main navigation"] a[href="?view=store"]').click();
-    await expect($('main')).toHaveText(expect.stringContaining('Desktop · WDBX v2 journal'));
+    await expect($('main')).toHaveText(
+      expect.stringContaining('Desktop · WDBX v2 journal'),
+    );
     await $('nav[aria-label="Main navigation"] a[href="?view=lab"]').click();
     for (const tab of ['Image', 'Generate', 'Models'])
       await expect($(`button=${tab}`)).toBeDisplayed();
     await $('button=Models').click();
     await expect($('.model-card')).toBeDisplayed();
     evidence.scenarios.push('store-info-network-revision-lab-tabs');
+  });
+  it('teaches an unmatched prompt while preserving an unfinished composer draft', async () => {
+    await browser.refresh();
+    await $('nav[aria-label="Main navigation"] a[href="?view=studio"]').click();
+    const prompt = $('input#prompt');
+    const input = 'cobalt orchard lantern';
+    await prompt.setValue(input);
+    await $('button=Run cycle').click();
+    await $('button=Teach this prompt').waitForDisplayed();
+    await prompt.setValue('unfinished next question');
+    await $('button=Teach this prompt').click();
+    await expect($('#node-pattern')).toHaveValue(input);
+    await browser.keys('Escape');
+    await expect(prompt).toHaveValue('unfinished next question');
+    await $('button=Teach this prompt').click();
+    await $('#node-name').setValue('Orchard response');
+    await $('#node-action').setValue('A small lesson remembered.');
+    await $('button=Teach pattern').click();
+    await expect(prompt).toHaveValue('unfinished next question');
+    await prompt.setValue(input);
+    await $('button=Run cycle').click();
+    await expect($('.answer-text')).toHaveText('A small lesson remembered.');
+    await expect($('button=Teach this prompt')).not.toBeExisting();
+    await browser.waitUntil(async () =>
+      browser.tauri.execute(async () => {
+        const snapshot = await window.__wdbxTestCall({ op: 'snapshot' });
+        return (
+          snapshot.specimen.history.at(-1)?.segments[0]?.text ===
+          'A small lesson remembered.'
+        );
+      }),
+    );
+    await browser.refresh();
+    await expect($('.answer-text')).toHaveText('A small lesson remembered.');
+    evidence.scenarios.push('unmatched-teach-draft-preservation');
+  });
+  it('creates pending proposals when review sees repeated unmatched history', async () => {
+    await browser.refresh();
+    await browser.waitUntil(
+      async () => !(await $('body').getText()).includes('Opening workspace'),
+      { timeout: 30000 },
+    );
+    // Seed the Type B observer and repeated unmatched history through the
+    // instrumented bridge. The browser suite covers the same dialog path.
+    await browser.tauri.execute(async () => {
+      const snapshot = await window.__wdbxTestCall({ op: 'snapshot' });
+      const specimen = snapshot.specimen;
+      specimen.nodes.push({
+        ref: 'type-b-observer',
+        name: 'Repeat Observer',
+        patternId: 'observer',
+        resolution: 'low',
+        type: 'B',
+        contextId: '',
+        strength: 5,
+        jitter: false,
+        tone: 'neutral',
+        entries: [
+          {
+            id: 'observer-entry',
+            pattern: 'observer seed',
+            alternatives: [
+              {
+                id: 'observer-alt',
+                action: 'Tracks repeated unmatched inputs for proposals.',
+                inhibition: '',
+                weight: 1,
+                remixed: false,
+              },
+            ],
+          },
+        ],
+        createdAt: specimen.updatedAt,
+      });
+      const unmatched = (input, n) => ({
+        id: `unmatched-${input}-${n}`,
+        input,
+        status: 'unmatched',
+        segments: [],
+        votes: [],
+        trace: [],
+        feedback: [],
+        pinned: false,
+        createdAt: specimen.updatedAt,
+      });
+      specimen.history.push(
+        unmatched('zephyr probe alpha', 1),
+        unmatched('zephyr probe alpha', 2),
+        unmatched('zephyr probe beta', 1),
+        unmatched('zephyr probe beta', 2),
+      );
+      await window.__wdbxTestCall({
+        op: 'edit',
+        revision: snapshot.revision,
+        specimen,
+      });
+    });
+    const pending = await browser.tauri.execute(async () => {
+      const seeded = await window.__wdbxTestCall({ op: 'snapshot' });
+      const reviewed = await window.__wdbxTestCall({
+        op: 'review',
+        jobId: 'e2e-proposal-review',
+        revision: seeded.revision,
+      });
+      const rows = reviewed.snapshot?.specimen?.proposals ?? [];
+      return rows.filter((row) => row.status === 'pending').length;
+    });
+    if (pending < 2)
+      throw Error(`review must create pending proposals, got ${pending}`);
+    await browser.refresh();
+    await browser.waitUntil(
+      async () => !(await $('body').getText()).includes('Opening workspace'),
+      { timeout: 30000 },
+    );
+    await $(
+      'nav[aria-label="Main navigation"] a[href="?view=activity"]',
+    ).click();
+    const dismissAll = $('button=Dismiss all pending');
+    await dismissAll.waitForDisplayed({ timeout: 15000 });
+    await dismissAll.click();
+    await browser.waitUntil(
+      async () =>
+        (await browser.tauri.execute(async () => {
+          const snap = await window.__wdbxTestCall({ op: 'snapshot' });
+          return (snap.specimen.proposals ?? []).filter(
+            (row) => row.status === 'pending',
+          ).length;
+        })) === 0,
+      { timeout: 15000 },
+    );
+    evidence.scenarios.push('proposal-lifecycle-via-review');
   });
   it('searches a virtualized 100,000-record history', async () => {
     // Embedded direct-eval has its own short timeout. Poll the asynchronous

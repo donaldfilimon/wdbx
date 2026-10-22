@@ -25,6 +25,11 @@ export interface SpecimenNode {
   tone: Tone;
   entries: Entry[];
   createdAt: string;
+  /** Present only after a move. Absent means the view lays the node out. */
+  pinned?: boolean;
+  x?: number;
+  y?: number;
+  z?: number;
 }
 export interface Attachment {
   id: string;
@@ -132,6 +137,9 @@ export interface Proposal {
   pattern: string;
   evidence: number;
   status: 'pending' | 'learned' | 'dismissed';
+  pros?: string[];
+  cons?: string[];
+  observer?: string;
 }
 export interface Settings {
   gpu?: boolean;
@@ -157,6 +165,14 @@ export interface Settings {
   transientWidth: number;
   seed: number;
 }
+export interface Note {
+  id: string;
+  title: string;
+  body: string;
+  tags: string[];
+  createdAt: string;
+  updatedAt: string;
+}
 export interface Specimen {
   schema: 'wdbx.studio.v1';
   name: string;
@@ -170,6 +186,8 @@ export interface Specimen {
   atp: { valence: number; intensity: number; lastUpdate: number };
   settings: Settings;
   updatedAt: string;
+  /** Absent on specimens saved before notes existed. */
+  notes?: Note[];
 }
 export const SUBSYSTEMS = [
   'dictionary',

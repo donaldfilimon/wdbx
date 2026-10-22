@@ -99,3 +99,10 @@ export function unwrap<T>(reply: KernelReply): T {
     throw new KernelError(reply.error.code, reply.error.message);
   return reply.ok as T;
 }
+
+/** Code and message, the form every command surface shows. */
+export function formatKernelError(error: unknown): string {
+  if (error instanceof KernelError) return `${error.code}: ${error.message}`;
+  if (error instanceof Error) return error.message;
+  return 'This action could not complete.';
+}

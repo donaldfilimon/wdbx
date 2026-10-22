@@ -21,7 +21,7 @@ excludes it, and wdbx's `tools/check.sh` does not build or test it.
 
 ## Build, Test, and Development Commands
 
-Use Bun, Node.js 22.13+, and `nightly-2026-09-01` from `rust-toolchain.toml`.
+Use Bun, Node.js 22.13+, and stable Rust `1.99.1` from `rust-toolchain.toml`.
 Bun is the runtime wherever it has been proven (2026-09-29 spike, recorded in
 `VALIDATION.md`): `bun run build` (vinext), `desktop:dev`/`desktop:build` (Vite),
 `desktop:package` (Tauri CLI) and `test:browser` (Playwright) run with `bun --bun`
@@ -38,6 +38,7 @@ CI uses Bun 1.4.0; dependency resolutions live in `bun.lock` and `Cargo.lock`.
 - `bunx tsc --noEmit`: check TypeScript types.
 - `bun run lint:studio`: lint studio/runtime code; `bun run lint` checks the broader project.
 - `bun run desktop`: launch Tauri; first build inference binaries with `python3 scripts/build-runtimes.py`.
+- `cargo run --locked`: build and launch the embedded desktop app without a dev server; automatically builds WASM, Vite assets and missing inference executables. Nested WASM compilation uses `target/desktop-wasm` to avoid the outer Cargo lock. `bun run desktop` disables the default `custom-protocol` feature for live reload.
 - `bun run desktop:package`: package the desktop application.
 - `bun run test:native`: `cargo test --locked` over `specimen-kernel`, `specimen-core` and `specimen-wasm`; `bun run check:native` runs workspace Clippy with warnings denied.
 - `bun run build:wasm`: release-build the kernel probe for `wasm32-unknown-unknown` (target installed by `rustup`); `bun test` needs it for `tests/wasm-probe.test.js`, so `bun run check` runs it first.
@@ -75,6 +76,27 @@ before touching `node_modules`, `.wrangler`, or `.next`.
   Rust 1.99.1 rejects (E0554). The local crates are the source that builds on
   that compiler. Do not change the wdbx crates, ABI, or Abbey to implement this
   studio's runtime behavior.
+- `native/specimen-core/src/canonical/` is the studio's adapter over the
+  substrate's v3 episode ledger, and `native/specimen-core/src/persistence/canonical.rs`
+  is the write-through that uses it. The adapter is OPT-IN at the store level
+  (`persistence::Store::open_with_canonical`): the default store, the desktop
+  app and the TUI still open the plain store. The studio records under one
+  scope (`studio_workspace`), its candidates are not per-member
+  (`member_scoped` is false), and it binds its own contract digest
+  (`canonical::contract_digest()`), not the Abbey corpus. The episode sources
+  are the studio's own: `LocalRuntime` for an edit or an erasure,
+  `Proposal` for a learned fact, so a learned proposal reads `Uncertain` by
+  design and never `Accepted`. The studio's snapshot is a projection of the
+  ledger there — `Store::rebuild_from_ledger` reconstructs the document from
+  the ledger, and a content blob the studio no longer holds is a declared
+  gap, never a partial document. The ledger is opened UNSIGNED, so every
+  episode's cryptographic dimension reads `Unsigned`, and it is one local
+  writer: the substrate's v3 profile is unratified, and no quorum, no
+  federation and no cross-language verification stand behind these episodes.
+  The declared losses are `canonical::LossManifest` for the native edition
+  (`native/specimen-core/src/canonical/manifest.rs`) and
+  `lib/specimen/canonical-loss.json` for the browser edition, which has no
+  ledger at all.
 - Keep the root Cargo GLib patch and its attribution/safety rationale in
   `native/vendor/README.md`; the vendored crate is excluded from the workspace.
 - `scripts/build-runtimes.py` downloads pinned sources and compiles local CPU

@@ -14,8 +14,8 @@ use abi_foundation::http::{
 };
 use serde_json::{Value, json};
 use std::fmt::Write as _;
-use std::io;
-use std::net::{Ipv4Addr, SocketAddrV4, TcpListener, TcpStream};
+use std::io::{self, Read as _};
+use std::net::{Ipv4Addr, Shutdown, SocketAddrV4, TcpListener, TcpStream};
 use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::mpsc;
@@ -441,12 +441,22 @@ fn reap_workers(workers: &mut Vec<thread::JoinHandle<io::Result<()>>>) {
 }
 
 fn reject_overloaded(stream: &mut TcpStream, stop: &AtomicBool) -> io::Result<()> {
-    let _ = read_request(
-        &mut DeadlineReader::with_stop(stream, stop, OVERLOAD_READ_DEADLINE),
-        MAX_REQUEST_SIZE,
-    );
     stream.set_write_timeout(Some(OVERLOAD_WRITE_TIMEOUT))?;
-    write_all(stream, OVERLOADED)
+    write_all(stream, OVERLOADED)?;
+    // Send FIN before discarding input: closing with unread request bytes can
+    // otherwise reset TCP and erase the 503. Never parse or route this input.
+    stream.shutdown(Shutdown::Write)?;
+    let mut reader = DeadlineReader::with_stop(stream, stop, OVERLOAD_READ_DEADLINE);
+    let mut buffer = [0; 4096];
+    let mut remaining = MAX_REQUEST_SIZE;
+    while remaining > 0 {
+        let limit = remaining.min(buffer.len());
+        match reader.read(&mut buffer[..limit]) {
+            Ok(0) | Err(_) => break,
+            Ok(count) => remaining -= count,
+        }
+    }
+    Ok(())
 }
 
 fn handle_connection(

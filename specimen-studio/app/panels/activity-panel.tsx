@@ -8,24 +8,51 @@ import {
   ToolbarSpacer,
   WButton,
 } from '@/components/wdbx';
+import { Badge } from '@/components/ui/badge';
+import { type AgentAudit } from '@/lib/specimen/agent-policy';
 import { type Specimen } from '@/lib/specimen/types';
+import { AgentDesk } from './agent-desk';
 
 export function ActivityView({
   state,
   onMaintenance,
   onLearn,
   onReview,
+  onDismiss,
+  onReconsider,
+  onDismissAll,
+  onReconsiderAll,
+  agentAsk,
+  agentLog,
+  onApprove,
+  onDecline,
   busy,
 }: {
   state: Specimen;
   onMaintenance: (m: 'phagy' | 'mutation') => void;
   onLearn: (pattern: string) => void;
   onReview: () => void;
+  onDismiss?: (id: string) => void;
+  onReconsider?: (id: string) => void;
+  onDismissAll?: () => void;
+  onReconsiderAll?: () => void;
+  agentAsk?: string | null;
+  agentLog?: AgentAudit[];
+  onApprove?: () => void;
+  onDecline?: () => void;
   busy: boolean;
 }) {
-  const pending = state.proposals.filter((p) => p.status === 'pending');
+  const proposals = state.proposals;
   return (
     <div className="grid gap-4">
+      <AgentDesk
+        state={state}
+        agentAsk={agentAsk ?? null}
+        audit={agentLog ?? []}
+        busy={busy}
+        onApprove={onApprove}
+        onDecline={onDecline}
+      />
       <Toolbar label="Activity actions">
         <WButton disabled={busy} onClick={onReview}>
           <Search size={16} />
@@ -44,24 +71,105 @@ export function ActivityView({
           Run PHAGY
         </WButton>
       </Toolbar>
-      {pending.length > 0 && (
+      {proposals.length > 0 && (
         <Panel title="Learning proposals">
+          <div className="px-4 py-1 text-xs text-muted-foreground">
+            {proposals.filter((p) => p.status === 'pending').length} pending ·{' '}
+            {proposals.filter((p) => p.status === 'learned').length} learned ·{' '}
+            {proposals.filter((p) => p.status === 'dismissed').length} dismissed
+          </div>
+          <div className="flex gap-2 px-4 pb-2">
+            {proposals.some((p) => p.status === 'pending') && onDismissAll && (
+              <WButton
+                variant="outline"
+                onClick={() => onDismissAll()}
+                disabled={busy}
+              >
+                Dismiss all pending
+              </WButton>
+            )}
+            {proposals.some((p) => p.status === 'dismissed') &&
+              onReconsiderAll && (
+                <WButton
+                  variant="outline"
+                  onClick={() => onReconsiderAll()}
+                  disabled={busy}
+                >
+                  Reconsider all dismissed
+                </WButton>
+              )}
+          </div>
           <ul className="m-0 list-none divide-y divide-line p-0">
-            {pending.map((p) => (
+            {proposals.map((p) => (
               <li
                 key={p.id}
                 className="flex flex-wrap items-center gap-3 px-4 py-3"
               >
                 <div className="min-w-0 flex-1">
                   <strong className="text-sm text-ink">{p.pattern}</strong>
+                  <Badge
+                    variant={
+                      p.status === 'pending'
+                        ? 'default'
+                        : p.status === 'dismissed'
+                          ? 'outline'
+                          : 'secondary'
+                    }
+                    className="ml-2 text-[10px]"
+                  >
+                    {p.status}
+                  </Badge>
                   <p className="m-0 text-sm text-ink-soft">
-                    {p.evidence} unmatched prompts suggest a missing pattern.
-                    Supply its response to approve learning.
+                    {p.evidence} unmatched prompts.{' '}
+                    {p.status === 'pending'
+                      ? 'Supply response to learn.'
+                      : p.status === 'dismissed'
+                        ? 'Dismissed from suggestions.'
+                        : 'Learned.'}
                   </p>
+                  {(p.pros?.length || p.cons?.length) && (
+                    <div className="mt-1 text-[10px] text-muted-foreground">
+                      {p.pros?.length ? (
+                        <span>Pros: {p.pros.join(', ')} </span>
+                      ) : null}
+                      {p.cons?.length ? (
+                        <span>Cons: {p.cons.join(', ')}</span>
+                      ) : null}
+                    </div>
+                  )}
+                  {p.observer && (
+                    <div className="mt-0.5 text-[10px] text-muted-foreground">
+                      Observer: {p.observer}
+                    </div>
+                  )}
                 </div>
-                <WButton variant="primary" onClick={() => onLearn(p.pattern)}>
-                  Review & learn
-                </WButton>
+                {p.status === 'pending' && (
+                  <>
+                    <WButton
+                      variant="primary"
+                      onClick={() => onLearn(p.pattern)}
+                      disabled={busy}
+                    >
+                      Review & learn
+                    </WButton>
+                    <WButton
+                      variant="outline"
+                      onClick={() => onDismiss?.(p.id)}
+                      disabled={busy}
+                    >
+                      Dismiss
+                    </WButton>
+                  </>
+                )}
+                {p.status === 'dismissed' && onReconsider && (
+                  <WButton
+                    variant="outline"
+                    onClick={() => onReconsider(p.id)}
+                    disabled={busy}
+                  >
+                    Reconsider
+                  </WButton>
+                )}
               </li>
             ))}
           </ul>

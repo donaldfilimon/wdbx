@@ -2,7 +2,7 @@
 //! a new network that passes `Network::validate`, or `InvalidNetwork`.
 use crate::neural::{Layer, Network, Rng};
 use crate::{Error, Result, error};
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 /// Input features the first layer reads (`neural::encode`).
 pub const INPUTS: usize = 128;
@@ -12,7 +12,7 @@ pub const MAX_LAYERS: usize = 8;
 pub const MAX_OUTPUTS: usize = 1024;
 pub const MAX_WEIGHTS: usize = 131_072;
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(
     tag = "command",
     rename_all = "camelCase",

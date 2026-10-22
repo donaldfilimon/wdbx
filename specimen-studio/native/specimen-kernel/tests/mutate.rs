@@ -4,7 +4,9 @@ use specimen_kernel::{
     host::FixedHost,
     language,
     mutate::{self, NodeInput, ResourceInput},
+    neural::Network,
 };
+use std::sync::atomic::AtomicBool;
 
 fn seeded() -> (FixedHost, Value) {
     let fixed = FixedHost::default();
@@ -26,8 +28,27 @@ fn seed_is_a_valid_native_specimen() {
     let (_, s) = seeded();
     engine::validate(&s).unwrap();
     assert_eq!(s["schema"], "wdbx.studio.v1");
-    assert_eq!(s["nodes"].as_array().unwrap().len(), 8);
-    assert_eq!(s["resources"].as_array().unwrap().len(), 12);
+    assert_eq!(s["nodes"].as_array().unwrap().len(), 15);
+    assert_eq!(s["resources"].as_array().unwrap().len(), 20);
+    let names: Vec<_> = s["nodes"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|n| n["name"].as_str().unwrap())
+        .collect();
+    assert_eq!(
+        &names[..8],
+        [
+            "Calculate",
+            "Greeting",
+            "Repeat",
+            "Time",
+            "Recall",
+            "Imagine",
+            "Tone",
+            "Negation",
+        ]
+    );
     assert_eq!(s["nodes"][0]["strength"], 6);
     assert_eq!(s["nodes"][1]["tone"], "warm");
     for n in s["nodes"].as_array().unwrap() {
@@ -46,6 +67,34 @@ fn seed_is_a_valid_native_specimen() {
     );
     assert_eq!(s["events"].as_array().unwrap().len(), 1);
     assert_eq!(s["events"][0]["title"], "Starter specimen created");
+    assert_eq!(
+        s["events"][0]["detail"],
+        "15 nodes and 20 supporting memories. The first eight patterns are unchanged."
+    );
+    assert_eq!(s["nodes"][14]["type"], "B");
+}
+
+#[test]
+fn starter_still_calculates_and_answers_who_it_is() {
+    let (fixed, s) = seeded();
+    let network = Network::default();
+    let cancel = AtomicBool::new(false);
+    let (_, cycle) = engine::cycle(
+        &fixed.host(),
+        &s,
+        "What is 2 + 2?",
+        &network,
+        &cancel,
+        &|_| {},
+    )
+    .unwrap();
+    assert_eq!(cycle["segments"][0]["text"], "4");
+    let (_, cycle) =
+        engine::cycle(&fixed.host(), &s, "who are you", &network, &cancel, &|_| {}).unwrap();
+    assert_eq!(
+        cycle["segments"][0]["text"],
+        "I am Specimen 001, a pattern specimen stored on this device."
+    );
 }
 
 #[test]
@@ -138,7 +187,7 @@ fn remove_node_drops_attachments_and_orphaned_links() {
         json!([{"id":"x","from":a,"to":b,"bidirectional":false,"hard":false,"affinity":0.5}]);
     let recall = s["nodes"][4]["ref"].as_str().unwrap().to_owned();
     let next = mutate::remove_node(&h, &s, a.as_str().unwrap());
-    assert_eq!(next["nodes"].as_array().unwrap().len(), 7);
+    assert_eq!(next["nodes"].as_array().unwrap().len(), 14);
     assert!(next["attachments"].as_array().unwrap().is_empty());
     let next = mutate::remove_node(&h, &next, &recall);
     assert!(
@@ -236,9 +285,10 @@ fn feedback_removes_nodes_that_reach_zero() {
         .map(|n| n["ref"].clone())
         .collect();
     with_cycle(&mut s, json!(refs));
+    let before = s["nodes"].as_array().unwrap().len();
     let (next, _) = mutate::feedback(&h, &s, "c1", false, None).unwrap();
     let left = next["nodes"].as_array().unwrap();
-    assert!(left.len() < 8, "some coin flips must land");
+    assert!(left.len() < before, "some coin flips must land");
     assert!(left.iter().all(|n| n["strength"].as_f64().unwrap() > 0.));
 }
 
@@ -368,7 +418,7 @@ fn migrate_splits_entries_that_no_longer_share_a_pattern_id() {
     legacy_recall(&mut s);
     let next = mutate::migrate_ids(&h, &s);
     let nodes = next["nodes"].as_array().unwrap();
-    assert_eq!(nodes.len(), 9);
+    assert_eq!(nodes.len(), 16);
     let recall = &nodes[4];
     assert_eq!(recall["entries"].as_array().unwrap().len(), 1);
     let split = nodes

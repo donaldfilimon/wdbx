@@ -1,0 +1,48 @@
+{
+  "scope": "Reviewed Python-only bounded private prototype; Rust differential integration pending",
+  "files": [
+    {
+      "path": "tools/wdbx_complete_episode_decode.py",
+      "sha256": "a10ae43b463cecd892af203583977c129554a5e8b67a11015f436f8cfa42bd2b"
+    },
+    {
+      "path": "tools/wdbx_complete_episode_decode_ingress.py",
+      "sha256": "da22b337074c4435570b29135e2aa4786b9db5bcfe143013dbebd9a5eac916cb"
+    },
+    {
+      "path": "tools/wdbx_complete_episode_decode_values.py",
+      "sha256": "de246ff7954a0b3b145d1d1478e70666bb90bf7b7bda90b8ebe843781a6457f4"
+    },
+    {
+      "path": "tools/wdbx_complete_episode_decode_validate.py",
+      "sha256": "669feef4e72582364000edd1c5098acb01ef5467c519baf459afc3a51580660a"
+    },
+    {
+      "path": "tools/tests/test_wdbx_complete_episode_decode.py",
+      "sha256": "505d765ddcebdca59270daae4239f7fdc362d7acd1bc70dad193f15dfc83b502"
+    },
+    {
+      "path": "tools/tests/test_wdbx_complete_episode_decode_ingress.py",
+      "sha256": "14b7db36ed4a9760b5797ef1327325579f59d08fac8de44b8200b6d8ab234037"
+    },
+    {
+      "path": "tools/tests/test_wdbx_complete_episode_decode_protocol.py",
+      "sha256": "7635aff119af71c4ea91ae78ba276112064ad72e4f9012e674b98756125efda6"
+    },
+    {
+      "path": "tools/tests/test_wdbx_complete_episode_decode_validate.py",
+      "sha256": "41c75713aaf91c71c648d44e942a80f58a978c41b2caf356fb6b0484ad01092e"
+    },
+    {
+      "path": "tools/tests/test_wdbx_complete_episode_decode_values.py",
+      "sha256": "9a9886eae073d863bd0c48efc6f928dd6d80ac4760bdb82b13039a9ed57dcb28"
+    }
+  ],
+  "focused_regression_methods": 52,
+  "stage_counts": {
+    "ingress": 10,
+    "values": 18,
+    "relations": 13,
+    "final": 11
+  }
+}

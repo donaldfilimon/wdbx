@@ -5,7 +5,7 @@ edition = "2024"
 [build-dependencies]
 tauri-build = { version = "2", features = [] }
 [dependencies]
-tauri = { version = "2", features = [] }
+tauri = { version = "2", features = ["macos-private-api"] }
 specimen-core = { path = "../native/specimen-core" }
 serde.workspace = true
 serde_json.workspace = true
@@ -13,6 +13,7 @@ uuid.workspace = true
 tauri-plugin-dialog = "2"
 
 [features]
+default = ["custom-protocol"]
 custom-protocol = ["tauri/custom-protocol"]
 e2e = ["dep:tauri-plugin-wdio", "dep:tauri-plugin-wdio-webdriver"]
 [dependencies.tauri-plugin-wdio]

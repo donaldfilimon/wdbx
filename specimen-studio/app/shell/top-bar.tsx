@@ -23,6 +23,7 @@ export function TopBar({
   openPalette,
   dockOpen,
   toggleDock,
+  onOpenActivity,
 }: {
   view: View;
   model: StudioModel;
@@ -32,10 +33,16 @@ export function TopBar({
   openPalette: () => void;
   dockOpen: boolean;
   toggleDock: () => void;
+  onOpenActivity: () => void;
 }) {
   const { state, busy, openDialog, setDialogReturn, fileRef, save } = model;
+  const pendingProposals =
+    view === 'studio'
+      ? state.proposals.filter((p) => p.status === 'pending').length
+      : 0;
   return (
-    <header className="page-header">
+    <header className="page-header native-toolbar">
+      <div className="native-drag" data-tauri-drag-region aria-hidden="true" />
       <div className="heading-wrap">
         <button
           ref={mobileMenuRef}
@@ -59,72 +66,92 @@ export function TopBar({
               </span>
             )}
           </div>
-          <p>{labels[view][1]}</p>
+          <p className="toolbar-status">{labels[view][1]}</p>
         </div>
       </div>
       <div className="header-actions">
-        <button
-          className="button utility palette-trigger"
-          aria-label="Search or run a command"
-          aria-keyshortcuts="Meta+K Control+K"
-          onClick={openPalette}
-        >
-          <Search size={16} />
-          <span>Commands</span>
-          <kbd>⌘K</kbd>
-        </button>
-        <button
-          className="button utility icon-only"
-          aria-label={dockOpen ? 'Hide activity dock' : 'Show activity dock'}
-          aria-pressed={dockOpen}
-          title="Activity dock (`)"
-          onClick={toggleDock}
-        >
-          <PanelBottom size={17} />
-        </button>
-        {view === 'specification' ? (
-          <a
-            className="button outline"
-            href="/WDBX-Specimen-Architecture-Specification.md"
-            download
+        <div className="toolbar-cluster">
+          <button
+            className="button utility palette-trigger"
+            aria-label="Search or run a command"
+            aria-keyshortcuts="Meta+K Control+K"
+            onClick={openPalette}
           >
-            <ArrowDownToLine size={17} />
-            Download Markdown
-          </a>
-        ) : (
-          <>
-            {view === 'studio' && (
-              <button
-                className="button utility starter-action"
-                aria-label="Reset to starter specimen"
-                onClick={() => openDialog('reset')}
-              >
-                <RotateCcw size={16} />
-                <span>Starter</span>
-              </button>
-            )}
+            <Search size={16} />
+            <span>Commands</span>
+            <kbd>⌘K</kbd>
+          </button>
+          {pendingProposals > 0 && (
             <button
+              type="button"
               className="button utility"
-              aria-label="Load specimen"
-              onClick={(event) => {
-                setDialogReturn(event.currentTarget);
-                fileRef.current?.click();
-              }}
-              disabled={busy}
+              aria-label={`${pendingProposals} pending learning proposals`}
+              title="Open Activity to review, dismiss, or teach"
+              onClick={onOpenActivity}
             >
-              <Upload size={17} />
-              <span>Load</span>
+              <span className="nav-count toolbar-count">
+                {pendingProposals}
+              </span>
+              <span>Review</span>
             </button>
-            <button
+          )}
+          <button
+            className="button utility icon-only"
+            aria-label={dockOpen ? 'Hide activity dock' : 'Show activity dock'}
+            aria-pressed={dockOpen}
+            title="Activity dock (`)"
+            onClick={toggleDock}
+          >
+            <PanelBottom size={17} />
+          </button>
+        </div>
+        <div className="toolbar-cluster">
+          {view === 'specification' ? (
+            <a
               className="button outline"
-              aria-label="Save specimen"
-              onClick={save}
+              href="/WDBX-Specimen-Architecture-Specification.md"
+              download
             >
-              <Save size={17} />
-              <span>Save specimen</span>
-            </button>
-          </>
-        )}
+              <ArrowDownToLine size={17} />
+              Download Markdown
+            </a>
+          ) : (
+            <>
+              {view === 'studio' && (
+                <button
+                  className="button utility starter-action"
+                  aria-label="Reset to starter specimen"
+                  onClick={() => openDialog('reset')}
+                >
+                  <RotateCcw size={16} />
+                  <span>Starter</span>
+                </button>
+              )}
+              <button
+                className="button utility"
+                aria-label="Load specimen"
+                onClick={(event) => {
+                  setDialogReturn(event.currentTarget);
+                  fileRef.current?.click();
+                }}
+                disabled={busy}
+              >
+                <Upload size={17} />
+                <span>Load</span>
+                <kbd>⌘O</kbd>
+              </button>
+              <button
+                className="button outline"
+                aria-label="Save specimen"
+                onClick={save}
+              >
+                <Save size={17} />
+                <span>Save specimen</span>
+                <kbd>⌘S</kbd>
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </header>
   );

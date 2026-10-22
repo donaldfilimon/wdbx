@@ -33,6 +33,7 @@ function accessibilityWidth(width) {
     'network-layers',
     'network-topology',
     'lab-browser',
+    'notes',
   ];
   if (width === 390) states.push('mobile-drawer');
   if (width === 1440) states.push('split-studio-nodes');

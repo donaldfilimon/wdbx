@@ -1,0 +1,6 @@
+# Overrides the repository-root aliases, whose manifest path is relative to
+# the wdbx checkout root and would miss from inside this workspace.
+[alias]
+studio = "run --locked -p wdbx-studio-desktop"
+studio-build = "build --locked -p wdbx-studio-desktop"
+studio-test = "test --locked --workspace"

@@ -16,11 +16,14 @@ function safeStorage(): Storage | undefined {
 }
 // index.html ships class="dark" (the default); CSP forbids an inline boot script.
 applyTheme(document.documentElement, resolveTheme(safeStorage()));
+document.documentElement.classList.add('native-app');
 async function mount() {
   if (import.meta.env.VITE_NATIVE_E2E === '1') {
     await import('@wdio/tauri-plugin');
     const { callNative } = await import('../lib/specimen/native');
-    (window as unknown as {__wdbxTestCall:typeof callNative}).__wdbxTestCall=callNative;
+    (
+      window as unknown as { __wdbxTestCall: typeof callNative }
+    ).__wdbxTestCall = callNative;
   }
   createRoot(document.getElementById('root')!).render(<Studio />);
 }

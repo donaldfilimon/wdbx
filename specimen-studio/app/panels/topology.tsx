@@ -179,12 +179,14 @@ export function NodeInspector({
   maxStrength,
   onEdit,
   onJitter,
+  mentions = [],
 }: {
   node?: SpecimenNode;
   vote?: Vote;
   maxStrength: number;
   onEdit: () => void;
   onJitter: () => void;
+  mentions?: { id: string; title: string }[];
 }) {
   if (!node)
     return (
@@ -242,6 +244,21 @@ export function NodeInspector({
           {vote?.action ?? node.entries[0]?.alternatives[0]?.action}
         </div>
       </div>
+      <section
+        className="inspector-section"
+        aria-label="Notes that mention this node"
+      >
+        <span className="inspector-label">Notes</span>
+        {mentions.length === 0 ? (
+          <p className="muted">No notes mention this node.</p>
+        ) : (
+          <ul className="m-0 list-none p-0">
+            {mentions.map((mention) => (
+              <li key={mention.id}>{mention.title}</li>
+            ))}
+          </ul>
+        )}
+      </section>
       <div className="inspector-section">
         <div className="switch-label">
           Jitter enabled

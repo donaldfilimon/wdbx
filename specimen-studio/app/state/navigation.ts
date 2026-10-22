@@ -2,6 +2,7 @@ export type View =
   | 'studio'
   | 'nodes'
   | 'memory'
+  | 'notes'
   | 'network'
   | 'activity'
   | 'engine'
@@ -15,6 +16,7 @@ export const VIEWS: readonly View[] = [
   'studio',
   'nodes',
   'memory',
+  'notes',
   'network',
   'activity',
   'engine',
