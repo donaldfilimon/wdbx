@@ -1,0 +1,167 @@
+{
+  "version": 1,
+  "recorded_date": "2026-10-20",
+  "repositories": {
+    "wdbx": {
+      "head": "b932b219c4771f048c45b1714c3708e749ccc702",
+      "dirty_paths": [
+        " M crates/abi-compute/src/cpu.rs",
+        "?? docs/completion/"
+      ]
+    },
+    "abi": {
+      "head": "cf3d9a425560a8223f476663ec45551d81efcf2c",
+      "dirty_paths": [
+        " M .agents/skills/abi-claims-validator/SKILL.md",
+        " M .agents/skills/abi-doc-claims-sync/references/claim-boundaries.md",
+        " M .agents/skills/abi-goal-orchestrator/SKILL.md",
+        " M .agents/skills/abi-skills/SKILL.md",
+        " M .agents/skills/agent-plan-train/SKILL.md",
+        " M .agents/skills/agent-plan/SKILL.md",
+        " M .agents/skills/auth-localcheck/SKILL.md",
+        " M .agents/skills/donald-mode/SKILL.md",
+        " M .agents/skills/goals/SKILL.md",
+        " M .agents/skills/modern-patterns/SKILL.md",
+        " M .agents/skills/run-abi/SKILL.md",
+        " M .agents/skills/run-tui/SKILL.md",
+        " M .agents/skills/scheduler-status/SKILL.md",
+        " M .agents/skills/sync-clis/SKILL.md",
+        " M .agents/skills/wdbx-api-serve/SKILL.md",
+        " M .agents/skills/wdbx-roundtrip/SKILL.md",
+        " M .claude/settings.json",
+        " M .codex/hooks.json",
+        " M .github/copilot-instructions.md",
+        " M .github/workflows/ci.yml",
+        " M AGENTS.md",
+        " M CLAUDE.md",
+        " M Cargo.lock",
+        " M GEMINI.md",
+        " M README.md",
+        " M crates/abi-agent-host/Cargo.toml",
+        " M crates/abi-agent-host/src/host.rs",
+        " M crates/abi-agent-host/src/lib.rs",
+        " M crates/abi-capability/Cargo.toml",
+        " M crates/abi-capability/src/kernel.rs",
+        " M crates/abi-capability/src/lib.rs",
+        " M crates/abi-capability/src/recording.rs",
+        " M crates/abi-capability/src/types.rs",
+        " M crates/abi-capability/tests/privacy_replay.rs",
+        " M docs/contracts/external-claims-audit.mdx",
+        " M docs/index.mdx",
+        " M docs/spec/agent-wdbx-architecture.mdx",
+        " M docs/spec/wdbx-north-star.mdx",
+        " M rust-toolchain.toml",
+        " M tasks/goals.md",
+        " M tasks/lessons.md",
+        " M tasks/todo.md",
+        " M tools/cargo.sh",
+        " M tools/check.sh",
+        " M tools/tests/test_ci_contract.py",
+        "?? .claude/hooks/format-rust.sh",
+        "?? .claude/hooks/skill-loop.sh",
+        "?? crates/abi-agent-host/src/governed.rs",
+        "?? crates/abi-agent-host/tests/governed.rs",
+        "?? crates/abi-capability/src/lifecycle.rs",
+        "?? crates/abi-capability/src/source.rs",
+        "?? crates/abi-capability/tests/lifecycle.rs",
+        "?? crates/abi-capability/tests/source.rs",
+        "?? crates/abi-gpu/tests/",
+        "?? docs/superpowers/plans/2026-10-20-abi-stable-source-completion.md",
+        "?? docs/superpowers/specs/2026-10-20-abi-stable-source-completion-design.md",
+        "?? tools/tests/test_hooks.py",
+        "?? tools/tests/test_toolchain.py",
+        "?? tools/toolchain_policy.py"
+      ]
+    },
+    "abbey": {
+      "head": "f81e2ecfa75173257d466c4ecb220cabe3622dbf",
+      "dirty_paths": [
+        " M Cargo.lock",
+        " M Cargo.toml",
+        " M docs/tui-reliability.md",
+        " M src/runtime/migrations.rs",
+        " M src/runtime/store.rs",
+        " M src/runtime/store/tool_approval.rs",
+        " M src/runtime/store/tool_execution.rs",
+        " M tasks/goals.md",
+        " M tests/learn_distill.rs",
+        " M tools/tests/smoke_tui_slash_pty.py",
+        "?? docs/superpowers/plans/2026-10-20-rust-finishing.md",
+        "?? docs/verification/",
+        "?? src/runtime/migration_8_governed_tools.sql",
+        "?? src/runtime/store/governed.rs",
+        "?? src/runtime/store/governed/"
+      ]
+    }
+  },
+  "source_hashes": {
+    "crates/abi-wdbx/src/v3/episode/store.rs": "478c661966398964ca7cb0ba2e12df573129f115919c9618b1fe7a137c463381",
+    "crates/abi-wdbx/src/v3/episode/signing.rs": "08882f5e3d8a462d6c2de5fbe2442baae13e1b3114e981a270dbb60a2157862a",
+    "crates/abi-wdbx/src/v3/episode/store/validate.rs": "fedab0d4517179602261faf089419c400b98e31a123e3515aa310b219e0ab042",
+    "specimen-studio/native/specimen-kernel/src/language.rs": "d9682c1a5ce3ee27f0bdca9da0b9d208a695c95089bc478875d482a9543aaccc",
+    "specimen-studio/native/specimen-kernel/src/neural.rs": "5d41289e95492839875d1ed0b8507156636ec14d485f39e161e724d368d3fdf1",
+    "specimen-studio/native/specimen-kernel/src/engine.rs": "98ce45326436b9ed580a9aaa9f41ab2090f2d3f685fcaea50be0eca86a6ccba2",
+    "specimen-studio/native/specimen-core/src/vision.rs": "09cd5de6a09aa9f293ea4d35666f6d8645d8681122cac4ebc67d02373d071f64",
+    "tools/check.sh": "7a5661395e09a180164ca0c5fba7ba45da7ecd9bd648190c9c3fc9d4ac0a5a6e",
+    "specimen-studio/package.json": "4f57c95cbc8eb6cb0c1155d51acd4721c931b095630c26dd081709414abeb2ac"
+  },
+  "gates": [
+    {
+      "scope": "WDBX",
+      "command": "bash tools/check.sh",
+      "result": "controller-reported exit 0: 647 passed, 0 failed, 0 ignored across 24 summaries; contracts author did not rerun",
+      "reported_log": "/tmp/wdbx-20261020-baseline.log",
+      "qualification": "local baseline only; log remains ephemeral and is not a durable evidence receipt"
+    },
+    {
+      "scope": "Studio",
+      "command": "bun run check && bun run lint && bun run test:native && bun run check:native",
+      "result": "not run by Task 1 contracts author"
+    },
+    {
+      "scope": "FHE",
+      "command": "cargo test -p abi-wdbx --features full-fhe; cargo test -p abi-wdbx --features experimental-dghv-bootstrap",
+      "result": "not run; default gate does not qualify features"
+    }
+  ],
+  "observations": [
+    {
+      "path": "crates/abi-wdbx/src/v3/episode/store.rs",
+      "current": "single writer canonical episode append and reopen",
+      "missing": "complete new-domain envelope and quorum-fenced replication"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/episode/signing.rs",
+      "current": "detached digest Ed25519 signing",
+      "missing": "COSE decoding, rotation/revocation and second-language signature witness"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/language.rs",
+      "current": "regex tokenization, clause negation, token count complexity and text-v2 identifiers",
+      "missing": "general nine-utility language governance; selected design requires versioned encoders"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/neural.rs",
+      "current": "seeded sparse 128/64/32 feed-forward network, CPU reference and accelerator fallback",
+      "missing": "held-out efficacy of arbitrary composition, bounded semantic decoder"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "current": "bounded literal second-order Markov mutation and history/reference PHAGY",
+      "missing": "complete grave lifecycle and independent general research qualification"
+    },
+    {
+      "path": "specimen-studio/native/specimen-core/src/vision.rs",
+      "current": "DistanceField validation and image/OCR analysis entry points",
+      "missing": "independent held-out general vision/rendering and actual platform execution evidence"
+    }
+  ],
+  "limitations": "Source inspection only. No live stores read; no runtime or efficacy claims. Later gate reports must identify their own HEAD and dirty state.",
+  "initial_checkout_head": "08a69b3f22db61093e06527b3308b10589687022",
+  "environment": {
+    "host": "Darwin ARM64, controller-reported Xcode 27.2",
+    "rust": "pinned 1.99.1 available",
+    "studio": "Bun/Node absent from default PATH; no Studio gate run in this slice",
+    "python_compatibility": "system Python 3.9.6 and Homebrew Python 3.15.0 checked by contract tests"
+  }
+}

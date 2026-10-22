@@ -1,0 +1,65 @@
+warning: missing documentation for the crate
+  --> crates/abi-wdbx/tests/wdbx_3d_numeric.rs:1:1
+   |
+ 1 | / use abi_wdbx::{Point3D, spatial3d::{Point3, Radius, SpatialError}};
+ 2 | |
+ 3 | | #[test]
+ 4 | | fn rejects_nonfinite_and_out_of_domain() {
+...  |
+58 | |     assert_eq!(Radius::try_new(f64::from_bits(1e150_f64.to_bits() + 1)), Err(SpatialError::CoordinateOutOfRange));
+59 | | }
+   | |_^
+   |
+   = note: requested on the command line with `-W missing-docs`
+
+warning: `abi-wdbx` (test "wdbx_3d_numeric") generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running tests/wdbx_3d_numeric.rs (target/debug/deps/wdbx_3d_numeric-6dce56fd4be631eb)
+
+running 4 tests
+test normalizes_only_new_geometric_zero ... FAILED
+test widens_all_finite_f32 ... FAILED
+test radius_domain_is_closed ... FAILED
+test rejects_nonfinite_and_out_of_domain ... FAILED
+
+failures:
+
+---- normalizes_only_new_geometric_zero stdout ----
+
+thread 'normalizes_only_new_geometric_zero' (358271) panicked at crates/abi-wdbx/tests/wdbx_3d_numeric.rs:43:5:
+assertion `left == right` failed
+  left: [9223372036854775808, 0, 9223372036854775808]
+ right: [0, 0, 0]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- widens_all_finite_f32 stdout ----
+
+thread 'widens_all_finite_f32' (358274) panicked at crates/abi-wdbx/tests/wdbx_3d_numeric.rs:33:9:
+assertion `left == right` failed
+  left: Ok(Point3 { coordinates: [NaN, 0.0, 0.0] })
+ right: Err(NonFinite)
+
+---- radius_domain_is_closed stdout ----
+
+thread 'radius_domain_is_closed' (358272) panicked at crates/abi-wdbx/tests/wdbx_3d_numeric.rs:50:5:
+assertion `left == right` failed
+  left: Ok(Radius(-1.0))
+ right: Err(NegativeRadius)
+
+---- rejects_nonfinite_and_out_of_domain stdout ----
+
+thread 'rejects_nonfinite_and_out_of_domain' (358273) panicked at crates/abi-wdbx/tests/wdbx_3d_numeric.rs:8:13:
+assertion `left == right` failed
+  left: Ok(Point3 { coordinates: [NaN, 0.0, 0.0] })
+ right: Err(NonFinite)
+
+
+failures:
+    normalizes_only_new_geometric_zero
+    radius_domain_is_closed
+    rejects_nonfinite_and_out_of_domain
+    widens_all_finite_f32
+
+test result: FAILED. 0 passed; 4 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p abi-wdbx --test wdbx_3d_numeric`

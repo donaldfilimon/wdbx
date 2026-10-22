@@ -1,0 +1,333 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-20",
+  "status": "historically unqualified archive; identical bytes reproduced as active root resolution by later authorized compatible regeneration",
+  "baseline_commit": "8c5ed7faf412d9098ecacad5ca2c10a68c935279",
+  "baseline_root_lock_sha256": "4900d9f3e71f6915b0a3fb88a74a357772151b82975cb2dd0be07099262f9f54",
+  "candidate_lock_sha256": "e2fac4f3f125cecc771a0dc7d6f33eb1629972b3979ac0771849fdf61368680e",
+  "baseline_to_candidate_patch_sha256": "eba90b905ad6edd5cdd52bafd49b3f0976e93873425345e7d64cf3330a916032",
+  "author": "unknown; existing dirty root lock encountered during spatial integration",
+  "provenance": "Prior spatial integration receipt and integration-main-2026-10-20.json recorded the same candidate hash and offline missing ctutils 0.4.3. Exact generating command and author are unknown.",
+  "qualification": "Not qualified. No necessity or preferred-version claim.",
+  "reconstruction": "git apply of exact patch to committed baseline reproduced candidate bytes before root restoration",
+  "version_changes": [
+    {
+      "name": "cc",
+      "baseline_versions": [
+        "1.4.7"
+      ],
+      "candidate_versions": [
+        "1.9.0"
+      ]
+    },
+    {
+      "name": "ctutils",
+      "baseline_versions": [
+        "0.4.2"
+      ],
+      "candidate_versions": [
+        "0.4.3"
+      ]
+    },
+    {
+      "name": "either",
+      "baseline_versions": [
+        "1.18.0"
+      ],
+      "candidate_versions": [
+        "1.19.0"
+      ]
+    },
+    {
+      "name": "equivalent",
+      "baseline_versions": [
+        "1.0.2"
+      ],
+      "candidate_versions": [
+        "1.0.3"
+      ]
+    },
+    {
+      "name": "find-msvc-tools",
+      "baseline_versions": [
+        "0.1.13"
+      ],
+      "candidate_versions": [
+        "0.1.15"
+      ]
+    },
+    {
+      "name": "inout",
+      "baseline_versions": [
+        "0.2.2"
+      ],
+      "candidate_versions": [
+        "0.2.5"
+      ]
+    },
+    {
+      "name": "js-sys",
+      "baseline_versions": [
+        "0.3.105"
+      ],
+      "candidate_versions": [
+        "0.3.106"
+      ]
+    },
+    {
+      "name": "jsonschema",
+      "baseline_versions": [
+        "0.58.5"
+      ],
+      "candidate_versions": [
+        "0.58.6"
+      ]
+    },
+    {
+      "name": "jsonschema-regex",
+      "baseline_versions": [
+        "0.58.5"
+      ],
+      "candidate_versions": [
+        "0.58.6"
+      ]
+    },
+    {
+      "name": "jsonschema-value",
+      "baseline_versions": [
+        "0.58.5"
+      ],
+      "candidate_versions": [
+        "0.58.6"
+      ]
+    },
+    {
+      "name": "libc",
+      "baseline_versions": [
+        "0.2.189"
+      ],
+      "candidate_versions": [
+        "0.2.191"
+      ]
+    },
+    {
+      "name": "referencing",
+      "baseline_versions": [
+        "0.58.5"
+      ],
+      "candidate_versions": [
+        "0.58.6"
+      ]
+    },
+    {
+      "name": "serde_json",
+      "baseline_versions": [
+        "1.0.151"
+      ],
+      "candidate_versions": [
+        "1.0.154"
+      ]
+    },
+    {
+      "name": "sha2",
+      "baseline_versions": [
+        "0.11.0"
+      ],
+      "candidate_versions": [
+        "0.11.1"
+      ]
+    },
+    {
+      "name": "smallvec",
+      "baseline_versions": [
+        "1.16.1"
+      ],
+      "candidate_versions": [
+        "1.16.3"
+      ]
+    },
+    {
+      "name": "syn",
+      "baseline_versions": [
+        "2.0.119",
+        "3.0.6"
+      ],
+      "candidate_versions": [
+        "2.0.119",
+        "3.0.9"
+      ]
+    },
+    {
+      "name": "unicode-ident",
+      "baseline_versions": [
+        "1.0.26"
+      ],
+      "candidate_versions": [
+        "1.0.27"
+      ]
+    },
+    {
+      "name": "uuid",
+      "baseline_versions": [
+        "1.26.1"
+      ],
+      "candidate_versions": [
+        "1.28.0"
+      ]
+    },
+    {
+      "name": "wasm-bindgen",
+      "baseline_versions": [
+        "0.2.128"
+      ],
+      "candidate_versions": [
+        "0.2.129"
+      ]
+    },
+    {
+      "name": "wasm-bindgen-macro",
+      "baseline_versions": [
+        "0.2.128"
+      ],
+      "candidate_versions": [
+        "0.2.129"
+      ]
+    },
+    {
+      "name": "wasm-bindgen-macro-support",
+      "baseline_versions": [
+        "0.2.128"
+      ],
+      "candidate_versions": [
+        "0.2.129"
+      ]
+    },
+    {
+      "name": "wasm-bindgen-shared",
+      "baseline_versions": [
+        "0.2.128"
+      ],
+      "candidate_versions": [
+        "0.2.129"
+      ]
+    },
+    {
+      "name": "zerocopy",
+      "baseline_versions": [
+        "0.8.57"
+      ],
+      "candidate_versions": [
+        "0.8.63"
+      ]
+    },
+    {
+      "name": "zerocopy-derive",
+      "baseline_versions": [
+        "0.8.57"
+      ],
+      "candidate_versions": [
+        "0.8.63"
+      ]
+    },
+    {
+      "name": "zeroize",
+      "baseline_versions": [
+        "1.9.0"
+      ],
+      "candidate_versions": [
+        "1.9.1"
+      ]
+    }
+  ],
+  "dependency_edge_only_changes": [
+    {
+      "name": "async-trait",
+      "baseline_versions": [
+        "0.1.92"
+      ],
+      "candidate_versions": [
+        "0.1.92"
+      ]
+    },
+    {
+      "name": "futures-macro",
+      "baseline_versions": [
+        "0.3.34"
+      ],
+      "candidate_versions": [
+        "0.3.34"
+      ]
+    },
+    {
+      "name": "ref-cast-impl",
+      "baseline_versions": [
+        "1.0.27"
+      ],
+      "candidate_versions": [
+        "1.0.27"
+      ]
+    },
+    {
+      "name": "serde_derive",
+      "baseline_versions": [
+        "1.0.229"
+      ],
+      "candidate_versions": [
+        "1.0.229"
+      ]
+    },
+    {
+      "name": "serde_repr",
+      "baseline_versions": [
+        "0.1.21"
+      ],
+      "candidate_versions": [
+        "0.1.21"
+      ]
+    },
+    {
+      "name": "tempfile",
+      "baseline_versions": [
+        "3.27.0"
+      ],
+      "candidate_versions": [
+        "3.27.0"
+      ]
+    },
+    {
+      "name": "thiserror-impl",
+      "baseline_versions": [
+        "2.0.21"
+      ],
+      "candidate_versions": [
+        "2.0.21"
+      ]
+    },
+    {
+      "name": "zbus_macros",
+      "baseline_versions": [
+        "6.0.0"
+      ],
+      "candidate_versions": [
+        "6.0.0"
+      ]
+    },
+    {
+      "name": "zbus_utils",
+      "baseline_versions": [
+        "6.0.0"
+      ],
+      "candidate_versions": [
+        "6.0.0"
+      ]
+    }
+  ],
+  "historical_capture_status": "archived unqualified candidate; not active workspace resolution",
+  "superseding_status_2026_10_20": {
+    "direction": "Later direct user instruction replaced restore-as-final with verified backup, source lock removal, compatible regeneration and bounded checks.",
+    "active_root_sha256": "e2fac4f3f125cecc771a0dc7d6f33eb1629972b3979ac0771849fdf61368680e",
+    "identity": "Fresh pinned Rust 1.99.1 fallback generation reproduced the historical candidate byte-for-byte; original author and generating command remain unknown.",
+    "evidence": "../2026-10-20-compatible-refresh/results.json",
+    "qualification": "Locked fetch and root workspace/all-targets compilation passed. Full root gate pending controller; no security, optional FHE, Studio or platform qualification."
+  }
+}

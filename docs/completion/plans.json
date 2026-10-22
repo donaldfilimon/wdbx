@@ -1,0 +1,504 @@
+{
+  "version": 1,
+  "plans": [
+    {
+      "id": "task-01",
+      "task": 1,
+      "depends_on": [],
+      "status": "proposed",
+      "evidence_level": "C0",
+      "interfaces": [
+        "CompletionManifestV1 -> list[Requirement]; validate(root)->list[str]; all claims C0"
+      ],
+      "steps": [
+        "Freeze upstream reference snapshots and independently enumerate requirements.",
+        "Write mutation tests before closure checker; run on system Python and current Python.",
+        "Independent reviewers compare every §25.1 decision and §25.3 row to source; resolve findings before dependent work."
+      ],
+      "acceptance": [
+        "Deleting a requirement in catalog and manifest still fails against pinned source; changing text, source hash or C0 status fails.",
+        "Corpus bytes/splits/seeds and nonzero efficacy thresholds are pinned; no research result is implied."
+      ],
+      "expected_evidence": [
+        "Python unit output and checker exit code",
+        "Source-review findings and resolution report",
+        "Baseline HEAD/dirty paths and gate command/result with no private data"
+      ],
+      "requirement_ids": [
+        "G01",
+        "G02",
+        "G03",
+        "G04",
+        "G05",
+        "G06",
+        "G07",
+        "G08",
+        "G09",
+        "G10",
+        "G11",
+        "G12",
+        "G13",
+        "P01.01",
+        "P01.02",
+        "P01.03",
+        "P01.04",
+        "P01.05"
+      ],
+      "owner": "WDBX contracts",
+      "schema_gate": "shared-types-v1.json#task-01"
+    },
+    {
+      "id": "task-02",
+      "task": 2,
+      "depends_on": [
+        1
+      ],
+      "status": "proposed",
+      "evidence_level": "C0",
+      "interfaces": [
+        "New-domain EpisodeEnvelopeVNext{tenant,scope,context,regime,prediction,action,outcome,evidence,uncertainty,authority_versions,provenance,lifecycle,artifacts}",
+        "decode_canonical(bytes,Limits)->Envelope|DecodeError; verify(CoseBytes,TrustSnapshot)->Verification{historical,current,key_status}",
+        "KeyAdmin.rotate/revoke(KeyId,EffectiveTime,Authority)->Receipt; old signed bytes remain immutable"
+      ],
+      "steps": [
+        "Agree new domain and typed envelope with ABI schema owner before writing canonical serializer; preserve all old golden bytes.",
+        "Implement bounded reader separately for existing profile, then new-domain canonical decode/re-encode and COSE detached payload signature.",
+        "Add trust key history with activation/revocation times, distinguish historical validity from permission for new writes.",
+        "Implement Python decode/signature witness with independently reviewed crypto dependency selection; do not hand-roll crypto in Python."
+      ],
+      "acceptance": [
+        "Reject duplicate/noncanonical map keys, overlong integers, nesting/length exhaustion, trailing data and unsupported domain.",
+        "Cross-language vectors cover decode, tamper, payload substitution, replay and downgrade; old candidate/edge goldens unchanged.",
+        "Revoked key rejects new admission but preserves attributable historical verification."
+      ],
+      "expected_evidence": [
+        "Rust/Python differential raw vectors including malformed cases",
+        "Exact codec/domain/schema hashes",
+        "Independent crypto review before production claims"
+      ],
+      "requirement_ids": [
+        "P02.01",
+        "P02.02",
+        "P02.03",
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C12",
+        "C13",
+        "C14",
+        "C15",
+        "C16"
+      ],
+      "owner": "WDBX",
+      "schema_gate": "shared-types-v1.json#task-02"
+    },
+    {
+      "id": "task-03",
+      "task": 3,
+      "depends_on": [
+        2
+      ],
+      "status": "proposed",
+      "evidence_level": "C0",
+      "interfaces": [
+        "propose(Candidate,AuthSnapshot,Quota,OperationId)->WriteDecision{class,reason,receipt?}",
+        "lifecycle(ObjectRef,Action,PolicyEpoch)->LifecycleReceipt; erase(ObjectKey)->KeyDestructionReceipt",
+        "InhibitionCommitmentV1: inhibition-contract-v2.md, separate tenant MAC epochs survive object-key erasure; scoped historical-epoch matching must pass synthetic vectors."
+      ],
+      "steps": [
+        "Admission classifies ephemeral/session/TTL/durable/minimal incident; bind current consent/policy and quota atomically.",
+        "Implement lifecycle edges and holds; encrypt payloads with per-object tenant-derived keys; separate minimal tombstone metadata.",
+        "Journal key destruction/deletion generations and idempotent derived cleanup including outboxes/conflicts/indexes/cache/blob/exports.",
+        "Restore backup into quarantine, apply current deletion ledger and revalidate keys before any serving."
+      ],
+      "acceptance": [
+        "Every rejected admission leaves ledger bytes, receipts and quota unchanged.",
+        "Crash at each journal/key/index boundary then replay twice: no duplicate canonical effect or decryptable deleted payload.",
+        "Stale offline/import/backup generations cannot recreate erased objects; holds retain only authorized minimum."
+      ],
+      "expected_evidence": [
+        "Fault-injection boundary matrix and byte comparisons",
+        "Erasure inventory for each projection/backup state",
+        "Current authorization and deletion receipts, no content payload in reports"
+      ],
+      "requirement_ids": [
+        "P03.01",
+        "P03.02",
+        "P03.03",
+        "P03.04",
+        "C17",
+        "C18",
+        "C19",
+        "C20",
+        "C21"
+      ],
+      "owner": "WDBX",
+      "schema_gate": "shared-types-v1.json#task-03"
+    },
+    {
+      "id": "task-04",
+      "task": 4,
+      "depends_on": [
+        2,
+        3
+      ],
+      "status": "proposed",
+      "evidence_level": "C0",
+      "interfaces": [
+        "retrieve(MemoryQuery{tenant,scope,regime,constraints,versions,limit})->MemoryResults{eight_dimensions,disposition,lineage,explanation}",
+        "rebuild(IndexVersion,CanonicalSnapshot)->IndexDigest"
+      ],
+      "steps": [
+        "Implement tenant/scope-constrained candidate admission before cache/index access.",
+        "Expose eight dimensions separately; reject invalid signatures, retain uncertain/contradicted evidence visibly.",
+        "Deterministically rebuild disposable index and evaluate matched vector baseline under frozen protocol."
+      ],
+      "acceptance": [
+        "Wrong tenant, stale policy, wrong regime and incomplete lineage fixtures have explicit dispositions.",
+        "Index rebuild yields same sorted result refs/explanations; never hides uncertainty.",
+        "Held-out repeated-failure and stale-reuse reductions satisfy frozen thresholds vs equivalent embeddings/storage/candidates."
+      ],
+      "expected_evidence": [
+        "Per-query results and dimension ablations",
+        "Baseline embeddings and candidate hashes",
+        "Negative results and independent held-out analysis"
+      ],
+      "requirement_ids": [
+        "P04.01",
+        "P04.02",
+        "P04.03",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08"
+      ],
+      "owner": "WDBX",
+      "schema_gate": "shared-types-v1.json#task-04"
+    },
+    {
+      "id": "task-05",
+      "task": 5,
+      "depends_on": [
+        2,
+        3,
+        4
+      ],
+      "status": "proposed",
+      "evidence_level": "C0",
+      "interfaces": [
+        "ABI Retrieve/ProposeWrite/Verify with principal-bound tenant/scope and version negotiation",
+        "ConsumerProjection{canonical_ref,projection_version,dropped_fields}; MigrationCheckpoint{watermark,writer_epoch}"
+      ],
+      "steps": [
+        "ABI owner changes normative schemas and vendor tool refreshes corpus; no manual fixture updates.",
+        "Implement cancellation/idempotency/rate limits across transport; generic KV cannot access canonical namespace.",
+        "Inventory Abbey/Swift stores as projection/migration contracts with synthetic roundtrip fixtures.",
+        "Shadow-read/replay/compare, recovery and deletion drill, fence old writer, cut over one writer, retain rollback watermark."
+      ],
+      "acceptance": [
+        "Cross-tenant requests/caches/jobs and generic KV bypass attempts fail before payload access.",
+        "Retries return same terminal receipt; cancellation after commit reports accepted result; duplicate operations never double-write.",
+        "Rollback preserves writes/deletions accepted after migration watermark and never re-enables dual writers."
+      ],
+      "expected_evidence": [
+        "ABI authoritative gate and corpus provenance receipts",
+        "Consumer comparison diffs, recovery/deletion/rollback traces",
+        "Independent authorization review"
+      ],
+      "requirement_ids": [
+        "P05.01",
+        "P05.02",
+        "P05.03",
+        "P05.04"
+      ],
+      "owner": "ABI with Abbey consumers",
+      "schema_gate": "shared-types-v1.json#task-05"
+    },
+    {
+      "id": "task-06",
+      "task": 6,
+      "depends_on": [
+        2,
+        3,
+        5
+      ],
+      "status": "proposed",
+      "evidence_level": "C0",
+      "interfaces": [
+        "enroll(PeerIdentity,Certificate,TrustGrant)->PeerReceipt; reconcile(Peer,Checkpoint,DeletionWatermark)->ImportBatch",
+        "ForeignEnvelope{origin_authority,original_bytes,ancestry,grant_version}; local metadata never rewrites foreign signature"
+      ],
+      "steps": [
+        "Implement bilateral scoped trust/residency and grant revocation before exchange.",
+        "Verify ancestry/checkpoints, detect equivocation, deduplicate by origin+digest, resume interrupted batches.",
+        "Rejoin requires current trust and deletion watermark before serving; revoked peers cannot import/export."
+      ],
+      "acceptance": [
+        "Separate administered hosts partition/rejoin without losing origin authority; malicious parents and rollback checkpoints rejected.",
+        "Cross-scope grant and revoked peer reads fail; deletions propagate idempotently before stale imports can serve."
+      ],
+      "expected_evidence": [
+        "Two independently controlled host identities/config hashes",
+        "Network fault timelines and signed import/checkpoint receipts",
+        "Independent trust-policy witness; loopback is insufficient"
+      ],
+      "requirement_ids": [
+        "P06.01",
+        "P06.02",
+        "P06.03"
+      ],
+      "owner": "ABI federation and WDBX",
+      "schema_gate": "shared-types-v1.json#task-06"
+    },
+    {
+      "id": "task-07",
+      "task": 7,
+      "depends_on": [
+        3,
+        5
+      ],
+      "status": "proposed",
+      "evidence_level": "C0",
+      "interfaces": [
+        "Outbox.enqueue(OperationId,Dependencies,Schema,BaseRevision,Delta)->ProvisionalReceipt",
+        "sync(Cursor,CurrentAuth)->TerminalReceipt tagged union in shared-types-v1.json; transfer(BlobDigest,Range)->VerifiedChunk"
+      ],
+      "steps": [
+        "Implement transactional IndexedDB/native outboxes; operation dependencies and receipts survive restart.",
+        "Reconnect negotiates schema and current consent; chunk assets with digest checks/resume, model identity only.",
+        "Merge disjoint object/field edits with identical authority/schema/network version; incompatible edits branch explicitly.",
+        "Indefinite disconnect triggers resnapshot/deletion revalidation and preserves unsent work for explicit resolution."
+      ],
+      "acceptance": [
+        "Reordered/duplicate deliveries, crash between enqueue/send/ack, interrupted/corrupt blob and revoked device never duplicate or bypass admission.",
+        "Conflicting learning/network/specimen/authority edits remain branches; no silent last-write-wins.",
+        "Closed browser tab claims no background progress; reopen automatically retries within current policy."
+      ],
+      "expected_evidence": [
+        "Browser/native fault matrix, outbox before/after snapshots from synthetic fixtures",
+        "Conflict and stale deletion receipts",
+        "No weight auto-download/network side effects"
+      ],
+      "requirement_ids": [
+        "P07.01",
+        "P07.02",
+        "P07.03",
+        "P07.04"
+      ],
+      "owner": "Studio sync and ABI",
+      "schema_gate": "shared-types-v1.json#task-07"
+    },
+    {
+      "id": "task-08",
+      "task": 8,
+      "depends_on": [
+        1
+      ],
+      "status": "proposed",
+      "evidence_level": "C0",
+      "interfaces": [
+        "Design interfaces in designs.json, implemented in pure Rust kernel plus capability-bearing host adapters",
+        "Versioned JSON command ABI must match native/WASM; supplied host clock/entropy/cancellation only"
+      ],
+      "steps": [
+        "Implement identity and nine language tables, then scanner/vote/provenance, then synthesis/ATP/vision.",
+        "Implement supervision/mutation/graves and global scheduler/persistence with each corresponding acceptance case as executable test.",
+        "Run deterministic native/WASM fixtures; run frozen held-out efficacy protocol only after independent freeze verification.",
+        "Qualify actual GPU/OCR/model hosts separately and retain explicit fallback metadata."
+      ],
+      "acceptance": [
+        "All 46 source cases pass with case-ID-labelled direct assertions, not merely chapter presence.",
+        "Every D01-D18 has implemented algorithm, bounds, negative tests and parity evidence.",
+        "All frozen efficacy thresholds pass; failed or underpowered results leave relevant mechanism open; arbitrary language/vision generality remains unproven."
+      ],
+      "expected_evidence": [
+        "Case-to-test map and exact source/artifact digests",
+        "Research raw rows and independent adjudications",
+        "Native/WASM byte or declared numeric tolerance comparisons",
+        "Hardware execution receipts distinct from download/build/fallback"
+      ],
+      "requirement_ids": [
+        "P08.01",
+        "P08.02",
+        "P08.03",
+        "P08.04",
+        "P08.05",
+        "P08.06",
+        "P08.07",
+        "P08.08",
+        "P08.09",
+        "P08.10",
+        "CH01",
+        "CH02",
+        "CH03",
+        "CH04",
+        "CH05",
+        "CH06",
+        "CH07",
+        "CH08",
+        "CH09",
+        "CH10",
+        "CH11",
+        "CH12",
+        "CH13",
+        "CH14",
+        "CH15",
+        "CH16",
+        "CH17",
+        "CH18",
+        "CH19",
+        "CH20",
+        "CH21",
+        "CH22",
+        "CH23",
+        "CH24",
+        "CH25",
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13",
+        "S14",
+        "S15",
+        "S16",
+        "S17",
+        "S18",
+        "S19",
+        "S20",
+        "S21",
+        "S22",
+        "S23",
+        "S24",
+        "S25",
+        "S26",
+        "S27",
+        "S28",
+        "S29",
+        "S30",
+        "S31",
+        "S32",
+        "S33",
+        "S34",
+        "S35",
+        "S36",
+        "S37",
+        "S38",
+        "S39",
+        "S40",
+        "S41",
+        "S42",
+        "S43",
+        "S44",
+        "S45",
+        "S46",
+        "CH26"
+      ],
+      "owner": "Studio kernel/native",
+      "schema_gate": "shared-types-v1.json#task-08"
+    },
+    {
+      "id": "task-09",
+      "task": 9,
+      "depends_on": [
+        3,
+        5,
+        7,
+        8
+      ],
+      "status": "proposed",
+      "evidence_level": "C0",
+      "interfaces": [
+        "CanonicalAdapter.propose(Edit|Learning|Outcome|Lifecycle,BaseRevision)->Receipt",
+        "Projection.restore(CanonicalRefs,ProjectionVersion)->Specimen; dropped ephemeral activations/jobs declared"
+      ],
+      "steps": [
+        "Map edits/learning/outcomes/lifecycle to canonical episodes, keeping saved specimen a declared projection.",
+        "Update pinned WDBX Git revision and both lockfiles atomically after compatible release.",
+        "Wire busy/cancel/malformed response/storage failure/recovery and regenerate spec assets only on authoritative text change."
+      ],
+      "acceptance": [
+        "Save/reopen/export/import preserves refs, provenance and conflicts in browser and desktop.",
+        "Rejected/cancelled proposals do not look synchronized; accepted writes survive response loss.",
+        "Deletion and offline recovery prevent resurrection across snapshots and asset caches."
+      ],
+      "expected_evidence": [
+        "Both edition integration receipts and projection loss manifest",
+        "Pinned dependency/lockfile diffs",
+        "UI recovery and roundtrip fixture traces"
+      ],
+      "requirement_ids": [
+        "P09.01",
+        "P09.02",
+        "P09.03"
+      ],
+      "owner": "Studio and WDBX",
+      "schema_gate": "shared-types-v1.json#task-09"
+    },
+    {
+      "id": "task-10",
+      "task": 10,
+      "depends_on": [
+        5,
+        6,
+        7,
+        9
+      ],
+      "status": "proposed",
+      "evidence_level": "C0",
+      "interfaces": [
+        "DeploymentManifest{artifact_digest,platform,tenant_policy,writer_shards}; ShardWriter{term,quorum_commit_index}",
+        "Operator.restore(Backup,DeletionWatermark)->RecoveryReceipt"
+      ],
+      "steps": [
+        "Use three-voter quorum-fenced tenant/scope shards; majority only acknowledges writes, stale terms fail.",
+        "Restore real four desktop target runners; build signed packages excluding test bridge and witness installed bytes.",
+        "Deploy private staging only after credentials/host authority available; public ingress/signup remain disabled.",
+        "Exercise tenant keys/admin/quota/isolation/noisy neighbor, node failure, backup restore and rollback on both service platforms."
+      ],
+      "acceptance": [
+        "After any one voter fails, all acknowledged writes survive and minority cannot acknowledge.",
+        "Measured recovery <=900s and restore <=14400s on declared workloads; report capacity without SLA.",
+        "Every six platform requirement has direct independent installed/runtime evidence; configuration and emulation alone insufficient."
+      ],
+      "expected_evidence": [
+        "Signed artifacts, installed-byte hashes and OS/hardware identities",
+        "Failure/restore timestamps, operation ledger and independent observer",
+        "Private ingress checks; C4-C7 require real shadow/canary/witness/elapsed operation, never synthetic promotion"
+      ],
+      "requirement_ids": [
+        "P10.01",
+        "P10.02",
+        "P10.03",
+        "P10.04",
+        "OS01",
+        "OS02",
+        "OS03",
+        "OS04",
+        "OS05",
+        "OS06"
+      ],
+      "owner": "platform operators",
+      "schema_gate": "shared-types-v1.json#task-10"
+    }
+  ]
+}

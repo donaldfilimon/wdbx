@@ -1,0 +1,226 @@
+{
+  "version": 1,
+  "recorded_date": "2026-10-20",
+  "source_head": "5182bc3a60300e1dd152611025e774c4b906638b",
+  "purpose": "Execution tracking separate from frozen proposed C0 requirement, design, plan and experiment contracts. No efficacy or conformance promotion.",
+  "contract_inventory": {
+    "requirements": 163,
+    "acceptance_cases": 46,
+    "decisions": 18,
+    "design_bundles": 9,
+    "work_packages": 10,
+    "contract_status": "proposed",
+    "evidence_level": "C0"
+  },
+  "reader": {
+    "state": "committed_bounded_restricted_profile",
+    "profile": "abbey-cbor-episode-v1",
+    "source_sha256": [
+      {
+        "path": "crates/abi-wdbx/src/v3/commitment.rs",
+        "sha256": "7d8abf123dc76b7602f869629f41fa9625441ecbb9c212dc7ab0e62b19b15dbd"
+      },
+      {
+        "path": "crates/abi-wdbx/src/v3/commitment/decode.rs",
+        "sha256": "c72781bc25a8aaeb2e9cf6404db8fb41177381551ff0baf42c66c448162378b3"
+      },
+      {
+        "path": "crates/abi-wdbx/tests/v3_canonical_decode.rs",
+        "sha256": "f8f31f698889e85eac441626742a40c9962e1925088fa6ec60968c52801e8a43"
+      },
+      {
+        "path": "crates/abi-wdbx/tests/v3_canonical_decode_limits.rs",
+        "sha256": "2894154979f39b111ed8d33f8b1cbf22183c3c2b5a715150e7558d5fb8fa9992"
+      },
+      {
+        "path": "tools/abbey_cbor_episode_v1.py",
+        "sha256": "da920b0c3f523024de262328a553c80beca398cab30e13825220379049f155b1"
+      },
+      {
+        "path": "tools/abbey_cbor_reader_v1.py",
+        "sha256": "6c6fd35fb857d40e838692d718a039462a3187e529a9582e44cb6d9ab4f9eb60"
+      },
+      {
+        "path": "crates/abi-wdbx/tests/v3_cross_language_decode.rs",
+        "sha256": "4ff35518f1a1f6a49b444c57d5e8bbc1baa46277e558208eb1a87dc79f17f155"
+      }
+    ],
+    "receipt": "docs/superpowers/plans/2026-10-20-canonical-cbor-reader-receipt.md"
+  },
+  "gates": [
+    {
+      "command": "bash tools/check.sh",
+      "state": "historical_pass",
+      "source_base": "429318a0b185d4d609dd3f8fcb7c4dcee8152afe",
+      "snapshot": "seven reader hashes match source_head",
+      "passed": 667,
+      "failed": 0,
+      "ignored": 0,
+      "limitations": "Historical uncommitted-snapshot gate; not rerun by documentation reconciliation. No optional FHE, Studio, consumer or platform qualification."
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 tools/check_completion.py",
+      "state": "pass",
+      "exit_code": 0,
+      "output": "Completion contracts valid: 163 C0 requirements, 46 acceptance cases; no implementation/efficacy claim.\n",
+      "scope": "documentation and frozen C0 contract reconciliation only"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tools/tests -p test_check_completion.py",
+      "state": "pass",
+      "exit_code": 0,
+      "output": "....................................\n----------------------------------------------------------------------\nRan 36 tests in 4.237s\n\nOK\n",
+      "scope": "documentation and frozen C0 contract reconciliation only"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 /usr/bin/python3 -m unittest discover -s tools/tests -p test_check_completion.py",
+      "state": "pass",
+      "exit_code": 0,
+      "output": "....................................\n----------------------------------------------------------------------\nRan 36 tests in 5.026s\n\nOK\n",
+      "scope": "documentation and frozen C0 contract reconciliation only"
+    },
+    {
+      "command": "git diff --check",
+      "state": "pass",
+      "exit_code": 0,
+      "output": "",
+      "scope": "documentation and frozen C0 contract reconciliation only"
+    }
+  ],
+  "open_work_packages": [
+    {
+      "id": "task-01",
+      "owner": "WDBX contracts",
+      "depends_on": [],
+      "state": "open",
+      "acceptance_source": "docs/completion/plans.json#task-01",
+      "note": "Task 1 C0 contracts reviewed; execution reconciliation is not implementation or efficacy completion."
+    },
+    {
+      "id": "task-02",
+      "owner": "WDBX",
+      "depends_on": [
+        1
+      ],
+      "state": "open",
+      "acceptance_source": "docs/completion/plans.json#task-02",
+      "note": "Bounded old-profile reader complete; remaining envelope and crypto requirements open."
+    },
+    {
+      "id": "task-03",
+      "owner": "WDBX",
+      "depends_on": [
+        2
+      ],
+      "state": "open",
+      "acceptance_source": "docs/completion/plans.json#task-03",
+      "note": "Implementation and requirement-level qualification remain open."
+    },
+    {
+      "id": "task-04",
+      "owner": "WDBX",
+      "depends_on": [
+        2,
+        3
+      ],
+      "state": "open",
+      "acceptance_source": "docs/completion/plans.json#task-04",
+      "note": "Implementation and requirement-level qualification remain open."
+    },
+    {
+      "id": "task-05",
+      "owner": "ABI with Abbey consumers",
+      "depends_on": [
+        2,
+        3,
+        4
+      ],
+      "state": "open",
+      "acceptance_source": "docs/completion/plans.json#task-05",
+      "note": "Implementation and requirement-level qualification remain open."
+    },
+    {
+      "id": "task-06",
+      "owner": "ABI federation and WDBX",
+      "depends_on": [
+        2,
+        3,
+        5
+      ],
+      "state": "open",
+      "acceptance_source": "docs/completion/plans.json#task-06",
+      "note": "Implementation and requirement-level qualification remain open."
+    },
+    {
+      "id": "task-07",
+      "owner": "Studio sync and ABI",
+      "depends_on": [
+        3,
+        5
+      ],
+      "state": "open",
+      "acceptance_source": "docs/completion/plans.json#task-07",
+      "note": "Implementation and requirement-level qualification remain open."
+    },
+    {
+      "id": "task-08",
+      "owner": "Studio kernel/native",
+      "depends_on": [
+        1
+      ],
+      "state": "open",
+      "acceptance_source": "docs/completion/plans.json#task-08",
+      "note": "Implementation and requirement-level qualification remain open."
+    },
+    {
+      "id": "task-09",
+      "owner": "Studio and WDBX",
+      "depends_on": [
+        3,
+        5,
+        7,
+        8
+      ],
+      "state": "open",
+      "acceptance_source": "docs/completion/plans.json#task-09",
+      "note": "Implementation and requirement-level qualification remain open."
+    },
+    {
+      "id": "task-10",
+      "owner": "platform operators",
+      "depends_on": [
+        5,
+        6,
+        7,
+        9
+      ],
+      "state": "open",
+      "acceptance_source": "docs/completion/plans.json#task-10",
+      "note": "Implementation and requirement-level qualification remain open."
+    }
+  ],
+  "open_external_gates": [
+    "ABI normative schema approval and exact-revision consumer qualification",
+    "independent crypto review",
+    "research efficacy experiments",
+    "separate-host federation",
+    "platform installation and signing receipts",
+    "private staging and recovery drills",
+    "elapsed C7 operation"
+  ],
+  "private_complete_episode": {
+    "state": "reviewed_private_prototype",
+    "source_base": "e02834f65d8e94bc93b558fa1305903fc43e4246",
+    "receipt": "docs/superpowers/plans/2026-10-20-complete-episode-prototype-receipt.md",
+    "gate": {
+      "command": "bash tools/check.sh",
+      "passed": 697,
+      "failed": 0,
+      "ignored": 0,
+      "summaries": 27
+    },
+    "abi_ratification": "open",
+    "typed_decoding": "not_implemented",
+    "evidence": "Local source and finite cross-language encoding only; no frozen requirement or research promotion."
+  }
+}

@@ -55,7 +55,7 @@ CLI/MCP output goldens (`help-wdbx.txt`, etc.) remain in `abi` because they desc
 ## Concurrency & Safety
 
 - **No `unsafe`** — workspace denies `unsafe_code`
-- **Deterministic** — pinned nightly toolchain (`rust-toolchain.toml`); SIMD via `portable_simd` (nightly)
+- **Deterministic** — root pin is stable 1.99.1 (`rust-toolchain.toml`); abi-compute uses deterministic lane folding on stable Rust without a feature gate
 - **Tests** — Must use `ABI_WDBX_PATH=:memory:`, `ABI_WDBX_PERSIST=0`, or scratch paths; never `~/.abi/`
 - **Gateway** — Bounded authenticated gRPC (`WdbxGateway`: `PutVector`, `Search`, `PutKv`, `GetKv`, `ResolveConflict`, `Stats`, `MembershipChange`, `WatchMutations`)
 

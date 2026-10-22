@@ -1,0 +1,4 @@
+$ python3 tools/validate_wdbx_3d_evidence.py docs/claims/wdbx-3d/source-manifest.json
+Source manifest inventory accepted (content/execution not independently verified)
+
+exit=0

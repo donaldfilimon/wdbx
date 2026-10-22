@@ -5,3 +5,5 @@
 
 pub mod commitment;
 pub mod episode;
+
+pub(crate) mod complete_episode;

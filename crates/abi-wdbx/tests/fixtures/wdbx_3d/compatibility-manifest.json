@@ -1,0 +1,65 @@
+{
+  "profile": "spatial-checked-v1",
+  "status": "characterization; dependent T00/T01 acceptance pending",
+  "sha256": {
+    "wdbx-sample.manifest": "a1553b1fc23e2e21e8e404f4d1ea829544fbd9ee4351a3424ce6863245b58d46",
+    "wdbx-sample.seg.jsonl": "45f3623020122e9158e1f264010fa1686b67328eac2d06789dc0d27bf0cc779a",
+    "wdbx-sample.seg.1-collected.jsonl": "cec04bee5fc16c77f61b155c0bbaa72957e31b6f12660f46e3014b9c1db3348d",
+    "wdbx-sample.seg.2.jsonl": "d0a7ae2abfb54f612294b5cb8949e19d250d936933ebf46c1b4cda7ad32a0f28",
+    "wdbx-sample.seg.3.jsonl": "92f31fc5e7a27af9640f247e32aa8cfe6dbf050d24dd57fab7d2e69356492b2d",
+    "signed-v2-object": "48e59e116a2f30a0d9998dda44e247fd0d5a304773f634d04df991529ca26b5e",
+    "signed-v3-ledger": "25ddcefbbebc646ecc240151d4f42507246525877d082dd0bc17deed83ee28cc"
+  },
+  "cases": [
+    "signed_bytes_remain_identical",
+    "legacy_reader_is_nonmutating",
+    "legacy_api_order_is_characterized"
+  ],
+  "zero_tests_do_not_qualify": {
+    "owner": "tools/validate_wdbx_3d_evidence.py",
+    "status": "Python validator negative case; not a Rust test"
+  },
+  "report": {
+    "unchanged": [
+      "v1 scratch-copy file set and bytes",
+      "v2 authenticated object bytes",
+      "v3 signed ledger bytes and commitment",
+      "legacy threshold-dependent tie order and duplicate IDs"
+    ],
+    "changed": [],
+    "blocked": [
+      "attachment-index operations: API not implemented",
+      "entire packet acceptance pending T00/T01"
+    ],
+    "reason": "Prepared characterization only; signed v2 object-layer fixture is not complete v2 journal/segment qualification."
+  },
+  "v3_episode_digest": "b5f06be593fe61fcbe6c4d9655e7b203d26cc2f0036dd77a5407ec88aeb34925",
+  "fixture_sources": {
+    "v1": "tests/golden/wdbx-sample*; tests/real_store.rs",
+    "v2": "public seal_object/open_object, deterministic synthetic Artifact; does not qualify journal replay",
+    "v3": "tests/v3_episode_signing.rs policy/proposal seed 1, request_1, operation_1"
+  },
+  "legacy_api": {
+    "record_counts": [
+      63,
+      64,
+      65
+    ],
+    "duplicate_u32_id": 7,
+    "equal_distance_order_below_64": [
+      "positive",
+      "negative"
+    ],
+    "equal_distance_order_at_or_above_64": [
+      "negative",
+      "positive"
+    ],
+    "cosine_order": "insertion order at all three counts; zero-norm distance 1",
+    "metrics": [
+      "Euclidean",
+      "Manhattan",
+      "Cosine"
+    ],
+    "nearest_count": "all points and all-but-one (tie cutoff)"
+  }
+}

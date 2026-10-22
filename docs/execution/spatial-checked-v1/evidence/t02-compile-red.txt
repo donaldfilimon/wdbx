@@ -1,0 +1,118 @@
+   Compiling cfg-if v1.0.5
+   Compiling typenum v1.20.1
+   Compiling rand_core v0.10.1
+   Compiling libc v0.2.189
+   Compiling memchr v2.8.3
+   Compiling serde_core v1.0.229
+   Compiling allocator-api2 v0.2.21
+   Compiling num-traits v0.2.19
+   Compiling foldhash v0.2.0
+   Compiling equivalent v1.0.2
+   Compiling zmij v1.0.23
+   Compiling itoa v1.0.18
+   Compiling core-foundation-sys v0.8.7
+   Compiling cmov v0.5.4
+   Compiling hashbrown v0.17.1
+   Compiling regex-syntax v0.8.11
+   Compiling const-oid v0.10.2
+   Compiling ctutils v0.4.2
+   Compiling aho-corasick v1.1.5
+   Compiling zeroize v1.9.0
+   Compiling zerocopy v0.8.57
+   Compiling getrandom v0.4.3
+   Compiling num-integer v0.1.47
+   Compiling num-complex v0.4.6
+   Compiling getrandom v0.3.4
+   Compiling smallvec v1.16.1
+   Compiling hybrid-array v0.4.15
+   Compiling indexmap v2.14.2
+   Compiling num-bigint v0.4.8
+   Compiling num-iter v0.1.46
+   Compiling scopeguard v1.2.0
+   Compiling once_cell v1.21.4
+   Compiling lock_api v0.4.14
+   Compiling parking_lot_core v0.9.12
+   Compiling ref-cast v1.0.27
+   Compiling core-foundation v0.10.1
+   Compiling crypto-common v0.2.2
+   Compiling block-buffer v0.12.1
+   Compiling inout v0.2.2
+   Compiling cpufeatures v0.3.1
+   Compiling security-framework-sys v2.17.0
+   Compiling bit-vec v0.8.0
+   Compiling borrow-or-share v0.2.4
+   Compiling bitflags v2.13.2
+   Compiling signature v3.0.0
+   Compiling subtle v2.6.1
+   Compiling security-framework v3.7.0
+   Compiling bit-set v0.8.0
+   Compiling ed25519 v3.0.0
+   Compiling thiserror v2.0.21
+   Compiling parking_lot v0.12.5
+   Compiling rand_core v0.9.5
+   Compiling sha1_smol v1.0.1
+   Compiling num-rational v0.4.2
+   Compiling regex-automata v0.4.18
+   Compiling digest v0.11.3
+   Compiling universal-hash v0.6.1
+   Compiling cipher v0.5.2
+   Compiling serde v1.0.229
+   Compiling serde_json v1.0.151
+   Compiling num v0.4.3
+   Compiling poly1305 v0.9.1
+   Compiling fraction v0.17.0
+   Compiling chacha20 v0.10.2
+   Compiling sha2 v0.11.0
+   Compiling curve25519-dalek v5.0.0
+   Compiling aead v0.6.1
+   Compiling fluent-uri v0.4.1
+   Compiling vsimd v0.8.0
+   Compiling micromap v0.3.0
+   Compiling bytecount v0.6.9
+   Compiling outref v0.5.2
+   Compiling percent-encoding v2.3.2
+   Compiling num-cmp v0.1.0
+   Compiling uuid-simd v0.8.0
+   Compiling ed25519-dalek v3.0.0
+   Compiling chacha20poly1305 v0.11.0
+   Compiling email_address v0.2.9
+   Compiling abi-foundation v0.1.0 (/Users/donald/sources/repos/wdbx-spatial-checked-v1/crates/abi-foundation)
+   Compiling uuid v1.26.1
+   Compiling wyhash v0.6.0
+   Compiling jsonschema-regex v0.58.5
+   Compiling unicode-general-category v1.1.0
+   Compiling strum v0.28.0
+   Compiling crc32fast v1.5.2
+   Compiling num-bigint v0.5.1
+   Compiling data-encoding v2.11.1
+   Compiling abi-compute v0.1.0 (/Users/donald/sources/repos/wdbx-spatial-checked-v1/crates/abi-compute)
+   Compiling ahash v0.8.12
+   Compiling referencing v0.58.5
+   Compiling jsonschema-value v0.58.5
+   Compiling fancy-regex v0.19.2
+   Compiling regex v1.13.1
+   Compiling abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx-spatial-checked-v1/crates/abi-wdbx)
+   Compiling jsonschema v0.58.5
+error[E0277]: the trait bound `Array<u8, UInt<UInt<UInt<UInt<_, B0>, B0>, B0>, B0>>: LowerHex` is not satisfied
+  --> crates/abi-wdbx/tests/wdbx_3d_compatibility.rs:38:21
+   |
+38 |     format!("{:x}", Sha256::digest(bytes))
+   |              ----   ^^^^^^^^^^^^^^^^^^^^^ the trait `LowerHex` is not implemented for `Array<u8, UInt<UInt<UInt<UInt<UInt<_, B0>, B0>, B0>, B0>, B0>>`
+   |              |
+   |              required by this formatting parameter
+   |
+   = help: the following other types implement trait `LowerHex`:
+             &T
+             &mut T
+             Braced
+             Hyphenated
+             Saturating<T>
+             Signature
+             Simple
+             Urn
+           and 32 others
+   = note: the full name for the type has been written to '/Users/donald/sources/repos/wdbx-spatial-checked-v1/target/debug/deps/wdbx_3d_compatibility-6a84b02da7f12cff.long-type-11712141310427028514.txt'
+   = note: consider using `--verbose` to print the full type name to the console
+
+For more information about this error, try `rustc --explain E0277`.
+error: could not compile `abi-wdbx` (test "wdbx_3d_compatibility") due to 1 previous error

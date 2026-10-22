@@ -1,0 +1,1008 @@
+{
+  "results": {
+    "root": {
+      "path": "Cargo.lock",
+      "sha256": "e2fac4f3f125cecc771a0dc7d6f33eb1629972b3979ac0771849fdf61368680e",
+      "before_package_count": 209,
+      "after_package_count": 209,
+      "changes": [
+        {
+          "name": "async-trait",
+          "before": [
+            "0.1.92"
+          ],
+          "after": [
+            "0.1.92"
+          ],
+          "kind": "dependency-edge"
+        },
+        {
+          "name": "cc",
+          "before": [
+            "1.4.7"
+          ],
+          "after": [
+            "1.9.0"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "ctutils",
+          "before": [
+            "0.4.2"
+          ],
+          "after": [
+            "0.4.3"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "either",
+          "before": [
+            "1.18.0"
+          ],
+          "after": [
+            "1.19.0"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "equivalent",
+          "before": [
+            "1.0.2"
+          ],
+          "after": [
+            "1.0.3"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "find-msvc-tools",
+          "before": [
+            "0.1.13"
+          ],
+          "after": [
+            "0.1.15"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "futures-macro",
+          "before": [
+            "0.3.34"
+          ],
+          "after": [
+            "0.3.34"
+          ],
+          "kind": "dependency-edge"
+        },
+        {
+          "name": "inout",
+          "before": [
+            "0.2.2"
+          ],
+          "after": [
+            "0.2.5"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "js-sys",
+          "before": [
+            "0.3.105"
+          ],
+          "after": [
+            "0.3.106"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "jsonschema",
+          "before": [
+            "0.58.5"
+          ],
+          "after": [
+            "0.58.6"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "jsonschema-regex",
+          "before": [
+            "0.58.5"
+          ],
+          "after": [
+            "0.58.6"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "jsonschema-value",
+          "before": [
+            "0.58.5"
+          ],
+          "after": [
+            "0.58.6"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "libc",
+          "before": [
+            "0.2.189"
+          ],
+          "after": [
+            "0.2.191"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "ref-cast-impl",
+          "before": [
+            "1.0.27"
+          ],
+          "after": [
+            "1.0.27"
+          ],
+          "kind": "dependency-edge"
+        },
+        {
+          "name": "referencing",
+          "before": [
+            "0.58.5"
+          ],
+          "after": [
+            "0.58.6"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "serde_derive",
+          "before": [
+            "1.0.229"
+          ],
+          "after": [
+            "1.0.229"
+          ],
+          "kind": "dependency-edge"
+        },
+        {
+          "name": "serde_json",
+          "before": [
+            "1.0.151"
+          ],
+          "after": [
+            "1.0.154"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "serde_repr",
+          "before": [
+            "0.1.21"
+          ],
+          "after": [
+            "0.1.21"
+          ],
+          "kind": "dependency-edge"
+        },
+        {
+          "name": "sha2",
+          "before": [
+            "0.11.0"
+          ],
+          "after": [
+            "0.11.1"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "smallvec",
+          "before": [
+            "1.16.1"
+          ],
+          "after": [
+            "1.16.3"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "syn",
+          "before": [
+            "2.0.119",
+            "3.0.6"
+          ],
+          "after": [
+            "2.0.119",
+            "3.0.9"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "tempfile",
+          "before": [
+            "3.27.0"
+          ],
+          "after": [
+            "3.27.0"
+          ],
+          "kind": "dependency-edge"
+        },
+        {
+          "name": "thiserror-impl",
+          "before": [
+            "2.0.21"
+          ],
+          "after": [
+            "2.0.21"
+          ],
+          "kind": "dependency-edge"
+        },
+        {
+          "name": "unicode-ident",
+          "before": [
+            "1.0.26"
+          ],
+          "after": [
+            "1.0.27"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "uuid",
+          "before": [
+            "1.26.1"
+          ],
+          "after": [
+            "1.28.0"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "wasm-bindgen",
+          "before": [
+            "0.2.128"
+          ],
+          "after": [
+            "0.2.129"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "wasm-bindgen-macro",
+          "before": [
+            "0.2.128"
+          ],
+          "after": [
+            "0.2.129"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "wasm-bindgen-macro-support",
+          "before": [
+            "0.2.128"
+          ],
+          "after": [
+            "0.2.129"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "wasm-bindgen-shared",
+          "before": [
+            "0.2.128"
+          ],
+          "after": [
+            "0.2.129"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "zbus_macros",
+          "before": [
+            "6.0.0"
+          ],
+          "after": [
+            "6.0.0"
+          ],
+          "kind": "dependency-edge"
+        },
+        {
+          "name": "zbus_utils",
+          "before": [
+            "6.0.0"
+          ],
+          "after": [
+            "6.0.0"
+          ],
+          "kind": "dependency-edge"
+        },
+        {
+          "name": "zerocopy",
+          "before": [
+            "0.8.57"
+          ],
+          "after": [
+            "0.8.63"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "zerocopy-derive",
+          "before": [
+            "0.8.57"
+          ],
+          "after": [
+            "0.8.63"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "zeroize",
+          "before": [
+            "1.9.0"
+          ],
+          "after": [
+            "1.9.1"
+          ],
+          "kind": "version/add/remove"
+        }
+      ]
+    },
+    "fuzz": {
+      "path": "crates/abi-wdbx/fuzz/Cargo.lock",
+      "sha256": "b02d27422795c1785c9f4119f5e6a1b57e296bb74d543c908f7f285928a2aa83",
+      "before_package_count": 153,
+      "after_package_count": 125,
+      "changes": [
+        {
+          "name": "arbitrary",
+          "before": [
+            "1.4.2"
+          ],
+          "after": [
+            "1.5.0"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "async-broadcast",
+          "before": [
+            "0.7.2"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "async-channel",
+          "before": [
+            "2.5.0"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "async-executor",
+          "before": [
+            "1.14.0"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "async-io",
+          "before": [
+            "2.6.0"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "async-lock",
+          "before": [
+            "3.4.2"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "async-process",
+          "before": [
+            "2.5.0"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "async-recursion",
+          "before": [
+            "1.1.1"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "async-signal",
+          "before": [
+            "0.2.14"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "async-task",
+          "before": [
+            "4.7.1"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "async-trait",
+          "before": [
+            "0.1.92"
+          ],
+          "after": [
+            "0.1.92"
+          ],
+          "kind": "dependency-edge"
+        },
+        {
+          "name": "atomic-waker",
+          "before": [
+            "1.1.2"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "bitflags",
+          "before": [
+            "2.13.1"
+          ],
+          "after": [
+            "2.13.2"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "blocking",
+          "before": [
+            "1.7.0"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "cc",
+          "before": [
+            "1.4.5"
+          ],
+          "after": [
+            "1.9.0"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "cfg-if",
+          "before": [
+            "1.0.4"
+          ],
+          "after": [
+            "1.0.5"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "concurrent-queue",
+          "before": [
+            "2.5.0"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "crc32fast",
+          "before": [
+            "1.5.1"
+          ],
+          "after": [
+            "1.5.2"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "crossbeam-utils",
+          "before": [
+            "0.8.23"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "ctutils",
+          "before": [
+            "0.4.2"
+          ],
+          "after": [
+            "0.4.3"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "enumflags2",
+          "before": [
+            "0.7.12"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "enumflags2_derive",
+          "before": [
+            "0.7.12"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "equivalent",
+          "before": [
+            "1.0.2"
+          ],
+          "after": [
+            "1.0.3"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "event-listener",
+          "before": [
+            "5.4.2"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "event-listener-strategy",
+          "before": [
+            "0.5.4"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "find-msvc-tools",
+          "before": [
+            "0.1.12"
+          ],
+          "after": [
+            "0.1.15"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "foldhash",
+          "before": [],
+          "after": [
+            "0.2.0"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "futures-lite",
+          "before": [
+            "2.6.1"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "futures-macro",
+          "before": [
+            "0.3.34"
+          ],
+          "after": [
+            "0.3.34"
+          ],
+          "kind": "dependency-edge"
+        },
+        {
+          "name": "hermit-abi",
+          "before": [
+            "0.5.3"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "hybrid-array",
+          "before": [
+            "0.4.14"
+          ],
+          "after": [
+            "0.4.15"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "inout",
+          "before": [
+            "0.2.2"
+          ],
+          "after": [
+            "0.2.5"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "js-sys",
+          "before": [
+            "0.3.105"
+          ],
+          "after": [
+            "0.3.106"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "libc",
+          "before": [
+            "0.2.189"
+          ],
+          "after": [
+            "0.2.191"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "parking",
+          "before": [
+            "2.2.1"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "piper",
+          "before": [
+            "0.2.5"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "polling",
+          "before": [
+            "3.11.0"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "proc-macro-crate",
+          "before": [
+            "3.5.0"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "rustix",
+          "before": [
+            "1.1.4"
+          ],
+          "after": [
+            "1.1.5"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "secret-service",
+          "before": [
+            "5.2.0"
+          ],
+          "after": [
+            "6.0.0"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "serde_derive",
+          "before": [
+            "1.0.229"
+          ],
+          "after": [
+            "1.0.229"
+          ],
+          "kind": "dependency-edge"
+        },
+        {
+          "name": "serde_json",
+          "before": [
+            "1.0.151"
+          ],
+          "after": [
+            "1.0.154"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "serde_repr",
+          "before": [
+            "0.1.21"
+          ],
+          "after": [
+            "0.1.21"
+          ],
+          "kind": "dependency-edge"
+        },
+        {
+          "name": "sha2",
+          "before": [
+            "0.11.0"
+          ],
+          "after": [
+            "0.11.1"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "signal-hook-registry",
+          "before": [
+            "1.4.8"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "socket2",
+          "before": [],
+          "after": [
+            "0.6.5"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "syn",
+          "before": [
+            "2.0.119",
+            "3.0.5"
+          ],
+          "after": [
+            "2.0.119",
+            "3.0.9"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "thiserror",
+          "before": [
+            "2.0.20"
+          ],
+          "after": [
+            "2.0.21"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "thiserror-impl",
+          "before": [
+            "2.0.20"
+          ],
+          "after": [
+            "2.0.21"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "toml_datetime",
+          "before": [
+            "1.1.1+spec-1.1.0"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "toml_edit",
+          "before": [
+            "0.25.13+spec-1.1.0"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "toml_parser",
+          "before": [
+            "1.1.3+spec-1.1.0"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "tracing",
+          "before": [
+            "0.1.44"
+          ],
+          "after": [
+            "0.1.44"
+          ],
+          "kind": "dependency-edge"
+        },
+        {
+          "name": "tracing-attributes",
+          "before": [
+            "0.1.31"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "unicode-ident",
+          "before": [
+            "1.0.24"
+          ],
+          "after": [
+            "1.0.27"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "uuid",
+          "before": [
+            "1.26.0"
+          ],
+          "after": [
+            "1.28.0"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "wasm-bindgen",
+          "before": [
+            "0.2.128"
+          ],
+          "after": [
+            "0.2.129"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "wasm-bindgen-macro",
+          "before": [
+            "0.2.128"
+          ],
+          "after": [
+            "0.2.129"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "wasm-bindgen-macro-support",
+          "before": [
+            "0.2.128"
+          ],
+          "after": [
+            "0.2.129"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "wasm-bindgen-shared",
+          "before": [
+            "0.2.128"
+          ],
+          "after": [
+            "0.2.129"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "zbus",
+          "before": [
+            "5.19.0"
+          ],
+          "after": [
+            "6.0.0"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "zbus_macros",
+          "before": [
+            "5.19.0"
+          ],
+          "after": [
+            "6.0.0"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "zbus_names",
+          "before": [
+            "4.3.4"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "zbus_utils",
+          "before": [],
+          "after": [
+            "6.0.0"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "zeroize",
+          "before": [
+            "1.9.0"
+          ],
+          "after": [
+            "1.9.1"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "zruntime",
+          "before": [],
+          "after": [
+            "0.2.0"
+          ],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "zvariant",
+          "before": [
+            "5.15.0"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "zvariant_derive",
+          "before": [
+            "5.15.0"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        },
+        {
+          "name": "zvariant_utils",
+          "before": [
+            "4.2.0"
+          ],
+          "after": [],
+          "kind": "version/add/remove"
+        }
+      ]
+    }
+  },
+  "logs": {
+    "/tmp/wdbx-20261020-compatible-root-generate.log": {
+      "sha256": "84ebac1a4328106bd1fdf6173e81a5704c2bdd52314553fa091ef1ab777f7e73",
+      "exit_code": 0
+    },
+    "/tmp/wdbx-20261020-compatible-root-fetch.log": {
+      "sha256": "b9822d0ebcb062158a1481dc0d6919afdcba40c687292cf484068a0165f54f2c",
+      "exit_code": 0
+    },
+    "/tmp/wdbx-20261020-compatible-root-check.log": {
+      "sha256": "875eccc008275f575ad49cfe8b67d91268df3b3e3c07a02ddcfaa6b9e41ed49d",
+      "exit_code": 0
+    },
+    "/tmp/wdbx-20261020-compatible-fuzz-generate.log": {
+      "sha256": "7055797d3cceca0090baaf9d863ed4fe3f57a177cf483592dbd8c9b5344e7467",
+      "exit_code": 0
+    },
+    "/tmp/wdbx-20261020-compatible-fuzz-fetch.log": {
+      "sha256": "138a46f0e5288e8392d2c1014589698a544684eac19da41cc59abef3b0d3f887",
+      "exit_code": 0
+    },
+    "/tmp/wdbx-20261020-compatible-fuzz-check.log": {
+      "sha256": "4ca65c069c20170547b796ef3bd072368faf780ff107e28bf4add0c5a395997b",
+      "exit_code": 0
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "baseline_commit": "8c5ed7faf412d9098ecacad5ca2c10a68c935279",
+  "locks": [
+    {
+      "path": "Cargo.lock",
+      "backup": "root.Cargo.lock",
+      "sha256": "4900d9f3e71f6915b0a3fb88a74a357772151b82975cb2dd0be07099262f9f54",
+      "head_sha256": "4900d9f3e71f6915b0a3fb88a74a357772151b82975cb2dd0be07099262f9f54"
+    },
+    {
+      "path": "crates/abi-wdbx/fuzz/Cargo.lock",
+      "backup": "fuzz.Cargo.lock",
+      "sha256": "bc5f83278bc6e7800d6d3bf871c936ae3cf296868c0c2c62bfdbe45ec0e17a53",
+      "head_sha256": "bc5f83278bc6e7800d6d3bf871c936ae3cf296868c0c2c62bfdbe45ec0e17a53"
+    },
+    {
+      "path": "specimen-studio/Cargo.lock",
+      "backup": "studio.Cargo.lock",
+      "sha256": "36ff8bdfd1a18872b0ef2132e10d72c4ee4babda31ba897eb72c428a6febf48b",
+      "head_sha256": "4de8c5cef824339500f05696f2473bd648b840f1a9f0495d26f209341426b8dd"
+    }
+  ],
+  "manifest_sha256": {
+    "Cargo.toml": "6f65609201205000f806e84fe1812df23d81a4631e6366a46dd0386b4fb2bf5c",
+    "crates/abi-core/Cargo.toml": "a4a734cb846b8103030d27faa4d6dbb1dceee10fb149fc52b91204b9282787d9",
+    "crates/abi-compute/Cargo.toml": "bf92bf8f08da40854eb4bcc1e5599c020f10521cf60e9832cecc1d590a944361",
+    "crates/abi-wdbx/Cargo.toml": "f4263a0b62e6243a266038e6aa939a24a868c7cb74da7fde6bb92d980f63d31f",
+    "crates/abi-telemetry/Cargo.toml": "0c76f4ae22ba7bab51a891abc366f6146a70566a0139855013f03413f8e1e5ae",
+    "crates/abi-foundation/Cargo.toml": "44c710c2f042509c3dbc29f601c00e57fca072150eeda670c9731e079d8e2c98",
+    "crates/abi-wdbx/fuzz/Cargo.toml": "a97752465743940bf05732029f3597f394b9bd66149fcd84b672af29f1605446",
+    "specimen-studio/Cargo.toml": "5866a7301606f40932bb4bfcd77608487b712a90de2c5906749b5a3854e82447",
+    "specimen-studio/native/specimen-core/Cargo.toml": "618b0a27d80dcdf66c5691a5ced0ceeb447976609cdebfcb0b3b4dd841e5595b",
+    "specimen-studio/native/specimen-kernel/Cargo.toml": "d77e7f7a0055a4d7600a69a527501e46573c8457bbcb1ca2508042adaf791ad0",
+    "specimen-studio/src-tauri/Cargo.toml": "c7737f37ad30a447dcc25437efc68dd4278d40605b651ff18fc657596716dbaf"
+  },
+  "previous_candidate": "../2026-10-20-unqualified-cargo-upgrade/metadata.json",
+  "scope": "Root and fuzz each remove/regenerate at most once. Studio backup read-only pending owner freeze.",
+  "toolchain": "1.99.1",
+  "resolver": "incompatible-rust-versions=fallback"
+}

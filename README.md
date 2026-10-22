@@ -52,7 +52,11 @@ signing over transaction and segment objects. MVCC. WAL plus segments with CRC
 framing. Cluster replication and read repair. A pluggable retrieval scoring seam.
 Program 4's first C1-only slice adds a pure `abbey-cbor-episode-v1`
 deterministic-CBOR envelope encoder, sorted parent commitments, and exact
-positive golden vectors. The next bounded slice adds a single-writer
+positive golden vectors. A bounded restricted-profile reader now validates canonical
+syntax and envelope shape with finite resource limits, exact reencoding and an
+independent Python decoding witness. It adds syntax validation only; see the
+[qualification receipt](docs/superpowers/plans/2026-10-20-canonical-cbor-reader-receipt.md).
+The next bounded slice adds a single-writer
 `EpisodeStore`: it reconstructs that canonical envelope from typed lifecycle
 events, computes the commitment inside WDBX, appends linked records, verifies
 every complete record on reopen, and returns content-free receipts. New writes
@@ -67,6 +71,12 @@ bytes unchanged. This is C1 source evidence plus local deterministic
 replay test evidence; it is not a claim-registry promotion or deployed
 federation evidence.
 
+**Private prototype.** A crate-private complete-episode model now has bounded
+canonical encoding and an independent Python encoding witness. Its domain remains
+provisional pending ABI agreement; it adds no typed complete decoder, admission,
+persistence or signature verification. See the
+[prototype qualification receipt](docs/superpowers/plans/2026-10-20-complete-episode-prototype-receipt.md).
+
 **Not implemented, and not claimed.** No complete constitutional v3
 `EpisodeBlock`, general canonical-CBOR reader, or COSE envelope. Episode
 signing exists only as a detached per-record Ed25519 signature over the v3
@@ -77,8 +87,9 @@ second-language witness: a standard-library Python reimplementation
 golden vectors and a differential corpus, and must reproduce, from each
 write's JSON wire form plus its parent, every receipt digest a real
 `EpisodeStore` appends across all seven event variants, under `cargo test`.
-It reimplements the encoding and the header/payload derivation only: not the
-store's admission rules, not COSE, and it verifies no signature. The existing v2 commit digest remains `serde_json` bytes with parents in insertion
+The Python witness also independently decodes the restricted profile and checks
+malformed inputs against Rust; it does not implement the
+store's admission rules or COSE, and it verifies no signature. The existing v2 commit digest remains `serde_json` bytes with parents in insertion
 order; it is intentionally unchanged for compatibility. No `policy_version`,
 `signer_key_id`, `task_regime`, or `regime_posterior` exists in the older v2
 record format; the new episode ledger binds `policy_version` but does not

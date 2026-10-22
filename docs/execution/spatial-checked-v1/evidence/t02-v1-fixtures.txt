@@ -1,0 +1,11 @@
+   Compiling abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx-spatial-checked-v1/crates/abi-wdbx)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.42s
+     Running tests/real_store.rs (target/debug/deps/real_store-d9a475d4ce65c152)
+
+running 3 tests
+test parses_the_magic_only_sample_segment ... ok
+test parses_the_sample_manifest ... ok
+test parses_the_sample_segment_with_both_hash_encodings ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+

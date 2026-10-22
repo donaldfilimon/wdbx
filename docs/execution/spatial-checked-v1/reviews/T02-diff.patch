@@ -1,0 +1,367 @@
+diff --git a/crates/abi-wdbx/tests/wdbx_3d_compatibility.rs b/crates/abi-wdbx/tests/wdbx_3d_compatibility.rs
+new file mode 100644
+index 0000000..0a5feff
+--- /dev/null
++++ b/crates/abi-wdbx/tests/wdbx_3d_compatibility.rs
+@@ -0,0 +1,290 @@
++//! Frozen legacy behavior; this corpus does not prescribe the new checked API.
++use abi_wdbx::StorePaths;
++use abi_wdbx::spatial::{DistanceMetric, Point3D, SpatialIndex3D};
++use abi_wdbx::v2::{
++    ObjectKind, ObjectSecurity, VersionedSnapshot, open_object, open_versioned_read_only,
++    seal_object,
++};
++use abi_wdbx::v3::episode::{
++    ActorKind, ActorRef, EpisodeEvent, EpisodeSigner, EpisodeSource, EpisodeStore, EpisodeWrite,
++    EvidenceLevel, GuildEpisodePolicy, SignatureStatus, StorePolicy,
++};
++use ed25519_dalek::SigningKey;
++use sha2::{Digest as _, Sha256};
++use std::{
++    collections::BTreeMap,
++    fs,
++    path::{Path, PathBuf},
++};
++use uuid::Uuid;
++
++struct Scratch(PathBuf);
++impl Scratch {
++    fn new() -> Self {
++        let path = std::env::temp_dir().join(format!("wdbx-compatibility-{}", Uuid::new_v4()));
++        fs::create_dir(&path).unwrap();
++        Self(path)
++    }
++}
++impl Drop for Scratch {
++    fn drop(&mut self) {
++        let _ = fs::remove_dir_all(&self.0);
++    }
++}
++fn manifest() -> serde_json::Value {
++    serde_json::from_str(include_str!("fixtures/wdbx_3d/compatibility-manifest.json")).unwrap()
++}
++fn hex(bytes: &[u8]) -> String {
++    use std::fmt::Write as _;
++    let mut result = String::with_capacity(bytes.len() * 2);
++    for byte in bytes {
++        write!(result, "{byte:02x}").unwrap();
++    }
++    result
++}
++fn hash(bytes: &[u8]) -> String {
++    hex(&Sha256::digest(bytes))
++}
++fn pinned(name: &str, bytes: &[u8]) {
++    let actual = hash(bytes);
++    assert_eq!(
++        actual,
++        manifest()["sha256"][name].as_str().unwrap(),
++        "fixture {name}"
++    );
++}
++fn files(root: &Path) -> BTreeMap<PathBuf, Vec<u8>> {
++    fn walk(root: &Path, path: &Path, result: &mut BTreeMap<PathBuf, Vec<u8>>) {
++        for entry in fs::read_dir(path).unwrap() {
++            let path = entry.unwrap().path();
++            if path.is_dir() {
++                walk(root, &path, result);
++            } else {
++                result.insert(
++                    path.strip_prefix(root).unwrap().to_owned(),
++                    fs::read(path).unwrap(),
++                );
++            }
++        }
++    }
++    let mut result = BTreeMap::new();
++    walk(root, root, &mut result);
++    result
++}
++
++#[test]
++fn legacy_reader_is_nonmutating() {
++    let scratch = Scratch::new();
++    let paths = StorePaths::new(&scratch.0);
++    let golden = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/golden");
++    for (source, destination) in [
++        ("wdbx-sample.manifest", paths.manifest()),
++        ("wdbx-sample.seg.jsonl", paths.segment(0)),
++        ("wdbx-sample.seg.1-collected.jsonl", paths.segment(1)),
++        ("wdbx-sample.seg.2.jsonl", paths.segment(2)),
++        ("wdbx-sample.seg.3.jsonl", paths.segment(3)),
++    ] {
++        let bytes = fs::read(golden.join(source)).unwrap();
++        pinned(source, &bytes);
++        fs::write(destination, bytes).unwrap();
++    }
++    let before = files(&scratch.0);
++    for _ in 0..2 {
++        let VersionedSnapshot::V1(snapshot) = open_versioned_read_only(&paths).unwrap() else {
++            panic!("must remain v1")
++        };
++        // Highest active epoch 3 is a valid empty checkpoint, not a delta.
++        assert_eq!(snapshot.stats.blocks, 0);
++        assert_eq!(snapshot.stats.spatial_records, 0);
++        snapshot.verify_chain().unwrap();
++        assert_eq!(
++            files(&scratch.0),
++            before,
++            "read must preserve every filename and byte"
++        );
++    }
++    let monolithic = Scratch::new();
++    let paths = StorePaths::new(&monolithic.0);
++    fs::copy(golden.join("wdbx-sample.seg.jsonl"), paths.index()).unwrap();
++    let before = files(&monolithic.0);
++    let VersionedSnapshot::V1(snapshot) = open_versioned_read_only(&paths).unwrap() else {
++        panic!("monolithic fixture must remain v1")
++    };
++    assert_eq!(snapshot.stats.blocks, 2);
++    assert_eq!(snapshot.stats.spatial_records, 1);
++    snapshot.verify_chain().unwrap();
++    assert_eq!(files(&monolithic.0), before);
++}
++
++#[test]
++fn legacy_api_order_is_characterized() {
++    for count in [63_u32, 64, 65] {
++        let mut index = SpatialIndex3D::new();
++        // Insert positive octant first. Equal distances retain scan or octant traversal order.
++        index.insert(
++            7,
++            Point3D {
++                x: 1.0,
++                y: 0.0,
++                z: 0.0,
++            },
++            b"positive",
++        );
++        index.insert(
++            7,
++            Point3D {
++                x: -1.0,
++                y: 0.0,
++                z: 0.0,
++            },
++            b"negative",
++        );
++        for id in 2..count {
++            index.insert(
++                id,
++                Point3D {
++                    x: 0.0,
++                    y: 0.0,
++                    z: 0.0,
++                },
++                b"center",
++            );
++        }
++        assert_eq!(index.count(), usize::try_from(count).unwrap());
++        for metric in [DistanceMetric::Euclidean, DistanceMetric::Manhattan] {
++            let results = index.radius_search(Point3D::default(), 1.0, metric);
++            let duplicates: Vec<_> = results
++                .iter()
++                .filter(|hit| hit.id == 7 && hit.distance.to_bits() == 1.0_f32.to_bits())
++                .map(|hit| hit.payload)
++                .collect();
++            let expected: Vec<&[u8]> = if count < 64 {
++                vec![b"positive", b"negative"]
++            } else {
++                vec![b"negative", b"positive"]
++            };
++            assert_eq!(duplicates, expected, "radius threshold {count}, {metric:?}");
++            let nearest = index.nearest_neighbors(
++                Point3D::default(),
++                usize::try_from(count).unwrap(),
++                metric,
++            );
++            assert_eq!(
++                nearest
++                    .iter()
++                    .filter(|hit| hit.id == 7 && hit.distance.to_bits() == 1.0_f32.to_bits())
++                    .map(|hit| hit.payload)
++                    .collect::<Vec<_>>(),
++                expected
++            );
++            // k cuts inside the tie, freezing which observation survives.
++            let nearest = index.nearest_neighbors(
++                Point3D::default(),
++                usize::try_from(count - 1).unwrap(),
++                metric,
++            );
++            assert_eq!(nearest.last().unwrap().payload, expected[0]);
++        }
++        let cosine = index.radius_search(Point3D::default(), 1.0, DistanceMetric::Cosine);
++        assert_eq!(cosine[0].payload, b"positive");
++        assert_eq!(cosine[1].payload, b"negative");
++    }
++}
++
++fn policy() -> StorePolicy {
++    StorePolicy {
++        contract_revision: 2,
++        contract_digest: [9; 32],
++        guilds: BTreeMap::from([(
++            "guild_ref".into(),
++            GuildEpisodePolicy {
++                learning_enabled: true,
++                policy_version: "policy_v1".into(),
++                token_budget: 1000,
++                storage_budget_bytes: 1024 * 1024,
++                current_consent_epoch: Some(7),
++            },
++        )]),
++    }
++}
++fn proposal() -> EpisodeWrite {
++    EpisodeWrite {
++        request_id: "request_1".into(),
++        operation_id: "operation_1".into(),
++        contract_revision: 2,
++        contract_digest: [9; 32],
++        guild_ref: "guild_ref".into(),
++        consent_epoch: Some(7),
++        source_type: EpisodeSource::DiscordVoice,
++        policy_version: "policy_v1".into(),
++        evidence_level: EvidenceLevel::C2,
++        event: EpisodeEvent::Proposal {
++            requested_by: ActorRef {
++                principal_id: "requester_ref".into(),
++                kind: ActorKind::HumanSubject,
++            },
++            proposed_by: ActorRef {
++                principal_id: "abbey_service".into(),
++                kind: ActorKind::Service,
++            },
++        },
++        token_cost: 3,
++        expected_commitment: None,
++        quiet: false,
++    }
++}
++
++#[test]
++fn signed_bytes_remain_identical() {
++    let scratch = Scratch::new();
++    // Synthetic public test seed only, never an operator key. Use the public permission-checked loader.
++    let key_path = scratch.0.join("test-signing-key");
++    fs::write(&key_path, [1_u8; 32]).unwrap();
++    #[cfg(unix)]
++    {
++        use std::os::unix::fs::PermissionsExt as _;
++        fs::set_permissions(&key_path, fs::Permissions::from_mode(0o600)).unwrap();
++    }
++    let security = ObjectSecurity::from_key_files(None, Some(&key_path), None).unwrap();
++    // This tests the frozen v2 authenticated object layer, not a second journal format.
++    let payload = br#"{"parents":["second","first"],"point":[-0.0,1.0,2.0]}"#;
++    let encoded =
++        seal_object(ObjectKind::Artifact, "compatibility-v2", payload, &security).unwrap();
++    let object_path = scratch.0.join("signed-v2-object");
++    fs::write(&object_path, &encoded).unwrap();
++    let signer = EpisodeSigner::new(SigningKey::from_bytes(&[1; 32]));
++    let key = signer.verifying_key();
++    let key_id = signer.key_id().clone();
++    let directory = scratch.0.join("v3");
++    let mut store = EpisodeStore::open_with_signer(&directory, policy(), signer).unwrap();
++    let digest = store.propose_write(&proposal()).unwrap().episode_digest;
++    drop(store);
++    let before = files(&scratch.0);
++    for _ in 0..2 {
++        let raw = fs::read(&object_path).unwrap();
++        let opened = open_object(&raw, &security, true).unwrap();
++        assert!(opened.signed);
++        assert_eq!(opened.kind, ObjectKind::Artifact);
++        assert_eq!(opened.plaintext, payload);
++        let store = EpisodeStore::open(&directory, policy()).unwrap();
++        assert_eq!(store.retrieve("guild_ref", 10).unwrap().len(), 1);
++        assert!(store.find_receipt("guild_ref", &digest).unwrap().is_some());
++        assert_eq!(
++            store
++                .signature_status("guild_ref", &digest, |id| (id == &key_id).then_some(key))
++                .unwrap(),
++            Some(SignatureStatus::Valid(key_id.clone()))
++        );
++        drop(store);
++        assert_eq!(files(&scratch.0), before);
++    }
++    pinned("signed-v2-object", &encoded);
++    pinned(
++        "signed-v3-ledger",
++        &fs::read(directory.join("episodes.v1.jsonl")).unwrap(),
++    );
++    assert_eq!(
++        hex(&digest),
++        manifest()["v3_episode_digest"].as_str().unwrap()
++    );
++}
+diff --git a/crates/abi-wdbx/tests/fixtures/wdbx_3d/compatibility-manifest.json b/crates/abi-wdbx/tests/fixtures/wdbx_3d/compatibility-manifest.json
+new file mode 100644
+index 0000000..734816b
+--- /dev/null
++++ b/crates/abi-wdbx/tests/fixtures/wdbx_3d/compatibility-manifest.json
+@@ -0,0 +1,65 @@
++{
++  "profile": "spatial-checked-v1",
++  "status": "characterization; dependent T00/T01 acceptance pending",
++  "sha256": {
++    "wdbx-sample.manifest": "a1553b1fc23e2e21e8e404f4d1ea829544fbd9ee4351a3424ce6863245b58d46",
++    "wdbx-sample.seg.jsonl": "45f3623020122e9158e1f264010fa1686b67328eac2d06789dc0d27bf0cc779a",
++    "wdbx-sample.seg.1-collected.jsonl": "cec04bee5fc16c77f61b155c0bbaa72957e31b6f12660f46e3014b9c1db3348d",
++    "wdbx-sample.seg.2.jsonl": "d0a7ae2abfb54f612294b5cb8949e19d250d936933ebf46c1b4cda7ad32a0f28",
++    "wdbx-sample.seg.3.jsonl": "92f31fc5e7a27af9640f247e32aa8cfe6dbf050d24dd57fab7d2e69356492b2d",
++    "signed-v2-object": "48e59e116a2f30a0d9998dda44e247fd0d5a304773f634d04df991529ca26b5e",
++    "signed-v3-ledger": "25ddcefbbebc646ecc240151d4f42507246525877d082dd0bc17deed83ee28cc"
++  },
++  "cases": [
++    "signed_bytes_remain_identical",
++    "legacy_reader_is_nonmutating",
++    "legacy_api_order_is_characterized"
++  ],
++  "zero_tests_do_not_qualify": {
++    "owner": "tools/validate_wdbx_3d_evidence.py",
++    "status": "Python validator negative case; not a Rust test"
++  },
++  "report": {
++    "unchanged": [
++      "v1 scratch-copy file set and bytes",
++      "v2 authenticated object bytes",
++      "v3 signed ledger bytes and commitment",
++      "legacy threshold-dependent tie order and duplicate IDs"
++    ],
++    "changed": [],
++    "blocked": [
++      "attachment-index operations: API not implemented",
++      "entire packet acceptance pending T00/T01"
++    ],
++    "reason": "Prepared characterization only; signed v2 object-layer fixture is not complete v2 journal/segment qualification."
++  },
++  "v3_episode_digest": "b5f06be593fe61fcbe6c4d9655e7b203d26cc2f0036dd77a5407ec88aeb34925",
++  "fixture_sources": {
++    "v1": "tests/golden/wdbx-sample*; tests/real_store.rs",
++    "v2": "public seal_object/open_object, deterministic synthetic Artifact; does not qualify journal replay",
++    "v3": "tests/v3_episode_signing.rs policy/proposal seed 1, request_1, operation_1"
++  },
++  "legacy_api": {
++    "record_counts": [
++      63,
++      64,
++      65
++    ],
++    "duplicate_u32_id": 7,
++    "equal_distance_order_below_64": [
++      "positive",
++      "negative"
++    ],
++    "equal_distance_order_at_or_above_64": [
++      "negative",
++      "positive"
++    ],
++    "cosine_order": "insertion order at all three counts; zero-norm distance 1",
++    "metrics": [
++      "Euclidean",
++      "Manhattan",
++      "Cosine"
++    ],
++    "nearest_count": "all points and all-but-one (tie cutoff)"
++  }
++}

@@ -1,0 +1,28 @@
+Tue Oct 20 07:42:38 UTC 2026
+rustc 1.99.1 (58cf8f9c3 2026-10-13)
+binary: rustc
+commit-hash: 58cf8f9c35b355199727627d07ae34a4e2846d67
+commit-date: 2026-10-13
+host: aarch64-apple-darwin
+release: 1.99.1
+LLVM version: 23.1.1
+cargo 1.99.1 (5f94df478 2026-08-27)
+4900d9f3e71f6915b0a3fb88a74a357772151b82975cb2dd0be07099262f9f54  Cargo.lock
+ed8c872ca71dbf097ae42e020310d0f0123a516257c7b66c63e7bb6809a48ca6  crates/abi-compute/src/cpu.rs
+diff --git a/crates/abi-compute/src/cpu.rs b/crates/abi-compute/src/cpu.rs
+index 15fc17f..caa9f4e 100644
+--- a/crates/abi-compute/src/cpu.rs
++++ b/crates/abi-compute/src/cpu.rs
+@@ -167,7 +167,9 @@ fn dot_lanes<const LANES: usize>(left: &[f32], right: &[f32]) -> f32 {
+         offset += LANES;
+     }
+     // SimdFloat::reduce_sum used an ordered reduction seeded with -0.0.
+-    let mut sum = accumulator.into_iter().fold(-0.0_f32, |sum, lane| sum + lane);
++    let mut sum = accumulator
++        .into_iter()
++        .fold(-0.0_f32, |sum, lane| sum + lane);
+     for index in offset..left.len() {
+         sum += left[index] * right[index];
+     }
+
+Post-run environment presence check (not a captured pre-run environment): {"ABI_WDBX_REAL_STORE_TEST": false, "ABI_ZIG_BIN": false}

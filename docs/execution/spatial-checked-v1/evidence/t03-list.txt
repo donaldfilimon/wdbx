@@ -1,0 +1,24 @@
+   Compiling abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx-spatial-checked-v1/crates/abi-wdbx)
+warning: missing documentation for the crate
+  --> crates/abi-wdbx/tests/wdbx_3d_numeric.rs:1:1
+   |
+ 1 | / use abi_wdbx::{Point3D, spatial3d::{Point3, Radius, SpatialError}};
+ 2 | |
+ 3 | | #[test]
+ 4 | | fn rejects_nonfinite_and_out_of_domain() {
+...  |
+58 | |     assert_eq!(Radius::try_new(f64::from_bits(1e150_f64.to_bits() + 1)), Err(SpatialError::CoordinateOutOfRange));
+59 | | }
+   | |_^
+   |
+   = note: requested on the command line with `-W missing-docs`
+
+warning: `abi-wdbx` (test "wdbx_3d_numeric") generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.42s
+     Running tests/wdbx_3d_numeric.rs (target/debug/deps/wdbx_3d_numeric-6dce56fd4be631eb)
+normalizes_only_new_geometric_zero: test
+radius_domain_is_closed: test
+rejects_nonfinite_and_out_of_domain: test
+widens_all_finite_f32: test
+
+4 tests, 0 benchmarks

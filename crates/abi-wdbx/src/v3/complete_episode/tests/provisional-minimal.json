@@ -1,0 +1,127 @@
+{
+  "identity": {
+    "episode_id": "0102030405064008800a0b0c0d0e0f10",
+    "request_id": "0102030405064008800a0b0c0d0e0f10",
+    "binding": {
+      "tenant": "synthetic-tenant",
+      "scope": {
+        "variant": "Guild",
+        "guild": "synthetic-guild"
+      }
+    },
+    "contract": {
+      "component": "contract",
+      "revision": "v1",
+      "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+    }
+  },
+  "time": {
+    "acquired_at": 100,
+    "received_at": 99
+  },
+  "origin": {
+    "source_node": "synthetic-node",
+    "actor": {
+      "principal": "synthetic-principal",
+      "kind": "Service"
+    },
+    "signer": "ed25519:abababababababababababababababababababababababababababababababab"
+  },
+  "context": {
+    "task_id": "0102030405064008800a0b0c0d0e0f10",
+    "regime": "synthetic-regime",
+    "regime_posterior": {
+      "unknown": true
+    },
+    "habituation": {
+      "unknown": true
+    },
+    "resources": []
+  },
+  "decision": {
+    "route": "NoModel",
+    "prediction": {
+      "unknown": true
+    },
+    "actions": [],
+    "uncertainty": {
+      "unknown": true
+    },
+    "risk": {
+      "unknown": true
+    },
+    "novelty": {
+      "unknown": true
+    }
+  },
+  "outcome": {
+    "observed": {
+      "unknown": true
+    },
+    "utility": {
+      "unknown": true
+    },
+    "safety_effect": "Unknown",
+    "costs": [],
+    "rollback": "Unknown"
+  },
+  "authority": {
+    "policy": {
+      "component": "policy",
+      "revision": "v1",
+      "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+    },
+    "safety_policy": {
+      "component": "safety",
+      "revision": "v1",
+      "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+    },
+    "capabilities": [],
+    "models": [],
+    "calibrations": [],
+    "approvals": []
+  },
+  "evidence": {
+    "maturity": "C0",
+    "source_refs": [],
+    "observation_refs": [],
+    "dimensions": {
+      "cryptographic": {
+        "unknown": true
+      },
+      "source": {
+        "unknown": true
+      },
+      "calibration": {
+        "unknown": true
+      },
+      "outcome": {
+        "unknown": true
+      },
+      "compatibility": {
+        "unknown": true
+      },
+      "regime": {
+        "unknown": true
+      },
+      "lifecycle": {
+        "unknown": true
+      },
+      "confidence": {
+        "unknown": true
+      }
+    }
+  },
+  "lifecycle": {
+    "retention": {
+      "variant": "Ephemeral"
+    },
+    "holds": [],
+    "edges": []
+  },
+  "provenance": {
+    "causal_parents": [],
+    "consulted_parents": [],
+    "records": []
+  }
+}

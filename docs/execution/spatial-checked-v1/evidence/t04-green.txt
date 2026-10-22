@@ -1,0 +1,48 @@
+   Compiling abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx-spatial-checked-v1/crates/abi-wdbx)
+warning: missing documentation for the crate
+   --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:1:1
+    |
+  1 | / #[path = "support/dyadic_reference.rs"]
+  2 | | mod dyadic_reference;
+  3 | | #[path = "support/spatial_oracle.rs"]
+  4 | | mod spatial_oracle;
+...   |
+219 | | }
+    | |_^
+    |
+    = note: requested on the command line with `-W missing-docs`
+
+warning: `abi-wdbx` (test "wdbx_3d_oracle") generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.29s
+     Running tests/wdbx_3d_oracle.rs (target/debug/deps/wdbx_3d_oracle-0ecf43b059d2c9b7)
+
+running 8 tests
+test extreme_coordinates_have_finite_reported_distance ... ok
+test identity_breaks_true_metric_ties ... ok
+test oracle_does_not_call_production_kernel ... ok
+test squared_key_precedes_rounded_distance ... ok
+test known_answers_degenerate_extreme_and_subnormal ... ok
+test defined_float_and_exact_dyadic_intentionally_disagree ... ok
+test boundary_neighbors_are_distinct ... ok
+test seeded_integer_corpus_agrees_with_exact_reference ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.60s
+
+        0.90 real         0.93 user         0.17 sys
+           174194688  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               35501  page reclaims
+                 319  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   2  signals received
+                 400  voluntary context switches
+                3075  involuntary context switches
+           812382867  instructions retired
+           253962379  cycles elapsed
+            37700280  peak memory footprint

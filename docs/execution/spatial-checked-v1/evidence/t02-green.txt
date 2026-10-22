@@ -1,0 +1,28 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running tests/wdbx_3d_compatibility.rs (target/debug/deps/wdbx_3d_compatibility-6a84b02da7f12cff)
+
+running 3 tests
+test legacy_api_order_is_characterized ... ok
+test legacy_reader_is_nonmutating ... ok
+test signed_bytes_remain_identical ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+        0.07 real         0.03 user         0.03 sys
+            62111744  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                6061  page reclaims
+                   3  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   1  signals received
+                  12  voluntary context switches
+                 309  involuntary context switches
+           784428486  instructions retired
+           238431765  cycles elapsed
+            37438184  peak memory footprint

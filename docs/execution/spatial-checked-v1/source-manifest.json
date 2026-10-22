@@ -1,0 +1,5 @@
+{
+  "schema": "wdbx-execution-manifest-pointer-v1",
+  "canonical_manifest": "docs/claims/wdbx-3d/source-manifest.json",
+  "note": "Initial hash-only inventory superseded by the reviewed source manifest; read ranges and authority distinctions live there."
+}

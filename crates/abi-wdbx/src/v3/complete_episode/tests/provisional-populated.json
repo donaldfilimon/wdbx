@@ -1,0 +1,651 @@
+{
+  "identity": {
+    "episode_id": "0102030405064008800a0b0c0d0e0f10",
+    "request_id": "0102030405064008800a0b0c0d0e0f10",
+    "binding": {
+      "tenant": "synthetic-tenant",
+      "scope": {
+        "variant": "Guild",
+        "guild": "synthetic-guild"
+      }
+    },
+    "contract": {
+      "component": "contract",
+      "revision": "v1",
+      "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+    }
+  },
+  "time": {
+    "acquired_at": 100,
+    "received_at": 99,
+    "monotonic": {
+      "clock": "synthetic-clock",
+      "start": 10,
+      "end": 10
+    }
+  },
+  "origin": {
+    "source_node": "synthetic-node",
+    "actor": {
+      "principal": "synthetic-principal",
+      "kind": "Service"
+    },
+    "signer": "ed25519:abababababababababababababababababababababababababababababababab"
+  },
+  "context": {
+    "task_id": "0102030405064008800a0b0c0d0e0f10",
+    "regime": "synthetic-regime",
+    "regime_posterior": {
+      "known": [
+        [
+          "z",
+          0
+        ],
+        [
+          "a",
+          1000000
+        ]
+      ]
+    },
+    "habituation": {
+      "known": 0
+    },
+    "resources": [
+      {
+        "resource": "Tokens",
+        "amount": 24
+      },
+      {
+        "resource": "CpuMicros",
+        "amount": 256
+      }
+    ],
+    "summary": {
+      "binding": {
+        "tenant": "synthetic-tenant",
+        "scope": {
+          "variant": "Guild",
+          "guild": "synthetic-guild"
+        }
+      },
+      "digest": "0101010101010101010101010101010101010101010101010101010101010101",
+      "byte_length": 24,
+      "kind": "StateSummary",
+      "format": {
+        "component": "format",
+        "revision": "v1",
+        "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+      }
+    },
+    "reservoir": {
+      "binding": {
+        "tenant": "synthetic-tenant",
+        "scope": {
+          "variant": "Guild",
+          "guild": "synthetic-guild"
+        }
+      },
+      "digest": "0202020202020202020202020202020202020202020202020202020202020202",
+      "byte_length": 24,
+      "kind": "ReservoirEmbedding",
+      "format": {
+        "component": "format",
+        "revision": "v1",
+        "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+      }
+    }
+  },
+  "decision": {
+    "route": "LocalModel",
+    "prediction": {
+      "known": {
+        "binding": {
+          "tenant": "synthetic-tenant",
+          "scope": {
+            "variant": "Guild",
+            "guild": "synthetic-guild"
+          }
+        },
+        "digest": "0303030303030303030303030303030303030303030303030303030303030303",
+        "byte_length": 24,
+        "kind": "Prediction",
+        "format": {
+          "component": "format",
+          "revision": "v1",
+          "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+        }
+      }
+    },
+    "actions": [
+      {
+        "capability": {
+          "component": "capability",
+          "revision": "v1",
+          "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+        },
+        "action": "run",
+        "parameter_classes": [
+          "a",
+          "z"
+        ],
+        "phase": "Proposed"
+      }
+    ],
+    "uncertainty": {
+      "known": 100
+    },
+    "risk": {
+      "known": 200
+    },
+    "novelty": {
+      "known": 300
+    }
+  },
+  "outcome": {
+    "observed": {
+      "known": {
+        "binding": {
+          "tenant": "synthetic-tenant",
+          "scope": {
+            "variant": "Guild",
+            "guild": "synthetic-guild"
+          }
+        },
+        "digest": "0404040404040404040404040404040404040404040404040404040404040404",
+        "byte_length": 24,
+        "kind": "Outcome",
+        "format": {
+          "component": "format",
+          "revision": "v1",
+          "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+        }
+      }
+    },
+    "utility": {
+      "known": {
+        "unit": "Unitless",
+        "value": -1
+      }
+    },
+    "safety_effect": "NoViolationObserved",
+    "costs": [
+      {
+        "resource": "Tokens",
+        "amount": 24
+      },
+      {
+        "resource": "CpuMicros",
+        "amount": 256
+      }
+    ],
+    "rollback": "NotAttempted"
+  },
+  "authority": {
+    "policy": {
+      "component": "policy",
+      "revision": "v1",
+      "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+    },
+    "safety_policy": {
+      "component": "safety",
+      "revision": "v1",
+      "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+    },
+    "capabilities": [
+      {
+        "component": "capability",
+        "revision": "v1",
+        "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+      },
+      {
+        "component": "other",
+        "revision": "v1",
+        "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+      }
+    ],
+    "models": [
+      {
+        "component": "model",
+        "revision": "v1",
+        "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+      }
+    ],
+    "calibrations": [
+      {
+        "component": "calibration",
+        "revision": "v1",
+        "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+      }
+    ],
+    "approvals": [
+      {
+        "binding": {
+          "tenant": "synthetic-tenant",
+          "scope": {
+            "variant": "Guild",
+            "guild": "synthetic-guild"
+          }
+        },
+        "domain": "CompleteV1",
+        "digest": "0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a"
+      },
+      {
+        "binding": {
+          "tenant": "synthetic-tenant",
+          "scope": {
+            "variant": "Guild",
+            "guild": "synthetic-guild"
+          }
+        },
+        "domain": "CompleteV1",
+        "digest": "0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"
+      }
+    ],
+    "consent": {
+      "binding": {
+        "tenant": "synthetic-tenant",
+        "scope": {
+          "variant": "Guild",
+          "guild": "synthetic-guild"
+        }
+      },
+      "epoch": 1,
+      "policy": {
+        "component": "consent",
+        "revision": "v1",
+        "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+      },
+      "attestation": {
+        "binding": {
+          "tenant": "synthetic-tenant",
+          "scope": {
+            "variant": "Guild",
+            "guild": "synthetic-guild"
+          }
+        },
+        "domain": "CompleteV1",
+        "digest": "0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c"
+      }
+    }
+  },
+  "evidence": {
+    "maturity": "C0",
+    "source_refs": [
+      {
+        "binding": {
+          "tenant": "synthetic-tenant",
+          "scope": {
+            "variant": "Guild",
+            "guild": "synthetic-guild"
+          }
+        },
+        "digest": "0505050505050505050505050505050505050505050505050505050505050505",
+        "byte_length": 24,
+        "kind": "Model",
+        "format": {
+          "component": "format",
+          "revision": "v1",
+          "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+        }
+      },
+      {
+        "binding": {
+          "tenant": "synthetic-tenant",
+          "scope": {
+            "variant": "Guild",
+            "guild": "synthetic-guild"
+          }
+        },
+        "digest": "0606060606060606060606060606060606060606060606060606060606060606",
+        "byte_length": 24,
+        "kind": "Authority",
+        "format": {
+          "component": "format",
+          "revision": "v1",
+          "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+        }
+      }
+    ],
+    "observation_refs": [
+      {
+        "binding": {
+          "tenant": "synthetic-tenant",
+          "scope": {
+            "variant": "Guild",
+            "guild": "synthetic-guild"
+          }
+        },
+        "digest": "0707070707070707070707070707070707070707070707070707070707070707",
+        "byte_length": 24,
+        "kind": "Observation",
+        "format": {
+          "component": "format",
+          "revision": "v1",
+          "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+        }
+      }
+    ],
+    "dimensions": {
+      "cryptographic": {
+        "known": {
+          "binding": {
+            "tenant": "synthetic-tenant",
+            "scope": {
+              "variant": "Guild",
+              "guild": "synthetic-guild"
+            }
+          },
+          "digest": "0808080808080808080808080808080808080808080808080808080808080808",
+          "byte_length": 24,
+          "kind": "Evidence",
+          "format": {
+            "component": "format",
+            "revision": "v1",
+            "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+          }
+        }
+      },
+      "source": {
+        "known": {
+          "binding": {
+            "tenant": "synthetic-tenant",
+            "scope": {
+              "variant": "Guild",
+              "guild": "synthetic-guild"
+            }
+          },
+          "digest": "0808080808080808080808080808080808080808080808080808080808080808",
+          "byte_length": 24,
+          "kind": "Evidence",
+          "format": {
+            "component": "format",
+            "revision": "v1",
+            "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+          }
+        }
+      },
+      "calibration": {
+        "known": {
+          "binding": {
+            "tenant": "synthetic-tenant",
+            "scope": {
+              "variant": "Guild",
+              "guild": "synthetic-guild"
+            }
+          },
+          "digest": "0808080808080808080808080808080808080808080808080808080808080808",
+          "byte_length": 24,
+          "kind": "Evidence",
+          "format": {
+            "component": "format",
+            "revision": "v1",
+            "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+          }
+        }
+      },
+      "outcome": {
+        "known": {
+          "binding": {
+            "tenant": "synthetic-tenant",
+            "scope": {
+              "variant": "Guild",
+              "guild": "synthetic-guild"
+            }
+          },
+          "digest": "0808080808080808080808080808080808080808080808080808080808080808",
+          "byte_length": 24,
+          "kind": "Evidence",
+          "format": {
+            "component": "format",
+            "revision": "v1",
+            "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+          }
+        }
+      },
+      "compatibility": {
+        "known": {
+          "binding": {
+            "tenant": "synthetic-tenant",
+            "scope": {
+              "variant": "Guild",
+              "guild": "synthetic-guild"
+            }
+          },
+          "digest": "0808080808080808080808080808080808080808080808080808080808080808",
+          "byte_length": 24,
+          "kind": "Evidence",
+          "format": {
+            "component": "format",
+            "revision": "v1",
+            "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+          }
+        }
+      },
+      "regime": {
+        "known": {
+          "binding": {
+            "tenant": "synthetic-tenant",
+            "scope": {
+              "variant": "Guild",
+              "guild": "synthetic-guild"
+            }
+          },
+          "digest": "0808080808080808080808080808080808080808080808080808080808080808",
+          "byte_length": 24,
+          "kind": "Evidence",
+          "format": {
+            "component": "format",
+            "revision": "v1",
+            "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+          }
+        }
+      },
+      "lifecycle": {
+        "known": {
+          "binding": {
+            "tenant": "synthetic-tenant",
+            "scope": {
+              "variant": "Guild",
+              "guild": "synthetic-guild"
+            }
+          },
+          "digest": "0808080808080808080808080808080808080808080808080808080808080808",
+          "byte_length": 24,
+          "kind": "Evidence",
+          "format": {
+            "component": "format",
+            "revision": "v1",
+            "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+          }
+        }
+      },
+      "confidence": {
+        "known": {
+          "binding": {
+            "tenant": "synthetic-tenant",
+            "scope": {
+              "variant": "Guild",
+              "guild": "synthetic-guild"
+            }
+          },
+          "digest": "0808080808080808080808080808080808080808080808080808080808080808",
+          "byte_length": 24,
+          "kind": "Evidence",
+          "format": {
+            "component": "format",
+            "revision": "v1",
+            "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+          }
+        }
+      }
+    }
+  },
+  "lifecycle": {
+    "retention": {
+      "variant": "Operational",
+      "expires_at": 100
+    },
+    "holds": [
+      {
+        "binding": {
+          "tenant": "synthetic-tenant",
+          "scope": {
+            "variant": "Guild",
+            "guild": "synthetic-guild"
+          }
+        },
+        "domain": "CompleteV1",
+        "digest": "0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d"
+      }
+    ],
+    "edges": [
+      {
+        "relation": "Contradicts",
+        "target": {
+          "binding": {
+            "tenant": "synthetic-tenant",
+            "scope": {
+              "variant": "Guild",
+              "guild": "synthetic-guild"
+            }
+          },
+          "domain": "CompleteV1",
+          "digest": "0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e"
+        },
+        "basis": {
+          "binding": {
+            "tenant": "synthetic-tenant",
+            "scope": {
+              "variant": "Guild",
+              "guild": "synthetic-guild"
+            }
+          },
+          "domain": "CompleteV1",
+          "digest": "0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f"
+        }
+      },
+      {
+        "relation": "Resolves",
+        "target": {
+          "binding": {
+            "tenant": "synthetic-tenant",
+            "scope": {
+              "variant": "Guild",
+              "guild": "synthetic-guild"
+            }
+          },
+          "domain": "CompleteV1",
+          "digest": "0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e"
+        },
+        "basis": {
+          "binding": {
+            "tenant": "synthetic-tenant",
+            "scope": {
+              "variant": "Guild",
+              "guild": "synthetic-guild"
+            }
+          },
+          "domain": "CompleteV1",
+          "digest": "0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f"
+        }
+      }
+    ],
+    "deletion_key": {
+      "binding": {
+        "tenant": "synthetic-tenant",
+        "scope": {
+          "variant": "Guild",
+          "guild": "synthetic-guild"
+        }
+      },
+      "key_id": "synthetic-key"
+    }
+  },
+  "provenance": {
+    "causal_parents": [
+      {
+        "binding": {
+          "tenant": "synthetic-tenant",
+          "scope": {
+            "variant": "Guild",
+            "guild": "synthetic-guild"
+          }
+        },
+        "domain": "CompleteV1",
+        "digest": "1010101010101010101010101010101010101010101010101010101010101010"
+      },
+      {
+        "binding": {
+          "tenant": "synthetic-tenant",
+          "scope": {
+            "variant": "Guild",
+            "guild": "synthetic-guild"
+          }
+        },
+        "domain": "CompleteV1",
+        "digest": "1111111111111111111111111111111111111111111111111111111111111111"
+      }
+    ],
+    "consulted_parents": [
+      {
+        "variant": "Local",
+        "reference": {
+          "binding": {
+            "tenant": "synthetic-tenant",
+            "scope": {
+              "variant": "Guild",
+              "guild": "synthetic-guild"
+            }
+          },
+          "domain": "CompleteV1",
+          "digest": "1010101010101010101010101010101010101010101010101010101010101010"
+        }
+      },
+      {
+        "variant": "Foreign",
+        "reference": {
+          "origin_organization": "foreign-org",
+          "origin_binding": {
+            "tenant": "foreign-tenant",
+            "scope": {
+              "variant": "Organization",
+              "organization": "foreign-org"
+            }
+          },
+          "domain": "LegacyEpisodeV1",
+          "digest": "1212121212121212121212121212121212121212121212121212121212121212",
+          "import_receipt": {
+            "binding": {
+              "tenant": "synthetic-tenant",
+              "scope": {
+                "variant": "Guild",
+                "guild": "synthetic-guild"
+              }
+            },
+            "domain": "CompleteV1",
+            "digest": "1313131313131313131313131313131313131313131313131313131313131313"
+          }
+        }
+      }
+    ],
+    "records": [
+      {
+        "binding": {
+          "tenant": "synthetic-tenant",
+          "scope": {
+            "variant": "Guild",
+            "guild": "synthetic-guild"
+          }
+        },
+        "digest": "0909090909090909090909090909090909090909090909090909090909090909",
+        "byte_length": 24,
+        "kind": "Provenance",
+        "format": {
+          "component": "format",
+          "revision": "v1",
+          "digest": "0707070707070707070707070707070707070707070707070707070707070707"
+        }
+      }
+    ]
+  }
+}

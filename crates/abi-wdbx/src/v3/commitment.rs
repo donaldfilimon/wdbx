@@ -7,7 +7,7 @@
 //! - byte strings, UTF-8 text strings, arrays, and maps always have definite
 //!   lengths;
 //! - map keys are ordered first by their encoded length and then by their
-//!   encoded bytes, per RFC 8949 section 4.2.1;
+//!   encoded bytes, per RFC 8949 section 4.2.3;
 //! - duplicate encoded map keys are rejected;
 //! - floating-point values, tags, indefinite-length items, and `undefined` are
 //!   outside this profile;
@@ -31,13 +31,16 @@
 //! no hidden prefix, native struct layout, wire encoder output, signature, or
 //! store operation. Existing v2 commitments are a separate frozen domain.
 
+mod decode;
+pub use decode::{CanonicalDecodeError, CanonicalDecodeLimits};
+
 use sha2::{Digest, Sha256};
 use thiserror::Error;
 
 /// Name of the deterministic CBOR profile and its envelope domain separator.
 pub const PROFILE_NAME: &str = "abbey-cbor-episode-v1";
 
-/// Maximum supported nesting depth for caller-supplied header and payload maps.
+/// Maximum item depth, counting the root value (including an envelope) as zero.
 pub const MAX_NESTING_DEPTH: usize = 32;
 
 /// A value admitted by the `abbey-cbor-episode-v1` deterministic profile.
@@ -126,6 +129,30 @@ impl EpisodeCommitment {
             payload,
             parent_digests,
         }
+    }
+
+    /// The syntactic schema version carried by this commitment.
+    #[must_use]
+    pub const fn schema_version(&self) -> u64 {
+        self.schema_version
+    }
+
+    /// The committed header value.
+    #[must_use]
+    pub const fn header(&self) -> &CanonicalValue {
+        &self.header
+    }
+
+    /// The committed payload value.
+    #[must_use]
+    pub const fn payload(&self) -> &CanonicalValue {
+        &self.payload
+    }
+
+    /// Parent digests as supplied; decoded envelopes retain canonical order.
+    #[must_use]
+    pub fn parent_digests(&self) -> &[[u8; 32]] {
+        &self.parent_digests
     }
 
     /// Encode the exact domain-separated deterministic-CBOR envelope.

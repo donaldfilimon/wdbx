@@ -1,0 +1,21 @@
+test_accepts_complete_pinned_inventory (test_wdbx_3d_evidence.SourceManifestTests) ... ok
+test_distinguishes_reported_and_executed (test_wdbx_3d_evidence.SourceManifestTests) ... ok
+test_execution_requires_source_binding_and_immutable_artifact (test_wdbx_3d_evidence.SourceManifestTests) ... ok
+test_external_artifacts_do_not_invent_git_history (test_wdbx_3d_evidence.SourceManifestTests) ... ok
+test_failed_execution_is_recordable_and_check_is_not_test_evidence (test_wdbx_3d_evidence.SourceManifestTests) ... ok
+test_file_and_execution_paths_are_normalized_relative_files (test_wdbx_3d_evidence.SourceManifestTests) ... ok
+test_git_branch_and_clean_state_are_required (test_wdbx_3d_evidence.SourceManifestTests) ... ok
+test_lockfile_dependency_inventory_is_honestly_partial (test_wdbx_3d_evidence.SourceManifestTests) ... ok
+test_partial_ancillary_ranges_must_still_be_well_typed (test_wdbx_3d_evidence.SourceManifestTests) ... ok
+test_plan_can_qualify_only_the_first_packet_read_scope (test_wdbx_3d_evidence.SourceManifestTests) ... ok
+test_rejects_incomplete_read_ranges (test_wdbx_3d_evidence.SourceManifestTests) ... ok
+test_rejects_malformed_types_without_crashing (test_wdbx_3d_evidence.SourceManifestTests) ... ok
+test_rejects_missing_original_authority (test_wdbx_3d_evidence.SourceManifestTests) ... ok
+test_rejects_mutable_only_source (test_wdbx_3d_evidence.SourceManifestTests) ... ok
+test_required_inventory_categories_cannot_be_omitted (test_wdbx_3d_evidence.SourceManifestTests) ... ok
+test_zero_tests_do_not_qualify (test_wdbx_3d_evidence.SourceManifestTests) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.011s
+
+OK

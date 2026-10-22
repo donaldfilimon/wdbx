@@ -1,0 +1,2 @@
+    Checking abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx-spatial-checked-v1/crates/abi-wdbx)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.17s

@@ -2,10 +2,10 @@
 
 use std::cmp::Ordering;
 
-const OCTREE_MIN_POINTS: usize = 64;
-const OCTREE_LEAF_CAPACITY: usize = 8;
-const OCTREE_MAX_DEPTH: u32 = 16;
-const BOUNDS_EPSILON: f32 = 1e-3;
+pub(crate) const OCTREE_MIN_POINTS: usize = 64;
+pub(crate) const OCTREE_LEAF_CAPACITY: usize = 8;
+pub(crate) const OCTREE_MAX_DEPTH: u32 = 16;
+pub(crate) const BOUNDS_EPSILON: f32 = 1e-3;
 
 /// A point in three-dimensional space.
 #[derive(Clone, Copy, Debug, Default, PartialEq)]
@@ -92,13 +92,13 @@ pub fn calculate_distance(left: Point3D, right: Point3D, metric: DistanceMetric)
 }
 
 #[derive(Clone, Copy, Debug)]
-struct BoundingBox {
-    min: Point3D,
-    max: Point3D,
+pub(crate) struct BoundingBox {
+    pub(crate) min: Point3D,
+    pub(crate) max: Point3D,
 }
 
 impl BoundingBox {
-    fn center(self) -> Point3D {
+    pub(crate) fn center(self) -> Point3D {
         Point3D {
             x: self.min.x.midpoint(self.max.x),
             y: self.min.y.midpoint(self.max.y),
@@ -143,13 +143,13 @@ fn compute_bounds(records: &[SpatialRecord3D]) -> BoundingBox {
     }
 }
 
-fn octant_of(point: Point3D, center: Point3D) -> usize {
+pub(crate) fn octant_of(point: Point3D, center: Point3D) -> usize {
     usize::from(point.x >= center.x)
         | (usize::from(point.y >= center.y) << 1)
         | (usize::from(point.z >= center.z) << 2)
 }
 
-fn child_bounds(bounds: BoundingBox, center: Point3D, octant: usize) -> BoundingBox {
+pub(crate) fn child_bounds(bounds: BoundingBox, center: Point3D, octant: usize) -> BoundingBox {
     let x_high = octant & 1 != 0;
     let y_high = octant & 2 != 0;
     let z_high = octant & 4 != 0;
@@ -343,6 +343,35 @@ impl SpatialIndex3D {
             payload: payload.to_vec(),
         });
         self.octree_dirty = true;
+    }
+
+    /// Validate and atomically append one legacy record, allocating fallibly.
+    pub fn try_insert(
+        &mut self,
+        id: u32,
+        point: Point3D,
+        payload: &[u8],
+    ) -> Result<(), crate::spatial3d::SpatialError> {
+        crate::spatial3d::Point3::from_legacy(point)?;
+        let mut owned_payload = Vec::new();
+        owned_payload
+            .try_reserve_exact(payload.len())
+            .map_err(|_| crate::spatial3d::SpatialError::BudgetExceeded)?;
+        owned_payload.extend_from_slice(payload);
+        self.records
+            .try_reserve(1)
+            .map_err(|_| crate::spatial3d::SpatialError::BudgetExceeded)?;
+        self.records.push(SpatialRecord3D {
+            id,
+            point,
+            payload: owned_payload,
+        });
+        self.octree_dirty = true;
+        Ok(())
+    }
+
+    pub(crate) fn checked_records(&self) -> &[SpatialRecord3D] {
+        &self.records
     }
 
     /// Number of indexed points.

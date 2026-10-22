@@ -1,0 +1,659 @@
+   Compiling abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx/crates/abi-wdbx)
+warning: missing documentation for the crate
+   --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:1:1
+    |
+  1 | / #[path = "support/dyadic_reference.rs"]
+  2 | | mod dyadic_reference;
+  3 | | #[path = "support/spatial_oracle.rs"]
+  4 | | mod spatial_oracle;
+...   |
+219 | | }
+    | |_^
+    |
+    = note: requested on the command line with `-W missing-docs`
+
+warning: `abi-wdbx` (test "wdbx_3d_oracle") generated 1 warning
+warning: missing documentation for the crate
+   --> crates/abi-wdbx/tests/wdbx_3d_numeric.rs:1:1
+    |
+  1 | / use abi_wdbx::{
+  2 | |     Point3D,
+  3 | |     spatial3d::{Point3, Radius, SpatialError},
+  4 | | };
+...   |
+114 | |     );
+115 | | }
+    | |_^
+    |
+    = note: requested on the command line with `-W missing-docs`
+
+warning: `abi-wdbx` (test "wdbx_3d_numeric") generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 51.55s
+     Running unittests src/lib.rs (target/debug/deps/abi_wdbx-94ed1da77b7c86af)
+
+running 341 tests
+test ans::tests::empty_and_incompressible_inputs_use_exact_stored_mode ... ok
+test ans::tests::repetitive_large_input_exercises_rans_instead_of_stored_fallback ... ok
+test ans::tests::malformed_modes_and_truncated_streams_are_rejected ... ok
+test ans::tests::encoding_is_deterministic ... ok
+test ans::tests::order_zero_and_order_one_round_trip ... ok
+test cluster::tests::configured_quorum_is_not_redefined_after_failures ... ok
+test cluster::tests::leader_failover_uses_a_higher_term_and_surviving_majority ... ok
+test cluster::tests::primitives_match_the_cluster_driver ... ok
+test cluster::tests::replication_reaches_every_alive_replica_and_commits ... ok
+test cluster::placement::tests::placement_is_deterministic_distinct_and_capped ... ok
+test cluster::placement::tests::draining_and_removed_nodes_are_never_selected ... ok
+test cluster::tests::single_leader_is_elected_with_a_configured_quorum ... ok
+test cluster::tests::status_line_matches_the_cli_shape ... ok
+test cluster_rpc::tests::auth_and_allowlist_rejections_do_not_mutate_state ... ok
+test cluster::placement::tests::one_join_changes_only_keys_won_by_the_new_node ... ok
+test cluster_rpc::tests::authenticated_multi_node_round_reaches_vote_and_append_quorum ... ok
+test cluster_rpc::tests::data_plane_rejects_an_oversized_request_before_connecting ... ok
+test cluster_rpc::tests::graceful_shutdown_requires_authentication_and_stops_the_server ... ok
+test cluster::membership::tests::signed_generations_apply_in_order_and_removal_is_a_tombstone ... ok
+test cluster_rpc::tests::legacy_unauthenticated_append_accepts_an_empty_payload ... ok
+test cluster_rpc::tests::loopback_vote_and_append_mutate_the_node ... ok
+test cluster_rpc::tests::non_loopback_bind_fails_closed_before_opening_a_socket ... ok
+test cluster_rpc::tests::peer_reload_admits_a_previously_rejected_candidate ... ok
+test cluster_rpc::tests::missing_auth_and_missing_authenticated_leader_are_rejected ... ok
+test cluster_rpc::tests::policy_validation_and_reload_are_explicit ... ok
+test cluster::membership::tests::unsigned_wrong_key_tampered_replayed_gapped_and_forked_records_fail_closed ... ok
+test cluster_rpc::tests::authenticated_data_plane_preserves_exact_objects_and_conflict_state ... ok
+test codecs::pq::tests::ties_choose_the_lowest_centroid_and_inputs_are_strict ... ok
+test codecs::autoencoder::tests::artifact_shape_bounds_and_finite_checks_fail_closed ... ok
+test codecs::pq::tests::tampered_artifacts_codes_and_tables_fail_closed ... ok
+test codecs::pq::tests::deterministic_quality_fixture_and_reload ... ok
+test codecs::tests::source_digest_is_record_id_sorted_and_bit_exact ... ok
+test compression::tests::quantization_is_deterministic ... ok
+test codecs::tests::source_validation_rejects_empty_mixed_nonfinite_and_duplicates ... ok
+test compression::tests::constant_vector_is_lossless_and_empty_is_rejected ... ok
+test compression::tests::realistic_vector_round_trip_stays_within_one_step ... ok
+test crypto_he::tests::ciphertext_sum_decrypts_to_plaintext_sum ... ok
+test crypto_he::tests::encryption_round_trips_and_rejects_invalid_inputs ... ok
+test crypto_he::tests::many_values_aggregate_without_operand_decryption ... ok
+test crypto_he::tests::wrong_key_does_not_recover_plaintext ... ok
+test codecs::autoencoder::tests::trained_artifact_round_trips_deterministically ... ok
+test durable::tests::a_lock_released_moments_later_is_waited_out_rather_than_reported_busy ... ok
+test cluster::tests::read_repair_refuses_a_value_without_its_exact_transaction ... ok
+test cluster::tests::vector_fanout_is_deduplicated_and_stably_sorted ... ok
+test durable::tests::kv_and_vector_mutations_survive_reopen ... ok
+test durable::tests::open_empty_creates_an_epoch_zero_wal ... ok
+test durable::tests::checkpoint_resets_wal_and_preserves_id_continuity ... ok
+test durable::tests::every_mutation_family_survives_recovery ... ok
+test entropy::tests::corrupt_code_lengths_and_truncated_payload_are_rejected ... ok
+test entropy::tests::all_byte_values_and_incompressible_data_round_trip ... ok
+test entropy::tests::edge_case_alphabets_round_trip_exactly ... ok
+test entropy::tests::encoding_is_deterministic ... ok
+test durable::tests::corrupt_complete_wal_frame_releases_writer_lock_for_repair_and_reopen ... ok
+test entropy::tests::skewed_text_uses_huffman_and_compresses_after_table_overhead ... ok
+test fhe::tests::chained_multiplication_is_verified_through_depth_three ... ok
+test fhe::tests::addition_and_multiplication_hold_over_seeded_keys_and_bits ... ok
+test fhe::tests::depth_two_circuit_evaluates_correctly ... ok
+test fhe::tests::educational_refresh_has_complete_truth_tables_and_fresh_ciphertexts ... ok
+test fhe::tests::identical_seed_reproduces_keys_and_ciphertexts ... ok
+test fhe::tests::parameter_constants_and_fresh_noise_bound_are_explicit ... ok
+test format::tests::corruption_that_is_not_the_final_line_is_an_error ... ok
+test format::tests::a_complete_final_line_is_not_treated_as_torn ... ok
+test format::tests::a_missing_manifest_is_an_empty_store_not_an_error ... ok
+test durable::tests::wal_failure_rolls_back_the_graph_without_burning_the_id ... ok
+test format::tests::empty_manifest_renders_and_reparses ... ok
+test format::tests::genesis_hash_is_all_zero_and_reports_itself ... ok
+test format::tests::drops_a_torn_final_line_and_reports_it ... ok
+test format::tests::hash_reads_a_non_zero_string_encoding ... ok
+test format::tests::hash_reads_the_array_encoding ... ok
+test format::tests::hash_reads_the_string_encoding_used_by_genesis_blocks ... ok
+test format::tests::hash_rejects_the_wrong_length_in_either_encoding ... ok
+test format::tests::hash_rejects_out_of_range_values ... ok
+test format::tests::hash_serializes_as_an_array_so_it_always_round_trips ... ok
+test format::tests::manifest_active_is_sorted_and_deduplicated ... ok
+test format::tests::manifest_ignores_unknown_keys_for_forward_compatibility ... ok
+test format::tests::latin1_range_characters_decode_to_their_byte_values ... ok
+test format::tests::manifest_infers_next_epoch_when_absent ... ok
+test format::tests::manifest_rejects_a_bad_magic_line ... ok
+test format::tests::manifest_renders_in_the_readable_form ... ok
+test format::tests::manifest_tolerates_a_sparse_active_list ... ok
+test format::tests::parses_a_kv_record_keeping_the_value_opaque ... ok
+test format::tests::parses_a_block_with_either_hash_encoding ... ok
+test durable::tests::torn_wal_is_checkpointed_before_future_appends ... ok
+test format::tests::parses_a_kv_record_whose_value_is_not_json ... ok
+test format::tests::parses_a_manifest ... ok
+test format::tests::parses_a_segment_containing_only_its_magic_line ... ok
+test format::tests::mirror_epoch_defaults_legacy_to_zero_and_rejects_corruption ... ok
+test format::tests::parses_spatial_and_temporal_records ... ok
+test format::tests::reads_the_optional_checksum_trailer ... ok
+test format::tests::parses_a_vector_record_of_any_dimension ... ok
+test format::tests::record_type_names_round_trip ... ok
+test cluster::tests::selected_replication_requires_quorum_and_preserves_exact_identity ... ok
+test format::tests::rejects_a_segment_with_a_bad_magic_line ... ok
+test format::tests::rejects_an_empty_segment_file ... ok
+test format::tests::rejects_an_unknown_record_type ... ok
+test format::tests::reports_a_missing_field_by_name ... ok
+test format::tests::store_paths_match_the_observed_layout ... ok
+test hnsw::tests::dimensions_are_validated_at_construction_and_use ... ok
+test hnsw::tests::empty_and_zero_limit_searches_return_no_results ... ok
+test hnsw::tests::insert_get_and_duplicate_rejection_are_consistent ... ok
+test hnsw::tests::rollback_is_scoped_to_the_matching_newest_insert ... ok
+test hnsw::tests::search_results_are_score_sorted_and_borrow_storage ... ok
+test hnsw::tests::snapshot_rebuild_preserves_ids_and_vectors ... ok
+test hnsw::tests::vector_storage_supports_sparse_ids_without_zero_filled_presence ... ok
+test index::tests::absolute_ids_must_continue_the_sequence ... ok
+test index::tests::dimensions_are_established_once ... ok
+test index::tests::empty_and_oversize_vectors_are_rejected ... ok
+test index::tests::exact_search_orders_by_cosine_similarity ... ok
+test index::tests::generated_ids_start_at_one_and_are_contiguous ... ok
+test index::tests::limit_zero_returns_no_matches_after_validation ... ok
+test index::tests::snapshot_load_preserves_ids_and_selects_the_next_one ... ok
+test index::tests::results_borrow_the_stored_vector_without_copying ... ok
+test hnsw::tests::rollback_restores_the_complete_prior_graph ... ok
+test index::tests::snapshot_load_rejects_mixed_dimensions ... ok
+test index::tests::ties_are_stable_by_id ... ok
+test index::tests::zero_norm_vectors_have_zero_similarity ... ok
+test hnsw::tests::inserted_vectors_are_found_as_their_own_nearest_neighbor ... ok
+test hnsw::tests::identical_seed_and_insertion_order_produce_identical_graphs ... ok
+test multiway::tests::canonical_exports_are_byte_deterministic_and_dot_keeps_multiplicity ... ok
+test multiway::tests::duplicate_events_survive_state_deduplication ... ok
+test multiway::tests::cycles_convergence_and_empty_payloads_are_measured ... ok
+test multiway::tests::max_depth_and_cancellation_return_resumable_partial_state ... ok
+test multiway::tests::every_hard_cap_is_atomic_and_never_exceeded ... ok
+test multiway::tests::overlapping_matches_preserve_rule_then_offset_order ... ok
+test multiway::tests::rule_parsing_hashing_and_validation_match_the_oracle ... ok
+test multiway::tests::repeated_runs_are_structurally_deterministic ... ok
+test multiway::tests::resume_rejects_mismatch_malformed_and_completed_documents ... ok
+test multiway::tests::interrupted_resume_matches_an_uninterrupted_canonical_export ... ok
+test multiway::tests::token_lineage_links_producer_events_to_consumers ... ok
+test mvcc::tests::append_hash_linking_lookup_and_tail_match_the_oracle ... ok
+test mvcc::tests::cloned_chain_handles_share_one_sequence ... ok
+test mvcc::tests::empty_profiles_are_rejected_without_burning_a_sequence ... ok
+test mvcc::tests::snapshot_remains_frozen_after_later_appends ... ok
+test net_line::tests::rejects_a_frame_that_fills_the_buffer_without_newline ... ok
+test net_line::tests::strips_crlf_and_returns_partial_eof_frames ... ok
+test durable::tests::compaction_preserves_latest_checkpoint_plus_wal_recovery ... ok
+test neural_compress::tests::caller_buffers_and_dimension_validation_are_explicit ... ok
+test neural_compress::tests::reference_generator_matches_zig_xoshiro256_sequence ... ok
+test mvcc::tests::snapshots_are_stable_while_another_thread_appends ... ok
+test neural_compress::tests::identical_seed_and_training_order_are_deterministic ... ok
+test persistence::tests::serialized_records_reparse_individually ... ok
+test neural_compress::tests::higher_learning_rate_remains_stable ... ok
+test cluster::tests::read_fanout_retains_conflicts_and_repairs_with_exact_objects ... ok
+test durable::tests::one_writer_session_excludes_concurrent_opens_and_releases_on_drop ... ok
+test neural_compress::tests::learns_to_reconstruct_low_rank_vectors ... ok
+test persistence::tests::writer_rejects_an_invalid_audit_chain ... ok
+test rate_limit::tests::capacity_denial_and_counters_match_the_oracle ... ok
+test rate_limit::tests::refill_advances_only_after_a_whole_token_is_available ... ok
+test persistence::tests::checksum_detects_body_tampering ... ok
+test persistence::tests::writer_rejects_mixed_dimensions_before_creating_files ... ok
+test persistence::tests::writer_rejects_non_finite_spatial_coordinates ... ok
+test remote_compute::tests::authenticated_adapter_executes_and_matches_cpu_oracle ... ok
+test remote_compute::tests::endpoint_port_parsing_matches_the_oracle ... ok
+test remote_compute::tests::malformed_request_is_rejected ... ok
+test remote_compute::tests::loopback_dispatch_matches_the_local_reference ... ok
+test persistence::tests::snapshot_round_trips_all_record_types ... ok
+test remote_compute::tests::non_loopback_listener_policy_requires_authentication ... ok
+test remote_compute::tests::unreachable_or_malformed_endpoint_falls_back_locally ... ok
+test remote_compute::tests::wrong_or_missing_token_fails_closed_to_cpu ... ok
+test remote_compute::tests::oversized_and_non_finite_inputs_are_not_mis_served ... ok
+test remote_compute::tests::malformed_tokens_and_oversized_client_frames_are_bounded ... ok
+test persistence::tests::a_second_flush_publishes_a_new_full_checkpoint ... ok
+test cluster::tests::rebalance_plan_is_hash_verified_and_resumes_without_repeating_steps ... ok
+test rest::tests::malformed_route_inputs_preserve_oracle_errors ... ok
+test rest::tests::failed_auth_consumes_the_bucket_before_a_valid_request ... ok
+test rest::tests::hostile_host_or_origin_cannot_reach_rest_store ... ok
+test rest::tests::insert_block_and_verify_recompute_the_chain ... ok
+test rest::tests::insert_and_query_kv_survive_reopen_and_escape_json ... ok
+test rest::tests::pure_routes_cover_health_stats_and_unknown_paths ... ok
+test rest::tests::real_tcp_auth_accepts_only_the_configured_bearer ... ok
+test hnsw::tests::graph_invariants_hold_after_neighbor_pruning ... ok
+test rest::tests::mismatched_vector_width_is_refused_and_queries_keep_working ... ok
+test rest::tests::real_tcp_rejects_ambiguous_body_framing_before_routing ... ok
+test rest::tests::real_tcp_reassembles_body_and_embeds_rate_stats ... ok
+test rest::tests::real_tcp_rejects_incomplete_and_oversize_requests ... ok
+test retrieval::tests::recency_causality_and_persona_re_rank_equal_semantics ... ok
+test rest::tests::undeclared_coalesced_insert_body_cannot_mutate_the_store ... ok
+test rest::tests::saturated_rest_readers_get_503_without_store_routing ... ok
+test retrieval::tests::persona_scope_isolates_vectors_and_preserves_borrowing ... ok
+test rest::tests::slow_partial_request_times_out_then_next_request_is_served ... ok
+test remote_compute::tests::incorrect_or_slow_remote_results_fall_back_without_verification ... ok
+test retrieval::tests::spatial_blend_recovers_pure_semantic_and_pure_spatial_rankings ... ok
+test multiway::tests::wdbx_persistence_round_trips_latest_and_config_hash ... ok
+test spatial3d::octree_checked::tests::radius_payload_budget_rejects_before_reservation ... ok
+test spatial::tests::distance_metrics_match_the_oracle_values ... ok
+test spatial::tests::insert_after_first_octree_build_invalidates_and_rebuilds ... ok
+test spatial::tests::insert_radius_and_nearest_neighbor_match_the_oracle_example ... ok
+test spatial::tests::octree_matches_linear_scan_across_threshold_and_distributions ... ok
+test store::tests::a_break_reports_where_it_happened ... ok
+test segments::tests::active_and_latest_epochs_follow_the_manifest ... ok
+test rest::tests::slow_reader_does_not_hold_the_rest_accept_loop ... ok
+test store::tests::a_chain_not_starting_at_genesis_is_a_break ... ok
+test store::tests::a_tampered_block_hash_is_rejected_even_when_links_match ... ok
+test segments::tests::reset_removes_only_manifest_listed_checkpoints ... ok
+test segments::tests::missing_retired_file_is_already_reclaimed ... ok
+test rest::tests::vector_query_applies_temporal_causal_and_persona_components ... ok
+test store::tests::an_empty_chain_verifies ... ok
+test store::tests::a_well_formed_chain_verifies_from_genesis ... ok
+test store::tests::disagreeing_vector_dimensions_report_none_rather_than_guessing ... ok
+test segments::tests::single_and_empty_stores_are_no_ops ... ok
+test store::tests::an_empty_store_loads_as_an_empty_snapshot ... ok
+test segments::tests::retaining_zero_is_rejected_without_mutation ... ok
+test store::tests::a_torn_segment_tail_is_counted ... ok
+test store::tests::a_segment_not_listed_as_active_is_not_read ... ok
+test segments::tests::compaction_retains_the_newest_checkpoints_and_next_epoch ... ok
+test store::tests::a_missing_active_segment_is_skipped_not_fatal ... ok
+test store::tests::no_vectors_means_no_dimensions_and_no_max_id ... ok
+test store::tests::stats_count_each_record_kind ... ok
+test store::tests::newest_valid_recovery_falls_back_without_merging_checkpoints ... ok
+test store::tests::vectors_shadow_by_id_and_report_dimensions ... ok
+test store_path::tests::env_wrapper_reads_the_registry_and_treats_empty_as_unset ... ok
+test store::tests::recovery_mode_sees_a_segment_the_manifest_omits ... ok
+test store_path::tests::resolution_follows_the_documented_precedence ... ok
+test store_path::tests::xdg_data_home_wins_over_home_off_windows_only ... ok
+test temporal::tests::hybrid_score_matches_the_zig_multiplicative_model ... ok
+test temporal::tests::temporal_weight_halves_and_clamps_future_timestamps ... ok
+test temporal::tests::graph_accepts_both_historical_edge_spellings ... ok
+test store::tests::only_the_latest_checkpoint_is_loaded ... ok
+test store::tests::loading_does_not_duplicate_the_block_chain_across_epochs ... ok
+test store::tests::newest_valid_recovery_reports_corruption_when_no_checkpoint_survives ... ok
+test store::tests::merging_all_epochs_is_available_for_recovery_and_does_duplicate ... ok
+test store::tests::the_latest_epoch_is_chosen_numerically_not_lexicographically ... ok
+test tls_config::tests::environment_requires_a_complete_pair ... ok
+test tls_config::tests::explicit_paths_require_both_files_to_be_accessible ... ok
+test v2::lease::tests::maintenance_reclaims_crash_stale_unlocked_lease_files ... ok
+test v2::lease::tests::writers_do_not_contend_but_maintenance_excludes_live_leases ... ok
+test v2::index::tests::v2_hnsw_accepts_4096_dimensions_without_widening_v1 ... ok
+test v2::index::tests::accelerator_batch_search_rejects_invalid_adapter_rankings ... ok
+test v2::lifecycle::tests::activation_rejects_path_traversal_and_bad_v2_version_markers ... ok
+test v2::index::tests::dense_slots_preserve_public_ids_and_snapshot_lifetimes ... ok
+test v2::index::tests::accelerator_batch_search_preserves_ids_ties_and_snapshot_lifetime ... ok
+test v2::lifecycle::tests::new_store_uses_v2_and_read_only_empty_open_is_non_mutating ... ok
+test v2::lifecycle::tests::read_only_v1_open_does_not_remove_a_stale_wal ... ok
+test v2::lifecycle::tests::failed_verification_never_publishes_or_changes_v1 ... ok
+test v2::lifecycle::tests::legacy_monolithic_snapshot_migrates_without_a_manifest ... ok
+test v2::lifecycle::tests::confirmed_gc_requires_no_live_writer_and_keeps_one_covering_segment ... ok
+test v2::lifecycle::tests::retry_discards_only_unpublished_v2_temporary_generations ... ok
+test v2::security::tests::every_encrypted_object_gets_a_fresh_24_byte_nonce ... ok
+test v2::security::tests::generated_key_files_are_redacted_owner_only_and_never_overwritten ... ok
+test v2::security::tests::mismatched_signing_and_verifying_keys_are_rejected_before_writes ... ok
+test v2::security::tests::plaintext_and_encrypted_signed_objects_round_trip ... ok
+test v2::security::tests::private_key_files_must_be_owner_only ... ok
+test v2::lifecycle::tests::wal_ahead_and_torn_tail_migrate_only_committed_v1_frames ... ok
+test v2::security::tests::signature_requirement_rejects_plaintext_compatibility_objects ... ok
+test v2::security::tests::wrong_missing_and_tampered_keys_or_objects_fail_closed ... ok
+test v2::lifecycle::tests::rekey_refuses_active_writers_then_atomically_activates_verified_generation ... ok
+test v2::segment::tests::artifact_security_policy_mismatch_fails_before_publishing_a_segment ... ok
+test v2::replication::tests::exact_export_import_preserves_versions_values_and_bytes ... ok
+test v2::replication::tests::failed_head_publication_rolls_back_a_new_journal ... ok
+test v2::segment::tests::autoencoder_segment_uses_fixture_quality_and_reopens ... ok
+test v2::segment::tests::format_two_none_is_exact_and_declares_no_artifact ... ok
+test v2::segment::tests::concurrent_vector_versions_are_all_encoded_without_collapsing_conflicts ... ok
+test v2::replication::tests::identical_repeat_is_idempotent_but_conflicting_repeat_fails_closed ... ok
+test v2::replication::tests::tamper_invalid_mutation_and_gap_leave_target_unchanged ... ok
+test v2::segment::tests::legacy_exact_segment_remains_readable_without_format_drift ... ok
+test v2::segment::tests::encrypted_signed_artifact_authenticates_before_parse_and_tampering_fails ... ok
+test v2::replication::tests::encrypted_signed_import_preserves_envelope_and_wrong_key_fails_closed ... ok
+test v2::segment::tests::incomparable_segments_still_fall_back_conservatively ... ok
+test v2::segment::tests::pq_segment_uses_fixture_quality_and_preserves_all_metadata ... ok
+test v2::lifecycle::tests::writable_open_migrates_every_v1_family_and_keeps_a_byte_exact_backup ... ok
+test v2::segment::tests::sequential_mixed_generations_select_the_covering_codec_segment ... ok
+test v2::tests::a_published_head_without_its_transaction_fails_closed ... ok
+test v2::tests::a_tampered_committed_transaction_fails_closed ... ok
+test v2::tests::a_torn_authenticated_object_tail_is_ignored ... ok
+test v2::tests::a_synced_commit_is_invisible_until_its_writer_head_is_published ... ok
+test v2::segment::tests::missing_wrong_and_digest_mismatched_artifacts_fail_closed ... ok
+test v2::tests::record_ids_keep_legacy_numbers_and_v2_strings ... ok
+test v2::tests::encrypted_signed_journals_recover_and_hide_plaintext ... ok
+test v2::tests::compaction_preserves_covered_state_and_replays_uncovered_journals ... ok
+test v2::tests::encrypted_signed_segments_hide_plaintext_and_fail_closed_on_tampering ... ok
+test v2::types::record_id_tests::record_ids_preserve_value_encoding_and_accept_json_map_keys ... ok
+test v2::tests::v2_refuses_a_batch_whose_vectors_disagree_on_width ... ok
+test v2::tests::mutations_in_one_transaction_are_causal_peers ... ok
+test v2::tests::v2_accepts_4096_dimensions_but_rejects_bad_vectors ... ok
+test v3::commitment::tests::deeply_nested_values_are_rejected ... ok
+test v3::commitment::tests::non_negative_negative_variant_is_rejected ... ok
+test v3::commitment::tests::preferred_integer_encodings_cover_boundaries ... ok
+test v3::complete_episode::tests::boundaries::all_primitive_boundaries ... ok
+test v3::complete_episode::tests::boundaries::integer_shortest_forms_and_checked_size_agree ... ok
+test v3::complete_episode::tests::boundaries::posterior_cardinality_and_exact_sum ... ok
+test v3::complete_episode::tests::boundaries::temporal_and_artifact_boundaries ... ok
+test v3::complete_episode::tests::collections::every_set_rejects_duplicates ... ok
+test v3::complete_episode::tests::collections::all_set_reversals_and_sequence_order ... ok
+test v3::complete_episode::tests::complete_minimal_and_populated_roundtrip ... ok
+test v3::complete_episode::tests::collections::valid_bounded_shape_exercises_production_output_cap ... ok
+test v3::complete_episode::tests::coverage::every_evidence_dimension_and_absence_are_independent ... ok
+test v3::complete_episode::tests::coverage::every_numeric_enum_has_explicit_singleton_tag ... ok
+test v3::complete_episode::tests::collections::exact_cardinality_caps_and_cap_plus_one ... ok
+test v3::complete_episode::tests::coverage::reused_enum_labels_are_exact ... ok
+test v3::complete_episode::tests::diagnostics::every_new_type_redacts_private_leaves_and_signer_containment ... ok
+test v2::tests::incomplete_transaction_is_ignored_and_old_views_survive_mutation ... ok
+test v3::complete_episode::tests::coverage::retention_data_and_foreign_descriptor_leaves ... ok
+test v3::complete_episode::tests::draft_mapping::complete_domain_substitution_changes_bytes_and_digest ... ok
+test v2::tests::v2_refuses_a_vector_whose_width_differs_from_the_store ... ok
+test v3::complete_episode::tests::draft_vectors ... ok
+test v2::tests::required_signature_policy_rejects_plaintext_and_accepts_signed_generations ... ok
+test v2::tests::concurrent_writers_surface_conflicts_and_resolution_dominates_them ... ok
+test v3::complete_episode::tests::identifiers_ranges_and_redaction ... ok
+test v3::complete_episode::tests::references::constructor_checks_computed_digest_and_propagates_self_reference_rejection ... ok
+test v3::complete_episode::tests::references::foreign_origin_consistency_and_distinct_import_claims ... ok
+test v3::complete_episode::tests::references::member_and_dm_identity_are_part_of_every_binding ... ok
+test v2::tests::fifty_independent_writers_recover_every_commit_without_a_global_lock ... ok
+test v3::complete_episode::tests::references::self_reference_inventory_is_complete_without_fabricating_hash_fixed_point ... ok
+test v3::complete_episode::tests::scope_kind_and_duplicate_validation ... ok
+test v3::complete_episode::tests::unknown_zero_and_tag_shape_are_distinct ... ok
+test v3::episode::signing::tests::a_mutated_signature_byte_is_invalid ... ok
+test v3::episode::signing::tests::a_signature_round_trips_through_json_and_rejects_a_short_one ... ok
+test v3::episode::signing::tests::a_valid_signature_is_never_credited_to_a_key_id_it_was_not_made_under ... ok
+test v3::episode::signing::tests::a_signature_verifies_over_exactly_its_digest ... ok
+test v3::episode::signing::tests::debug_never_prints_the_secret_key ... ok
+test v3::episode::signing::tests::key_ids_are_derived_and_parsed_strictly ... ok
+test v3::episode::signing::tests::another_key_cannot_verify_even_with_a_forged_key_id ... ok
+test v3::episode::signing::tests::unsigned_and_unknown_key_are_not_invalid ... ok
+test v3::complete_episode::tests::references::every_nested_scope_and_kind_is_checked ... ok
+test v3::complete_episode::tests::draft_mapping::wrapper_shapes_posterior_and_optional_distinctions ... ok
+test v3::complete_episode::tests::coverage::every_group_leaf_changes_the_commitment ... ok
+test v3::complete_episode::tests::draft_corpus::independent_set_reversals_and_action_sequence ... ok
+test v3::complete_episode::tests::draft_witness::strict_requests_and_protocol_failures ... ok
+test versioned::tests::audit_block_uses_the_same_refreshed_frontier_as_its_commit ... ok
+test versioned::tests::facade_exposes_all_causal_record_families ... ok
+test versioned::tests::vector_pair_and_audit_publish_as_one_transaction ... ok
+test wal::tests::crc_matches_the_frozen_zig_algorithm ... ok
+test v3::complete_episode::tests::draft_witness::pinned_fixtures_and_duplex_batch ... ok
+test versioned::tests::result_views_survive_mutations_and_audit_blocks_form_a_dag ... ok
+test wal::tests::flipped_payload_byte_is_corruption_even_on_the_last_frame ... ok
+test wal::tests::create_with_epoch_never_truncates_an_existing_delta ... ok
+test wal::tests::incomplete_mid_log_frame_is_corruption ... ok
+test wal::tests::append_verify_and_replay_all_mutation_families ... ok
+test wal::tests::incomplete_last_frame_is_a_soft_torn_tail ... ok
+test wal::tests::checkpoint_resets_wal_to_the_new_epoch ... ok
+test versioned::tests::facade_exposes_exact_transaction_portability_and_explicit_compaction ... ok
+test v3::complete_episode::tests::draft_corpus::every_vocabulary_scope_and_integer_mapping ... ok
+test wal::tests::legacy_snapshot_without_wal_reports_snapshot_source ... ok
+test wal::tests::vector_ids_must_continue_the_checkpoint ... ok
+test wal::tests::matching_epoch_wal_merges_onto_checkpoint ... ok
+test versioned::tests::versioned_focus_preserves_v1_order_and_v2_causality ... ok
+test versioned::tests::first_product_write_migrates_v1_and_allocates_uuid_ids ... ok
+test wal::tests::stale_wal_is_removed_without_double_applying ... ok
+test wal::tests::legacy_checkpoint_is_recovered_then_refreshed_on_segment_cutover ... ok
+test rest::tests::repeated_query_joined_teardown_and_reopen_preserve_searchability ... ok
+test wal::tests::mirror_epoch_preserves_a_newer_wal_delta_without_a_manifest ... ok
+
+test result: ok. 341 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.80s
+
+     Running tests/abbey_bot_projection_conformance.rs (target/debug/deps/abbey_bot_projection_conformance-e2964244ef04027b)
+
+running 2 tests
+test abi_wdbx_parses_a_segment_written_by_the_abbey_bot_projection ... ok
+test the_projections_vectors_and_memory_facts_survive_the_crossing ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/abbey_contracts.rs (target/debug/deps/abbey_contracts-6f2fdc96581b7e66)
+
+running 9 tests
+test manifest_line_ending_mutation_is_not_normalized_away ... ok
+test transport_json_is_never_accepted_as_a_canonical_episode_commitment ... ok
+test corpus_lock_and_manifest_match_the_qualified_abi_source ... ok
+test adapter_projection_cannot_decode_as_a_canonical_episode ... ok
+test deletion_key_and_retention_policy_are_fail_closed ... ok
+test adapter_supplied_episode_digest_is_rejected ... ok
+test valid_episode_evidence_claim_retention_and_link_shapes_decode ... ok
+test every_episode_family_fixture_has_its_declared_native_disposition ... ok
+test artifact_byte_mutation_and_extra_inventory_fail_native_verification ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests/durable_writer_lock.rs (target/debug/deps/durable_writer_lock-1a594d4b73412778)
+
+running 4 tests
+test child_process_entry ... ok
+test child_opens_after_normal_parent_drop ... ok
+test parent_opens_after_terminating_lock_owning_child ... ok
+test parent_held_store_rejects_child_without_mutating_durable_artifacts ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.31s
+
+     Running tests/multiway_zig_compat.rs (target/debug/deps/multiway_zig_compat-f11eafe79128d9cf)
+
+running 1 test
+test rust_canonical_export_matches_zig_when_opted_in ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/real_store.rs (target/debug/deps/real_store-61f566278f480d82)
+
+running 6 tests
+test reads_the_real_store_when_opted_in ... ok
+test parses_the_magic_only_sample_segment ... ok
+test parses_the_sample_manifest ... ok
+test reports_the_torn_sample_segment ... ok
+test parses_the_sample_segment_with_both_hash_encodings ... ok
+test the_sample_chain_verifies ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/v2_process_stress.rs (target/debug/deps/v2_process_stress-c2b46f7c7e1f18a8)
+
+running 2 tests
+test child_process_entry ... ok
+test fifty_processes_recover_reported_commits_conflicts_and_audit_dag ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.18s
+
+     Running tests/v3_canonical_commitment.rs (target/debug/deps/v3_canonical_commitment-4b08d3b96d1d50e1)
+
+running 8 tests
+test header_and_payload_must_be_maps_and_schema_version_is_nonzero ... ok
+test profile_and_envelope_bytes_are_exact ... ok
+test duplicate_encoded_map_keys_fail_closed_without_content ... ok
+test map_keys_follow_rfc_8949_length_first_order ... ok
+test positive_golden_cbor_fixtures_match_exact_bytes_and_digests ... ok
+test duplicate_parents_are_preserved_not_silently_deduplicated ... ok
+test absent_and_present_zero_are_distinct ... ok
+test parent_permutations_have_identical_bytes_and_digest ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/v3_canonical_decode.rs (target/debug/deps/v3_canonical_decode-113b21f9ac36011d)
+
+running 9 tests
+test all_argument_widths_are_minimal_for_integers_and_lengths ... ok
+test malformed_syntax_is_rejected_without_private_content ... ok
+test compound_keys_and_length_first_order_are_preserved ... ok
+test envelope_shape_failures_are_rejected ... ok
+test sorted_duplicate_parents_survive_and_future_schema_is_syntactic ... ok
+test envelope_exact_members_types_and_root_context_are_enforced ... ok
+test scalar_boundaries_are_exact_and_text_is_not_normalized ... ok
+test golden_envelopes_reencode_and_retain_pinned_digests ... ok
+test deterministic_mutations_never_panic_and_success_reencodes_exactly ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/v3_canonical_decode_limits.rs (target/debug/deps/v3_canonical_decode_limits-01f69488b50676ba)
+
+running 7 tests
+test string_caps_and_zero_collection_caps_accept_exact_and_reject_next ... ok
+test collection_caps_accept_exact_and_reject_next ... ok
+test giant_declared_lengths_fail_with_tiny_input_even_under_large_policy ... ok
+test input_and_global_value_caps_include_root_keys_and_values ... ok
+test parent_caps_apply_before_children_only_in_episode_context ... ok
+test root_zero_depth_boundary_counts_leaves_empty_containers_and_map_keys ... ok
+test operational_defaults_bound_real_inputs_at_exact_thresholds ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/v3_cross_language_commitment.rs (target/debug/deps/v3_cross_language_commitment-367be3e699db1fb9)
+
+running 2 tests
+ok   empty-parents: python envelope bytes == golden .hex
+ok   empty-parents: sha256(python envelope) == golden .sha256
+ok   empty-parents: sha256(golden .hex bytes) == golden .sha256
+ok   two-parents: python envelope bytes == golden .hex
+ok   two-parents: sha256(python envelope) == golden .sha256
+ok   two-parents: sha256(golden .hex bytes) == golden .sha256
+ok   boundary 17
+ok   boundary 1818
+ok   boundary 18ff
+ok   boundary 190100
+ok   boundary 20
+ok   boundary 3818
+ok   map keys sort by encoded length then bytes
+0 failure(s)
+test python_verifies_the_golden_vectors_standalone ... ok
+test python_reimplementation_agrees_on_bytes_digests_and_errors ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+     Running tests/v3_cross_language_decode.rs (target/debug/deps/v3_cross_language_decode-6ef948961c2cce03)
+
+running 4 tests
+test episode_shapes_parents_and_compound_depth ... ok
+test strict_requests_and_protocol_failures ... ok
+test literal_contract_and_controlled_bad_children ... ok
+test canonical_malformed_bounds_and_duplex_corpus ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+
+     Running tests/v3_cross_language_episode.rs (target/debug/deps/v3_cross_language_episode-ead7f4681eadddc0)
+
+running 2 tests
+ok   episode_write_memory_candidate.json: python episode digest == pinned 3c19a479…
+ok   episode_write_memory_edge.json: python episode digest == pinned dfc839a6…
+0 failure(s)
+test python_re_derives_the_pinned_golden_episode_digests_standalone ... ok
+test python_reproduces_every_receipt_digest_the_store_appended ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running tests/v3_episode_signing.rs (target/debug/deps/v3_episode_signing-3dba1958a10840c1)
+
+running 7 tests
+test a_signing_key_file_must_be_owner_only_and_32_bytes ... ok
+test a_signed_store_reports_valid_and_survives_reopen ... ok
+test a_malformed_key_id_on_disk_is_corruption_for_every_reader ... ok
+test a_tampered_own_signature_fails_replay_but_a_foreign_one_is_left_to_the_verifier ... ok
+test an_existing_unsigned_ledger_opens_with_a_signer_and_mixes_states ... ok
+test a_relabelled_key_id_does_not_let_another_key_vouch_for_the_record ... ok
+test signing_leaves_the_digest_and_the_unsigned_ledger_bytes_unchanged ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/v3_episode_store.rs (target/debug/deps/v3_episode_store-1519d23688f039ad)
+
+running 10 tests
+test replay_identity_order_and_commitment_mutation_are_rejected ... ok
+test policy_version_drift_is_rejected_as_stale_binding_without_partial_write ... ok
+test consent_epoch_drift_is_rejected_as_stale_binding_without_partial_write ... ok
+test raw_content_and_voice_collection_overflow_cannot_enter_the_typed_gate ... ok
+test global_ledger_limit_rejects_an_append_before_it_becomes_unreopenable ... ok
+test partial_tail_recovers_but_a_mutated_complete_commitment_fails_closed ... ok
+test quiet_opt_out_stale_bindings_and_budgets_fail_before_append ... ok
+test failed_replay_preserves_an_incomplete_tail_until_the_prefix_is_repaired ... ok
+test lifecycle_is_linked_sanitized_and_stable_across_reopen ... ok
+test find_receipt_scans_the_whole_ledger_not_a_window ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.35s
+
+     Running tests/v3_memory_candidate.rs (target/debug/deps/v3_memory_candidate-0aad4c6b4f49c38f)
+
+running 6 tests
+test wire_form_and_digest_are_pinned_for_transcriptions ... ok
+test shape_rules_hold_before_any_append ... ok
+test a_candidate_is_one_completed_operation_with_a_content_free_receipt ... ok
+test forgetting_tombstones_cannot_be_forgotten_or_superseded_again ... ok
+test payload_bytes_are_charged_against_the_storage_budget ... ok
+test supersede_and_forget_edges_name_admitted_digests_only ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/v3_memory_edge.rs (target/debug/deps/v3_memory_edge-cc679a39cda8bdfc)
+
+running 9 tests
+test wire_form_and_digest_are_pinned_for_transcriptions ... ok
+test edge_authority_and_single_event_rules ... ok
+test a_forgetting_tombstone_is_not_a_live_edge_target ... ok
+test edge_shapes_are_closed_before_any_append ... ok
+test a_quarantine_opens_closes_by_human_resolution_and_survives_reopen ... ok
+test contradictions_have_one_encoding_and_obey_scope ... ok
+test replay_rejects_a_resolution_whose_edge_was_removed ... ok
+test quarantine_never_blocks_forgetting_or_correction ... ok
+test resolution_provenance_is_per_edge_and_survives_reopen ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+
+     Running tests/wdbx_3d_checked_points.rs (target/debug/deps/wdbx_3d_checked_points-e739ffc3430a2c0b)
+
+running 10 tests
+test invalid_legacy_population_is_not_silently_skipped ... ok
+test equal_distance_uses_checked_total_order ... ok
+test rounded_display_distance_does_not_replace_squared_order_key ... ok
+test widening_extrema_subnormals_and_closed_boundaries_match_independent_scan ... ok
+test invalid_queries_empty_and_cancellation ... ok
+test legacy_duplicates_are_retained ... ok
+test resource_caps_are_complete_or_error ... ok
+test invalid_insert_is_atomic ... ok
+test zero_k_returns_no_hits ... ok
+test bounded_topk_matches_independent_scan_across_thresholds ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/wdbx_3d_compatibility.rs (target/debug/deps/wdbx_3d_compatibility-0fcbcbc220fc5eac)
+
+running 3 tests
+test legacy_api_order_is_characterized ... ok
+test legacy_reader_is_nonmutating ... ok
+test signed_bytes_remain_identical ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/wdbx_3d_numeric.rs (target/debug/deps/wdbx_3d_numeric-4976dd90b8e9ad27)
+
+running 4 tests
+test rejects_nonfinite_and_out_of_domain ... ok
+test radius_domain_is_closed ... ok
+test widens_all_finite_f32 ... ok
+test normalizes_only_new_geometric_zero ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/wdbx_3d_octree_parity.rs (target/debug/deps/wdbx_3d_octree_parity-dfac83a62b211944)
+
+running 12 tests
+test conservative_bounds_do_not_drop_boundary_hits ... ok
+test cosine_nontrivial_normalization_and_payloads ... ok
+test invalid_legacy_and_cancelled_queries_fail_closed ... ok
+test radius_payload_budget_exact_and_one_byte_under_on_both_paths ... ok
+test degenerate_points_do_not_explode_tree ... ok
+test unsupported_cosine_pruning_falls_back ... ok
+test resource_caps_fallback_and_cumulative_work ... ok
+test manhattan_and_cosine_have_independent_ordering ... ok
+test threshold_63_64_65_has_same_semantics ... ok
+test insert_after_build_invalidates_correctly ... ok
+test fifty_seeded_manhattan_radius_and_knn_oracles ... ok
+test thousand_seeded_independent_cases ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.90s
+
+     Running tests/wdbx_3d_oracle.rs (target/debug/deps/wdbx_3d_oracle-24f73ae64f80b8ed)
+
+running 8 tests
+test boundary_neighbors_are_distinct ... ok
+test defined_float_and_exact_dyadic_intentionally_disagree ... ok
+test extreme_coordinates_have_finite_reported_distance ... ok
+test identity_breaks_true_metric_ties ... ok
+test known_answers_degenerate_extreme_and_subnormal ... ok
+test oracle_does_not_call_production_kernel ... ok
+test squared_key_precedes_rounded_distance ... ok
+test seeded_integer_corpus_agrees_with_exact_reference ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.08s
+
+     Running tests/zig_writer_compat.rs (target/debug/deps/zig_writer_compat-27b2cf72fc37af06)
+
+running 1 test
+test zig_verifies_a_rust_written_checkpoint_when_opted_in ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests abi_wdbx
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

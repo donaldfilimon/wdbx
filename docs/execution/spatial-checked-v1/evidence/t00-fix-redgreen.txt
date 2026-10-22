@@ -1,0 +1,96 @@
+..F..FFF.....F.
+======================================================================
+FAIL: test_execution_requires_source_binding_and_immutable_artifact (test_wdbx_3d_evidence.SourceManifestTests.test_execution_requires_source_binding_and_immutable_artifact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/donald/sources/repos/wdbx-spatial-checked-v1/tools/tests/test_wdbx_3d_evidence.py", line 139, in test_execution_requires_source_binding_and_immutable_artifact
+    self.assertTrue(module.validate_source_manifest(doc), field)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true : source_sha256
+
+======================================================================
+FAIL: test_file_and_execution_paths_are_normalized_relative_files (test_wdbx_3d_evidence.SourceManifestTests.test_file_and_execution_paths_are_normalized_relative_files)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/donald/sources/repos/wdbx-spatial-checked-v1/tools/tests/test_wdbx_3d_evidence.py", line 133, in test_file_and_execution_paths_are_normalized_relative_files
+    self.assertTrue(module.validate_source_manifest(doc), (field, repr(path)))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true : ('path', "'.'")
+
+======================================================================
+FAIL: test_git_branch_and_clean_state_are_required (test_wdbx_3d_evidence.SourceManifestTests.test_git_branch_and_clean_state_are_required)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/donald/sources/repos/wdbx-spatial-checked-v1/tools/tests/test_wdbx_3d_evidence.py", line 97, in test_git_branch_and_clean_state_are_required
+    self.assertTrue(module.validate_source_manifest(doc), field)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true : branch
+
+======================================================================
+FAIL: test_partial_ancillary_ranges_must_still_be_well_typed (test_wdbx_3d_evidence.SourceManifestTests.test_partial_ancillary_ranges_must_still_be_well_typed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/donald/sources/repos/wdbx-spatial-checked-v1/tools/tests/test_wdbx_3d_evidence.py", line 121, in test_partial_ancillary_ranges_must_still_be_well_typed
+    self.assertTrue(module.validate_source_manifest(doc), repr(ranges))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true : None
+
+======================================================================
+FAIL: test_required_inventory_categories_cannot_be_omitted (test_wdbx_3d_evidence.SourceManifestTests.test_required_inventory_categories_cannot_be_omitted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/donald/sources/repos/wdbx-spatial-checked-v1/tools/tests/test_wdbx_3d_evidence.py", line 111, in test_required_inventory_categories_cannot_be_omitted
+    self.assertTrue(module.validate_source_manifest(doc), authority)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true : command-contracts
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.003s
+
+FAILED (failures=5)
+
+RED_EXIT=1
+...............
+----------------------------------------------------------------------
+Ran 15 tests in 0.005s
+
+OK
+
+GREEN_EXIT=0
+.......F........
+======================================================================
+FAIL: test_lockfile_dependency_inventory_is_honestly_partial (test_wdbx_3d_evidence.SourceManifestTests.test_lockfile_dependency_inventory_is_honestly_partial)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/donald/sources/repos/wdbx-spatial-checked-v1/tools/tests/test_wdbx_3d_evidence.py", line 161, in test_lockfile_dependency_inventory_is_honestly_partial
+    self.assertEqual(module.validate_source_manifest(doc), [])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['sources[18]: complete read ranges required'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'sources[18]: complete read ranges required'
+
+- ['sources[18]: complete read ranges required']
++ []
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.008s
+
+FAILED (failures=1)
+
+LOCKFILE_RED_EXIT=1
+................
+----------------------------------------------------------------------
+Ran 16 tests in 0.006s
+
+OK
+
+FINAL_GREEN_EXIT=0
+................
+----------------------------------------------------------------------
+Ran 16 tests in 0.006s
+
+OK
+
+EXTERNAL_COMPAT_GREEN_EXIT=0

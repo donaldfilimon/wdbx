@@ -1,0 +1,234 @@
+   Compiling abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx-spatial-checked-v1/crates/abi-wdbx)
+warning: missing documentation for a variant
+ --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:7:27
+  |
+7 | pub enum PointSelection { Radius(Radius), Knn(usize) }
+  |                           ^^^^^^
+  |
+  = note: requested on the command line with `-W missing-docs`
+
+warning: missing documentation for a variant
+ --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:7:43
+  |
+7 | pub enum PointSelection { Radius(Radius), Knn(usize) }
+  |                                           ^^^
+
+warning: missing documentation for a struct field
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:10:32
+   |
+10 | pub struct OctreeBuildLimits { pub max_nodes: usize, pub max_scratch_bytes: usize }
+   |                                ^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:10:54
+   |
+10 | pub struct OctreeBuildLimits { pub max_nodes: usize, pub max_scratch_bytes: usize }
+   |                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:14:5
+   |
+14 |     pub center: Point3, pub selection: PointSelection, pub metric: DistanceMetric,
+   |     ^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:14:25
+   |
+14 |     pub center: Point3, pub selection: PointSelection, pub metric: DistanceMetric,
+   |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:14:56
+   |
+14 |     pub center: Point3, pub selection: PointSelection, pub metric: DistanceMetric,
+   |                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:15:5
+   |
+15 |     pub limits: QueryLimits, pub build_limits: OctreeBuildLimits,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:15:30
+   |
+15 |     pub limits: QueryLimits, pub build_limits: OctreeBuildLimits,
+   |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:16:5
+   |
+16 |     pub cancellation: Option<&'a AtomicBool>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a variant
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:20:23
+   |
+20 | pub enum ScanReason { BelowThreshold, UnsupportedCosineBound, IndexBudget }
+   |                       ^^^^^^^^^^^^^^
+
+warning: missing documentation for a variant
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:20:39
+   |
+20 | pub enum ScanReason { BelowThreshold, UnsupportedCosineBound, IndexBudget }
+   |                                       ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a variant
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:20:63
+   |
+20 | pub enum ScanReason { BelowThreshold, UnsupportedCosineBound, IndexBudget }
+   |                                                               ^^^^^^^^^^^
+
+warning: missing documentation for a variant
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:23:27
+   |
+23 | pub enum PointQueryPath { Octree, CompleteScan(ScanReason), EmptySelection }
+   |                           ^^^^^^
+
+warning: missing documentation for a variant
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:23:35
+   |
+23 | pub enum PointQueryPath { Octree, CompleteScan(ScanReason), EmptySelection }
+   |                                   ^^^^^^^^^^^^
+
+warning: missing documentation for a variant
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:23:61
+   |
+23 | pub enum PointQueryPath { Octree, CompleteScan(ScanReason), EmptySelection }
+   |                                                             ^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:27:5
+   |
+27 |     pub hits: Vec<CheckedSpatialHit<'a>>, pub numeric_profile: &'static str,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:27:43
+   |
+27 |     pub hits: Vec<CheckedSpatialHit<'a>>, pub numeric_profile: &'static str,
+   |                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:28:5
+   |
+28 |     pub numeric_accuracy: &'static str, pub path_used: PointQueryPath,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:28:41
+   |
+28 |     pub numeric_accuracy: &'static str, pub path_used: PointQueryPath,
+   |                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:29:5
+   |
+29 |     pub candidate_coverage: &'static str, pub completion: &'static str,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:29:43
+   |
+29 |     pub candidate_coverage: &'static str, pub completion: &'static str,
+   |                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:30:5
+   |
+30 |     pub consistency: &'static str, pub ranking_policy_id: &'static str,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:30:36
+   |
+30 |     pub consistency: &'static str, pub ranking_policy_id: &'static str,
+   |                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:31:5
+   |
+31 |     pub observed_generations: [(); 0], pub work_observations: usize,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:31:40
+   |
+31 |     pub observed_generations: [(); 0], pub work_observations: usize,
+   |                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:32:5
+   |
+32 |     pub built_nodes: usize, pub reserved_scratch_bytes: usize,
+   |     ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:32:29
+   |
+32 |     pub built_nodes: usize, pub reserved_scratch_bytes: usize,
+   |                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `abi-wdbx` (lib) generated 28 warnings
+warning: struct `OraclePoint` is never constructed
+ --> crates/abi-wdbx/tests/support/spatial_oracle.rs:4:12
+  |
+4 | pub struct OraclePoint {
+  |            ^^^^^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: struct `OracleHit` is never constructed
+  --> crates/abi-wdbx/tests/support/spatial_oracle.rs:10:12
+   |
+10 | pub struct OracleHit {
+   |            ^^^^^^^^^
+
+warning: function `measure` is never used
+  --> crates/abi-wdbx/tests/support/spatial_oracle.rs:19:4
+   |
+19 | fn measure(row: &OraclePoint, center: Point3) -> OracleHit {
+   |    ^^^^^^^
+
+warning: function `ordered` is never used
+  --> crates/abi-wdbx/tests/support/spatial_oracle.rs:33:4
+   |
+33 | fn ordered(points: &[OraclePoint], center: Point3) -> Vec<OracleHit> {
+   |    ^^^^^^^
+
+warning: function `reference_radius` is never used
+  --> crates/abi-wdbx/tests/support/spatial_oracle.rs:43:8
+   |
+43 | pub fn reference_radius(points: &[OraclePoint], center: Point3, radius: Radius) -> Vec<OracleHit> {
+   |        ^^^^^^^^^^^^^^^^
+
+warning: function `reference_knn` is never used
+  --> crates/abi-wdbx/tests/support/spatial_oracle.rs:50:8
+   |
+50 | pub fn reference_knn(points: &[OraclePoint], center: Point3, k: usize) -> Vec<OracleHit> {
+   |        ^^^^^^^^^^^^^
+
+warning: missing documentation for the crate
+  --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:1:1
+   |
+ 1 | / #[path = "support/spatial_oracle.rs"] mod spatial_oracle;
+ 2 | | use abi_wdbx::spatial::{DistanceMetric, Point3D, SpatialIndex3D};
+ 3 | | use abi_wdbx::spatial3d::*;
+ 4 | | fn query(selection: PointSelection) -> CheckedPointQuery<'static> { CheckedPointQuery {
+...  |
+13 | | #[test] fn insert_after_build_invalidates_correctly() {let mut i=data(65);let q=query(PointSelection::Knn(2));assert_eq!(checked_octree_query(&mut i,&q).unwrap().hits[1].id,1);i.insert(999,Point3D::default(),&[9]);let o=checked_octree_query(&mut i,&q).unwrap();assert_eq!(o.hits[1].i...
+14 | | #[test] fn unsupported_cosine_pruning_falls_back() {let mut i=data(65);let mut q=query(PointSelection::Knn(2));q.metric=DistanceMetric::Cosine;let o=checked_octree_query(&mut i,&q).unwrap();assert_eq!(o.path_used,PointQueryPath::CompleteScan(ScanReason::UnsupportedCosineBound));}
+   | |________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________^
+   |
+   = note: requested on the command line with `-W missing-docs`
+
+warning: `abi-wdbx` (test "wdbx_3d_octree_parity") generated 7 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.67s
+     Running tests/wdbx_3d_octree_parity.rs (target/debug/deps/wdbx_3d_octree_parity-0478e6e1e2d55987)
+conservative_bounds_do_not_drop_boundary_hits: test
+degenerate_points_do_not_explode_tree: test
+insert_after_build_invalidates_correctly: test
+threshold_63_64_65_has_same_semantics: test
+unsupported_cosine_pruning_falls_back: test
+
+5 tests, 0 benchmarks

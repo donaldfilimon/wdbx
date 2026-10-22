@@ -1,0 +1,10 @@
+{
+  "head": "08a69b3f22db61093e06527b3308b10589687022",
+  "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)\nbinary: rustc\ncommit-hash: 58cf8f9c35b355199727627d07ae34a4e2846d67\ncommit-date: 2026-10-13\nhost: aarch64-apple-darwin\nrelease: 1.99.1\nLLVM version: 23.1.1\n",
+  "sha256": {
+    "crates/abi-wdbx/src/spatial3d/mod.rs": "02d4f324a6e414c0df2a4cd16c9fe62ca2728a3dbc50a7f000c578ef0f096f27",
+    "crates/abi-wdbx/src/spatial3d/numeric.rs": "abcecaf1c098aca63665222a8b773b403bac2c1cb0e40ffcfc1c8a37354a3a2c",
+    "crates/abi-wdbx/src/lib.rs": "d8c98048cdf82b74ec4ff84ba0710da154efe4999f16860b8d97f3351eef96b4",
+    "crates/abi-wdbx/tests/wdbx_3d_numeric.rs": "703f1b7786de87709e86c65fc990e771254b09f4ca0cc1b69028388737db820d"
+  }
+}

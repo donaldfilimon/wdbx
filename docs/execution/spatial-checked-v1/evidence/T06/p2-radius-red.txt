@@ -1,0 +1,25 @@
+   Compiling abi-compute v0.1.0 (/Users/donald/sources/repos/wdbx-spatial-checked-v1/crates/abi-compute)
+   Compiling abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx-spatial-checked-v1/crates/abi-wdbx)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 12.03s
+     Running unittests src/lib.rs (target/debug/deps/abi_wdbx-db89c34c5a981ba1)
+
+running 1 test
+test spatial3d::octree_checked::tests::radius_payload_budget_rejects_before_reservation ... FAILED
+
+failures:
+
+---- spatial3d::octree_checked::tests::radius_payload_budget_rejects_before_reservation stdout ----
+
+thread 'spatial3d::octree_checked::tests::radius_payload_budget_rejects_before_reservation' (520850) panicked at crates/abi-wdbx/src/spatial3d/octree_checked.rs:518:9:
+assertion `left == right` failed
+  left: Ok(())
+ right: Err(BudgetExceeded)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    spatial3d::octree_checked::tests::radius_payload_budget_rejects_before_reservation
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 309 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p abi-wdbx --lib`

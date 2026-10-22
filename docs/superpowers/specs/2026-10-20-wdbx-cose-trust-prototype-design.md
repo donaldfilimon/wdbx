@@ -1,0 +1,116 @@
+# WDBX bounded COSE and key-trust prototype design
+
+2026-10-20. **Proposed, design only, crate-private, unratified.** This is a decision-complete local prototype proposal, not permission to publish interfaces, an ABI approval receipt, cryptographic qualification, or task-02 completion. No implementation, dependency selection approval, keys, services or fixtures are delivered here.
+
+## Authority and baseline
+
+[Constitution §5](../../../../abi/docs/superpowers/specs/2026-08-22-abbey-system-constitution.md#5-wdbx-episodic-and-evidence-contract) governs single canonical ownership, explicit evidence dimensions and original history. The [proposed canonical episode mechanism](../../../../abi/docs/superpowers/specs/2026-08-22-spec-canonical-wdbx-episodes.md#2-commitment) specifies raw digest signing; the COSE mechanism below is deliberately a different new profile requiring explicit agreement. The [ratification dossier](../plans/2026-10-20-complete-episode-abi-ratification-dossier.md) and [shared task-02 gate](../../completion/shared-types-v1.json) remain open.
+
+Current source facts: `episode/signing.rs` signs exactly SHA-256 digest bytes using Ed25519 and strict verification. Its key ID is `ed25519:` plus lowercase SHA-256 hex of the 32-byte public key. Signature states are Unsigned, Valid, Invalid and UnknownKey; these do not establish trusted authority. `complete_episode` is private, has provisional domain `wdbx-complete-episode-v1`, includes a signer ID and claimed acquisition/receipt times, caps encoding at 1 MiB, and has no current signing/admission/persistence behavior. Its typed decoder is a separate ongoing slice; this design depends on its reviewed result, not merely its plan.
+
+Ownership: ABI Program 1 owns normative wire schemas, authority/receipt vocabulary and compatibility publication; WDBX owns canonical bytes, durable trust and admission behavior. An authenticated operator/ABI authority supplies administration decisions; neither a key file nor an envelope manufactures that authority. The prototype is isolated under a future private `complete_episode/crypto/` with separate `profile`, `verify`, `trust`, `admission` and test modules, each below 1000 Rust lines. Existing signing and canonical encoders are not refactored for convenience.
+
+## Profile P1: exact local choices
+
+P1's local name is `wdbx-complete-cose-sign1-prototype-v1`. It is neither a registered media type nor a public version. Any change to these choices makes a distinct prototype profile and fixture set.
+
+- COSE_Sign1 uses CBOR tag 18, an array of exactly four items: `[protected_bstr, {}, null, signature_bstr]`. Payload is detached. Only this tagged form is accepted; no COSE_Sign, countersignatures, certificates, embedded keys, URI fetching, attached payload or alternative tag.
+- The protected bytes encode exactly `{1: -19, 4: kid}`. `kid` is a byte string containing the exact 72 ASCII bytes of the existing derived signer ID. Unprotected headers must be the empty map. No unknown header, duplicate key, `crit`, content type or algorithm alias is accepted. This closed subset is a local restriction, not a general COSE reader. Header names and tag semantics follow [RFC 9052](https://www.rfc-editor.org/rfc/rfc9052.html).
+- `-19` is fully specified Ed25519. IANA currently lists it Recommended Yes, with Ed25519 curve 6 / OKP key type; the older polymorphic EdDSA `-8` is Deprecated. P1 rejects `-8`, even for Ed25519 keys, with no fallback. This follows [IANA COSE registry](https://www.iana.org/assignments/cose) and [RFC 9864 §§2.2, 4.2.2, 4.4](https://www.rfc-editor.org/rfc/rfc9864.html). Deprecation of that identifier does not invalidate existing non-COSE v3 signatures.
+- External AAD is precisely the ASCII bytes `wdbx-complete-cose-sign1-prototype-v1`, supplied by the profile implementation, never caller-selected or inferred from transport. Detached payload is the full original canonical complete-episode bytes `c`, not its digest. Sign standard COSE `Sig_structure = ["Signature1", protected_bstr, aad_bstr, c_bstr]` with pure Ed25519. Do not use Ed25519ph or sign SHA-256(Sig_structure). RFC 9052 §4.4 defines the signed structure and requires application identity/authorization checks separately. [RFC 9052 §4.4](https://www.rfc-editor.org/rfc/rfc9052.html#section-4.4)
+- The existing complete-episode identity remains `SHA-256(c)`. The container is detached metadata, not recursively inside `c`. Protected kid must equal `Origin.signer` and the key-derived ID. Payload domain/version and contract digest must equal the explicit expected profile/contract input. Tenant/scope, request and episode IDs are signed because they are in `c`.
+- P1 uses a new purpose-specific key, distinct from v2 segment and old v3 digest keys. Its trust registration grants only this profile and canonical-writer role. No adapter signing, source attestation, self-signed trust bootstrap or transitive federation authority.
+
+Full-payload COSE is chosen to avoid inventing an ambiguous digest-payload wrapper. It differs from the proposed canonical spec's raw-digest signing equation and must be ratified explicitly. An old 64-byte signature cannot be inserted into this container and become a valid COSE signature. A later hash-envelope profile would need its own specification and vectors, not a flag in P1.
+
+## Bounded parsing and interfaces
+
+All interfaces below are proposed private Rust interfaces, not new cross-package schemas. Immutable wrappers redact Debug/Display and expose bytes only through deliberate accessors. No raw input, key ID, timestamp, signature, path or parser diagnostic appears in errors/logs.
+
+`parse_p1(container: &[u8], payload: &[u8], limits: CryptoLimits) -> Result<ParsedP1, ProfileError>` checks bounds before ownership/allocation. Container cap 256 bytes; protected cap 128 bytes; kid exactly 72; signature exactly 64; payload cap 1,048,576 bytes. Container reader permits only the single outer tag and expected structure, definite lengths, shortest argument encodings, ascending canonical integer header keys, no trailing bytes or duplicate maps. Container depth at most 3 excluding the separately parsed protected map; protected map exactly two entries, no nesting. It must not relax the existing generic reader's tag ban: peel/check tag in the dedicated bounded envelope parser and use existing canonical machinery only where compatible. RFC 8949 distinguishes basic validity from deterministic encodings; this profile deliberately requires deterministic bytes. [RFC 8949 §§3.2, 4.2, 5.6](https://www.rfc-editor.org/rfc/rfc8949.html)
+
+Call the reviewed complete-episode typed decoder with all caller bounds clamped downward to its current caps (including depth 32); reject any canonical re-encoding difference. Caller zero bounds mean zero, not defaults. Preserve both original protected and payload byte strings for verification; never verify a normalized replacement. Sig_structure allocation cap is 1,049,088 bytes, using checked size arithmetic before reservation. Container + payload budget is 1,048,832 bytes. These are input/buffer bounds, not peak heap or global OOM guarantees. Existing decoder trees, typed values, clones and crypto-library allocations also consume memory; measure them separately before resource claims.
+
+`verify_p1(parsed: &ParsedP1, expected: &ExpectedContext, keys: &KeySnapshot) -> VerificationReport` recomputes the payload digest, confirms contract/domain/kid bindings, resolves exactly one key by derived ID in the expected local namespace, and calls the crypto backend once. No trying every key, backend fallback, batch verification or networking. `ExpectedContext` contains expected P1 identifier, complete domain/version, contract digest, tenant/scope and allowed local trust namespace; values come from configured verifier policy, not unsigned caller metadata.
+
+`evaluate_admission(verified: &VerificationReport, context: &AdmissionContext, snapshot: &TrustSnapshot) -> AdmissionDecision` is separate and cannot append. `AdmissionContext` contains an authenticated principal/role decision from the owner, policy and consent revisions, target binding, request/episode IDs and current writer revision. Only a future single-writer transactional commit can consume the decision after checking revisions again. A parsed object or cryptographically valid report is never an append capability.
+
+`apply_trust_command(command: TrustCommand, auth: AdminAuthorization, expected_revision: u64) -> Result<TrustRevision, TrustError>` is a separately authorized local operation. Commands are Register, Activate, Retire, Revoke, and atomic Rotate; proof of possession is separate from permission to administer. No command executes in this design. Proposed wire/receipt forms must stay private until ABI agreement.
+
+## Trust inputs and lifecycle
+
+The caller explicitly provisions a local root administration policy, authenticated administrator evidence, immutable public key material, target principal binding, allowed canonical-writer role, exact tenant/scope and allowed profile. Do not accept role strings in episodes as authentication. Never resolve keys through network URLs or trust a supplied public key because its fingerprint matches. Public-key possession and trust are separate.
+
+Prototype state is an immutable in-memory snapshot plus ordered synthetic command history, not a production store. Limit each snapshot to 1024 keys, each key to 64 explicit scope grants, each command to one key or one old/new rotation pair, each history to 4096 commands; reject overflow without eviction. Revision is checked u64 and monotonically increments; overflow fails closed. Registration rejects malformed/weak public keys, mismatched IDs, reused IDs with different metadata, purpose reuse and duplicate registrations. No wildcard scope or trust delegation in P1. Equal public key IDs in foreign namespaces do not confer local authority.
+
+| State / command | Exact local semantics |
+|---|---|
+| Register | Create Pending key with immutable principal, public bytes, purpose/profile and scoped grants; cannot admit. |
+| Activate | Pending -> Active at successful administration revision; no backdating or scheduled activation in P1. |
+| Retire | Active -> Retired; rejects new admissions from that revision, retains public material/history. |
+| Rotate | Atomically activate registered Pending replacement and retire Active predecessor at one revision; replacement must have identical principal/purpose/scopes. No overlap in this prototype. |
+| Revoke | Pending/Active/Retired -> Revoked, terminal; reason Administration or SuspectedCompromise, plus optional claimed compromise time retained only as evidence. Cannot reactivate; use a new key. |
+| Retry/conflict | Exact command ID and canonical command digest returns original result; same ID/different digest conflicts; stale expected revision fails. |
+
+A retired/revoked key remains resolvable for mathematics. P1 lifecycle uses authoritative local command order, not episode timestamps. Admin receipt can record observer wall time, clock identity and uncertainty as evidence, but no wall-time claim changes transition ordering. Key destruction must not erase required public verification history; signing secrets and payload-encryption KEKs have separate retention/rotation rules.
+
+## Historical verification versus current admission
+
+Report separate axes, never a single trusted Boolean:
+
+- `format`: P1, LegacyV3Digest, LegacyV2, UnsignedComplete or Unsupported; a caller selects the expected profile, not heuristic fallback.
+- `integrity`: Valid, Invalid, Unsigned, or Unverifiable(reason: UnknownKey, MissingOriginalBytes, UnsupportedProfile). Only a backend signature mismatch or contradictory bound identity is Invalid; missing evidence is not forgery.
+- `key_current`: Pending, Active, Retired, Revoked, Unknown; plus explicit purpose/scope/identity match results.
+- `historical_admission`: RecordedAccepted(receipt reference and recorded trust/policy revision), NoAcceptanceEvidence, or EvidenceUnavailable. This reports what an authenticated local admission journal recorded, not factual truth or present permission.
+- `current_admission`: EligibleAtRevision, Rejected(reason), or Indeterminate(reason). Missing trust/policy/consent evidence is Indeterminate and cannot append.
+
+All claimed episode times, including `received_at`, remain signer-controlled data. A malicious or compromised signer can backdate them. A signature alone proves neither signing time nor time of local acceptance. No timestamp service or externally witnessed clock is included. An authenticated writer journal receipt can establish local acceptance ordering only relative to that journal's trust boundary. A future externally verifiable time proof needs separate reviewed trust roots, format and policy.
+
+When compromise is discovered, retain original math and old receipt; add a current compromise warning. With no independent trusted existence/order evidence, do not assert that a signature predates compromise. Even with a receipt, it means the local writer previously accepted those exact bytes under recorded policy; current policy may invalidate their use. Retired/Revoked/Pending/unknown keys never authorize new admission. An existing exact retry may return its original receipt after access checks, explicitly as historical replay with no new append or renewed authorization. A never-before-seen backdated episode under a retired key is rejected.
+
+Unsigned complete episodes can be inspected as Unsigned. P1 admission requires a signature and never downgrades to unsigned acceptance. Valid uncertain content may retain separate quarantine/contradiction evidence; crypto status does not collapse other evidence dimensions or bypass deletion/consent.
+
+## Admission, replay and substitution controls
+
+A future single writer must atomically check and persist: expected trust revision, current policy/consent revision, authoritative principal/scope grant, replay indexes, original bytes and acceptance receipt. Trust changes and admissions serialize through the same ordering mechanism; an old snapshot cannot authorize a commit after revocation. Crash testing must demonstrate all-or-none persistence before receipt issuance. This persistence is a later gated slice, not claimed by an in-memory prototype.
+
+Replay key is `(tenant, scope, profile, request_id)`; episode identity uniqueness is `(tenant, scope, profile, episode_id)`. An exact retry requires same payload digest AND byte-identical payload and COSE container, and returns the existing receipt after authorization to read that receipt. Reusing either identity with changed content/signature conflicts; neither index may be silently evicted. Resource/quota exhaustion rejects new writes. Deletion retains scoped content-free replay/tombstone identity according to owner-approved privacy policy; signature transport cannot resurrect an erased payload. Exact retention/erasure of IDs and commitments requires the ABI lifecycle decision before persistence implementation.
+
+Reject changed payload, altered kid/alg, header relocation, altered AAD, unknown version/domain/contract, wrong tenant/scope, signature truncation, unexpected signed/unsigned alternatives, old-domain signature transplant, and foreign trust namespace substitution. A valid key signature alone supplies no grants, consent, trusted source truth, evidence maturity, policy compatibility or permission to import. No foreign trust import path exists here; foreign artifacts remain references and require the separate federation contract.
+
+## Original bytes and legacy handling
+
+Store original canonical complete bytes, exact detached container and protected bytes (or exact recoverable slice), explicit profile ID, digest, selected public-key ID, verification implementation/version, trust/policy snapshot IDs and acceptance ordering receipt. Never replace originals with decode/re-encode output. Retention/crypto-erasure rules still govern the payload; if erased, report MissingOriginalBytes while retaining only permitted content-free evidence. Do not falsely report fresh verification using only a receipt or digest.
+
+Preserve old v2 insertion-order JSON commitments and v3 `abbey-cbor-episode-v1` digest/signature domains, golden bytes and verification entrypoints unchanged. Old unsigned stays unsigned; old unknown key stays unknown. The legacy path may compute its existing mathematical result without upgrading to P1, granting current admission or inferring historical trust. Where legacy original canonical bytes were never retained, state ReconstructedFromLegacyRecord versus OriginalAvailable in evidence; do not claim original-byte provenance. Migration is explicit shadow verification and comparison, followed by a separately approved single-writer cutover. Never re-sign or rewrite old records automatically.
+
+## Failure contract and dependency boundary
+
+Static, content-free profile errors: ResourceLimit, MalformedCbor, NonCanonicalEncoding, UnsupportedProfile, UnsupportedAlgorithm, InvalidHeaderSet, InvalidLength, InvalidPayload, DomainMismatch, ContractMismatch, ScopeMismatch, KeyIdentityMismatch. Unknown keys produce Unverifiable; weak/malformed registered keys produce InvalidKeyRegistration; backend verification failure produces InvalidSignature. Trust/admission reasons: UnauthorizedAdmin, StaleTrustRevision, StalePolicyRevision, StaleConsentRevision, WrongKeyPurpose, KeyNotActive, KeyRevoked, ScopeDenied, MissingAuthority, ReplayConflict, Deleted, Quota, HistoryUnavailable, RevisionOverflow. IO/persistence errors belong only to the later adapter and never become successful admission. Tests fix isolated-error outcomes, not precedence among multiply-invalid inputs.
+
+Use maintained crypto implementations; never implement Edwards arithmetic, signature validation or Python cryptography by hand. Rust's existing `ed25519-dalek` strict verifier is the initial candidate; maintainers distinguish strict checks and prehashed APIs, so P1 must call the pure-message strict path and reject weak public keys at registration. [ed25519-dalek VerifyingKey documentation](https://docs.rs/ed25519-dalek/latest/ed25519_dalek/struct.VerifyingKey.html)
+
+Evaluate a maintained COSE library such as `coset` for structure construction and Sig_structure, but require raw protected-byte preservation and our bounded preflight before allocating generic objects. Do not assume library deserialization enforces P1 or supports current registry IDs. A safely represented integer -19 is acceptable only after verifying exact library semantics; no substitution with -8. [coset maintainer documentation](https://docs.rs/coset/latest/coset/)
+
+The independent Python witness may use PyCA `cryptography` Ed25519 verification, whose API verifies message bytes and raises InvalidSignature. It must independently parse P1 and reconstruct Sig_structure; matching Rust-produced bytes alone is insufficient. Library/backend acceptance of malformed points/scalars can differ: pin explicit rejection vectors and fail qualification on disagreement instead of weakening Rust. [PyCA Ed25519 documentation](https://cryptography.io/en/latest/hazmat/primitives/asymmetric/ed25519/)
+
+Exact stable versions, licenses, advisories, MSRV, target support, transitive graph, backend and raw-byte preservation review are prerequisites to implementation. Latest documentation pages are research references, not approved version pins. No dependencies were downloaded, installed, edited or built for this design.
+
+## Threat tests and staged acceptance
+
+Every fixture is synthetic, generated with conspicuously nonproduction test keys in isolated temporary storage. Never read the user's store or real signing keys.
+
+| Slice | Required artifacts and tests; exit condition |
+|---|---|
+| 1: private profile parser | Exact P1 container/protected/AAD/Sig_structure vectors; canonical complete decoder prerequisite; truncation at every boundary, trailing/duplicate/unknown headers, forbidden tags, indefinite/nonminimal encodings, depth/byte cap and cap+1, zero limits, overflow, panic corpus, content-free diagnostics. No crypto/admission claim. |
+| 2: private signing/verification | Reviewed dependency decision, deterministic synthetic positives from two independent implementations; cross-verify Rust/Python; kid/key/origin mismatch, alg -8/-19 substitution, altered AAD/payload, weak keys, noncanonical point/scalar signatures, Ed25519ph confusion, legacy transplant; original bytes unchanged. Missing witness dependency/interpreter fails, never skips. |
+| 3: private trust model | State-transition table exhaustively tested; unauthorized commands, role spoofing, scope/namespace mismatch, duplicate IDs, stale revision, atomic rotation, terminal revocation, resource caps, ordering and command retries. No real filesystem persistence or remote authority. |
+| 4: private admission simulator | Exact retry vs conflict, changed signature same payload, episode-ID collision, concurrent revoke/admit interleavings, stale consent/policy, forged/backdated times, no historical receipt, compromise warning and erased payload. Assert no append on any rejected/indeterminate result. Synthetic snapshot/receipt simulation only. |
+| 5: owner gate then durable integration | ABI-reviewed exact schema/profile/error/receipt diff and hashes; positive/malformed shared producer/consumer vectors; named owner receipt plus independent review. Only then design and review durable ordering, restart/rollback protection, replay/privacy retention and crash recovery, retaining one canonical writer. |
+| 6: production qualification | Independent cryptographic review of exact source/dependencies/vectors/key custody and threat model, operational administration/recovery evidence and applicable C0-C7 qualification. No default workspace green substitutes for this. |
+
+Implement one reviewed slice at a time; run focused tests and repository gate for eventual Rust changes, with unchanged legacy witnesses/signature goldens. Current design-only validation is source comparison and `git diff --check`, not a Rust gate. No slice alone closes task-02, integrated federation or production readiness.
+
+## Ratification decisions still owned externally
+
+Local choices above are concrete enough for private fixtures; they do not decide ABI's publication. The named schema owner must accept or revise: full-payload COSE versus raw-digest equation, exact profile/domain/AAD/header/kid representation, new-purpose keys, signature requirement versus optional constitutional signature, authority and trust receipt schemas, administration authorization/recovery, historical-evidence interpretation, replay namespaces and retention/erasure, public error vocabulary, library selection evidence, compatibility/cutover and independent cross-language vectors. Changes require new exact pins, not reinterpretation of old artifacts. The approval receipt must identify owner/reviewer, explicit decisions, schema/profile/source/vector/dependency hashes and bounded evidence. Independent crypto review remains additionally necessary before production qualification.

@@ -1,0 +1,29 @@
+{
+  "canonical_wdbx": {
+    "root": "/Users/donald/sources/repos/wdbx",
+    "head": "08a69b3f22db61093e06527b3308b10589687022",
+    "status_porcelain": " M crates/abi-compute/src/cpu.rs\n",
+    "dirty_file_sha256": {
+      "crates/abi-compute/src/cpu.rs": "ed8c872ca71dbf097ae42e020310d0f0123a516257c7b66c63e7bb6809a48ca6"
+    }
+  },
+  "abi": {
+    "root": "/Users/donald/sources/repos/abi",
+    "head": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+    "status_porcelain": " M .agents/skills/run-abi/SKILL.md\n M .agents/skills/run-abi/smoke.sh\n M .claude/settings.json\n M .codex/hooks.json\n M docs/spec/agent-wdbx-architecture.mdx\n M tasks/todo.md\n?? .claude/hooks/format-rust.sh\n?? .claude/hooks/skill-loop.sh\n?? tools/tests/test_hooks.py\n?? tools/tests/test_run_abi_smoke.py\n",
+    "dirty_file_sha256": {
+      ".agents/skills/run-abi/SKILL.md": "015e428dedc5da6adc6bb4cb5ca12a9061421b67a68575a926a0a2dac39554ae",
+      ".agents/skills/run-abi/smoke.sh": "65754a3f5001dba12ff26b97f997a2f78d291095d38774b278c92bc4d1b1585e",
+      ".claude/settings.json": "71cb2a4930145f129c46291426aa59eed37224fdb578e53a640979693a00b7d1",
+      ".codex/hooks.json": "846f492d1a8038db7b587343df5264096b1e197fc23618d054d161db68d1cb48",
+      "docs/spec/agent-wdbx-architecture.mdx": "45a7f418bad0f118efcd7a75915a2a61c26f42dab48f9dc3ac9617a434802219",
+      "tasks/todo.md": "3b08e824a0e407a36b4b7308aebb2be4da400eb01ce72040f72edd552d5d7554",
+      ".claude/hooks/format-rust.sh": "4b68f1ff437a33d9cb988f8f0d888c8458418f1464f87a39c11100a3f3363def",
+      ".claude/hooks/skill-loop.sh": "acc024bace12df7b5a68cf062dd7bc2a371509ed98ed481c511676e459a48265",
+      "tools/tests/test_hooks.py": "2df3b5ed3c330b0068a9e098e4884b1a7bfeb8e457c1d743f5d0dcaaad6ca9c5",
+      "tools/tests/test_run_abi_smoke.py": "a7b2630588c039a6ec796a12648059b0bab1738d9b4b97ff188ec1b60c5e0c8e"
+    }
+  },
+  "note": "Observed external dirty state; preserved without edits. ABI architecture diff inspected; no affected spatial contract. Baseline manifest remains pinned historical inspection, not claim these trees are currently clean.",
+  "recorded_at": "2026-10-20T08:11:03.333592+00:00"
+}

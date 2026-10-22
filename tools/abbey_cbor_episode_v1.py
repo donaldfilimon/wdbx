@@ -36,6 +36,11 @@ anyone else who wants to feed this script), one JSON object per value:
 
 Commands:
 
+    decode-corpus          bounded syntax-only JSON-lines decoding witness; reads
+                           {"cbor_hex":"...","kind":"value"|"episode","limits":{...}}
+                           and returns {"ok":true,"cbor_hex":"..."} or static errors
+                           (per-request rejection retains exit status 0)
+
     verify-goldens [DIR]   rebuild the two synthetic fixtures described in
                            DIR/README.md and compare with DIR/*.hex and *.sha256
                            (default DIR: crates/abi-wdbx/tests/golden/abbey-cbor-episode-v1)
@@ -607,6 +612,9 @@ def main(argv: list[str]) -> int:
         print(__doc__)
         return 0 if len(argv) >= 2 else 1
     command = argv[1]
+    if command == "decode-corpus":
+        from abbey_cbor_reader_v1 import decode_corpus
+        return decode_corpus(sys.modules[__name__])
     if command == "verify-goldens":
         return verify_goldens(argv[2] if len(argv) > 2 else DEFAULT_GOLDEN_DIR)
     if command == "differential":

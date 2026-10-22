@@ -1,0 +1,1455 @@
+{
+  "schema": "wdbx-3d-source-manifest-v1",
+  "scope": "T00 source qualification only; collective complete authority reads, scoped v5 read, hash-only fixture inventory",
+  "repositories": {
+    "wdbx": {
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "ref": "main baseline",
+      "baseline_state": "ABI clean; WDBX task worktree dirty during concurrent implementation"
+    },
+    "abi": {
+      "commit": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "ref": "main baseline",
+      "baseline_state": "clean at inventory"
+    }
+  },
+  "studio": {
+    "repository": "wdbx",
+    "root": "specimen-studio",
+    "workspace": "separate Cargo workspace",
+    "dependency_revision": "3ac03f085196dbe6e922a127ceaa37bc2368de89"
+  },
+  "missing_sources": [
+    {
+      "authority": "original-massive-plan",
+      "path": "WDBX-3D-Neural-Specimen-MASSIVE-Master-Plan.md",
+      "sha256_reported": "3cf8200fb9cb346a9b89aa5b329507f594411b37f4aad5510334ca4b52db340b",
+      "state": "not supplied in v6 package; identity inherited from v5, bytes not independently inspected"
+    },
+    {
+      "authority": "external-final-acceptance-receipt",
+      "path": "wdbx-source-qualification.md",
+      "state": "private external receipt referenced by ledger, not supplied or opened; historical summary only"
+    }
+  ],
+  "sources": [
+    {
+      "repository": "abi",
+      "ref": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "commit": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "identity_kind": "git",
+      "path": "docs/spec/wdbx-north-star.mdx",
+      "blob": "0dd70c541b257c9d63cc6f12c07dfc868d134f02",
+      "sha256": "a16a036d6b9eab6ae7f7cec8ec45cf7c98f4bab9ed1249eda34adc3767e21d4b",
+      "line_count": 171,
+      "read_ranges": [
+        [
+          1,
+          171
+        ]
+      ],
+      "authority": "north-star",
+      "owner": "maintainer",
+      "role": "Complete controlling document; implementation claims remain historical",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "main",
+      "clean": false
+    },
+    {
+      "repository": "abi",
+      "ref": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "commit": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "identity_kind": "git",
+      "path": "docs/spec/wdbx-multiway.mdx",
+      "blob": "18cfdb40516aa08199f1390bd79815f64f756a63",
+      "sha256": "5b89af752a55fea52183b45f732db9f18c37e2b34599edf83106eb2c09a8afe6",
+      "line_count": 153,
+      "read_ranges": [
+        [
+          1,
+          153
+        ]
+      ],
+      "authority": "multiway",
+      "owner": "maintainer",
+      "role": "Complete controlling document; implementation claims remain historical",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "main",
+      "clean": false
+    },
+    {
+      "repository": "abi",
+      "ref": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "commit": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "identity_kind": "git",
+      "path": "docs/spec/agent-wdbx-architecture.mdx",
+      "blob": "649f19d03fc37dd8d862e5f20d262d8f01830fe8",
+      "sha256": "1b191870fc089dcd3c96d2e49d73360f54a7502042bf9e1305e1fb72cb3efcf8",
+      "line_count": 143,
+      "read_ranges": [
+        [
+          1,
+          143
+        ]
+      ],
+      "authority": "agent-architecture",
+      "owner": "maintainer",
+      "role": "Complete controlling document; implementation claims remain historical",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "main",
+      "clean": false
+    },
+    {
+      "repository": "abi",
+      "ref": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "commit": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "identity_kind": "git",
+      "path": "docs/superpowers/specs/2026-08-22-spec-canonical-wdbx-episodes.md",
+      "blob": "f1fb42c8c469b5c258082148f1682544cb3e8607",
+      "sha256": "8c0c6295d9956290b45f0180a13ddfd42546911ad5bf5bc83e57f06868681526",
+      "line_count": 363,
+      "read_ranges": [
+        [
+          1,
+          363
+        ]
+      ],
+      "authority": "canonical-episodes",
+      "owner": "maintainer",
+      "role": "Complete controlling document; implementation claims remain historical",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "main",
+      "clean": false
+    },
+    {
+      "repository": "abi",
+      "ref": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "commit": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "identity_kind": "git",
+      "path": "docs/superpowers/specs/2026-09-29-wdbx-completion-design.md",
+      "blob": "bdf2a4b29091045534ec63f72a0d4af465739fb0",
+      "sha256": "93ba8b12ff82a2d7d83171fd3315439f3de11700fc3eec3fc843dfb7e2e489ff",
+      "line_count": 87,
+      "read_ranges": [
+        [
+          1,
+          87
+        ]
+      ],
+      "authority": "completion-design",
+      "owner": "maintainer",
+      "role": "Complete controlling document; implementation claims remain historical",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "main",
+      "clean": false
+    },
+    {
+      "repository": "abi",
+      "ref": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "commit": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "identity_kind": "git",
+      "path": "docs/superpowers/specs/2026-09-29-spec-member-erasure.md",
+      "blob": "360237f9d16f90d6fe1d30c44af5a575649cc1bf",
+      "sha256": "0ee3811743402430d360657267bd27d02d0dc4a2f702a4005914d22bb65211ea",
+      "line_count": 1332,
+      "read_ranges": [
+        [
+          1,
+          1332
+        ]
+      ],
+      "authority": "member-erasure",
+      "owner": "maintainer",
+      "role": "Complete controlling document; implementation claims remain historical",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "main",
+      "clean": false
+    },
+    {
+      "repository": "abi",
+      "ref": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "commit": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "identity_kind": "git",
+      "path": "docs/superpowers/specs/2026-08-22-abbey-system-constitution.md",
+      "blob": "3d5f3ca0c0eb8eee93048b1cfd9a0b7a13db8b0a",
+      "sha256": "7b3f932a08f55bb4bcf0dfe2b45ea356da84bc79d6103101f70900738b4c5bcc",
+      "line_count": 972,
+      "read_ranges": [
+        [
+          1,
+          972
+        ]
+      ],
+      "authority": "constitution",
+      "owner": "maintainer",
+      "role": "Complete controlling document; implementation claims remain historical",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "main",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "docs/claims.md",
+      "blob": "d3d26e6bac7374d014e33d1b6622862391e3e638",
+      "sha256": "287a9aac99cf8f7d95f9db6e91a968554a16e37668094ff9e20945aa8be04141",
+      "line_count": 38,
+      "read_ranges": [
+        [
+          1,
+          38
+        ]
+      ],
+      "authority": "claims",
+      "owner": "maintainer",
+      "role": "Complete controlling document; implementation claims remain historical",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "README.md",
+      "blob": "4af1e7fb21a2873d9fc4b3bdcf33a78dab87eab5",
+      "sha256": "a354ec8e93f1db731350294ab383cedf7c33db2a1e8c39589fd1f8b7fa443c7d",
+      "line_count": 138,
+      "read_ranges": [
+        [
+          1,
+          138
+        ]
+      ],
+      "authority": "readme",
+      "owner": "maintainer",
+      "role": "Complete controlling document; implementation claims remain historical",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "specimen-studio/public/WDBX-Specimen-Architecture-Specification.md",
+      "blob": "b06a9beb0f7069dafc1d61af642300e43c3ba0e0",
+      "sha256": "82aa6347e264efb789b21e915eb802802d1b3771c31d1a63f1fb85ee2a0c4c88",
+      "line_count": 1589,
+      "read_ranges": [
+        [
+          1,
+          1589
+        ]
+      ],
+      "authority": "original-specimen",
+      "owner": "maintainer",
+      "role": "Complete controlling document; implementation claims remain historical",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "specimen-studio/RUNTIME-PROFILE.md",
+      "blob": "805520097ae992109492c91d40af0cc763ab6f3f",
+      "sha256": "f5d456464e7de70a451c3f7c36598bf33cb9733a20cbda0392fc0bc79116951c",
+      "line_count": 37,
+      "read_ranges": [
+        [
+          1,
+          37
+        ]
+      ],
+      "authority": "runtime-profile",
+      "owner": "maintainer",
+      "role": "Complete controlling document; implementation claims remain historical",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "specimen-studio/NATIVE-RUNTIME-PROFILE.md",
+      "blob": "19743032686af5f2082f6ef82b427a5db8513af9",
+      "sha256": "e326bc39a3800585726f57a7183cb7f40542fe211c6bf4b486644fabd8d9503c",
+      "line_count": 107,
+      "read_ranges": [
+        [
+          1,
+          107
+        ]
+      ],
+      "authority": "native-runtime-profile",
+      "owner": "maintainer",
+      "role": "Complete controlling document; implementation claims remain historical",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "specimen-studio/VALIDATION.md",
+      "blob": "5fc375ad141c89af8f82800fdf5787f2a19dfb80",
+      "sha256": "59fcfecc2aa7811849a4573c7ff5673541794bf503edbf6f3a6acb8807211733",
+      "line_count": 1018,
+      "read_ranges": [
+        [
+          1,
+          1018
+        ]
+      ],
+      "authority": "acceptance-ledger",
+      "owner": "maintainer",
+      "role": "Complete controlling document; implementation claims remain historical",
+      "evidence_kind": "reported",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "user-supplied-specification-package",
+      "ref": "content-addressed supplied artifact",
+      "identity_kind": "external-artifact",
+      "commit": null,
+      "path": "WDBX-Full-Database-and-Neural-Specimen-Specification-v6.md",
+      "sha256": "7f361f63b90e4f0d22018338ecb18f30ca81fc574ee49b15fbb1299d38977072",
+      "line_count": 1636,
+      "read_ranges": [
+        [
+          1,
+          1636
+        ]
+      ],
+      "authority": "specification-v6",
+      "owner": "specification custodian",
+      "role": "Supplied proposed specification authority",
+      "provenance": "User-supplied artifact; no Git provenance supplied",
+      "evidence_kind": "source",
+      "execution": null,
+      "read_by": "source-audit worker"
+    },
+    {
+      "repository": "user-supplied-specification-package",
+      "ref": "content-addressed supplied artifact",
+      "identity_kind": "external-artifact",
+      "commit": null,
+      "path": "WDBX-3D-Neural-Specimen-Master-Plan-v5.md",
+      "sha256": "f98d61f6f80503a2d00687c8cb6f38ed654cf9ad46cf55407ba5e06765354822",
+      "line_count": 3234,
+      "read_ranges": [
+        [
+          1,
+          624
+        ],
+        [
+          2511,
+          2610
+        ],
+        [
+          2645,
+          2725
+        ],
+        [
+          2766,
+          2804
+        ]
+      ],
+      "authority": "master-plan-v5",
+      "owner": "specification custodian",
+      "role": "Proposed specification; v5 scoped execution companion",
+      "provenance": "User-supplied artifact; no Git provenance supplied",
+      "evidence_kind": "source",
+      "execution": null,
+      "read_by": "source-audit worker",
+      "read_scope": "first-packet"
+    },
+    {
+      "repository": "user-supplied-specification-package",
+      "ref": "content-addressed supplied artifact",
+      "identity_kind": "external-artifact",
+      "commit": null,
+      "path": "WDBX-Specification-v6-Requirements.json",
+      "sha256": "bcb67ddf87938e6a55ee44f12ce4e75a9298e5c934125bb40bcd69387887b74c",
+      "line_count": 882,
+      "read_ranges": [
+        [
+          1,
+          882
+        ]
+      ],
+      "authority": "requirements-v6",
+      "owner": "specification custodian",
+      "role": "Supplied proposed specification authority",
+      "provenance": "User-supplied artifact; no Git provenance supplied",
+      "evidence_kind": "source",
+      "execution": null,
+      "read_by": "source-audit worker"
+    },
+    {
+      "repository": "user-supplied-specification-package",
+      "ref": "content-addressed supplied artifact",
+      "identity_kind": "external-artifact",
+      "commit": null,
+      "path": "README.md",
+      "sha256": "996d7a29fe48a1c7ea41337a21f6842dd47f43a61b50fe17791a12a792eaeea5",
+      "line_count": 13,
+      "read_ranges": [
+        [
+          1,
+          13
+        ]
+      ],
+      "authority": "supplied-package-readme",
+      "owner": "specification custodian",
+      "role": "Supplied proposed specification authority",
+      "provenance": "User-supplied artifact; no Git provenance supplied",
+      "evidence_kind": "source",
+      "execution": null,
+      "read_by": "source-audit worker"
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "Cargo.toml",
+      "blob": "39ed8381abd035e19da1bb41453ac60c57e811c8",
+      "sha256": "6f65609201205000f806e84fe1812df23d81a4631e6366a46dd0386b4fb2bf5c",
+      "line_count": 51,
+      "read_ranges": [
+        [
+          1,
+          51
+        ]
+      ],
+      "authority": "implementation-inventory",
+      "owner": "maintainer",
+      "role": "Actual ownership/API/build seam; partial ranges explicitly retained",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "rust-toolchain.toml",
+      "blob": "65ee9b915478b31c122a9199eaefca9450ec8a4c",
+      "sha256": "511d40d52e2c79df3d3b5c724f47325141ee83c74a6c112a37cb8114e8fb7698",
+      "line_count": 7,
+      "read_ranges": [
+        [
+          1,
+          7
+        ]
+      ],
+      "authority": "toolchain",
+      "owner": "maintainer",
+      "role": "Actual ownership/API/build seam; partial ranges explicitly retained",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "tools/check.sh",
+      "blob": "7cdf24c0f567023427099f019d04869024a76f0b",
+      "sha256": "7a5661395e09a180164ca0c5fba7ba45da7ecd9bd648190c9c3fc9d4ac0a5a6e",
+      "line_count": 37,
+      "read_ranges": [
+        [
+          1,
+          37
+        ]
+      ],
+      "authority": "implementation-inventory",
+      "owner": "maintainer",
+      "role": "Actual ownership/API/build seam; partial ranges explicitly retained",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "specimen-studio/Cargo.toml",
+      "blob": "df98b015e9e8b2cc7f1af49cca0ae99f324a49e5",
+      "sha256": "5866a7301606f40932bb4bfcd77608487b712a90de2c5906749b5a3854e82447",
+      "line_count": 31,
+      "read_ranges": [
+        [
+          1,
+          31
+        ]
+      ],
+      "authority": "implementation-inventory",
+      "owner": "maintainer",
+      "role": "Actual ownership/API/build seam; partial ranges explicitly retained",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "specimen-studio/native/specimen-core/Cargo.toml",
+      "blob": "954bbb43e8e54684dbde9c8bab3db70d61f79be8",
+      "sha256": "db1452415da037dbe0a0d423bf8e5a4fffca7f0a9b86921b389e0ec367d7663c",
+      "line_count": 29,
+      "read_ranges": [
+        [
+          1,
+          29
+        ]
+      ],
+      "authority": "implementation-inventory",
+      "owner": "maintainer",
+      "role": "Actual ownership/API/build seam; partial ranges explicitly retained",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "specimen-studio/native/specimen-kernel/Cargo.toml",
+      "blob": "866ad0c7459fe3697606968d5e22f770a693da85",
+      "sha256": "bcabc6c49c3b3a75a0ebc6dfaec388d3c80a30f3c64cf342a0f6195bbb33c53b",
+      "line_count": 12,
+      "read_ranges": [
+        [
+          1,
+          12
+        ]
+      ],
+      "authority": "implementation-inventory",
+      "owner": "maintainer",
+      "role": "Actual ownership/API/build seam; partial ranges explicitly retained",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "specimen-studio/package.json",
+      "blob": "93395e91fa21297b5c2baa6603478c9623e6cb41",
+      "sha256": "4f57c95cbc8eb6cb0c1155d51acd4721c931b095630c26dd081709414abeb2ac",
+      "line_count": 84,
+      "read_ranges": [
+        [
+          1,
+          84
+        ]
+      ],
+      "authority": "implementation-inventory",
+      "owner": "maintainer",
+      "role": "Actual ownership/API/build seam; partial ranges explicitly retained",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "abi",
+      "ref": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "commit": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "identity_kind": "git",
+      "path": "crates/abi-wdbx-gateway/proto/gateway.proto",
+      "blob": "06f8689d2fba88667da957e846db7546e7a1d1ae",
+      "sha256": "f4c21cdd63d697e4025ab95f33dac5c0fd1276d89be79420a4ad14cc40bfd2e1",
+      "line_count": 157,
+      "read_ranges": [
+        [
+          1,
+          157
+        ]
+      ],
+      "authority": "gateway-schema",
+      "owner": "maintainer",
+      "role": "Actual ownership/API/build seam; partial ranges explicitly retained",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "main",
+      "clean": false
+    },
+    {
+      "repository": "abi",
+      "ref": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "commit": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "identity_kind": "git",
+      "path": "docs/contracts/public-api.mdx",
+      "blob": "ce072293a8e0cde7b6607bbf8a94fae497cad06b",
+      "sha256": "a8964119ce9fc0e475c2412048bc2ac9b71ebf2e513617e171eb98f469c742b1",
+      "line_count": 192,
+      "read_ranges": [
+        [
+          1,
+          192
+        ]
+      ],
+      "authority": "command-contracts",
+      "owner": "maintainer",
+      "role": "Actual ownership/API/build seam; partial ranges explicitly retained",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "main",
+      "clean": false
+    },
+    {
+      "repository": "abi",
+      "ref": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "commit": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "identity_kind": "git",
+      "path": "crates/abi-cli/src/usage.rs",
+      "blob": "43bd737263697e23622c83e60b2d686f7b4af393",
+      "sha256": "82d23ceed8bd0255cf4bb7d6f6a14abbec842310795d535e21703aff73c664d0",
+      "line_count": 450,
+      "read_ranges": [
+        [
+          91,
+          110
+        ]
+      ],
+      "authority": "implementation-inventory",
+      "owner": "maintainer",
+      "role": "Actual ownership/API/build seam; partial ranges explicitly retained",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "main",
+      "clean": false
+    },
+    {
+      "repository": "abi",
+      "ref": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "commit": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "identity_kind": "git",
+      "path": "crates/abi-mcp/src/handlers.rs",
+      "blob": "88b1ed1989e0242b2fd0e711fb8f3e1e2732e75b",
+      "sha256": "38cc7b51c46a0cfed0ea44bfa75009ae52aecb0881fdd439cc52ba6f523f4245",
+      "line_count": 491,
+      "read_ranges": [
+        [
+          173,
+          247
+        ]
+      ],
+      "authority": "implementation-inventory",
+      "owner": "maintainer",
+      "role": "Actual ownership/API/build seam; partial ranges explicitly retained",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "main",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "crates/abi-wdbx/src/v2.rs",
+      "blob": "73d29687be6fb497a9b07043a1dda2948bf1179e",
+      "sha256": "28a6283b886b6290ea00cdd7500efa248724ab28d60ae3fa2bdba297eb8e0d64",
+      "line_count": 824,
+      "read_ranges": [
+        [
+          1,
+          162
+        ]
+      ],
+      "authority": "implementation-inventory",
+      "owner": "maintainer",
+      "role": "Actual ownership/API/build seam; partial ranges explicitly retained",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "crates/abi-wdbx/src/v2/types.rs",
+      "blob": "2fd5b05a7d715e2356879b2b0a09c141679f784c",
+      "sha256": "8995b8672e59323995e879ca65d93c27f34c771b5ff113cc00fb48c4e045f57c",
+      "line_count": 546,
+      "read_ranges": [
+        [
+          1,
+          115
+        ]
+      ],
+      "authority": "implementation-inventory",
+      "owner": "maintainer",
+      "role": "Actual ownership/API/build seam; partial ranges explicitly retained",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "crates/abi-wdbx/src/v3/mod.rs",
+      "blob": "6478bb6b2d8f09c79648ce9b9b01f06b94d2af4b",
+      "sha256": "ccd7d723dd4424e6541aef43cc9e7911bdd3c7c38ed956b3716befb19798150b",
+      "line_count": 7,
+      "read_ranges": [
+        [
+          1,
+          7
+        ]
+      ],
+      "authority": "implementation-inventory",
+      "owner": "maintainer",
+      "role": "Actual ownership/API/build seam; partial ranges explicitly retained",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "crates/abi-wdbx/src/v3/episode/mod.rs",
+      "blob": "15856d0fac6f36ae3fcfc6bc79a25d2aa4d9cb22",
+      "sha256": "46508724ed9cec1e886ca6e61f4414993571abfba8c83c4bff3e509e8a73349d",
+      "line_count": 17,
+      "read_ranges": [
+        [
+          1,
+          17
+        ]
+      ],
+      "authority": "implementation-inventory",
+      "owner": "maintainer",
+      "role": "Actual ownership/API/build seam; partial ranges explicitly retained",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "crates/abi-compute/src/accelerator.rs",
+      "blob": "a6042533c0a0906044efe9b2147e0c7077579c2a",
+      "sha256": "7502a73816eadd398e04d25c6fb8a8f85c16a574e4e07de3a964fed3a5a6f95e",
+      "line_count": 142,
+      "read_ranges": [
+        [
+          1,
+          142
+        ]
+      ],
+      "authority": "implementation-inventory",
+      "owner": "maintainer",
+      "role": "Actual ownership/API/build seam; partial ranges explicitly retained",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "crates/abi-compute/src/backend.rs",
+      "blob": "2336c6dda9a605e1de288e00291970c2e1344e83",
+      "sha256": "76ed75e11cf48bbd5da8ceadb0a46a1c106ed0e0c8f3630fafcd067e2172d823",
+      "line_count": 504,
+      "read_ranges": [
+        [
+          1,
+          160
+        ]
+      ],
+      "authority": "implementation-inventory",
+      "owner": "maintainer",
+      "role": "Actual ownership/API/build seam; partial ranges explicitly retained",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "crates/abi-compute/src/cpu.rs",
+      "blob": "15fc17f5f291ec281c32ea62f0e06fdeb13f38e0",
+      "sha256": "310630fa80fba2b935a520e3a7132324ec2d94c10cc1e5a38dc97883da2f5bf9",
+      "line_count": 289,
+      "read_ranges": [
+        [
+          1,
+          215
+        ]
+      ],
+      "authority": "implementation-inventory",
+      "owner": "maintainer",
+      "role": "Actual ownership/API/build seam; partial ranges explicitly retained",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": false,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "detached",
+      "clean": false,
+      "dirty_diff_sha256": "c20d30bf127aecee62c7d32488c94a2afe316cde02e7488228bbb5c714e8b49c"
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "docs/verification/2026-10-08-main-integration.md",
+      "blob": "ddb3c7ef38829befda286c2cf6bc9e88f0512ba0",
+      "sha256": "43445d9caafb12e90691b80f176b32158e1737b5c9b67f5d20057607077696f7",
+      "line_count": 33,
+      "read_ranges": [
+        [
+          1,
+          33
+        ]
+      ],
+      "authority": "implementation-inventory",
+      "owner": "maintainer",
+      "role": "Actual ownership/API/build seam; partial ranges explicitly retained",
+      "evidence_kind": "reported",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "root and source-audit workers",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "Cargo.lock",
+      "blob": "37e5eb4027f679e9b66c8f37639efa1ec95d08f6",
+      "sha256": "4900d9f3e71f6915b0a3fb88a74a357772151b82975cb2dd0be07099262f9f54",
+      "line_count": 1975,
+      "read_ranges": [
+        [
+          1,
+          45
+        ]
+      ],
+      "authority": "lockfile",
+      "owner": "maintainer",
+      "role": "Full lockfile SHA-256 plus targeted local-package entries lines1\u201345; metadata evidence owned by T01 qualification report",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "detached",
+      "clean": false,
+      "read_scope": "dependency-inventory"
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "specimen-studio/Cargo.lock",
+      "blob": "e3eeb289cd02acaf21c2c12a54fb209268e74119",
+      "sha256": "4de8c5cef824339500f05696f2473bd648b840f1a9f0495d26f209341426b8dd",
+      "line_count": 7137,
+      "read_ranges": [
+        [
+          1,
+          42
+        ]
+      ],
+      "authority": "lockfile-inventory",
+      "owner": "maintainer",
+      "role": "Content identity and targeted dependency reconciliation; not full content review",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "specimen-studio/bun.lock",
+      "blob": "071f84fd95a68ae41b72996028021546257e089f",
+      "sha256": "d1de54eaca2ced931b7133387b53e573372665f963fb022fec40ac7c81e628eb",
+      "line_count": 2509,
+      "read_ranges": [],
+      "authority": "lockfile-inventory",
+      "owner": "maintainer",
+      "role": "Content identity and targeted dependency reconciliation; not full content review",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "abi",
+      "ref": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "commit": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "identity_kind": "git",
+      "path": "Cargo.lock",
+      "blob": "5536eb585d5ac153c86755f4eebbccdbe5d1d907",
+      "sha256": "95ecd0a6c6a0f6f3702e10a05faf8e1e1eb49504b032e8f3e37fd6a00f68d939",
+      "line_count": 4468,
+      "read_ranges": [],
+      "authority": "lockfile-inventory",
+      "owner": "maintainer",
+      "role": "Content identity and targeted dependency reconciliation; not full content review",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "main",
+      "clean": false
+    },
+    {
+      "repository": "abi",
+      "ref": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "commit": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "identity_kind": "git",
+      "path": "Cargo.toml",
+      "blob": "7f35e7b8caf079bf98e42e79d99e5282aca670fc",
+      "sha256": "f692925d7e5f235ae5b7399da170f983e17b060fa1ab66839a2f2e1b90e0adf2",
+      "line_count": 79,
+      "read_ranges": [],
+      "authority": "lockfile-inventory",
+      "owner": "maintainer",
+      "role": "Content identity and targeted dependency reconciliation; not full content review",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "main",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "crates/abi-wdbx/tests/golden/abbey-bot-projection.seg.jsonl",
+      "blob": "78a9ad16e6d3202e06dfcff7ce882dd3e5b4db64",
+      "sha256": "a4ec232c6980e009b77936386c9b233b864abb2d6b66b6253624d2f7a474be90",
+      "line_count": 6,
+      "read_ranges": [],
+      "authority": "compatibility-fixture",
+      "owner": "maintainer",
+      "role": "Hash-only existing format fixture; execution belongs to T02",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "crates/abi-wdbx/tests/golden/abbey-cbor-episode-v1/README.md",
+      "blob": "aa94918e55fa206a28ecc7a86f019e699d3fa9c5",
+      "sha256": "4d33d258b4b34feb79b4543861d0b5ef766483160cd67405590f89e4188f8c17",
+      "line_count": 11,
+      "read_ranges": [],
+      "authority": "compatibility-fixture",
+      "owner": "maintainer",
+      "role": "Hash-only existing format fixture; execution belongs to T02",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "crates/abi-wdbx/tests/golden/abbey-cbor-episode-v1/empty-parents.hex",
+      "blob": "6dddfdaafece58e87dfb4f50b48cfd33acd56961",
+      "sha256": "6efef79a2ef3641b917b327e8bc85db5e12120e61cd31bcd066c4c0d2a22f56f",
+      "line_count": 1,
+      "read_ranges": [],
+      "authority": "compatibility-fixture",
+      "owner": "maintainer",
+      "role": "Hash-only existing format fixture; execution belongs to T02",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "crates/abi-wdbx/tests/golden/abbey-cbor-episode-v1/empty-parents.sha256",
+      "blob": "311bbeb919eaa8e4120c533ff2c41de8cc53ae9c",
+      "sha256": "45aefe6b4ce0ae8bfc5c07d9ba63f0a7c6db5ae81e6efe086d125c11d96a5a5c",
+      "line_count": 1,
+      "read_ranges": [],
+      "authority": "compatibility-fixture",
+      "owner": "maintainer",
+      "role": "Hash-only existing format fixture; execution belongs to T02",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "crates/abi-wdbx/tests/golden/abbey-cbor-episode-v1/two-parents.hex",
+      "blob": "47bdf07212ce25eaf4e41c24a1d6cdd67b87d69f",
+      "sha256": "665e91765b1927787f62abde24b5dc4757fa2f51459dc92ff7d2e0e8d36a1c2a",
+      "line_count": 1,
+      "read_ranges": [],
+      "authority": "compatibility-fixture",
+      "owner": "maintainer",
+      "role": "Hash-only existing format fixture; execution belongs to T02",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "crates/abi-wdbx/tests/golden/abbey-cbor-episode-v1/two-parents.sha256",
+      "blob": "cf48b2c486a61c61746914eec86632268ec957cf",
+      "sha256": "ac40858761d87c27735a3a9dd6e71e0d6af2c66634213c15cf4bdc42d7f487c3",
+      "line_count": 1,
+      "read_ranges": [],
+      "authority": "compatibility-fixture",
+      "owner": "maintainer",
+      "role": "Hash-only existing format fixture; execution belongs to T02",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "crates/abi-wdbx/tests/golden/episode_write_memory_candidate.json",
+      "blob": "f89c7e7c1d06b8d95833162401a2b7c338923eb7",
+      "sha256": "afec0d0661721fbc10b594510af04a0d5dcb4c6e4539fc305535b3ae2838ac24",
+      "line_count": 1,
+      "read_ranges": [],
+      "authority": "compatibility-fixture",
+      "owner": "maintainer",
+      "role": "Hash-only existing format fixture; execution belongs to T02",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "crates/abi-wdbx/tests/golden/episode_write_memory_edge.json",
+      "blob": "fbf59b3380b30fe94450ef7b4db8d9b093204147",
+      "sha256": "ed621c149cb22b86cafa71a06c250e00e60c6643ace8e22adef4e0634b73661a",
+      "line_count": 1,
+      "read_ranges": [],
+      "authority": "compatibility-fixture",
+      "owner": "maintainer",
+      "role": "Hash-only existing format fixture; execution belongs to T02",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "crates/abi-wdbx/tests/golden/wdbx-format.md",
+      "blob": "de947baae5a17fae4ade2e03777b1c9a036678b6",
+      "sha256": "71838ce948defadda6eae7e4e8d60615a11498fb7cf0525a57cfb9797e886c6b",
+      "line_count": 162,
+      "read_ranges": [],
+      "authority": "compatibility-fixture",
+      "owner": "maintainer",
+      "role": "Hash-only existing format fixture; execution belongs to T02",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "crates/abi-wdbx/tests/golden/wdbx-sample.manifest",
+      "blob": "159a31bb85504537dde92d9a57178d735e992cff",
+      "sha256": "a1553b1fc23e2e21e8e404f4d1ea829544fbd9ee4351a3424ce6863245b58d46",
+      "line_count": 3,
+      "read_ranges": [],
+      "authority": "compatibility-fixture",
+      "owner": "maintainer",
+      "role": "Hash-only existing format fixture; execution belongs to T02",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "crates/abi-wdbx/tests/golden/wdbx-sample.seg.1-collected.jsonl",
+      "blob": "f02096a3da46e248865a6e62542c746a4e6ac96a",
+      "sha256": "cec04bee5fc16c77f61b155c0bbaa72957e31b6f12660f46e3014b9c1db3348d",
+      "line_count": 2,
+      "read_ranges": [],
+      "authority": "compatibility-fixture",
+      "owner": "maintainer",
+      "role": "Hash-only existing format fixture; execution belongs to T02",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "crates/abi-wdbx/tests/golden/wdbx-sample.seg.2.jsonl",
+      "blob": "afacc49720e290466a8bd24458ad399283a23431",
+      "sha256": "d0a7ae2abfb54f612294b5cb8949e19d250d936933ebf46c1b4cda7ad32a0f28",
+      "line_count": 3,
+      "read_ranges": [],
+      "authority": "compatibility-fixture",
+      "owner": "maintainer",
+      "role": "Hash-only existing format fixture; execution belongs to T02",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "crates/abi-wdbx/tests/golden/wdbx-sample.seg.3.jsonl",
+      "blob": "c1331533a7c1b6f88ff0cf1d6fcb8a36c44dcff8",
+      "sha256": "92f31fc5e7a27af9640f247e32aa8cfe6dbf050d24dd57fab7d2e69356492b2d",
+      "line_count": 1,
+      "read_ranges": [],
+      "authority": "compatibility-fixture",
+      "owner": "maintainer",
+      "role": "Hash-only existing format fixture; execution belongs to T02",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "crates/abi-wdbx/tests/golden/wdbx-sample.seg.jsonl",
+      "blob": "a1effdca103c902e6912a319d1ecae26bbe867ea",
+      "sha256": "45f3623020122e9158e1f264010fa1686b67328eac2d06789dc0d27bf0cc779a",
+      "line_count": 8,
+      "read_ranges": [],
+      "authority": "compatibility-fixture",
+      "owner": "maintainer",
+      "role": "Hash-only existing format fixture; execution belongs to T02",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "path": "crates/abi-wdbx/tests/golden/wdbx-sample.seg.truncated.jsonl",
+      "blob": "01f4d80eda7e80137ab03116867b962129aa4ef5",
+      "sha256": "218a7e93669d2ef050749e2ccd87c7ab38b2892f71822269db467c6cd8f3a393",
+      "line_count": 3,
+      "read_ranges": [],
+      "authority": "compatibility-fixture",
+      "owner": "maintainer",
+      "role": "Hash-only existing format fixture; execution belongs to T02",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "detached",
+      "clean": false
+    },
+    {
+      "repository": "abi",
+      "ref": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "commit": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "identity_kind": "git",
+      "path": "tests/golden/help.json",
+      "blob": "cf178ed6006a6561ebeed80db50072db9724ff7a",
+      "sha256": "2e4e3e113e0e42e72fd2023f0cfd5654576e81fce243bcc145f80fcefbd45730",
+      "line_count": 1,
+      "read_ranges": [],
+      "authority": "consumer-compatibility-fixture",
+      "owner": "maintainer",
+      "role": "Hash-only consumer fixture/test; no current execution claimed",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "main",
+      "clean": false
+    },
+    {
+      "repository": "abi",
+      "ref": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "commit": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "identity_kind": "git",
+      "path": "tests/golden/mcp-tools-list.json",
+      "blob": "14c20a6aaaa0a038dc3d4a100bc0350244593318",
+      "sha256": "58bfc25a3282e1a17f3dbaa188e4c8101b2c6589362047c5d94582db70c96701",
+      "line_count": 1,
+      "read_ranges": [],
+      "authority": "consumer-compatibility-fixture",
+      "owner": "maintainer",
+      "role": "Hash-only consumer fixture/test; no current execution claimed",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "main",
+      "clean": false
+    },
+    {
+      "repository": "abi",
+      "ref": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "commit": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "identity_kind": "git",
+      "path": "crates/abi-wdbx-gateway/tests/episodes.rs",
+      "blob": "bf062c247d45edc47d23aab84a263dbca0d9b008",
+      "sha256": "369b001b051c90d2b7e930070d55c3fca0bfe822492cbd86cf013d354983debc",
+      "line_count": 826,
+      "read_ranges": [],
+      "authority": "consumer-compatibility-fixture",
+      "owner": "maintainer",
+      "role": "Hash-only consumer fixture/test; no current execution claimed",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "main",
+      "clean": false
+    },
+    {
+      "repository": "abi",
+      "ref": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "commit": "ca4a725c07ff75f885eb60bd59fe9797e12e4d2c",
+      "identity_kind": "git",
+      "path": "crates/abi-wdbx-gateway/tests/gateway.rs",
+      "blob": "4ad47d6c208da4c75857f6d313add947ed67c4a5",
+      "sha256": "3a3575c81b4530dd0dfcd2dfe8e7c49cb0ef974c724a2727559e0d1cd9a2cff7",
+      "line_count": 785,
+      "read_ranges": [],
+      "authority": "consumer-compatibility-fixture",
+      "owner": "maintainer",
+      "role": "Hash-only consumer fixture/test; no current execution claimed",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker; ranges only",
+      "branch": "main",
+      "clean": false
+    },
+    {
+      "repository": "wdbx",
+      "ref": "08a69b3f22db61093e06527b3308b10589687022",
+      "commit": "08a69b3f22db61093e06527b3308b10589687022",
+      "identity_kind": "git",
+      "branch": "detached",
+      "clean": false,
+      "path": "crates/abi-wdbx/tests/v3_canonical_commitment.rs",
+      "blob": "bd6f510006ec0ec72aefd2f6d21a29a37da0c979",
+      "sha256": "d3030ed90e31f27f80d68a7b543f6ebeed3d99c0e3585df96f110c2a4e8d2e0d",
+      "line_count": 214,
+      "read_ranges": [
+        [
+          1,
+          214
+        ]
+      ],
+      "authority": "current-tests",
+      "owner": "storage maintainer",
+      "role": "Existing canonical compatibility tests; source read, not execution",
+      "evidence_kind": "source",
+      "execution": null,
+      "working_copy_matches_baseline": true,
+      "read_by": "source-audit worker"
+    }
+  ]
+}

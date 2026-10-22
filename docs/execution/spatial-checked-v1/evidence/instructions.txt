@@ -1,0 +1,4 @@
+$ bash tools/check_instructions.sh
+Agent instructions: CLAUDE.md matches its AGENTS.md pointer form
+
+exit=0

@@ -1,0 +1,292 @@
+    Checking abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx-spatial-checked-v1/crates/abi-wdbx)
+warning: this function has too many lines (144/100)
+   --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:360:1
+    |
+360 | / pub fn checked_octree_query<'a>(
+361 | |     index: &'a mut SpatialIndex3D,
+362 | |     query: &CheckedPointQuery<'_>,
+363 | | ) -> Result<CheckedPointOutcome<'a>, SpatialError> {
+    | |__________________________________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+    = note: `-W clippy::too-many-lines` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::too_many_lines)]`
+
+warning: `abi-wdbx` (lib) generated 1 warning
+warning: 5 bindings with single-character names in scope
+  --> crates/abi-wdbx/tests/support/spatial_oracle.rs:20:9
+   |
+20 |     let a = row.point.coordinates();
+   |         ^
+21 |     let b = center.coordinates();
+   |         ^
+22 |     let x = a[0] - b[0];
+   |         ^
+23 |     let y = a[1] - b[1];
+   |         ^
+24 |     let z = a[2] - b[2];
+   |         ^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#many_single_char_names
+   = note: `-W clippy::many-single-char-names` implied by `-W clippy::pedantic`
+   = help: to override `-W clippy::pedantic` add `#[allow(clippy::many_single_char_names)]`
+
+warning: long literal lacking separators
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:111:31
+    |
+111 |                 .wrapping_mul(6364136223846793005)
+    |                               ^^^^^^^^^^^^^^^^^^^ help: consider: `6_364_136_223_846_793_005`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#unreadable_literal
+    = note: `-W clippy::unreadable-literal` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::unreadable_literal)]`
+
+warning: long literal lacking separators
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:112:31
+    |
+112 |                 .wrapping_add(1442695040888963407);
+    |                               ^^^^^^^^^^^^^^^^^^^ help: consider: `1_442_695_040_888_963_407`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#unreadable_literal
+
+warning: item in documentation is missing backticks
+ --> crates/abi-wdbx/tests/support/spatial_oracle.rs:1:35
+  |
+1 | //! Independent complete scan for defined_float_profile, not exact-real predicates.
+  |                                   ^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#doc_markdown
+  = note: `-W clippy::doc-markdown` implied by `-W clippy::pedantic`
+  = help: to override `-W clippy::pedantic` add `#[allow(clippy::doc_markdown)]`
+help: try
+  |
+1 - //! Independent complete scan for defined_float_profile, not exact-real predicates.
+1 + //! Independent complete scan for `defined_float_profile`, not exact-real predicates.
+  |
+
+warning: casting `usize` to `u32` may truncate the value on targets with 64-bit wide pointers
+  --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:27:13
+   |
+27 |             j as u32,
+   |             ^^^^^^^^
+   |
+   = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+   = note: `-W clippy::cast-possible-truncation` implied by `-W clippy::pedantic`
+   = help: to override `-W clippy::pedantic` add `#[allow(clippy::cast_possible_truncation)]`
+help: ... or use `try_from` and handle the error accordingly
+   |
+27 -             j as u32,
+27 +             u32::try_from(j),
+   |
+
+warning: casting `usize` to `f32` may cause a loss of precision (`usize` can be up to 64 bits wide depending on the target architecture, but `f32`'s mantissa is only 23 bits wide)
+  --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:29:20
+   |
+29 |                 x: j as f32,
+   |                    ^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+   = note: `-W clippy::cast-precision-loss` implied by `-W clippy::pedantic`
+   = help: to override `-W clippy::pedantic` add `#[allow(clippy::cast_precision_loss)]`
+
+warning: this function has too many lines (118/100)
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:101:1
+    |
+101 | fn thousand_seeded_independent_cases() {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+    = note: `-W clippy::too-many-lines` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::too_many_lines)]`
+
+warning: casting `u64` to `usize` may truncate the value on targets with 32-bit wide pointers
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:105:30
+    |
+105 |         let n = [63, 64, 65][seed as usize % 3];
+    |                              ^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+105 -         let n = [63, 64, 65][seed as usize % 3];
+105 +         let n = [63, 64, 65][usize::try_from(seed) % 3];
+    |
+
+warning: casting `i32` to `f32` may cause a loss of precision (`i32` is 32 bits wide, but `f32`'s mantissa is only 23 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:113:21
+    |
+113 |             let a = ((state >> 32) as i32 % 1024) as f32 / 16.;
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `i32` to `f32` may cause a loss of precision (`i32` is 32 bits wide, but `f32`'s mantissa is only 23 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:115:21
+    |
+115 |             let b = ((state >> 32) as i32 % 1024) as f32 / 16.;
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `usize` to `u32` may truncate the value on targets with 64-bit wide pointers
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:135:39
+    |
+135 |                     x: f32::from_bits((ordinal % 5) as u32),
+    |                                       ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+135 -                     x: f32::from_bits((ordinal % 5) as u32),
+135 +                     x: f32::from_bits(u32::try_from(ordinal % 5)),
+    |
+
+warning: casting `usize` to `f32` may cause a loss of precision (`usize` can be up to 64 bits wide depending on the target architecture, but `f32`'s mantissa is only 23 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:147:24
+    |
+147 |                     z: (ordinal % 7) as f32,
+    |                        ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `usize` to `u32` may truncate the value on targets with 64-bit wide pointers
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:150:22
+    |
+150 |             let id = (ordinal % 11) as u32;
+    |                      ^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+150 -             let id = (ordinal % 11) as u32;
+150 +             let id = u32::try_from(ordinal % 11);
+    |
+
+warning: casting `usize` to `u8` may truncate the value
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:151:35
+    |
+151 |             index.insert(id, p, &[(ordinal % 251) as u8]);
+    |                                   ^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+151 -             index.insert(id, p, &[(ordinal % 251) as u8]);
+151 +             index.insert(id, p, &[u8::try_from(ordinal % 251)]);
+    |
+
+warning: casting `usize` to `u8` may truncate the value
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:187:46
+    |
+187 |                 assert_eq!(actual.payload, &[(want.ordinal % 251) as u8]);
+    |                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+187 -                 assert_eq!(actual.payload, &[(want.ordinal % 251) as u8]);
+187 +                 assert_eq!(actual.payload, &[u8::try_from(want.ordinal % 251)]);
+    |
+
+warning: casting `u32` to `u8` may truncate the value
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:329:15
+    |
+329 |             &[id as u8],
+    |               ^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+329 -             &[id as u8],
+329 +             &[u8::try_from(id)],
+    |
+
+warning: casting `u32` to `u8` may truncate the value
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:340:15
+    |
+340 |             &[id as u8],
+    |               ^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+340 -             &[id as u8],
+340 +             &[u8::try_from(id)],
+    |
+
+warning: casting `u32` to `u8` may truncate the value
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:359:33
+    |
+359 |         assert_eq!(h.payload, &[h.id as u8]);
+    |                                 ^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+359 -         assert_eq!(h.payload, &[h.id as u8]);
+359 +         assert_eq!(h.payload, &[u8::try_from(h.id)]);
+    |
+
+warning: casting `usize` to `f32` may cause a loss of precision (`usize` can be up to 64 bits wide depending on the target architecture, but `f32`'s mantissa is only 23 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:369:17
+    |
+369 |                 ((ordinal * 17 + seed * 3) % 21) as f32 - 10.,
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `usize` to `f32` may cause a loss of precision (`usize` can be up to 64 bits wide depending on the target architecture, but `f32`'s mantissa is only 23 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:370:17
+    |
+370 |                 ((ordinal * 7 + seed) % 17) as f32 - 8.,
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `usize` to `f32` may cause a loss of precision (`usize` can be up to 64 bits wide depending on the target architecture, but `f32`'s mantissa is only 23 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:371:17
+    |
+371 |                 ((ordinal * 3 + seed * 11) % 13) as f32 - 6.,
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `usize` to `u32` may truncate the value on targets with 64-bit wide pointers
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:373:22
+    |
+373 |             let id = (ordinal % 9) as u32;
+    |                      ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+373 -             let id = (ordinal % 9) as u32;
+373 +             let id = u32::try_from(ordinal % 9);
+    |
+
+warning: casting `usize` to `u8` may truncate the value
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:381:19
+    |
+381 |                 &[ordinal as u8],
+    |                   ^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+381 -                 &[ordinal as u8],
+381 +                 &[u8::try_from(ordinal)],
+    |
+
+warning: `abi-wdbx` (test "wdbx_3d_octree_parity") generated 23 warnings (run `cargo clippy --fix --test "wdbx_3d_octree_parity" -p abi-wdbx -- ` to apply 1 suggestion)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.86s

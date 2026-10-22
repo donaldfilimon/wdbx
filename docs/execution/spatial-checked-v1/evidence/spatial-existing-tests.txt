@@ -1,0 +1,13 @@
+Build command: rustup run 1.99.1 rustc --edition 2024 --test crates/abi-wdbx/src/spatial.rs -o target/spatial-qualification/spatial-tests
+Build exit: 0
+$ target/spatial-qualification/spatial-tests --nocapture
+
+running 4 tests
+test tests::distance_metrics_match_the_oracle_values ... ok
+test tests::insert_radius_and_nearest_neighbor_match_the_oracle_example ... ok
+test tests::insert_after_first_octree_build_invalidates_and_rebuilds ... ok
+test tests::octree_matches_linear_scan_across_threshold_and_distributions ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+exit=0
