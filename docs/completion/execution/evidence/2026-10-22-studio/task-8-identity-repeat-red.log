@@ -1,0 +1,30 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[67426]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "identity") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 0.23s
+     Running tests/identity.rs (specimen-studio/target/debug/deps/identity-b8c4ab09ba5b7476)
+
+running 1 test
+test exact_repeat_after_spill_returns_existing_ref_even_with_new_key_projection ... FAILED
+
+failures:
+
+---- exact_repeat_after_spill_returns_existing_ref_even_with_new_key_projection stdout ----
+
+thread 'exact_repeat_after_spill_returns_existing_ref_even_with_new_key_projection' (3724226) panicked at native/specimen-kernel/tests/identity.rs:220:65:
+called `Result::unwrap()` on an `Err` value: DuplicateRef
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    exact_repeat_after_spill_returns_existing_ref_even_with_new_key_projection
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 11 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p specimen-kernel --test identity`

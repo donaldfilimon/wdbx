@@ -1,0 +1,3 @@
+$ oxlint
+tests/scoring-parity.mjs:1917:5: error next(no-assign-module-variable): Do not assign to the variable `module`. help: See https://nextjs.org/docs/messages/no-assign-module-variable
+error: script "lint" exited with code 1

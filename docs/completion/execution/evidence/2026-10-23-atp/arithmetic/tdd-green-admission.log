@@ -1,0 +1,11 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+    Finished `test` profile [unoptimized] target(s) in 0.66s
+     Running tests/atp_v3.rs (target/debug/deps/atp_v3-b2d488f88ae1f10e)
+
+running 3 tests
+test d10_admission_normalizes_signed_zero_without_mutating_callers ... ok
+test d10_state_admission_rejects_each_nonfinite_and_out_of_range_field ... ok
+test d10_stimulus_admission_rejects_each_nonfinite_and_out_of_range_field ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

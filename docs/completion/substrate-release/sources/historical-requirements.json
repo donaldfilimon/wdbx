@@ -1,0 +1,3109 @@
+{
+  "version": 1,
+  "claim_policy": "All entries C0 proposed; this contract cannot promote claims. Future evidence requires separately reviewed schema/version migration.",
+  "requirements": [
+    {
+      "id": "G01",
+      "kind": "constraint",
+      "source": "program",
+      "line": 15,
+      "text": "- Work in canonical default-branch checkouts. Preserve unrelated dirty work, including `crates/abi-compute/src/cpu.rs`; stage exact paths. No default branches/worktrees beyond these checkouts.",
+      "owner": "WDBX contracts",
+      "task": 1,
+      "plan": "task-01",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- Work in canonical default-branch checkouts. Preserve unrelated dirty work, including `crates/abi-compute/src/cpu.rs`; stage exact paths. No default branches/worktrees beyond these checkouts."
+    },
+    {
+      "id": "G02",
+      "kind": "constraint",
+      "source": "program",
+      "line": 16,
+      "text": "- Never test against live stores or commit runtime data, credentials, or private evidence. No public launch or unrequested service changes.",
+      "owner": "WDBX contracts",
+      "task": 1,
+      "plan": "task-01",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- Never test against live stores or commit runtime data, credentials, or private evidence. No public launch or unrequested service changes."
+    },
+    {
+      "id": "G03",
+      "kind": "constraint",
+      "source": "program",
+      "line": 17,
+      "text": "- Preserve v2 JSON commitments/parent order, v3 candidate/edge digests, original signed bytes and existing corpus provenance. Only ABI's vendor tool refreshes the normative corpus.",
+      "owner": "WDBX contracts",
+      "task": 1,
+      "plan": "task-01",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- Preserve v2 JSON commitments/parent order, v3 candidate/edge digests, original signed bytes and existing corpus provenance. Only ABI's vendor tool refreshes the normative corpus."
+    },
+    {
+      "id": "G04",
+      "kind": "constraint",
+      "source": "program",
+      "line": 18,
+      "text": "- ABI owns wire contracts, gateway and authorization; WDBX owns durable semantics; Studio/Abbey projections declare losses. No second canonical episode writer.",
+      "owner": "WDBX contracts",
+      "task": 1,
+      "plan": "task-01",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- ABI owns wire contracts, gateway and authorization; WDBX owns durable semantics; Studio/Abbey projections declare losses. No second canonical episode writer."
+    },
+    {
+      "id": "G05",
+      "kind": "constraint",
+      "source": "program",
+      "line": 19,
+      "text": "- Shared canonical storage is partitioned by authenticated tenant/scope in every lookup, cache, job, blob and index; tenant-specific key hierarchies support per-object erasure.",
+      "owner": "WDBX contracts",
+      "task": 1,
+      "plan": "task-01",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- Shared canonical storage is partitioned by authenticated tenant/scope in every lookup, cache, job, blob and index; tenant-specific key hierarchies support per-object erasure."
+    },
+    {
+      "id": "G06",
+      "kind": "constraint",
+      "source": "program",
+      "line": 20,
+      "text": "- Each tenant/scope has one quorum-fenced canonical writer in a three-voter replicated shard. Partitioned minorities cannot acknowledge canonical writes.",
+      "owner": "WDBX contracts",
+      "task": 1,
+      "plan": "task-01",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- Each tenant/scope has one quorum-fenced canonical writer in a three-voter replicated shard. Partitioned minorities cannot acknowledge canonical writes."
+    },
+    {
+      "id": "G07",
+      "kind": "constraint",
+      "source": "program",
+      "line": 21,
+      "text": "- Federation supports independent organizations with explicit bilateral trust and scoped grants. Foreign evidence retains its origin authority.",
+      "owner": "WDBX contracts",
+      "task": 1,
+      "plan": "task-01",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- Federation supports independent organizations with explicit bilateral trust and scoped grants. Foreign evidence retains its origin authority."
+    },
+    {
+      "id": "G08",
+      "kind": "constraint",
+      "source": "program",
+      "line": 22,
+      "text": "- Offline writes are provisional. Reauthorize on reconnect; auto-merge only independent edits; preserve conflicting branches pending authorized resolution.",
+      "owner": "WDBX contracts",
+      "task": 1,
+      "plan": "task-01",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- Offline writes are provisional. Reauthorize on reconnect; auto-merge only independent edits; preserve conflicting branches pending authorized resolution."
+    },
+    {
+      "id": "G09",
+      "kind": "constraint",
+      "source": "program",
+      "line": 23,
+      "text": "- No fixed offline expiry. Retain minimal anti-resurrection deletion metadata indefinitely. Resnapshot/revalidate old clients; never silently discard their unsent work.",
+      "owner": "WDBX contracts",
+      "task": 1,
+      "plan": "task-01",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- No fixed offline expiry. Retain minimal anti-resurrection deletion metadata indefinitely. Resnapshot/revalidate old clients; never silently discard their unsent work."
+    },
+    {
+      "id": "G10",
+      "kind": "constraint",
+      "source": "program",
+      "line": 24,
+      "text": "- Desktop targets: macOS ARM64/x86-64, Windows x86-64, Linux x86-64. Service targets: Linux x86-64 and macOS ARM64.",
+      "owner": "WDBX contracts",
+      "task": 1,
+      "plan": "task-01",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- Desktop targets: macOS ARM64/x86-64, Windows x86-64, Linux x86-64. Service targets: Linux x86-64 and macOS ARM64."
+    },
+    {
+      "id": "G11",
+      "kind": "constraint",
+      "source": "program",
+      "line": 25,
+      "text": "- Operational acceptance: no loss of quorum-acknowledged writes after one voter fails; service recovery <=15 minutes; backup restore <=4 hours. Capacity is measured, not a commercial SLA.",
+      "owner": "WDBX contracts",
+      "task": 1,
+      "plan": "task-01",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- Operational acceptance: no loss of quorum-acknowledged writes after one voter fails; service recovery <=15 minutes; backup restore <=4 hours. Capacity is measured, not a commercial SLA."
+    },
+    {
+      "id": "G12",
+      "kind": "constraint",
+      "source": "program",
+      "line": 26,
+      "text": "- WDBX Rust source files <=1000 lines. Studio remains a separate workspace, with path dependencies on this checkout's `crates/` for `abi-wdbx` and `abi-compute`, so its `Cargo.lock` pins nothing for them. This line previously conflicted with `2026-10-20-wdbx-completion-remaining.md` (current execution tranche 1), which preserves the studio's intentional path dependencies; that later document is the operative coordination for this point.",
+      "owner": "WDBX contracts",
+      "task": 1,
+      "plan": "task-01",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- WDBX Rust source files <=1000 lines. Studio remains a separate workspace, with path dependencies on this checkout's `crates/` for `abi-wdbx` and `abi-compute`, so its `Cargo.lock` pins nothing for them. This line previously conflicted with `2026-10-20-wdbx-completion-remaining.md` (current execution tranche 1), which preserves the studio's intentional path dependencies; that later document is the operative coordination for this point."
+    },
+    {
+      "id": "G13",
+      "kind": "constraint",
+      "source": "program",
+      "line": 27,
+      "text": "- Evidence levels C0-C7 are separate. Research failure leaves the relevant completion claim open. Independent crypto review precedes production qualification.",
+      "owner": "WDBX contracts",
+      "task": 1,
+      "plan": "task-01",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- Evidence levels C0-C7 are separate. Research failure leaves the relevant completion claim open. Independent crypto review precedes production qualification."
+    },
+    {
+      "id": "P01.01",
+      "kind": "program",
+      "source": "program",
+      "line": 39,
+      "text": "- [ ] Record repository revisions, dirty paths, gates and current evidence without private runtime data.",
+      "owner": "WDBX contracts",
+      "task": 1,
+      "plan": "task-01",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Record repository revisions, dirty paths, gates and current evidence without private runtime data."
+    },
+    {
+      "id": "P01.02",
+      "kind": "program",
+      "source": "program",
+      "line": 40,
+      "text": "- [ ] Create a machine-readable requirement manifest covering constitutional semantics, federation, hosting, sync, every Studio architecture chapter and each supported platform. Each entry names owner, task, test/evidence and falsifiable completion condition.",
+      "owner": "WDBX contracts",
+      "task": 1,
+      "plan": "task-01",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Create a machine-readable requirement manifest covering constitutional semantics, federation, hosting, sync, every Studio architecture chapter and each supported platform. Each entry names owner, task, test/evidence and falsifiable completion condition."
+    },
+    {
+      "id": "P01.03",
+      "kind": "program",
+      "source": "program",
+      "line": 41,
+      "text": "- [ ] Resolve Studio section 25.1 algorithms in subsystem designs: language, transforms, synthesis, ATP equations, vision, supervision, mutation and graves. Preserve section 25.3 acceptance cases verbatim in a versioned inventory.",
+      "owner": "WDBX contracts",
+      "task": 1,
+      "plan": "task-01",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Resolve Studio section 25.1 algorithms in subsystem designs: language, transforms, synthesis, ATP equations, vision, supervision, mutation and graves. Preserve section 25.3 acceptance cases verbatim in a versioned inventory."
+    },
+    {
+      "id": "P01.04",
+      "kind": "program",
+      "source": "program",
+      "line": 42,
+      "text": "- [ ] Freeze research corpora, held-out splits, baselines, seeds, budgets, metrics and thresholds before experiments. Retain negative outcomes. Define subsystem interfaces and dependency contracts before downstream implementation.",
+      "owner": "WDBX contracts",
+      "task": 1,
+      "plan": "task-01",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Freeze research corpora, held-out splits, baselines, seeds, budgets, metrics and thresholds before experiments. Retain negative outcomes. Define subsystem interfaces and dependency contracts before downstream implementation."
+    },
+    {
+      "id": "P01.05",
+      "kind": "program",
+      "source": "program",
+      "line": 43,
+      "text": "- [ ] Validate manifest closure and source provenance; independently review the contracts. Documentation and experimental specifications do not count as implemented research.",
+      "owner": "WDBX contracts",
+      "task": 1,
+      "plan": "task-01",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Validate manifest closure and source provenance; independently review the contracts. Documentation and experimental specifications do not count as implemented research."
+    },
+    {
+      "id": "P02.01",
+      "kind": "program",
+      "source": "program",
+      "line": 47,
+      "text": "- [ ] Add a complete versioned envelope binding tenant/scope, context, regime, predictions, actions, outcomes, consulted evidence, uncertainty, authority versions, provenance, lifecycle and artifact references.",
+      "owner": "WDBX",
+      "task": 2,
+      "plan": "task-02",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Add a complete versioned envelope binding tenant/scope, context, regime, predictions, actions, outcomes, consulted evidence, uncertainty, authority versions, provenance, lifecycle and artifact references."
+    },
+    {
+      "id": "P02.02",
+      "kind": "program",
+      "source": "program",
+      "line": 48,
+      "text": "- [ ] Implement bounded canonical-CBOR reading, COSE interoperability, signer identity, trusted-key administration, rotation, revocation and historical verification without reinterpreting old records.",
+      "owner": "WDBX",
+      "task": 2,
+      "plan": "task-02",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Implement bounded canonical-CBOR reading, COSE interoperability, signer identity, trusted-key administration, rotation, revocation and historical verification without reinterpreting old records."
+    },
+    {
+      "id": "P02.03",
+      "kind": "program",
+      "source": "program",
+      "line": 49,
+      "text": "- [ ] Extend second-language witnesses to decoding, malformed input and signatures. Test tamper/substitution/replay/downgrade cases and unchanged existing goldens.",
+      "owner": "WDBX",
+      "task": 2,
+      "plan": "task-02",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Extend second-language witnesses to decoding, malformed input and signatures. Test tamper/substitution/replay/downgrade cases and unchanged existing goldens."
+    },
+    {
+      "id": "P03.01",
+      "kind": "program",
+      "source": "program",
+      "line": 53,
+      "text": "- [ ] Structured write decisions, retention classes, authority/consent, quotas and replay protection; minimal mandatory incidents cannot bypass privacy restrictions.",
+      "owner": "WDBX",
+      "task": 3,
+      "plan": "task-03",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Structured write decisions, retention classes, authority/consent, quotas and replay protection; minimal mandatory incidents cannot bypass privacy restrictions."
+    },
+    {
+      "id": "P03.02",
+      "kind": "program",
+      "source": "program",
+      "line": 54,
+      "text": "- [ ] Session/TTL expiration, holds, supersession/revocation, redacted derivatives, object-key destruction, tombstones and auditable garbage collection.",
+      "owner": "WDBX",
+      "task": 3,
+      "plan": "task-03",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Session/TTL expiration, holds, supersession/revocation, redacted derivatives, object-key destruction, tombstones and auditable garbage collection."
+    },
+    {
+      "id": "P03.03",
+      "kind": "program",
+      "source": "program",
+      "line": 55,
+      "text": "- [ ] Cover payloads, provisional/conflicting data, indexes, embeddings, blobs, caches, managed exports and restored backups. Distinguish active erasure, inaccessible backups, physical expiry and disconnected acknowledgements.",
+      "owner": "WDBX",
+      "task": 3,
+      "plan": "task-03",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Cover payloads, provisional/conflicting data, indexes, embeddings, blobs, caches, managed exports and restored backups. Distinguish active erasure, inaccessible backups, physical expiry and disconnected acknowledgements."
+    },
+    {
+      "id": "P03.04",
+      "kind": "program",
+      "source": "program",
+      "line": 56,
+      "text": "- [ ] Prove crash safety, idempotency, no resurrection and no canonical mutation on rejected writes.",
+      "owner": "WDBX",
+      "task": 3,
+      "plan": "task-03",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Prove crash safety, idempotency, no resurrection and no canonical mutation on rejected writes."
+    },
+    {
+      "id": "P04.01",
+      "kind": "program",
+      "source": "program",
+      "line": 60,
+      "text": "- [ ] Add constitutional queries/results alongside receipt lookup and legacy search. Expose eight dimensions, constraints, disposition, lineage and explanation separately.",
+      "owner": "WDBX",
+      "task": 4,
+      "plan": "task-04",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Add constitutional queries/results alongside receipt lookup and legacy search. Expose eight dimensions, constraints, disposition, lineage and explanation separately."
+    },
+    {
+      "id": "P04.02",
+      "kind": "program",
+      "source": "program",
+      "line": 61,
+      "text": "- [ ] Reject invalid crypto; preserve uncertain/contradicted/quarantined evidence with explicit applicability. Rebuild disposable indexes deterministically.",
+      "owner": "WDBX",
+      "task": 4,
+      "plan": "task-04",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Reject invalid crypto; preserve uncertain/contradicted/quarantined evidence with explicit applicability. Rebuild disposable indexes deterministically."
+    },
+    {
+      "id": "P04.03",
+      "kind": "program",
+      "source": "program",
+      "line": 62,
+      "text": "- [ ] Test stale policy, wrong regime and incomplete lineage. Compare repeated failures and stale reuse against equivalent vector retrieval with frozen embeddings, storage and candidate counts; retain negative results.",
+      "owner": "WDBX",
+      "task": 4,
+      "plan": "task-04",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Test stale policy, wrong regime and incomplete lineage. Compare repeated failures and stale reuse against equivalent vector retrieval with frozen embeddings, storage and candidate counts; retain negative results."
+    },
+    {
+      "id": "P05.01",
+      "kind": "program",
+      "source": "program",
+      "line": 66,
+      "text": "- [ ] Implement Retrieve/ProposeWrite/Verify semantics through ABI authorization and existing transport, with typed decisions, negotiation, identity/scope binding, cancellation, idempotency and per-principal budgets.",
+      "owner": "ABI with Abbey consumers",
+      "task": 5,
+      "plan": "task-05",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Implement Retrieve/ProposeWrite/Verify semantics through ABI authorization and existing transport, with typed decisions, negotiation, identity/scope binding, cancellation, idempotency and per-principal budgets."
+    },
+    {
+      "id": "P05.02",
+      "kind": "program",
+      "source": "program",
+      "line": 67,
+      "text": "- [ ] Generic KV/vector methods cannot bypass episode governance. Update normative ABI schemas and refresh vendored qualification only through its tool.",
+      "owner": "ABI with Abbey consumers",
+      "task": 5,
+      "plan": "task-05",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Generic KV/vector methods cannot bypass episode governance. Update normative ABI schemas and refresh vendored qualification only through its tool."
+    },
+    {
+      "id": "P05.03",
+      "kind": "program",
+      "source": "program",
+      "line": 68,
+      "text": "- [ ] Shadow-read, replay, compare, qualify recovery/deletion and cut over one writer in Abbey/applicable adapters. Reconcile Swift stores via explicit migration/projection contracts and synthetic fixtures.",
+      "owner": "ABI with Abbey consumers",
+      "task": 5,
+      "plan": "task-05",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Shadow-read, replay, compare, qualify recovery/deletion and cut over one writer in Abbey/applicable adapters. Reconcile Swift stores via explicit migration/projection contracts and synthetic fixtures."
+    },
+    {
+      "id": "P05.04",
+      "kind": "program",
+      "source": "program",
+      "line": 69,
+      "text": "- [ ] Test tenant isolation and rollback without losing accepted writes or deletions.",
+      "owner": "ABI with Abbey consumers",
+      "task": 5,
+      "plan": "task-05",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Test tenant isolation and rollback without losing accepted writes or deletions."
+    },
+    {
+      "id": "P06.01",
+      "kind": "program",
+      "source": "program",
+      "line": 73,
+      "text": "- [ ] Peer enrollment, bilateral trust, sharing grants, residency, revocation and certificate/key lifecycle.",
+      "owner": "ABI federation and WDBX",
+      "task": 6,
+      "plan": "task-06",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Peer enrollment, bilateral trust, sharing grants, residency, revocation and certificate/key lifecycle."
+    },
+    {
+      "id": "P06.02",
+      "kind": "program",
+      "source": "program",
+      "line": 74,
+      "text": "- [ ] Verified imports/exports, ancestry, equivocation, checkpoints, deduplication, resumable reconciliation and deletion propagation, preserving origin authority.",
+      "owner": "ABI federation and WDBX",
+      "task": 6,
+      "plan": "task-06",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Verified imports/exports, ancestry, equivocation, checkpoints, deduplication, resumable reconciliation and deletion propagation, preserving origin authority."
+    },
+    {
+      "id": "P06.03",
+      "kind": "program",
+      "source": "program",
+      "line": 75,
+      "text": "- [ ] Returning peers validate authorization and deletion watermarks before serving. Separate-host fault tests cover partition/rejoin, revoked peers, malicious ancestry, conflicting policies and rollback.",
+      "owner": "ABI federation and WDBX",
+      "task": 6,
+      "plan": "task-06",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Returning peers validate authorization and deletion watermarks before serving. Separate-host fault tests cover partition/rejoin, revoked peers, malicious ancestry, conflicting policies and rollback."
+    },
+    {
+      "id": "P07.01",
+      "kind": "program",
+      "source": "program",
+      "line": 79,
+      "text": "- [ ] Transactional browser/native outboxes: operation IDs, dependencies, schema, retries and terminal receipts. Reauthorize against current server policy/consent on reconnect.",
+      "owner": "Studio sync and ABI",
+      "task": 7,
+      "plan": "task-07",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Transactional browser/native outboxes: operation IDs, dependencies, schema, retries and terminal receipts. Reauthorize against current server policy/consent on reconnect."
+    },
+    {
+      "id": "P07.02",
+      "kind": "program",
+      "source": "program",
+      "line": 80,
+      "text": "- [ ] Resumable verified asset transfers; model identities sync without automatic weight distribution.",
+      "owner": "Studio sync and ABI",
+      "task": 7,
+      "plan": "task-07",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Resumable verified asset transfers; model identities sync without automatic weight distribution."
+    },
+    {
+      "id": "P07.03",
+      "kind": "program",
+      "source": "program",
+      "line": 81,
+      "text": "- [ ] Deterministic independent-edit merge; preserve incompatible specimen/learning/network/authority versions. Surface pending/rejected/conflicted/synchronized status.",
+      "owner": "Studio sync and ABI",
+      "task": 7,
+      "plan": "task-07",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Deterministic independent-edit merge; preserve incompatible specimen/learning/network/authority versions. Surface pending/rejected/conflicted/synchronized status."
+    },
+    {
+      "id": "P07.04",
+      "kind": "program",
+      "source": "program",
+      "line": 82,
+      "text": "- [ ] Test reordered/duplicate messages, interrupted blobs, crashes, revoked devices, schema skew and indefinite-disconnection deletion. Browser sync runs while open/on reconnect, not after tab shutdown.",
+      "owner": "Studio sync and ABI",
+      "task": 7,
+      "plan": "task-07",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Test reordered/duplicate messages, interrupted blobs, crashes, revoked devices, schema skew and indefinite-disconnection deletion. Browser sync runs while open/on reconnect, not after tab shutdown."
+    },
+    {
+      "id": "P08.01",
+      "kind": "program",
+      "source": "program",
+      "line": 86,
+      "text": "- [ ] Identity/HybridTable: stable references, duplicate semantics, encoders and complete lookup.",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Identity/HybridTable: stable references, duplicate semantics, encoders and complete lookup."
+    },
+    {
+      "id": "P08.02",
+      "kind": "program",
+      "source": "program",
+      "line": 87,
+      "text": "- [ ] Language/scripts: language utilities, context/negation, scoped grammar and bounded automata.",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Language/scripts: language utilities, context/negation, scoped grammar and bounded automata."
+    },
+    {
+      "id": "P08.03",
+      "kind": "program",
+      "source": "program",
+      "line": 88,
+      "text": "- [ ] Scoring/orchestration: confidence evidence, jitter/ATP order, complementary votes and attachment routing.",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Scoring/orchestration: confidence evidence, jitter/ATP order, complementary votes and attachment routing."
+    },
+    {
+      "id": "P08.04",
+      "kind": "program",
+      "source": "program",
+      "line": 89,
+      "text": "- [ ] Transient synthesis: fixed non-learning composition, provenance, bounded decoder and held-out efficacy.",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Transient synthesis: fixed non-learning composition, provenance, bounded decoder and held-out efficacy."
+    },
+    {
+      "id": "P08.05",
+      "kind": "program",
+      "source": "program",
+      "line": 90,
+      "text": "- [ ] ATP: specified buildup/release equations and meaning-preserving tone.",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] ATP: specified buildup/release equations and meaning-preserving tone."
+    },
+    {
+      "id": "P08.06",
+      "kind": "program",
+      "source": "program",
+      "line": 91,
+      "text": "- [ ] Vision/fuzzy art: contours/SDF, focus/periphery, OCR and instruction-driven rendering.",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Vision/fuzzy art: contours/SDF, focus/periphery, OCR and instruction-driven rendering."
+    },
+    {
+      "id": "P08.07",
+      "kind": "program",
+      "source": "program",
+      "line": 92,
+      "text": "- [ ] Type A/B: attributable correction, inference proposals and explicit learning approval.",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Type A/B: attributable correction, inference proposals and explicit learning approval."
+    },
+    {
+      "id": "P08.08",
+      "kind": "program",
+      "source": "program",
+      "line": 93,
+      "text": "- [ ] Growth/PHAGY: permanent lineage, unique cleanup jobs, timeout recovery and graves.",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Growth/PHAGY: permanent lineage, unique cleanup jobs, timeout recovery and graves."
+    },
+    {
+      "id": "P08.09",
+      "kind": "program",
+      "source": "program",
+      "line": 94,
+      "text": "- [ ] Scheduling/tuning: global ceilings, fairness, cancellation, complete rafts and measured tuning.",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Scheduling/tuning: global ceilings, fairness, cancellation, complete rafts and measured tuning."
+    },
+    {
+      "id": "P08.10",
+      "kind": "program",
+      "source": "program",
+      "line": 95,
+      "text": "- [ ] Preserve native/WASM parity; qualify actual model/hardware execution separately. All behavioral cases and frozen efficacy thresholds must pass before their claim closes.",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Preserve native/WASM parity; qualify actual model/hardware execution separately. All behavioral cases and frozen efficacy thresholds must pass before their claim closes."
+    },
+    {
+      "id": "P09.01",
+      "kind": "program",
+      "source": "program",
+      "line": 99,
+      "text": "- [ ] Canonical adapter for edits/learning/outcomes/lifecycle; snapshots remain projections. The studio builds against this checkout's `crates/` through path dependencies, so a substrate change is picked up by the studio's own gates without a revision bump; regenerate the studio's `Cargo.lock` together with any manifest change, as its own `--locked` gate requires.",
+      "owner": "Studio and WDBX",
+      "task": 9,
+      "plan": "task-09",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Canonical adapter for edits/learning/outcomes/lifecycle; snapshots remain projections. The studio builds against this checkout's `crates/` through path dependencies, so a substrate change is picked up by the studio's own gates without a revision bump; regenerate the studio's `Cargo.lock` together with any manifest change, as its own `--locked` gate requires."
+    },
+    {
+      "id": "P09.02",
+      "kind": "program",
+      "source": "program",
+      "line": 100,
+      "text": "- [ ] Complete busy/cancel/malformed-response/import/storage-failure/recovery behavior; regenerate specification assets after authoritative text changes.",
+      "owner": "Studio and WDBX",
+      "task": 9,
+      "plan": "task-09",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Complete busy/cancel/malformed-response/import/storage-failure/recovery behavior; regenerate specification assets after authoritative text changes."
+    },
+    {
+      "id": "P09.03",
+      "kind": "program",
+      "source": "program",
+      "line": 101,
+      "text": "- [ ] Qualify save/reopen/import/export, provenance, conflict resolution, deletion and offline recovery in both editions.",
+      "owner": "Studio and WDBX",
+      "task": 9,
+      "plan": "task-09",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Qualify save/reopen/import/export, provenance, conflict resolution, deletion and offline recovery in both editions."
+    },
+    {
+      "id": "P10.01",
+      "kind": "program",
+      "source": "program",
+      "line": 105,
+      "text": "- [ ] Restore real Intel macOS/Windows/Linux runners and qualify production installs/upgrades/uninstall, helpers, OCR/inference, accessibility and acceleration per platform.",
+      "owner": "platform operators",
+      "task": 10,
+      "plan": "task-10",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Restore real Intel macOS/Windows/Linux runners and qualify production installs/upgrades/uninstall, helpers, OCR/inference, accessibility and acceleration per platform."
+    },
+    {
+      "id": "P10.02",
+      "kind": "program",
+      "source": "program",
+      "line": 106,
+      "text": "- [ ] Signing/notarization and installed-byte evidence; no production test bridge.",
+      "owner": "platform operators",
+      "task": 10,
+      "plan": "task-10",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Signing/notarization and installed-byte evidence; no production test bridge."
+    },
+    {
+      "id": "P10.03",
+      "kind": "program",
+      "source": "program",
+      "line": 107,
+      "text": "- [ ] Private deployment: tenant administration, credentials, quotas, backups, observability, incidents and reproducible deployment. Test noisy neighbors, compromise, node failure, restore and rollback.",
+      "owner": "platform operators",
+      "task": 10,
+      "plan": "task-10",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Private deployment: tenant administration, credentials, quotas, backups, observability, incidents and reproducible deployment. Test noisy neighbors, compromise, node failure, restore and rollback."
+    },
+    {
+      "id": "P10.04",
+      "kind": "program",
+      "source": "program",
+      "line": 108,
+      "text": "- [ ] Keep public ingress/signup disabled. Produce exact-artifact receipts and measured capacity/recovery results on both service platforms.",
+      "owner": "platform operators",
+      "task": 10,
+      "plan": "task-10",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- [ ] Keep public ingress/signup disabled. Produce exact-artifact receipts and measured capacity/recovery results on both service platforms."
+    },
+    {
+      "id": "CH01",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 38,
+      "text": "## 1. Authority and interpretation",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 1. Authority and interpretation has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "CH02",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 83,
+      "text": "## 2. Architecture and responsibility boundaries",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 2. Architecture and responsibility boundaries has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "CH03",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 144,
+      "text": "## 3. Terminology and identifiers",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 3. Terminology and identifiers has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "CH04",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 186,
+      "text": "## 4. Invariants",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 4. Invariants has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "CH05",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 219,
+      "text": "## 5. Logical data models",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 5. Logical data models has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "CH06",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 408,
+      "text": "## 6. HybridTable and storage organization",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 6. HybridTable and storage organization has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "CH07",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 444,
+      "text": "## 7. Language Governance and input preparation",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 7. Language Governance and input preparation has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "CH08",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 495,
+      "text": "## 8. Sigil scopes and action scripting",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 8. Sigil scopes and action scripting has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "CH09",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 557,
+      "text": "## 9. Pattern-node activation and votes",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 9. Pattern-node activation and votes has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "CH10",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 643,
+      "text": "## 10. Node attachments and automatic wiring",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 10. Node attachments and automatic wiring has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "CH11",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 685,
+      "text": "## 11. Cycle lifecycle and orchestration",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 11. Cycle lifecycle and orchestration has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "CH12",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 752,
+      "text": "## 12. Pattern-ID-guided supporting retrieval",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 12. Pattern-ID-guided supporting retrieval has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "CH13",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 798,
+      "text": "## 13. Transient Memory and imagination",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 13. Transient Memory and imagination has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "CH14",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 861,
+      "text": "## 14. Action Tone Predictor and stochastic behavior",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 14. Action Tone Predictor and stochastic behavior has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "CH15",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 898,
+      "text": "## 15. Conversation memory and temporal coherence",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 15. Conversation memory and temporal coherence has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "CH16",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 912,
+      "text": "## 16. Visual perception and ephemeral fuzzy art",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 16. Visual perception and ephemeral fuzzy art has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "CH17",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 958,
+      "text": "## 17. Non-pattern nodes",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 17. Non-pattern nodes has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "CH18",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 997,
+      "text": "## 18. Contributor provenance and feedback",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 18. Contributor provenance and feedback has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "CH19",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 1040,
+      "text": "## 19. Growth, idle mutation, and PHAGY",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 19. Growth, idle mutation, and PHAGY has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "CH20",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 1144,
+      "text": "## 20. Index Rafts, chunking, and scheduling",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 20. Index Rafts, chunking, and scheduling has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "CH21",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 1240,
+      "text": "## 21. Compartmental contact ledger",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 21. Compartmental contact ledger has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "CH22",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 1267,
+      "text": "## 22. Commands",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 22. Commands has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "CH23",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 1292,
+      "text": "## 23. Configuration and limits",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 23. Configuration and limits has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "CH24",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 1363,
+      "text": "## 24. Persistence and restoration",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 24. Persistence and restoration has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "CH25",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 1444,
+      "text": "## 25. Implementation decisions and acceptance criteria",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 25. Implementation decisions and acceptance criteria has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "S01",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1496,
+      "text": "| Two original paraphrases share a compatible key | Both remain distinct entries; both can independently qualify |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Both remain distinct entries; both can independently qualify"
+    },
+    {
+      "id": "S02",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1497,
+      "text": "| Two nodes share a logical ID | Lookup returns both; feedback/removal can target one concrete contributor |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Lookup returns both; feedback/removal can target one concrete contributor"
+    },
+    {
+      "id": "S03",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1498,
+      "text": "| A node's 21st unique same-key entry arrives at default capacity | Apply the explicit full-node policy without overwriting existing entries |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Apply the explicit full-node policy without overwriting existing entries"
+    },
+    {
+      "id": "S04",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1499,
+      "text": "| Identical ID strings use different resolution classes | They do not compare equal as complete Pattern keys |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "They do not compare equal as complete Pattern keys"
+    },
+    {
+      "id": "S05",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1500,
+      "text": "| A low-resolution candidate is retrieved | Its secondary comparison still uses high-resolution scanning |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Its secondary comparison still uses high-resolution scanning"
+    },
+    {
+      "id": "S06",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1501,
+      "text": "| Similarity and dissimilarity sums exceed narrow integer capacity | Safe arithmetic preserves their difference; confidence remains bounded |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Safe arithmetic preserves their difference; confidence remains bounded"
+    },
+    {
+      "id": "S07",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1502,
+      "text": "| Confidence is exactly +100 or -100 | No jitter applies |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "No jitter applies"
+    },
+    {
+      "id": "S08",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1503,
+      "text": "| Maximum-strength node has a qualified baseline | Its score does not jitter; below-threshold entries retain jitter eligibility |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Its score does not jitter; below-threshold entries retain jitter eligibility"
+    },
+    {
+      "id": "S09",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1504,
+      "text": "| One node has several matching entries | Every qualified entry may emit its vote |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every qualified entry may emit its vote"
+    },
+    {
+      "id": "S10",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1505,
+      "text": "| Several complementary nodes use the same triple | Their contributions survive; no global election removes them |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Their contributions survive; no global election removes them"
+    },
+    {
+      "id": "S11",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1506,
+      "text": "| Fan-outs produce redundant alternative contributions | Scoped spin-bottle selection resolves the redundancy with valid weights |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Scoped spin-bottle selection resolves the redundancy with valid weights"
+    },
+    {
+      "id": "S12",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1507,
+      "text": "| A hard attachment triggers a below-threshold target | Target is evaluated but emits no forced vote |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Target is evaluated but emits no forced vote"
+    },
+    {
+      "id": "S13",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1508,
+      "text": "| A bidirectional attachment cycles without consuming remainder | Visit/depth policy stops repeated non-progressing work |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Visit/depth policy stops repeated non-progressing work"
+    },
+    {
+      "id": "S14",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1509,
+      "text": "| Lookup returns more than 1,000 deep comparisons | Queue all admitted work; peak simultaneous comparisons stays within the cap |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Queue all admitted work; peak simultaneous comparisons stays within the cap"
+    },
+    {
+      "id": "S15",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1510,
+      "text": "| Foreground and maintenance scans coexist | They share the same cap, including attachments |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "They share the same cap, including attachments"
+    },
+    {
+      "id": "S16",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1511,
+      "text": "| A vote and activator reference different supporting keys | Both query paths are used; only contextually relevant returned subdata is consumed |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Both query paths are used; only contextually relevant returned subdata is consumed"
+    },
+    {
+      "id": "S17",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1512,
+      "text": "| Two resources share a linked resource ID | Both are retrieved; absence of a resource link does not remove structural indexing |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Both are retrieved; absence of a resource link does not remove structural indexing"
+    },
+    {
+      "id": "S18",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1513,
+      "text": "| Side-resource retrieval is traced | No global semantic scan or node-style confidence calculation appears in that path |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "No global semantic scan or node-style confidence calculation appears in that path"
+    },
+    {
+      "id": "S19",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1514,
+      "text": "| `two plus two` and `2+2` | Bind compatible procedural structure and preserve operands; permitted action yields 4 |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Bind compatible procedural structure and preserve operands; permitted action yields 4"
+    },
+    {
+      "id": "S20",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1515,
+      "text": "| `don't solve 2+2` | Negation/inhibition survives preparation and blocks the prohibited action |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Negation/inhibition survives preparation and blocks the prohibited action"
+    },
+    {
+      "id": "S21",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1516,
+      "text": "| User automaton exceeds its execution budget | It terminates with an explicit bounded-execution result |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "It terminates with an explicit bounded-execution result"
+    },
+    {
+      "id": "S22",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1517,
+      "text": "| Imagination runs on retrieved material | Temporary synthesis uses source ingredients; persistent learned state is unchanged |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Temporary synthesis uses source ingredients; persistent learned state is unchanged"
+    },
+    {
+      "id": "S23",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1518,
+      "text": "| Transient execution is repeated | Weight/knowledge state does not train or drift merely from invocation |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Weight/knowledge state does not train or drift merely from invocation"
+    },
+    {
+      "id": "S24",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1519,
+      "text": "| ATP spans two related cycles | Intended buildup/release persists; last-cycle random jitter does not |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Intended buildup/release persists; last-cycle random jitter does not"
+    },
+    {
+      "id": "S25",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1520,
+      "text": "| Thesaurus replacement changes tone beyond tolerance | Retry within budget or use the original phrase |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Retry within budget or use the original phrase"
+    },
+    {
+      "id": "S26",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1521,
+      "text": "| An output combines several nodes and later gets paraphrased | Provenance still identifies all causal voting contributors and transformations |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Provenance still identifies all causal voting contributors and transformations"
+    },
+    {
+      "id": "S27",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1522,
+      "text": "| `/right green` with one contributor appearing in several spans | That node receives one independent feedback trial for the event |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "That node receives one independent feedback trial for the event"
+    },
+    {
+      "id": "S28",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1523,
+      "text": "| A node falls from maximum strength | Node crystallization is removed; attachment mode is not accidentally changed |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Node crystallization is removed; attachment mode is not accidentally changed"
+    },
+    {
+      "id": "S29",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1524,
+      "text": "| One same-ID node reaches zero | Remove only that active record; its peers remain |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Remove only that active record; its peers remain"
+    },
+    {
+      "id": "S30",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1525,
+      "text": "| A Type A node detects a residual error | Correction is attributable to the original output and expires within bounded supervision |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Correction is attributable to the original output and expires within bounded supervision"
+    },
+    {
+      "id": "S31",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1526,
+      "text": "| Type B finds new knowledge | Present an identified proposal; no persistent knowledge promotion until `/learn id` |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Present an identified proposal; no persistent knowledge promotion until `/learn id`"
+    },
+    {
+      "id": "S32",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1527,
+      "text": "| Mutation pairs five weak alternatives with four strong alternatives | Recipient count becomes four only under valid history-preserving shortening rules |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Recipient count becomes four only under valid history-preserving shortening rules"
+    },
+    {
+      "id": "S33",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1528,
+      "text": "| Mutation pairs four weak alternatives with five strong alternatives | Recipient remains four; no fifth alternative is added |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Recipient remains four; no fifth alternative is added"
+    },
+    {
+      "id": "S34",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1529,
+      "text": "| A recipient slot already remixed | It is ineligible, including after save/load or slot renumbering |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "It is ineligible, including after save/load or slot renumbering"
+    },
+    {
+      "id": "S35",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1530,
+      "text": "| A prohibited donor relationship is selected through another slot | Lineage policy rejects the pathological reuse |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Lineage policy rejects the pathological reuse"
+    },
+    {
+      "id": "S36",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1531,
+      "text": "| Growth proposes an original inhibited pattern/vote pairing | Reject it, including configured relevant fan-out equivalents |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Reject it, including configured relevant fan-out equivalents"
+    },
+    {
+      "id": "S37",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1532,
+      "text": "| Idle timer fires repeatedly | Each event draws a fresh interval and chooses tag or PHAGY |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Each event draws a fresh interval and chooses tag or PHAGY"
+    },
+    {
+      "id": "S38",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1533,
+      "text": "| PHAGY jobs overlap or time out | Unique job claims prevent duplicate active work; timed-out agents release resources |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Unique job claims prevent duplicate active work; timed-out agents release resources"
+    },
+    {
+      "id": "S39",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1534,
+      "text": "| Rafts start at 0, 20, and 50 | Exactly the assigned ranges are covered with no overlap/gaps and per-step yielding |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Exactly the assigned ranges are covered with no overlap/gaps and per-step yielding"
+    },
+    {
+      "id": "S40",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1535,
+      "text": "| Duplicate-ID matches span several chunks | `find_all` completes every chunk; a first hit does not terminate the search |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "`find_all` completes every chunk; a first hit does not terminate the search"
+    },
+    {
+      "id": "S41",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1536,
+      "text": "| The sandbox prefers a simple loop | HybridTable uses that choice within limits; raft dispatch is not mandatory |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "HybridTable uses that choice within limits; raft dispatch is not mandatory"
+    },
+    {
+      "id": "S42",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1537,
+      "text": "| A visual record has unequal array lengths | Reject it before scanning/rendering |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Reject it before scanning/rendering"
+    },
+    {
+      "id": "S43",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1538,
+      "text": "| A history record is pinned | Ordinary rolling overwrite preserves it under the pin policy |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Ordinary rolling overwrite preserves it under the pin policy"
+    },
+    {
+      "id": "S44",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1539,
+      "text": "| A complete specimen is saved and loaded | All durable organs, duplicate IDs, strengths, links, scripts, history, and mutation markers survive |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "All durable organs, duplicate IDs, strengths, links, scripts, history, and mutation markers survive"
+    },
+    {
+      "id": "S45",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1540,
+      "text": "| A saved specimen is malformed or incompatible | Load fails without replacing the current specimen |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Load fails without replacing the current specimen"
+    },
+    {
+      "id": "S46",
+      "kind": "acceptance",
+      "source": "studio",
+      "line": 1541,
+      "text": "| A sigil calls an undeclared subsystem | The scope/contact boundary rejects the call |",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "The scope/contact boundary rejects the call"
+    },
+    {
+      "id": "CH26",
+      "kind": "chapter",
+      "source": "studio",
+      "line": 1549,
+      "text": "## 26. Source coverage map",
+      "owner": "Studio kernel/native",
+      "task": 8,
+      "plan": "task-08",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Every normative mechanism in 26. Source coverage map has a source-linked test and independent result; chapter summary alone is insufficient."
+    },
+    {
+      "id": "C01",
+      "kind": "constitution",
+      "source": "constitution",
+      "line": 263,
+      "text": "- UUID, schema version, pseudonymous scope, acquisition and receipt time;",
+      "owner": "WDBX",
+      "task": 2,
+      "plan": "task-02",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- UUID, schema version, pseudonymous scope, acquisition and receipt time;"
+    },
+    {
+      "id": "C02",
+      "kind": "constitution",
+      "source": "constitution",
+      "line": 264,
+      "text": "- regime, bounded state summaries, and resource state;",
+      "owner": "WDBX",
+      "task": 2,
+      "plan": "task-02",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- regime, bounded state summaries, and resource state;"
+    },
+    {
+      "id": "C03",
+      "kind": "constitution",
+      "source": "constitution",
+      "line": 265,
+      "text": "- decision route, prediction, uncertainty, risk, and novelty;",
+      "owner": "WDBX",
+      "task": 2,
+      "plan": "task-02",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- decision route, prediction, uncertainty, risk, and novelty;"
+    },
+    {
+      "id": "C04",
+      "kind": "constitution",
+      "source": "constitution",
+      "line": 266,
+      "text": "- capability, model, policy, calibration, approval, and consent versions;",
+      "owner": "WDBX",
+      "task": 2,
+      "plan": "task-02",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- capability, model, policy, calibration, approval, and consent versions;"
+    },
+    {
+      "id": "C05",
+      "kind": "constitution",
+      "source": "constitution",
+      "line": 267,
+      "text": "- redacted action sequence and parameter classes;",
+      "owner": "WDBX",
+      "task": 2,
+      "plan": "task-02",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- redacted action sequence and parameter classes;"
+    },
+    {
+      "id": "C06",
+      "kind": "constitution",
+      "source": "constitution",
+      "line": 268,
+      "text": "- observed outcome, utility, safety effect, cost, and rollback state;",
+      "owner": "WDBX",
+      "task": 2,
+      "plan": "task-02",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- observed outcome, utility, safety effect, cost, and rollback state;"
+    },
+    {
+      "id": "C07",
+      "kind": "constitution",
+      "source": "constitution",
+      "line": 269,
+      "text": "- source and evidence references with explicit evidence dimensions;",
+      "owner": "WDBX",
+      "task": 2,
+      "plan": "task-02",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- source and evidence references with explicit evidence dimensions;"
+    },
+    {
+      "id": "C08",
+      "kind": "constitution",
+      "source": "constitution",
+      "line": 270,
+      "text": "- contradiction, supersession, revocation, resolution, and quarantine edges;",
+      "owner": "WDBX",
+      "task": 2,
+      "plan": "task-02",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- contradiction, supersession, revocation, resolution, and quarantine edges;"
+    },
+    {
+      "id": "C09",
+      "kind": "constitution",
+      "source": "constitution",
+      "line": 271,
+      "text": "- retention class, hold state, deletion-key reference, and provenance parents;",
+      "owner": "WDBX",
+      "task": 2,
+      "plan": "task-02",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- retention class, hold state, deletion-key reference, and provenance parents;"
+    },
+    {
+      "id": "C10",
+      "kind": "constitution",
+      "source": "constitution",
+      "line": 272,
+      "text": "- canonical encoding, digest, signer identity, and optional signature.",
+      "owner": "WDBX",
+      "task": 2,
+      "plan": "task-02",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- canonical encoding, digest, signer identity, and optional signature."
+    },
+    {
+      "id": "C11",
+      "kind": "constitution",
+      "source": "constitution",
+      "line": 276,
+      "text": "**Integrity is not truth.** Cryptography supports origin, object identity, and",
+      "owner": "WDBX",
+      "task": 2,
+      "plan": "task-02",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "**Integrity is not truth.** Cryptography supports origin, object identity, and"
+    },
+    {
+      "id": "C12",
+      "kind": "constitution",
+      "source": "constitution",
+      "line": 280,
+      "text": "**Similarity is not applicability.** Retrieval must consider semantic",
+      "owner": "WDBX",
+      "task": 2,
+      "plan": "task-02",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "**Similarity is not applicability.** Retrieval must consider semantic"
+    },
+    {
+      "id": "C13",
+      "kind": "constitution",
+      "source": "constitution",
+      "line": 284,
+      "text": "**Trust is multidimensional.** Evidence dimensions remain individually",
+      "owner": "WDBX",
+      "task": 2,
+      "plan": "task-02",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "**Trust is multidimensional.** Evidence dimensions remain individually"
+    },
+    {
+      "id": "C14",
+      "kind": "constitution",
+      "source": "constitution",
+      "line": 287,
+      "text": "**Indexes are not canonical.** Embeddings, HNSW structures, summaries, and",
+      "owner": "WDBX",
+      "task": 2,
+      "plan": "task-02",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "**Indexes are not canonical.** Embeddings, HNSW structures, summaries, and"
+    },
+    {
+      "id": "C15",
+      "kind": "constitution",
+      "source": "constitution",
+      "line": 290,
+      "text": "**No cross-guild recall.** Guild isolation is the correctness boundary;",
+      "owner": "WDBX",
+      "task": 2,
+      "plan": "task-02",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "**No cross-guild recall.** Guild isolation is the correctness boundary;"
+    },
+    {
+      "id": "C16",
+      "kind": "constitution",
+      "source": "constitution",
+      "line": 293,
+      "text": "**No dual canonical writers.** Migrations shadow-read, replay, compare, cut over",
+      "owner": "WDBX",
+      "task": 2,
+      "plan": "task-02",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "**No dual canonical writers.** Migrations shadow-read, replay, compare, cut over"
+    },
+    {
+      "id": "C17",
+      "kind": "constitution",
+      "source": "constitution",
+      "line": 300,
+      "text": "- **Ephemeral:** never written.",
+      "owner": "WDBX",
+      "task": 3,
+      "plan": "task-03",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- **Ephemeral:** never written."
+    },
+    {
+      "id": "C18",
+      "kind": "constitution",
+      "source": "constitution",
+      "line": 301,
+      "text": "- **Session:** retained only for the bounded session.",
+      "owner": "WDBX",
+      "task": 3,
+      "plan": "task-03",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- **Session:** retained only for the bounded session."
+    },
+    {
+      "id": "C19",
+      "kind": "constitution",
+      "source": "constitution",
+      "line": 302,
+      "text": "- **Operational:** retained under a short explicit TTL.",
+      "owner": "WDBX",
+      "task": 3,
+      "plan": "task-03",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- **Operational:** retained under a short explicit TTL."
+    },
+    {
+      "id": "C20",
+      "kind": "constitution",
+      "source": "constitution",
+      "line": 303,
+      "text": "- **Durable:** requires defined utility, authority, privacy basis, and policy.",
+      "owner": "WDBX",
+      "task": 3,
+      "plan": "task-03",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- **Durable:** requires defined utility, authority, privacy basis, and policy."
+    },
+    {
+      "id": "C21",
+      "kind": "constitution",
+      "source": "constitution",
+      "line": 304,
+      "text": "- **Mandatory incident:** stores the smallest safety, security, audit, or legal",
+      "owner": "WDBX",
+      "task": 3,
+      "plan": "task-03",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "- **Mandatory incident:** stores the smallest safety, security, audit, or legal"
+    },
+    {
+      "id": "OS01",
+      "kind": "platform",
+      "source": "program",
+      "line": 24,
+      "text": "- Desktop targets: macOS ARM64/x86-64, Windows x86-64, Linux x86-64. Service targets: Linux x86-64 and macOS ARM64.",
+      "owner": "platform operators",
+      "task": 10,
+      "plan": "task-10",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "desktop:macos-arm64: independently witness installation, upgrade, recovery, isolation and removal on named real hardware; attach signed artifact hash and raw logs, unsupported acceleration explicitly reported.",
+      "platform": "desktop:macos-arm64"
+    },
+    {
+      "id": "OS02",
+      "kind": "platform",
+      "source": "program",
+      "line": 24,
+      "text": "- Desktop targets: macOS ARM64/x86-64, Windows x86-64, Linux x86-64. Service targets: Linux x86-64 and macOS ARM64.",
+      "owner": "platform operators",
+      "task": 10,
+      "plan": "task-10",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "desktop:macos-x86_64: independently witness installation, upgrade, recovery, isolation and removal on named real hardware; attach signed artifact hash and raw logs, unsupported acceleration explicitly reported.",
+      "platform": "desktop:macos-x86_64"
+    },
+    {
+      "id": "OS03",
+      "kind": "platform",
+      "source": "program",
+      "line": 24,
+      "text": "- Desktop targets: macOS ARM64/x86-64, Windows x86-64, Linux x86-64. Service targets: Linux x86-64 and macOS ARM64.",
+      "owner": "platform operators",
+      "task": 10,
+      "plan": "task-10",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "desktop:windows-x86_64: independently witness installation, upgrade, recovery, isolation and removal on named real hardware; attach signed artifact hash and raw logs, unsupported acceleration explicitly reported.",
+      "platform": "desktop:windows-x86_64"
+    },
+    {
+      "id": "OS04",
+      "kind": "platform",
+      "source": "program",
+      "line": 24,
+      "text": "- Desktop targets: macOS ARM64/x86-64, Windows x86-64, Linux x86-64. Service targets: Linux x86-64 and macOS ARM64.",
+      "owner": "platform operators",
+      "task": 10,
+      "plan": "task-10",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "desktop:linux-x86_64: independently witness installation, upgrade, recovery, isolation and removal on named real hardware; attach signed artifact hash and raw logs, unsupported acceleration explicitly reported.",
+      "platform": "desktop:linux-x86_64"
+    },
+    {
+      "id": "OS05",
+      "kind": "platform",
+      "source": "program",
+      "line": 24,
+      "text": "- Desktop targets: macOS ARM64/x86-64, Windows x86-64, Linux x86-64. Service targets: Linux x86-64 and macOS ARM64.",
+      "owner": "platform operators",
+      "task": 10,
+      "plan": "task-10",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "service:linux-x86_64: independently witness installation, upgrade, recovery, isolation and removal on named real hardware; attach signed artifact hash and raw logs, unsupported acceleration explicitly reported.",
+      "platform": "service:linux-x86_64"
+    },
+    {
+      "id": "OS06",
+      "kind": "platform",
+      "source": "program",
+      "line": 24,
+      "text": "- Desktop targets: macOS ARM64/x86-64, Windows x86-64, Linux x86-64. Service targets: Linux x86-64 and macOS ARM64.",
+      "owner": "platform operators",
+      "task": 10,
+      "plan": "task-10",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "service:macos-arm64: independently witness installation, upgrade, recovery, isolation and removal on named real hardware; attach signed artifact hash and raw logs, unsupported acceleration explicitly reported.",
+      "platform": "service:macos-arm64"
+    },
+    {
+      "id": "E01",
+      "kind": "evidence_dimension",
+      "source": "episodes",
+      "line": 193,
+      "text": "cryptographic     valid | invalid | unverifiable; key status",
+      "owner": "WDBX",
+      "task": 4,
+      "plan": "task-04",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Retrieval returns cryptographic separately and explains unknown/invalid values; mutate this dimension in isolation and assert disposition without opaque scalar collapse."
+    },
+    {
+      "id": "E02",
+      "kind": "evidence_dimension",
+      "source": "episodes",
+      "line": 194,
+      "text": "source            identity, role, reputation",
+      "owner": "WDBX",
+      "task": 4,
+      "plan": "task-04",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Retrieval returns source separately and explains unknown/invalid values; mutate this dimension in isolation and assert disposition without opaque scalar collapse."
+    },
+    {
+      "id": "E03",
+      "kind": "evidence_dimension",
+      "source": "episodes",
+      "line": 195,
+      "text": "calibration       sensor/model calibration and hardware health",
+      "owner": "WDBX",
+      "task": 4,
+      "plan": "task-04",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Retrieval returns calibration separately and explains unknown/invalid values; mutate this dimension in isolation and assert disposition without opaque scalar collapse."
+    },
+    {
+      "id": "E04",
+      "kind": "evidence_dimension",
+      "source": "episodes",
+      "line": 196,
+      "text": "outcome           validated | contradicted | unobserved",
+      "owner": "WDBX",
+      "task": 4,
+      "plan": "task-04",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Retrieval returns outcome separately and explains unknown/invalid values; mutate this dimension in isolation and assert disposition without opaque scalar collapse."
+    },
+    {
+      "id": "E05",
+      "kind": "evidence_dimension",
+      "source": "episodes",
+      "line": 197,
+      "text": "compatibility     model, policy, schema",
+      "owner": "WDBX",
+      "task": 4,
+      "plan": "task-04",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Retrieval returns compatibility separately and explains unknown/invalid values; mutate this dimension in isolation and assert disposition without opaque scalar collapse."
+    },
+    {
+      "id": "E06",
+      "kind": "evidence_dimension",
+      "source": "episodes",
+      "line": 198,
+      "text": "regime            task-regime and safety-constraint compatibility",
+      "owner": "WDBX",
+      "task": 4,
+      "plan": "task-04",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Retrieval returns regime separately and explains unknown/invalid values; mutate this dimension in isolation and assert disposition without opaque scalar collapse."
+    },
+    {
+      "id": "E07",
+      "kind": "evidence_dimension",
+      "source": "episodes",
+      "line": 199,
+      "text": "lifecycle         age, superseded_by, retention class, quarantine",
+      "owner": "WDBX",
+      "task": 4,
+      "plan": "task-04",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Retrieval returns lifecycle separately and explains unknown/invalid values; mutate this dimension in isolation and assert disposition without opaque scalar collapse."
+    },
+    {
+      "id": "E08",
+      "kind": "evidence_dimension",
+      "source": "episodes",
+      "line": 200,
+      "text": "confidence        recorded uncertainty or interval",
+      "owner": "WDBX",
+      "task": 4,
+      "plan": "task-04",
+      "status": "proposed",
+      "evidence_level": "C0",
+      "evidence": [],
+      "expected_evidence": [
+        "exact source revision and artifact digest",
+        "test command, environment, raw assertion results and failure logs",
+        "independent reviewer identity and scope"
+      ],
+      "completion_condition": "Retrieval returns confidence separately and explains unknown/invalid values; mutate this dimension in isolation and assert disposition without opaque scalar collapse."
+    }
+  ]
+}

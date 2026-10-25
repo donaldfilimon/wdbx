@@ -1,0 +1,8 @@
+git diff --no-index --check /Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/before/arithmetic.rs /Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs
+exit=1; no whitespace diagnostics (--no-index reports differences with exit 1)
+git diff --no-index --check /Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/before/prepare.rs /Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs
+exit=1; no whitespace diagnostics (--no-index reports differences with exit 1)
+git diff --no-index --check /dev/null /Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs
+exit=1; no whitespace diagnostics (--no-index reports differences with exit 1)
+git diff --check -- <three owned paths>
+exit=0

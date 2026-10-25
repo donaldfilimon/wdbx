@@ -1,0 +1,13 @@
+{
+  "scope": "Additional two unchanged WASM entrypoints; no ATP registration or dependency changes. Supplements118-file baseline.",
+  "files": [
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "sha256": "a189f2cde52f2fd2f55e48c7b6d5e50782330cd0732f147d574999deaa87c3f1"
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "sha256": "c5f140c3c5a78d9ed64b922f14e604f87a0516fa279234ed5ea74facac870104"
+    }
+  ]
+}

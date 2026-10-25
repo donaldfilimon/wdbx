@@ -1,0 +1,30 @@
+{
+  "environment": {
+    "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+    "RUSTUP_TOOLCHAIN": "1.99.1",
+    "CARGO_NET_OFFLINE": "true"
+  },
+  "results": {
+    "06-focused-final.log": {
+      "exit_code": 0,
+      "passed": 34,
+      "failed": 0,
+      "summaries": 4
+    },
+    "07-full-kernel-final.log": {
+      "exit_code": 0,
+      "passed": 229,
+      "failed": 0,
+      "summaries": 24
+    },
+    "08-clippy-final.log": {
+      "exit_code": 0
+    },
+    "09-owned-fmt-final.log": {
+      "exit_code": 0
+    },
+    "10-diff-check-final.log": {
+      "exit_code": 0
+    }
+  }
+}

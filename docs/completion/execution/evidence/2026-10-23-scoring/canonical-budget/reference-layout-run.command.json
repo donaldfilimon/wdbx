@@ -1,0 +1,7 @@
+{
+  "command": [
+    "/Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/reference-layout"
+  ],
+  "exit": 0,
+  "note": "Runtime output captured in reference-layout.log after successful build; temporary executable removed after run. Native arm64 reference observation only."
+}

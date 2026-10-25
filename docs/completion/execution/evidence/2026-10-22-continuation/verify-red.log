@@ -1,0 +1,324 @@
+   Compiling abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx/crates/abi-wdbx)
+error[E0583]: file not found for module `verify`
+ --> crates/abi-wdbx/src/v3/complete_episode/crypto/mod.rs:9:1
+  |
+9 | mod verify;
+  | ^^^^^^^^^^^
+  |
+  = help: to create the module `verify`, create file "crates/abi-wdbx/src/v3/complete_episode/crypto/verify.rs" or "crates/abi-wdbx/src/v3/complete_episode/crypto/verify/mod.rs"
+  = note: if there is a `mod verify` elsewhere in the crate already, import it with `use crate::...` instead
+
+error[E0425]: cannot find type `ExpectedContext` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:27:41
+   |
+27 | pub(super) fn expected(bytes: &[u8]) -> ExpectedContext {
+   |                                         ^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `ExpectedContext` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:29:5
+   |
+29 |     ExpectedContext {
+   |     ^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `KeySnapshot` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:39:37
+   |
+39 | pub(super) fn snapshot(seed: u8) -> KeySnapshot {
+   |                                     ^^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `Integrity` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:49:36
+   |
+49 |     assert_eq!(report.integrity(), Integrity::Valid);
+   |                                    ^^^^^^^^^ use of undeclared type `Integrity`
+   |
+help: consider importing this enum through its public re-export
+   |
+ 2 + use crate::v3::episode::cose_prototype::Integrity;
+   |
+
+error[E0433]: cannot find type `Integrity` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:68:36
+   |
+68 |     assert_eq!(report.integrity(), Integrity::Unverifiable);
+   |                                    ^^^^^^^^^ use of undeclared type `Integrity`
+   |
+help: consider importing this enum through its public re-export
+   |
+ 2 + use crate::v3::episode::cose_prototype::Integrity;
+   |
+
+error[E0433]: cannot find type `Integrity` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:85:40
+   |
+85 |         assert_eq!(report.integrity(), Integrity::Invalid);
+   |                                        ^^^^^^^^^ use of undeclared type `Integrity`
+   |
+help: consider importing this enum through its public re-export
+   |
+ 2 + use crate::v3::episode::cose_prototype::Integrity;
+   |
+
+error[E0433]: cannot find type `Integrity` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:106:40
+    |
+106 |         assert_eq!(report.integrity(), Integrity::Invalid);
+    |                                        ^^^^^^^^^ use of undeclared type `Integrity`
+    |
+help: consider importing this enum through its public re-export
+    |
+  2 + use crate::v3::episode::cose_prototype::Integrity;
+    |
+
+warning: unused import: `super::verify::*`
+ --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:3:5
+  |
+3 | use super::verify::*;
+  |     ^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+error[E0433]: cannot find type `KeySnapshot` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:40:5
+   |
+40 |     KeySnapshot::new(OpaqueRef::new("synthetic-local").unwrap(), 3, vec![key(seed).verifying_key()]).unwrap()
+   |     ^^^^^^^^^^^ use of undeclared type `KeySnapshot`
+
+error[E0425]: cannot find function `sign_p1` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:46:21
+   |
+46 |     let container = sign_p1(&bytes, &key(1), CryptoLimits::default()).unwrap();
+   |                     ^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `verify_p1` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:48:18
+   |
+48 |     let report = verify_p1(parse_p1(&container, &bytes, CryptoLimits::default()).unwrap(), &expected(&bytes), &keys);
+   |                  ^^^^^^^^^ not found in this scope
+
+error[E0599]: no method named `identity` found for struct `ParsedP1` in the current scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:58:99
+   |
+58 |     assert_eq!(report.identity(), &parse_p1(&container, &bytes, CryptoLimits::default()).unwrap().identity().clone());
+   |                                                                                                   ^^^^^^^^ method not found in `ParsedP1`
+   |
+  ::: crates/abi-wdbx/src/v3/complete_episode/crypto/profile.rs:55:1
+   |
+55 | pub(super) struct ParsedP1 {
+   | -------------------------- method `identity` not found for this struct
+   |
+   = help: items from traits can only be used if the trait is implemented and in scope
+   = note: the following traits define an item `identity`, perhaps you need to implement one of them:
+           candidate #1: `curve25519_dalek::traits::Identity`
+           candidate #2: `jsonschema_value::Node`
+
+error[E0425]: cannot find function `sign_p1` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:66:21
+   |
+66 |     let container = sign_p1(&bytes, &key(1), CryptoLimits::default()).unwrap();
+   |                     ^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `verify_p1` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:67:18
+   |
+67 |     let report = verify_p1(parse_p1(&container, &bytes, CryptoLimits::default()).unwrap(), &expected(&bytes), &snapshot(2));
+   |                  ^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `VerificationReason` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:69:38
+   |
+69 |     assert_eq!(report.reason(), Some(VerificationReason::UnknownKey));
+   |                                      ^^^^^^^^^^^^^^^^^^ use of undeclared type `VerificationReason`
+
+error[E0425]: cannot find function `sign_p1` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:76:20
+   |
+76 |     let original = sign_p1(&bytes, &key(1), CryptoLimits::default()).unwrap();
+   |                    ^^^^^^^ not found in this scope
+
+error[E0277]: the size for values of type `[u8]` cannot be known at compilation time
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:83:9
+   |
+83 |     for container in [altered, legacy] {
+   |         ^^^^^^^^^ doesn't have a size known at compile-time
+   |
+   = help: the trait `Sized` is not implemented for `[u8]`
+   = note: all local variables must have a statically known size
+
+error[E0277]: the size for values of type `[u8]` cannot be known at compilation time
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:83:5
+    |
+ 83 | /     for container in [altered, legacy] {
+ 84 | |         let report = verify_p1(parse_p1(&container, &bytes, CryptoLimits::default()).unwrap(), &expected(&bytes), &snapshot(1));
+ 85 | |         assert_eq!(report.integrity(), Integrity::Invalid);
+ 86 | |         assert_eq!(report.reason(), Some(VerificationReason::InvalidSignature));
+ 87 | |     }
+    | |_____^ doesn't have a size known at compile-time
+    |
+    = help: the trait `Sized` is not implemented for `[u8]`
+note: required by an implicit `Sized` bound in `std::option::Option`
+   --> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/core/src/option.rs:598:17
+    |
+598 | pub enum Option<T> {
+    |                 ^ required by the implicit `Sized` requirement on this type parameter in `Option`
+
+error[E0425]: cannot find function `verify_p1` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:84:22
+   |
+84 |         let report = verify_p1(parse_p1(&container, &bytes, CryptoLimits::default()).unwrap(), &expected(&bytes), &snapshot(1));
+   |                      ^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `VerificationReason` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:86:42
+   |
+86 |         assert_eq!(report.reason(), Some(VerificationReason::InvalidSignature));
+   |                                          ^^^^^^^^^^^^^^^^^^ use of undeclared type `VerificationReason`
+
+error[E0425]: cannot find function `sign_p1` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:93:21
+   |
+93 |     let container = sign_p1(&bytes, &key(1), CryptoLimits::default()).unwrap();
+   |                     ^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `VerificationReason` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:94:20
+   |
+94 |     for reason in [VerificationReason::UnsupportedProfile, VerificationReason::DomainMismatch,
+   |                    ^^^^^^^^^^^^^^^^^^ use of undeclared type `VerificationReason`
+
+error[E0433]: cannot find type `VerificationReason` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:94:60
+   |
+94 |     for reason in [VerificationReason::UnsupportedProfile, VerificationReason::DomainMismatch,
+   |                                                            ^^^^^^^^^^^^^^^^^^ use of undeclared type `VerificationReason`
+
+error[E0433]: cannot find type `VerificationReason` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:95:9
+   |
+95 |         VerificationReason::ContractMismatch, VerificationReason::ScopeMismatch, VerificationReason::NamespaceMismatch] {
+   |         ^^^^^^^^^^^^^^^^^^ use of undeclared type `VerificationReason`
+
+error[E0433]: cannot find type `VerificationReason` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:95:47
+   |
+95 |         VerificationReason::ContractMismatch, VerificationReason::ScopeMismatch, VerificationReason::NamespaceMismatch] {
+   |                                               ^^^^^^^^^^^^^^^^^^ use of undeclared type `VerificationReason`
+
+error[E0433]: cannot find type `VerificationReason` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:95:82
+   |
+95 |         VerificationReason::ContractMismatch, VerificationReason::ScopeMismatch, VerificationReason::NamespaceMismatch] {
+   |                                                                                  ^^^^^^^^^^^^^^^^^^ use of undeclared type `VerificationReason`
+
+error[E0425]: cannot find function `verify_p1` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:105:22
+    |
+105 |         let report = verify_p1(parse_p1(&container, &bytes, CryptoLimits::default()).unwrap(), &context, &snapshot(1));
+    |                      ^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `verify_p1` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:111:18
+    |
+111 |     let report = verify_p1(parse_p1(&container, &bytes, CryptoLimits::default()).unwrap(), &context, &snapshot(1));
+    |                  ^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `VerificationReason` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:112:38
+    |
+112 |     assert_eq!(report.reason(), Some(VerificationReason::DomainMismatch));
+    |                                      ^^^^^^^^^^^^^^^^^^ use of undeclared type `VerificationReason`
+
+error[E0425]: cannot find function `sign_p1` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:118:13
+    |
+118 |     assert!(sign_p1(&bytes, &key(2), CryptoLimits::default()).is_err());
+    |             ^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `sign_p1` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:119:25
+    |
+119 |     let mut container = sign_p1(&bytes, &key(1), CryptoLimits::default()).unwrap();
+    |                         ^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `verify_p1` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:126:18
+    |
+126 |     let report = verify_p1(parse_p1(&container, &different, CryptoLimits::default()).unwrap(), &expected(&different), &snapshot(1));
+    |                  ^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `VerificationReason` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:127:38
+    |
+127 |     assert_eq!(report.reason(), Some(VerificationReason::KeyIdentityMismatch));
+    |                                      ^^^^^^^^^^^^^^^^^^ use of undeclared type `VerificationReason`
+
+error[E0433]: cannot find type `KeySnapshot` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:134:13
+    |
+134 |     assert!(KeySnapshot::new(namespace.clone(), 0, vec![weak]).is_err());
+    |             ^^^^^^^^^^^ use of undeclared type `KeySnapshot`
+
+error[E0433]: cannot find type `KeySnapshot` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:135:13
+    |
+135 |     assert!(KeySnapshot::new(namespace.clone(), 0, vec![key(1).verifying_key();2]).is_err());
+    |             ^^^^^^^^^^^ use of undeclared type `KeySnapshot`
+
+error[E0433]: cannot find type `KeySnapshot` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:136:13
+    |
+136 |     assert!(KeySnapshot::new(namespace.clone(), 0, vec![key(1).verifying_key();1025]).is_err());
+    |             ^^^^^^^^^^^ use of undeclared type `KeySnapshot`
+
+error[E0433]: cannot find type `KeySnapshot` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:137:17
+    |
+137 |     let first = KeySnapshot::new(namespace.clone(), 0, vec![key(1).verifying_key(),key(2).verifying_key()]).unwrap();
+    |                 ^^^^^^^^^^^ use of undeclared type `KeySnapshot`
+
+error[E0433]: cannot find type `KeySnapshot` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:138:18
+    |
+138 |     let second = KeySnapshot::new(namespace.clone(), 0, vec![key(2).verifying_key(),key(1).verifying_key()]).unwrap();
+    |                  ^^^^^^^^^^^ use of undeclared type `KeySnapshot`
+
+error[E0433]: cannot find type `KeySnapshot` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:140:19
+    |
+140 |     let revised = KeySnapshot::new(namespace, 1, vec![key(1).verifying_key(),key(2).verifying_key()]).unwrap();
+    |                   ^^^^^^^^^^^ use of undeclared type `KeySnapshot`
+
+error[E0433]: cannot find type `VerificationReason` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:100:13
+    |
+100 |             VerificationReason::ContractMismatch => context.contract = Digest32::new([99;32]),
+    |             ^^^^^^^^^^^^^^^^^^ use of undeclared type `VerificationReason`
+
+error[E0433]: cannot find type `VerificationReason` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:101:13
+    |
+101 |             VerificationReason::ScopeMismatch => context.binding.tenant = TenantRef::new("other").unwrap(),
+    |             ^^^^^^^^^^^^^^^^^^ use of undeclared type `VerificationReason`
+
+error[E0433]: cannot find type `VerificationReason` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:102:13
+    |
+102 |             VerificationReason::NamespaceMismatch => context.namespace = OpaqueRef::new("foreign").unwrap(),
+    |             ^^^^^^^^^^^^^^^^^^ use of undeclared type `VerificationReason`
+
+error[E0433]: cannot find type `VerificationReason` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:98:13
+   |
+98 |             VerificationReason::UnsupportedProfile => context.profile = "other",
+   |             ^^^^^^^^^^^^^^^^^^ use of undeclared type `VerificationReason`
+
+error[E0433]: cannot find type `VerificationReason` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:99:13
+   |
+99 |             VerificationReason::DomainMismatch => context.domain = "other",
+   |             ^^^^^^^^^^^^^^^^^^ use of undeclared type `VerificationReason`
+
+Some errors have detailed explanations: E0277, E0422, E0425, E0433, E0583, E0599.
+For more information about an error, try `rustc --explain E0277`.
+warning: `abi-wdbx` (lib test) generated 1 warning
+error: could not compile `abi-wdbx` (lib test) due to 44 previous errors; 1 warning emitted

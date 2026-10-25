@@ -1,0 +1,274 @@
+source-head=36bc99b699de60be6c07b2838d74580084fb5d4c
+source-root=/Users/donald/sources/repos/wdbx/specimen-studio
+PATH=/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin
+RUSTUP_TOOLCHAIN=1.99.1 CARGO_NET_OFFLINE=true
+cargo=/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin/cargo
+cargo 1.99.1 (5f94df478 2026-08-27)
+rustc=/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin/rustc
+rustc 1.99.1 (58cf8f9c3 2026-10-13)
+binary: rustc
+commit-hash: 58cf8f9c35b355199727627d07ae34a4e2846d67
+commit-date: 2026-10-13
+host: aarch64-apple-darwin
+release: 1.99.1
+LLVM version: 23.1.1
+bun=/opt/homebrew/bin/bun
+1.4.4
+6d576d8058f8ca643e8fce55b64ee3c614ba64c9da2e536bae843e6a2e1f3951  /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin/cargo
+1ba7bb8e273bd64125f4048d2ecce530e0a6470e565ab1b3aecf0b82b532f7b1  /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin/rustc
+30b3578e2f0e4901998ed11d85566f294f7b654da00883fd2357eed7387b2621  /opt/homebrew/bin/bun
+ed6f5284033aa2aae6a58427c25ba3ab119947b40365627b24e5d51a4b70a1cd  /usr/bin/python3
+99b7810b5cd10fc483aad1233298f00704af28c826e3337be013bd9266cb55bf  native/specimen-kernel/src/identity/index.rs
+39c13866d6796260c85a618156b5fc177eeae3780bacca0503accf2ed42d62a0  native/specimen-kernel/src/identity/mod.rs
+12cda88d9ac5968b0d92279f4dc5ebaf1041c5d4b5c49c5ac5ee999be2373f35  native/specimen-kernel/src/identity/model.rs
+6ecb1b0659f9261c4f56a9cf016fd0fe9fd075407d9d26b44d4609636d1218d8  native/specimen-kernel/src/identity/validate.rs
+85cca7eb74f62ec4f0d46160ac1e3c3f67e277335bd837d2e6c2b9d14307aac9  native/specimen-kernel/src/language_v3/arithmetic.rs
+b479b4d1426a30352fdb4a68212f84bebf36249963466a1cfa97656a11a3ac73  native/specimen-kernel/src/language_v3/mod.rs
+2ed6ce26fd2040da3db283b50b13aec0b7b478bd520b049b24df1d03c1b24c5f  native/specimen-kernel/src/language_v3/model.rs
+6ca1696da4dbfd1ac96c148f6c7236719c36ed5fb07f19d49aa9a273a4b3050a  native/specimen-kernel/src/language_v3/prepare.rs
+d03e3b54349ff73d5f58bf2f100baf1d47d10acc15411c1848c97611b2587187  native/specimen-kernel/src/language_v3/script.rs
+5f4e4138fdb860288085f877ebe1eb81c7f336b599571a63d8f0e4216fb51c1f  native/specimen-kernel/src/language_v3/script/tape.rs
+7fc3bd1fabcd7192a2b65355ebce4a48a07f7680bd7f3d72390033da35a474bc  native/specimen-kernel/src/language_v3/tables.rs
+5cb736d802fa8bf7b932037b2feec26b90f71b5f04383d2d51068e4a2d5bd9d1  native/specimen-kernel/src/language_v3/tokenize.rs
+eeaf037caab92f8ca6afcf5bc4e8acdd95d8c0c21b14171552a8fe99624dc3c3  native/specimen-kernel/src/orchestration_v3/attachments.rs
+8618d61f8ba27559d4f627aad199dbeb2a2401a0e3b2f9d56fc8630b1b37737c  native/specimen-kernel/src/orchestration_v3/broker.rs
+05358e060925aa811e183cb943bc31632d877faf01f8f3ecae7ce9337e542076  native/specimen-kernel/src/orchestration_v3/budget.rs
+98c0e214f30c626282b45af3c66e7c1a0ba0633b453e79e0fad4904967585506  native/specimen-kernel/src/orchestration_v3/compose.rs
+32dbd43eb5f4ccaa610f984388745e03e6b310b9250ba66c7baa3e7f0f04f86a  native/specimen-kernel/src/orchestration_v3/mod.rs
+0e2f987d7ed96eabd1e07520f9e5f8428cba450b604a52c1b3a398e2544ba41b  native/specimen-kernel/src/scanner_v3/mod.rs
+027c6411f4d167c9bbd4f2d8c2259f00a2387a30745b1e52f6329ba439953d50  native/specimen-kernel/src/scanner_v3/rational.rs
+aacb965f10f31c98c71d2fbcf6dd5718b7359e4d24ec6037d52f0a226b9cd486  native/specimen-kernel/src/scanner_v3/routes/matching.rs
+a76f83c1b99780917da3c18cc63b32676e25e9731ac1e4bff4969b69e188add6  native/specimen-kernel/src/scanner_v3/routes/mod.rs
+731254ac7cfe6547ca7f0dfb7814d8ca6a2331f387c5ae841f9f236725fe761e  native/specimen-kernel/src/scanner_v3/routes/model.rs
+8a589b4d576fe588bd4ce32767e65a1121a49dbf44b8ad51d00229956b5d54cc  native/specimen-kernel/src/scanner_v3/routes/work.rs
+bebb773f29b2aad6a9dd577330c98aedde1d49bc4dd741e8e40248ed4f1afba9  native/specimen-kernel/src/scoring_v3/arbitration.rs
+5230076cc5c567fbacd7261dd115caa7d4af129201fbb872f795321a2fe12981  native/specimen-kernel/src/scoring_v3/budget.rs
+5fc433d8cce55ca728749eb0dee6ef142ecbee47a064cb586d0bf42351e3ae63  native/specimen-kernel/src/scoring_v3/contribution.rs
+1dc1240e736117a106c3766ee1e9fc7e5df098fe81961193afc26a0f534931aa  native/specimen-kernel/src/scoring_v3/draws.rs
+28eaedfb182e66c6de0fd8a819c6a8a9f4045f015bccfda505554f29b121dffa  native/specimen-kernel/src/scoring_v3/election.rs
+f9a17e784eb345a68f7e3d480367a99ad75eb645efca2799d48fbcb59670edb6  native/specimen-kernel/src/scoring_v3/math.rs
+7d51beb8b5dc76a2c8189bd0976f6c24b6fcfdc9921364fbc8ddd31390164027  native/specimen-kernel/src/scoring_v3/mod.rs
+d9b39863fe3e19f1a1444e9c925c9588f7568ad7f81da2d521a5a7293b894c58  native/specimen-kernel/src/scoring_v3/policy.rs
+b82068b636c1aa3645da004637a2291b88c0758eebcb720603857fca3b37fb1d  native/specimen-kernel/src/text_v3/mod.rs
+5efecffd49a4912984914bb36c5be4468db17edd424f63ba6ad77c0a403c39f7  native/specimen-wasm/examples/identity_probe.rs
+aeab4b298e8d9ca3884d612eae5ab0625a0f6de2cb07d87069895641de83c55e  native/specimen-wasm/examples/language_probe.rs
+e6ef97ea22719c16b091180d5378d714d07a09c5641b12ae603335251b8f350e  native/specimen-wasm/examples/scoring_probe.rs
+eb94eb78aa7fdc8c84eea95da259410d7105b0c49daa00039a21027837d97891  native/specimen-wasm/src/dispatch.rs
+1219bef564855db408cd83fad1f95071e01afa501ef9715e0fbe17a615807c35  native/specimen-wasm/src/identity_probe.rs
+15b81316e38e8019ccc2dd879f50644ef69a67a19b3547de90e105c039df986c  native/specimen-wasm/src/language_probe.rs
+1cc0657b901fad9f3047d55026f27e6c2d37aa4f65273eb68f0abdac492ceb72  native/specimen-wasm/src/language_probe/final_fix.rs
+a189f2cde52f2fd2f55e48c7b6d5e50782330cd0732f147d574999deaa87c3f1  native/specimen-wasm/src/lib.rs
+a7afe9ee6a9015eb7d0da4a404d2476adbb8da61599febce97541d0528b40a42  native/specimen-wasm/src/scoring_probe/entries.rs
+44877959cea9fc645f849f1b24749edd7ff9d1bc06c0156165d1c22bbc2e9f38  native/specimen-wasm/src/scoring_probe/mod.rs
+a057f079512b8e12115a5a9a47dcbf33970db44e352803a6e14537eb5de5f973  native/specimen-wasm/src/scoring_probe/numeric.rs
+0b3b9a3c38e016607d1cf2ca6000cd43ef314dcb33437402c101e20731694589  native/specimen-wasm/src/scoring_probe/orchestration.rs
+7bfe6ced1895c93218ce8078e0d008f7eaec5ee48e20f629c91636c52dc52ee5  native/specimen-wasm/src/scoring_probe/project.rs
+86316c8343f8c5d4f72d04d43ce67478bd0847b48aff93dd327320aabb3b5ab3  native/specimen-wasm/tests/identity_probe.rs
+0622daf6d5a87a073010f4c88a24df0c877a72c13a0bd4d8634b5a940a7bdc42  native/specimen-wasm/tests/language_probe.rs
+a10c40e5b89274cf6c420550f38c17ed40b18a1132e1307c7f3d8f83507571c2  native/specimen-wasm/tests/scoring_probe.rs
+1f9adcf3aac487c3d643fd87ff99e58d20ddc0700a31f40c6e3da74b8494474b  Cargo.toml
+164da1d1a61f57a16d651708af6959644c5d543f44f8e6bcb0bb0a7142ce7a98  Cargo.lock
+c5f140c3c5a78d9ed64b922f14e604f87a0516fa279234ed5ea74facac870104  native/specimen-wasm/Cargo.toml
+7476b3f4e3507461319f4f6f759ee966386993a0b82ca169a70d9277dbc5ed56  scripts/check-scoring-parity.sh
+49f1f80a09841898604f34a8444a151eadb809155535483e9701bc4da80aa648  tests/scoring-parity.mjs
++ cargo run --locked -p specimen-wasm --features scoring-probe --example scoring_probe --target-dir /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/target
+   Compiling proc-macro2 v1.0.107
+   Compiling version_check v0.9.5
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.27
+   Compiling memchr v2.8.3
+   Compiling typenum v1.20.1
+   Compiling libc v0.2.191
+   Compiling serde_core v1.0.229
+   Compiling zmij v1.0.23
+   Compiling thiserror v2.0.21
+   Compiling serde_json v1.0.154
+   Compiling hashbrown v0.17.1
+   Compiling equivalent v1.0.3
+   Compiling generic-array v0.14.7
+   Compiling serde v1.0.229
+   Compiling libm v0.2.16
+   Compiling regex-syntax v0.8.11
+   Compiling aho-corasick v1.1.5
+   Compiling pulldown-cmark v0.13.4
+   Compiling cfg-if v1.0.5
+   Compiling indexmap v2.14.2
+   Compiling itoa v1.0.18
+   Compiling bitflags v2.13.2
+   Compiling syn v3.0.9
+   Compiling foldhash v0.2.0
+   Compiling unicase v2.10.0
+   Compiling abi-compute v0.1.0 (/Users/donald/sources/repos/wdbx/crates/abi-compute)
+   Compiling cpufeatures v0.2.17
+   Compiling crypto-common v0.1.7
+   Compiling block-buffer v0.10.4
+   Compiling digest v0.10.7
+   Compiling sha2 v0.10.9
+   Compiling regex-automata v0.4.18
+   Compiling thiserror-impl v2.0.21
+   Compiling serde_derive v1.0.229
+   Compiling regex v1.13.1
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+   Compiling specimen-wasm v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-wasm)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[96845]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-wasm` (lib) generated 1 warning
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[96852]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-wasm` (example "scoring_probe") generated 1 warning
+    Finished `dev` profile [unoptimized] target(s) in 5.45s
+     Running `/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/target/debug/examples/scoring_probe`
++ shasum -a 256 /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/target/debug/examples/scoring_probe
+c5b0da679c8c585c374ad8f49a0cef5943c5384fa672c1a7b3196b04282e9138  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/target/debug/examples/scoring_probe
++ cargo build --locked -p specimen-wasm --target wasm32-unknown-unknown --release --no-default-features --target-dir /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/target
+   Compiling proc-macro2 v1.0.107
+   Compiling version_check v0.9.5
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.27
+   Compiling typenum v1.20.1
+   Compiling memchr v2.8.3
+   Compiling serde_core v1.0.229
+   Compiling zmij v1.0.23
+   Compiling libm v0.2.16
+   Compiling serde v1.0.229
+   Compiling regex-syntax v0.8.11
+   Compiling serde_json v1.0.154
+   Compiling thiserror v2.0.21
+   Compiling generic-array v0.14.7
+   Compiling hashbrown v0.17.1
+   Compiling equivalent v1.0.3
+   Compiling pulldown-cmark v0.13.4
+   Compiling itoa v1.0.18
+   Compiling aho-corasick v1.1.5
+   Compiling cfg-if v1.0.5
+   Compiling foldhash v0.2.0
+   Compiling unicase v2.10.0
+   Compiling bitflags v2.13.2
+   Compiling indexmap v2.14.2
+   Compiling syn v3.0.9
+   Compiling abi-compute v0.1.0 (/Users/donald/sources/repos/wdbx/crates/abi-compute)
+   Compiling crypto-common v0.1.7
+   Compiling block-buffer v0.10.4
+   Compiling digest v0.10.7
+   Compiling sha2 v0.10.9
+   Compiling regex-automata v0.4.18
+   Compiling thiserror-impl v2.0.21
+   Compiling serde_derive v1.0.229
+   Compiling regex v1.13.1
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+   Compiling specimen-wasm v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-wasm)
+    Finished `release` profile [optimized] target(s) in 9.63s
++ cp /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/target/wasm32-unknown-unknown/release/specimen_wasm.wasm /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/default.wasm
++ cargo build --locked -p specimen-wasm --target wasm32-unknown-unknown --release --no-default-features --features scoring-probe --target-dir /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/target
+   Compiling specimen-wasm v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-wasm)
+    Finished `release` profile [optimized] target(s) in 2.09s
++ cp /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/target/wasm32-unknown-unknown/release/specimen_wasm.wasm /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/scoring.wasm
++ bun tests/scoring-parity.mjs /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/native.json /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/scoring.wasm /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/default.wasm /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/wasm.json /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/corrupt-arithmetic.json /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/corrupt-quarantine.json
+PASS: default WASM compile/export inspection only; not instantiated
+{"result":"PASS","semantic_bytes":209566,"semantic_native_sha256":"6d3b506580e52316ea849e62965b11b959b2b36ebbad8000fc00d5ee0db879ef","semantic_wasm_sha256":"6d3b506580e52316ea849e62965b11b959b2b36ebbad8000fc00d5ee0db879ef","raw_native_bytes":216457,"raw_wasm_bytes":216452,"native_sha256":"33dacbb0fe54140441dd1c1d3aa25ee33fcbc7c721612d4f120e67e346519a6a","wasm_sha256":"148aa710c12fe18000116d50299a805ab99078f532de5b5ed59cf859e8c6e98e","host_calls":0,"feature_imports":[{"module":"env","name":"progress","kind":"function"},{"module":"env","name":"now_ms","kind":"function"},{"module":"env","name":"random_u32","kind":"function"}],"default_exports":["memory","alloc","call","free","probe_raw"],"feature_sha256":"4565aa5af173113741eb6ee1d546d294cb61a679f66121c5ff522af52c6f4df8","default_sha256":"747b1b6c2d7ccb8591b845d55d37668ad9535a6676004ee8c946cee665c9f7fb"}
++ bun tests/scoring-parity.mjs --self-test /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/native.json
+PASS: 8 invalid/incomplete shapes plus malformed JSON refused by normal comparator
++ for kind in arithmetic quarantine
++ status=0
++ bun tests/scoring-parity.mjs --check-json /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/corrupt-arithmetic.json
++ status=1
++ echo negative-arithmetic-comparator-exit=1
+negative-arithmetic-comparator-exit=1
++ [[ 1 -ne 0 ]]
++ [[ arithmetic == arithmetic ]]
++ rg -q 'exact confidence/gate effective' /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/negative-arithmetic.log
++ cat /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/negative-arithmetic.log
+141 |   if (ctx.bypass)
+142 |     expected.refusals = expected.refusals.filter((x) => x !== 'BelowThreshold');
+143 |   expected.refusals.push(...guards);
+144 |   expected.qualified = expected.refusals.length === 0;
+145 |   for (const [k, v] of Object.entries(expected))
+146 |     eq(s[k], v, `exact confidence/gate ${k}`);
+          ^
+AssertionError: exact confidence/gate effective
++ actual - expected
+
+  {
+    d: '1',
++   n: '51'
+-   n: '50'
+  }
+
+ generatedMessage: false,
+     actual: {
+  n: "51",
+  d: "1",
+},
+   expected: {
+  n: "50",
+  d: "1",
+},
+   operator: "deepStrictEqual",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at checkScore (/Users/donald/sources/repos/wdbx/specimen-studio/tests/scoring-parity.mjs:146:5)
+      at validate (/Users/donald/sources/repos/wdbx/specimen-studio/tests/scoring-parity.mjs:1150:7)
+
+Bun v1.4.4-canary.1+ea6a2c7b7 (macOS arm64)
++ for kind in arithmetic quarantine
++ status=0
++ bun tests/scoring-parity.mjs --check-json /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/corrupt-quarantine.json
++ status=1
++ echo negative-quarantine-comparator-exit=1
+negative-quarantine-comparator-exit=1
++ [[ 1 -ne 0 ]]
++ [[ quarantine == arithmetic ]]
++ rg -q 'broker independent transition cancel/quarantined' /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/negative-quarantine.log
++ cat /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/negative-quarantine.log
+ 995 |       pending: fg.length + mt.length,
+ 996 |       active: active.size,
+ 997 |       quarantined: [...active.values()].filter((a) => a.revoked).length,
+ 998 |     };
+ 999 |     for (const [k, v] of Object.entries(expected))
+1000 |       eq(e.counts[k], v, `broker independent transition ${q.op}/${k}`);
+             ^
+AssertionError: broker independent transition cancel/quarantined
+
+0 !== 1
+
+ generatedMessage: false,
+     actual: 0,
+   expected: 1,
+   operator: "deepStrictEqual",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at replay (/Users/donald/sources/repos/wdbx/specimen-studio/tests/scoring-parity.mjs:1000:7)
+      at validate (/Users/donald/sources/repos/wdbx/specimen-studio/tests/scoring-parity.mjs:1190:3)
+
+Bun v1.4.4-canary.1+ea6a2c7b7 (macOS arm64)
++ python3 -
+PASS: all 80 preservation-baseline source hashes unchanged
++ shasum -a 256 /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/native.json /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/wasm.json /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/native.json.semantic.json /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/wasm.json.semantic.json /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/default.wasm /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/scoring.wasm /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/target/debug/examples/scoring_probe /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/corrupt-arithmetic.json /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/corrupt-quarantine.json /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/negative-arithmetic.log /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/negative-quarantine.log
++ cat /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/artifacts.sha256
+33dacbb0fe54140441dd1c1d3aa25ee33fcbc7c721612d4f120e67e346519a6a  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/native.json
+148aa710c12fe18000116d50299a805ab99078f532de5b5ed59cf859e8c6e98e  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/wasm.json
+6d3b506580e52316ea849e62965b11b959b2b36ebbad8000fc00d5ee0db879ef  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/native.json.semantic.json
+6d3b506580e52316ea849e62965b11b959b2b36ebbad8000fc00d5ee0db879ef  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/wasm.json.semantic.json
+747b1b6c2d7ccb8591b845d55d37668ad9535a6676004ee8c946cee665c9f7fb  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/default.wasm
+4565aa5af173113741eb6ee1d546d294cb61a679f66121c5ff522af52c6f4df8  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/scoring.wasm
+c5b0da679c8c585c374ad8f49a0cef5943c5384fa672c1a7b3196b04282e9138  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/target/debug/examples/scoring_probe
+8ac25a8dbbbd21172b3f9ac1db69b7c10282652ecfd1a2a8a7828c516275939b  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/corrupt-arithmetic.json
+719e18b2122fe8772bbc36ec7136ce7c661de0dba65d4c119f928fb69ff56b51  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/corrupt-quarantine.json
+fa5dd1b9cd39f82fb8c371ffaa98a6590f43c22b40cc1947b367f1fb4e02c229  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/negative-arithmetic.log
+7de5a4703e2833284c8a49ae8fb94d3dac0b17c9eb8e3df62d013945ac854170  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/negative-quarantine.log
++ echo 'Evidence limit: finite synthetic pure mechanisms; default WASM compile/export inspection only; feature WASM executed with throwing imports and zero actual host calls. No physical concurrency, host fencing, efficacy, installed execution, ABI acceptance or production cutover claim; every requirement remains open/C0/unknown.'
+Evidence limit: finite synthetic pure mechanisms; default WASM compile/export inspection only; feature WASM executed with throwing imports and zero actual host calls. No physical concurrency, host fencing, efficacy, installed execution, ABI acceptance or production cutover claim; every requirement remains open/C0/unknown.
++ echo retained-artifacts=/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN
+retained-artifacts=/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN

@@ -1,0 +1,9 @@
+Collecting pynacl==1.6.2 (from -r docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/requirements-local-arm64.txt (line 1))
+  Downloading pynacl-1.6.2-cp38-abi3-macosx_10_10_universal2.whl (388 kB)
+Collecting cffi==2.1.1 (from -r docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/requirements-local-arm64.txt (line 2))
+  Downloading cffi-2.1.1-cp312-cp312-macosx_11_0_arm64.whl (184 kB)
+Collecting pycparser==3.11 (from -r docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/requirements-local-arm64.txt (line 3))
+  Downloading pycparser-3.11-py3-none-any.whl (51 kB)
+Installing collected packages: pynacl, pycparser, cffi
+Successfully installed cffi-2.1.1 pycparser-3.11 pynacl-1.6.2
+No broken requirements found.

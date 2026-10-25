@@ -1,0 +1,1244 @@
+--- before/specimen-studio/native/specimen-kernel/src/identity/mod.rs
++++ after/specimen-studio/native/specimen-kernel/src/identity/mod.rs
+@@ -216,6 +216,11 @@
+             .iter()
+             .find(|r| &r.population == population && r.reference == resource)
+     }
++    /// Borrow entries in insertion order in O(1), without copying any records.
++    /// Callers can reserve traversal/materialization work before inspecting them.
++    pub fn entries(&self) -> &[EntryRecord] {
++        &self.records.entries
++    }
+     pub fn snapshot(&self) -> TableSnapshot {
+         self.records.clone()
+     }
+--- before/specimen-studio/native/specimen-kernel/src/language_v3/model.rs
++++ after/specimen-studio/native/specimen-kernel/src/language_v3/model.rs
+@@ -119,9 +119,13 @@
+     NegatedAction { uncertain: bool, action: Box<Self> },
+ }
+ impl SemanticAst {
++    /// Profile lexical count: punctuation excluded, explicit controls counted once.
+     pub fn token_count(&self) -> usize {
+         match self {
+-            Self::Action(t) => t.len(),
++            Self::Action(t) => t
++                .iter()
++                .filter(|t| t.kind() != TokenKind::Punctuation)
++                .count(),
+             Self::And(a, b) | Self::Or(a, b) | Self::But(a, b) | Self::IfThen(a, b) => {
+                 1 + a.token_count() + b.token_count()
+             }
+--- before/specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs
++++ after/specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs
+@@ -60,13 +60,11 @@
+                     condition_ast = Some(join(&clauses, &links, start, id));
+                     let first: &PreparedClause = &clauses[start];
+                     let last: &PreparedClause = &clauses[id - 1];
+-                    let key = input.text[first.span.start..last.span.end]
+-                        .trim()
+-                        .to_lowercase();
++                    let key = condition_key(input.text[first.span.start..last.span.end].trim())?;
+                     condition = context
+                         .conditions
+                         .iter()
+-                        .find(|(s, _)| s.to_lowercase() == key)
++                        .find(|(s, _)| condition_key(s).is_ok_and(|candidate| candidate == key))
+                         .map(|(_, v)| {
+                             if *v {
+                                 ConditionalDisposition::Satisfied
+@@ -751,3 +749,22 @@
+     variants.push(variant);
+     Ok(())
+ }
++
++// Preserve the complete antecedent, including whitespace and every quoted byte.
++// Token spans correctly distinguish apostrophes within words from quote openers.
++fn condition_key(source: &str) -> Result<String, LanguageError> {
++    let tokens = tokenize::tokenize(source, 0)?;
++    let mut key = String::new();
++    let mut end = 0;
++    for token in tokens {
++        key.push_str(&source[end..token.span.start]);
++        if token.quoted() {
++            key.push_str(token.source());
++        } else {
++            key.push_str(&token.source().to_lowercase());
++        }
++        end = token.span.end;
++    }
++    key.push_str(&source[end..]);
++    Ok(key)
++}
+--- before/specimen-studio/native/specimen-kernel/src/language_v3/script.rs
++++ after/specimen-studio/native/specimen-kernel/src/language_v3/script.rs
+@@ -103,11 +103,11 @@
+         })
+     }
+ }
++fn call_name_byte(c: u8) -> bool {
++    c.is_ascii_alphanumeric() || c == b'_' || c == b'-'
++}
+ fn name(s: &str) -> bool {
+-    !s.is_empty()
+-        && s.len() <= 128
+-        && s.bytes()
+-            .all(|c| c.is_ascii_alphanumeric() || c == b'_' || c == b'-')
++    !s.is_empty() && s.len() <= 128 && s.bytes().all(call_name_byte)
+ }
+ #[derive(Debug, Clone)]
+ pub struct CapabilityLedger {
+@@ -541,7 +541,7 @@
+         while self.source[self.pos..]
+             .chars()
+             .next()
+-            .is_some_and(|c| c.is_ascii_alphanumeric() || c == '_')
++            .is_some_and(|c| c.is_ascii() && call_name_byte(c as u8))
+         {
+             self.pos += 1
+         }
+--- before/specimen-studio/native/specimen-kernel/src/language_v3/tables.rs
++++ after/specimen-studio/native/specimen-kernel/src/language_v3/tables.rs
+@@ -155,6 +155,7 @@
+                         replacement.chars().all(char::is_alphabetic)
+                             && row.phrase.chars().all(char::is_alphabetic)
+                     }
++                    UtilityEffect::Role(role) => !matches!(role, Role::Negation | Role::Connective),
+                     _ => true,
+                 };
+                 if !valid {
+@@ -174,6 +175,7 @@
+                     .map(|ts| ts.into_iter().map(|t| t.lemma).collect::<Vec<_>>())
+             })
+             .collect::<Result<Vec<_>, _>>()?;
++        validate_controls(&rows, &phrases)?;
+         // Reserve the worst-case row visits, lexical byte comparisons and
+         // changed-region checks for both safety kinds before each matcher pass.
+         let safety_words = rows
+@@ -377,3 +379,57 @@
+         Ok(())
+     }
+ }
++
++// A connective runs before the negation pass. Reject any vocabulary in which it
++// can swallow even part of a negator (including a prefix/suffix across rows).
++// This deliberately conservative constructor admits no competing control roles.
++fn validate_controls(rows: &[UtilityRow], phrases: &[Vec<String>]) -> Result<(), LanguageError> {
++    let mut negation_words = BTreeSet::new();
++    for (row, words) in rows.iter().zip(phrases) {
++        if matches!(row.effect, UtilityEffect::Negation { .. }) {
++            for word in words {
++                if matches!(word.as_str(), "and" | "or" | "but" | "if" | "then") {
++                    return Err(LanguageError::InvalidTables);
++                }
++                negation_words.insert(word.as_str());
++            }
++        }
++    }
++    for (row, words) in rows.iter().zip(phrases) {
++        for word in words {
++            if matches!(word.as_str(), "if" | "then") {
++                let expected = if word == "if" {
++                    Connective::If
++                } else {
++                    Connective::Then
++                };
++                if words.len() != 1
++                    || !matches!(row.effect, UtilityEffect::Conjunction(c) if c == expected)
++                {
++                    return Err(LanguageError::InvalidTables);
++                }
++            }
++            if let UtilityEffect::Conjunction(c) = row.effect {
++                if is_negator(word) || negation_words.contains(word.as_str()) {
++                    return Err(LanguageError::InvalidTables);
++                }
++                let builtin = match word.as_str() {
++                    "and" => Some(Connective::And),
++                    "or" => Some(Connective::Or),
++                    "but" => Some(Connective::But),
++                    _ => None,
++                };
++                if builtin.is_some_and(|b| b != c) {
++                    return Err(LanguageError::InvalidTables);
++                }
++                // Conditional keywords have fixed positions and exact vocabulary.
++                if matches!(c, Connective::If | Connective::Then)
++                    && !(words.len() == 1 && matches!(word.as_str(), "if" | "then"))
++                {
++                    return Err(LanguageError::InvalidTables);
++                }
++            }
++        }
++    }
++    Ok(())
++}
+--- before/specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs
++++ after/specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs
+@@ -14,6 +14,7 @@
+     caps: &CapabilityLedger,
+     work: &mut Work,
+ ) -> Result<Vec<Match>, RouteError> {
++    work.charge(1 + rule.id.len())?;
+     match &rule.kind {
+         RouteKind::Grammar(atoms) => {
+             work.charge(atoms.len() + a.tokens().len())?;
+@@ -22,6 +23,18 @@
+             }
+             let mut captures = vec![];
+             for (atom, token) in atoms.iter().zip(a.tokens()) {
++                work.charge(token.lemma().len())?;
++                match atom {
++                    GrammarAtom::Literal(s) | GrammarAtom::Quoted(s) | GrammarAtom::Number(s) => {
++                        work.charge(s.len())?
++                    }
++                    GrammarAtom::Operator { name, allowed } => {
++                        work.charge(name.len() + allowed.len())?;
++                        for op in allowed {
++                            work.charge(op.len())?;
++                        }
++                    }
++                }
+                 let capture = match atom {
+                     GrammarAtom::Literal(s)
+                         if !token.quoted() && token.decimal().is_none() && token.lemma() == s =>
+@@ -85,7 +98,7 @@
+             work.charge(
+                 positions
+                     .len()
+-                    .checked_mul(a.original().len() + 3)
++                    .checked_mul(a.original().len() + rule.id.len() + 21)
+                     .ok_or(RouteError::BudgetExceeded)?,
+             )?;
+             Ok(positions
+--- before/specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs
++++ after/specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs
+@@ -1,6 +1,7 @@
+ //! Population/scope fenced explicit routes and a pure structural/route join.
+ mod matching;
+ mod model;
++mod work;
+ use crate::{
+     identity::*,
+     language_v3::{script::*, *},
+@@ -60,7 +61,7 @@
+         if new.len() > 4096 || self.rules.len() + new.len() > 4096 {
+             return Err(RouteError::RuleLimit);
+         }
+-        let snapshot = table.snapshot();
++        let entries = table.entries();
+         let mut ids = self
+             .rules
+             .iter()
+@@ -98,8 +99,7 @@
+                 return Err(RouteError::RuleLimit);
+             }
+             for reference in &rule.entries {
+-                let entry = snapshot
+-                    .entries
++                let entry = entries
+                     .iter()
+                     .find(|e| e.reference == *reference)
+                     .ok_or(RouteError::MissingEntry)?;
+@@ -294,9 +294,15 @@
+         return Err(RouteError::StaleRegistry);
+     }
+     let mut work = Work::new(budget)?;
+-    let snapshot = table.snapshot();
+-    let records = snapshot
+-        .entries
++    let entries = table.entries();
++    // O(1) slice metadata lets us refuse before traversing or indexing even an
++    // empty query. Charge an upper bound on BTreeMap insertion comparisons.
++    let index_steps = entries
++        .len()
++        .checked_mul(1 + (usize::BITS - entries.len().leading_zeros()) as usize)
++        .ok_or(RouteError::BudgetExceeded)?;
++    work.charge(index_steps)?;
++    let records = entries
+         .iter()
+         .map(|e| (e.reference.0, e))
+         .collect::<BTreeMap<_, _>>();
+@@ -304,7 +310,10 @@
+     for rule in &index.rules {
+         work.charge(1 + rule.entries.len())?;
+         for reference in &rule.entries {
++            work.charge(1 + (usize::BITS - records.len().leading_zeros()) as usize)?;
+             let entry = records.get(&reference.0).ok_or(RouteError::MissingEntry)?;
++            work.population(&entry.population)?;
++            work.population(population)?;
+             if &entry.population != population {
+                 return Err(RouteError::PopulationMismatch);
+             }
+@@ -315,22 +324,38 @@
+     for clause in prepared.clauses() {
+         for action in clause.variants() {
+             work.charge(1 + action.tokens().len() + action.original().len())?;
++            work.semantic_ast(action.ast())?;
+             let key = text_v3::encode(action)?;
+-            for entry in table.find_all(population, key.pattern_key()) {
++            // Stream complete structural matches in insertion order; no uncharged
++            // all-match Vec or hidden table traversal occurs before reservation.
++            work.charge(entries.len())?;
++            for entry in entries {
++                work.population(&entry.population)?;
++                work.population(population)?;
++                if &entry.population != population {
++                    continue;
++                }
++                work.key(&entry.key)?;
++                work.key(key.pattern_key())?;
++                if &entry.key != key.pattern_key() {
++                    continue;
++                }
+                 append(
+                     &mut result,
+                     &mut positions,
+                     &records,
+-                    entry,
+-                    origin(
+-                        action,
+-                        CandidatePath::Structural(key.pattern_key().clone()),
+-                        vec![],
+-                        SimilarityBypass::RequireFullScan,
+-                    ),
++                    entry.reference,
++                    action,
++                    &CandidatePath::Structural(key.pattern_key().clone()),
++                    &[],
++                    SimilarityBypass::RequireFullScan,
+                     &mut work,
+                 )?;
+             }
++            work.charge(
++                index.rules.len()
++                    * (1 + (usize::BITS - index.rules.len().leading_zeros()) as usize),
++            )?;
+             for number in index.possible(action.original()) {
+                 let rule = &index.rules[number];
+                 work.charge(1)?;
+@@ -344,7 +369,10 @@
+                             &mut positions,
+                             &records,
+                             *entry,
+-                            origin(action, matched.0.clone(), matched.1.clone(), matched.2),
++                            action,
++                            &matched.0,
++                            &matched.1,
++                            matched.2,
+                             &mut work,
+                         )?;
+                     }
+@@ -354,50 +382,44 @@
+     }
+     Ok(result)
+ }
+-fn origin(
+-    a: &PreparedAction,
+-    path: CandidatePath,
+-    captures: Vec<RouteCapture>,
+-    bypass: SimilarityBypass,
+-) -> CandidateOrigin {
+-    CandidateOrigin {
+-        origin: a.origin().clone(),
+-        span: a.span(),
+-        token_spans: a.tokens().iter().map(Token::span).collect(),
+-        constraints: a.into(),
+-        path,
+-        captures,
+-        bypass,
+-    }
+-}
++#[allow(clippy::too_many_arguments)]
+ fn append(
+     out: &mut Vec<Candidate>,
+     positions: &mut BTreeMap<u128, usize>,
+     records: &BTreeMap<u128, &EntryRecord>,
+     reference: EntryRef,
+-    origin: CandidateOrigin,
++    action: &PreparedAction,
++    path: &CandidatePath,
++    captures: &[RouteCapture],
++    bypass: SimilarityBypass,
+     work: &mut Work,
+ ) -> Result<(), RouteError> {
+-    work.charge(
+-        1 + origin.token_spans.len()
+-            + origin
+-                .captures
+-                .iter()
+-                .map(|c| match &c.value {
+-                    CaptureValue::Text(s) | CaptureValue::Operator(s) => s.len(),
+-                    CaptureValue::Bytes(b) => b.len(),
+-                    CaptureValue::Number(_) => 32,
+-                })
+-                .sum::<usize>(),
+-    )?;
++    // Reserve every variable-size origin field before materialization, including
++    // caller identity and fanout rule refs, which need not be short source text.
++    work.origin(action, path, captures)?;
+     work.origins = work
+         .origins
+         .checked_sub(1)
+         .ok_or(RouteError::BudgetExceeded)?;
+-    if let Some(position) = positions.get(&reference.0) {
+-        out[*position].origins.push(origin);
++    work.charge(2 + 2 * (usize::BITS - records.len().leading_zeros()) as usize)?;
++    let position = positions.get(&reference.0).copied();
++    let record = records.get(&reference.0).ok_or(RouteError::MissingEntry)?;
++    if position.is_none() {
++        work.charge(record.original.len())?;
++        work.target_ast(&record.ast)?;
++    }
++    let origin = CandidateOrigin {
++        origin: action.origin().clone(),
++        span: action.span(),
++        token_spans: action.tokens().iter().map(Token::span).collect(),
++        constraints: action.into(),
++        path: path.clone(),
++        captures: captures.to_vec(),
++        bypass,
++    };
++    if let Some(position) = position {
++        out[position].origins.push(origin);
+     } else {
+-        let record = records.get(&reference.0).ok_or(RouteError::MissingEntry)?;
+         positions.insert(reference.0, out.len());
+         out.push(Candidate {
+             entry: reference,
+--- before/specimen-studio/native/specimen-kernel/src/scanner_v3/routes/work.rs
++++ after/specimen-studio/native/specimen-kernel/src/scanner_v3/routes/work.rs
+@@ -0,0 +1,102 @@
++//! Borrowed preflights: charge vector lengths before traversal and strings before
++//! comparisons/copies. No arbitrary new identity limit, timing claim or mutation.
++use super::*;
++use crate::language::Expr;
++impl Work {
++    pub(super) fn population(&mut self, p: &Population) -> Result<(), RouteError> {
++        for s in [&p.tenant, &p.specimen, &p.node_type] {
++            self.charge(s.len())?;
++        }
++        Ok(())
++    }
++    pub(super) fn key(&mut self, k: &PatternKey) -> Result<(), RouteError> {
++        self.charge(32)?;
++        for s in [&k.encoder_version, &k.modality, &k.resolution] {
++            self.charge(s.len())?;
++        }
++        Ok(())
++    }
++    fn strings(&mut self, strings: &[String]) -> Result<(), RouteError> {
++        self.charge(strings.len())?;
++        for s in strings {
++            self.charge(s.len())?;
++        }
++        Ok(())
++    }
++    fn expressions(&mut self, trees: &[Expr]) -> Result<(), RouteError> {
++        self.charge(1)?; // vector header, including empty argument vectors
++        self.charge(trees.len())?;
++        for tree in trees {
++            match tree {
++                Expr::Text { value } => self.charge(value.len())?,
++                Expr::Call { name, args } => {
++                    self.charge(name.len())?;
++                    self.charge(args.len())?;
++                    for arg in args {
++                        self.expressions(arg)?;
++                    }
++                }
++            }
++        }
++        Ok(())
++    }
++    pub(super) fn target_ast(&mut self, ast: &ActionAst) -> Result<(), RouteError> {
++        self.charge(1)?;
++        // A selected entry can hold unbounded alternatives. Refuse in O(1)
++        // from the borrowed vector length before visiting any of them.
++        self.charge(ast.alternatives.len())?;
++        self.expressions(&ast.bind)?;
++        for alternative in &ast.alternatives {
++            self.expressions(&alternative.action)?;
++        }
++        Ok(())
++    }
++    pub(super) fn semantic_ast(&mut self, ast: &SemanticAst) -> Result<(), RouteError> {
++        self.charge(1)?;
++        match ast {
++            SemanticAst::Action(tokens) => {
++                self.charge(tokens.len())?;
++                for t in tokens {
++                    self.charge(t.lemma().len())?;
++                    self.charge(t.source().len())?;
++                }
++            }
++            SemanticAst::And(a, b)
++            | SemanticAst::Or(a, b)
++            | SemanticAst::But(a, b)
++            | SemanticAst::IfThen(a, b) => {
++                self.semantic_ast(a)?;
++                self.semantic_ast(b)?;
++            }
++            SemanticAst::NegatedAction { action, .. } => self.semantic_ast(action)?,
++        }
++        Ok(())
++    }
++    pub(super) fn origin(
++        &mut self,
++        a: &PreparedAction,
++        path: &CandidatePath,
++        captures: &[RouteCapture],
++    ) -> Result<(), RouteError> {
++        self.charge(1)?;
++        self.charge(a.tokens().len())?;
++        self.charge(a.origin().input_id().len())?;
++        self.strings(a.origin().rule_refs())?;
++        match path {
++            CandidatePath::Structural(k) => self.key(k)?,
++            CandidatePath::Grammar(s)
++            | CandidatePath::Wildcard(s)
++            | CandidatePath::Automaton { rule: s, .. } => self.charge(s.len())?,
++        }
++        self.charge(captures.len())?;
++        for c in captures {
++            self.charge(c.name.len())?;
++            self.charge(match &c.value {
++                CaptureValue::Text(s) | CaptureValue::Operator(s) => s.len(),
++                CaptureValue::Bytes(s) => s.len(),
++                CaptureValue::Number(_) => 32,
++            })?;
++        }
++        Ok(())
++    }
++}
+--- before/specimen-studio/native/specimen-kernel/src/text_v3/mod.rs
++++ after/specimen-studio/native/specimen-kernel/src/text_v3/mod.rs
+@@ -71,7 +71,7 @@
+     if original.chars().count() > 2000 {
+         return Err(TextError::PatternTooLong);
+     }
+-    let count = lexical_count(tree);
++    let count = tree.token_count();
+     let resolution = if count <= 6 {
+         Resolution::Low
+     } else if count <= 16 {
+@@ -309,19 +309,3 @@
+         },
+     );
+ }
+-
+-// Punctuation is retained by the high AST, but is not a lexical leaf in the
+-// selected class profile. Count the actual immutable tree, never source length.
+-fn lexical_count(tree: &SemanticAst) -> usize {
+-    match tree {
+-        SemanticAst::Action(tokens) => tokens
+-            .iter()
+-            .filter(|t| t.kind() != TokenKind::Punctuation)
+-            .count(),
+-        SemanticAst::And(a, b)
+-        | SemanticAst::Or(a, b)
+-        | SemanticAst::But(a, b)
+-        | SemanticAst::IfThen(a, b) => 1 + lexical_count(a) + lexical_count(b),
+-        SemanticAst::NegatedAction { action, .. } => 1 + lexical_count(action),
+-    }
+-}
+--- before/specimen-studio/native/specimen-kernel/tests/language_final_fix.rs
++++ after/specimen-studio/native/specimen-kernel/tests/language_final_fix.rs
+@@ -0,0 +1,254 @@
++use specimen_kernel::{
++    language_v3::{script::*, *},
++    text_v3,
++};
++fn tables(rows: Vec<(UtilityKind, &str, UtilityEffect)>) -> Result<UtilityTables, LanguageError> {
++    UtilityTables::new(
++        "p",
++        "v",
++        UtilityKind::ALL
++            .into_iter()
++            .map(|kind| UtilitySnapshot {
++                population: "p".into(),
++                version: "v".into(),
++                kind,
++                rows: rows
++                    .iter()
++                    .enumerate()
++                    .filter(|(_, r)| r.0 == kind)
++                    .map(|(i, r)| UtilityRow {
++                        reference: format!("r{i}"),
++                        phrase: r.1.into(),
++                        effect: r.2.clone(),
++                    })
++                    .collect(),
++            })
++            .collect(),
++    )
++}
++fn prepared(text: &str, condition: &str, t: &UtilityTables) -> Prepared {
++    prepare(
++        Input {
++            id: "final-fix".into(),
++            text: text.into(),
++        },
++        &ContextSnapshot {
++            population: "p".into(),
++            utility_version: "v".into(),
++            tokens: vec![],
++            conditions: vec![(condition.into(), true)],
++        },
++        t,
++        Budget::default(),
++        &mut FixedDraw(0),
++    )
++    .unwrap()
++}
++fn registry(name: &str, alias: &str) -> Registry {
++    Registry::new(
++        "test-registry",
++        1,
++        vec![],
++        vec![Declaration {
++            name: name.into(),
++            aliases: vec![alias.into()],
++            scopes: vec![Scope::NodeAction],
++            reads: vec![],
++            handler: Handler::Text,
++        }],
++    )
++    .unwrap()
++}
++#[test]
++fn quote_opaque_full_conditions_and_execution_guard() {
++    let t = tables(vec![]).unwrap();
++    let r = registry("Text", "text");
++    let s = compile("Text(\"effect\")", Scope::NodeAction, &r).unwrap();
++    let caps = r.capabilities(vec![]).unwrap();
++    for (antecedent, attestation, yes) in [
++        ("\"ALLOW\"", "\"allow\"", false),
++        ("\"Ä\"", "\"ä\"", false),
++        ("\"é\"", "\"é\"", false),
++        ("\"ALLOW\"", "\"ALLOW\"", true),
++        ("RAIN", "rain", true),
++        ("rain and \"ALLOW\"", "rain", false),
++        ("RAIN and \"ALLOW\"", "rain and \"ALLOW\"", true),
++        (r#""a\"B""#, r#""a\"b""#, false),
++        (r#""a\"B""#, r#""a\"B""#, true),
++        ("don't rain", "DON'T RAIN", true),
++    ] {
++        let p = prepared(&format!("if {antecedent} then go"), attestation, &t);
++        let a = &p.clauses().last().unwrap().variants()[0];
++        assert_eq!(a.executable(), yes, "{antecedent} / {attestation}");
++        assert_eq!(
++            a.conditional(),
++            if yes {
++                ConditionalDisposition::Satisfied
++            } else {
++                ConditionalDisposition::Unresolved
++            }
++        );
++        assert_eq!(
++            execute_for_action(&s, a, &r, &caps, ScriptBudget::default()).is_ok(),
++            yes
++        );
++    }
++}
++#[test]
++fn contradictory_control_tables_refuse_before_any_prepared_action() {
++    let cases = vec![
++        vec![(
++            UtilityKind::Grammar,
++            "halt",
++            UtilityEffect::Role(Role::Negation),
++        )],
++        vec![(
++            UtilityKind::Grammar,
++            "halt",
++            UtilityEffect::Role(Role::Connective),
++        )],
++        vec![(
++            UtilityKind::Conjunction,
++            "don't",
++            UtilityEffect::Conjunction(Connective::And),
++        )],
++        vec![(
++            UtilityKind::Conjunction,
++            "please don't",
++            UtilityEffect::Conjunction(Connective::And),
++        )],
++        vec![(
++            UtilityKind::Conjunction,
++            "don't please",
++            UtilityEffect::Conjunction(Connective::And),
++        )],
++        vec![
++            (
++                UtilityKind::Conjunction,
++                "halt now",
++                UtilityEffect::Conjunction(Connective::And),
++            ),
++            (
++                UtilityKind::Negation,
++                "halt",
++                UtilityEffect::Negation { uncertain: false },
++            ),
++        ],
++        vec![
++            (
++                UtilityKind::Conjunction,
++                "go halt",
++                UtilityEffect::Conjunction(Connective::And),
++            ),
++            (
++                UtilityKind::Negation,
++                "halt now",
++                UtilityEffect::Negation { uncertain: false },
++            ),
++        ],
++        vec![
++            (
++                UtilityKind::Conjunction,
++                "now go",
++                UtilityEffect::Conjunction(Connective::And),
++            ),
++            (
++                UtilityKind::Negation,
++                "halt now",
++                UtilityEffect::Negation { uncertain: false },
++            ),
++        ],
++        vec![(
++            UtilityKind::Conjunction,
++            "if",
++            UtilityEffect::Conjunction(Connective::And),
++        )],
++        vec![(
++            UtilityKind::Conjunction,
++            "then",
++            UtilityEffect::Conjunction(Connective::Or),
++        )],
++        vec![(
++            UtilityKind::Negation,
++            "if",
++            UtilityEffect::Negation { uncertain: false },
++        )],
++        vec![(
++            UtilityKind::Negation,
++            "halt and",
++            UtilityEffect::Negation { uncertain: false },
++        )],
++        vec![(
++            UtilityKind::Grammar,
++            "then",
++            UtilityEffect::Role(Role::Predicate),
++        )],
++    ];
++    for rows in cases {
++        assert!(matches!(tables(rows), Err(LanguageError::InvalidTables)));
++    }
++    // A valid custom negator remains guarded; quotes are inert.
++    let t = tables(vec![(
++        UtilityKind::Negation,
++        "halt now",
++        UtilityEffect::Negation { uncertain: false },
++    )])
++    .unwrap();
++    let r = registry("Text", "text");
++    let s = compile("Text(\"effect\")", Scope::NodeAction, &r).unwrap();
++    let caps = r.capabilities(vec![]).unwrap();
++    for (text, yes) in [
++        ("halt now go", false),
++        ("please don't go", false),
++        ("\"halt now\" go", true),
++    ] {
++        let p = prepared(text, "", &t);
++        let a = &p.clauses()[0].variants()[0];
++        assert_eq!(a.executable(), yes);
++        assert_eq!(
++            execute_for_action(&s, a, &r, &caps, ScriptBudget::default()).is_ok(),
++            yes
++        );
++    }
++}
++#[test]
++fn complexity_getter_matches_text_profile() {
++    let t = tables(vec![]).unwrap();
++    for text in [
++        "alpha, beta gamma delta epsilon zeta",
++        "\"x,y\" + 2",
++        "not hello",
++        "if rain and snow then go",
++    ] {
++        let p = prepared(text, "", &t);
++        for c in p.clauses() {
++            for a in c.variants() {
++                assert_eq!(
++                    a.complexity_token_count(),
++                    text_v3::encode(a).unwrap().token_count(),
++                    "{text}"
++                );
++            }
++        }
++    }
++}
++#[test]
++fn registry_call_names_and_aliases_compile() {
++    for (name, alias) in [
++        ("my-text", "alias-text"),
++        ("Text_2", "two_2"),
++        ("2Text", "2alias"),
++    ] {
++        let r = registry(name, alias);
++        let caps = r.capabilities(vec![]).unwrap();
++        for n in [name, alias] {
++            let s = compile(&format!("{n}(\"x\")"), Scope::NodeAction, &r).unwrap();
++            assert_eq!(
++                execute_script(&s, &r, &caps, ScriptBudget::default())
++                    .unwrap()
++                    .value(),
++                &Value::Text("x".into())
++            );
++        }
++    }
++}
+--- before/specimen-studio/native/specimen-kernel/tests/routes_final_fix.rs
++++ after/specimen-studio/native/specimen-kernel/tests/routes_final_fix.rs
+@@ -0,0 +1,179 @@
++use specimen_kernel::{
++    identity::*,
++    language::Expr,
++    language_v3::{script::*, *},
++    scanner_v3::routes::*,
++    text_v3,
++};
++fn prepared(text: &str) -> Prepared {
++    let t = UtilityTables::new(
++        "p",
++        "v",
++        UtilityKind::ALL
++            .into_iter()
++            .map(|kind| UtilitySnapshot {
++                population: "p".into(),
++                version: "v".into(),
++                kind,
++                rows: vec![],
++            })
++            .collect(),
++    )
++    .unwrap();
++    prepare(
++        Input {
++            id: "id".into(),
++            text: text.into(),
++        },
++        &ContextSnapshot {
++            population: "p".into(),
++            utility_version: "v".into(),
++            tokens: vec![],
++            conditions: vec![],
++        },
++        &t,
++        Budget::default(),
++        &mut FixedDraw(0),
++    )
++    .unwrap()
++}
++fn registry() -> Registry {
++    Registry::new("r", 1, vec![], vec![]).unwrap()
++}
++fn pop() -> Population {
++    Population::new("t", "s", "n")
++}
++fn entry(id: u128, key: PatternKey, ast: ActionAst) -> EntryRecord {
++    EntryRecord {
++        population: pop(),
++        node: NodeRef(id + 10000),
++        reference: EntryRef(id),
++        key,
++        original: format!("target{id}"),
++        ast,
++        resource: None,
++    }
++}
++fn key() -> PatternKey {
++    text_v3::encode(&prepared("hello").clauses()[0].variants()[0])
++        .unwrap()
++        .pattern_key()
++        .clone()
++}
++fn query(
++    t: &HybridTable,
++    i: &RouteIndex,
++    p: &Prepared,
++    steps: usize,
++) -> Result<Vec<Candidate>, RouteError> {
++    let r = registry();
++    candidates(
++        t,
++        i,
++        &pop(),
++        Scope::NodeAction,
++        p,
++        &r,
++        &r.capabilities(vec![]).unwrap(),
++        RouteBudget {
++            work_steps: steps,
++            ..RouteBudget::default()
++        },
++    )
++}
++#[test]
++fn empty_query_large_table_requires_entry_inspection_budget() {
++    let mut t = HybridTable::default();
++    for id in 1..=257 {
++        t.insert(entry(id, key(), ActionAst::default()), None)
++            .unwrap();
++    }
++    let i = RouteIndex::new(pop(), vec![Scope::NodeAction], &registry()).unwrap();
++    let p = prepared("");
++    assert_eq!(query(&t, &i, &p, 1), Err(RouteError::BudgetExceeded));
++    assert!(query(&t, &i, &p, 100000).unwrap().is_empty());
++}
++#[test]
++fn selected_unbounded_alternative_vector_is_charged_before_clone() {
++    let mut t = HybridTable::default();
++    let ast = ActionAst {
++        bind: vec![],
++        alternatives: (0..12000)
++            .map(|_| Alternative {
++                action: vec![],
++                inhibited: true,
++                weight: 1.0,
++            })
++            .collect(),
++    };
++    t.insert(entry(1, key(), ast), None).unwrap();
++    let i = RouteIndex::new(pop(), vec![Scope::NodeAction], &registry()).unwrap();
++    assert_eq!(
++        query(&t, &i, &prepared("hello"), 100),
++        Err(RouteError::BudgetExceeded)
++    );
++    let out = query(&t, &i, &prepared("hello"), 100000).unwrap();
++    assert_eq!(out[0].target_ast.alternatives.len(), 12000);
++}
++#[test]
++fn nested_target_payloads_and_shared_origins_have_exact_budget_boundary() {
++    let mut t = HybridTable::default();
++    for id in 1..=30 {
++        let ast = ActionAst {
++            bind: vec![Expr::Call {
++                name: "Text".into(),
++                args: vec![vec![Expr::Text {
++                    value: "a".repeat(80),
++                }]],
++            }],
++            alternatives: vec![Alternative {
++                action: vec![Expr::Text {
++                    value: "b".repeat(80),
++                }],
++                inhibited: id % 2 == 0,
++                weight: 0.5,
++            }],
++        };
++        t.insert(entry(id, key(), ast), None).unwrap();
++    }
++    let r = registry();
++    let mut i = RouteIndex::new(pop(), vec![Scope::NodeAction], &r).unwrap();
++    i.register(
++        &t,
++        &r,
++        vec![RouteRule {
++            id: "shared".into(),
++            entries: vec![EntryRef(1), EntryRef(30)],
++            scopes: vec![Scope::NodeAction],
++            kind: RouteKind::Wildcard {
++                mode: WildcardMode::Prefix,
++                literal: "hello".into(),
++                bypass: SimilarityBypass::Declared,
++            },
++        }],
++    )
++    .unwrap();
++    let p = prepared("hello");
++    let full = query(&t, &i, &p, 100000).unwrap();
++    assert_eq!(
++        full.iter().map(|c| c.entry).collect::<Vec<_>>(),
++        (1..=30).map(EntryRef).collect::<Vec<_>>()
++    );
++    assert_eq!(full[0].origins.len(), 2);
++    assert_eq!(full[29].origins.len(), 2);
++    assert_eq!(full[0].original, "target1");
++    assert!(full[1].target_ast.alternatives[0].inhibited);
++    let (mut lo, mut hi) = (1, 100000);
++    while lo < hi {
++        let mid = (lo + hi) / 2;
++        if query(&t, &i, &p, mid).is_ok() {
++            hi = mid
++        } else {
++            lo = mid + 1
++        }
++    }
++    assert_eq!(query(&t, &i, &p, lo).unwrap(), full);
++    assert_eq!(query(&t, &i, &p, lo - 1), Err(RouteError::BudgetExceeded));
++    // Nested strings, vectors and selected original bytes must cost more than flat references.
++    assert!(lo > 30 * 160);
++}
+--- before/specimen-studio/native/specimen-wasm/src/language_probe.rs
++++ after/specimen-studio/native/specimen-wasm/src/language_probe.rs
+@@ -1,4 +1,5 @@
+ //! Synthetic, pure language/text/scanner integration witness; no runtime cutover.
++mod final_fix;
+ use serde_json::{Value, json};
+ use specimen_kernel::{
+     identity::*,
+@@ -482,5 +483,5 @@
+     json!({"schema":"task8-language-mechanism-probe-v1","utility":prepared(&utility),"weighted":[prepared(&weighted(0)),prepared(&weighted(u64::MAX))],"quoted":prepared(&quoted),"unframed":prepared(&unframed),"numeric":numeric.iter().map(prepared).collect::<Vec<_>>(),"decimal":prepared(&decimal_input),"boundaries":boundaries,
+         "control_keys":[key(last(&conditional[0])),key(last(&conditional[4])),key(first(&quoted)),key(first(&prep("1+2+3+4"))),key(first(&prep("1+2+3+4+5+6+7+8+9")))],
+         "errors":{"division":fail("1/0"),"decimal":fail("9999999999999999999+1"),"quote":fail("\"unterminated"),"syntax":fail("two plus"),"nonfinite":fail("10^1000"),"work":format!("{:?}",prepare_with("bright",true,0,Budget { work_steps:1,..Budget::default() }).unwrap_err())},
+-        "scripts":scripts(),"scans":{"antecedent_body_conflict":evidence(last(&conditional[0]),last(&conditional[1])),"antecedent_only":evidence(last(&conditional[0]),last(&conditional[2])),"uncertain_antecedent":evidence(last(&conditional[2]),last(&conditional[3])),"uncertain_body":evidence(last(&conditional[2]),last(&conditional[4])),"numeric":evidence(first(&numeric[0]),first(&numeric[1])),"repeated":evidence(first(&repeated_a),first(&repeated_b)),"partial_roles":evidence(first(&partial_a),first(&partial_b))},"huge":huge,"shared_low":shared_low(),"routes":routes()}).to_string()
+-}
++        "final_fix":final_fix::run(),"scripts":scripts(),"scans":{"antecedent_body_conflict":evidence(last(&conditional[0]),last(&conditional[1])),"antecedent_only":evidence(last(&conditional[0]),last(&conditional[2])),"uncertain_antecedent":evidence(last(&conditional[2]),last(&conditional[3])),"uncertain_body":evidence(last(&conditional[2]),last(&conditional[4])),"numeric":evidence(first(&numeric[0]),first(&numeric[1])),"repeated":evidence(first(&repeated_a),first(&repeated_b)),"partial_roles":evidence(first(&partial_a),first(&partial_b))},"huge":huge,"shared_low":shared_low(),"routes":routes()}).to_string()
++}
+--- before/specimen-studio/native/specimen-wasm/src/language_probe/final_fix.rs
++++ after/specimen-studio/native/specimen-wasm/src/language_probe/final_fix.rs
+@@ -0,0 +1,113 @@
++use super::*;
++pub(super) fn run() -> Value {
++    let r = registry(1);
++    let caps = r.capabilities(vec![]).unwrap();
++    let script = compile("Text(\"effect\")", Scope::NodeAction, &r).unwrap();
++    let conditions=[(r#""ALLOW""#,r#""allow""#),(r#""Ä""#,r#""ä""#),(r#""ALLOW""#,r#""ALLOW""#),("RAIN and snow","rain and snow"),("rain and snow","rain"),(r#""a\"B""#,r#""a\"b""#)].map(|(antecedent,attestation)| {
++        let mut ctx=context(); ctx.conditions=vec![(attestation.into(),true)];
++        let p=prepare(Input{id:"synthetic-input".into(),text:format!("if {antecedent} then go")},&ctx,&tables(false),Budget::default(),&mut FixedDraw(0)).unwrap();
++        let a=last(&p);
++        json!({"antecedent":antecedent,"attestation":attestation,"prepared":prepared(&p),"guard":format!("{:?}",execute_for_action(&script,a,&r,&caps,ScriptBudget::default()).map(|_|"executed"))})
++    });
++    let invalid = [
++        (
++            UtilityKind::Grammar,
++            "halt",
++            UtilityEffect::Role(Role::Negation),
++        ),
++        (
++            UtilityKind::Conjunction,
++            "don't",
++            UtilityEffect::Conjunction(Connective::And),
++        ),
++        (
++            UtilityKind::Conjunction,
++            "if",
++            UtilityEffect::Conjunction(Connective::And),
++        ),
++    ]
++    .map(|(kind, phrase, effect)| {
++        let snapshots = UtilityKind::ALL
++            .into_iter()
++            .map(|k| UtilitySnapshot {
++                population: "parity".into(),
++                version: "v1".into(),
++                kind: k,
++                rows: if k == kind {
++                    vec![UtilityRow {
++                        reference: "control".into(),
++                        phrase: phrase.into(),
++                        effect: effect.clone(),
++                    }]
++                } else {
++                    vec![]
++                },
++            })
++            .collect();
++        format!(
++            "{:?}",
++            UtilityTables::new("parity", "v1", snapshots).unwrap_err()
++        )
++    });
++    let population = Population::new("budget", "probe", "text");
++    let index = RouteIndex::new(population.clone(), vec![Scope::NodeAction], &r).unwrap();
++    let key = text_v3::encode(first(&prep("hello")))
++        .unwrap()
++        .pattern_key()
++        .clone();
++    let entry = |id, ast| EntryRecord {
++        population: population.clone(),
++        node: NodeRef(id + 10000),
++        reference: EntryRef(id),
++        key: key.clone(),
++        original: format!("target{id}"),
++        ast,
++        resource: None,
++    };
++    let mut table = HybridTable::default();
++    for id in 1..=257 {
++        table.insert(entry(id, ActionAst::default()), None).unwrap();
++    }
++    let q = |t: &HybridTable, text: &str, steps| {
++        candidates(
++            t,
++            &index,
++            &population,
++            Scope::NodeAction,
++            &prep(text),
++            &r,
++            &caps,
++            RouteBudget {
++                work_steps: steps,
++                ..RouteBudget::default()
++            },
++        )
++    };
++    let empty = format!("{:?}", q(&table, "", 1).unwrap_err());
++    let mut selected = HybridTable::default();
++    selected
++        .insert(
++            entry(
++                1,
++                ActionAst {
++                    bind: vec![],
++                    alternatives: (0..12000)
++                        .map(|_| Alternative {
++                            action: vec![],
++                            inhibited: true,
++                            weight: 1.0,
++                        })
++                        .collect(),
++                },
++            ),
++            None,
++        )
++        .unwrap();
++    let large = format!("{:?}", q(&selected, "hello", 100).unwrap_err());
++    let complete = q(&selected, "hello", 100000).unwrap();
++    let a = prep("alpha, beta gamma delta epsilon zeta");
++    json!({"conditions":conditions,"invalid_controls":invalid,"empty_table_records":257,"empty_query_error":empty,"selected_alternatives_error":large,"complete_alternative_count":complete[0].target_ast.alternatives.len(),"complexity":{"getter":first(&a).complexity_token_count(),"key":key_value(first(&a))}})
++}
++fn key_value(a: &PreparedAction) -> Value {
++    super::key(a)
++}
+--- before/specimen-studio/native/specimen-wasm/tests/language_probe.rs
++++ after/specimen-studio/native/specimen-wasm/tests/language_probe.rs
+@@ -117,3 +117,19 @@
+     );
+     assert_eq!(trace["scripts"]["runaway"], "StepBudget");
+ }
++
++#[test]
++fn final_fix_witness_exercises_guards_and_borrowed_budget_refusal() {
++    let trace: Value = serde_json::from_str(&specimen_wasm::language_probe::run()).unwrap();
++    let f = &trace["final_fix"];
++    assert_eq!(f["conditions"][0]["guard"], "Err(ActionBlocked)");
++    assert_eq!(f["conditions"][2]["guard"], "Ok(\"executed\")");
++    assert_eq!(
++        f["invalid_controls"],
++        serde_json::json!(["InvalidTables", "InvalidTables", "InvalidTables"])
++    );
++    assert_eq!(f["empty_query_error"], "BudgetExceeded");
++    assert_eq!(f["selected_alternatives_error"], "BudgetExceeded");
++    assert_eq!(f["complete_alternative_count"], 12000);
++    assert_eq!(f["complexity"]["getter"], 6);
++}
+--- before/specimen-studio/scripts/check-language-parity.sh
++++ after/specimen-studio/scripts/check-language-parity.sh
+@@ -53,17 +53,33 @@
+ rg -q 'full32 digest' "$artifacts/negative.log"
+ cat "$artifacts/negative.log"
+ echo 'PASS: load-bearing corrupted digest refused by same comparator with nonzero exit'
++label_status=0
++bun tests/language-parity.mjs --check-json "$artifacts/corrupt-digest.json.label.json" > "$artifacts/negative-label.log" 2>&1 || label_status=$?
++echo "negative-label-comparator-exit=$label_status"
++if [[ "$label_status" -eq 0 ]]; then
++  echo 'FAIL: comparator accepted corrupted scanner component name' >&2
++  exit 1
++fi
++rg -q 'ordered scanner component names/count' "$artifacts/negative-label.log"
++cat "$artifacts/negative-label.log"
++echo 'PASS: load-bearing corrupted label refused by same comparator with nonzero exit'
++
+ python3 - <<'PY'
+ import hashlib, json
+ from pathlib import Path
+ root = Path.cwd().parent
+ baseline = json.loads((root / 'docs/completion/execution/evidence/2026-10-22-language/legacy-baseline.json').read_text())
+ for row in baseline['files']:
+-    actual = hashlib.sha256((root / row['path']).read_bytes()).hexdigest()
+-    assert actual == row['sha256'], row['path']
+-print(f"PASS: {len(baseline['files'])} frozen legacy ID/save/conformance/lock hashes unchanged")
++    data = (root / row['path']).read_bytes()
++    if row['path'] == 'specimen-studio/native/specimen-kernel/src/identity/mod.rs':
++        extension = b"    /// Borrow entries in insertion order in O(1), without copying any records.\n    /// Callers can reserve traversal/materialization work before inspecting them.\n    pub fn entries(&self) -> &[EntryRecord] {\n        &self.records.entries\n    }\n"
++        assert data.count(extension) == 1
++        data = data.replace(extension, b'', 1)
++    assert hashlib.sha256(data).hexdigest() == row['sha256'], row['path']
++print('PASS: 22 legacy hashes unchanged; one exact reviewed immutable accessor extension only; original 23-file baseline retained')
+ PY
+ shasum -a 256 "$artifacts/native.json" "$artifacts/default.wasm" "$artifacts/language.wasm" \
+-  "$artifacts/wasm.json" "$artifacts/corrupt-digest.json" "$artifacts/negative.log" > "$artifacts/artifacts.sha256"
++  "$artifacts/wasm.json" "$artifacts/corrupt-digest.json" "$artifacts/negative.log" \
++  "$artifacts/corrupt-digest.json.label.json" "$artifacts/negative-label.log" > "$artifacts/artifacts.sha256"
+ cat "$artifacts/artifacts.sha256"
+ echo 'Evidence limit: synthetic pure API execution only; default WASM compiled/export-inspected, not instantiated; no production cutover, efficacy, effect hosting, migration, scheduling or target qualification.'
+--- before/specimen-studio/tests/language-parity.mjs
++++ after/specimen-studio/tests/language-parity.mjs
+@@ -236,6 +236,11 @@
+   });
+   let totalS = [0n, 1n],
+     totalD = [0n, 1n];
++  eq(
++    e.components.map((c) => c.name),
++    ['lemma-multiset', 'ordered-bigram-multiset', 'spo', 'operands-operators'],
++    'ordered scanner component names/count',
++  );
+   e.components.forEach((c, i) => {
+     const weight = BigInt(i === 0 ? 40 : 20),
+       want = expected[i];
+@@ -285,6 +290,25 @@
+ }
+ function validate(out) {
+   eq(out.schema, 'task8-language-mechanism-probe-v1');
++  const f = out.final_fix;
++  eq(f.invalid_controls, ['InvalidTables', 'InvalidTables', 'InvalidTables']);
++  eq(f.empty_table_records, 257);
++  eq(f.empty_query_error, 'BudgetExceeded');
++  eq(f.selected_alternatives_error, 'BudgetExceeded');
++  eq(f.complete_alternative_count, 12000);
++  eq(f.complexity.getter, 6);
++  eq(f.complexity.getter, f.complexity.key.count);
++  checkKey(f.complexity.key);
++  f.conditions.forEach((c, i) => {
++    checkPrepared(c.prepared);
++    const yes = [false, false, true, true, false, false][i];
++    eq(c.prepared.actions.at(-1).constraints.executable, yes);
++    eq(
++      c.prepared.actions.at(-1).constraints.condition,
++      yes ? 'Satisfied' : 'Unresolved',
++    );
++    eq(c.guard, yes ? 'Ok("executed")' : 'Err(ActionBlocked)');
++  });
+   assert.equal(Object.hasOwn(out, 'error'), false);
+   [
+     out.utility,
+@@ -511,7 +535,15 @@
+   const corrupt = structuredClone(out);
+   corrupt.boundaries[0].digest[0] ^= 1;
+   assert.throws(() => validate(corrupt), /full32 digest/);
+-  console.log('PASS comparator rejects changed digest');
++  const label = structuredClone(out);
++  label.scans.numeric.components[0].name = 'corrupted-label';
++  assert.throws(() => validate(label), /ordered scanner component names/);
++  const missing = structuredClone(out);
++  missing.scans.numeric.components.pop();
++  assert.throws(() => validate(missing), /ordered scanner component names/);
++  console.log(
++    'PASS comparator rejects changed digest, component name and count',
++  );
+ } else if (mode === '--check-json') {
+   validate(JSON.parse(readFileSync(args[0], 'utf8')));
+   console.log('PASS independent JSON semantics');
+@@ -585,6 +617,9 @@
+   const corrupt = structuredClone(out);
+   corrupt.boundaries[0].digest[0] ^= 1;
+   writeFileSync(corruptPath, JSON.stringify(corrupt));
++  const label = structuredClone(out);
++  label.scans.numeric.components[0].name = 'corrupted-label';
++  writeFileSync(`${corruptPath}.label.json`, JSON.stringify(label));
+   console.log(
+     `default-wasm sha256=${hash(production)} compiled/export-inspected language_probe_raw=absent; not instantiated`,
+   );

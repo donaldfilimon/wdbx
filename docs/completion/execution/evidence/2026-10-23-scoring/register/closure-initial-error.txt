@@ -1,0 +1,1 @@
+Initial development closure process exited 1 at nonempty mapped_decisions assertion: final probe P08.10 group initially omitted D06/D07/D08/D16 routing. Added those applicable decision mappings to current metadata and rehashed the affected current references. No checker/schema policy relaxation or product edit.

@@ -1,0 +1,29 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+error[E0599]: no method named `retire_cycle` found for struct `specimen_kernel::orchestration_v3::Broker<'a>` in the current scope
+   --> native/specimen-kernel/tests/orchestration_v3.rs:393:405
+    |
+393 | ...).unwrap();assert_eq!(b.retire_cycle(&p,1,1).unwrap_err(),Error::Revoked);b.acknowledge_fence(&p,1,&leases[0]).unwrap();b.retire...
+    |                            ^^^^^^^^^^^^ method not found in `specimen_kernel::orchestration_v3::Broker<'_>`
+
+error[E0599]: no method named `retire_cycle` found for struct `specimen_kernel::orchestration_v3::Broker<'a>` in the current scope
+   --> native/specimen-kernel/tests/orchestration_v3.rs:393:503
+    |
+393 | ...,&leases[0]).unwrap();b.retire_cycle(&p,1,1).unwrap();assert_eq!(b.counts().active,1);b.complete(&p,1,&leases[1],None).unwrap();...
+    |                            ^^^^^^^^^^^^ method not found in `specimen_kernel::orchestration_v3::Broker<'_>`
+
+error[E0599]: no method named `retire_cycle` found for struct `specimen_kernel::orchestration_v3::Broker<'a>` in the current scope
+   --> native/specimen-kernel/tests/orchestration_v3.rs:393:659
+    |
+393 | ...::Requested).unwrap();b.retire_cycle(&p,1,2).unwrap();assert_eq!(b.counts().owned_bytes,baseline);
+    |                            ^^^^^^^^^^^^ method not found in `specimen_kernel::orchestration_v3::Broker<'_>`
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `specimen-kernel` (test "orchestration_v3") due to 3 previous errors
+warning: build failed, waiting for other jobs to finish...
+error[E0599]: no method named `retire_cycle` found for struct `specimen_kernel::orchestration_v3::Broker<'a>` in the current scope
+   --> native/specimen-kernel/tests/orchestration_v3_attachments.rs:626:232
+    |
+626 | ...::Requested).unwrap();b.retire_cycle(&scope(),1,1).unwrap();b.begin(&scope(),1,1,CycleLimit::default()).unwrap();b.admit(&scope(...
+    |                            ^^^^^^^^^^^^ method not found in `specimen_kernel::orchestration_v3::Broker<'_>`
+
+error: could not compile `specimen-kernel` (test "orchestration_v3_attachments") due to 1 previous error

@@ -1,0 +1,89 @@
+[
+  {
+    "command": [
+      "/opt/homebrew/opt/python@3.15/bin/python3.15",
+      "tools/check_completion_execution.py"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "python_version": "3.15.0 (main, Oct  9 2026, 11:16:41) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "started_utc": "2026-10-23T02:58:37.453289+00:00",
+    "exit_code": 0,
+    "log": "current-execution-checker.log",
+    "log_sha256": "7db51a594198bccc2ebeaa015f6c56c4aa8ef9d9ac56a324b1f859734c08c302"
+  },
+  {
+    "command": [
+      "/opt/homebrew/opt/python@3.15/bin/python3.15",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools/tests",
+      "-p",
+      "test_check_completion_execution.py"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "python_version": "3.15.0 (main, Oct  9 2026, 11:16:41) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "started_utc": "2026-10-23T02:58:37.779668+00:00",
+    "exit_code": 0,
+    "log": "current-execution-27-mutations.log",
+    "log_sha256": "553bc4fa5a2515829c05f9336abf9b3d2a97bc5784210d371002245da30b901f"
+  },
+  {
+    "command": [
+      "/opt/homebrew/opt/python@3.15/bin/python3.15",
+      "/Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-22-language/final-fix/check-final-closure.py"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "python_version": "3.15.0 (main, Oct  9 2026, 11:16:41) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "started_utc": "2026-10-23T02:58:45.841920+00:00",
+    "exit_code": 0,
+    "log": "current-final-closure.log",
+    "log_sha256": "9a5817e27d0339627228210ef13413d2432f595772ea00296999739c464de8ef"
+  },
+  {
+    "command": [
+      "/opt/homebrew/opt/python@3.15/bin/python3.15",
+      "tools/check_completion.py"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "python_version": "3.15.0 (main, Oct  9 2026, 11:16:41) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "started_utc": "2026-10-23T02:58:46.261944+00:00",
+    "exit_code": 0,
+    "log": "current-frozen-completion-checker.log",
+    "log_sha256": "2f88e13061eb9a6f8cf0ae9d4a6efe063939a54ef1bb299cba4d2554389365d4"
+  },
+  {
+    "command": [
+      "/opt/homebrew/opt/python@3.15/bin/python3.15",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools/tests",
+      "-p",
+      "test_check_completion.py"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "python_version": "3.15.0 (main, Oct  9 2026, 11:16:41) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "started_utc": "2026-10-23T02:58:46.329447+00:00",
+    "exit_code": 0,
+    "log": "current-frozen-completion-tests.log",
+    "log_sha256": "a8ebbfa7392d607323756eaa2a559e6d39b26c685a9579b48ac42b3a8a1a12ce"
+  }
+]

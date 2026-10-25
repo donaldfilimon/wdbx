@@ -1,0 +1,9 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+error[E0425]: cannot find function `encode_prepared` in this scope
+  --> native/specimen-kernel/tests/text_v3.rs:13:35
+   |
+13 | fn key(p: &Prepared) -> TextKey { encode_prepared(p).unwrap() }
+   |                                   ^^^^^^^^^^^^^^^ not found in this scope
+
+For more information about this error, try `rustc --explain E0425`.
+error: could not compile `specimen-kernel` (test "text_v3") due to 1 previous error

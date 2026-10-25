@@ -1,0 +1,28 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[67637]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "identity") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 0.70s
+     Running tests/identity.rs (specimen-studio/target/debug/deps/identity-b8c4ab09ba5b7476)
+
+running 12 tests
+test pattern_character_limit_preserves_multibyte_original_bytes ... ok
+test s01_s02_collisions_retain_originals_and_concrete_nodes ... ok
+test alternative_tree_and_slot_order_are_identity ... ok
+test s04_every_complete_key_dimension_is_used ... ok
+test s17_resource_links_are_nonunique_and_optional ... ok
+test invalid_mutations_are_transactional_and_validate_nested_trees ... ok
+test repeats_compare_complete_structures_across_keys_and_population ... ok
+test exact_repeat_after_spill_returns_existing_ref_even_with_new_key_projection ... ok
+test rebuild_rejects_corruption_without_replacing_current_state ... ok
+test s03_capacity_plus_one_spills_atomically_with_host_reference ... ok
+test resources_enforce_cap_and_rebuild_array_hash_equivalence ... ok
+test s40_array_hash_crossover_and_multiple_chunks_preserve_all_matches ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.04s
+

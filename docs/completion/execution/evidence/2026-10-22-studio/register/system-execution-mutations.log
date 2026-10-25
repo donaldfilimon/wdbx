@@ -1,0 +1,8 @@
+$ PYTHONDONTWRITEBYTECODE=1 /usr/bin/python3 -m unittest discover -s tools/tests -p test_check_completion_execution.py
+...........................
+----------------------------------------------------------------------
+Ran 27 tests in 4.095s
+
+OK
+
+exit_status=0

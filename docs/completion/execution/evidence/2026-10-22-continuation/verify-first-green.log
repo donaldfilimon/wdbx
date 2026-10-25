@@ -1,0 +1,14 @@
+   Compiling abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx/crates/abi-wdbx)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 14.95s
+     Running unittests src/lib.rs (target/debug/deps/abi_wdbx-3a7f4a090aa34a18)
+
+running 6 tests
+test v3::complete_episode::crypto::verify_tests::unresolved_key_is_unverifiable_and_never_rescued_by_other_keys ... ok
+test v3::complete_episode::crypto::verify_tests::snapshots_reject_weak_duplicate_and_over_limit_keys_and_pin_order ... ok
+test v3::complete_episode::crypto::verify_tests::strict_full_payload_signature_retains_originals_and_bound_report ... ok
+test v3::complete_episode::crypto::verify_tests::signing_refuses_origin_mismatch_and_verification_rejects_signed_substitution ... ok
+test v3::complete_episode::crypto::verify_tests::trusted_context_mismatches_are_invalid_before_authority_can_be_inferred ... ok
+test v3::complete_episode::crypto::verify_tests::changed_signature_and_digest_signature_are_not_valid_p1 ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 450 filtered out; finished in 0.01s
+

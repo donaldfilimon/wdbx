@@ -1,0 +1,63 @@
+[
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--manifest-path",
+      "specimen-studio/Cargo.toml",
+      "--locked",
+      "-p",
+      "specimen-wasm",
+      "--features",
+      "language-probe"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx",
+    "exit": 0,
+    "log": "native-suite.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "clippy",
+      "--manifest-path",
+      "specimen-studio/Cargo.toml",
+      "--locked",
+      "-p",
+      "specimen-wasm",
+      "--features",
+      "language-probe",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx",
+    "exit": 0,
+    "log": "clippy.log"
+  },
+  {
+    "command": [
+      "rustfmt",
+      "--edition",
+      "2024",
+      "--check",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/src/lib.rs"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx",
+    "exit": 0,
+    "log": "fmt-check.log"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx",
+    "exit": 0,
+    "log": "diff-check.log"
+  }
+]

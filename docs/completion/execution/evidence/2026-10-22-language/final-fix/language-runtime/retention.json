@@ -1,0 +1,55 @@
+{
+  "retained_build_directory": "/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-language-parity.OH3pmC",
+  "files": [
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/default.wasm",
+      "sha256": "c3f56ce5fa884c05f619c508b066341592f3826df0007b3e7cf0cd21e9b978e3",
+      "bytes": 2568209
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/wasm.json",
+      "sha256": "743d07418aadbe60c704d0d934c2bffb237e62e1e39c162ad731aba7d4a8e4d9",
+      "bytes": 151812
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/negative.log",
+      "sha256": "08b239f6949bc7c2279e2242ac7b3febe0c6bd4324392a919f155cc84590a79c",
+      "bytes": 1182
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/corrupt-digest.json",
+      "sha256": "2c0b3eafcdc00aa43149154fc1ea46055f055a1d2f9054880d41022a3ed84987",
+      "bytes": 151786
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/native.json",
+      "sha256": "743d07418aadbe60c704d0d934c2bffb237e62e1e39c162ad731aba7d4a8e4d9",
+      "bytes": 151812
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/source.sha256",
+      "sha256": "5a482dc285e23b08035e99be390cd11bce9d98a2cecdf42cc5549af4a9210e41",
+      "bytes": 3619
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/artifacts.sha256",
+      "sha256": "55ecbc8e0cc89120dfa2d7a48216f113d2450aedc82c7a12ea71758cd9c78670",
+      "bytes": 1300
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/corrupt-digest.json.label.json",
+      "sha256": "409bc58d88d8a1193383ff4e3e28a15e460aca025ace0399513ba410eb39f5ce",
+      "bytes": 151787
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/negative-label.log",
+      "sha256": "0f59fe8fbe0ad0fde30c4902e78f0a454fd5bfdbacb52516820a3daf35e65432",
+      "bytes": 972
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/language.wasm",
+      "sha256": "28fa421f31cc3f087bc81d4e66774913fe7e949781c39dbbe9023bfb243f0ddd",
+      "bytes": 3021967
+    }
+  ]
+}

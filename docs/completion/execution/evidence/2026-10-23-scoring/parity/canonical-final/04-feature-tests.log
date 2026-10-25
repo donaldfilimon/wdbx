@@ -1,0 +1,47 @@
+   Compiling specimen-wasm v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-wasm)
+    Finished `test` profile [unoptimized] target(s) in 1.90s
+     Running unittests src/lib.rs (/tmp/task-8-scoring-parity-canonical-dev-target/debug/deps/specimen_wasm-89ab4e467fcf75b2)
+
+running 13 tests
+test tests::malformed_input_is_an_error_not_a_panic ... ok
+test dispatch::tests::rfc3339_formats_known_instants ... ok
+test dispatch::tests::uuid_v4_sets_version_and_variant_bits ... ok
+test dispatch::tests::seed_then_mutate_through_the_envelope ... ok
+test tests::native_pow_probe_matches_golden ... ok
+test dispatch::tests::errors_come_back_as_codes_and_messages ... ok
+test tests::pow_case_evaluates_a_fractional_power ... ok
+test tests::native_imagine_probe_matches_golden ... ok
+test tests::imagine_case_exercises_transcendentals ... ok
+test dispatch::tests::parse_and_apply_round_trip_through_the_envelope ... ok
+test tests::native_probe_matches_golden ... ok
+test dispatch::tests::cycle_streams_trace_steps_and_returns_the_answer ... ok
+test dispatch::tests::feedback_returns_state_and_message ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.49s
+
+     Running tests/identity_probe.rs (/tmp/task-8-scoring-parity-canonical-dev-target/debug/deps/identity_probe-6dffeb221383827c)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/language_probe.rs (/tmp/task-8-scoring-parity-canonical-dev-target/debug/deps/language_probe-bff05adbd3050b7b)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/scoring_probe.rs (/tmp/task-8-scoring-parity-canonical-dev-target/debug/deps/scoring_probe-1888fd05f160555a)
+
+running 2 tests
+test fixed_same_limit_decisions_preserve_refused_rng_and_private_lease_retry ... ok
+test finite_trace_is_deterministic_bounded_and_calls_actual_apis ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+
+   Doc-tests specimen_wasm
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

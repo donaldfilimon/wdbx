@@ -1,0 +1,134 @@
+[
+  {
+    "name": "focused-green",
+    "argv": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "specimen-kernel",
+      "--test",
+      "language_final_fix",
+      "--test",
+      "routes_final_fix"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx/specimen-studio",
+    "started": "2026-10-23T02:52:21.367465+00:00",
+    "exit_code": 0,
+    "environment": {
+      "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+      "RUSTUP_TOOLCHAIN": "1.99.1",
+      "CARGO_NET_OFFLINE": "true"
+    },
+    "log": "focused-green.log",
+    "sha256": "96d10a91299c3b1c7db1be3d57f687ec8f2c00fe97efcfb087010c07ef877d2b"
+  },
+  {
+    "name": "kernel-feature-final",
+    "argv": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "specimen-kernel",
+      "-p",
+      "specimen-wasm",
+      "--features",
+      "language-probe,identity-probe"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx/specimen-studio",
+    "started": "2026-10-23T02:52:23.362050+00:00",
+    "exit_code": 0,
+    "environment": {
+      "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+      "RUSTUP_TOOLCHAIN": "1.99.1",
+      "CARGO_NET_OFFLINE": "true"
+    },
+    "log": "kernel-feature-final.log",
+    "sha256": "8d8c86bc4041b05c10d5df478e56fed712f1470cb9c98f4a55186ba2c798893f"
+  },
+  {
+    "name": "clippy",
+    "argv": [
+      "cargo",
+      "clippy",
+      "--locked",
+      "-p",
+      "specimen-kernel",
+      "-p",
+      "specimen-wasm",
+      "--all-targets",
+      "--features",
+      "language-probe,identity-probe",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx/specimen-studio",
+    "started": "2026-10-23T02:52:31.663593+00:00",
+    "exit_code": 0,
+    "environment": {
+      "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+      "RUSTUP_TOOLCHAIN": "1.99.1",
+      "CARGO_NET_OFFLINE": "true"
+    },
+    "log": "clippy.log",
+    "sha256": "c9b98b54482a5ef82530154c26bb800699d9cd007364c629625f7d7e2e80ef5c"
+  },
+  {
+    "name": "fmt",
+    "argv": [
+      "cargo",
+      "fmt",
+      "--check",
+      "-p",
+      "specimen-kernel",
+      "-p",
+      "specimen-wasm"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx/specimen-studio",
+    "started": "2026-10-23T02:52:33.220495+00:00",
+    "exit_code": 0,
+    "environment": {
+      "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+      "RUSTUP_TOOLCHAIN": "1.99.1",
+      "CARGO_NET_OFFLINE": "true"
+    },
+    "log": "fmt.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "name": "language-parity",
+    "argv": [
+      "bash",
+      "scripts/check-language-parity.sh"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx/specimen-studio",
+    "started": "2026-10-23T02:52:33.370770+00:00",
+    "exit_code": 0,
+    "environment": {
+      "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+      "RUSTUP_TOOLCHAIN": "1.99.1",
+      "CARGO_NET_OFFLINE": "true"
+    },
+    "log": "language-parity.log",
+    "sha256": "23293fb35f9366a225f20d0af11a3790e42870f4d68d3957d423116a49c0399a"
+  },
+  {
+    "name": "identity-parity",
+    "argv": [
+      "bash",
+      "scripts/check-identity-parity.sh"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx/specimen-studio",
+    "started": "2026-10-23T02:52:57.638032+00:00",
+    "exit_code": 0,
+    "environment": {
+      "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+      "RUSTUP_TOOLCHAIN": "1.99.1",
+      "CARGO_NET_OFFLINE": "true"
+    },
+    "log": "identity-parity.log",
+    "sha256": "7bfb461ebfa350f26e33bd83bf41c65851956ac61375027086cbc914ca15848c"
+  }
+]

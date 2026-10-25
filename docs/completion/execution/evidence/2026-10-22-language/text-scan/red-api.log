@@ -1,0 +1,19 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+error[E0432]: unresolved import `specimen_kernel::text_v3`
+ --> native/specimen-kernel/tests/text_v3.rs:2:39
+  |
+2 | use specimen_kernel::{language_v3::*, text_v3::*};
+  |                                       ^^^^^^^ could not find `text_v3` in `specimen_kernel`
+
+error[E0432]: unresolved imports `specimen_kernel::scanner_v3`, `specimen_kernel::text_v3`
+ --> native/specimen-kernel/tests/scanner_v3.rs:1:39
+  |
+1 | use specimen_kernel::{language_v3::*, scanner_v3::*, text_v3};
+  |                                       ^^^^^^^^^^     ^^^^^^^ no `text_v3` in the root
+  |                                       |
+  |                                       could not find `scanner_v3` in `specimen_kernel`
+
+For more information about this error, try `rustc --explain E0432`.
+error: could not compile `specimen-kernel` (test "text_v3") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `specimen-kernel` (test "scanner_v3") due to 1 previous error

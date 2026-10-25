@@ -1,0 +1,112 @@
+abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx/crates/abi-wdbx)
+├── abi-compute v0.1.0 (/Users/donald/sources/repos/wdbx/crates/abi-compute)
+├── abi-foundation v0.1.0 (/Users/donald/sources/repos/wdbx/crates/abi-foundation)
+│   ├── security-framework v3.7.0
+│   │   ├── bitflags v2.13.2
+│   │   ├── core-foundation v0.10.1
+│   │   │   ├── core-foundation-sys v0.8.7
+│   │   │   └── libc v0.2.191
+│   │   ├── core-foundation-sys v0.8.7
+│   │   ├── libc v0.2.191
+│   │   └── security-framework-sys v2.17.0
+│   │       ├── core-foundation-sys v0.8.7
+│   │       └── libc v0.2.191
+│   ├── serde v1.0.229
+│   │   ├── serde_core v1.0.229
+│   │   └── serde_derive v1.0.229 (proc-macro)
+│   │       ├── proc-macro2 v1.0.107
+│   │       │   └── unicode-ident v1.0.27
+│   │       ├── quote v1.0.47
+│   │       │   └── proc-macro2 v1.0.107 (*)
+│   │       └── syn v3.0.9
+│   │           ├── proc-macro2 v1.0.107 (*)
+│   │           ├── quote v1.0.47 (*)
+│   │           └── unicode-ident v1.0.27
+│   ├── serde_json v1.0.154
+│   │   ├── foldhash v0.2.0
+│   │   ├── indexmap v2.14.2
+│   │   │   ├── equivalent v1.0.3
+│   │   │   └── hashbrown v0.17.1
+│   │   ├── itoa v1.0.18
+│   │   ├── memchr v2.8.3
+│   │   ├── serde_core v1.0.229
+│   │   └── zmij v1.0.23
+│   ├── thiserror v2.0.21
+│   │   └── thiserror-impl v2.0.21 (proc-macro)
+│   │       ├── proc-macro2 v1.0.107 (*)
+│   │       ├── quote v1.0.47 (*)
+│   │       └── syn v3.0.9 (*)
+│   └── zeroize v1.9.1
+│       └── zeroize_derive v1.5.0 (proc-macro)
+│           ├── proc-macro2 v1.0.107 (*)
+│           ├── quote v1.0.47 (*)
+│           └── syn v2.0.119
+│               ├── proc-macro2 v1.0.107 (*)
+│               ├── quote v1.0.47 (*)
+│               └── unicode-ident v1.0.27
+├── chacha20poly1305 v0.11.0
+│   ├── aead v0.6.1
+│   │   ├── crypto-common v0.2.2
+│   │   │   ├── getrandom v0.4.3
+│   │   │   │   ├── cfg-if v1.0.5
+│   │   │   │   ├── libc v0.2.191
+│   │   │   │   └── rand_core v0.10.1
+│   │   │   ├── hybrid-array v0.4.15
+│   │   │   │   └── typenum v1.20.1
+│   │   │   └── rand_core v0.10.1
+│   │   └── inout v0.2.5
+│   │       └── hybrid-array v0.4.15 (*)
+│   ├── chacha20 v0.10.2
+│   │   ├── cfg-if v1.0.5
+│   │   └── cipher v0.5.2
+│   │       ├── block-buffer v0.12.1
+│   │       │   └── hybrid-array v0.4.15 (*)
+│   │       ├── crypto-common v0.2.2 (*)
+│   │       └── inout v0.2.5 (*)
+│   ├── cipher v0.5.2 (*)
+│   └── poly1305 v0.9.1
+│       └── universal-hash v0.6.1
+│           ├── crypto-common v0.2.2 (*)
+│           └── ctutils v0.4.3
+│               └── cmov v0.5.4
+├── crc32fast v1.5.2
+│   └── cfg-if v1.0.5
+├── ed25519-dalek v3.0.0
+│   ├── curve25519-dalek v5.0.0
+│   │   ├── cfg-if v1.0.5
+│   │   ├── digest v0.11.3
+│   │   │   ├── block-buffer v0.12.1 (*)
+│   │   │   ├── const-oid v0.10.2
+│   │   │   └── crypto-common v0.2.2 (*)
+│   │   ├── subtle v2.6.1
+│   │   └── zeroize v1.9.1 (*)
+│   │   [build-dependencies]
+│   │   └── rustc_version v0.4.1
+│   │       └── semver v1.0.28
+│   ├── ed25519 v3.0.0
+│   │   └── signature v3.0.0
+│   ├── sha2 v0.11.1
+│   │   ├── cfg-if v1.0.5
+│   │   ├── cpufeatures v0.3.1
+│   │   │   └── libc v0.2.191
+│   │   └── digest v0.11.3 (*)
+│   ├── subtle v2.6.1
+│   └── zeroize v1.9.1 (*)
+├── num-bigint v0.5.1
+│   ├── num-integer v0.1.47
+│   │   └── num-traits v0.2.19
+│   │       [build-dependencies]
+│   │       └── autocfg v1.5.1
+│   └── num-traits v0.2.19 (*)
+├── num-traits v0.2.19 (*)
+├── serde v1.0.229 (*)
+├── serde_json v1.0.154 (*)
+├── sha2 v0.11.1 (*)
+├── thiserror v2.0.21 (*)
+├── uuid v1.28.0
+│   ├── getrandom v0.4.3 (*)
+│   ├── serde_core v1.0.229
+│   └── sha1_smol v1.0.1
+├── wyhash v0.6.0
+│   └── rand_core v0.9.5
+└── zeroize v1.9.1 (*)

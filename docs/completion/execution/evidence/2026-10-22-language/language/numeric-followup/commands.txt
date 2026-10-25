@@ -1,0 +1,37 @@
+Working directory: /Users/donald/sources/repos/wdbx/specimen-studio
+All Rust commands used:
+PATH=/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin
+RUSTUP_TOOLCHAIN=1.99.1
+
+Before source changes, saved arithmetic.rs and prepare.rs under before/.
+New synthetic tests were written before implementation.
+
+1. cargo test -p specimen-kernel --locked --test language_v3_numeric
+   red.log; exit 101; behavioral RED: 3 passed / 3 failed.
+2. rustfmt --edition 2024 native/specimen-kernel/src/language_v3/arithmetic.rs native/specimen-kernel/src/language_v3/prepare.rs native/specimen-kernel/tests/language_v3_numeric.rs
+   exit 0; formatted exact owned files only.
+3. cargo test -p specimen-kernel --locked --test language_v3_numeric
+   green-numeric.log; exit 0; 6 passed.
+4. cargo test -p specimen-kernel --locked --test language_v3 --test language_v3_limits --test language_v3_scripts --test language_v3_numeric
+   green-focused.log; exit 0; 37 passed.
+5. cargo test -p specimen-kernel --locked
+   kernel-suite.log; exit 0; 146 passed, 0 failed; 0 doctests.
+6. rustfmt --edition 2024 --check native/specimen-kernel/src/language_v3/arithmetic.rs native/specimen-kernel/src/language_v3/prepare.rs native/specimen-kernel/tests/language_v3_numeric.rs
+   fmt-check.log; exit 0.
+7. cargo clippy -p specimen-kernel --locked --all-targets -- -D warnings
+   clippy.log; exit 0.
+
+Repository root /Users/donald/sources/repos/wdbx:
+8. git diff --no-index --check <before/arithmetic.rs> <owned arithmetic.rs>
+9. git diff --no-index --check <before/prepare.rs> <owned prepare.rs>
+10. git diff --no-index --check /dev/null <new language_v3_numeric.rs>
+    Raw statuses/outputs in diff-check.log: exit 1 because files differ; no whitespace diagnostics.
+    Initial accounting wrapper incorrectly asserted exit 0 for --no-index and raised AssertionError;
+    no source change resulted. Final accounting accepts documented difference status 1 only
+    with empty diagnostics; diff-check-final.log records the result.
+11. git diff --check -- specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs
+    exit 0; supplementary no-index checks above cover these untracked source files.
+
+All cargo stdout/stderr redirected verbatim to named logs; no stripping of warnings.
+Source and log manifests use Python standard-library hashlib.sha256 over raw file bytes.
+No source edits occurred after the comment clarification before step 4.

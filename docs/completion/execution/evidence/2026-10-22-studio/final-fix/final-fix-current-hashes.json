@@ -1,0 +1,26 @@
+[
+  {
+    "path": "docs/completion/execution/register-v1.json",
+    "sha256": "535a89bf360bdc3a0fbbaa581455a426d0a2b49a367073dde0a37bfecc1179ec"
+  },
+  {
+    "path": "docs/completion/execution/studio-research-v1.json",
+    "sha256": "27e55f78913a395012cce1c7a021042565803dfc4a2dbe46d7ad2e15c06d278d"
+  },
+  {
+    "path": "docs/completion/execution/studio-research.md",
+    "sha256": "5de233db49b692a1bb8919f79111b9a9b73779570f7e2a8eea729288dd314aeb"
+  },
+  {
+    "path": "specimen-studio/native/specimen-wasm/src/identity_probe.rs",
+    "sha256": "1219bef564855db408cd83fad1f95071e01afa501ef9715e0fbe17a615807c35"
+  },
+  {
+    "path": "specimen-studio/native/specimen-wasm/tests/identity_probe.rs",
+    "sha256": "86316c8343f8c5d4f72d04d43ce67478bd0847b48aff93dd327320aabb3b5ab3"
+  },
+  {
+    "path": "specimen-studio/tests/identity-parity.mjs",
+    "sha256": "938b098eab09f16b33151503603f9ee96a9e31984494b77cda4c0da00d5e7d48"
+  }
+]

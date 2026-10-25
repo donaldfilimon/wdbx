@@ -1,0 +1,30 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[95717]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "orchestration_v3") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 2.13s
+     Running tests/orchestration_v3.rs (specimen-studio/target/debug/deps/orchestration_v3-adb3570e0cb1cbd2)
+
+running 1 test
+test s15_wrong_scope_binding_duplicate_completion_and_restart_are_atomic ... FAILED
+
+failures:
+
+---- s15_wrong_scope_binding_duplicate_completion_and_restart_are_atomic stdout ----
+
+thread 's15_wrong_scope_binding_duplicate_completion_and_restart_are_atomic' (5767968) panicked at native/specimen-kernel/tests/orchestration_v3.rs:261:53:
+called `Result::unwrap_err()` on an `Ok` value: ()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    s15_wrong_scope_binding_duplicate_completion_and_restart_are_atomic
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p specimen-kernel --test orchestration_v3`

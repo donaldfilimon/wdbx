@@ -1,0 +1,47 @@
+{
+  "backend": "OpenSSL 4.0.3 29 Sep 2026",
+  "captured_at_utc": "2026-10-22T22:55:23.411044+00:00",
+  "cryptography": "50.0.2",
+  "identity_key_vector": {
+    "dalek_basis": "verify_strict rejects low-order public key and R; source inventory separately pins implementation",
+    "dalek_strict_required_outcome": "refused",
+    "message_hex": "70726f6265",
+    "public_key_hex": "0100000000000000000000000000000000000000000000000000000000000000",
+    "pyca_backend_outcome": "accepted",
+    "signature_hex": "01000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "ordinary_synthetic_vectors": {
+    "invalid_R": {
+      "message_hex": "70726f6265",
+      "pyca_backend_outcome": "refused",
+      "signature_hex": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff600d2096f5d860f7506be5ed59141a16e6aa3a7060df2baff8168e830fd4060e"
+    },
+    "message_substitution": {
+      "message_hex": "6f74686572",
+      "pyca_backend_outcome": "refused",
+      "signature_hex": "b1c7eebe6bfbc1ccd0f7af3b35f2c12ae666479eb9bc0ca4cdaa41485c0acd15600d2096f5d860f7506be5ed59141a16e6aa3a7060df2baff8168e830fd4060e"
+    },
+    "noncanonical_scalar": {
+      "message_hex": "70726f6265",
+      "pyca_backend_outcome": "refused",
+      "signature_hex": "b1c7eebe6bfbc1ccd0f7af3b35f2c12ae666479eb9bc0ca4cdaa41485c0acd154de115f30f3c734f2708dd90380ef92ae6aa3a7060df2baff8168e830fd4061e"
+    },
+    "ordinary_positive": {
+      "message_hex": "70726f6265",
+      "pyca_backend_outcome": "accepted",
+      "signature_hex": "b1c7eebe6bfbc1ccd0f7af3b35f2c12ae666479eb9bc0ca4cdaa41485c0acd15600d2096f5d860f7506be5ed59141a16e6aa3a7060df2baff8168e830fd4060e"
+    },
+    "signature_tamper": {
+      "message_hex": "70726f6265",
+      "pyca_backend_outcome": "refused",
+      "signature_hex": "b0c7eebe6bfbc1ccd0f7af3b35f2c12ae666479eb9bc0ca4cdaa41485c0acd15600d2096f5d860f7506be5ed59141a16e6aa3a7060df2baff8168e830fd4060e"
+    },
+    "signature_truncation": {
+      "message_hex": "70726f6265",
+      "pyca_backend_outcome": "refused",
+      "signature_hex": "b1c7eebe6bfbc1ccd0f7af3b35f2c12ae666479eb9bc0ca4cdaa41485c0acd15600d2096f5d860f7506be5ed59141a16e6aa3a7060df2baff8168e830fd406"
+    }
+  },
+  "purpose": "raw backend characterization only; strict parity NOT qualified",
+  "python": "3.12.14"
+}

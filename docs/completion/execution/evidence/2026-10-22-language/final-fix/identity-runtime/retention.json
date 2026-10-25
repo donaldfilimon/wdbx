@@ -1,0 +1,25 @@
+{
+  "retained_build_directory": "/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-identity-parity.IDUbX0",
+  "files": [
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-runtime/default.wasm",
+      "sha256": "c3f56ce5fa884c05f619c508b066341592f3826df0007b3e7cf0cd21e9b978e3",
+      "bytes": 2568209
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-runtime/wasm.json",
+      "sha256": "60aaef7f217d27a6fe505f2c6405239e3032902e9964472e24273bca97c07580",
+      "bytes": 4205
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-runtime/identity.wasm",
+      "sha256": "f8a0c5a272e9bbcbde8bb8b7c6e4f384652b588cce05228e3bcadf3ba87d925a",
+      "bytes": 2678186
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-runtime/native.json",
+      "sha256": "60aaef7f217d27a6fe505f2c6405239e3032902e9964472e24273bca97c07580",
+      "bytes": 4205
+    }
+  ]
+}

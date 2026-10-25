@@ -1,0 +1,30 @@
+234 |     s: [exact ? 20n : 0n, 1n],
+235 |     reason: !present ? 'Missing' : exact ? 'Match' : 'Mismatch',
+236 |   });
+237 |   let totalS = [0n, 1n],
+238 |     totalD = [0n, 1n];
+239 |   eq(
+        ^
+AssertionError: ordered scanner component names/count
++ actual - expected
+
+  [
++   'corrupted-label',
+-   'lemma-multiset',
+    'ordered-bigram-multiset',
+    'spo',
+    'operands-operators'
+  ]
+
+ generatedMessage: false,
+     actual: [ "corrupted-label", "ordered-bigram-multiset", "spo", "operands-operators" ],
+   expected: [ "lemma-multiset", "ordered-bigram-multiset", "spo", "operands-operators" ],
+   operator: "deepStrictEqual",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at checkScan (/Users/donald/sources/repos/wdbx/specimen-studio/tests/language-parity.mjs:239:3)
+      at forEach (native:1:11)
+      at validate (/Users/donald/sources/repos/wdbx/specimen-studio/tests/language-parity.mjs:431:28)
+
+Bun v1.4.4-canary.1+ea6a2c7b7 (macOS arm64)

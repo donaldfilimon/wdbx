@@ -1,0 +1,458 @@
+{
+  "version": 1,
+  "status": "awaiting_owner_review",
+  "task_2_complete": false,
+  "scope": "Review-ready owner proposal only; no normative publication, implementation authorization, dependency approval or qualification",
+  "source_manifest": "source-manifest-v1.json",
+  "decisions": [
+    {
+      "id": "P1-profile",
+      "owner": "ABI schema owner and WDBX canonical profile owner",
+      "proposed_decision": "Ratify the exact private full-payload P1 constants below as a separately versioned profile; never alias raw-digest signatures or the older digest-payload COSE profile.",
+      "source_refs": [
+        "crates/abi-wdbx/src/v3/complete_episode/crypto/profile.rs",
+        "crates/abi-wdbx/src/v3/complete_episode/crypto/verify.rs",
+        "docs/completion/execution/owner-review.md"
+      ],
+      "required_acceptance": "Named owners accept or revise exact domain, version, AAD, -19 header, kid derivation/representation, purpose-separated signing keys and signature-required admission against schema/profile/source/vector hashes. Independent crypto review is additional.",
+      "missing_artifacts": [
+        "ABI-owned normative schema/profile diff",
+        "shared producer-consumer positive and malformed signature vectors",
+        "named-owner receipt",
+        "independent exact-artifact crypto review"
+      ],
+      "status": "awaiting_owner_review",
+      "affected_tasks": [
+        2,
+        4,
+        16,
+        17,
+        19,
+        20,
+        21,
+        22
+      ]
+    },
+    {
+      "id": "authority-admission",
+      "owner": "ABI authority owner and WDBX admission owner",
+      "proposed_decision": "Use host-issued authenticated principal/scope and explicit namespace grants; signed role, tenant and claimed times never authorize. Preserve pure evaluation then single-writer revision/authority/policy/consent/budget recheck before atomic append. Private synthetic booleans are fixtures only.",
+      "source_refs": [
+        "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/SPEC.md",
+        "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/evaluate.rs",
+        "../abi/contracts/abbey/v2/schemas/authorization/grant.schema.json",
+        "../abi/contracts/abbey/v2/schemas/authorization/approval.schema.json"
+      ],
+      "required_acceptance": "Accept exact principal/scope, issuer/recipient, capability/package/version, approval single-use, revocation, trusted policy/safety/consent revision and failure mappings; specify trusted host boundary and fencing.",
+      "missing_artifacts": [
+        "normative authority/error diff",
+        "real authentication adapter contract",
+        "durable ordering/restart contract",
+        "shared unauthorized/stale/substitution vectors"
+      ],
+      "status": "awaiting_owner_review",
+      "affected_tasks": [
+        2,
+        4,
+        5,
+        6,
+        9,
+        16,
+        17,
+        18,
+        19,
+        20
+      ]
+    },
+    {
+      "id": "trust-administration",
+      "owner": "ABI authority owner and WDBX trust owner",
+      "proposed_decision": "Retain Pending\u2192Active\u2192Retired and terminal Revoked, exact identity/profile/purpose/scoped grants and registered-replacement rotation. Authorize current administrator/history scope before command replay lookup; then exact bytes/digest replay or conflict; unseen command revision check then atomic transition/history receipt.",
+      "source_refs": [
+        "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/mod.rs",
+        "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/command.rs",
+        "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/apply.rs"
+      ],
+      "required_acceptance": "Accept production administrator authentication/recovery/custody and durable command history; historical public-key resolution must not imply new admission authority.",
+      "missing_artifacts": [
+        "trust command ingress/schema and public receipt/error diff",
+        "custody and administrator recovery contract",
+        "durable history and rollback protection",
+        "shared trust vectors"
+      ],
+      "status": "awaiting_owner_review",
+      "affected_tasks": [
+        2,
+        4,
+        6,
+        16,
+        17,
+        19,
+        20
+      ]
+    },
+    {
+      "id": "receipts-errors",
+      "owner": "ABI schema/receipt owner with ABI and Abbey consumers",
+      "proposed_decision": "Keep three distinct concepts: private admission simulation receipt, ABI execution outcome receipt, and proposed operation terminal receipt. Propose operation terminals committed/rejected/failed-before-commit/cancelled-before-commit, with unknown requiring reconciliation; do not publish names until ABI resolves old accepted/rejected/conflicted and explicit branch/conflict representation.",
+      "source_refs": [
+        "docs/completion/shared-types-v1.json",
+        "../abi/contracts/abbey/v2/schemas/receipt/outcome-receipt.schema.json",
+        "docs/completion/substrate-release/sources/plan.md",
+        "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/mod.rs"
+      ],
+      "required_acceptance": "Owner must approve exact versioned receipt/error diff, operation ID/input digest/writer epoch/revision mapping, postcommit cancellation and lost-receipt reconciliation; producer and consumer must decode identical positive/negative vectors and reject unknown tags/extra fields.",
+      "missing_artifacts": [
+        "exact normative receipt/error diff",
+        "shared operation terminal and conflict vectors",
+        "admission reason\u2192public reason mapping",
+        "cancellation-after-commit and unknown reconciliation specification"
+      ],
+      "status": "awaiting_owner_review",
+      "affected_tasks": [
+        2,
+        4,
+        16,
+        18,
+        19,
+        20,
+        21,
+        22
+      ]
+    },
+    {
+      "id": "replay-privacy-deletion",
+      "owner": "ABI lifecycle/privacy owner and WDBX governance owner",
+      "proposed_decision": "Retain both scoped request and episode replay identities without silent eviction; fresh history-read authorization precedes lookup including new attempts. Exact historical return needs byte-identical original payload/container and digests; deleted and unavailable originals are distinct. Permit only owner-approved content-free retained evidence after erasure; refuse resurrection and fresh verification from digest alone.",
+      "source_refs": [
+        "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/SPEC.md",
+        "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/simulator.rs",
+        "../abi/contracts/abbey/v1/schemas/episode/tombstone.schema.json"
+      ],
+      "required_acceptance": "Choose actual retention periods/purpose/access/erasure for identities, commitments, receipts and public verification keys, backup/offline reconciliation, revocation and legal holds. No implementer-selected retention policy.",
+      "missing_artifacts": [
+        "named privacy/lifecycle acceptance",
+        "retention/deletion schema and loss mapping",
+        "backup/offline/erasure recovery vectors"
+      ],
+      "status": "awaiting_owner_review",
+      "affected_tasks": [
+        2,
+        4,
+        5,
+        6,
+        17,
+        18,
+        19,
+        20,
+        22
+      ]
+    },
+    {
+      "id": "schema-loss-and-identity",
+      "owner": "ABI schema owner and producer/consumer owners",
+      "proposed_decision": "Preserve distinct private and ABI identity/time/digest/counter/scope types. Version a deliberate complete-episode contract and explicit adapter loss/accountability rules; do not treat existing proposal/evidence/claim/tombstone objects or private Rust structs as published complete wire.",
+      "source_refs": [
+        "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+        "crates/abi-wdbx/src/v3/complete_episode/primitives.rs",
+        "../abi/contracts/abbey/v1/schemas/episode/proposal.schema.json",
+        "../abi/contracts/abbey/v1/schemas/episode/evidence.schema.json",
+        "../abi/contracts/abbey/v1/schemas/episode/claim.schema.json"
+      ],
+      "required_acceptance": "Accept the mismatch inventory below against exact schema diff and bounds, evidence semantics, retention/hold/deletion mapping. Signature integrity never supplies truth, provenance or C-level promotion.",
+      "missing_artifacts": [
+        "ABI-owned versioned envelope/authority/receipt/error diff",
+        "shared ABI producer/WDBX consumer vectors including IDs/scopes/null/unknown/extra fields and bounds",
+        "explicit loss/compatibility rules"
+      ],
+      "status": "awaiting_owner_review",
+      "affected_tasks": [
+        2,
+        4,
+        5,
+        9,
+        10,
+        17,
+        18,
+        19,
+        21
+      ]
+    },
+    {
+      "id": "migration-reader-floor",
+      "owner": "ABI compatibility owner and WDBX storage owner",
+      "proposed_decision": "Preserve all legacy bytes/domains and entrypoints. No implicit downgrade, automatic re-sign/rewrite or profile fallback. Propose shadow verification/comparison then separately accepted single-writer cutover with explicit reader floor and refusal on unsupported profile.",
+      "source_refs": [
+        "docs/completion/execution/owner-review.md",
+        "docs/superpowers/specs/2026-10-20-wdbx-cose-trust-prototype-design.md"
+      ],
+      "required_acceptance": "Freeze negotiated profile/signature requirements, cutover marker, reader/version floor, fencing, restart and restore/rollback rules before durable integration. Legacy reconstructed bytes must not claim original provenance.",
+      "missing_artifacts": [
+        "exact reader-floor/downgrade matrix",
+        "migration and rollback contract",
+        "shared legacy/cutover/restart vectors"
+      ],
+      "status": "awaiting_owner_review",
+      "affected_tasks": [
+        2,
+        3,
+        4,
+        16,
+        18,
+        19,
+        21,
+        22
+      ]
+    },
+    {
+      "id": "dependencies-crypto",
+      "owner": "WDBX dependency owner and independent cryptographic reviewer",
+      "proposed_decision": "Keep locked dalek strict pure-message verification and explicit witness backend selection as candidates. Retain known PyCA weak-key acceptance failure and bounded libsodium success as separate evidence. No generic COSE dependency is selected; private bounded parser does not itself establish production suitability.",
+      "source_refs": [
+        "docs/completion/execution/p1-dependency-decision.md",
+        "docs/completion/execution/p1-libsodium-decision.md",
+        "Cargo.lock",
+        "tools/wdbx_complete_p1_crypto.py"
+      ],
+      "required_acceptance": "Review exact complete transitive/native/target graph, licenses/advisories/MSRV, build provenance and malformed-point/scalar/AAD/transplant matrix. Independent review must identify exact artifacts and scope.",
+      "missing_artifacts": [
+        "complete target/feature/native advisory and license review",
+        "authenticated build provenance",
+        "independent crypto acceptance",
+        "resolved qualification policy for retained backend disagreement"
+      ],
+      "status": "awaiting_owner_review",
+      "affected_tasks": [
+        2,
+        4,
+        17,
+        19,
+        20,
+        21,
+        22
+      ]
+    },
+    {
+      "id": "dependencies-consensus-fhe",
+      "owner": "WDBX consensus/FHE owners and independent reviewers",
+      "proposed_decision": "OpenRaft stable release line is a candidate only: neither inspected lock contains openraft, so no exact release is selected. Current locked TFHE 1.8.1 is a candidate only; do not infer production FHE from dependency presence/default gate. Owner rejection returns for amendment.",
+      "source_refs": [
+        "Cargo.lock",
+        "Cargo.toml",
+        "specimen-studio/Cargo.lock",
+        "docs/completion/substrate-release/sources/plan.md"
+      ],
+      "required_acceptance": "Select exact OpenRaft release/graph and reviewed storage/state-machine/transport integration; review TFHE exact operations/parameters/custody/targets, licenses/advisories and build provenance before implementation/qualification.",
+      "missing_artifacts": [
+        "exact OpenRaft version and lock/graph",
+        "OpenRaft license/advisory/MSRV/target/provenance review",
+        "TFHE full graph/license/advisory/target/provenance review",
+        "independent exact-integration FHE review"
+      ],
+      "status": "awaiting_owner_review",
+      "affected_tasks": [
+        2,
+        11,
+        16,
+        20,
+        21,
+        22
+      ]
+    },
+    {
+      "id": "read-views",
+      "owner": "ABI read-view owner and WDBX query/governance owners",
+      "proposed_decision": "Bind database, immutable v2 frontier/causal dependencies, v3 root vector, frame registry, conflict mode, index generations and lifetime. Trusted runtime wraps authorized subset with current policy/consent and expiry; client tokens authenticate or map to state without exposing hidden membership/topology. Recheck current disclosure policy; cursors bind query/ranking/sort/view/authority/expiry and cannot silently restart on current state.",
+      "source_refs": [
+        "docs/completion/substrate-release/sources/specification-v6.md",
+        "docs/completion/substrate-release/sources/plan.md",
+        "docs/completion/shared-types-v1.json"
+      ],
+      "source_sections": [
+        "9",
+        "25",
+        "A.4",
+        "22.3"
+      ],
+      "required_acceptance": "Named ABI interface owner and WDBX semantic owner accept exact versioned normative schema/error diff and shared producer/consumer positive/negative vectors, including unknown/extra-field rejection. Record exact hashes and independent review; this semantic proposal supplies no public encoding.",
+      "missing_artifacts": [
+        "normative read-view/token/error schema",
+        "token authentication/key rotation and policy invalidation contract",
+        "shared stale-policy/revoked-access/expired-view/hidden-topology vectors"
+      ],
+      "status": "awaiting_owner_review",
+      "affected_tasks": [
+        2,
+        7,
+        8,
+        9,
+        10,
+        17,
+        18,
+        19,
+        20,
+        21
+      ]
+    },
+    {
+      "id": "query-outcome",
+      "owner": "ABI query owner and WDBX retrieval/evidence owners",
+      "proposed_decision": "Keep independent axes: candidate_coverage exhaustive/bounded_approximate; numeric_accuracy exact_real_predicate/defined_float_profile/bounded_model_error; completion complete/partial with deadline/work_budget/result_cap/unavailable_partition reasons; consistency local_snapshot/causal_cut/best_effort; separate ranking/components, evidence/provenance and actual execution references. Bind query ID/view/digest/generations and authenticated continuation. Complete approximate never means exhaustive; exact inability fails unless explicit partial policy; similarity and crypto integrity never assert truth.",
+      "source_refs": [
+        "docs/completion/substrate-release/sources/specification-v6.md",
+        "docs/completion/substrate-release/sources/plan.md",
+        "docs/completion/shared-types-v1.json"
+      ],
+      "source_sections": [
+        "22.1\u201322.3",
+        "A.5\u2013A.6"
+      ],
+      "required_acceptance": "Named ABI interface owner and WDBX semantic owner accept exact versioned normative schema/error diff and shared producer/consumer positive/negative vectors, including unknown/extra-field rejection. Record exact hashes and independent review; this semantic proposal supplies no public encoding.",
+      "missing_artifacts": [
+        "normative query/hit/outcome/error schemas",
+        "evidence disposition and disclosure mappings",
+        "shared partial/exact/top-k/bounds/pagination/hidden-result vectors"
+      ],
+      "status": "awaiting_owner_review",
+      "affected_tasks": [
+        2,
+        7,
+        8,
+        9,
+        10,
+        12,
+        13,
+        14,
+        15,
+        17,
+        19,
+        20,
+        21
+      ]
+    },
+    {
+      "id": "compute-contract",
+      "owner": "ABI compute owner and WDBX compute/qualification owners",
+      "proposed_decision": "Bind job and parent operation/cycle IDs/input digest; trusted authority/scope/policy epoch/permitted destinations; exact operation/model/kernel/runtime; shape/dtype/layout/source/read-view; output shape/numeric/completeness/destination; deadline/RAM/concurrency/retry/transfer budgets; qualification and placement evidence. Buffers retain ownership/source generations and completion fences. Cancelled futures do not release uncertain reservations; fallback preserves authority/model/output/privacy and remaining budgets; output violation quarantines affected path. No compute adapter gains canonical commit authority or long-lived keys.",
+      "source_refs": [
+        "docs/completion/substrate-release/sources/specification-v6.md",
+        "docs/completion/substrate-release/sources/plan.md",
+        "docs/completion/shared-types-v1.json"
+      ],
+      "source_sections": [
+        "31.1\u201331.3",
+        "34",
+        "A.7"
+      ],
+      "required_acceptance": "Named ABI interface owner and WDBX semantic owner accept exact versioned normative schema/error diff and shared producer/consumer positive/negative vectors, including unknown/extra-field rejection. Record exact hashes and independent review; this semantic proposal supplies no public encoding.",
+      "missing_artifacts": [
+        "normative compute/result/error/fence/qualification schemas",
+        "supported device/driver/model/shape/numeric matrix",
+        "shared stale-buffer/cancel/uncertain-work/forbidden-fallback/output-violation vectors"
+      ],
+      "status": "awaiting_owner_review",
+      "affected_tasks": [
+        2,
+        11,
+        12,
+        13,
+        14,
+        15,
+        19,
+        20,
+        21,
+        22
+      ]
+    },
+    {
+      "id": "deletion-stages",
+      "owner": "ABI lifecycle/privacy owner and WDBX deletion/custody owners",
+      "proposed_decision": "Keep requested, local inaccessibility, propagation, backup reconciliation and physical expiry distinct. Receipts bind scope/authorization/holds/logical invisibility/key destruction/derivative invalidation/replica acknowledgments/retained material/residual exposure. Offline replicas remain pending; restore reconciles tombstone and key epochs before serving. Content-free evidence must not retain low-entropy plaintext-equivalent commitments. Separately approved member-custody implementation is not authorized by this packet.",
+      "source_refs": [
+        "docs/completion/substrate-release/sources/specification-v6.md",
+        "docs/completion/substrate-release/sources/plan.md",
+        "docs/completion/shared-types-v1.json"
+      ],
+      "source_sections": [
+        "29.1\u201329.3"
+      ],
+      "required_acceptance": "Named ABI interface owner and WDBX semantic owner accept exact versioned normative schema/error diff and shared producer/consumer positive/negative vectors, including unknown/extra-field rejection. Record exact hashes and independent review; this semantic proposal supplies no public encoding.",
+      "missing_artifacts": [
+        "normative deletion-stage/receipt/error schema",
+        "named privacy acceptance and actual retention/hold/backup/expiry policy",
+        "shared offline/rejoin/restore/derived-data/hold/physical-expiry vectors"
+      ],
+      "status": "awaiting_owner_review",
+      "affected_tasks": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        12,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22
+      ]
+    }
+  ],
+  "current_private_mechanisms": {
+    "authority": "Current private constants/interfaces, verified against pinned sources; not published wire",
+    "snapshot": "- Complete domain (`complete_episode/mod.rs`): `wdbx-complete-episode-v1`, root schema version 1, integer-key CBOR map 0..11: domain, version, identity, time, origin, context, decision, outcome, authority, evidence, lifecycle, provenance. Nested keys text; omitted optional fields differ from null/Unknown. Types/mapping are in `types.rs`, `primitives.rs`, `canonical/mapping.rs`; structural enforcement in `validate.rs`. Complete encoder cap 1,048,576 bytes.\n- `crypto/profile.rs`: `PROFILE_ID=wdbx-complete-cose-sign1-prototype-v1`; exact tag 18/four-element COSE Sign1, protected `{1:-19,4:kid}`, empty unprotected map, detached null payload, signature 64 bytes, kid bstr exactly 72 UTF-8 bytes parsed as `SignerKeyId`. Current signer builds protected bytes length 78 and container length 151. Sig_structure is `[\"Signature1\", protected_bstr, PROFILE_ID_as_bstr, full_canonical_payload_bstr]`; the profile ID is fixed external AAD. No attached/digest-payload fallback. Retains original container/payload/protected bytes. Caps: container 256, protected 128, payload 1,048,576, combined 1,048,832, Sig_structure 1,049,088; caller limits may lower, never raise these.\n- Generic payload defaults (`commitment/decode.rs`): input/string 1,048,576 bytes, values 65,536, collection entries 16,384, parents 4,096; nesting depth 32. P1 clamps each supplied decoder limit to these defaults. These bounds do not bound total heap or promise OOM recovery.\n- `validate.rs`: actions 128; parameter classes 32/action; resources/costs 16 each (only five unique resource variants exist); capability/model/calibration lists 32 each; approvals/holds/causal parents 64 each; lifecycle edges 64; consulted parents/source refs/observation refs/provenance records 256 each. Artifact byte length <=2^40; known posterior 1..32 unique regimes totaling 1,000,000 ppm. Local bindings must match; artifact kind and duplicate/self-reference checks do not resolve authority.\n- `crypto/verify.rs`: `parse_p1 -> ParsedP1`; `sign_p1(payload, SigningKey, CryptoLimits)` is private canonical-writer primitive; `verify_p1(ParsedP1, ExpectedContext, KeySnapshot) -> VerificationReport` checks profile/domain/version/contract digest/scope/namespace/key identity then exactly one `verify_strict` over Sig_structure. `ExpectedContext` contains profile/domain/version/contract/binding/namespace. `KeySnapshot` <=1024 nonweak unique keys, namespace/revision and SHA-256 over `wdbx-p1-key-snapshot-prototype-v1` canonical array. Unknown key = Unverifiable; all other failures = Invalid; success = Valid. Report retains original bytes plus payload/container digest and snapshot provenance. It cannot authorize append.\n- `crypto/trust/`: KEY_CAP=1024, GRANT_CAP=64, HISTORY_CAP=4096. Registration requires nonempty scopes, 32-byte nonweak key and derived kid, exact P1 profile/purpose, synthetic administrator. Pending\u2192Active\u2192Retired; revocation terminal; rotation requires Active old/Pending new with identical principal/purpose/profile/grants. Historical public keys remain resolvable. Command domain `wdbx-trust-command-prototype-v1`, snapshot domain `wdbx-p1-trust-snapshot-prototype-v1`; operation tags register=0, activate=1, retire=2, revoke=3, rotate=4. Command encodes namespace/id/admin/expected revision/operation. This is typed-command encoding, no ingress byte decoder. `TrustReceipt` only revision and command_digest; Applied/HistoricalReplay wrappers. Revisions checked for overflow; no durable history or credentials.\n- `crypto/admission/{SPEC.md,mod.rs,evaluate.rs,simulator.rs}`: pure `evaluate_admission` returns Eligible/Rejected/Indeterminate with immutable evidence bindings; `simulate_commit` returns Accepted/HistoricalReplay(private SimulatedReceipt) or AdmissionReason. Context binds complete identity/profile/domain/version/contract/namespace/signer/payload+container digests, expected trust/policy/consent/writer revisions, synthetic host actor/scope/writer and write/history rights, current policy/safety VersionRefs, explicit Required/NotRequired consent, and count/byte budgets. Cap 4096 successful records; no eviction; replay indexes `(binding,profile,request_id)` and `(binding,profile,episode_id)` must agree. Fresh scoped history-read authority precedes lookup; exact replay requires original equal bytes and digests. Deleted/unavailable originals differ. Receipt fields: revision, ExpectedAdmission, trust revision/digest, verification revision/digest, policy_epoch, consent_epoch. Only revision accessor; no public serializer or wire receipt. Rechecks precede mutations; no durable admission.",
+    "key_identity": "SignerKeyId = ed25519: plus lowercase hex of the 32-byte public key (72 UTF-8 bytes); derived rather than caller chosen. Trust registration requires KeyPurpose::P1CanonicalWriter and exact P1 profile. Production key custody/purpose allocation remains unratified."
+  },
+  "abi_mismatch_inventory": "| Existing authority | Private difference / missing mapping |\n|---|---|\n| v1/v2 common definitions | ABI opaque_id pattern `[a-z][a-z0-9_-]{0,63}` versus private 1..128 ASCII alphanumeric + `._:-`; textual sha256 hex versus raw 32-byte digest; ABI whole-second UTC text versus unsigned epoch milliseconds; ABI v2 counter decimal text versus u64. UUID v4/v7 nonzero 16-byte private episode/request/task IDs are not ABI opaque IDs or proposed OperationId lowercase 32-hex. Preserve distinct types. |\n| ABI v2 principal_ref/scope | ABI closed principal and organization/deployment/tenant/resource/subject scope object versus private principal+ActorKind and tenant+tagged Guild/GuildMember/DirectMessage/Organization scope. No implicit scope equivalence, namespace grant or authentication. |\n| v1 episode proposal (32 KiB, unknown/extra fields reject) | Adapter proposal is not complete episode. Required observation_method/data_class/claim_class/payload_mode/deletion_required/priority_class/minimized/redacted absent as explicit complete fields. scope_digest differs from ScopeBinding. evidence refs max32 opaque IDs versus private artifact lists max256; links max32 kind/target_id versus private edges max64 relation/target/basis with additional Resolves/Redacts/Forgets. retention ephemeral/short/policy_bound/mandatory_incident versus private Ephemeral/Session/Operational/Durable/MandatoryIncident. hold_state none/active/released differs from hold-reference set; required opaque deletion_key differs from optional scoped ObjectKeyRef. Need loss/accountability decision, not automatic projection. |\n| v1 episode evidence (16 KiB) | Four closed states integrity/provenance/semantic/truth plus source/version/time/payload_digest differ from eight private Unknown/Known Evidence artifact dimensions and recorded C0..C7 maturity. A valid signature cannot supply truth/provenance, and artifacts need an owner-defined content contract. |\n| v1 claim (16 KiB) | Private maturity alone lacks claim_class, capability_state, display_evidence_level, subject/environment binding, permitted_conclusion, expiry and rollback_condition_code. No conformance promotion follows from a private C-level. |\n| v1 tombstone (8 KiB) | Required tombstone_id/target ID+digest/reason/retention/deletion_key/effective_at/evidence refs do not equal private lifecycle edge or synthetic erasure transition. Need explicit authorized deletion/retention and content-free receipt mapping. |\n| v2 grant/approval/policy-decision | Private synthetic namespace/principal/scoped key grants and host booleans omit normative issuer/recipient, capability+semver+package digest, validity intervals, risk/confirmation, policy/guild/safety versions and revocation_state/epoch. Approval additionally binds call_id/call_digest/grant/subject/approver/level/time/single-use state. Private VersionRefs/approval episode refs do not resolve these objects. Decision enums allow/approval_required/deny/pause and closed policy reason codes differ from Eligible/Rejected/Indeterminate and 17 private AdmissionReason variants. No error alias approved. |\n| v2 outcome-receipt (8 KiB) | Required attempt_id, request_digest, capability_id/version, package_digest, decision, reason_code, outcome_state, postcondition_state, compensation_state, result_digest, audit_record_digest, redacted=true are not SimulatedReceipt or TrustReceipt fields. It is an execution outcome, not canonical admission. No operation_id/canonical_receipt/writer_epoch mapping or cancellation-after-commit rule exists here. |\n| local shared-types TerminalReceipt (proposed only) | accepted(operation_id,canonical_receipt,writer_epoch), rejected(operation_id,reason,policy_epoch), conflicted(operation_id,nonempty branch_refs,base_revision) differs from private Accepted/HistoricalReplay or error; private revision is not ratified writer_epoch/Revision; expected identity is not CanonicalReceiptRef; ReplayConflict has no branch refs/base revision. Pending is only local outbox state. No exact serializer or shared reason mapping exists. |\n| proposed canonical episode signature equation | Raw-digest signing direction differs from full-payload P1 Sig_structure; existing detached EpisodeSignature and old digest COSE stay separate. Owner must decide domain/AAD/header/kid, purpose-separated keys, signature requirements, cutover/downgrade, original-byte retention and new-versus-historical authorization. |",
+  "dependency_snapshot": {
+    "root_lock": {
+      "ed25519-dalek": "3.0.0",
+      "curve25519-dalek": "5.0.0",
+      "sha2": "0.11.1",
+      "tfhe": "1.8.1",
+      "openraft": null
+    },
+    "studio_lock": {
+      "ed25519-dalek": "3.0.0",
+      "curve25519-dalek": "5.0.0",
+      "sha2": [
+        "0.10.9",
+        "0.11.1"
+      ],
+      "tfhe": null,
+      "openraft": null
+    },
+    "historically_reviewed_experiment": {
+      "Python": "3.12.14",
+      "cryptography": "50.0.2",
+      "OpenSSL": "4.0.3",
+      "PyNaCl": "1.6.2",
+      "libsodium": "1.0.20-stable 2025-12-31 build per recorded wheel/source review",
+      "cffi": "2.1.1",
+      "pycparser": "3.11",
+      "licenses_recorded_not_reaudited": {
+        "dalek": "BSD-3-Clause",
+        "cryptography": "Apache-2.0 OR BSD-3-Clause",
+        "PyNaCl": "Apache-2.0",
+        "libsodium": "ISC",
+        "cffi": "MIT-0",
+        "pycparser": "BSD-3-Clause"
+      },
+      "limit": "Historical local wheel/host and bounded matrix only; no packages loaded or dependencies queried for this packet; recorded narrow OSV empty results are not full audit. No upstream build provenance authentication or all-platform qualification."
+    }
+  },
+  "independent_work": {
+    "safe": [
+      "Task 3 unchanged compatibility/supporting-crate validation",
+      "private bounded source review and synthetic tests within previously approved slices",
+      "Task 1 C0 bookkeeping; no evidence promotion",
+      "independent oracle/test design for Tasks 7\u201315 without freezing blocked interfaces or claiming qualification"
+    ],
+    "blocked": "Tasks listed on each decision remain blocked for dependent integration/publication/qualification until their exact decisions/artifacts/reviews are accepted. Existing private mechanisms and encoding vectors do not close Task 2."
+  }
+}

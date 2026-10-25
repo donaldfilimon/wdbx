@@ -1,0 +1,77 @@
+{
+  "scope": "Read-only source inspection snapshot, not execution or efficacy",
+  "files": [
+    {
+      "path": "docs/completion/designs.json",
+      "sha256": "f67633ce920f802b75109b18e2786b09648bbd4b6d174cc42995e7d45e6258e9"
+    },
+    {
+      "path": "docs/completion/studio-acceptance-v1.json",
+      "sha256": "511cb9f85f6651143b59f4cd6c213059a2bce505c57d86861b8f22c377c4dec5"
+    },
+    {
+      "path": "specimen-studio/app/state/use-studio.ts",
+      "sha256": "1e096cae3a74826216a2f7ba3a7296a4a1d1c1a4223d383ab1721c92cc5f6d77"
+    },
+    {
+      "path": "specimen-studio/native/specimen-core/src/persistence.rs",
+      "sha256": "31a82e06eb71d76dd4fbc709c39972387e53b888648a4c10bc2609017c3307a7"
+    },
+    {
+      "path": "specimen-studio/native/specimen-core/src/scheduler.rs",
+      "sha256": "94afe22e3923635d13ff64b14a8435ee43d7cf490f682cf69cb5a4ebe72a0738"
+    },
+    {
+      "path": "specimen-studio/native/specimen-core/src/vision.rs",
+      "sha256": "09cd5de6a09aa9f293ea4d35666f6d8645d8681122cac4ebc67d02373d071f64"
+    },
+    {
+      "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "sha256": "f855272da8934bcce6d8d0bee3f2bfae7cfef71714fb1b70da408adb3e3da81f"
+    },
+    {
+      "path": "specimen-studio/native/specimen-core/tests/raft_partition.rs",
+      "sha256": "f7562fddf6986429185cb3947b0e121befee8fc2c2a5a41268d66d1646a8f350"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/command/apply.rs",
+      "sha256": "9e9b815ea3ea9190f470a163f79a6be50e87039ac24a3d5507f0bb2c955f0c24"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "sha256": "98ce45326436b9ed580a9aaa9f41ab2090f2d3f685fcaea50be0eca86a6ccba2"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/language.rs",
+      "sha256": "d9682c1a5ce3ee27f0bdca9da0b9d208a695c95089bc478875d482a9543aaccc"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "sha256": "7aaee9761ee5137312ce30904df85b40c7cc62068f05d2bf0018bff2f172fe0f"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/neural.rs",
+      "sha256": "eb5c197df8679f6172441ca9c6727753c2a2643ccfc87eaacffdaff1e83624b8"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/search.rs",
+      "sha256": "cfdec797d79b3925a5035bdc36f5ace9343dc2a21dea29047b5f021334440def"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/mutate.rs",
+      "sha256": "bc7ce5137fa3d6769c4ddda6304b2745be17bdc64ca731b81c9c0983e9f467f3"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/raft_plan.rs",
+      "sha256": "eeef7bbaec5b7ffca69df80089ea16e51b23a4e37c59ddd2bc42263262f503d3"
+    },
+    {
+      "path": "specimen-studio/tests/kernel.test.js",
+      "sha256": "5ebd63c4db12f6bb16244663f10193c03a78548f5f2e5ecb0c8be592383da654"
+    },
+    {
+      "path": "specimen-studio/tests/wasm-probe.test.js",
+      "sha256": "993858d6fe4ce16643ae04575978cac432e345f0d9ed1b92d20ba1436f70f46e"
+    }
+  ]
+}

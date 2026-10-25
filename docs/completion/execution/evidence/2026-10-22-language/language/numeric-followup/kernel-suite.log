@@ -1,0 +1,350 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[20125]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[20120]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[20121]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "language_v3_scripts") generated 1 warning
+warning: `specimen-kernel` (test "language_v3_numeric") generated 1 warning
+warning: `specimen-kernel` (test "language_v3_limits") generated 1 warning
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[20127]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "language_v3") generated 1 warning
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[20221]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "raft_plan") generated 1 warning
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[20225]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[20226]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "text_v3") generated 1 warning
+warning: `specimen-kernel` (test "scanner_v3") generated 1 warning
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[20228]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "import_adapt") generated 1 warning
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[20233]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "identity_fixture") generated 1 warning
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[20247]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "network_edit") generated 1 warning
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[20248]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[20249]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "identity") generated 1 warning
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[20250]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "mutate") generated 1 warning
+warning: `specimen-kernel` (test "scanner_v3_routes") generated 1 warning
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[20256]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (lib test) generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 0.83s
+     Running unittests src/lib.rs (target/debug/deps/specimen_kernel-2dd4985eddf3c822)
+
+running 29 tests
+test command::tests::help_lists_every_spelling ... ok
+test command::tests::parse_keeps_the_composer_spellings ... ok
+test command::tests::bulk_proposal_commands_change_matching_statuses ... ok
+test graph::tests::camera_cycle_and_budget_are_bounded ... ok
+test graph::tests::local_view_keeps_neighbors ... ok
+test host::tests::fixed_env_is_deterministic ... ok
+test language::tests::bounded_math ... ok
+test command::tests::add_remove_and_settings_round_trip ... ok
+test language::tests::independent_negation ... ok
+test language::tests::scope_and_nesting ... ok
+test command::tests::reconsider_proposal_roundtrips ... ok
+test neural::tests::fixed_and_validated ... ok
+test command::tests::a_rejected_command_does_not_mutate ... ok
+test language::tests::collision_is_not_confidence ... ok
+test command::tests::dismiss_proposal_marks_and_errors ... ok
+test neural::tests::missing_or_failing_accelerator_falls_back_to_cpu ... ok
+test notes::tests::html_is_dropped_and_code_spans_are_not_links ... ok
+test command::tests::network_edit_undo_restores_the_previous_network ... ok
+test engine::host_tests::gpu_setting_without_accelerator_runs_on_cpu ... ok
+test engine::host_tests::current_input_reads_the_original_text ... ok
+test notes::tests::rename_rewrites_exact_links_and_delete_waits_for_backlinks ... ok
+test notes::tests::an_incremental_index_matches_a_full_rebuild ... ok
+test place::tests::a_missing_connect_endpoint_is_not_found_and_leaves_attachments ... ok
+test place::tests::a_missing_node_and_a_bad_position_do_not_change_the_specimen ... ok
+test notes::tests::graph_positions_do_not_change_between_calls ... ok
+test notes::tests::a_missing_notes_list_is_empty_and_still_valid ... ok
+test place::tests::move_pins_and_unpin_restores_the_specimen ... ok
+test command::tests::resources_attachments_and_feedback_round_trip ... ok
+test engine::host_tests::fixed_host_cycle_is_byte_deterministic ... ok
+
+test result: ok. 29 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s
+
+     Running tests/identity.rs (target/debug/deps/identity-b8c4ab09ba5b7476)
+
+running 12 tests
+test pattern_character_limit_preserves_multibyte_original_bytes ... ok
+test s01_s02_collisions_retain_originals_and_concrete_nodes ... ok
+test alternative_tree_and_slot_order_are_identity ... ok
+test s04_every_complete_key_dimension_is_used ... ok
+test invalid_mutations_are_transactional_and_validate_nested_trees ... ok
+test s17_resource_links_are_nonunique_and_optional ... ok
+test repeats_compare_complete_structures_across_keys_and_population ... ok
+test rebuild_rejects_corruption_without_replacing_current_state ... ok
+test exact_repeat_after_spill_returns_existing_ref_even_with_new_key_projection ... ok
+test s03_capacity_plus_one_spills_atomically_with_host_reference ... ok
+test resources_enforce_cap_and_rebuild_array_hash_equivalence ... ok
+test s40_array_hash_crossover_and_multiple_chunks_preserve_all_matches ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.94s
+
+     Running tests/identity_fixture.rs (target/debug/deps/identity_fixture-586136e9ccb61f19)
+
+running 1 test
+test deterministic_fixture_retains_order_at_hash_crossover ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/import_adapt.rs (target/debug/deps/import_adapt-011e361942ecf13a)
+
+running 5 tests
+test an_empty_file_errors ... ok
+test a_wrong_schema_is_not_a_supported_specimen ... ok
+test network_for_import_is_a_valid_decoder_and_repeats_for_the_same_seed ... ok
+test markdown_becomes_a_node_and_a_valid_network ... ok
+test a_valid_seed_round_trips_as_a_specimen_and_keeps_its_name ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+
+     Running tests/language_v3.rs (target/debug/deps/language_v3-7f6ed537601b8d80)
+
+running 20 tests
+test incomplete_conditionals_do_not_become_executable_plain_actions ... ok
+test review_builtin_contraction_rewrites_refused ... ok
+test compound_condition_requires_context_for_entire_antecedent ... ok
+test review_cross_boundary_safety_phrase_refused ... ok
+test conditional_action_ast_retains_condition_and_uncertain_negation_scope ... ok
+test longest_phrase_context_ties_and_missing_frames_stay_explicit ... ok
+test decimals_precedence_unary_and_errors_are_bounded ... ok
+test review_custom_multiword_rewrites_refused ... ok
+test all_nine_utilities_have_observable_semantics_and_safe_fanout ... ok
+test review_dictionary_safety_introduction_refused ... ok
+test review_duplicate_then_cannot_escape_unresolved_condition ... ok
+test review_morphology_safety_introduction_refused ... ok
+test review_grammar_resolved_slots_satisfy_required_frame ... ok
+test s19_numeric_grammar_preserves_exact_operands_and_source_spans ... ok
+test review_multiword_replacements_preserve_exact_original_source_slice ... ok
+test utility_substitutions_cannot_introduce_custom_inhibitors_or_drop_numeric_frames ... ok
+test s20_quotes_negation_independent_clauses_and_conditionals ... ok
+test deterministic_host_draws_original_caps_zero_weights_and_protected_spans ... ok
+test repeated_utility_matches_do_not_allocate_unbounded_candidate_products ... ok
+test table_rows_are_validated_before_lookup_and_unicode_spans_survive ... ok
+
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/language_v3_limits.rs (target/debug/deps/language_v3_limits-0309d5f5bd993ee7)
+
+running 3 tests
+test rewrite_work_allowance_is_validated_before_preparation ... ok
+test shared_rewrite_work_budget_is_not_reset_between_clauses ... ok
+test unicode_bounds_invalid_tables_and_variant_budgets_fail_deterministically ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/language_v3_numeric.rs (target/debug/deps/language_v3_numeric-d70ddc11bbe00f4c)
+
+running 6 tests
+test explicit_numeric_frame_captures_number_word_but_keeps_quotes_opaque ... ok
+test seven_ordinary_number_words_remain_lexical_without_numeric_evidence ... ok
+test quotes_negation_and_utf8_source_bytes_survive_numeric_recognition ... ok
+test explicit_word_arithmetic_keeps_operand_order_operators_and_value ... ok
+test malformed_explicit_arithmetic_still_returns_typed_failure ... ok
+test single_and_adjacent_number_words_need_arithmetic_intent_or_numeric_frame ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/language_v3_scripts.rs (target/debug/deps/language_v3_scripts-c1cf172329f6bf1f)
+
+running 8 tests
+test review_exact_arithmetic_exhaustion_is_runtime_step_budget ... ok
+test root_quoted_literal_obeys_output_budget ... ok
+test execute_for_action_preserves_preparation_guards ... ok
+test review_mixed_sequence_output_bytes_are_counted_recursively ... ok
+test registry_content_binding_and_aggregate_budgets_cannot_be_bypassed ... ok
+test s46_nested_contacts_narrow_parent_and_current_registry ... ok
+test scripts_math_pratt_and_literal_quotes_execute_once ... ok
+test s21_actual_tape_execution_and_atomic_failures ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/mutate.rs (target/debug/deps/mutate-54a7e368a960a17b)
+
+running 18 tests
+test add_node_validates_and_logs ... ok
+test feedback_removes_nodes_that_reach_zero ... ok
+test add_entry_requires_the_same_pattern_id ... ok
+test feedback_is_deterministic_applies_once_and_advances_the_seed ... ok
+test add_node_rejects_missing_or_empty_explicit_entries ... ok
+test add_node_rejects_inhibited_pairings_and_the_node_limit ... ok
+test add_node_edit_keeps_ref_strength_and_sibling_entries ... ok
+test migrate_clamps_settings_to_native_bounds ... ok
+test settings_use_native_bounds_and_types ... ok
+test save_resource_validates_and_sets_native_ids ... ok
+test remove_node_drops_attachments_and_orphaned_links ... ok
+test toggle_pin_respects_the_pin_limit ... ok
+test seed_is_a_valid_native_specimen ... ok
+test migrate_splits_entries_that_no_longer_share_a_pattern_id ... ok
+test migrate_ids_recomputes_patterns_and_remaps_links ... ok
+test seed_is_deterministic_under_a_fixed_host ... ok
+test starter_still_calculates_and_answers_who_it_is ... ok
+test validate_records_restores_the_browser_record_checks ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.40s
+
+     Running tests/network_edit.rs (target/debug/deps/network_edit-32e50d3fc1407519)
+
+running 9 tests
+test a_malformed_input_network_is_rejected_before_any_work ... ok
+test init_weights_keeps_connectivity_and_changes_weights ... ok
+test the_decoder_cannot_be_resized_removed_or_followed ... ok
+test each_neuron_reads_distinct_sorted_inputs ... ok
+test remove_and_resize_rewire_the_next_layer ... ok
+test add_layer_inserts_a_hidden_layer_and_rewires_the_displaced_one ... ok
+test fan_in_is_capped_at_the_input_width ... ok
+test trace_ends_with_the_run_result ... ok
+test limits_are_reported_not_silently_clamped ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests/raft_plan.rs (target/debug/deps/raft_plan-706cff6f49aa607b)
+
+running 6 tests
+test empty_candidate_list_has_no_chunks ... ok
+test chunk_is_capped_at_the_shared_maximum ... ok
+test chunks_split_across_rafts_with_ceiling_size ... ok
+test only_a_bounded_prefix_is_materialized ... ok
+test invalid_budgets_are_rejected_like_the_search ... ok
+test more_workers_than_candidates_gives_one_per_raft ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/scanner_v3.rs (target/debug/deps/scanner_v3-a4f5ea4564e0ae35)
+
+running 7 tests
+test s06_direct_checked_i128_reducer_subtracts_before_single_clamp ... ok
+test punctuation_is_excluded_from_lexical_scanner_features ... ok
+test profile_absence_consequences_are_visible_and_modality_is_explicit ... ok
+test s05_same_low_key_scans_distinct_original_numeric_evidence ... ok
+test conditional_antecedent_leaves_are_scanned_once_without_inventing_roles ... ok
+test resolved_spo_thirds_and_negation_conflict_are_independent_components ... ok
+test multiset_repeats_bigrams_operand_order_and_exact_decimals ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/scanner_v3_routes.rs (target/debug/deps/scanner_v3_routes-0e36100fb8daf36c)
+
+running 14 tests
+test declared_scopes_do_not_leak_route_hits_and_removed_refs_refuse ... ok
+test tape_input_uses_quote_safe_preserved_utf8_without_script_interpretation ... ok
+test fanout_origins_and_target_inhibition_remain_separate_through_join ... ok
+test duplicate_paths_and_repeated_contains_keep_distinct_capture_origins ... ok
+test automata_share_output_reservations_and_registry_identity_is_current ... ok
+test blocked_routes_retain_constraints_without_successful_automaton_execution ... ok
+test population_scope_reference_and_registration_failures_are_atomic ... ok
+test typed_grammar_total_pattern_bound_is_validated_atomically ... ok
+test runaway_and_shared_budgets_return_errors_without_partial_candidates ... ok
+test grammar_wildcard_and_automaton_routes_cross_literal_keys_and_keep_captures ... ok
+test s05_distinct_originals_share_low_key_but_full_scanner_evidence_differs ... ok
+test unresolved_condition_and_utf8_spans_survive_wildcard_routes ... ok
+test wildcard_capture_copy_work_is_reserved_before_materializing_matches ... ok
+test wildcard_and_automaton_fixed_caps_are_checked_before_batch_publication ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/text_v3.rs (target/debug/deps/text_v3-f17e03a8bc1d3e2f)
+
+running 8 tests
+test low_and_medium_lexical_transforms_ignore_punctuation ... ok
+test punctuation_does_not_count_as_lexical_ast_complexity ... ok
+test high_complete_numeric_ast_and_low_quoted_literal_content_are_retained ... ok
+test medium_roles_change_key_but_host_rule_refs_do_not ... ok
+test exact_ast_token_boundaries_and_full_digest_framing ... ok
+test medium_order_roles_operators_and_high_complete_values_survive ... ok
+test low_numeric_coarsening_retains_quotes_negation_and_controls ... ok
+test ids_whitespace_and_utf8_spans_are_excluded_original_limit_is_characters ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests specimen_kernel
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

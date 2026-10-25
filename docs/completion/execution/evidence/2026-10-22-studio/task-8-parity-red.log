@@ -1,0 +1,25 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling specimen-wasm v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-wasm)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[74669]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-wasm` (lib) generated 1 warning
+error[E0433]: cannot find `identity_probe` in `specimen_wasm`
+ --> native/specimen-wasm/tests/identity_probe.rs:7:31
+  |
+7 |     let text = specimen_wasm::identity_probe::run();
+  |                               ^^^^^^^^^^^^^^ could not find `identity_probe` in `specimen_wasm`
+
+error[E0433]: cannot find `identity_probe` in `specimen_wasm`
+  --> native/specimen-wasm/tests/identity_probe.rs:40:37
+   |
+40 |     assert_eq!(text, specimen_wasm::identity_probe::run());
+   |                                     ^^^^^^^^^^^^^^ could not find `identity_probe` in `specimen_wasm`
+
+For more information about this error, try `rustc --explain E0433`.
+error: could not compile `specimen-wasm` (test "identity_probe") due to 2 previous errors

@@ -1,0 +1,134 @@
+source-head=36bc99b699de60be6c07b2838d74580084fb5d4c
+source-root=/Users/donald/sources/repos/wdbx/specimen-studio
+cargo=/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin/cargo
+cargo 1.99.1 (5f94df478 2026-08-27)
+rustc=/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin/rustc
+rustc 1.99.1 (58cf8f9c3 2026-10-13)
+binary: rustc
+commit-hash: 58cf8f9c35b355199727627d07ae34a4e2846d67
+commit-date: 2026-10-13
+host: aarch64-apple-darwin
+release: 1.99.1
+LLVM version: 23.1.1
+bun=/opt/homebrew/bin/bun
+1.4.4
+6d576d8058f8ca643e8fce55b64ee3c614ba64c9da2e536bae843e6a2e1f3951  /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin/cargo
+1ba7bb8e273bd64125f4048d2ecce530e0a6470e565ab1b3aecf0b82b532f7b1  /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin/rustc
+30b3578e2f0e4901998ed11d85566f294f7b654da00883fd2357eed7387b2621  /opt/homebrew/bin/bun
+1f9adcf3aac487c3d643fd87ff99e58d20ddc0700a31f40c6e3da74b8494474b  Cargo.toml
+164da1d1a61f57a16d651708af6959644c5d543f44f8e6bcb0bb0a7142ce7a98  Cargo.lock
+5e3c35f9bb576b9561a05c58b92837e45d001a11171b4c037082f0a75de60b2d  native/specimen-wasm/Cargo.toml
+d7b6b4896c2216f788121555facdd676bc1e49bd9d4fb8d1498f8119552970ad  native/specimen-wasm/src/lib.rs
+15a72b098947a45a25c5dc7a4c8427066ccb778d14248185548bfd44fea1494a  native/specimen-wasm/src/identity_probe.rs
+5efecffd49a4912984914bb36c5be4468db17edd424f63ba6ad77c0a403c39f7  native/specimen-wasm/examples/identity_probe.rs
+e26e992d27df1d37c2535fc135da0334a4e5f4c4e580edc5316445a1de95745d  native/specimen-wasm/tests/identity_probe.rs
+99b7810b5cd10fc483aad1233298f00704af28c826e3337be013bd9266cb55bf  native/specimen-kernel/src/identity/index.rs
+2b28dc381bc67ee27cb484618188b2457fc58f53a37da09057ace5e1b67182c1  native/specimen-kernel/src/identity/mod.rs
+12cda88d9ac5968b0d92279f4dc5ebaf1041c5d4b5c49c5ac5ee999be2373f35  native/specimen-kernel/src/identity/model.rs
+6ecb1b0659f9261c4f56a9cf016fd0fe9fd075407d9d26b44d4609636d1218d8  native/specimen-kernel/src/identity/validate.rs
+25ce6e4b7174218a6247ebb9261c04c74163bc019980629178945b197700a0d0  native/specimen-kernel/tests/identity_fixture.rs
+d2a7f3978cf918e56af9e280e10153959094cc4588cb35a096022fff3996d80d  scripts/check-identity-parity.sh
+44cc1e921f82556b25ad14036850aa5b736891048c697ad9c50fb2573bc99477  tests/identity-parity.mjs
+   Compiling proc-macro2 v1.0.107
+   Compiling unicode-ident v1.0.27
+   Compiling version_check v0.9.5
+   Compiling quote v1.0.47
+   Compiling typenum v1.20.1
+   Compiling memchr v2.8.3
+   Compiling libc v0.2.191
+   Compiling serde_core v1.0.229
+   Compiling zmij v1.0.23
+   Compiling thiserror v2.0.21
+   Compiling serde v1.0.229
+   Compiling generic-array v0.14.7
+   Compiling regex-syntax v0.8.11
+   Compiling pulldown-cmark v0.13.4
+   Compiling aho-corasick v1.1.5
+   Compiling libm v0.2.16
+   Compiling serde_json v1.0.154
+   Compiling hashbrown v0.17.1
+   Compiling equivalent v1.0.3
+   Compiling indexmap v2.14.2
+   Compiling crypto-common v0.1.7
+   Compiling block-buffer v0.10.4
+   Compiling unicase v2.10.0
+   Compiling cfg-if v1.0.5
+   Compiling syn v3.0.9
+   Compiling digest v0.10.7
+   Compiling cpufeatures v0.2.17
+   Compiling bitflags v2.13.2
+   Compiling itoa v1.0.18
+   Compiling foldhash v0.2.0
+   Compiling sha2 v0.10.9
+   Compiling abi-compute v0.1.0 (/Users/donald/sources/repos/wdbx/crates/abi-compute)
+   Compiling regex-automata v0.4.18
+   Compiling serde_derive v1.0.229
+   Compiling thiserror-impl v2.0.21
+   Compiling regex v1.13.1
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+   Compiling specimen-wasm v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-wasm)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[75367]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-identity-parity.smflwU/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-wasm` (lib) generated 1 warning
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[75374]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-identity-parity.smflwU/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-wasm` (example "identity_probe") generated 1 warning
+    Finished `dev` profile [unoptimized] target(s) in 4.39s
+     Running `/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-identity-parity.smflwU/target/debug/examples/identity_probe`
+8ae0a102914fd689559a3a7ee1d999df9bedc9a318c7cff4528a8e798e1bf2ef  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-identity-parity.smflwU/target/debug/examples/identity_probe
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.27
+   Compiling version_check v0.9.5
+   Compiling typenum v1.20.1
+   Compiling memchr v2.8.3
+   Compiling serde_core v1.0.229
+   Compiling zmij v1.0.23
+   Compiling serde v1.0.229
+   Compiling thiserror v2.0.21
+   Compiling hashbrown v0.17.1
+   Compiling generic-array v0.14.7
+   Compiling regex-syntax v0.8.11
+   Compiling serde_json v1.0.154
+   Compiling pulldown-cmark v0.13.4
+   Compiling equivalent v1.0.3
+   Compiling libm v0.2.16
+   Compiling aho-corasick v1.1.5
+   Compiling indexmap v2.14.2
+   Compiling foldhash v0.2.0
+   Compiling unicase v2.10.0
+   Compiling bitflags v2.13.2
+   Compiling cfg-if v1.0.5
+   Compiling itoa v1.0.18
+   Compiling syn v3.0.9
+   Compiling crypto-common v0.1.7
+   Compiling block-buffer v0.10.4
+   Compiling abi-compute v0.1.0 (/Users/donald/sources/repos/wdbx/crates/abi-compute)
+   Compiling digest v0.10.7
+   Compiling sha2 v0.10.9
+   Compiling regex-automata v0.4.18
+   Compiling thiserror-impl v2.0.21
+   Compiling serde_derive v1.0.229
+   Compiling regex v1.13.1
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+   Compiling specimen-wasm v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-wasm)
+    Finished `release` profile [optimized] target(s) in 6.99s
+   Compiling specimen-wasm v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-wasm)
+    Finished `release` profile [optimized] target(s) in 1.74s
+default-wasm sha256=58d010f48c79f6ad109d975d186a817c9569488c0cd33cd1d563639607da47ca identity_probe_raw=absent
+feature-wasm sha256=76a9d1595ea206c03791df599891d2aac1d01b6cae9beaa72a5022ce50f7cf58 identity_probe_raw=executed
+native-output sha256=eb84ea042097bba7786b5c6cf23ae808b8a95f02887c668999934d44760d55d1 bytes=4168
+wasm-output sha256=eb84ea042097bba7786b5c6cf23ae808b8a95f02887c668999934d44760d55d1 bytes=4168
+PASS: exact runtime bytes and independent fixture properties
+Evidence limit: synthetic pure-kernel identity mechanisms only; no encoder, save migration, model/hardware or full Task 8 qualification.
+retained-artifacts=/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-identity-parity.smflwU

@@ -1,0 +1,42 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+    Finished `test` profile [unoptimized] target(s) in 2.37s
+     Running tests/atp_v3.rs (target/debug/deps/atp_v3-b2d488f88ae1f10e)
+
+running 3 tests
+test d10_admission_normalizes_signed_zero_without_mutating_callers ... FAILED
+test d10_state_admission_rejects_each_nonfinite_and_out_of_range_field ... FAILED
+test d10_stimulus_admission_rejects_each_nonfinite_and_out_of_range_field ... FAILED
+
+failures:
+
+---- d10_admission_normalizes_signed_zero_without_mutating_callers stdout ----
+
+thread 'd10_admission_normalizes_signed_zero_without_mutating_callers' (6868834) panicked at native/specimen-kernel/tests/atp_v3.rs:60:5:
+assertion `left == right` failed
+  left: [2147483648, 2147483648, 2147483648]
+ right: [0, 0, 0]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- d10_state_admission_rejects_each_nonfinite_and_out_of_range_field stdout ----
+
+thread 'd10_state_admission_rejects_each_nonfinite_and_out_of_range_field' (6868835) panicked at native/specimen-kernel/tests/atp_v3.rs:10:9:
+assertion `left == right` failed
+  left: Ok(State { v: NaN, a: 0.0, cooldown_seconds: 0.0 })
+ right: Err(ValenceNotFinite)
+
+---- d10_stimulus_admission_rejects_each_nonfinite_and_out_of_range_field stdout ----
+
+thread 'd10_stimulus_admission_rejects_each_nonfinite_and_out_of_range_field' (6868836) panicked at native/specimen-kernel/tests/atp_v3.rs:37:13:
+assertion `left == right` failed
+  left: Ok(Stimulus { valence: NaN, intensity: 0.0, urgency: false })
+ right: Err(ValenceNotFinite)
+
+
+failures:
+    d10_admission_normalizes_signed_zero_without_mutating_callers
+    d10_state_admission_rejects_each_nonfinite_and_out_of_range_field
+    d10_stimulus_admission_rejects_each_nonfinite_and_out_of_range_field
+
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p specimen-kernel --test atp_v3`

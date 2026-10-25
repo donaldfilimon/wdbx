@@ -1,0 +1,46 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[17106]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "scanner_v3") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 0.17s
+     Running tests/scanner_v3.rs (specimen-studio/target/debug/deps/scanner_v3-a4f5ea4564e0ae35)
+
+running 7 tests
+test s06_direct_checked_i128_reducer_subtracts_before_single_clamp ... ok
+test s05_same_low_key_scans_distinct_original_numeric_evidence ... ok
+test profile_absence_consequences_are_visible_and_modality_is_explicit ... ok
+test resolved_spo_thirds_and_negation_conflict_are_independent_components ... ok
+test punctuation_is_excluded_from_lexical_scanner_features ... FAILED
+test conditional_antecedent_leaves_are_scanned_once_without_inventing_roles ... FAILED
+test multiset_repeats_bigrams_operand_order_and_exact_decimals ... ok
+
+failures:
+
+---- punctuation_is_excluded_from_lexical_scanner_features stdout ----
+
+thread 'punctuation_is_excluded_from_lexical_scanner_features' (4334919) panicked at native/specimen-kernel/tests/scanner_v3.rs:231:5:
+assertion `left == right` failed
+  left: Rational { numerator: 80, denominator: 3 }
+ right: Rational { numerator: 40, denominator: 1 }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- conditional_antecedent_leaves_are_scanned_once_without_inventing_roles stdout ----
+
+thread 'conditional_antecedent_leaves_are_scanned_once_without_inventing_roles' (4334916) panicked at native/specimen-kernel/tests/scanner_v3.rs:219:5:
+assertion `left == right` failed
+  left: Rational { numerator: 40, denominator: 1 }
+ right: Rational { numerator: 40, denominator: 3 }
+
+
+failures:
+    conditional_antecedent_leaves_are_scanned_once_without_inventing_roles
+    punctuation_is_excluded_from_lexical_scanner_features
+
+test result: FAILED. 5 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p specimen-kernel --test scanner_v3`

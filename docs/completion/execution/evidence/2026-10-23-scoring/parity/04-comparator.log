@@ -1,0 +1,49 @@
+54 | function checkEvidence(e){keys(e,'version components similarity dissimilarity difference confidence left_constraints right_constraints');eq(e.version,'text-scanner-v3');eq(e.components.map(c=>c.name),['lemma-multiset','ordered-bigram-multiset','spo','operands-operators'],'ordered scanner component names/count');let s=[0n,1n],d=[0n,1n];for(const[c,w]of e.components.map((c,i)=>[c,[40n,20n,20n,20n][i]])){keys(c,'name weight similarity dissimilarity reason left right');eq(integer(c.weight),w);const a=read(c.similarity),b=read(c.dissimilarity);assert(a[0]>=0&&b[0]>=0);eq(add(a,b),[w,1n],'component complementarity');assert(['Match','Partial','Missing','Mismatch','NegationConflict','UncertainNegation'].includes(c.reason));if(c.reason==='Match')eq(a,[w,1n]);else if(c.reason==='Partial')assert(a[0]>0n&&b[0]>0n);else eq(a,[0n,1n]);spans(c.left);spans(c.right);s=add(s,a);d=add(d,b);}eq(read(e.similarity),s);eq(read(e.dissimilarity),d);eq(read(e.difference),sub(s,d));eq(read(e.confidence),clamp(sub(s,d)),'scanner S-D cla
+55 | function entryScore(s,i,e,stream){const rs=[...guards(i.guards,true),...guards(e.right_constraints,false)];if(i.route.includes('Blocked'))rs.push('BlockedAutomaton');return checkScore(s,checkEvidence(e),i.policy,{seed:'18446744073709551557',stream,draws:[],bypass:i.bypass==='Declared'},rs);}
+56 | function checkContribution(c,i,score,election,evidence){keys(c,'id node entry population root source_original target_origin parent inhibitions captures dependencies group kind slot strength action score election evidence');for(const[k,v]of Object.entries({id:i.id,node:i.node,entry:i.entry,population:i.population,root:i.origin,source_original:i.source.original,target_origin:i.target.origin,parent:i.parent,inhibitions:i.inhibitions,captures:i.captures,dependencies:i.dependencies,group:i.group,kind:i.kind,strength:i.policy.strength}))eq(c[k],v,`retained contribution ${k}`);eq(c.score,score);if(election!==undefined)eq(c.election,election);if(evidence!==undefined)eq(c.evidence,evidence);assert(c.score.qualified);eq(c.slot,c.election.winner);eq(c.action,i.alternatives[c.slot].action);tree(c.action);const ctx={seed:c.election.seed,stream:c.election.stream,draws:c.election.draw?[c.election.draw.value]:[],weight_bits:i.alternatives.map(a=>a.weight_bits),eligible:i.alternatives.map(a=>!a.inhibited)};checkElection(c.ele
+57 | const canonical=(c)=>JSON.stringify([c.root.input,c.root.clause,c.root.action,c.parent,c.action,[...c.inhibitions].sort((a,b)=>a.domain.localeCompare(b.domain)||a.code.localeCompare(b.code)),c.captures.map(x=>[x.name,x.value]),[...c.dependencies].sort((a,b)=>integer(a)<integer(b)?-1:1)]);
+58 | function independentGroups(cs){const refs=new Set(cs.flatMap(c=>c.dependencies));const groups=new Map();for(const c of cs){if(c.group!==null||c.kind==='IntermediateFact'||refs.has(c.id))continue;const key=canonical(c);if(!groups.has(key))groups.set(key,[]);groups.get(key).push(c);}return[...groups.values()].filter(g=>g.length>1);}
+59 | function checkArbitration(cs,groups,survivors,ctx){const expected=independentGroups(cs);eq(groups.length,expected.length,'independent canonical redundant group count');let offset=0;const removed=new Set();groups.forEach((g,n)=>{keys(g,'candidates winner election');const vs=expected[n];eq(g.candidates,vs.map(c=>c.id),'canonical tree/root/capture/inhibition/dependency grouping');const ws=vs.map(c=>Math.max(0,Number(integer(c.score.effective.n))/Number(integer(c.score.effective.d)))*c.strength);const bits=ws.map(w=>{const b=Buffer.alloc(8);b.writeDoubleLE(w);return b.readBigUInt64LE().toString(16).padStart(16,'0');});offset+=checkElection(g.election,{...ctx,weight_bits:bits,eligible:vs.map(()=>true)},'Redundancy',offset);eq(g.winner,g.election.winner===null?null:vs[g.election.winner].id);for(const c of vs)if(c.id!==g.winner)removed.add(c.id);});eq(survivors,cs.filter(c=>!removed.has(c.id)),'stable complete surviving contribution metadata');return offset;}
+
+AssertionError: canonical tree/root/capture/inhibition/dependency grouping
++ actual - expected
+... Skipped lines
+
+  [
+    '1267650600228229401496703205577',
+    '1267650600228229401496703205578',
+    '1267650600228229401496703205579',
+    '1267650600228229401496703205580',
+...
+    '1267650600228229401496703205584',
+-   '1267650600228229401496703205587',
+    '1267650600228229401496703205585',
+    '1267650600228229401496703205586',
++   '1267650600228229401496703205587',
+    '1267650600228229401496703205588'
+  ]
+
+ generatedMessage: false,
+     actual: [
+  "1267650600228229401496703205577", "1267650600228229401496703205578", "1267650600228229401496703205579",
+  "1267650600228229401496703205580", "1267650600228229401496703205581", "1267650600228229401496703205582",
+  "1267650600228229401496703205583", "1267650600228229401496703205584", "1267650600228229401496703205585",
+  "1267650600228229401496703205586", "1267650600228229401496703205587", "1267650600228229401496703205588"
+],
+   expected: [
+  "1267650600228229401496703205577", "1267650600228229401496703205578", "1267650600228229401496703205579",
+  "1267650600228229401496703205580", "1267650600228229401496703205581", "1267650600228229401496703205582",
+  "1267650600228229401496703205583", "1267650600228229401496703205584", "1267650600228229401496703205587",
+  "1267650600228229401496703205585", "1267650600228229401496703205586", "1267650600228229401496703205588"
+],
+   operator: "deepStrictEqual",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at /Users/donald/sources/repos/wdbx/specimen-studio/tests/scoring-parity.mjs:59:287
+      at forEach (native:1:11)
+      at checkArbitration (/Users/donald/sources/repos/wdbx/specimen-studio/tests/scoring-parity.mjs:59:213)
+      at replay (/Users/donald/sources/repos/wdbx/specimen-studio/tests/scoring-parity.mjs:76:398)
+      at validate (/Users/donald/sources/repos/wdbx/specimen-studio/tests/scoring-parity.mjs:96:66)
+
+Bun v1.4.4-canary.1+ea6a2c7b7 (macOS arm64)

@@ -1,0 +1,65 @@
+{
+  "scope": "Task8.scoring product source and tests; lib.rs contains earlier unrelated registrations",
+  "files": [
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/src/scoring_v3/arbitration.rs",
+      "sha256": "bebb773f29b2aad6a9dd577330c98aedde1d49bc4dd741e8e40248ed4f1afba9",
+      "lines": 249
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/src/scoring_v3/budget.rs",
+      "sha256": "5230076cc5c567fbacd7261dd115caa7d4af129201fbb872f795321a2fe12981",
+      "lines": 218
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/src/scoring_v3/contribution.rs",
+      "sha256": "5fc433d8cce55ca728749eb0dee6ef142ecbee47a064cb586d0bf42351e3ae63",
+      "lines": 384
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/src/scoring_v3/draws.rs",
+      "sha256": "1dc1240e736117a106c3766ee1e9fc7e5df098fe81961193afc26a0f534931aa",
+      "lines": 104
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/src/scoring_v3/election.rs",
+      "sha256": "28eaedfb182e66c6de0fd8a819c6a8a9f4045f015bccfda505554f29b121dffa",
+      "lines": 105
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/src/scoring_v3/math.rs",
+      "sha256": "f9a17e784eb345a68f7e3d480367a99ad75eb645efca2799d48fbcb59670edb6",
+      "lines": 47
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/src/scoring_v3/mod.rs",
+      "sha256": "7d51beb8b5dc76a2c8189bd0976f6c24b6fcfdc9921364fbc8ddd31390164027",
+      "lines": 37
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/src/scoring_v3/policy.rs",
+      "sha256": "d9b39863fe3e19f1a1444e9c925c9588f7568ad7f81da2d521a5a7293b894c58",
+      "lines": 256
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/tests/scoring_v3_contributions.rs",
+      "sha256": "8416b7d355eb2f004b151cd63b352ba70d3f22735a1cffba3baeba4e1696c898",
+      "lines": 738
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/tests/scoring_v3_election.rs",
+      "sha256": "0cf8330041848198efb7f97adacc87063bd951aa83510247a911e40daab3eb6c",
+      "lines": 66
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/tests/scoring_v3_policy.rs",
+      "sha256": "58d8f2a2ed080c759fda11d68fab7a22c5e5a31da21808697220158c968c4391",
+      "lines": 233
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/src/lib.rs",
+      "sha256": "181f93268d36169dda4d186ac9872ec286df999aaa069b56f43c1ae16560027d",
+      "lines": 46
+    }
+  ]
+}

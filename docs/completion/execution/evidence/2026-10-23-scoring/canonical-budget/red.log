@@ -1,0 +1,63 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[14566]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "scoring_orchestration_budget_v1") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 0.26s
+     Running tests/scoring_orchestration_budget_v1.rs (target/debug/deps/scoring_orchestration_budget_v1-2f7b6bed13ce0bb3)
+
+running 8 tests
+test overflowing_policy_and_overlarge_budget_refuse_without_consuming_draws ... ok
+test broker_admission_work_boundary_is_atomic ... ok
+test scoring_work_still_counts_items_independently_of_logical_metadata_bytes ... ok
+test scoring_entry_payload_minus_one_refuses_and_exact_charge_admits_without_draws ... FAILED
+test completion_cleanup_headroom_is_four_cycles_plus_four_jobs_plus_retained_bytes ... FAILED
+test scoring_arbitration_uses_fixed_contribution_and_nested_metadata_reserves ... FAILED
+test completion_owned_boundary_preserves_the_lease_on_refusal ... FAILED
+test scoring_batch_uses_fixed_entry_request_reserve ... FAILED
+
+failures:
+
+---- scoring_entry_payload_minus_one_refuses_and_exact_charge_admits_without_draws stdout ----
+
+thread 'scoring_entry_payload_minus_one_refuses_and_exact_charge_admits_without_draws' (6163349) panicked at native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs:47:13:
+assertion failed: matches!(result, Err(ScoringError::BudgetExceeded))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- completion_cleanup_headroom_is_four_cycles_plus_four_jobs_plus_retained_bytes stdout ----
+
+thread 'completion_cleanup_headroom_is_four_cycles_plus_four_jobs_plus_retained_bytes' (6163344) panicked at native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs:171:31:
+called `Result::unwrap_err()` on an `Ok` value: Some(CompletedIssuer { incarnation: 1, owner: (), cycle: 1, job: 1, generation: 1 })
+
+---- scoring_arbitration_uses_fixed_contribution_and_nested_metadata_reserves stdout ----
+
+thread 'scoring_arbitration_uses_fixed_contribution_and_nested_metadata_reserves' (6163347) panicked at native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs:91:16:
+assertion failed: matches!(result, Err(ScoringError::BudgetExceeded))
+
+---- completion_owned_boundary_preserves_the_lease_on_refusal stdout ----
+
+thread 'completion_owned_boundary_preserves_the_lease_on_refusal' (6163345) panicked at native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs:140:31:
+called `Result::unwrap_err()` on an `Ok` value: Some(CompletedIssuer { incarnation: 1, owner: (), cycle: 1, job: 1, generation: 1 })
+
+---- scoring_batch_uses_fixed_entry_request_reserve stdout ----
+
+thread 'scoring_batch_uses_fixed_entry_request_reserve' (6163348) panicked at native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs:74:9:
+assertion `left == right` failed
+  left: true
+ right: false
+
+
+failures:
+    completion_cleanup_headroom_is_four_cycles_plus_four_jobs_plus_retained_bytes
+    completion_owned_boundary_preserves_the_lease_on_refusal
+    scoring_arbitration_uses_fixed_contribution_and_nested_metadata_reserves
+    scoring_batch_uses_fixed_entry_request_reserve
+    scoring_entry_payload_minus_one_refuses_and_exact_charge_admits_without_draws
+
+test result: FAILED. 3 passed; 5 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p specimen-kernel --test scoring_orchestration_budget_v1`

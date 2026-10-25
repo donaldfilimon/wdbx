@@ -1,0 +1,18 @@
+{
+  "command": [
+    "bun",
+    "run",
+    "lint"
+  ],
+  "cwd": "/Users/donald/sources/repos/wdbx/specimen-studio",
+  "environment": {
+    "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+    "RUSTUP_TOOLCHAIN": "1.99.1"
+  },
+  "source_head": "36bc99b699de60be6c07b2838d74580084fb5d4c",
+  "scope": "Current uncommitted source; gate execution only, not installed/UI/research/owner qualification",
+  "started_utc": "2026-10-23T02:11:21.229477+00:00",
+  "ended_utc": "2026-10-23T02:11:23.414261+00:00",
+  "exit_code": 0,
+  "log_sha256": "fe82195262b09727902d8ea57ceb3e12a09e5df0c6f26157db77f5c51b45d9f5"
+}

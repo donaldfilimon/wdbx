@@ -1,0 +1,981 @@
+{
+  "audit_kind": "source-only requirement-evidence candidate inventory",
+  "execution": "No tests run; no acceptance promotion or efficacy claim. Frozen experiments/holdout corpus not accessed.",
+  "scope": "46 frozen S cases and 18 D decisions. No repository edits. Kernel identity module under concurrent development excluded.",
+  "acceptance_source": "docs/completion/studio-acceptance-v1.json",
+  "design_source": "docs/completion/designs.json",
+  "cases": [
+    {
+      "id": "S01",
+      "frozen_row": "| Two original paraphrases share a compatible key | Both remain distinct entries; both can independently qualify |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/language.rs",
+        "specimen-studio/native/specimen-kernel/src/mutate.rs",
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-kernel/tests/mutate.rs",
+          "name": "add_node_edit_keeps_ref_strength_and_sibling_entries"
+        }
+      ],
+      "assertion_relation": "adjacent",
+      "limit_or_blocker": "Sibling retention asserted; no dedicated compatible-key paraphrase pair independently qualifying fixture."
+    },
+    {
+      "id": "S02",
+      "frozen_row": "| Two nodes share a logical ID | Lookup returns both; feedback/removal can target one concrete contributor |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs",
+        "specimen-studio/native/specimen-kernel/src/mutate.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+          "name": "all_same_id_entries_are_reachable_past_one_thousand"
+        },
+        {
+          "path": "specimen-studio/native/specimen-kernel/tests/mutate.rs",
+          "name": "feedback_removes_nodes_that_reach_zero"
+        }
+      ],
+      "assertion_relation": "partial direct",
+      "limit_or_blocker": "Retrieval fixture reaches last same-ID record; no combined same-ID concrete-feedback/removal peer-survival assertion."
+    },
+    {
+      "id": "S03",
+      "frozen_row": "| A node's 21st unique same-key entry arrives at default capacity | Apply the explicit full-node policy without overwriting existing entries |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/mutate.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-kernel/tests/mutate.rs",
+          "name": "add_entry_requires_the_same_pattern_id"
+        }
+      ],
+      "assertion_relation": "adjacent",
+      "limit_or_blocker": "add_entry refuses full node with Create a related node; no atomic fresh-node insertion or capacity+1 direct test found. Conflicts with proposed design automatic split."
+    },
+    {
+      "id": "S04",
+      "frozen_row": "| Identical ID strings use different resolution classes | They do not compare equal as complete Pattern keys |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/language.rs"
+      ],
+      "candidate_tests": [],
+      "assertion_relation": "source only",
+      "limit_or_blocker": "identify embeds resolution in text-v2 ID, but complete version/modality/resolution/digest PatternKey not present in inspected old language module; new moving identity module excluded."
+    },
+    {
+      "id": "S05",
+      "frozen_row": "| A low-resolution candidate is retrieved | Its secondary comparison still uses high-resolution scanning |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/language.rs",
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-kernel/src/language.rs",
+          "name": "collision_is_not_confidence"
+        }
+      ],
+      "assertion_relation": "partial direct",
+      "limit_or_blocker": "Collision test asserts same retrieval ID has low score for different operands; scanner is token-set overlap/bind, not proposed role/bigram high-resolution algorithm."
+    },
+    {
+      "id": "S06",
+      "frozen_row": "| Similarity and dissimilarity sums exceed narrow integer capacity | Safe arithmetic preserves their difference; confidence remains bounded |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/language.rs"
+      ],
+      "candidate_tests": [],
+      "assertion_relation": "source only",
+      "limit_or_blocker": "f64 token count fractions and clamp avoid narrow integer accumulation here; proposed signed i128 feature accumulation and overflow fixture absent."
+    },
+    {
+      "id": "S07",
+      "frozen_row": "| Confidence is exactly +100 or -100 | No jitter applies |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [],
+      "assertion_relation": "source only",
+      "limit_or_blocker": "Explicit modulated.abs()!=100 guard; no endpoint jitter test found; -100 generally filtered before voting."
+    },
+    {
+      "id": "S08",
+      "frozen_row": "| Maximum-strength node has a qualified baseline | Its score does not jitter; below-threshold entries retain jitter eligibility |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [],
+      "assertion_relation": "source only",
+      "limit_or_blocker": "max strength/qualified baseline guard exists; no paired threshold/max-strength seeded test found."
+    },
+    {
+      "id": "S09",
+      "frozen_row": "| One node has several matching entries | Every qualified entry may emit its vote |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [],
+      "assertion_relation": "source only",
+      "limit_or_blocker": "Entry iteration exists, but later same-origin normalized-action grouping can remove matching votes; no multi-entry all-qualified assertion found."
+    },
+    {
+      "id": "S10",
+      "frozen_row": "| Several complementary nodes use the same triple | Their contributions survive; no global election removes them |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [],
+      "assertion_relation": "gap",
+      "limit_or_blocker": "Group key origin plus normalized action globally elects one per same-origin action; complementary same-triple contributions need direct conservation fixture and revised redundancy identity."
+    },
+    {
+      "id": "S11",
+      "frozen_row": "| Fan-outs produce redundant alternative contributions | Scoped spin-bottle selection resolves the redundancy with valid weights |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [],
+      "assertion_relation": "source only",
+      "limit_or_blocker": "pick uses nonnegative weighted draw but zero total chooses uniform item; proposed zero-total no-action and fanout lineage/capture scoped redundancy not implemented here."
+    },
+    {
+      "id": "S12",
+      "frozen_row": "| A hard attachment triggers a below-threshold target | Target is evaluated but emits no forced vote |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [],
+      "assertion_relation": "source only",
+      "limit_or_blocker": "Attachment jobs return through common threshold guard; no hard-attachment below-threshold regression test found."
+    },
+    {
+      "id": "S13",
+      "frozen_row": "| A bidirectional attachment cycles without consuming remainder | Visit/depth policy stops repeated non-progressing work |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [],
+      "assertion_relation": "source only",
+      "limit_or_blocker": "depth<4 and seen tuple bound attachment traversal; no bidirectional non-progress fixture found."
+    },
+    {
+      "id": "S14",
+      "frozen_row": "| Lookup returns more than 1,000 deep comparisons | Queue all admitted work; peak simultaneous comparisons stays within the cap |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs",
+        "specimen-studio/native/specimen-core/src/scheduler.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+          "name": "all_same_id_entries_are_reachable_past_one_thousand"
+        },
+        {
+          "path": "specimen-studio/native/specimen-core/src/scheduler.rs",
+          "name": "lease_and_coverage"
+        }
+      ],
+      "assertion_relation": "partial direct",
+      "limit_or_blocker": "1002 candidate fixture and 10001 all-hit scheduler fixture show no first-hit truncation; no measured simultaneous peak assertion. Permit only wraps raft predicate, not all later engine comparisons."
+    },
+    {
+      "id": "S15",
+      "frozen_row": "| Foreground and maintenance scans coexist | They share the same cap, including attachments |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs",
+        "specimen-studio/native/specimen-core/src/scheduler.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-core/src/scheduler.rs",
+          "name": "priority_and_background_opportunities"
+        },
+        {
+          "path": "specimen-studio/native/specimen-core/src/scheduler.rs",
+          "name": "queued_state_job_cancels_and_releases"
+        }
+      ],
+      "assertion_relation": "adjacent",
+      "limit_or_blocker": "Static comparison semaphore is shared by native raft scans; attachment/deep scans and maintenance language::score calls bypass it. No coexistence peak trace test."
+    },
+    {
+      "id": "S16",
+      "frozen_row": "| A vote and activator reference different supporting keys | Both query paths are used; only contextually relevant returned subdata is consumed |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+          "name": "explicit_resource_and_temporal_lookup_preserve_evidence"
+        }
+      ],
+      "assertion_relation": "partial direct",
+      "limit_or_blocker": "Explicit action key lookup and resource evidence asserted; separate vote/activator keys and contextually relevant subdata need paired fixture."
+    },
+    {
+      "id": "S17",
+      "frozen_row": "| Two resources share a linked resource ID | Both are retrieved; absence of a resource link does not remove structural indexing |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs",
+        "specimen-studio/native/specimen-kernel/src/mutate.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-kernel/tests/mutate.rs",
+          "name": "save_resource_validates_and_sets_native_ids"
+        }
+      ],
+      "assertion_relation": "adjacent",
+      "limit_or_blocker": "ResourceIndex stores Vec values for ref/pattern/structural/resource IDs; direct linked duplicate plus unlinked structural retrieval fixture absent."
+    },
+    {
+      "id": "S18",
+      "frozen_row": "| Side-resource retrieval is traced | No global semantic scan or node-style confidence calculation appears in that path |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+          "name": "explicit_resource_and_temporal_lookup_preserve_evidence"
+        }
+      ],
+      "assertion_relation": "partial direct",
+      "limit_or_blocker": "Indexed support path observable in source; test asserts result/provenance, not trace absence of global semantic scan or node confidence."
+    },
+    {
+      "id": "S19",
+      "frozen_row": "| `two plus two` and `2+2` | Bind compatible procedural structure and preserve operands; permitted action yields 4 |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/language.rs",
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-kernel/tests/mutate.rs",
+          "name": "starter_still_calculates_and_answers_who_it_is"
+        },
+        {
+          "path": "specimen-studio/tests/kernel.test.js",
+          "name": "the starter arithmetic node answers one binary operation"
+        },
+        {
+          "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+          "name": "cycle_and_clauses"
+        }
+      ],
+      "assertion_relation": "partial direct",
+      "limit_or_blocker": "Arithmetic behavior and normalization covered by nearby fixtures; explicit paired two plus two versus 2+2 structural/operand assertion not established."
+    },
+    {
+      "id": "S20",
+      "frozen_row": "| `don't solve 2+2` | Negation/inhibition survives preparation and blocks the prohibited action |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/language.rs",
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-kernel/src/language.rs",
+          "name": "independent_negation"
+        },
+        {
+          "path": "specimen-studio/tests/kernel.test.js",
+          "name": "repeat, negation and unmatched inputs behave"
+        },
+        {
+          "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+          "name": "cycle_and_clauses"
+        }
+      ],
+      "assertion_relation": "partial direct",
+      "limit_or_blocker": "Clause negation and cycle refusal fixtures relevant; exact requested phrase plus action-side-effect suppression needs explicit named fixture."
+    },
+    {
+      "id": "S21",
+      "frozen_row": "| User automaton exceeds its execution budget | It terminates with an explicit bounded-execution result |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/language.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-kernel/src/language.rs",
+          "name": "bounded_math"
+        }
+      ],
+      "assertion_relation": "partial direct",
+      "limit_or_blocker": "tape +[] returns Err and tape implements BudgetExceeded after 10000; test only is_err, and bind swallows tape errors into unmatched rather than explicit cycle budget result."
+    },
+    {
+      "id": "S22",
+      "frozen_row": "| Imagination runs on retrieved material | Temporary synthesis uses source ingredients; persistent learned state is unchanged |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs",
+        "specimen-studio/native/specimen-kernel/src/neural.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/tests/kernel.test.js",
+          "name": "cycles are pure: the source specimen is untouched"
+        },
+        {
+          "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+          "name": "cancellation_after_composition_preserves_the_durable_snapshot"
+        }
+      ],
+      "assertion_relation": "adjacent",
+      "limit_or_blocker": "Input purity and cancellation do not assert successful synthesis uses multiple source ingredients while learned state unchanged; frozen synthesis network contract not shown implemented."
+    },
+    {
+      "id": "S23",
+      "frozen_row": "| Transient execution is repeated | Weight/knowledge state does not train or drift merely from invocation |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/neural.rs",
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-kernel/src/neural.rs",
+          "name": "fixed_and_validated"
+        },
+        {
+          "path": "specimen-studio/native/specimen-kernel/src/engine.rs",
+          "name": "fixed_host_cycle_is_byte_deterministic"
+        }
+      ],
+      "assertion_relation": "adjacent",
+      "limit_or_blocker": "Determinism/immutable borrow relevant; repeated transient invocation with explicit knowledge and weight hashes absent."
+    },
+    {
+      "id": "S24",
+      "frozen_row": "| ATP spans two related cycles | Intended buildup/release persists; last-cycle random jitter does not |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [],
+      "assertion_relation": "source only",
+      "limit_or_blocker": "ATP persists decay/release values, jitter local to evidence; two-cycle buildup/release and no-jitter-drift fixture absent. Wall time and max(0) differ from proposed monotonic/backwards rejection."
+    },
+    {
+      "id": "S25",
+      "frozen_row": "| Thesaurus replacement changes tone beyond tolerance | Retry within budget or use the original phrase |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+          "name": "tone_variation_preserves_numbers_and_negation"
+        }
+      ],
+      "assertion_relation": "partial direct",
+      "limit_or_blocker": "Protected numeric/negation text and thesaurus transformation asserted; charge tolerance retry exhaustion not directly asserted."
+    },
+    {
+      "id": "S26",
+      "frozen_row": "| An output combines several nodes and later gets paraphrased | Provenance still identifies all causal voting contributors and transformations |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+          "name": "tone_variation_preserves_numbers_and_negation"
+        },
+        {
+          "path": "specimen-studio/tests/kernel.test.js",
+          "name": "feedback applies once per contributor and selection"
+        }
+      ],
+      "assertion_relation": "adjacent",
+      "limit_or_blocker": "Segments carry contributors/transformations; no multi-node composition then paraphrase all-causal contributor conservation assertion found."
+    },
+    {
+      "id": "S27",
+      "frozen_row": "| `/right green` with one contributor appearing in several spans | That node receives one independent feedback trial for the event |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/mutate.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-kernel/tests/mutate.rs",
+          "name": "feedback_is_deterministic_applies_once_and_advances_the_seed"
+        },
+        {
+          "path": "specimen-studio/tests/kernel.test.js",
+          "name": "feedback applies once per contributor and selection"
+        }
+      ],
+      "assertion_relation": "partial direct",
+      "limit_or_blocker": "contributors deduplicated across segments; verify fixture specifically repeats same contributor across green spans and independent seeded Bernoulli outcomes before closure."
+    },
+    {
+      "id": "S28",
+      "frozen_row": "| A node falls from maximum strength | Node crystallization is removed; attachment mode is not accidentally changed |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/mutate.rs",
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [],
+      "assertion_relation": "source only",
+      "limit_or_blocker": "Strength updated directly, crystallization inferred in score guards; no explicit fall-from-maximum test preserving attachment hard mode found."
+    },
+    {
+      "id": "S29",
+      "frozen_row": "| One same-ID node reaches zero | Remove only that active record; its peers remain |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/mutate.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-kernel/tests/mutate.rs",
+          "name": "feedback_removes_nodes_that_reach_zero"
+        },
+        {
+          "path": "specimen-studio/native/specimen-kernel/tests/mutate.rs",
+          "name": "remove_node_drops_attachments_and_orphaned_links"
+        }
+      ],
+      "assertion_relation": "partial direct",
+      "limit_or_blocker": "Removal targets ref; existing zero fixture does not establish same logical ID peer preservation."
+    },
+    {
+      "id": "S30",
+      "frozen_row": "| A Type A node detects a residual error | Correction is attributable to the original output and expires within bounded supervision |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+          "name": "bounded_correction_is_linked_once"
+        }
+      ],
+      "assertion_relation": "partial direct",
+      "limit_or_blocker": "Correction parent ID and no second correction asserted; source supervisedUntil is +90000ms, not proposed 60000ms; expiry/next-user-cycle boundary fixture absent."
+    },
+    {
+      "id": "S31",
+      "frozen_row": "| Type B finds new knowledge | Present an identified proposal; no persistent knowledge promotion until `/learn id` |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs",
+        "specimen-studio/native/specimen-kernel/src/command/apply.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+          "name": "literal_text_remains_inert_and_type_b_only_proposes"
+        },
+        {
+          "path": "specimen-studio/tests/kernel.test.js",
+          "name": "review with Type B on repeated unmatched produces proposals; dismiss/reconsider round trip and undo"
+        }
+      ],
+      "assertion_relation": "partial direct",
+      "limit_or_blocker": "Pending identified proposal and unchanged nodes asserted; observed-relation join, expiry and approval authority revalidation are larger unproven proposed semantics."
+    },
+    {
+      "id": "S32",
+      "frozen_row": "| Mutation pairs five weak alternatives with four strong alternatives | Recipient count becomes four only under valid history-preserving shortening rules |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+          "name": "invalid_mutation_preserves_alternative_pools"
+        }
+      ],
+      "assertion_relation": "adjacent",
+      "limit_or_blocker": "count=min and remixed trailing-slot rejection present; no five-to-four history-preserving shortening and retired-slot tombstone assertion."
+    },
+    {
+      "id": "S33",
+      "frozen_row": "| Mutation pairs four weak alternatives with five strong alternatives | Recipient remains four; no fifth alternative is added |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+          "name": "invalid_mutation_preserves_alternative_pools"
+        }
+      ],
+      "assertion_relation": "adjacent",
+      "limit_or_blocker": "min count prevents added fifth slot in source; no explicit four-versus-five success fixture."
+    },
+    {
+      "id": "S34",
+      "frozen_row": "| A recipient slot already remixed | It is ineligible, including after save/load or slot renumbering |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs",
+        "specimen-studio/native/specimen-kernel/src/mutate.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+          "name": "successful_mutation_keeps_slots_and_forbids_reciprocal_borrowing"
+        }
+      ],
+      "assertion_relation": "partial direct",
+      "limit_or_blocker": "Stable slot/remixed marker and invalid original restoration asserted; save/load marker + renumber/repeat ineligibility not explicitly asserted together."
+    },
+    {
+      "id": "S35",
+      "frozen_row": "| A prohibited donor relationship is selected through another slot | Lineage policy rejects the pathological reuse |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+          "name": "successful_mutation_keeps_slots_and_forbids_reciprocal_borrowing"
+        }
+      ],
+      "assertion_relation": "partial direct",
+      "limit_or_blocker": "Reciprocal node pair reuse refusal asserted; no multi-hop ancestor DFS or another-slot lineage fixture."
+    },
+    {
+      "id": "S36",
+      "frozen_row": "| Growth proposes an original inhibited pattern/vote pairing | Reject it, including configured relevant fan-out equivalents |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/mutate.rs",
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-kernel/tests/mutate.rs",
+          "name": "add_node_rejects_inhibited_pairings_and_the_node_limit"
+        },
+        {
+          "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+          "name": "successful_mutation_keeps_slots_and_forbids_reciprocal_borrowing"
+        }
+      ],
+      "assertion_relation": "partial direct",
+      "limit_or_blocker": "Original pair restoration refusal asserted; relevant fanout equivalents and scoped privacy-safe MAC commitment contract absent in inspected implementation."
+    },
+    {
+      "id": "S37",
+      "frozen_row": "| Idle timer fires repeatedly | Each event draws a fresh interval and chooses tag or PHAGY |",
+      "source_paths": [
+        "specimen-studio/app/state/use-studio.ts"
+      ],
+      "candidate_tests": [],
+      "assertion_relation": "gap",
+      "limit_or_blocker": "Effect samples interval once and uses setInterval; choice sampled each callback, but fresh delay per completed event not directly established; no fake-clock test found."
+    },
+    {
+      "id": "S38",
+      "frozen_row": "| PHAGY jobs overlap or time out | Unique job claims prevent duplicate active work; timed-out agents release resources |",
+      "source_paths": [
+        "specimen-studio/native/specimen-core/src/scheduler.rs",
+        "specimen-studio/native/specimen-core/src/persistence.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-core/src/scheduler.rs",
+          "name": "lease_and_coverage"
+        },
+        {
+          "path": "specimen-studio/native/specimen-core/src/scheduler.rs",
+          "name": "queued_state_job_cancels_and_releases"
+        }
+      ],
+      "assertion_relation": "partial direct",
+      "limit_or_blocker": "Duplicate active lease refusal and drop/cancel release asserted; timeout-expiry fencing, renewable object/revision claims and stale late publish race unproven."
+    },
+    {
+      "id": "S39",
+      "frozen_row": "| Rafts start at 0, 20, and 50 | Exactly the assigned ranges are covered with no overlap/gaps and per-step yielding |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/search.rs",
+        "specimen-studio/native/specimen-core/src/scheduler.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-kernel/tests/raft_plan.rs",
+          "name": "chunks_split_across_rafts_with_ceiling_size"
+        },
+        {
+          "path": "specimen-studio/native/specimen-core/tests/raft_partition.rs",
+          "name": "threaded_scan_uses_the_planned_raft_ranges"
+        },
+        {
+          "path": "specimen-studio/native/specimen-core/src/scheduler.rs",
+          "name": "checkpoint_resume_and_cancel_are_exact"
+        }
+      ],
+      "assertion_relation": "partial direct",
+      "limit_or_blocker": "Disjoint ranges/checkpoints asserted for generated plans; literal raft starts 0,20,50 fixture and per-step UI yielding not directly covered."
+    },
+    {
+      "id": "S40",
+      "frozen_row": "| Duplicate-ID matches span several chunks | `find_all` completes every chunk; a first hit does not terminate the search |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/search.rs",
+        "specimen-studio/native/specimen-core/src/scheduler.rs",
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+          "name": "all_same_id_entries_are_reachable_past_one_thousand"
+        },
+        {
+          "path": "specimen-studio/native/specimen-core/src/scheduler.rs",
+          "name": "lease_and_coverage"
+        }
+      ],
+      "assertion_relation": "partial direct",
+      "limit_or_blocker": "Last same-ID candidate and complete generic all-hit results asserted separately; same-ID multiple qualified matches exact ordered find_all fixture absent."
+    },
+    {
+      "id": "S41",
+      "frozen_row": "| The sandbox prefers a simple loop | HybridTable uses that choice within limits; raft dispatch is not mandatory |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/search.rs",
+        "specimen-studio/native/specimen-core/src/scheduler.rs"
+      ],
+      "candidate_tests": [],
+      "assertion_relation": "gap",
+      "limit_or_blocker": "Sequential and native raft implementations exist; inspected paths do not expose sandbox-selected HybridTable loop/hash/raft planner or correctness-before-speed selection fixture."
+    },
+    {
+      "id": "S42",
+      "frozen_row": "| A visual record has unequal array lengths | Reject it before scanning/rendering |",
+      "source_paths": [
+        "specimen-studio/native/specimen-core/src/vision.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-core/src/vision.rs",
+          "name": "signed_field_and_focus"
+        },
+        {
+          "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+          "name": "visual_positive_negative_and_cycle_evidence"
+        }
+      ],
+      "assertion_relation": "adjacent",
+      "limit_or_blocker": "Analysis validates fixed feature/SDF lengths and finite values; existing visual success/contrast fixtures not malformed unequal-array rejection before scan/render fixture."
+    },
+    {
+      "id": "S43",
+      "frozen_row": "| A history record is pinned | Ordinary rolling overwrite preserves it under the pin policy |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/mutate.rs",
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-kernel/tests/mutate.rs",
+          "name": "toggle_pin_respects_the_pin_limit"
+        },
+        {
+          "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+          "name": "phagy_preserves_pins_and_lineage"
+        },
+        {
+          "path": "specimen-studio/tests/kernel.test.js",
+          "name": "pins survive and the pin limit holds"
+        }
+      ],
+      "assertion_relation": "partial direct",
+      "limit_or_blocker": "Pin budget/PHAGY retention directly relevant; ordinary rolling overwrite pressure rather than PHAGY alone needs explicit fixture."
+    },
+    {
+      "id": "S44",
+      "frozen_row": "| A complete specimen is saved and loaded | All durable organs, duplicate IDs, strengths, links, scripts, history, and mutation markers survive |",
+      "source_paths": [
+        "specimen-studio/native/specimen-core/src/persistence.rs",
+        "specimen-studio/native/specimen-kernel/src/mutate.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+          "name": "durable_roundtrip_stale_revision_and_failed_import"
+        },
+        {
+          "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+          "name": "portable_save_preserves_fractional_specimen_values_exactly"
+        },
+        {
+          "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+          "name": "successful_mutation_keeps_slots_and_forbids_reciprocal_borrowing"
+        }
+      ],
+      "assertion_relation": "partial direct",
+      "limit_or_blocker": "Full specimen equality for starter/fractional fixture; complete durable-organ-rich specimen with duplicate IDs/scripts/history/mutation markers not one comprehensive roundtrip assertion."
+    },
+    {
+      "id": "S45",
+      "frozen_row": "| A saved specimen is malformed or incompatible | Load fails without replacing the current specimen |",
+      "source_paths": [
+        "specimen-studio/native/specimen-core/src/persistence.rs",
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+          "name": "durable_roundtrip_stale_revision_and_failed_import"
+        },
+        {
+          "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+          "name": "malformed_history_and_duplicate_entries_are_rejected"
+        },
+        {
+          "path": "specimen-studio/tests/kernel.test.js",
+          "name": "malformed files are rejected before replacement"
+        }
+      ],
+      "assertion_relation": "partial direct",
+      "limit_or_blocker": "Malformed import and preserved revision asserted; exhaustive incompatible major-version and active specimen byte-equality fixture coverage remains bounded."
+    },
+    {
+      "id": "S46",
+      "frozen_row": "| A sigil calls an undeclared subsystem | The scope/contact boundary rejects the call |",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/language.rs"
+      ],
+      "candidate_tests": [
+        {
+          "path": "specimen-studio/native/specimen-kernel/src/language.rs",
+          "name": "scope_and_nesting"
+        }
+      ],
+      "assertion_relation": "partial direct",
+      "limit_or_blocker": "Unknown sigil and wrong-scope calc rejected; nested declared-contact capability intersection beyond static Scope ledger needs specific escalation fixture."
+    }
+  ],
+  "decisions": [
+    {
+      "id": "D01",
+      "design_bundle": "identity",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/language.rs",
+        "specimen-studio/native/specimen-kernel/src/mutate.rs",
+        "specimen-studio/native/specimen-kernel/src/engine.rs",
+        "specimen-studio/native/specimen-kernel/tests/mutate.rs"
+      ],
+      "related_cases": "S01-S05,S16-S18,S39-S40,S44-S45",
+      "limit_or_blocker": "Legacy text-v2 and scalar ID surface; proposed full key/collision/scope/capacity contracts require dedicated assertions. Moving new identity paths intentionally excluded.",
+      "status": "source candidates only; C0 unchanged"
+    },
+    {
+      "id": "D02",
+      "design_bundle": "identity",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/language.rs",
+        "specimen-studio/native/specimen-kernel/src/mutate.rs",
+        "specimen-studio/native/specimen-kernel/src/engine.rs",
+        "specimen-studio/native/specimen-kernel/tests/mutate.rs"
+      ],
+      "related_cases": "S01-S05,S16-S18,S39-S40,S44-S45",
+      "limit_or_blocker": "Legacy text-v2 and scalar ID surface; proposed full key/collision/scope/capacity contracts require dedicated assertions. Moving new identity paths intentionally excluded.",
+      "status": "source candidates only; C0 unchanged"
+    },
+    {
+      "id": "D03",
+      "design_bundle": "identity",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/language.rs",
+        "specimen-studio/native/specimen-kernel/src/mutate.rs",
+        "specimen-studio/native/specimen-kernel/src/engine.rs",
+        "specimen-studio/native/specimen-kernel/tests/mutate.rs"
+      ],
+      "related_cases": "S01-S05,S16-S18,S39-S40,S44-S45",
+      "limit_or_blocker": "Legacy text-v2 and scalar ID surface; proposed full key/collision/scope/capacity contracts require dedicated assertions. Moving new identity paths intentionally excluded.",
+      "status": "source candidates only; C0 unchanged"
+    },
+    {
+      "id": "D04",
+      "design_bundle": "identity",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/language.rs",
+        "specimen-studio/native/specimen-kernel/src/mutate.rs",
+        "specimen-studio/native/specimen-kernel/src/engine.rs",
+        "specimen-studio/native/specimen-kernel/tests/mutate.rs"
+      ],
+      "related_cases": "S01-S05,S16-S18,S39-S40,S44-S45",
+      "limit_or_blocker": "Legacy text-v2 and scalar ID surface; proposed full key/collision/scope/capacity contracts require dedicated assertions. Moving new identity paths intentionally excluded.",
+      "status": "source candidates only; C0 unchanged"
+    },
+    {
+      "id": "D05",
+      "design_bundle": "language",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/language.rs",
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "related_cases": "S19-S21,S46",
+      "limit_or_blocker": "Regex clause preparation/static scopes and bounded tape exist; nine versioned utility tables, typed roles/negation/capability semantics not fully implemented or proven.",
+      "status": "source candidates only; C0 unchanged"
+    },
+    {
+      "id": "D06",
+      "design_bundle": "scoring",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/language.rs",
+        "specimen-studio/native/specimen-kernel/src/engine.rs",
+        "specimen-studio/native/specimen-core/src/scheduler.rs"
+      ],
+      "related_cases": "S05-S15",
+      "limit_or_blocker": "Token-set f64 similarity and same-origin action grouping differ from proposed i128 feature algorithm and lineage/capture-scoped redundancy. No measured global cap proof.",
+      "status": "source candidates only; C0 unchanged"
+    },
+    {
+      "id": "D07",
+      "design_bundle": "scoring",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/language.rs",
+        "specimen-studio/native/specimen-kernel/src/engine.rs",
+        "specimen-studio/native/specimen-core/src/scheduler.rs"
+      ],
+      "related_cases": "S05-S15",
+      "limit_or_blocker": "Token-set f64 similarity and same-origin action grouping differ from proposed i128 feature algorithm and lineage/capture-scoped redundancy. No measured global cap proof.",
+      "status": "source candidates only; C0 unchanged"
+    },
+    {
+      "id": "D08",
+      "design_bundle": "scoring",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/language.rs",
+        "specimen-studio/native/specimen-kernel/src/engine.rs",
+        "specimen-studio/native/specimen-core/src/scheduler.rs"
+      ],
+      "related_cases": "S05-S15",
+      "limit_or_blocker": "Token-set f64 similarity and same-origin action grouping differ from proposed i128 feature algorithm and lineage/capture-scoped redundancy. No measured global cap proof.",
+      "status": "source candidates only; C0 unchanged"
+    },
+    {
+      "id": "D09",
+      "design_bundle": "synthesis",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/neural.rs",
+        "specimen-studio/native/specimen-kernel/src/engine.rs",
+        "specimen-studio/tests/wasm-probe.test.js"
+      ],
+      "related_cases": "S22-S23,S26",
+      "limit_or_blocker": "Current Network decoder and purity fixtures are adjacent to frozen contract artifacts; no claim of implemented synthesis-contract-v2 or held-out efficacy.",
+      "status": "source candidates only; C0 unchanged"
+    },
+    {
+      "id": "D10",
+      "design_bundle": "atp",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs",
+        "specimen-studio/native/specimen-core/tests/conformance.rs"
+      ],
+      "related_cases": "S24-S25",
+      "limit_or_blocker": "Persisted decay/release and safe literal replacement exist; proposed dt bounds/urgency/monotonic time, repeated-state and semantic tolerance tests incomplete.",
+      "status": "source candidates only; C0 unchanged"
+    },
+    {
+      "id": "D11",
+      "design_bundle": "vision",
+      "source_paths": [
+        "specimen-studio/native/specimen-core/src/vision.rs",
+        "specimen-studio/native/specimen-core/tests/conformance.rs"
+      ],
+      "related_cases": "S42 and visual-pattern vote lifecycle",
+      "limit_or_blocker": "Current visual-v2 features/SDF and validation are adjacent; proposed true Euclidean contour distance, typed render operations and hardware/OCR efficacy not established.",
+      "status": "source candidates only; C0 unchanged"
+    },
+    {
+      "id": "D12",
+      "design_bundle": "supervision",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs",
+        "specimen-studio/native/specimen-kernel/src/mutate.rs",
+        "specimen-studio/native/specimen-kernel/src/command/apply.rs",
+        "specimen-studio/native/specimen-core/tests/conformance.rs"
+      ],
+      "related_cases": "S26-S31",
+      "limit_or_blocker": "Attributable single correction and pending proposal exist; 90s source supervision differs from 60s design and inferred typed relation/proposal expiry/revalidation incomplete.",
+      "status": "source candidates only; C0 unchanged"
+    },
+    {
+      "id": "D13",
+      "design_bundle": "mutation",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs",
+        "specimen-studio/native/specimen-kernel/src/mutate.rs",
+        "specimen-studio/native/specimen-core/src/persistence.rs",
+        "specimen-studio/native/specimen-core/tests/conformance.rs"
+      ],
+      "related_cases": "S32-S38",
+      "limit_or_blocker": "Stable slots, pair ban and Markov remix exist; optimal one-to-one alignment, multi-hop ancestor checks, privacy-safe inhibition and fenced GC/restore contracts incomplete.",
+      "status": "source candidates only; C0 unchanged"
+    },
+    {
+      "id": "D14",
+      "design_bundle": "mutation",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs",
+        "specimen-studio/native/specimen-kernel/src/mutate.rs",
+        "specimen-studio/native/specimen-core/src/persistence.rs",
+        "specimen-studio/native/specimen-core/tests/conformance.rs"
+      ],
+      "related_cases": "S32-S38",
+      "limit_or_blocker": "Stable slots, pair ban and Markov remix exist; optimal one-to-one alignment, multi-hop ancestor checks, privacy-safe inhibition and fenced GC/restore contracts incomplete.",
+      "status": "source candidates only; C0 unchanged"
+    },
+    {
+      "id": "D15",
+      "design_bundle": "scheduler",
+      "source_paths": [
+        "specimen-studio/native/specimen-core/src/scheduler.rs",
+        "specimen-studio/native/specimen-kernel/src/search.rs",
+        "specimen-studio/native/specimen-core/src/persistence.rs",
+        "specimen-studio/app/state/use-studio.ts"
+      ],
+      "related_cases": "S14-S15,S37-S41,S43-S45",
+      "limit_or_blocker": "Raft completeness, cancellation and lease source/tests exist; no sandbox HybridTable, fresh idle interval guarantee or cap covering every deep/maintenance comparison demonstrated.",
+      "status": "source candidates only; C0 unchanged"
+    },
+    {
+      "id": "D16",
+      "design_bundle": "scheduler",
+      "source_paths": [
+        "specimen-studio/native/specimen-core/src/scheduler.rs",
+        "specimen-studio/native/specimen-kernel/src/search.rs",
+        "specimen-studio/native/specimen-core/src/persistence.rs",
+        "specimen-studio/app/state/use-studio.ts"
+      ],
+      "related_cases": "S14-S15,S37-S41,S43-S45",
+      "limit_or_blocker": "Raft completeness, cancellation and lease source/tests exist; no sandbox HybridTable, fresh idle interval guarantee or cap covering every deep/maintenance comparison demonstrated.",
+      "status": "source candidates only; C0 unchanged"
+    },
+    {
+      "id": "D17",
+      "design_bundle": "language",
+      "source_paths": [
+        "specimen-studio/native/specimen-kernel/src/language.rs",
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "related_cases": "S19-S21,S46",
+      "limit_or_blocker": "Regex clause preparation/static scopes and bounded tape exist; nine versioned utility tables, typed roles/negation/capability semantics not fully implemented or proven.",
+      "status": "source candidates only; C0 unchanged"
+    },
+    {
+      "id": "D18",
+      "design_bundle": "scheduler",
+      "source_paths": [
+        "specimen-studio/native/specimen-core/src/scheduler.rs",
+        "specimen-studio/native/specimen-kernel/src/search.rs",
+        "specimen-studio/native/specimen-core/src/persistence.rs",
+        "specimen-studio/app/state/use-studio.ts"
+      ],
+      "related_cases": "S14-S15,S37-S41,S43-S45",
+      "limit_or_blocker": "Raft completeness, cancellation and lease source/tests exist; no sandbox HybridTable, fresh idle interval guarantee or cap covering every deep/maintenance comparison demonstrated.",
+      "status": "source candidates only; C0 unchanged"
+    }
+  ]
+}

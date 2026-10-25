@@ -1,0 +1,68 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[16025]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "scanner_v3") generated 1 warning
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[16027]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "text_v3") generated 1 warning
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[16033]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "scanner_v3_routes") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 0.89s
+     Running tests/scanner_v3.rs (specimen-studio/target/debug/deps/scanner_v3-a4f5ea4564e0ae35)
+
+running 5 tests
+test s06_direct_checked_i128_reducer_subtracts_before_single_clamp ... ok
+test profile_absence_consequences_are_visible_and_modality_is_explicit ... ok
+test s05_same_low_key_scans_distinct_original_numeric_evidence ... ok
+test resolved_spo_thirds_and_negation_conflict_are_independent_components ... ok
+test multiset_repeats_bigrams_operand_order_and_exact_decimals ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/scanner_v3_routes.rs (specimen-studio/target/debug/deps/scanner_v3_routes-0e36100fb8daf36c)
+
+running 14 tests
+test fanout_origins_and_target_inhibition_remain_separate_through_join ... ok
+test automata_share_output_reservations_and_registry_identity_is_current ... ok
+test duplicate_paths_and_repeated_contains_keep_distinct_capture_origins ... ok
+test tape_input_uses_quote_safe_preserved_utf8_without_script_interpretation ... ok
+test grammar_wildcard_and_automaton_routes_cross_literal_keys_and_keep_captures ... ok
+test blocked_routes_retain_constraints_without_successful_automaton_execution ... ok
+test s05_distinct_originals_share_low_key_but_full_scanner_evidence_differs ... ok
+test declared_scopes_do_not_leak_route_hits_and_removed_refs_refuse ... ok
+test runaway_and_shared_budgets_return_errors_without_partial_candidates ... ok
+test typed_grammar_total_pattern_bound_is_validated_atomically ... ok
+test population_scope_reference_and_registration_failures_are_atomic ... ok
+test unresolved_condition_and_utf8_spans_survive_wildcard_routes ... ok
+test wildcard_capture_copy_work_is_reserved_before_materializing_matches ... ok
+test wildcard_and_automaton_fixed_caps_are_checked_before_batch_publication ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/text_v3.rs (specimen-studio/target/debug/deps/text_v3-f17e03a8bc1d3e2f)
+
+running 5 tests
+test punctuation_does_not_count_as_lexical_ast_complexity ... ok
+test exact_ast_token_boundaries_and_full_digest_framing ... ok
+test low_numeric_coarsening_retains_quotes_negation_and_controls ... ok
+test medium_order_roles_operators_and_high_complete_values_survive ... ok
+test ids_whitespace_and_utf8_spans_are_excluded_original_limit_is_characters ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

@@ -1,0 +1,112 @@
+[
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/clippy-final-first.log",
+    "sha256": "56b38922002ff2afa86ff8f74180fe52e6460d5ea8ff9c69d0c313fb797a141b",
+    "bytes": 1124
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/clippy-final.log",
+    "sha256": "5ac93376590e0fc65503aea58421eef9a6dec5ec5b430c8b5f95bb81157e640d",
+    "bytes": 170
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/clippy-first.log",
+    "sha256": "878a638fa2ff0784c1e84f923f735385ef3df455a44e1ca13555b0119687a6ae",
+    "bytes": 8397
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/clippy-fix.log",
+    "sha256": "265fe2da8ffd7237e89ce6e85c10d479decaf158ef536fdf9a6466afa136e7a6",
+    "bytes": 385
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/clippy-second.log",
+    "sha256": "51dec478ea5691492d0d249bde83da6718cbf128b3244056bbb53cc9e1080daf",
+    "bytes": 3120
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/diff-check.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/fmt-check.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/green-basic.log",
+    "sha256": "9a35063a300f4e2d1ca798c48a7caa37609f8d0f498bbe5f376f4ebb08afc1f6",
+    "bytes": 3224
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/green-boundaries.log",
+    "sha256": "2f91d8f4e3eeae016b2a3ed0ae2b6bec19fe5fcb8726eab16a7da2bd4fe76c95",
+    "bytes": 3467
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/green-budgets.log",
+    "sha256": "65327c7e70abf223147a2ae1c3d1acd5e91c4450ae2d391a5f46086ceb97dbc5",
+    "bytes": 3545
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/green-first.log",
+    "sha256": "b491d197c055db0627b8dd12fc4f97842a93fccd6ad70355d19cc5a99b14c265",
+    "bytes": 3751
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/green-focused.log",
+    "sha256": "3970de367cb13b1820d0750c9fdcdc38cf1cef7318756b63619c9b384415e804",
+    "bytes": 3918
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/green-prepare-first.log",
+    "sha256": "4a26eed472973130c1e45566502ea38369740a17ed9dfef2e412001e6b134317",
+    "bytes": 2303
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/green-self-review.log",
+    "sha256": "ce96c35e8714761ea9b8e585647a290c4cb6a877e9097d739866d6207fa55fbf",
+    "bytes": 3836
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/kernel-suite.log",
+    "sha256": "c3f9799d0222a3cf70aa548cd16aae28e6adde5d6b2c0b4e71c8f8bee7f203bd",
+    "bytes": 17219
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/red-boundaries.log",
+    "sha256": "de8997e18f65a9399c3bde638081fea0ca78cdda3bdaea64108e42692b1b4d76",
+    "bytes": 3101
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/red-compound-condition.log",
+    "sha256": "f2328315454f3ece68707d1528511801d0fe8f2e1517403fb8a380044d31345a",
+    "bytes": 1937
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/red-prepare.log",
+    "sha256": "fc0422ce08f68a46fae7abb6e0d9e1349b93593664b2ddddf3e9cceed866ac21",
+    "bytes": 516
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/red-root-literal.log",
+    "sha256": "b1e8c61989572867d209c4e5d04a764524a5471ff4ca2d0426019e6381ec1939",
+    "bytes": 1900
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/red-scripts.log",
+    "sha256": "8492b95f27946dcb38c3683d46b9893fc4342a84076037017b9a7accc167b208",
+    "bytes": 21558
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/red-self-review.log",
+    "sha256": "71425c111d4b9cdc357979c186b30ffd65e43103e5fb5e1621b2cbdcfe565740",
+    "bytes": 4683
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/red-utility-work.log",
+    "sha256": "bf4b032ac72f9c5e23d5ef836ffe234fb928e38559c9824bb42213ffd81fdf4c",
+    "bytes": 8769399
+  }
+]

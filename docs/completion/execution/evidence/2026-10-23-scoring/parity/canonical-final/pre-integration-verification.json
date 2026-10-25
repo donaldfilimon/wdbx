@@ -1,0 +1,37 @@
+{
+  "phase": "pending root attachment integration correction/review; not a final parity pass",
+  "owned_source_freeze": "pre-integration-source-freeze.json",
+  "commands": [
+    {
+      "log": "01-first-producer.log",
+      "exit": 0,
+      "scope": "actual native probe producer"
+    },
+    {
+      "log": "02-first-comparator.log",
+      "exit": 0,
+      "scope": "normal independent native comparator incl fixed14 rows"
+    },
+    {
+      "log": "03-parity-final.log",
+      "exit": 1,
+      "scope": "actual native/WASM; allsemantic14rows equal but required logical diagnostic equality failure at attachment two paths"
+    },
+    {
+      "log": "04-feature-tests.log",
+      "exit": 0,
+      "passed": 8,
+      "scope": "specimen-wasm scoring-probe feature tests"
+    },
+    {
+      "log": "05-feature-clippy.log",
+      "exit": 0,
+      "scope": "feature all-target Clippy -D warnings"
+    },
+    {
+      "log": "06-fmt.log",
+      "exit": 0,
+      "scope": "owned Rust formatter check"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+warning: field `binding` is never read
+ --> native/specimen-kernel/tests/orchestration_v3/support.rs:2:124
+  |
+2 | pub struct Fixture { pub source: Prepared, pub target: Prepared, pub record: EntryRecord, pub origin: CandidateOrigin, pub binding: T...
+  |            ------- field in this struct                                                                                    ^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: methods `request` and `vote` are never used
+  --> native/specimen-kernel/tests/orchestration_v3/support.rs:16:9
+   |
+ 3 | impl Fixture {
+   | ------------ methods in this implementation
+...
+16 |  pub fn request(&self,id:u128)->EntryRequest<'_>{EntryRequest{id,source:&self.source.clauses()[0].variants()[0],target:&self.target....
+   |         ^^^^^^^
+17 |  pub fn comparison(&self)->Comparison<'_>{Comparison{record:&self.record,source:&self.source.clauses()[0].variants()[0],target:&self...
+18 |  pub fn vote(&self,id:u128)->Option<Contribution>{evaluate_entry(self.request(id),&mut DrawTape::new(0,"test",&[],0).unwrap(),Scorin...
+   |         ^^^^
+
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[42177]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "orchestration_v3_attachments") generated 3 warnings
+    Finished `test` profile [unoptimized] target(s) in 0.52s
+     Running tests/orchestration_v3_attachments.rs (specimen-studio/target/debug/deps/orchestration_v3_attachments-4037fd7033d7486d)
+
+running 1 test
+
+thread 's12_empty_remainder_unicode_wrong_scope_and_issuer_are_refused_safely' (5554254) panicked at native/specimen-kernel/tests/orchestration_v3/support.rs:23:320:
+issuer constraints Constraints { inhibited: false, uncertain_negation: false, unresolved_frame: false, conditional: None, executable: true }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test s12_empty_remainder_unicode_wrong_scope_and_issuer_are_refused_safely ... FAILED
+
+failures:
+
+failures:
+    s12_empty_remainder_unicode_wrong_scope_and_issuer_are_refused_safely
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p specimen-kernel --test orchestration_v3_attachments`

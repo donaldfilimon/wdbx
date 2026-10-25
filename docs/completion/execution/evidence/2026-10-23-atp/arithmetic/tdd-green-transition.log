@@ -1,0 +1,22 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+    Finished `test` profile [unoptimized] target(s) in 0.24s
+     Running tests/atp_v3.rs (target/debug/deps/atp_v3-b2d488f88ae1f10e)
+
+running 14 tests
+test d10_admission_normalizes_signed_zero_without_mutating_callers ... ok
+test d10_clamps_before_releasing_both_valence_signs_and_arousal ... ok
+test d10_elapsed_cap_is_exactly_3600_for_all_larger_finite_values ... ok
+test d10_elapsed_refusal_is_typed_and_inputs_remain_immutable ... ok
+test d10_idle_decay_matches_independently_rounded_exp_minus_one ... ok
+test d10_output_and_negative_zero_elapsed_have_only_positive_zero_bits ... ok
+test d10_entry_cooldown_ignores_stimulus_and_zero_elapsed_preserves_it ... ok
+test d10_release_is_inclusive_at_point_eight_five_and_preserves_adjacent_float_boundary ... ok
+test d10_state_admission_rejects_each_nonfinite_and_out_of_range_field ... ok
+test d10_stimulus_admission_rejects_each_nonfinite_and_out_of_range_field ... ok
+test d10_zero_elapsed_charges_and_success_leaves_inputs_immutable ... ok
+test d10_zero_intensity_blocks_valence_charge_but_declared_urgency_adds_point_one ... ok
+test s24_cooldown_crossing_zero_waits_until_the_next_separate_step_to_charge ... ok
+test s24_repeated_scalar_calls_have_no_jitter_or_hidden_state_and_cycles_build_release_decay ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

@@ -1,0 +1,9 @@
+{
+  "recorded_utc": "2026-10-23T06:09:25.244192+00:00",
+  "attempted_model": "gpt-6-astra",
+  "attempt_result": "Agent errored before review: Selected model is at capacity. Please try a different model.",
+  "available_fallback_model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "fallback_scope": "Same final whole-tranche specification and quality review; no criteria relaxation.",
+  "status_at_record": "Fallback reviewer running; no final verdict yet."
+}

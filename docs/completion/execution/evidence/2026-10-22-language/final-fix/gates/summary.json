@@ -1,0 +1,128 @@
+{
+  "scope": "Fresh four separate Studio gates after integrated finalfix; all exit0 and relevant sources byte-identical before/after. Not installed/UI/research/owner qualification.",
+  "gates": [
+    {
+      "command": [
+        "bun",
+        "run",
+        "check"
+      ],
+      "cwd": "/Users/donald/sources/repos/wdbx/specimen-studio",
+      "environment": {
+        "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+        "RUSTUP_TOOLCHAIN": "1.99.1",
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "source_head": "36bc99b699de60be6c07b2838d74580084fb5d4c",
+      "scope": "Current uncommitted source; gate execution only, not installed/UI/research/owner qualification",
+      "started_utc": "2026-10-23T02:53:56.158262+00:00",
+      "source_unchanged_during_gate": true,
+      "ended_utc": "2026-10-23T02:54:16.681445+00:00",
+      "exit_code": 0,
+      "log_sha256": "7002f4aa507309acf30c33d6542bd07acc2f2fd454d4a8549099b147171a459c",
+      "source_file_count": 289,
+      "source_file_list_sha256": "c366684189e941c8e8e975083d9e2b01a5d843a6924ad45601450486f48517a4",
+      "record": {
+        "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/browser.json",
+        "sha256": "944d9d2dc9b0057d5271fa2dc7dd8de84ae665fa91651b2711fc26758b46a6f0"
+      },
+      "gate": "browser",
+      "bun_passed": 221,
+      "bun_failed": 0
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "lint"
+      ],
+      "cwd": "/Users/donald/sources/repos/wdbx/specimen-studio",
+      "environment": {
+        "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+        "RUSTUP_TOOLCHAIN": "1.99.1",
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "source_head": "36bc99b699de60be6c07b2838d74580084fb5d4c",
+      "scope": "Current uncommitted source; gate execution only, not installed/UI/research/owner qualification",
+      "started_utc": "2026-10-23T02:53:56.158276+00:00",
+      "source_unchanged_during_gate": true,
+      "ended_utc": "2026-10-23T02:53:58.132182+00:00",
+      "exit_code": 0,
+      "log_sha256": "fe82195262b09727902d8ea57ceb3e12a09e5df0c6f26157db77f5c51b45d9f5",
+      "source_file_count": 289,
+      "source_file_list_sha256": "c366684189e941c8e8e975083d9e2b01a5d843a6924ad45601450486f48517a4",
+      "record": {
+        "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/lint.json",
+        "sha256": "da333b889794d434883fb95bc8e261bac1981eee8f6106eb6f45be3b116715b1"
+      },
+      "gate": "lint"
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "test:native"
+      ],
+      "cwd": "/Users/donald/sources/repos/wdbx/specimen-studio",
+      "environment": {
+        "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+        "RUSTUP_TOOLCHAIN": "1.99.1",
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "source_head": "36bc99b699de60be6c07b2838d74580084fb5d4c",
+      "scope": "Current uncommitted source; gate execution only, not installed/UI/research/owner qualification",
+      "started_utc": "2026-10-23T02:54:59.205677+00:00",
+      "source_unchanged_during_gate": true,
+      "ended_utc": "2026-10-23T02:55:17.384291+00:00",
+      "exit_code": 0,
+      "log_sha256": "865ad4bb6cc3786d6c5a0ca085f8f684c170c0d3cfa9be4d28bb150ca2f779ec",
+      "source_file_count": 289,
+      "source_file_list_sha256": "c366684189e941c8e8e975083d9e2b01a5d843a6924ad45601450486f48517a4",
+      "record": {
+        "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/native-test.json",
+        "sha256": "77560a6a20f68a272e450584c66f9bdfcf66c5594d9dde2ede33dc97e47e1223"
+      },
+      "gate": "native-test",
+      "rust_passed": 228,
+      "rust_ignored": 1
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "check:native"
+      ],
+      "cwd": "/Users/donald/sources/repos/wdbx/specimen-studio",
+      "environment": {
+        "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+        "RUSTUP_TOOLCHAIN": "1.99.1",
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "source_head": "36bc99b699de60be6c07b2838d74580084fb5d4c",
+      "scope": "Current uncommitted source; gate execution only, not installed/UI/research/owner qualification",
+      "started_utc": "2026-10-23T02:55:29.566868+00:00",
+      "source_unchanged_during_gate": true,
+      "ended_utc": "2026-10-23T02:55:41.652580+00:00",
+      "exit_code": 0,
+      "log_sha256": "d807efd2e6923de589933835347d51b52ef40891b7a74957da76aba195d5e51c",
+      "source_file_count": 289,
+      "source_file_list_sha256": "c366684189e941c8e8e975083d9e2b01a5d843a6924ad45601450486f48517a4",
+      "record": {
+        "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/native-clippy.json",
+        "sha256": "adb98c8e45ce4ed8df89cec34ebaa1d10be1d0e772ed4f4fda4d0289aaa23b4f"
+      },
+      "gate": "native-clippy"
+    }
+  ],
+  "product_freeze": {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/product-freeze.json",
+    "sha256": "94c567b079532c225a63f31383aadde3bd75313b12f9182b646aaba1170c131c"
+  },
+  "limitations": [
+    "Pinned rust-objcopy cannot load @rpath/libLLVM.dylib while stripping; tests execute and warnings retained.",
+    "Existing abi-wdbx dependency unused simulator::AdmissionSimulator import, desktop build-script stripping warning and future-incompatible block v0.1.6 remain. No substrate source modified.",
+    "Browser build chunk/static-analysis route-classification limitations remain. No browser UI/theme/installed desktop qualification.",
+    "One existing ignored native test is not passing qualification.",
+    "Local Bun1.4.4 canary differs from CI1.4.0; actual local execution only."
+  ]
+}

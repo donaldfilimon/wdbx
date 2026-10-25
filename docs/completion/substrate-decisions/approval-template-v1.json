@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "status": "empty_non_authorizing_template",
+  "authorizes": false,
+  "owner_name": null,
+  "owner_role": null,
+  "accepted_at": null,
+  "decision_ids": [],
+  "artifact_hashes": {},
+  "schema_diff_hash": null,
+  "shared_vectors_hash": null,
+  "independent_reviews": [],
+  "explicit_decisions": [],
+  "privacy_acceptance": null,
+  "signature_or_receipt": null,
+  "rule": "Template only. Filling fields is not self-authenticating approval. Actual named owner evidence and independent review must be recorded and checked separately against exact artifacts; rejection requires amendment."
+}

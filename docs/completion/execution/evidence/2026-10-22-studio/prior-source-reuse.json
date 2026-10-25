@@ -1,0 +1,162 @@
+{
+  "scope": "Prior root-substrate/P1 source bytes reused unchanged; prior gates remain historical and supply no new conformance/efficacy assertion",
+  "prior_receipt": "docs/completion/execution/evidence/2026-10-22-continuation/receipt.json",
+  "files": [
+    {
+      "path": "crates/abi-wdbx/Cargo.toml",
+      "prior_sha256": "a4dca8395b0768d127b42e106eb28bfbcacd0672a91c06322638db5f83d95975",
+      "observed_sha256": "a4dca8395b0768d127b42e106eb28bfbcacd0672a91c06322638db5f83d95975",
+      "state": "matched"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/SPEC.md",
+      "prior_sha256": "62eaabb7d7f9752c15253764fff67304d635ffd054b2f2ac9e64224fb3db4506",
+      "observed_sha256": "62eaabb7d7f9752c15253764fff67304d635ffd054b2f2ac9e64224fb3db4506",
+      "state": "matched"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/evaluate.rs",
+      "prior_sha256": "362c8c191af591cf973d04c8b8c8119b29ea58a6f73809c399fde1a3385b89de",
+      "observed_sha256": "362c8c191af591cf973d04c8b8c8119b29ea58a6f73809c399fde1a3385b89de",
+      "state": "matched"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/mod.rs",
+      "prior_sha256": "e42d996f32cb8316da05d2cb2b2043c8c9778622a64ceb9c57e9da8fd80dbc60",
+      "observed_sha256": "e42d996f32cb8316da05d2cb2b2043c8c9778622a64ceb9c57e9da8fd80dbc60",
+      "state": "matched"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/scenarios.rs",
+      "prior_sha256": "2f476d0b7243500a0a58765acfa652c056576babc3fd037e7b5da08ba832eeed",
+      "observed_sha256": "2f476d0b7243500a0a58765acfa652c056576babc3fd037e7b5da08ba832eeed",
+      "state": "matched"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/simulator.rs",
+      "prior_sha256": "c9d08a48e1109dc0db8e2279fa715137e4658b9dd46d132961653fbb0e6e66e6",
+      "observed_sha256": "c9d08a48e1109dc0db8e2279fa715137e4658b9dd46d132961653fbb0e6e66e6",
+      "state": "matched"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs",
+      "prior_sha256": "6ee16787bd91deb9369ed7c654a53e5535cef21f4cafb21ceeadc278cb37a8e7",
+      "observed_sha256": "6ee16787bd91deb9369ed7c654a53e5535cef21f4cafb21ceeadc278cb37a8e7",
+      "state": "matched"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/mod.rs",
+      "prior_sha256": "3c67d8fbe0f7eb152f92b6856851130c4922b016f556ac5a25a362a8f375eef1",
+      "observed_sha256": "3c67d8fbe0f7eb152f92b6856851130c4922b016f556ac5a25a362a8f375eef1",
+      "state": "matched"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/profile.rs",
+      "prior_sha256": "30110ee1ecb5a0d214f6564c6a9426a00d045dc997465866ada91030c2044a05",
+      "observed_sha256": "30110ee1ecb5a0d214f6564c6a9426a00d045dc997465866ada91030c2044a05",
+      "state": "matched"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/python_witness_tests.rs",
+      "prior_sha256": "a580b56f2f688de108f81629316b2da71f9ed69f71bf1500c407363ed745044a",
+      "observed_sha256": "a580b56f2f688de108f81629316b2da71f9ed69f71bf1500c407363ed745044a",
+      "state": "matched"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/tests.rs",
+      "prior_sha256": "882c05e8ada9827143172f97f245eb0e3df54ebbc88ff53c2a478a396ceb7d63",
+      "observed_sha256": "882c05e8ada9827143172f97f245eb0e3df54ebbc88ff53c2a478a396ceb7d63",
+      "state": "matched"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/apply.rs",
+      "prior_sha256": "2b2848eb378b63bf427f0218b1ad2487e8636126fc7846283ce00e0a6931e002",
+      "observed_sha256": "2b2848eb378b63bf427f0218b1ad2487e8636126fc7846283ce00e0a6931e002",
+      "state": "matched"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/command.rs",
+      "prior_sha256": "41869e254acca2dd9ce04385ce1064a0f87af5afd6c3c2b369e31e71a20946b4",
+      "observed_sha256": "41869e254acca2dd9ce04385ce1064a0f87af5afd6c3c2b369e31e71a20946b4",
+      "state": "matched"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/mod.rs",
+      "prior_sha256": "ec4c7dc34a3817410106de8faa08b9197f58eba607cdab38a93d125c11e6f391",
+      "observed_sha256": "ec4c7dc34a3817410106de8faa08b9197f58eba607cdab38a93d125c11e6f391",
+      "state": "matched"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/snapshot.rs",
+      "prior_sha256": "b79f8784e783ef5dcaed058bf2f3261e88927c12ccbc2980ec2a6e85e2b83099",
+      "observed_sha256": "b79f8784e783ef5dcaed058bf2f3261e88927c12ccbc2980ec2a6e85e2b83099",
+      "state": "matched"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/tests.rs",
+      "prior_sha256": "88fd718c06216f94c60b94e49dba1eca0c0a01a4f1127fee25a7b496102d3587",
+      "observed_sha256": "88fd718c06216f94c60b94e49dba1eca0c0a01a4f1127fee25a7b496102d3587",
+      "state": "matched"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/verify.rs",
+      "prior_sha256": "3f82562b5a7456ffc3040d5b23cd7bd6c3ad3b5fe5c3f9487402ee938309706c",
+      "observed_sha256": "3f82562b5a7456ffc3040d5b23cd7bd6c3ad3b5fe5c3f9487402ee938309706c",
+      "state": "matched"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs",
+      "prior_sha256": "7d23d94d31188e3051a79a1fac042aefee20754a94542f254fc593ca97668d98",
+      "observed_sha256": "7d23d94d31188e3051a79a1fac042aefee20754a94542f254fc593ca97668d98",
+      "state": "matched"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/facade.rs",
+      "prior_sha256": "593b2b1c35a9fd3df489639be9911bcc1e8772eb4d66aebb6e7ad240bd70e6c3",
+      "observed_sha256": "593b2b1c35a9fd3df489639be9911bcc1e8772eb4d66aebb6e7ad240bd70e6c3",
+      "state": "matched"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/ledger.rs",
+      "prior_sha256": "753a8c400796a70e61d310ce1e86c47509083edb9fe8b4bc096222182b719df0",
+      "observed_sha256": "753a8c400796a70e61d310ce1e86c47509083edb9fe8b4bc096222182b719df0",
+      "state": "matched"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/mod.rs",
+      "prior_sha256": "69508342cd1868ea752b1116bc3c443837b97bc1f8cc5ac970065fffe0837d12",
+      "observed_sha256": "69508342cd1868ea752b1116bc3c443837b97bc1f8cc5ac970065fffe0837d12",
+      "state": "matched"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/episode/cose/trust.rs",
+      "prior_sha256": "4ace7beb5f0b3fb61d725975c70c1d743435e90a5c9db4e8a4767cac683f2592",
+      "observed_sha256": "4ace7beb5f0b3fb61d725975c70c1d743435e90a5c9db4e8a4767cac683f2592",
+      "state": "matched"
+    },
+    {
+      "path": "crates/abi-wdbx/tests/v3_complete_episode_authenticated.rs",
+      "prior_sha256": "d114f5e5871bed914dde04d6fff9258cc18b47616778c046593bebbb7c9c625a",
+      "observed_sha256": "d114f5e5871bed914dde04d6fff9258cc18b47616778c046593bebbb7c9c625a",
+      "state": "matched"
+    },
+    {
+      "path": "tools/check_p1_crypto.sh",
+      "prior_sha256": "ab875d8d196f9382e43b382bd848bad9453d057f37c80543a348bc357acc9295",
+      "observed_sha256": "ab875d8d196f9382e43b382bd848bad9453d057f37c80543a348bc357acc9295",
+      "state": "matched"
+    },
+    {
+      "path": "tools/tests/test_wdbx_complete_p1_crypto.py",
+      "prior_sha256": "00dfd29fdae563b21f4f0e0d979ca60763ac44529f44d43b54a0ca9b40d3c663",
+      "observed_sha256": "00dfd29fdae563b21f4f0e0d979ca60763ac44529f44d43b54a0ca9b40d3c663",
+      "state": "matched"
+    },
+    {
+      "path": "tools/wdbx_complete_p1_crypto.py",
+      "prior_sha256": "9a9df3ae043d1da6a2084c1a29b25ac7f668e485716404ce0c38e820bbe3985d",
+      "observed_sha256": "9a9df3ae043d1da6a2084c1a29b25ac7f668e485716404ce0c38e820bbe3985d",
+      "state": "matched"
+    }
+  ]
+}

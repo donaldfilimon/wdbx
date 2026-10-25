@@ -1,0 +1,21 @@
+1175 |     h.limits.operation_work,
+1176 |   );
+1177 |   eq(h.refusal, 'Backpressure');
+1178 |   eq(h.after, h.before);
+1179 |   eq(h.before_owned, h.after_owned);
+1180 |   eq(
+         ^
+AssertionError: observed zero-extra retained inventory bytes
+
+800 !== 801
+
+ generatedMessage: false,
+     actual: 800,
+   expected: 801,
+   operator: "deepStrictEqual",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at validate (/Users/donald/sources/repos/wdbx/specimen-studio/tests/scoring-parity.mjs:1180:3)
+
+Bun v1.4.4-canary.1+ea6a2c7b7 (macOS arm64)

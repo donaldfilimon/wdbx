@@ -1,0 +1,117 @@
+[
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/clippy-first.log",
+    "sha256": "9e342077bd42747fc2ed9defda37aa8d5e6471d7d7ac7b624081abb4e666b72d",
+    "bytes": 170
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/clippy.log",
+    "sha256": "f5fd95b1562368a3158a36a1c02076cd7212f50b991ae625cef05eb9cec251dc",
+    "bytes": 224
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/commands.txt",
+    "sha256": "06f9e1e09cf9aaad88f6b342c32edc5a45e8f0aa14f9ef477396312d77175c40",
+    "bytes": 1910
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/dependency-manifest.json",
+    "sha256": "d9d67623146bcd47a24dbf26a45e6117001e8c1426cdf025c1e180d8eecb9853",
+    "bytes": 2190
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/diff-check.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fmt-check.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/green-core-first.log",
+    "sha256": "d6395aae15ca17d853774129cbbd88c184fd8ce98adc1a56f0e292df5ff09c4a",
+    "bytes": 4447
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/green-core-second.log",
+    "sha256": "a5071df5cc655d8f27c28f393b52d712e41cd02723213f773ed087cbe660bdcb",
+    "bytes": 3085
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/green-focused-initial.log",
+    "sha256": "34d15187b368b1eb4881d3bfe9ad460501f4d249b93fec3761d19513b936d5eb",
+    "bytes": 5227
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/green-focused-second.log",
+    "sha256": "5f701c3e59428fe5d77f876b882b8cd6f5b42ccc7fe7bd3e3a78c139d1076ece",
+    "bytes": 5539
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/green-focused.log",
+    "sha256": "e001ffa71439d188698b8daffb92f0bf79a38b79d4a99749ca3cbdb0d56f5c7c",
+    "bytes": 5897
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/green-routes-first.log",
+    "sha256": "37a9a58d6416866d149da7ce5a95c019b777961bf8918a484c6e7908defb7bd5",
+    "bytes": 1853
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/kernel-suite.log",
+    "sha256": "186cbd419863337f5019a765cae57327261aecf6da83f30a340629f37927820e",
+    "bytes": 24909
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/legacy-hashes.json",
+    "sha256": "832c1b5b59f44377b943f93570e480d7f4f310a39547f2a1da6a020c16b0ea3a",
+    "bytes": 6389
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/red-antecedent.log",
+    "sha256": "9fabc5f0e10938244792270338c85a4a9b17996b3dc7b56126e723177a327db1",
+    "bytes": 2902
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/red-api.log",
+    "sha256": "dad543b3a3088794c0201e94f32d1a7d8f538544bd715bf3d38413504297f03d",
+    "bytes": 1114
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/red-chunk-api.log",
+    "sha256": "a21c2fb8c2fb0838434ad173851a3afae284e2be01e58104c59da606f79d3845",
+    "bytes": 535
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/red-lexical-transform.log",
+    "sha256": "3ff20749b59700a69badd5291bc4786517c81e4f159c480c9c3f2d2106c98b74",
+    "bytes": 2854
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/red-punctuation.log",
+    "sha256": "06e9fa19a55c91b32143c8627dfcdcf3a9b4b2e056d599ee562aa6e6d4627904",
+    "bytes": 3724
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/red-route-work.log",
+    "sha256": "f4aded31b00df8eef51ffb9f6adf3532b3382db6be746b3a8246256ca3332512",
+    "bytes": 5983
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/red-routes-api.log",
+    "sha256": "83104561d233e05c5c78817028cde475b178564f1cf0901f52397ef6365c348c",
+    "bytes": 637
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/source-manifest.json",
+    "sha256": "99038842dd15678adeca820f4583851e80ef18f20555834185627e525a7c2d4d",
+    "bytes": 1859
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-report.md",
+    "sha256": "a55b4c71c775a008a976d8bc6f0dd0eaa0213b228ddef1ca1d09ee9b145d9a5d",
+    "bytes": 12320
+  }
+]

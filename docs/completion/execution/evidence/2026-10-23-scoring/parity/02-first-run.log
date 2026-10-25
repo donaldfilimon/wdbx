@@ -1,0 +1,223 @@
+   Compiling specimen-wasm v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-wasm)
+error[E0624]: associated function `whole` is private
+  --> native/specimen-wasm/src/scoring_probe/numeric.rs:8:33
+   |
+ 8 |  ("default-threshold",Rational::whole(50),base,[0,1]),
+   |                                 ^^^^^ private associated function
+   |
+  ::: native/specimen-kernel/src/scanner_v3/rational.rs:69:5
+   |
+69 |     pub(super) const fn whole(n: i128) -> Self {
+   |     ------------------------------------------ private associated function defined here
+
+error[E0624]: associated function `whole` is private
+  --> native/specimen-wasm/src/scoring_probe/numeric.rs:9:29
+   |
+ 9 |  ("negative-sign",Rational::whole(50),base,[u32::MAX,0]),
+   |                             ^^^^^ private associated function
+   |
+  ::: native/specimen-kernel/src/scanner_v3/rational.rs:69:5
+   |
+69 |     pub(super) const fn whole(n: i128) -> Self {
+   |     ------------------------------------------ private associated function defined here
+
+error[E0624]: associated function `whole` is private
+  --> native/specimen-wasm/src/scoring_probe/numeric.rs:10:29
+   |
+10 |  ("positive-sign",Rational::whole(49),base,[u32::MAX,1]),
+   |                             ^^^^^ private associated function
+   |
+  ::: native/specimen-kernel/src/scanner_v3/rational.rs:69:5
+   |
+69 |     pub(super) const fn whole(n: i128) -> Self {
+   |     ------------------------------------------ private associated function defined here
+
+error[E0624]: associated function `whole` is private
+  --> native/specimen-wasm/src/scoring_probe/numeric.rs:11:26
+   |
+11 |  ("brainstorm",Rational::whole(49),Policy::brainstorm(),[u32::MAX,1]),
+   |                          ^^^^^ private associated function
+   |
+  ::: native/specimen-kernel/src/scanner_v3/rational.rs:69:5
+   |
+69 |     pub(super) const fn whole(n: i128) -> Self {
+   |     ------------------------------------------ private associated function defined here
+
+error[E0624]: associated function `whole` is private
+  --> native/specimen-wasm/src/scoring_probe/numeric.rs:12:28
+   |
+12 |  ("positive-atp",Rational::whole(50),Policy{atp:Atp{valence:Rational::whole(1),intensity:Rational::whole(1)},..base},[0,0]),
+   |                            ^^^^^ private associated function
+   |
+  ::: native/specimen-kernel/src/scanner_v3/rational.rs:69:5
+   |
+69 |     pub(super) const fn whole(n: i128) -> Self {
+   |     ------------------------------------------ private associated function defined here
+
+error[E0624]: associated function `whole` is private
+  --> native/specimen-wasm/src/scoring_probe/numeric.rs:12:71
+   |
+12 |  ("positive-atp",Rational::whole(50),Policy{atp:Atp{valence:Rational::whole(1),intensity:Rational::whole(1)},..base},[0,0]),
+   |                                                                       ^^^^^ private associated function
+   |
+  ::: native/specimen-kernel/src/scanner_v3/rational.rs:69:5
+   |
+69 |     pub(super) const fn whole(n: i128) -> Self {
+   |     ------------------------------------------ private associated function defined here
+
+error[E0624]: associated function `whole` is private
+  --> native/specimen-wasm/src/scoring_probe/numeric.rs:12:100
+   |
+12 |  ("positive-atp",Rational::whole(50),Policy{atp:Atp{valence:Rational::whole(1),intensity:Rational::whole(1)},..base},[0,0]),
+   |                                                                                                    ^^^^^ private associated function
+   |
+  ::: native/specimen-kernel/src/scanner_v3/rational.rs:69:5
+   |
+69 |     pub(super) const fn whole(n: i128) -> Self {
+   |     ------------------------------------------ private associated function defined here
+
+error[E0624]: associated function `whole` is private
+  --> native/specimen-wasm/src/scoring_probe/numeric.rs:13:28
+   |
+13 |  ("negative-atp",Rational::whole(55),Policy{atp:Atp{valence:Rational::new(-1,2).unwrap(),intensity:Rational::whole(1)},..base},[0,1]),
+   |                            ^^^^^ private associated function
+   |
+  ::: native/specimen-kernel/src/scanner_v3/rational.rs:69:5
+   |
+69 |     pub(super) const fn whole(n: i128) -> Self {
+   |     ------------------------------------------ private associated function defined here
+
+error[E0624]: associated function `whole` is private
+  --> native/specimen-wasm/src/scoring_probe/numeric.rs:13:110
+   |
+13 |  ("negative-atp",Rational::whole(55),Policy{atp:Atp{valence:Rational::new(-1,2).unwrap(),intensity:Rational::whole(1)},..base},[0,1]),
+   |                                                                                                              ^^^^^ private associated function
+   |
+  ::: native/specimen-kernel/src/scanner_v3/rational.rs:69:5
+   |
+69 |     pub(super) const fn whole(n: i128) -> Self {
+   |     ------------------------------------------ private associated function defined here
+
+error[E0624]: associated function `whole` is private
+  --> native/specimen-wasm/src/scoring_probe/numeric.rs:16:30
+   |
+16 |  ("upper-endpoint",Rational::whole(100),base,[u32::MAX,0]),
+   |                              ^^^^^ private associated function
+   |
+  ::: native/specimen-kernel/src/scanner_v3/rational.rs:69:5
+   |
+69 |     pub(super) const fn whole(n: i128) -> Self {
+   |     ------------------------------------------ private associated function defined here
+
+error[E0624]: associated function `whole` is private
+  --> native/specimen-wasm/src/scoring_probe/numeric.rs:17:30
+   |
+17 |  ("lower-endpoint",Rational::whole(-100),base,[u32::MAX,1]),
+   |                              ^^^^^ private associated function
+   |
+  ::: native/specimen-kernel/src/scanner_v3/rational.rs:69:5
+   |
+69 |     pub(super) const fn whole(n: i128) -> Self {
+   |     ------------------------------------------ private associated function defined here
+
+error[E0624]: associated function `whole` is private
+  --> native/specimen-wasm/src/scoring_probe/numeric.rs:18:34
+   |
+18 |  ("displaced-endpoint",Rational::whole(100),Policy{atp:Atp{valence:Rational::whole(-1),intensity:Rational::whole(1)},..base},[u32::M...
+   |                                  ^^^^^ private associated function
+   |
+  ::: native/specimen-kernel/src/scanner_v3/rational.rs:69:5
+   |
+69 |     pub(super) const fn whole(n: i128) -> Self {
+   |     ------------------------------------------ private associated function defined here
+
+error[E0624]: associated function `whole` is private
+  --> native/specimen-wasm/src/scoring_probe/numeric.rs:18:78
+   |
+18 |  ("displaced-endpoint",Rational::whole(100),Policy{atp:Atp{valence:Rational::whole(-1),intensity:Rational::whole(1)},..base},[u32::M...
+   |                                                                              ^^^^^ private associated function
+   |
+  ::: native/specimen-kernel/src/scanner_v3/rational.rs:69:5
+   |
+69 |     pub(super) const fn whole(n: i128) -> Self {
+   |     ------------------------------------------ private associated function defined here
+
+error[E0624]: associated function `whole` is private
+  --> native/specimen-wasm/src/scoring_probe/numeric.rs:18:108
+   |
+18 | ...valence:Rational::whole(-1),intensity:Rational::whole(1)},..base},[u32::MAX,0]),
+   |                                                    ^^^^^ private associated function
+   |
+  ::: native/specimen-kernel/src/scanner_v3/rational.rs:69:5
+   |
+69 |     pub(super) const fn whole(n: i128) -> Self {
+   |     ------------------------------------------ private associated function defined here
+
+error[E0624]: associated function `whole` is private
+  --> native/specimen-wasm/src/scoring_probe/numeric.rs:19:28
+   |
+19 |  ("crystallized",Rational::whole(50),Policy{strength:100,..base},[u32::MAX,0]),
+   |                            ^^^^^ private associated function
+   |
+  ::: native/specimen-kernel/src/scanner_v3/rational.rs:69:5
+   |
+69 |     pub(super) const fn whole(n: i128) -> Self {
+   |     ------------------------------------------ private associated function defined here
+
+error[E0624]: associated function `whole` is private
+  --> native/specimen-wasm/src/scoring_probe/numeric.rs:20:40
+   |
+20 |  ("subthreshold-strength100",Rational::whole(49),Policy{strength:100,..base},[u32::MAX,1]),
+   |                                        ^^^^^ private associated function
+   |
+  ::: native/specimen-kernel/src/scanner_v3/rational.rs:69:5
+   |
+69 |     pub(super) const fn whole(n: i128) -> Self {
+   |     ------------------------------------------ private associated function defined here
+
+error[E0624]: associated function `whole` is private
+  --> native/specimen-wasm/src/scoring_probe/numeric.rs:21:29
+   |
+21 |  ("zero-strength",Rational::whole(60),Policy{strength:0,..base},[0,1]),
+   |                             ^^^^^ private associated function
+   |
+  ::: native/specimen-kernel/src/scanner_v3/rational.rs:69:5
+   |
+69 |     pub(super) const fn whole(n: i128) -> Self {
+   |     ------------------------------------------ private associated function defined here
+
+error[E0624]: associated function `whole` is private
+  --> native/specimen-wasm/src/scoring_probe/numeric.rs:22:24
+   |
+22 |  ("zero-cap",Rational::whole(60),Policy{cap:Rational::whole(0),..base},[0,1]),
+   |                        ^^^^^ private associated function
+   |
+  ::: native/specimen-kernel/src/scanner_v3/rational.rs:69:5
+   |
+69 |     pub(super) const fn whole(n: i128) -> Self {
+   |     ------------------------------------------ private associated function defined here
+
+error[E0624]: associated function `whole` is private
+  --> native/specimen-wasm/src/scoring_probe/numeric.rs:22:55
+   |
+22 |  ("zero-cap",Rational::whole(60),Policy{cap:Rational::whole(0),..base},[0,1]),
+   |                                                       ^^^^^ private associated function
+   |
+  ::: native/specimen-kernel/src/scanner_v3/rational.rs:69:5
+   |
+69 |     pub(super) const fn whole(n: i128) -> Self {
+   |     ------------------------------------------ private associated function defined here
+
+error[E0624]: associated function `whole` is private
+  --> native/specimen-wasm/src/scoring_probe/numeric.rs:23:24
+   |
+23 |  ("disabled",Rational::whole(60),Policy{jitter:false,..base},[0,1]),
+   |                        ^^^^^ private associated function
+   |
+  ::: native/specimen-kernel/src/scanner_v3/rational.rs:69:5
+   |
+69 |     pub(super) const fn whole(n: i128) -> Self {
+   |     ------------------------------------------ private associated function defined here
+
+For more information about this error, try `rustc --explain E0624`.
+error: could not compile `specimen-wasm` (lib) due to 20 previous errors

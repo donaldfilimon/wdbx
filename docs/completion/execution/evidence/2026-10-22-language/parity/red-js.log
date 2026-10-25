@@ -1,0 +1,18 @@
+11 | if (mode === '--self-test') {
+12 |   const out = JSON.parse(readFileSync(args[0], 'utf8'));
+13 |   validate(out);
+14 |   const corrupt = structuredClone(out);
+15 |   corrupt.boundaries[0].digest[0] ^= 1;
+16 |   assert.throws(() => validate(corrupt), /full32 digest/);
+              ^
+AssertionError: Missing expected exception.
+ generatedMessage: false,
+     actual: undefined,
+   expected: /full32 digest/,
+   operator: "throws",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at /Users/donald/sources/repos/wdbx/specimen-studio/tests/language-parity.mjs:16:10
+
+Bun v1.4.4-canary.1+ea6a2c7b7 (macOS arm64)

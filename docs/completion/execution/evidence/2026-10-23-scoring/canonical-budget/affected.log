@@ -1,0 +1,130 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+    Finished `test` profile [unoptimized] target(s) in 0.55s
+     Running tests/orchestration_v3.rs (target/debug/deps/orchestration_v3-adb3570e0cb1cbd2)
+
+running 11 tests
+test s15_explicit_deadline_and_discovery_barrier_never_compose_partial ... ok
+test scoped_retirement_releases_only_drained_cancelled_metadata_and_preserves_quarantine ... ok
+test s15_cancel_quarantines_until_generation_bound_fence ... ok
+test delayed_cycle_controls_cannot_touch_reused_identity ... ok
+test s15_wrong_scope_binding_duplicate_completion_and_restart_are_atomic ... ok
+test sealed_cycle_rejects_new_jobs_and_expired_ready_cycle_never_composes ... ok
+test s15_foreground_fifo_eight_to_one_maintenance_even_with_permanent_refill ... ok
+test huge_metadata_and_late_invalid_batch_are_refused_before_any_acceptance ... ok
+test complete_graph_preserves_admission_order_not_numeric_job_order ... ok
+test s14_all_1501_admitted_comparisons_drain_without_truncation ... ok
+test s14_exact_pending_boundary_atomic_overlimit_and_byte_backpressure ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+
+     Running tests/orchestration_v3_attachments.rs (target/debug/deps/orchestration_v3_attachments-4037fd7033d7486d)
+
+running 12 tests
+test attachment_foreground_fifo_and_maintenance_use_one_capacity ... ok
+test s12_empty_remainder_unicode_wrong_scope_and_issuer_are_refused_safely ... ok
+test s13_backpressure_does_not_consume_visit_or_rng_and_retry_is_once ... ok
+test contextual_capture_cannot_be_rebound_into_delegated_target ... ok
+test cancellation_drops_owned_attachment_payload_without_touching_other_cycle ... ok
+test s12_all_explicit_target_entries_share_pool_and_group_survives ... ok
+test s12_hard_evaluates_below_threshold_without_forcing_target_vote ... ok
+test s12_remainder_preserves_full_capture_context_and_only_whole_target_authority ... ok
+test retired_cycle_receipt_cannot_authorize_reused_cycle_and_job_ids ... ok
+test s13_bidirectional_revisit_stops_without_reset_or_second_draw ... ok
+test s12_affinity_endpoints_and_interior_draws_are_exact ... ok
+test s13_fifth_attachment_depth_is_refused_with_no_recursive_dispatch ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/orchestration_v3_fix1.rs (target/debug/deps/orchestration_v3_fix1-76b4ab726258c655)
+
+running 8 tests
+test i2_lower_work_limit_reserves_cleanup_before_accepting_more_cycles ... ok
+test i2_retained_cancelled_records_keep_cleanup_reservation_until_retirement ... ok
+test i1_decline_validates_identity_and_scope_without_reserving_a_full_queue ... ok
+test i1_nested_capture_matching_uses_one_lowered_work_meter_and_retry ... ok
+test i2_attachment_cleanup_headroom_failure_preserves_rng_visit_and_retry ... ok
+test i2_completion_cleanup_headroom_failure_preserves_active_work ... ok
+test i2_restart_many_small_cycles_has_one_bounded_cleanup_and_keeps_composed_metadata ... ok
+test i1_oversized_selected_and_declined_descriptors_are_atomic_and_retryable ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/orchestration_v3_graph.rs (target/debug/deps/orchestration_v3_graph-be1d607d155b8e33)
+
+running 3 tests
+test exact_redundancy_runs_once_with_original_election_lineage ... ok
+test complete_complementary_actions_fact_and_dependency_graph_keeps_all_origins ... ok
+test dangling_dependency_and_cycle_refuse_before_arbitration_draws ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/scoring_orchestration_budget_v1.rs (target/debug/deps/scoring_orchestration_budget_v1-2f7b6bed13ce0bb3)
+
+running 8 tests
+test overflowing_policy_and_overlarge_budget_refuse_without_consuming_draws ... ok
+test broker_admission_work_boundary_is_atomic ... ok
+test scoring_entry_payload_minus_one_refuses_and_exact_charge_admits_without_draws ... ok
+test scoring_work_still_counts_items_independently_of_logical_metadata_bytes ... ok
+test scoring_batch_uses_fixed_entry_request_reserve ... ok
+test scoring_arbitration_uses_fixed_contribution_and_nested_metadata_reserves ... ok
+test completion_owned_boundary_preserves_the_lease_on_refusal ... ok
+test completion_cleanup_headroom_is_four_cycles_plus_four_jobs_plus_retained_bytes ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/scoring_v3_contributions.rs (target/debug/deps/scoring_v3_contributions-87156be70e9b2e8b)
+
+running 22 tests
+test conflicting_concrete_entry_snapshots_refuse_atomically ... ok
+test canonical_actions_exclude_node_identity_and_election_weight ... ok
+test fanout_siblings_share_root_but_keep_distinct_origin_provenance ... ok
+test late_invalid_batch_and_arbitration_references_leave_draws_untouched ... ok
+test distinct_dependency_sets_remain_complementary ... ok
+test different_parent_captures_inhibition_and_tree_are_complementary ... ok
+test attached_facts_and_referenced_dependencies_are_exempt ... ok
+test guards_and_blocked_automaton_never_become_successful_bypasses ... ok
+test lowering_arbitration_budget_refuses_without_partial_draws ... ok
+test s09_every_qualified_entry_in_a_node_can_contribute ... ok
+test named_typed_capture_values_are_ordered_and_spans_are_only_provenance ... ok
+test s10_complementary_entries_survive_without_election ... ok
+test source_guard_mismatch_refuses_and_matching_inhibited_alternatives_cannot_emit ... ok
+test sorted_inhibition_sets_ignore_order_but_keep_input_target_codes_distinct ... ok
+test s11_actual_redundancy_elects_only_within_its_group ... ok
+test stale_explicit_binding_refuses_before_jitter ... ok
+test supplied_evidence_is_checked_but_cannot_construct_contributions ... ok
+test threshold_bypass_does_not_bypass_zero_strength_or_action_inhibition ... ok
+test zero_confidence_redundancy_abstains_without_forging_bypass_confidence ... ok
+test oversized_action_vectors_and_payloads_refuse_before_copy_or_draw ... ok
+test deep_and_many_argument_trees_fail_before_cloning ... ok
+test external_evidence_spans_are_bounded ... ok
+
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/scoring_v3_election.rs (target/debug/deps/scoring_v3_election-3ac38173cf867a55)
+
+running 5 tests
+test cumulative_intervals_are_half_open_at_an_exact_grid_boundary ... ok
+test finite_extreme_weights_do_not_overflow_and_late_invalid_input_is_atomic ... ok
+test endpoint_zero_selects_first_positive_even_when_scaling_underflows ... ok
+test zero_and_single_positive_abstain_or_select_without_draw ... ok
+test s09_alternatives_use_closed_grid_endpoints_and_inhibition ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/scoring_v3_policy.rs (target/debug/deps/scoring_v3_policy-9a116fa75c77fec3)
+
+running 11 tests
+test explicit_seeded_helper_is_repeatable_bounded_and_has_no_ambient_state ... ok
+test arithmetic_overflow_is_explicit_and_never_commits_partial_draws ... ok
+test jitter_cap_sign_independence_no_drift_and_trace ... ok
+test no_draw_exceptions_still_retain_seed_and_stream_identity ... ok
+test invalid_policies_and_draw_exhaustion_are_atomic ... ok
+test numeric_balance_subtracts_before_clamp_and_positive_atp_does_not_boost ... ok
+test exact_threshold_neighbors_and_strength_gate ... ok
+test s07_atp_negative_valence_dampens_before_inclusive_gate ... ok
+test s07_endpoints_are_tested_after_atp ... ok
+test s08_maximum_strength_only_protects_qualified_baselines ... ok
+test zero_magnitude_still_uses_an_independent_sign_draw ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

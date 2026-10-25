@@ -1,0 +1,52 @@
+[
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/lib.rs",
+    "sha256": "3fd3d1bf50ca7837c5a24422f89dc5487bcd4d8b75a13a8c97ec0a954b4b2620",
+    "lines": 45
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/scanner_v3/mod.rs",
+    "sha256": "0e2f987d7ed96eabd1e07520f9e5f8428cba450b604a52c1b3a398e2544ba41b",
+    "lines": 260
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/scanner_v3/rational.rs",
+    "sha256": "027c6411f4d167c9bbd4f2d8c2259f00a2387a30745b1e52f6329ba439953d50",
+    "lines": 101
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs",
+    "sha256": "63163ece7522a23360eade9a57a225c4851539eadeb29c8f99e43149beee74f1",
+    "lines": 167
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs",
+    "sha256": "4bb28b576a27bbca4a9bacb734b2aa2ecabbd68fe306aec0bf8661b8ad1f2bb4",
+    "lines": 411
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/model.rs",
+    "sha256": "731254ac7cfe6547ca7f0dfb7814d8ca6a2331f387c5ae841f9f236725fe761e",
+    "lines": 155
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/text_v3/mod.rs",
+    "sha256": "30bdcf3a1f3ffe27c79afd9b9a4b4403c5d3c4573c9a7e0b398c2de8bdc3509e",
+    "lines": 327
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/tests/scanner_v3.rs",
+    "sha256": "ca4e3c4f5f648b8c7a8a4d636bce6802c5ec21035f8c375bb44cf71e17c9fc4e",
+    "lines": 364
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs",
+    "sha256": "8855f42229630cfd89921406bcc2e37accf9e2248c63847700dd38cd3451feda",
+    "lines": 737
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/tests/text_v3.rs",
+    "sha256": "b2bfef9fce1ce85e3dd6214186679d7a17ea6e82573e0b118f1a8aefded34b6e",
+    "lines": 200
+  }
+]

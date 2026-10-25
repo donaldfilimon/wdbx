@@ -10,6 +10,7 @@ description = "WDBX vector store for the ABI framework: on-disk segment format, 
 [features]
 default = []
 experimental-dghv-bootstrap = []
+p1-crypto-witness = []
 full-fhe = ["dep:tfhe"]
 
 [dependencies]

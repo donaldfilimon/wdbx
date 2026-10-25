@@ -1,0 +1,33 @@
+141 |   if (ctx.bypass)
+142 |     expected.refusals = expected.refusals.filter((x) => x !== 'BelowThreshold');
+143 |   expected.refusals.push(...guards);
+144 |   expected.qualified = expected.refusals.length === 0;
+145 |   for (const [k, v] of Object.entries(expected))
+146 |     eq(s[k], v, `exact confidence/gate ${k}`);
+          ^
+AssertionError: exact confidence/gate effective
++ actual - expected
+
+  {
+    d: '1',
++   n: '51'
+-   n: '50'
+  }
+
+ generatedMessage: false,
+     actual: {
+  n: "51",
+  d: "1",
+},
+   expected: {
+  n: "50",
+  d: "1",
+},
+   operator: "deepStrictEqual",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at checkScore (/Users/donald/sources/repos/wdbx/specimen-studio/tests/scoring-parity.mjs:146:5)
+      at validate (/Users/donald/sources/repos/wdbx/specimen-studio/tests/scoring-parity.mjs:1737:7)
+
+Bun v1.4.4-canary.1+ea6a2c7b7 (macOS arm64)

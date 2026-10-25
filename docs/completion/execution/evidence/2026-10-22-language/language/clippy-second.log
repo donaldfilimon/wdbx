@@ -1,0 +1,57 @@
+    Checking specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> native/specimen-kernel/tests/language_v3.rs:390:5
+    |
+390 |     b.variants_per_clause = 17;
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `specimen_kernel::language_v3::Budget { variants_per_clause: 17, ..Default::default() }` and removing relevant reassignments
+   --> native/specimen-kernel/tests/language_v3.rs:389:5
+    |
+389 |     let mut b = Budget::default();
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#field_reassign_with_default
+    = note: `-D clippy::field-reassign-with-default` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::field_reassign_with_default)]`
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> native/specimen-kernel/tests/language_v3.rs:406:5
+    |
+406 |     b.total_variants = 1;
+    |     ^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `specimen_kernel::language_v3::Budget { total_variants: 1, ..Default::default() }` and removing relevant reassignments
+   --> native/specimen-kernel/tests/language_v3.rs:405:5
+    |
+405 |     let mut b = Budget::default();
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> native/specimen-kernel/tests/language_v3.rs:487:5
+    |
+487 |     b.variants_per_clause = 2;
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `specimen_kernel::language_v3::Budget { variants_per_clause: 2, ..Default::default() }` and removing relevant reassignments
+   --> native/specimen-kernel/tests/language_v3.rs:486:5
+    |
+486 |     let mut b = Budget::default();
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> native/specimen-kernel/tests/language_v3.rs:534:5
+    |
+534 |     b.draws = 0;
+    |     ^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `specimen_kernel::language_v3::Budget { draws: 0, ..Default::default() }` and removing relevant reassignments
+   --> native/specimen-kernel/tests/language_v3.rs:533:5
+    |
+533 |     let mut b = Budget::default();
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#field_reassign_with_default
+
+error: could not compile `specimen-kernel` (test "language_v3") due to 4 previous errors
+warning: build failed, waiting for other jobs to finish...

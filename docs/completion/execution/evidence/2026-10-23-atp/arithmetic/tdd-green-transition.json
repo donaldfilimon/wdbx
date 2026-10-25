@@ -1,0 +1,57 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "specimen-kernel",
+    "--test",
+    "atp_v3"
+  ],
+  "cwd": "/Users/donald/sources/repos/wdbx/specimen-studio",
+  "env": {
+    "RUSTUP_TOOLCHAIN": "1.99.1",
+    "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+    "DYLD_LIBRARY_PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib",
+    "CARGO_NET_OFFLINE": "true"
+  },
+  "exit_code": 0,
+  "duration_seconds": 0.3569350242614746,
+  "source_before": [
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/atp_v3/advance.rs",
+      "sha256": "0f767ab8c6eb7cb6b62f1b700484c2b251b8d1aed653185b055ddb90fa41d63c"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/atp_v3/mod.rs",
+      "sha256": "4d49058592d17757d83eba510f54a6753cad05b8eb4511e649914afdf900763b"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/atp_v3/model.rs",
+      "sha256": "fa2ff3da94f598d14266a88714c72c09eccce3ce657102002b57fadb90d91eeb"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/atp_v3.rs",
+      "sha256": "a0a7f53377939f682b29038eee57c996104d66436873151df118544ab2d17427"
+    }
+  ],
+  "source_after": [
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/atp_v3/advance.rs",
+      "sha256": "0f767ab8c6eb7cb6b62f1b700484c2b251b8d1aed653185b055ddb90fa41d63c"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/atp_v3/mod.rs",
+      "sha256": "4d49058592d17757d83eba510f54a6753cad05b8eb4511e649914afdf900763b"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/atp_v3/model.rs",
+      "sha256": "fa2ff3da94f598d14266a88714c72c09eccce3ce657102002b57fadb90d91eeb"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/atp_v3.rs",
+      "sha256": "a0a7f53377939f682b29038eee57c996104d66436873151df118544ab2d17427"
+    }
+  ]
+}

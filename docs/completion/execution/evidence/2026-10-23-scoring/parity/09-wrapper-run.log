@@ -1,0 +1,9 @@
+   Compiling specimen-wasm v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-wasm)
+error[E0425]: cannot find value `batch_consumed` in this scope
+   --> native/specimen-wasm/src/scoring_probe/entries.rs:300:99
+    |
+300 | ...try-batch","batch_draws":[],"batch_consumed":batch_consumed,"evaluated":observed,"arbitration":{"stream":"redundancy","draws":ds...
+    |                                                 ^^^^^^^^^^^^^^ not found in this scope
+
+For more information about this error, try `rustc --explain E0425`.
+error: could not compile `specimen-wasm` (lib) due to 1 previous error

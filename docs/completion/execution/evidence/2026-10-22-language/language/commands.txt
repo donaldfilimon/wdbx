@@ -1,0 +1,37 @@
+Task8.language exact command/env inventory, 2026-10-22
+Working directory: /Users/donald/sources/repos/wdbx
+All cargo/rustfmt commands used these exact explicit environment assignments:
+RUSTUP_TOOLCHAIN=1.99.1
+PATH=/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin
+No RUSTFLAGS, LLVM workaround, install, network, or golden regeneration environment was set by this task.
+
+Log filename -> command (stdout+stderr redirected to the filename in this directory):
+red-prepare.log -> cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --test language_v3
+green-prepare-first.log -> cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --test language_v3
+red-scripts.log -> cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --test language_v3_scripts
+green-first.log -> cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --test language_v3 --test language_v3_scripts
+green-basic.log -> cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --test language_v3 --test language_v3_scripts
+red-boundaries.log -> cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --test language_v3
+green-boundaries.log -> cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --test language_v3 --test language_v3_scripts
+clippy-first.log -> cargo clippy --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --all-targets -- -D warnings
+clippy-fix.log -> cargo clippy --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --fix --allow-dirty --lib -- -D warnings
+clippy-second.log -> cargo clippy --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --all-targets -- -D warnings
+green-budgets.log -> cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --test language_v3 --test language_v3_scripts
+red-self-review.log -> cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --test language_v3 --test language_v3_scripts
+red-root-literal.log -> cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --test language_v3_scripts root_quoted_literal_obeys_output_budget -- --exact
+red-compound-condition.log -> cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --test language_v3 compound_condition_requires_context_for_entire_antecedent -- --exact
+green-self-review.log -> cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --test language_v3 --test language_v3_scripts
+red-utility-work.log -> cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --test language_v3 repeated_utility_matches_do_not_allocate_unbounded_candidate_products -- --exact
+green-focused.log -> cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --test language_v3 --test language_v3_scripts
+clippy-final-first.log -> cargo clippy --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --all-targets -- -D warnings
+kernel-suite.log -> cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked
+clippy-final.log -> cargo clippy --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --all-targets -- -D warnings
+fmt-check.log -> rustfmt --edition 2024 --check specimen-studio/native/specimen-kernel/src/language_v3/mod.rs specimen-studio/native/specimen-kernel/tests/language_v3.rs specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs
+diff-check.log -> git diff --check
+
+Formatting (no log, exact owned paths only, performed before final checks):
+rustfmt --edition 2024 specimen-studio/native/specimen-kernel/src/language_v3/mod.rs specimen-studio/native/specimen-kernel/tests/language_v3.rs specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs
+
+legacy-hashes.json: python3 subprocess git rev-parse HEAD:<path> compared with git hash-object <path>; no source/fixture writes.
+source-manifest.json: python3 hashlib.sha256 over exact new owned source/test paths; counts read_text().splitlines().
+Raw logs retained without sanitizing warnings/failures. Shell tool wrappers tailed logs after cargo; the trailing shell command's status alone is not the cargo verdict. Verdicts are established by the actual compiler/test summaries in each raw log. Initial missing API RED logs are compilation failures, explicitly distinguished from later behavioral RED assertion failures in the report.

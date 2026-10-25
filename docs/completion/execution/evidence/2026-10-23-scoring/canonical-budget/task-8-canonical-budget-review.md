@@ -1,0 +1,41 @@
+# Task 8 canonical-budget independent review
+
+2026-10-23 UTC. Read-only review of the supplied exact five-file delta against the captured pre-edit sources, excluding earlier unrelated dirty work. Both spec compliance and implementation quality are reviewed here. No source edits, git commands, test/build/format reruns, subagents, installation, network, holdouts or live-store access occurred. This review file is the sole write.
+
+## Verdicts
+
+- **Spec compliance: PASS for the bounded canonical-budget correction.** All target-layout charges in the two owned budget mechanisms are replaced by private explicit v1 units. The constants do not depend on the compiling target. The diff preserves traversal limits, checked arithmetic, refusal types and the existing distinction between scoring item work and orchestration byte work. Actual post-fix native/WASM boundary parity is a separate pending task.
+- **Implementation quality: PASS.** No Critical or Important finding. The change is small, uses one concrete-type charge table, retains compile-time coverage of traversed types and adds public behavior regressions at meaningful fixed boundaries. The table maintenance cost and logical-versus-physical distinction are documented.
+
+## Findings
+
+**Critical: none. Important: none. Minor: none requiring a change to this patch.**
+
+One nonblocking outside-diff observation is recorded below so this verdict is not mistaken for a claim that the entire scorer source is syntactically free of layout expressions.
+
+## Compliance and quality evidence
+
+Paths in this section are relative to `specimen-studio/native/specimen-kernel/` unless stated otherwise.
+
+- `src/lib.rs:10` registers a private module. `src/logical_charge_v1.rs:18` defines a crate-private trait, and `:33` supplies only concrete implementations. The table fixes all 19 traversed metadata categories, including `EntryRequest`, `Contribution` and contribution references. There is no blanket layout-based implementation, external dependency, public constructor or serialization change. `:22` and `:51` share the scalar/collection Contribution charge of 2048. The recorded native reference values fit the fixed units, with additional round-up for Token, EntryRequest and Contribution; the source comments at `:3` explicitly exclude physical allocation/capacity/overhead guarantees.
+- `src/scoring_v3/budget.rs:68` preserves item-count work charging and checked multiplication/subtraction for logical payload, changing only the metadata multiplier. `src/orchestration_v3/budget.rs:30` preserves the 100,000 collection ceiling, checked multiplication and the existing work-plus-bytes policy; `:185` uses the named Contribution unit. Positive constants preserve the former orchestration `.max(1)` behavior. Text lengths, recursive tree and collection traversal, leaf/depth/node limits and error variants are untouched by the diff.
+- The only production changes are these two helpers, the scalar Contribution charge, the private table and module registration. No broker, attachment, draw-tape, contribution construction, producer, scanner, identity, legacy engine/save, probe, manifest or wire source is edited. Consequently the patch does not rewrite the existing `R = 4*C + 4*J + E` calculation, retain/release operations, RNG/visit transaction boundaries or active/quarantine fencing protocol. The higher fixed metadata charges intentionally affect admission and retention decisions through those existing checks.
+- `tests/scoring_orchestration_budget_v1.rs:28` pins payload 2971 and item work 2158 independently of runtime layout. The entry, batch and arbitration cases at `:32`, `:74` and `:96` assert public refusal/admission around 2970/2971, 3354/3355 and 2791/2792. The fixture uses a two-byte UTF-8 action, and the independent ledger retains the declared recursive payload charges. `:55` separately guards the unchanged item-count work policy at 2157/2158.
+- The descriptor test at `:122` asserts admission work 465/466 and unchanged counts/empty dispatch after refusal. Completion tests at `:157` and `:191` exercise owned-byte 2985/2986 and cleanup-work 2303/2304 boundaries. They assert retained bytes 2296, preserve the refused lease for a subsequent no-vote completion, reject an extra cycle at full cleanup reservation without changing counts, and release accounting back to broker274 after restart/retirement. The overflow/invalid-budget control at `:234` also verifies the draw cursor is unchanged. These tests invoke public behavior, rather than asserting only table constants or target-adapted diagnostics.
+- The operational profile at `docs/completion/execution/scoring-orchestration-v3-profile.md:90` agrees with the implemented table and describes logical accounted bytes. Its evidence qualification at `:173` requires the later same-limit minus-one/exact-boundary scenarios and retains historical failed/projection evidence. No promotion of the 163 open/C0/unknown requirements is justified by this correction.
+
+## Focused outside-diff checks and disposition
+
+Named risk: replacing generic helpers might leave a decision-bearing layout charge in a public scoring path or produce boundary totals that do not match the fixture/callsite semantics. To resolve only that risk, I read the two complete budget traversals; the support fixture; relevant `evaluate_entry`/batch/arbitration preflight and repeated-accounting callsites; and searched the `scoring_v3` subtree for budget/layout calls. This was not a repository crawl or a rerun of validation.
+
+The fixture and callsites support the independent ledgers: the request has the declared origin/input, parent, wildcard path and single text action; batch admission adds one EntryRequest unit; arbitration performs three nested-accounting traversals. The untouched contribution preflight's existing literal 2048 is already target-independent and is unchanged by the task.
+
+The focused search found an existing `size_of::<Span>()` check in `src/scoring_v3/policy.rs:194`, outside the five-file delta. It is dominated by `spans <= 1_000_000` at `:192`. `src/language_v3/model.rs:5` defines Span as two usize fields; the supplied native reference is 16 bytes. Thus the largest admitted count yields 16,000,000 bytes, below the 16MiB threshold, and WASM32's smaller span layout cannot make that branch refuse either. This expression does not create a supported native/WASM admission difference under the current fixed cap. It is not an unresolved defect in the corrected budget helpers, and this review does not request a scope-expanding policy edit. A future cap/type change must revisit that redundant physical-size predicate instead of treating this verdict as approval for future layout-derived policy.
+
+## Evidence inspected and limits
+
+I inspected the canonical-budget report, reference-layout output, source-freeze inventory, owned-verification output, raw red/green/affected/full-kernel/Clippy log summaries, and affected/full-kernel/Clippy/format-check/objcopy command records in `docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/`. The command records identify the pinned 1.99.1 toolchain, offline/locked Cargo and zero exits; the logs support 8 new tests, 80 affected tests, 237 kernel tests and Clippy success. The initial behavioral red retains five failures and three passes. These are inspected execution records, not commands independently rerun by this reviewer.
+
+The original red log retains the rust-objcopy loader warning. The later objcopy command record supplies `DYLD_LIBRARY_PATH`, and its raw output actually reports the LLVM version with exit0; subsequent inspected build/test/Clippy records show no warning. That supports a local loader repair, not warning suppression or a product qualification claim. The 24-file source-freeze inventory is broader than the five changed Rust files; it does not mean 24 files were edited by this task.
+
+**Cannot verify in this review:** actual post-fix native/WASM decision parity, the four fresh Studio gates, physical allocator/process memory ceilings, host concurrency/fencing execution, general efficacy or operational adoption. The brief/report/profile correctly reserve those claims. No green rerun was performed, and this review does not replace the following target-boundary witness task.

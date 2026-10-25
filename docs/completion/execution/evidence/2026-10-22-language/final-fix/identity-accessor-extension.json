@@ -1,0 +1,7 @@
+{
+  "path": "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+  "original_sha256": "2b28dc381bc67ee27cb484618188b2457fc58f53a37da09057ace5e1b67182c1",
+  "current_sha256": "39c13866d6796260c85a618156b5fc177eeae3780bacca0503accf2ed42d62a0",
+  "exact_added_utf8": "    /// Borrow entries in insertion order in O(1), without copying any records.\n    /// Callers can reserve traversal/materialization work before inspecting them.\n    pub fn entries(&self) -> &[EntryRecord] {\n        &self.records.entries\n    }\n",
+  "proof": "Removing this one exact addition reproduces the original baseline bytes; 22 other legacy baseline files remain byte-identical."
+}

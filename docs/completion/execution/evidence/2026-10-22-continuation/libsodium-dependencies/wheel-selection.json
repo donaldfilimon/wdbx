@@ -1,0 +1,77 @@
+{
+  "captured_at_utc": "2026-10-22T22:59:32.675722+00:00",
+  "wheels": [
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "143914f93191bef3bff7ba953dea6a38fb05f7f9e38e2a2e6ae31bd14ba81709"
+      },
+      "digests": {
+        "blake2b_256": "be7b4845bbf88e94586ec47a432da4e9107e3fc3ce37eb412b1398630a37f7dd",
+        "md5": "365a2165de276844b3bd728fc99c55b0",
+        "sha256": "c949ea47e4206af7c8f604b8278093b674f7c79ed0d4719cc836902bf4517465"
+      },
+      "downloads": -1,
+      "filename": "pynacl-1.6.2-cp38-abi3-macosx_10_10_universal2.whl",
+      "has_sig": false,
+      "md5_digest": "365a2165de276844b3bd728fc99c55b0",
+      "packagetype": "bdist_wheel",
+      "python_version": "cp38",
+      "requires_python": ">=3.8",
+      "size": 388458,
+      "upload_time": "2026-01-01T17:32:16",
+      "upload_time_iso_8601": "2026-01-01T17:32:16.829569Z",
+      "url": "https://files.pythonhosted.org/packages/be/7b/4845bbf88e94586ec47a432da4e9107e3fc3ce37eb412b1398630a37f7dd/pynacl-1.6.2-cp38-abi3-macosx_10_10_universal2.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "558bafb9093a8e790175d9ecff9688382981d744877dad86fd6770db0f4dc918"
+      },
+      "digests": {
+        "blake2b_256": "547d16e5a096677b5e313ca80cd5e5170efa3ea44624a82bb111925522da64b1",
+        "md5": "a7ac39d760e8ae1f348d8185ba1bd3c2",
+        "sha256": "f81b3b8f3d4e343550fa4baa0e479bba9f2d29ce9c2e9b51d1ce1718d7442fcf"
+      },
+      "downloads": -1,
+      "filename": "cffi-2.1.1-cp312-cp312-macosx_11_0_arm64.whl",
+      "has_sig": false,
+      "md5_digest": "a7ac39d760e8ae1f348d8185ba1bd3c2",
+      "packagetype": "bdist_wheel",
+      "python_version": "cp312",
+      "requires_python": ">=3.10",
+      "size": 184719,
+      "upload_time": "2026-08-03T21:19:46",
+      "upload_time_iso_8601": "2026-08-03T21:19:46.129110Z",
+      "url": "https://files.pythonhosted.org/packages/54/7d/16e5a096677b5e313ca80cd5e5170efa3ea44624a82bb111925522da64b1/cffi-2.1.1-cp312-cp312-macosx_11_0_arm64.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "e3a74c846648bb55f4f907284b745e2003b87b96d9c9d17a8a50cf37804541c9"
+      },
+      "digests": {
+        "blake2b_256": "90110e6f11117525ff0eec40ebac3d313376f102df93ca44ad9e893ee85e4f89",
+        "md5": "33ee0f4abd15fe8dc2b564beb6db4fc8",
+        "sha256": "51d5a8ba2be0bbe440b99d2112604c95bbbc3c2748a64260186c541e1729cd80"
+      },
+      "downloads": -1,
+      "filename": "pycparser-3.11-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "33ee0f4abd15fe8dc2b564beb6db4fc8",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.10",
+      "size": 51178,
+      "upload_time": "2026-10-09T12:56:58",
+      "upload_time_iso_8601": "2026-10-09T12:56:58.131173Z",
+      "url": "https://files.pythonhosted.org/packages/90/11/0e6f11117525ff0eec40ebac3d313376f102df93ca44ad9e893ee85e4f89/pycparser-3.11-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ]
+}

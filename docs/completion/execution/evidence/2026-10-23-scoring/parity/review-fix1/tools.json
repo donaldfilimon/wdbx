@@ -1,0 +1,14 @@
+{
+  "bun": {
+    "path": "/opt/homebrew/bin/bun",
+    "sha256": "30b3578e2f0e4901998ed11d85566f294f7b654da00883fd2357eed7387b2621"
+  },
+  "python3": {
+    "path": "/usr/bin/python3",
+    "sha256": "ed6f5284033aa2aae6a58427c25ba3ab119947b40365627b24e5d51a4b70a1cd"
+  },
+  "oxlint": {
+    "path": "/Users/donald/sources/repos/wdbx/specimen-studio/node_modules/.bin/oxlint",
+    "sha256": "ecab4e2f1bebaab1a3306620bee562ec16e8cb83dd5fb739b94a5aae3c9e34bd"
+  }
+}

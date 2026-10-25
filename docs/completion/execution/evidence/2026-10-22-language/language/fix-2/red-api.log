@@ -1,0 +1,11 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+error[E0560]: struct `specimen_kernel::language_v3::Budget` has no field named `work_steps`
+   --> native/specimen-kernel/tests/language_v3_limits.rs:148:23
+    |
+148 |     let budget=Budget{work_steps:40,..Budget::default()};
+    |                       ^^^^^^^^^^ `specimen_kernel::language_v3::Budget` does not have this field
+    |
+    = note: available fields are: `variants_per_clause`, `total_variants`, `draws`, `arithmetic_steps`
+
+For more information about this error, try `rustc --explain E0560`.
+error: could not compile `specimen-kernel` (test "language_v3_limits") due to 1 previous error

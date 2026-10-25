@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--check"
+  ],
+  "cwd": "/Users/donald/sources/repos/wdbx",
+  "exit_code": 0,
+  "log": {
+    "path": "docs/completion/execution/evidence/2026-10-23-scoring/register/git-diff-check.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "qualification": "Tracked diff only; current execution files are untracked, so separate explicit owned whitespace check follows."
+}

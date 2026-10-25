@@ -1,0 +1,42 @@
+    Blocking waiting for file lock on build directory
+    Checking specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+error: using `contains()` instead of `iter().any()` is more efficient
+   --> native/specimen-kernel/src/scoring_v3/contribution.rs:260:8
+    |
+260 |     if r.dependencies.iter().any(|d| *d == r.id)
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: try: `r.dependencies.contains(&r.id)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#manual_contains
+    = note: `-D clippy::manual-contains` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::manual_contains)]`
+
+error: this `if` statement can be collapsed
+   --> native/specimen-kernel/src/scoring_v3/contribution.rs:289:5
+    |
+289 | /     if let CandidatePath::Structural(k) = &r.origin.path {
+290 | |         if k != &r.record.key
+291 | |             || crate::text_v3::encode(source)
+292 | |                 .map_err(|_| ScoringError::BindingMismatch)?
+...   |
+298 | |     }
+    | |_____^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#collapsible_if
+    = note: `-D clippy::collapsible-if` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::collapsible_if)]`
+help: collapse nested if block
+    |
+289 ~     if let CandidatePath::Structural(k) = &r.origin.path
+290 ~         && (k != &r.record.key
+291 |             || crate::text_v3::encode(source)
+292 |                 .map_err(|_| ScoringError::BindingMismatch)?
+293 |                 .pattern_key()
+294 ~                 != k)
+295 |         {
+296 |             return Err(ScoringError::BindingMismatch);
+297 ~         }
+    |
+
+error: could not compile `specimen-kernel` (lib) due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `specimen-kernel` (lib test) due to 2 previous errors

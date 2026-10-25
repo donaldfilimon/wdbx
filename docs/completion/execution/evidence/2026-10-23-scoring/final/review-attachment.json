@@ -1,0 +1,171 @@
+{
+  "kind": "C0-only partial-mechanism review attachment; no requirement promotion",
+  "reviews": [
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-scoring/final/task-8-scoring-final-review.md",
+      "sha256": "9de16f42e9a5ef30ae7efa4f029f82d06476b28116d89aef8e47f17c3ff34daf"
+    }
+  ],
+  "source_freeze": {
+    "path": "docs/completion/execution/evidence/2026-10-23-scoring/final/product-freeze.json",
+    "sha256": "3e12ba42110156f0389f142dec71463c0e6920ee76a79ec17d344fb6684d5aa8"
+  },
+  "mapping": {
+    "path": "docs/completion/execution/evidence/2026-10-23-scoring/evidence/requirement-mapping.json",
+    "sha256": "196cf8fbd0d57fb380b7ddea96d524d328e1482c20169553c9d4c3d75059b707"
+  },
+  "requirements": [
+    {
+      "id": "CH09",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent review of current bounded local mechanisms only; whole frozen requirement remains unqualified."
+    },
+    {
+      "id": "CH10",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent review of current bounded local mechanisms only; whole frozen requirement remains unqualified."
+    },
+    {
+      "id": "CH11",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent review of current bounded local mechanisms only; whole frozen requirement remains unqualified."
+    },
+    {
+      "id": "CH14",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent review of current bounded local mechanisms only; whole frozen requirement remains unqualified."
+    },
+    {
+      "id": "CH18",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent review of current bounded local mechanisms only; whole frozen requirement remains unqualified."
+    },
+    {
+      "id": "CH20",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent review of current bounded local mechanisms only; whole frozen requirement remains unqualified."
+    },
+    {
+      "id": "CH23",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent review of current bounded local mechanisms only; whole frozen requirement remains unqualified."
+    },
+    {
+      "id": "P08.03",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent review of current bounded local mechanisms only; whole frozen requirement remains unqualified."
+    },
+    {
+      "id": "P08.09",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent review of current bounded local mechanisms only; whole frozen requirement remains unqualified."
+    },
+    {
+      "id": "P08.10",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent review of current bounded local mechanisms only; whole frozen requirement remains unqualified."
+    },
+    {
+      "id": "S07",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent review of current bounded local mechanisms only; whole frozen requirement remains unqualified."
+    },
+    {
+      "id": "S08",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent review of current bounded local mechanisms only; whole frozen requirement remains unqualified."
+    },
+    {
+      "id": "S09",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent review of current bounded local mechanisms only; whole frozen requirement remains unqualified."
+    },
+    {
+      "id": "S10",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent review of current bounded local mechanisms only; whole frozen requirement remains unqualified."
+    },
+    {
+      "id": "S11",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent review of current bounded local mechanisms only; whole frozen requirement remains unqualified."
+    },
+    {
+      "id": "S12",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent review of current bounded local mechanisms only; whole frozen requirement remains unqualified."
+    },
+    {
+      "id": "S13",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent review of current bounded local mechanisms only; whole frozen requirement remains unqualified."
+    },
+    {
+      "id": "S14",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent review of current bounded local mechanisms only; whole frozen requirement remains unqualified."
+    },
+    {
+      "id": "S15",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent review of current bounded local mechanisms only; whole frozen requirement remains unqualified."
+    }
+  ],
+  "decisions": [
+    {
+      "id": "D06",
+      "scope": "Bounded partial design mechanism only; unmet research and host clauses remain open."
+    },
+    {
+      "id": "D07",
+      "scope": "Bounded partial design mechanism only; unmet research and host clauses remain open."
+    },
+    {
+      "id": "D08",
+      "scope": "Bounded partial design mechanism only; unmet research and host clauses remain open."
+    },
+    {
+      "id": "D16",
+      "scope": "Bounded partial design mechanism only; unmet research and host clauses remain open."
+    }
+  ],
+  "limitations": "No ABI owner approval, engine adoption, efficacy, independent contamination/adjudication, real host fencing, physical memory/concurrency, installed/platform or elapsed-operation qualification is inferred."
+}

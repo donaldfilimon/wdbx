@@ -1,0 +1,120 @@
+{
+  "matched": 23,
+  "files": [
+    {
+      "path": "specimen-studio/Cargo.lock",
+      "sha256": "164da1d1a61f57a16d651708af6959644c5d543f44f8e6bcb0bb0a7142ce7a98",
+      "lines": 7114
+    },
+    {
+      "path": "specimen-studio/bun.lock",
+      "sha256": "d1de54eaca2ced931b7133387b53e573372665f963fb022fec40ac7c81e628eb",
+      "lines": 2509
+    },
+    {
+      "path": "specimen-studio/conformance/p0-probe-imagine.sha256",
+      "sha256": "2961de688e91d14675a2ae88d7fdc25fb28c2c490fcd3ac2989a7c107c437b58",
+      "lines": 1
+    },
+    {
+      "path": "specimen-studio/conformance/p0-probe-pow.sha256",
+      "sha256": "eb51a3cd002966ce6d79c6ab1cc29100ba7717d87632e0b04c636f410d70e2dc",
+      "lines": 1
+    },
+    {
+      "path": "specimen-studio/conformance/p0-probe.sha256",
+      "sha256": "21374e42b0f8a728d75b4559df276c637ecbd5626c2cb90745e5537108ae2648",
+      "lines": 1
+    },
+    {
+      "path": "specimen-studio/conformance/starter.json",
+      "sha256": "a3877f6cd58bc9ad7c4bfd806c17e5d00108e12ee6fc48a92fa655a7289207c0",
+      "lines": 386
+    },
+    {
+      "path": "specimen-studio/lib/specimen/contracts.ts",
+      "sha256": "be9884cd662fbcc0fa77d3d3c800c46dd59858ae105649945ba0712764c2d318",
+      "lines": 228
+    },
+    {
+      "path": "specimen-studio/lib/specimen/native.ts",
+      "sha256": "14ae4ce37ff73e2c4c3e81069ca1ea4e1130fff7bb4ff168f799bfd042df3648",
+      "lines": 199
+    },
+    {
+      "path": "specimen-studio/lib/specimen/storage.ts",
+      "sha256": "ab64c091ea3badfb7e37152d2fa3f09444444bf9c529fdf42d373054e592c3b3",
+      "lines": 184
+    },
+    {
+      "path": "specimen-studio/native/specimen-core/src/persistence.rs",
+      "sha256": "31a82e06eb71d76dd4fbc709c39972387e53b888648a4c10bc2609017c3307a7",
+      "lines": 536
+    },
+    {
+      "path": "specimen-studio/native/specimen-core/src/persistence/canonical.rs",
+      "sha256": "0da5a8135044562111f95e30c709e574ba18ea981c6ebb0db5784588f0f43f55",
+      "lines": 643
+    },
+    {
+      "path": "specimen-studio/native/specimen-core/src/persistence/info.rs",
+      "sha256": "13646e86a3c4f54c4c21600b8e5386028d7bfd35849169c0c08c4036fbf1cebd",
+      "lines": 186
+    },
+    {
+      "path": "specimen-studio/native/specimen-core/src/persistence/lock.rs",
+      "sha256": "11d187fe2836cd647250552b40dd7a66de1fbca5f0184aaa8a169be0848f25c6",
+      "lines": 57
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/command/apply.rs",
+      "sha256": "9e9b815ea3ea9190f470a163f79a6be50e87039ac24a3d5507f0bb2c955f0c24",
+      "lines": 476
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/command/mod.rs",
+      "sha256": "911811ccd34ed7bacbd8d8018c43afbb6a1cb4066ff4aaaa1777d882a97d926a",
+      "lines": 682
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/command/parse.rs",
+      "sha256": "1a2ea79a9f0b182ea0b5b08320159600074f38f4eeb9c439100353f7d6424e16",
+      "lines": 336
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "sha256": "98ce45326436b9ed580a9aaa9f41ab2090f2d3f685fcaea50be0eca86a6ccba2",
+      "lines": 1318
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/identity/index.rs",
+      "sha256": "99b7810b5cd10fc483aad1233298f00704af28c826e3337be013bd9266cb55bf",
+      "lines": 55
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+      "sha256": "2b28dc381bc67ee27cb484618188b2457fc58f53a37da09057ace5e1b67182c1",
+      "lines": 251
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/identity/model.rs",
+      "sha256": "12cda88d9ac5968b0d92279f4dc5ebaf1041c5d4b5c49c5ac5ee999be2373f35",
+      "lines": 164
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/identity/validate.rs",
+      "sha256": "6ecb1b0659f9261c4f56a9cf016fd0fe9fd075407d9d26b44d4609636d1218d8",
+      "lines": 124
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/language.rs",
+      "sha256": "d9682c1a5ce3ee27f0bdca9da0b9d208a695c95089bc478875d482a9543aaccc",
+      "lines": 593
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "sha256": "7aaee9761ee5137312ce30904df85b40c7cc62068f05d2bf0018bff2f172fe0f",
+      "lines": 1061
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+quoted condition case mismatch: original="go", inhibited=false, executable=true, ast=IfThen(Action([Token { source: "\"ALLOW\"", lemma: "ALLOW", span: Span { start: 3, end: 10 }, kind: Quoted, role: Other, decimal: None, rule_refs: [] }]), Action([Token { source: "go", lemma: "go", span: Span { start: 16, end: 18 }, kind: Word, role: Other, decimal: None, rule_refs: [] }])), execution=Ok(Text("effect"))
+grammar negation: original="halt go", inhibited=false, executable=true, ast=Action([Token { source: "go", lemma: "go", span: Span { start: 5, end: 7 }, kind: Word, role: Other, decimal: None, rule_refs: [] }]), execution=Ok(Text("effect"))
+conjunction shadows builtin negation: original="go", inhibited=false, executable=true, ast=Action([Token { source: "go", lemma: "go", span: Span { start: 13, end: 15 }, kind: Word, role: Other, decimal: None, rule_refs: [] }]), execution=Ok(Text("effect"))
+complexity disagreement: getter=7, key_count=6, class=Low
+accepted hyphenated declaration compile: Err(Syntax)
+empty query, 257 records, work_steps=1: Ok(0)

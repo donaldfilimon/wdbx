@@ -1,0 +1,266 @@
+{
+  "claim_policy": "C0-only; no promotion",
+  "groups": [
+    {
+      "name": "language preparation, utilities and bounded scripts",
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+        "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+        "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+        "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+        "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+        "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+        "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+        "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+        "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+        "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs"
+      ],
+      "ids": [
+        "P08.02",
+        "CH07",
+        "CH08",
+        "CH21",
+        "CH23",
+        "S19",
+        "S20",
+        "S21",
+        "S25",
+        "S46"
+      ],
+      "decisions": [
+        "D05",
+        "D17"
+      ],
+      "boundary": "Pure immutable preparation and EffectPlans; no durable utility ingestion, authenticated host effects, active engine integration or general language efficacy."
+    },
+    {
+      "name": "class-specific text-v3 transforms",
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/text_v3/mod.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/text_v3.rs"
+      ],
+      "ids": [
+        "P08.01",
+        "CH05",
+        "CH06",
+        "S01",
+        "S04"
+      ],
+      "decisions": [
+        "D01",
+        "D02"
+      ],
+      "boundary": "Versioned local structural projection; no legacy ID conversion, saved schema migration, production registration or calibrated retrieval efficacy."
+    },
+    {
+      "name": "full-original checked scanner and exact reducer",
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/scanner_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/scanner_v3/rational.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scanner_v3.rs"
+      ],
+      "ids": [
+        "P08.03",
+        "CH09",
+        "CH23",
+        "S05",
+        "S06"
+      ],
+      "decisions": [
+        "D06"
+      ],
+      "boundary": "Action-scoped full validated features and checked i128 rational reducer; no whole-chunk scanner, jitter/ATP/voting/global scheduler or research calibration."
+    },
+    {
+      "name": "explicit routes and joined candidate origins",
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs",
+        "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/model.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs"
+      ],
+      "ids": [
+        "P08.01",
+        "P08.02",
+        "CH06",
+        "CH08",
+        "CH23",
+        "S05",
+        "S20",
+        "S21",
+        "S46"
+      ],
+      "decisions": [
+        "D05",
+        "D17"
+      ],
+      "boundary": "Population/scope-fenced local candidates and pure Tape adapter; no host authorization, vote/admission, production scheduler or durable registration."
+    },
+    {
+      "name": "actual native/feature-WASM synthetic integration witness",
+      "sources": [
+        "specimen-studio/native/specimen-wasm/Cargo.toml",
+        "specimen-studio/native/specimen-wasm/src/lib.rs",
+        "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+        "specimen-studio/native/specimen-wasm/examples/language_probe.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+        "specimen-studio/tests/language-parity.mjs",
+        "specimen-studio/scripts/check-language-parity.sh"
+      ],
+      "ids": [
+        "P08.10",
+        "P08.01",
+        "P08.02",
+        "P08.03",
+        "CH05",
+        "CH06",
+        "CH07",
+        "CH08",
+        "CH09",
+        "CH21",
+        "S01",
+        "S04",
+        "S05",
+        "S06",
+        "S19",
+        "S20",
+        "S21",
+        "S46"
+      ],
+      "decisions": [
+        "D01",
+        "D02",
+        "D05",
+        "D06",
+        "D17"
+      ],
+      "boundary": "Executed feature WASM only, default compiled/export-inspected; one arm64 native/Bun runtime, no all-target, model/GPU/OCR, installed desktop or UI theme qualification."
+    }
+  ],
+  "reports": [
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/task-8-language-report.md",
+      "sha256": "a9f8840c27cab4098f357b429ba8540ac5984788be2c780279ee0b1f07096551"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/task-8-language-numeric-report.md",
+      "sha256": "d62660e05d6ae994230781a52b2383a56f89ef64bf2ef97a68c1644beecf4acb"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-report.md",
+      "sha256": "697b0cc6cf1744e57341b790937de3412950ef5b557bffb64f2a2f9d065ab9c1"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/task-8-language-parity-report.md",
+      "sha256": "036544a7c9c44ade7e6031d445554e23d936ca15917182007166265c2dbf3448"
+    }
+  ],
+  "independent_reviews": [
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/language-task-review.md",
+      "sha256": "3db48313654969b8bc546f175917dbb5bf8e4a0205e4426280fb44c09c959d76"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/language-fix1-review.md",
+      "sha256": "01d98edf8cc08a3c993b6357b602e1caad97d7462eaeb4f65296c18ef674aafd"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/language-fix2-review.md",
+      "sha256": "cd8617e5d1e0664f9f60d1c01bc957be759f47f4b5668dd6b2919a2a741fe8c0"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/language-numeric-review.md",
+      "sha256": "882e14906d190e191cceb8a0099db4a465be95b977b004636b2a74e8aad3b3ec"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-review.md",
+      "sha256": "5ac0be0bff816c10aa6e5eaa54d77ae26d48b3689ca1ce78690f89eb59a72603"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-fix1-review.md",
+      "sha256": "22bfeff3fe72914c7dd3c01477e6d3b4c69646e52214e3ee3b69981b02d6b3dd"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/language-parity-review.md",
+      "sha256": "c1badeb8bbb7fec3655d4694540fea1994b48e198aeb91e57e422e6a3d7a3aa4"
+    }
+  ],
+  "profile": {
+    "path": "docs/completion/execution/language-v3-profile.md",
+    "sha256": "79ef5982ba2ad374d867c77af1b56bd9637b78295dc41556418b963cdf612d92"
+  },
+  "raw_evidence": [
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/gates/summary.json",
+      "sha256": "752353777aeca1e72c8ec5cbc6235ea4ce975d7de0fd88c0dae7be53f64f6fe4"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/gates/browser.log",
+      "sha256": "7e578defe1efd4e5b9e44d451179b2692f3a52576c1928d663abd4210344b846"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/gates/lint.log",
+      "sha256": "fe82195262b09727902d8ea57ceb3e12a09e5df0c6f26157db77f5c51b45d9f5"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/gates/native-test.log",
+      "sha256": "962b8bcc636ff3dad3060e7e5d4cecc4a99cd7bdfc5524ee7ec1ea44c458654e"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/gates/native-clippy.log",
+      "sha256": "fc0857391f3348dce4c4b341a0e73c04b2b902ae7016a86cba2d06be8eb44d86"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/green-focused.log",
+      "sha256": "697fd124701b82763000d6db1bce3d35a39536e1b8d66209fb0e92b5d0d63206"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/green-focused.log",
+      "sha256": "2fc47db883b953716c9ccb9ddd86a9696224e92cacf36e1e5c65e1724d7167a5"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/green-focused.log",
+      "sha256": "888bc097cb567b4755c4de8bf7bea3aa526bce55ce9d2c06cac3ebfca2259ffa"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/runtime-final.log",
+      "sha256": "2706187f412bff95e1b57dd423725b306caba7877029edb3d8e0674386f38d4a"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/negative.log",
+      "sha256": "57ee1e9d44cd9a260c1dafdd50ffb68c89a84b0dd222bbeaead75a7ba497732d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/checks.json",
+      "sha256": "de07f5a0091b200e26e0e0e71690afb2cf06ebc60ec0ed97a172df0958b1b9e0"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/native.json",
+      "sha256": "0874bb27c8a593db459c47f06faa46e62cf2c917f31e7eaa78845a5df7475bae"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/wasm.json",
+      "sha256": "0874bb27c8a593db459c47f06faa46e62cf2c917f31e7eaa78845a5df7475bae"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/default.wasm",
+      "sha256": "c52b4ae71741acaacdbc4612a39ea3c44cec1f66f5d6560cb0f89096a2fd95fd"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/language.wasm",
+      "sha256": "d7e69e38feaa00b3d375f7bc9072bcb1b22abd38b976257c244337656b8b154e"
+    }
+  ]
+}

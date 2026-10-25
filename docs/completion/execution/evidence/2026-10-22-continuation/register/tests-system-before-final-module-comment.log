@@ -1,0 +1,25 @@
+......F....................
+======================================================================
+FAIL: test_current_register (test_check_completion_execution.ExecutionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/donald/sources/repos/wdbx/tools/tests/test_check_completion_execution.py", line 26, in test_current_register
+    self.assertEqual([], self.module.validate(ROOT, self.register))
+AssertionError: Lists differ: [] != ['reference drift: crates/abi-wdbx/src/v3/[397 chars].rs']
+
+Second list contains 6 additional elements.
+First extra element 0:
+'reference drift: crates/abi-wdbx/src/v3/complete_episode/crypto/mod.rs'
+
+- []
++ ['reference drift: crates/abi-wdbx/src/v3/complete_episode/crypto/mod.rs',
++  'reference drift: crates/abi-wdbx/src/v3/complete_episode/crypto/mod.rs',
++  'reference drift: crates/abi-wdbx/src/v3/complete_episode/crypto/mod.rs',
++  'reference drift: crates/abi-wdbx/src/v3/complete_episode/crypto/mod.rs',
++  'reference drift: crates/abi-wdbx/src/v3/complete_episode/crypto/mod.rs',
++  'reference drift: crates/abi-wdbx/src/v3/complete_episode/crypto/mod.rs']
+
+----------------------------------------------------------------------
+Ran 27 tests in 6.962s
+
+FAILED (failures=1)

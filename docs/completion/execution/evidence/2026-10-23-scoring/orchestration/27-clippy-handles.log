@@ -1,0 +1,64 @@
+    Checking specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+error: this expression creates a reference which is immediately dereferenced by the compiler
+ --> native/specimen-kernel/tests/orchestration_v3_graph.rs:6:36
+  |
+6 |     b.close_discovery(&scope(), 1, &h1).unwrap();
+  |                                    ^^^ help: change this to: `h1`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_borrow
+  = note: `-D clippy::needless-borrow` implied by `-D warnings`
+  = help: to override `-D warnings` add `#[allow(clippy::needless_borrow)]`
+
+error: this expression creates a reference which is immediately dereferenced by the compiler
+ --> native/specimen-kernel/tests/orchestration_v3_graph.rs:7:25
+  |
+7 |     b.seal(&scope(), 1, &h1).unwrap();
+  |                         ^^^ help: change this to: `h1`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_borrow
+
+error: could not compile `specimen-kernel` (test "orchestration_v3_graph") due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: this expression creates a reference which is immediately dereferenced by the compiler
+   --> native/specimen-kernel/tests/orchestration_v3.rs:410:21
+    |
+410 |     b.cancel(&p, 1, &h1, CancelReason::Requested).unwrap();
+    |                     ^^^ help: change this to: `h1`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_borrow
+    = note: `-D clippy::needless-borrow` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::needless_borrow)]`
+
+error: this expression creates a reference which is immediately dereferenced by the compiler
+   --> native/specimen-kernel/tests/orchestration_v3.rs:411:38
+    |
+411 |     assert_eq!(b.retire_cycle(&p, 1, &h1).unwrap_err(), Error::Revoked);
+    |                                      ^^^ help: change this to: `h1`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_borrow
+
+error: this expression creates a reference which is immediately dereferenced by the compiler
+   --> native/specimen-kernel/tests/orchestration_v3.rs:413:27
+    |
+413 |     b.retire_cycle(&p, 1, &h1).unwrap();
+    |                           ^^^ help: change this to: `h1`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_borrow
+
+error: this expression creates a reference which is immediately dereferenced by the compiler
+   --> native/specimen-kernel/tests/orchestration_v3.rs:416:21
+    |
+416 |     b.cancel(&p, 1, &h2, CancelReason::Requested).unwrap();
+    |                     ^^^ help: change this to: `h2`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_borrow
+
+error: this expression creates a reference which is immediately dereferenced by the compiler
+   --> native/specimen-kernel/tests/orchestration_v3.rs:417:27
+    |
+417 |     b.retire_cycle(&p, 1, &h2).unwrap();
+    |                           ^^^ help: change this to: `h2`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_borrow
+
+error: could not compile `specimen-kernel` (test "orchestration_v3") due to 5 previous errors

@@ -1,0 +1,4 @@
+llvm-objcopy, compatible with GNU objcopy
+LLVM (http://llvm.org/):
+  LLVM version 23.1.1-rust-1.99.1-stable
+  Optimized build.

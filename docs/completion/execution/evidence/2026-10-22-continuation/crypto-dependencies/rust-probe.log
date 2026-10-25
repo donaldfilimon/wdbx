@@ -1,0 +1,3 @@
+library=target/debug/deps/libed25519_dalek-f9a32590d171c0e3.rlib
+identity_key_is_weak=true
+identity_signature_strict_accepted=false

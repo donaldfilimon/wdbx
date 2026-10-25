@@ -1,0 +1,19 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+error[E0609]: no field `random` on type `ScoreTrace`
+   --> native/specimen-kernel/tests/scoring_v3_policy.rs:230:22
+    |
+230 |     assert_eq!(score.random.seed, 77);
+    |                      ^^^^^^ unknown field
+    |
+    = note: available fields are: `scan`, `baseline`, `delta`, `effective`, `baseline_qualified` ... and 4 others
+
+error[E0609]: no field `random` on type `ScoreTrace`
+   --> native/specimen-kernel/tests/scoring_v3_policy.rs:231:22
+    |
+231 |     assert_eq!(score.random.stream, "endpoint-identity");
+    |                      ^^^^^^ unknown field
+    |
+    = note: available fields are: `scan`, `baseline`, `delta`, `effective`, `baseline_qualified` ... and 4 others
+
+For more information about this error, try `rustc --explain E0609`.
+error: could not compile `specimen-kernel` (test "scoring_v3_policy") due to 2 previous errors

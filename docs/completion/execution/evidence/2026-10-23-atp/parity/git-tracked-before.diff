@@ -1,0 +1,399 @@
+diff --git a/crates/abi-wdbx/Cargo.toml b/crates/abi-wdbx/Cargo.toml
+index 3884818..cc75e63 100644
+--- a/crates/abi-wdbx/Cargo.toml
++++ b/crates/abi-wdbx/Cargo.toml
+@@ -10,6 +10,7 @@ description = "WDBX vector store for the ABI framework: on-disk segment format,
+ [features]
+ default = []
+ experimental-dghv-bootstrap = []
++p1-crypto-witness = []
+ full-fhe = ["dep:tfhe"]
+ 
+ [dependencies]
+diff --git a/crates/abi-wdbx/src/v3/complete_episode/facade.rs b/crates/abi-wdbx/src/v3/complete_episode/facade.rs
+index fc0982e..46aafbd 100644
+--- a/crates/abi-wdbx/src/v3/complete_episode/facade.rs
++++ b/crates/abi-wdbx/src/v3/complete_episode/facade.rs
+@@ -132,6 +132,25 @@ impl PrototypeLedger {
+         })
+     }
+ 
++    /// Open with required signatures from the supplied historical trust keys.
++    ///
++    /// Every record must have a valid signature from one of these keys, and
++    /// the new writer's key must be included. Missing, invalid, and unresolved
++    /// signatures are corruption, checked before crash-tail repair. The host
++    /// must supply this policy on every open; it is not persisted. These keys
++    /// establish historical mathematics only, not current admission authority.
++    /// Compatibility `open` and `open_with_signer` remain permissive.
++    /// This provisional API has no ABI ratification or stability promise.
++    pub fn open_authenticated(
++        directory: impl AsRef<Path>,
++        signer: EpisodeSigner,
++        trusted_keys: &[VerifyingKey],
++    ) -> Result<Self, CompleteEpisodeStoreError> {
++        Ok(Self {
++            store: CompleteEpisodeStore::open_authenticated(directory, signer, trusted_keys)?,
++        })
++    }
++
+     /// Validate, hash, durably append, and return a content-free receipt.
+     pub fn append(
+         &mut self,
+diff --git a/crates/abi-wdbx/src/v3/complete_episode/ledger.rs b/crates/abi-wdbx/src/v3/complete_episode/ledger.rs
+index deadc07..2bba669 100644
+--- a/crates/abi-wdbx/src/v3/complete_episode/ledger.rs
++++ b/crates/abi-wdbx/src/v3/complete_episode/ledger.rs
+@@ -100,6 +100,13 @@
+ //! both stay distinct from this ledger's key, so that a signature made in one
+ //! domain can never be presented in another.
+ //!
++//! [`CompleteEpisodeStore::open_authenticated`] instead requires a valid
++//! signature from a supplied historical key for every record. The host must
++//! select that mode on every open; the policy is not persisted in the ledger.
++//! This detects signature removal and unresolved-key substitution in that mode,
++//! but does not prove current key authority, prevent whole-ledger rollback,
++//! or turn the compatibility opens into authenticated readers.
++//!
+ //! # Not implemented
+ //!
+ //! This is a private, provisional, crate-internal prototype. It has:
+@@ -139,6 +146,7 @@ use crate::v3::commitment::CanonicalDecodeLimits;
+ use crate::v3::episode::{
+     EpisodeSignature, EpisodeSigner, SignatureStatus, SignerKeyId, check_signature,
+ };
++use ed25519_dalek::VerifyingKey;
+ use serde::Serialize;
+ use sha2::{Digest, Sha256};
+ use std::collections::BTreeSet;
+@@ -259,7 +267,7 @@ impl CompleteEpisodeStore {
+     /// A store opened this way appends unsigned records. Existing signed
+     /// records remain readable; use [`Self::signature_status`] to check them.
+     pub(crate) fn open(directory: impl AsRef<Path>) -> Result<Self, CompleteEpisodeStoreError> {
+-        Self::open_inner(directory.as_ref(), None)
++        Self::open_inner(directory.as_ref(), None, None)
+     }
+ 
+     /// Open a ledger whose canonical writer signs every record it appends.
+@@ -272,12 +280,30 @@ impl CompleteEpisodeStore {
+         directory: impl AsRef<Path>,
+         signer: EpisodeSigner,
+     ) -> Result<Self, CompleteEpisodeStoreError> {
+-        Self::open_inner(directory.as_ref(), Some(signer))
++        Self::open_inner(directory.as_ref(), Some(signer), None)
++    }
++
++    /// Require every historical signature to verify against the supplied keys.
++    ///
++    /// The host supplies this policy on every open. Keys are historical
++    /// verification keys, not proof of current authority or key custody.
++    /// The current signer must be included. This refuses unsigned history
++    /// and unresolved keys before crash-tail repair and changes no record bytes.
++    pub(crate) fn open_authenticated(
++        directory: impl AsRef<Path>,
++        signer: EpisodeSigner,
++        trusted_keys: &[VerifyingKey],
++    ) -> Result<Self, CompleteEpisodeStoreError> {
++        if !trusted_keys.contains(&signer.verifying_key()) {
++            return Err(CompleteEpisodeStoreError::Corrupt);
++        }
++        Self::open_inner(directory.as_ref(), Some(signer), Some(trusted_keys))
+     }
+ 
+     fn open_inner(
+         directory: &Path,
+         signer: Option<EpisodeSigner>,
++        trusted_keys: Option<&[VerifyingKey]>,
+     ) -> Result<Self, CompleteEpisodeStoreError> {
+         let directory = prepare_directory(directory)?;
+         let ledger_path = directory.join(LEDGER_FILE);
+@@ -289,7 +315,7 @@ impl CompleteEpisodeStore {
+         acquire_writer_lock(&writer_lock)?;
+         let raw = read_bounded_file(&ledger_path, MAX_LEDGER_BYTES)?;
+         let (records, valid_bytes) = decode_lines(&raw)?;
+-        let entries = replay(records, signer.as_ref())?;
++        let entries = replay(records, signer.as_ref(), trusted_keys)?;
+         // A failed replay must not repair the file. Only a fully verified
+         // prefix permits discarding an incomplete final line.
+         if valid_bytes != raw.len() {
+@@ -486,6 +512,7 @@ fn receipt(entry: &LedgerEntry) -> CompleteEpisodeReceipt {
+ fn replay(
+     records: Vec<format::LedgerRecord>,
+     signer: Option<&EpisodeSigner>,
++    trusted_keys: Option<&[VerifyingKey]>,
+ ) -> Result<Vec<LedgerEntry>, CompleteEpisodeStoreError> {
+     let mut entries: Vec<LedgerEntry> = Vec::with_capacity(records.len());
+     let mut digests: BTreeSet<[u8; 32]> = BTreeSet::new();
+@@ -532,7 +559,16 @@ fn replay(
+         let decoded =
+             DecodedCompleteEpisode::from_canonical_bytes(&bytes, CanonicalDecodeLimits::default())
+                 .map_err(|_| CompleteEpisodeStoreError::Corrupt)?;
+-        if let Some(signer) = signer {
++        if let Some(keys) = trusted_keys {
++            let status = check_signature(&digest, signature.as_ref(), |id| {
++                keys.iter()
++                    .find(|key| &SignerKeyId::for_key(key) == id)
++                    .copied()
++            });
++            if !matches!(status, SignatureStatus::Valid(_)) {
++                return Err(CompleteEpisodeStoreError::Corrupt);
++            }
++        } else if let Some(signer) = signer {
+             validate_own_signature(&digest, signature.as_ref(), signer)?;
+         }
+         if !digests.insert(digest) {
+diff --git a/crates/abi-wdbx/src/v3/complete_episode/mod.rs b/crates/abi-wdbx/src/v3/complete_episode/mod.rs
+index 4930694..c2906c6 100644
+--- a/crates/abi-wdbx/src/v3/complete_episode/mod.rs
++++ b/crates/abi-wdbx/src/v3/complete_episode/mod.rs
+@@ -1,5 +1,6 @@
+ //! Provisional private complete-episode prototype; subject to ABI ratification.
+-//! No compatibility promise, admission, persistence, or signature verification.
++//! No compatibility promise or governed admission. The ledger and signature
++//! primitives remain private experiments, without production qualification.
+ //! Checked sizing precedes canonical-tree allocation. Temporary encoder buffers
+ //! mean the output cap is not a claim about peak memory. Caller allocations are
+ //! outside this guarantee. Explicit byte access intentionally discloses input.
+@@ -14,6 +15,7 @@ macro_rules! redacted {
+     })*};
+ }
+ mod canonical;
++mod crypto;
+ mod decode;
+ pub mod facade;
+ mod ledger;
+diff --git a/crates/abi-wdbx/src/v3/episode/cose/trust.rs b/crates/abi-wdbx/src/v3/episode/cose/trust.rs
+index e74a2b6..8021c1e 100644
+--- a/crates/abi-wdbx/src/v3/episode/cose/trust.rs
++++ b/crates/abi-wdbx/src/v3/episode/cose/trust.rs
+@@ -47,6 +47,9 @@ pub enum TrustError {
+     /// The key identifier is already registered.
+     #[error("trust key is already registered")]
+     AlreadyRegistered,
++    /// The identifier does not derive from the supplied verifying key.
++    #[error("trust key identifier does not match verifying key")]
++    KeyIdMismatch,
+     /// The requested transition is not permitted from the current state.
+     #[error("trust transition is not permitted")]
+     InvalidTransition,
+@@ -136,6 +139,9 @@ impl TrustList {
+         if self.keys.contains_key(key_id) {
+             return Err(TrustError::AlreadyRegistered);
+         }
++        if SignerKeyId::for_key(&key) != *key_id {
++            return Err(TrustError::KeyIdMismatch);
++        }
+         let revision = self.next_revision()?;
+         self.keys.insert(
+             key_id.clone(),
+@@ -191,9 +197,15 @@ impl TrustList {
+         if current == KeyStatus::Revoked {
+             return Err(TrustError::Revoked);
+         }
++        if current != KeyStatus::Active {
++            return Err(TrustError::InvalidTransition);
++        }
+         if self.keys.contains_key(new_id) {
+             return Err(TrustError::AlreadyRegistered);
+         }
++        if SignerKeyId::for_key(&new_key) != *new_id {
++            return Err(TrustError::KeyIdMismatch);
++        }
+         let revision = self.next_revision()?;
+         if let Some(entry) = self.keys.get_mut(old) {
+             entry.status = KeyStatus::Retired;
+@@ -254,6 +266,63 @@ mod tests {
+         SigningKey::from_bytes(&[seed; 32]).verifying_key()
+     }
+ 
++    #[test]
++    fn mismatched_registration_does_not_change_the_list() {
++        let mut list = TrustList::new();
++        assert_eq!(
++            list.register(&key_id(1), verifying_key(2)),
++            Err(TrustError::KeyIdMismatch)
++        );
++        assert_eq!(list.revision(), 0);
++        assert!(list.is_empty());
++        assert_eq!(list.resolve(&key_id(1)), None);
++    }
++
++    #[test]
++    fn rotation_requires_an_active_old_key_without_changing_history() {
++        for status in [KeyStatus::Pending, KeyStatus::Retired, KeyStatus::Revoked] {
++            let mut list = TrustList::new();
++            let old = key_id(1);
++            let new = key_id(2);
++            list.register(&old, verifying_key(1)).unwrap();
++            match status {
++                KeyStatus::Retired => list.retire(&old).unwrap(),
++                KeyStatus::Revoked => list.revoke(&old).unwrap(),
++                _ => {}
++            }
++            let revision = list.revision();
++            let expected = if status == KeyStatus::Revoked {
++                TrustError::Revoked
++            } else {
++                TrustError::InvalidTransition
++            };
++            assert_eq!(list.rotate(&old, &new, verifying_key(2)), Err(expected));
++            assert_eq!(list.revision(), revision);
++            assert_eq!(list.status(&old), Some(status));
++            assert_eq!(list.resolve(&old), Some(verifying_key(1)));
++            assert_eq!(list.status(&new), None);
++        }
++    }
++
++    #[test]
++    fn mismatched_rotation_preserves_the_active_old_key() {
++        let mut list = TrustList::new();
++        let old = key_id(1);
++        list.register(&old, verifying_key(1)).unwrap();
++        list.activate(&old).unwrap();
++        let revision = list.revision();
++        assert_eq!(
++            list.rotate(&old, &key_id(2), verifying_key(3)),
++            Err(TrustError::KeyIdMismatch)
++        );
++        assert_eq!(list.revision(), revision);
++        assert_eq!(list.status(&old), Some(KeyStatus::Active));
++        assert_eq!(list.resolve(&old), Some(verifying_key(1)));
++        assert!(list.admits(&old));
++        assert_eq!(list.status(&key_id(2)), None);
++        assert_eq!(list.len(), 1);
++    }
++
+     #[test]
+     fn revocation_is_terminal_and_history_still_resolves() {
+         let mut list = TrustList::new();
+diff --git a/docs/contracts/README.md b/docs/contracts/README.md
+index b3fe3da..c138bf5 100644
+--- a/docs/contracts/README.md
++++ b/docs/contracts/README.md
+@@ -20,17 +20,19 @@ This document mirrors the [Status: honest table](https://github.com/donaldfilimo
+ | v3 contradiction, quarantine and resolution edges (C0/C1) | ✅ Implemented | `EpisodeEvent::MemoryEdge`; `tests/v3_memory_edge.rs` pins authority, scope, reopen and forgetting behavior. The constitutional query reads them as its outcome and lifecycle dimensions, and the dimension-separated ranking carries that lifecycle state as a labelled signal, but the edges do not yet affect the v2 retrieval scoring seam |
+ | Per-edge resolution provenance | ✅ Implemented | `EpisodeStore::memory_edge_resolution` in `src/v3/episode/store.rs` returns the canonical resolving digest for one exact edge and guild, including after reopen. ABI exposes it through additive gateway field 9 and CLI text/JSON. This does not implement candidate-level history or retrieval weighting; [review and qualification](../reviews/2026-10-03-memory-edge-resolution.md) |
+ | Cross-language encoding and episode digest witness (partial C2) | ✅ Implemented | `tools/abbey_cbor_episode_v1.py` and the two `tests/v3_cross_language_*.rs` suites reproduce canonical bytes and receipt digests; no Python signature verifier or admission-rule implementation |
+-| Private `COSE_Sign1` prototype and in-memory key trust (C0/C1) | 🟡 Partial (private prototype) | `src/v3/episode/cose/` encodes and verifies a bounded tag-18 container whose RFC 9052 `Sig_structure` Ed25519 signature covers the v3 digest, and keeps an `Integrity` axis (Valid/Invalid/Unsigned/Unverifiable) apart from the key axis. Its in-memory `TrustList` has Pending/Active/Retired/Revoked, a revision counter and terminal revocation; retired and revoked keys still resolve for historical verification but never authorize a new admission. `tests/v3_episode_cose.rs` and `tests/golden/cose-sign1-p1/` pin it, and `tools/wdbx_cose_sign1_p1.py` with `tests/v3_cross_language_cose.rs` add cross-language *encoding* agreement: the same container bytes must parse to the same protected header, key id, algorithm, payload and RFC 9052 `Sig_structure` bytes, and the same malformed containers must be refused with the same error names. The Python side does not verify signatures and cannot (no Python cryptography library; hand-rolled crypto is forbidden), so the witness covers bytes only. Unratified and crate-internal: no cross-language verifier, no production key custody, no admission or authorization semantics, no independent cryptographic review. No committed digest changes, and the detached `EpisodeSignature` ledger format is unchanged |
++| Private `COSE_Sign1` prototype and in-memory key trust (C0/C1) | 🟡 Partial (private prototype) | `src/v3/episode/cose/` encodes and verifies a bounded tag-18 container whose RFC 9052 `Sig_structure` Ed25519 signature covers the v3 digest, and keeps an `Integrity` axis (Valid/Invalid/Unsigned/Unverifiable) apart from the key axis. Its in-memory `TrustList` has Pending/Active/Retired/Revoked, a revision counter and terminal revocation; registration binds identifiers to the supplied public keys and rotation requires an Active predecessor; retired and revoked keys still resolve for historical verification but never authorize a new admission. `tests/v3_episode_cose.rs` and `tests/golden/cose-sign1-p1/` pin it, and `tools/wdbx_cose_sign1_p1.py` with `tests/v3_cross_language_cose.rs` add cross-language *encoding* agreement: the same container bytes must parse to the same protected header, key id, algorithm, payload and RFC 9052 `Sig_structure` bytes, and the same malformed containers must be refused with the same error names. That standard-library Python witness performs no cryptography and covers bytes only; the separate full-payload P1 experiment below uses an explicitly selected maintained cryptographic backend. Unratified and crate-internal: no cross-language signature verifier for this digest-payload profile, no production key custody, no admission or authorization semantics, no independent cryptographic review. No committed digest changes, and the detached `EpisodeSignature` ledger format is unchanged |
+ | Supersession lineage reads for memory candidates (C0/C1) | ✅ Implemented | `EpisodeStore::superseded_by` and `EpisodeStore::supersession_lineage` in `src/v3/episode/store/lineage.rs` project the committed `supersedes` edges as content-free digests and flags; both maps are rebuilt in `apply_record`, so live writes and replay-on-open agree. `tests/v3_supersession_lineage.rs` pins it. Holds and revocation (`src/v3/episode/store/holds/`), redaction and object-key destruction (`src/v3/episode/store/deletion.rs`), garbage collection (`src/v3/episode/store/gc.rs`) and retention expiry (`src/v3/episode/store/expiry.rs`) are implemented as separate slices. Still open: the consumer's own destruction of derived copies and object keys, and a candidate-selected (digest-bound) retention window |
+ | Structured admission decision (C0/C1) | ✅ Implemented | `src/v3/episode/admission.rs` defines `AdmissionClass` (the closed five-class retention vocabulary), `AdmissionReason` (exactly one reason per `EpisodeStoreError` variant, plus `Accepted`) and a content-free `AdmissionDecision`. `EpisodeStore::decide_write` in `src/v3/episode/store/admission_gate.rs` runs the same validation, commitment check and quota checks as `propose_write` and appends nothing; the three budget checks are now shared by the append path, the decision and `preview_commitment` through `EpisodeStore::check_quotas`, so a preview no longer succeeds for a write the append would refuse on budget. `EpisodeStoreError` and its labels are unchanged, so the gateway's status mapping is unaffected. `tests/v3_admission_decision.rs` pins it. Retention TTL enforcement (`src/v3/episode/store/expiry.rs`), holds and revocation (`src/v3/episode/store/holds/`), redaction and object-key destruction (`src/v3/episode/store/deletion.rs`) and garbage collection (`src/v3/episode/store/gc.rs`) are implemented as separate slices. Quota administration (`src/v3/episode/store/quota/`) is implemented too, and the checks read the effective budget it produces |
+ | Quota administration and per-class retention windows (C0/C1) | ✅ Implemented | `src/v3/episode/store/quota/` lets an authority adjust a guild's budgets at runtime: `EpisodeStore::decide_quota_adjustment` (non-mutating), `EpisodeStore::commit_quota_adjustment` (through the single writer), `EpisodeStore::clear_quota_adjustment` (lifts an adjustment), `EpisodeStore::quota_state` (effective budgets, usage and `over_budget`) and `EpisodeStore::quota_history` (every decision the sidecar holds for a guild). The effective budget is the host policy's budget for that guild, lowered to a recorded adjustment's budget only while the policy still states budgets at or below the ones in force when the adjustment was made, and never above the policy's budget. The host policy is the outer bound: no adjustment may set a budget above it, whoever makes it, so the host restores a larger budget by changing the policy or by clearing the override, and only an authority that may raise a budget may clear one — a writer can never freeze a guild's budget permanently. The adjustment is a governance decision, not an episode, so it lives in a content-free, checksummed sidecar (`episodes.v1.quotas.jsonl`) with a header line naming the number of decisions and a checksum over all of them, written by the same single writer; a truncated file, a trailing fragment and a bad checksum are all refused as corrupt, and it survives close and reopen. A guild owner, administrator or manager and an organization owner may adjust in either direction; a service may only lower a budget; a human subject may not adjust one; that vocabulary is actor-class based, and the class rule is only the first of two necessary conditions: the guild-scoped authority map below decides whether the principal may act for the target guild at all; and no adjustment may lower a budget below the usage already recorded. A host policy lowered below the recorded usage is surfaced through `over_budget` rather than refused at open. `GuildEpisodePolicy::retention_windows` adds optional per-class retention windows: an explicit per-class window wins over the single `retention_ttl_ms`, which stays the fallback, and `durable` candidates never expire. `tests/v3_quota_windows.rs` and `tests/v3_retention_windows.rs` pin both. Still open: a candidate-selected (digest-bound) retention window, a per-caller or per-class budget, and quota administration that is itself an episode |
+ | Guild-scoped authority map (C0/C1) | ✅ Implemented | `GuildEpisodePolicy::authorized_principals` is an optional, `#[serde(default)]` list of the principals that may act as authorities *for that guild*, and the store reads it in `src/v3/episode/store/authority.rs`. It is host policy and not episode material: the canonical commitment binds the policy *version*, never the policy itself, so naming a principal moves no committed digest and the frozen v3 record format is untouched. The rule has two halves and both are necessary: the guild's own map (only a principal on a non-empty list may place a hold, release a hold, revoke a candidate, adjust a budget, lift an adjustment, or order a destruction for that guild, whatever class it carries) and the store-wide scope (a principal some guild names is scoped to the guilds that name it, so naming the owner of one guild stops that owner acting for another). What the map closes, for the principals the host names, is that hole; a principal that no guild names is not closed by the map at all and still reaches every guild whose policy states no map of its own, on the class rule alone. The actor *class* stays a second, necessary condition: a service may never place a hold, revoke a candidate, raise a budget, or order a destruction, even when the map names it. An absent map leaves the guild to the class rule alone (a compatibility behaviour, not a security guarantee), a non-empty map constrains the guild to the principals it names, and an empty map is the same state as an absent map. `EpisodeStore::actor_may_act` is the store-side predicate, and every refusal answers the same closed, content-free `EpisodeStoreError::InvalidTransition`. The honest limit: the substrate cannot *verify* that a principal really holds a role — the host policy is the authority of record. `tests/v3_guild_authority.rs` pins it. The map does not constrain the canonical *write* path, and it does not reach the lifecycle `EpisodeEvent::Approval` (`src/v3/episode/store/validate.rs`), whose approver is class-checked (a valid actor, not a service, not the requester and not the proposer) but is *not* guild-scoped — no guild check is applied to it, so a principal labelled `GuildOwner` for guild A may approve an operation in guild B. That is a missing *guild* check, not a contradiction of the class rule: an approval is a **workflow** step, not a governance action over a guild's resources — it accepts one proposal and confers no authority over anything else — so the rule that a human subject is never an *authority*, a rule about governance authorities, does not reach it, and a `HumanSubject` is an admissible approver there by design; what the store does not do is verify that the approver holds any standing in the guild of the operation it approves. The map does reach the deletion lifecycle's destruction requests (`src/v3/episode/store/deletion.rs`): `RedactionRequest` and `ObjectKeyDestructionRequest` carry an `actor`, every destruction order is refused unless the principal is one the guild authorizes *and* the class is one that may destroy (a guild owner, administrator, manager, or an organization owner — never a service, never a human subject), and the sidecar lines record the principal, so a destruction order is attributable. The map is not committed, signed, or replayed: it is host policy, and changing it changes what the store accepts from the next open onwards — the store binds the policy at open and never reloads it. |
+ | Constitutional query read model — eight evidence dimensions, no combined score (C0/C1) | ✅ Implemented | `EpisodeStore::query` in `src/v3/episode/store/query/` returns the eight evidence dimensions (E01-E08) as separate fields, each with its own content-free reason, alongside a closed `Disposition`, the lineage, an `Explanation` and a sanitized receipt. There is no combined score and no field that could stand in for one. The query is guild-scoped, member-scope partitioned and bounded by `MAX_RECEIPTS`, and it omits nothing: a record whose cryptographic evidence fails is listed as `rejected` rather than dropped, and a forgotten record is listed as `rejected` when the caller asks for erased memories (by default it is excluded, because the tombstone means the content is gone). Dimensions the ledger does not hold read `Unknown`, not a fabricated zero. The lifecycle dimension also reports the hold state and the revocation state, and `Disposition` has `Held` and `Revoked` members for them. `tests/v3_constitutional_query.rs` and `tests/v3_constitutional_query_holds.rs` pin it. The query is not wired into the v2 retrieval scoring seam (`src/temporal.rs`'s `ScoreComponents::combined()` still collapses four factors multiplicatively); no production key trust, no cross-language verification, no ABI-facing wire contract |
+-| Cryptographic evidence as a separately inspectable dimension (C0/C1) | ✅ Implemented | The constitutional query reports the detached signature state (Valid/Invalid/Unverifiable/Unsigned) and the key status (Resolved/Unresolved/Absent) as its own dimension: an invalid signature makes the record `rejected`, and an unverifiable one leaves the disposition `unknown` rather than treating missing evidence as a negative finding. The shipped signature is a detached per-record Ed25519 signature over the v3 digest; the private COSE prototype above is unratified and crate-internal. The dimension is carried into the dimension-separated ranking as a labelled signal, but it is not incorporated into the v2 retrieval scoring seam, and there is no cross-language verifier or production key custody |
++| Cryptographic evidence as a separately inspectable dimension (C0/C1) | ✅ Implemented | The constitutional query reports the detached signature state (Valid/Invalid/Unverifiable/Unsigned) and the key status (Resolved/Unresolved/Absent) as its own dimension: an invalid signature makes the record `rejected`, and an unverifiable one leaves the disposition `unknown` rather than treating missing evidence as a negative finding. The shipped signature is a detached per-record Ed25519 signature over the v3 digest; the private COSE prototype above is unratified and crate-internal. The dimension is carried into the dimension-separated ranking as a labelled signal, but it is not incorporated into the v2 retrieval scoring seam, and there is no qualified cross-language verifier for this detached ledger profile or production key custody |
+ | Frozen local retrieval baseline harness (C1) | ✅ Implemented | `src/evaluation/` compares a plain-vector arm against the constitutional query over one frozen synthetic corpus with frozen embeddings, frozen storage and a fixed candidate count, and ablates each of the eight dimensions; `tests/v3_retrieval_baseline.rs` and the fixtures in `tests/fixtures/retrieval-baseline/` pin it. On that corpus the repeated-failure and stale-reuse rates both fell from 0.666667 to 0.000000, and the harness can report "no benefit" (suppressing every dimension reproduces the baseline exactly, which is asserted). The run also carries a negative result: the constitutional arm returned an unattributed (unsigned) record in 7 of 12 families against 1 of 12 for the plain arm. A deterministic local comparison over synthetic data — not a research result, not a production claim, and not evidence that evidence-weighted retrieval beats a vector database in production. The preregistered protocol is unmet and requirement `P04.03` stays `proposed` |
+ | Vector binding index and vector adapter (C0/C1) | ✅ Implemented | `VectorBindingIndex` in `src/v3/ranking/vector.rs` (with `vector/format.rs` for the file format and `vector/lock.rs` for the writer exclusion) binds a vector index's identifiers to the episode digests the constitutional query answers, in a derived sidecar beside the ledger (`episodes.v1.vectors.jsonl`) whose record shape matches the episode store's own sidecars and whose writer exclusion now matches them too: an owner file (`episodes.v1.vectors.lock`) and a lock held for the index's lifetime, so a second writer is refused instead of racing, and every write re-reads and merges the file on disk, so a binding another writer added is never lost. The file carries a header (format version, record count, checksum over the record set), so a truncation is detected: the index is replaced whole, so a trailing fragment is damage and not a crash tail, and a truncation at a line boundary is caught by the header; either is refused as corrupt, never a shorter index. The index is scope-partitioned, and a binding is refused a digest the scope's constitutional query did not admit (`AdmittedScope`, built only from the query's own answer, whose scope the answer now carries); that refusal is a check against the caller's admission set, so the substrate trusts the caller to hand over the query's own answer and does not independently prove admission. `src/v3/ranking/adapter.rs` adds `HnswVectorSource` (approximate, explicit pinned seed), `ExactVectorSource` (the deterministic correctness oracle) and `rank_with_vector_source`; the adapter declares what it drops — an HNSW search may miss a nearest neighbour, the binding index is separate from the ledger, a vector's payload is never held, an unbound vector's episode is never named, and an asset digest is never held at all. `tests/v3_vector_adapter.rs` pins it. Still open: latency or memory measurement, a cross-language witness for the binding sidecar, an append-only binding log (every write replaces the whole file), a writer-exclusion fence against an actor who rewrites the file wholesale (the lock is advisory, as everywhere else in the repository), a vector arm over several scopes in one index, cross-language verification, and an ABI-facing wire contract |
+ | Offline outbox (C0/C1) | ✅ Implemented | `src/v3/offline/` adds a durable, single-writer queue of PROPOSALS made while a scope was offline. It is not a canonical episode writer: it holds no canonical episode digest and refuses a write that carries a predicted commitment. Reauthorization is a separate, explicit step — `drain` takes the current policy and the canonical store and runs the store's own non-mutating decision rather than re-implementing the write gate. No operation is dropped by the outbox's own logic: a refused or conflicted operation keeps its proposal, a terminal status and a reason, and only an explicitly authorized caller (guild manager, administrator, owner, or the organization owner) may requeue, discard, or remove it; the removal is status-independent (`Resolution::Remove`), so an acknowledged operation is not immortal and a long-lived client can make room, and a full outbox refuses new work with `OutboxError::Capacity`, which is distinct from an invalid input. The merge is deterministic over a small closed set of mergeable configuration objects and never invents a winner. An asset operation carries a digest, a length and a chunk size but never the bytes; the asset digest is numbered by chunk index, so the order a caller hands its chunks over in never changes it and a correctly transferred asset is never reported as corrupted. There is no fixed offline expiry. The file is `outbox.v1.jsonl` beside `outbox.v1.lock`: a header line naming the operation count and a checksum over the record set, then one checksummed line per operation, with every write replacing the file atomically; a truncated file, a trailing fragment and a bad checksum are all refused as corrupt, so the outbox never opens with fewer operations than were queued. `tests/v3_offline_outbox.rs` pins it. Still open: a transport or a server (the caller supplies an `OperationSink`), a delivery acknowledgement from a real server, a general CRDT, model-weight distribution, a resnapshot format, and any expiry or reaping |
+-| Complete-episode ledger — private, provisional prototype (C0/C1) | 🟡 Partial (private prototype) | `src/v3/complete_episode/ledger.rs` adds a single-writer, append-only, durable ledger of complete episodes under `COMPLETE_EPISODE_DOMAIN` (`wdbx-complete-episode-v1`), in its own file family (`complete-episodes.v1.jsonl` and `complete-episodes.v1.lock`); the writer lock is held for the store's lifetime and persistent contention is `WriterBusy`. One record is one complete episode: the canonical complete-episode bytes, the SHA-256 digest over exactly those bytes, and the detached Ed25519 signature beside the record, so signing never moves a digest. The chain runs across the ledger: record N names record N-1's digest, and a gap, a fork or a duplicate digest is `Corrupt`. Replay re-derives every digest, re-decodes and re-validates every record through the complete episode's own validation, verifies every record that claims this store's own key, and refuses anything else as `Corrupt`; only an incomplete final line is discarded, and only after the verified prefix replays. It is a DIFFERENT store from the v3 episode ledger — different domain, different digests, different files — and it never writes a v3 candidate. The prototype's own types are crate-private, and the four handles the hidden facade re-exports are `pub` but `#[doc(hidden)]`, unratified, and not to be depended on: `#[doc(hidden)]` is documentation, not access control. The honest limit of the detached signature: stripping a signature from a signed record is not detected — an unsigned record in a signed ledger replays cleanly and is reported as unsigned, which downgrades the evidence of who wrote it rather than forging its content. `tests/v3_complete_episode_ledger.rs` pins it. Still open: ABI ratification, a wire contract, quorum or fencing (the v3 quorum shard does not cover it), federation, cross-language verification of the ledger format, a deletion or retention lifecycle, a reader projection, and any consumer |
++| Complete-episode ledger — private, provisional prototype (C0/C1) | 🟡 Partial (private prototype) | `src/v3/complete_episode/ledger.rs` adds a single-writer, append-only, durable ledger of complete episodes under `COMPLETE_EPISODE_DOMAIN` (`wdbx-complete-episode-v1`), in its own file family (`complete-episodes.v1.jsonl` and `complete-episodes.v1.lock`); the writer lock is held for the store's lifetime and persistent contention is `WriterBusy`. One record is one complete episode: the canonical complete-episode bytes, the SHA-256 digest over exactly those bytes, and the detached Ed25519 signature beside the record, so signing never moves a digest. The chain runs across the ledger: record N names record N-1's digest, and a gap, a fork or a duplicate digest is `Corrupt`. Replay re-derives every digest, re-decodes and re-validates every record through the complete episode's own validation, verifies every record that claims this store's own key, and refuses anything else as `Corrupt`; only an incomplete final line is discarded, and only after the verified prefix replays. It is a DIFFERENT store from the v3 episode ledger — different domain, different digests, different files — and it never writes a v3 candidate. The prototype's own types are crate-private, and the four handles the hidden facade re-exports are `pub` but `#[doc(hidden)]`, unratified, and not to be depended on: `#[doc(hidden)]` is documentation, not access control. The honest limit of the detached signature: the compatibility opens do not detect signature stripping. The explicit `PrototypeLedger::open_authenticated` mode instead requires every historical record to verify against caller-supplied keys, including before crash-tail repair; it requires the current writer key in that set and changes no stored bytes. The host must select this mode on every open; it does not persist policy, establish current admission authority or prevent rollback. `tests/v3_complete_episode_authenticated.rs` pins stripping, tamper, unknown-key, historical-key and unchanged-byte behavior. `tests/v3_complete_episode_ledger.rs` pins it. Still open: ABI ratification, a wire contract, quorum or fencing (the v3 quorum shard does not cover it), federation, cross-language verification of the ledger format, a deletion or retention lifecycle, a reader projection, and any consumer |
++
++| Complete-episode full-payload COSE P1, synthetic trust and admission (private C0/C1 slices) | 🟡 Partial (private experiments) | `src/v3/complete_episode/crypto/` retains original canonical bytes and implements strict pure-message P1 signing/verification, immutable bound reports, and bounded in-memory scoped trust commands/snapshots. The opt-in `p1-crypto-witness` feature and `tools/check_p1_crypto.sh` run an independent Python parser/signature backend. The reviewed isolated PyNaCl/libsodium backend passes a bounded paired matrix including actual native Ed25519ph rejection; the PyCA backend's weak-key acceptance disagreement remains an explicitly failing result. Trust commands have exact replay identity, current synthetic scoped authorization, atomic registered-key rotation and terminal revocation; command/snapshot vectors have a second-language encoding builder. The reviewed bounded admission simulator checks current synthetic authority and revision bindings, exact authorized replay, quotas and retained deletion/unavailable-original identity; it appends no real ledger. These are unratified local experiments, not credential authentication, durable trust, complete governed admission, a public interface or production crypto qualification. The default root gate does not run the cryptographic witness. |
+ 
+ Source paths beginning `src/` or `tests/` are relative to
+ `crates/abi-wdbx/`. These are source/local-test capabilities, not evidence of a
+@@ -42,7 +44,7 @@ deployed or hosted service.
+ |------------|--------|-----------|
+ | Complete constitutional v3 `EpisodeBlock` schema | ❌ Not implemented | Gap analysis §6.2 — `V2AuditBlock` carries 8 fields vs ~28 specified |
+ | General canonical-CBOR reader | ❌ Not implemented | The v3 encoder is deliberately a restricted commitment encoder, not a general CBOR decoder. The private crate-internal typed complete-episode decoder (`src/v3/complete_episode/`), with an independent Python witness, is provisional and crate-private — it is not a general reader |
+-| Ratified COSE profile, cross-language signature verification and production key custody | ❌ Not implemented | The shipped v3 signature remains a detached per-record Ed25519 signature over the digest. The private prototype in the table above is unratified and crate-internal: no wire profile, no second-language verifier, no key ceremony, no persisted trust state |
++| Ratified COSE profile, qualified signature interoperability and production key custody | ❌ Not implemented | The shipped v3 signature remains a detached per-record Ed25519 signature over the digest. The private prototype in the table above is unratified and crate-internal: no wire profile, no second-language verifier for that legacy digest profile, no key ceremony, no persisted trust state. The separate private full-payload P1 experiment above has bounded Rust/Python signature evidence; it does not ratify a profile or qualify custody |
+ | Complete constitutional metadata across storage generations | ❌ Not implemented | v3 binds `policy_version` and detached signatures carry a derived `signer_key_id`; v2 remains unchanged, and the complete constitutional schema is still absent |
+ | Evidence-weighted retrieval ranking (8 dimensions) | ❌ Not implemented | Gap analysis §6.5 — the eight dimensions exist as a separately inspectable read model (see the Current table) and are never collapsed, but the v2 retrieval scoring seam still combines four factors multiplicatively into one score, and the constitutional query is not wired into that seam. A dimension-separated ranking module (`src/v3/ranking/`) ranks the query's answer without collapsing the dimensions and merges a plain vector arm's own order beside them, and the vector adapter binds a vector index's slots to episode digests through the binding sidecar, but it publishes no trust number and none of it is wired into the v2 retrieval scoring seam. The frozen baseline harness compares the two arms locally over synthetic data only |
+ | Full block-level retention, redaction and deletion lifecycle | ❌ Not implemented | v3 memory candidates have supersession/forgetting tombstones (`tests/v3_memory_candidate.rs`), a readable supersession lineage (`tests/v3_supersession_lineage.rs`), TTL-bound retention with a content-free deadline index (`src/v3/episode/store/expiry.rs`), redaction and object-key destruction *requests* (`src/v3/episode/store/deletion.rs`) and a content-free garbage-collection rewrite (`src/v3/episode/store/gc.rs`); the store holds no derived copy and destroys none, so these do not establish the full constitutional lifecycle or physical erasure |
+diff --git a/specimen-studio/native/specimen-kernel/src/lib.rs b/specimen-studio/native/specimen-kernel/src/lib.rs
+index b72504a..4eac864 100644
+--- a/specimen-studio/native/specimen-kernel/src/lib.rs
++++ b/specimen-studio/native/specimen-kernel/src/lib.rs
+@@ -3,14 +3,21 @@ pub mod command;
+ pub mod engine;
+ pub mod graph;
+ pub mod host;
++pub mod identity;
+ pub mod import_adapt;
+ pub mod language;
++pub mod language_v3;
++mod logical_charge_v1;
+ pub mod mutate;
+ pub mod network_edit;
+ pub mod neural;
+ pub mod notes;
++pub mod orchestration_v3;
+ pub mod place;
++pub mod scanner_v3;
++pub mod scoring_v3;
+ pub mod search;
++pub mod text_v3;
+ use serde::{Deserialize, Serialize};
+ #[derive(Debug, Clone, Serialize, Deserialize, thiserror::Error)]
+ #[error("{message}")]
+diff --git a/specimen-studio/native/specimen-wasm/Cargo.toml b/specimen-studio/native/specimen-wasm/Cargo.toml
+index f6e3330..3215230 100644
+--- a/specimen-studio/native/specimen-wasm/Cargo.toml
++++ b/specimen-studio/native/specimen-wasm/Cargo.toml
+@@ -4,6 +4,19 @@ version = "0.2.0"
+ edition = "2024"
+ [lib]
+ crate-type = ["cdylib", "rlib"]
++[features]
++identity-probe = []
++language-probe = []
++scoring-probe = []
++[[example]]
++name = "identity_probe"
++required-features = ["identity-probe"]
++[[example]]
++name = "language_probe"
++required-features = ["language-probe"]
++[[example]]
++name = "scoring_probe"
++required-features = ["scoring-probe"]
+ [dependencies]
+ specimen-kernel = { path = "../specimen-kernel" }
+ serde_json.workspace = true
+diff --git a/specimen-studio/native/specimen-wasm/src/lib.rs b/specimen-studio/native/specimen-wasm/src/lib.rs
+index fb0e763..05eee54 100644
+--- a/specimen-studio/native/specimen-wasm/src/lib.rs
++++ b/specimen-studio/native/specimen-wasm/src/lib.rs
+@@ -1,6 +1,12 @@
+ //! The specimen kernel for the browser: a JSON command ABI (`call`) plus the
+ //! P0 fixed-host probe that the conformance goldens pin.
+ pub mod dispatch;
++#[cfg(feature = "identity-probe")]
++pub mod identity_probe;
++#[cfg(feature = "language-probe")]
++pub mod language_probe;
++#[cfg(feature = "scoring-probe")]
++pub mod scoring_probe;
+ use serde_json::{Value, json};
+ use specimen_kernel::{engine, host::FixedHost, neural::Network};
+ use std::sync::atomic::AtomicBool;
+@@ -122,6 +128,27 @@ mod exports {
+     pub unsafe extern "C" fn probe_raw(ptr: *mut u8, len: usize) -> u64 {
+         hand_out(crate::probe(&take(ptr, len)).into_bytes())
+     }
++
++    /// Bounded synthetic language experiment; absent from default builds.
++    #[cfg(feature = "language-probe")]
++    #[unsafe(no_mangle)]
++    pub extern "C" fn language_probe_raw() -> u64 {
++        hand_out(crate::language_probe::run().into_bytes())
++    }
++
++    /// Finite scoring/broker mechanism witness; absent from default builds.
++    #[cfg(feature = "scoring-probe")]
++    #[unsafe(no_mangle)]
++    pub extern "C" fn scoring_probe_raw() -> u64 {
++        hand_out(crate::scoring_probe::run().into_bytes())
++    }
++
++    /// Bounded synthetic identity experiment; absent from default builds.
++    #[cfg(feature = "identity-probe")]
++    #[unsafe(no_mangle)]
++    pub extern "C" fn identity_probe_raw() -> u64 {
++        hand_out(crate::identity_probe::run().into_bytes())
++    }
+ }
+ 
+ #[cfg(test)]

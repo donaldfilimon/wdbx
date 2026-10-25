@@ -1,0 +1,116 @@
+{
+  "scope": "I1/I2 review fix only; original manifest/raw logs preserved",
+  "original_manifest_sha256": "20a885758668a4ec01bba6aef30546c4cc6b89ec0921695447ba0896206c2eb8",
+  "original_raw_log_sha256": {
+    "01-api-red.log": "0b75190ad978cdeaaff30d17331a9351b8dccc8b772e2edd43edd4e91b51d894",
+    "02-first-green.log": "7f42bf5ff8261d65d3f60d841524a1f07807d9d585a60081468e57ac38b1fe0b",
+    "03-order-boundaries-red.log": "41df26b5659c2bcca3ed33db572e61752fbcb024526286b7f07087cf77bcdb49",
+    "04-order-boundaries-green.log": "2791bc2d1e8375fdc8646cc531c187e9ea8d4547c5dfb09a9236905166c1c02c",
+    "05-attachments-tests.log": "0e642e14ffe10fcc4e6ae588eb5fd7fcf6f5086b80c7516a878920c0f6332752",
+    "06-unicode-fixture.log": "f11e31004f4b08f58000a00c57840a38913c841faf0c6dbafa462f8768ea4f2b",
+    "07-unicode-fixture-green.log": "45aa0d7b866e2e0fffb953135e887a0712211681b755fde019fdc13d04bca2ef",
+    "08-adverse-expansion.log": "846bab372f67063db7b28992208b4f8b1f74dadc1cf3e3be53e49e47b92fee9a",
+    "09-adverse-green.log": "486e6ba16f5ce174e941e1668bd3d08e60bbbc03c16408c2b371a365a0186838",
+    "10-attachments-depth-group.log": "16f29f45ef901eb68b7174fa66fbffc474d6c9c15a5dc944723e2f0ced1b0891",
+    "11-budget-review.log": "1942e8ddb6ec9345f85423c464554b4d8bb09d1c92cf3b58c784464a7f2ebf90",
+    "12-clippy.log": "f8369ebb4ecb0899b6c0fdbbc8a1fc12773600e94ac34890bc6523233f7e74d9",
+    "13-clippy-green.log": "7c81d9266bdcf32b865ae50d41ab38721ffc062dcd71a4509fee4bf638d00e33",
+    "14-focused-final.log": "39b598661e3c1086fadc02f277d550f239de86f5f571ececbd53f03378727c49",
+    "15-full-kernel-final.log": "0eef2c537452d0358e9b1e0208757496ffb238967fd2ce692380d15bf11cd844",
+    "16-owned-fmt-final.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "17-focused-freeze.log": "dd0d33a4eb4030a9d5b3aad5760add0a7afccde7100c44c27cefbccd5bd82afc",
+    "18-full-kernel-freeze.log": "63e652580d362a6a94a89d22fa04b43c2539a0b1566ca558976070c99d07fd33",
+    "19-clippy-freeze.log": "6e2cd497b635d736c605f71b2a9900b7e3380d61d219e4a20e8953a4e9425178",
+    "20-owned-fmt-freeze.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "21-diff-check-freeze.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "22-untracked-whitespace.log": "4743ad7160db231b8d1d066aa18b8af65dc18e5652a4e4557d1a8a272131cc9c",
+    "23-retirement-api-red.log": "2c8c247caafba958ab57b0b55ea7eafdbc805551be10fe78ceb673c500c36a89",
+    "24-retirement-green.log": "16384645ac901de63c3874b28acf83e0ff420871c59075aec7d788c22adc86ce",
+    "25-private-cycle-handles.log": "1b3f06bb483f1a55d634ab99a976c2441b4c5c150ef8c9faf2b828e8c3b79bc2",
+    "26-private-cycle-handles-green.log": "adb40aff81057c19585787548f6c82eac75a4755a65a626107d5f3778acd62d1",
+    "27-clippy-handles.log": "f741192b1c4c21563449c41edb903ede9adeabcdaeb66d15e383f49aadef05f1",
+    "28-focused-final.log": "75c2a621428385e56200aa4b7babcdeed2f84a56842101e0daf5697fa21457a8",
+    "29-full-kernel-final.log": "d0b74d1b6e1f6affa91780f93084330d4c0ed380a5699807893acd13ed4d487e",
+    "30-focused-freeze.log": "2a94d9aa9295815b91d92bab7d236f6c39520770e8a0b8acb90303c80fe423a7",
+    "31-clippy-freeze.log": "861bad1dcc286a7df3872d764f8a3550244cafd51a2ba26ae99cef52af346a30",
+    "32-full-kernel-freeze.log": "570800c038bb64762a6471937d13e6a8010ef7547b8af29ac6b16b5d3b9784a5",
+    "33-owned-fmt-freeze.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "34-diff-check-freeze.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "35-untracked-whitespace.log": "4743ad7160db231b8d1d066aa18b8af65dc18e5652a4e4557d1a8a272131cc9c",
+    "36-ack-owner-red.log": "68ff0dc6bb0638934cba6959618e5df31549ef158e0616637b47a39399a92338",
+    "37-focused-freeze.log": "11de92293e4a702975b9fafa3d5e17bf41657ba4234e3ca2da6bc1846fb69234",
+    "38-full-kernel-freeze.log": "adc52fce251efcee517d80d4a6d087e82dc5b652d2363bc78fa0b34df193f250",
+    "39-clippy-freeze.log": "775e80f00b8bf061c55f0bf1db23a4ee6239a8c00d7253ea7c30395d6377d4d7",
+    "40-owned-fmt-freeze.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "41-diff-check-freeze.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "42-untracked-whitespace.log": "4743ad7160db231b8d1d066aa18b8af65dc18e5652a4e4557d1a8a272131cc9c"
+  },
+  "files": [
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+      "sha256": "eeaf037caab92f8ca6afcf5bc4e8acdd95d8c0c21b14171552a8fe99624dc3c3",
+      "lines": 420,
+      "changed_from_original": true
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+      "sha256": "8618d61f8ba27559d4f627aad199dbeb2a2401a0e3b2f9d56fc8630b1b37737c",
+      "lines": 673,
+      "changed_from_original": true
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/src/orchestration_v3/budget.rs",
+      "sha256": "05358e060925aa811e183cb943bc31632d877faf01f8f3ecae7ce9337e542076",
+      "lines": 241,
+      "changed_from_original": true
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs",
+      "sha256": "98c0e214f30c626282b45af3c66e7c1a0ba0633b453e79e0fad4904967585506",
+      "lines": 189,
+      "changed_from_original": false
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/src/orchestration_v3/mod.rs",
+      "sha256": "32dbd43eb5f4ccaa610f984388745e03e6b310b9250ba66c7baa3e7f0f04f86a",
+      "lines": 118,
+      "changed_from_original": false
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/tests/orchestration_v3.rs",
+      "sha256": "21dbabfd77a92bf20697b47b54989e81a6e351390cdd707aad1ffea0cab4902f",
+      "lines": 486,
+      "changed_from_original": false
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs",
+      "sha256": "e6a6c317b0e7c353abdc05ea3909dfb0f3392c0e1f4b4543ed827cfd0e14f8e8",
+      "lines": 673,
+      "changed_from_original": false
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/tests/orchestration_v3_fix1.rs",
+      "sha256": "6a8023405a31a961ab752523047a974b64be8ba54e1524907751c29ff17b8b03",
+      "lines": 450,
+      "changed_from_original": true
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/tests/orchestration_v3_graph.rs",
+      "sha256": "f64b65a5e7013f0751b7186df1a4de7e75b71992890b76306eeeb1103d5fc810",
+      "lines": 158,
+      "changed_from_original": false
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/tests/orchestration_v3/support.rs",
+      "sha256": "50197f9bee25ad3984c7e6db5959d32a3bba89f7d50b43d8ecd7d390cce57547",
+      "lines": 209,
+      "changed_from_original": false
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/src/lib.rs",
+      "sha256": "361b35e56069f153008797b4975f4a5328a8c6fba0644fd6c9206d097f7d491c",
+      "lines": 47,
+      "changed_from_original": false
+    }
+  ]
+}

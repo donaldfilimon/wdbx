@@ -1,0 +1,11 @@
+33dacbb0fe54140441dd1c1d3aa25ee33fcbc7c721612d4f120e67e346519a6a  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/native.json
+148aa710c12fe18000116d50299a805ab99078f532de5b5ed59cf859e8c6e98e  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/wasm.json
+6d3b506580e52316ea849e62965b11b959b2b36ebbad8000fc00d5ee0db879ef  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/native.json.semantic.json
+6d3b506580e52316ea849e62965b11b959b2b36ebbad8000fc00d5ee0db879ef  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/wasm.json.semantic.json
+747b1b6c2d7ccb8591b845d55d37668ad9535a6676004ee8c946cee665c9f7fb  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/default.wasm
+4565aa5af173113741eb6ee1d546d294cb61a679f66121c5ff522af52c6f4df8  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/scoring.wasm
+c5b0da679c8c585c374ad8f49a0cef5943c5384fa672c1a7b3196b04282e9138  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/target/debug/examples/scoring_probe
+8ac25a8dbbbd21172b3f9ac1db69b7c10282652ecfd1a2a8a7828c516275939b  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/corrupt-arithmetic.json
+719e18b2122fe8772bbc36ec7136ce7c661de0dba65d4c119f928fb69ff56b51  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/corrupt-quarantine.json
+fa5dd1b9cd39f82fb8c371ffaa98a6590f43c22b40cc1947b367f1fb4e02c229  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/negative-arithmetic.log
+7de5a4703e2833284c8a49ae8fb94d3dac0b17c9eb8e3df62d013945ac854170  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-scoring-parity.9QDsxN/negative-quarantine.log

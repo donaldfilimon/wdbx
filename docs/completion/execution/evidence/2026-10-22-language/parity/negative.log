@@ -1,0 +1,25 @@
+104 |   const transform = cat(lp('text-v3'), content, u64(1), guards, extra);
+105 |   eq(Buffer.from(k.transform), transform, 'independent typed transform');
+106 |   const preimage = cat(lp(transform), lp(level), lp('text'));
+107 |   eq(Buffer.from(k.preimage), preimage, 'independent LP preimage');
+108 |   eq(Buffer.from(k.digest).length, 32);
+109 |   eq(Buffer.from(k.digest).toString('hex'), hash(preimage), 'full32 digest');
+        ^
+AssertionError: full32 digest
++ actual - expected
+
++ 'eda364ff1ab319b7f17866346906fd047efe67fdcc43fb09eedd20fcea95b1ca'
+- 'eca364ff1ab319b7f17866346906fd047efe67fdcc43fb09eedd20fcea95b1ca'
+
+ generatedMessage: false,
+     actual: "eda364ff1ab319b7f17866346906fd047efe67fdcc43fb09eedd20fcea95b1ca",
+   expected: "eca364ff1ab319b7f17866346906fd047efe67fdcc43fb09eedd20fcea95b1ca",
+   operator: "deepStrictEqual",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at checkKey (/Users/donald/sources/repos/wdbx/specimen-studio/tests/language-parity.mjs:109:3)
+      at forEach (native:1:11)
+      at validate (/Users/donald/sources/repos/wdbx/specimen-studio/tests/language-parity.mjs:404:68)
+
+Bun v1.4.4-canary.1+ea6a2c7b7 (macOS arm64)
