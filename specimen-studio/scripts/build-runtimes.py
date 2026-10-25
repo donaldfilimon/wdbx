@@ -44,6 +44,31 @@ def source_path_parts(name, expected_root=None):
     return tuple(parts)
 
 
+def validate_source_pax(data):
+    """Accept framed nonstructural PAX fields, never parser offset controls.
+
+    Source downloads need comments, names and ordinary file attributes. Refuse
+    size (even an unchanged size), sparse and unknown keys rather than maintain
+    a second implementation of tarfile's structural extension semantics.
+    """
+    supported = {b'comment', b'path', b'linkpath', b'mtime', b'atime', b'ctime',
+                 b'uid', b'gid', b'uname', b'gname', b'hdrcharset'}
+    position = 0
+    while position < len(data):
+        space = data.find(b' ', position, position + 7)
+        prefix = data[position:space] if space >= 0 else b''
+        if not prefix or len(prefix) > 5 or not prefix.isdigit():
+            raise ValueError('Invalid source PAX record length')
+        length = int(prefix)
+        end = position + length
+        if length < 5 or end > len(data) or data[end - 1:end] != b'\n':
+            raise ValueError('Invalid source PAX record framing')
+        field, equals, value = data[space + 1:end - 1].partition(b'=')
+        if equals != b'=' or field not in supported:
+            raise ValueError('Unsupported source PAX field: ' + repr(field[:80]))
+        position = end
+
+
 def bounded_source_tar(archive, decoded):
     """Spool gzip TAR in bounded chunks before any extended-header parsing.
 
@@ -93,6 +118,8 @@ def bounded_source_tar(archive, decoded):
                 raise ValueError('Unsupported physical source archive member')
             if header.size < 0 or header.size > SOURCE_MAX_FILE_BYTES:
                 raise ValueError('Oversized physical source archive member')
+            if not metadata and not header.isfile() and header.size:
+                raise ValueError('Unsupported nonregular source TAR payload')
             payload_bytes += header.size
             if payload_bytes > SOURCE_MAX_BYTES:
                 raise ValueError('Source archive exceeds physical payload byte limit')
@@ -103,17 +130,23 @@ def bounded_source_tar(archive, decoded):
                         or metadata_bytes > SOURCE_MAX_METADATA_TOTAL
                         or metadata_headers > SOURCE_MAX_METADATA_HEADERS):
                     raise ValueError('Source archive exceeds TAR metadata limit')
+            pax_payload = bytearray() if header.type in (tarfile.XHDTYPE, tarfile.XGLTYPE) else None
             remaining = header.size
             while remaining:
                 data = read(min(remaining, 64 * 1024))
                 if not data:
                     raise ValueError('Truncated source TAR member')
-                if metadata and b'GNU.sparse' in data:
-                    raise ValueError('Unsupported sparse source TAR metadata')
+                if pax_payload is not None:
+                    pax_payload.extend(data)
                 remaining -= len(data)
+            if pax_payload is not None:
+                validate_source_pax(bytes(pax_payload))
             padding = -header.size % 512
-            if len(read(padding)) != padding:
+            padding_data = read(padding)
+            if len(padding_data) != padding:
                 raise ValueError('Truncated source TAR padding')
+            if padding_data.strip(b'\x00'):
+                raise ValueError('Nonzero source TAR padding')
 
 
 def extract_source_archive(archive, work, expected_root):

@@ -218,6 +218,101 @@ class RuntimeArchiveExtractionTests(unittest.TestCase):
         self.assertEqual((extracted / 'alias').read_bytes(), b'bytes')
         self.assertFalse((extracted / 'alias').is_symlink())
 
+    @staticmethod
+    def physical_record(name, kind, data, linkname=''):
+        header = tarfile.TarInfo(name)
+        header.type = kind
+        header.size = len(data)
+        header.linkname = linkname
+        return (header.tobuf(format=tarfile.USTAR_FORMAT) + data
+                + b'\x00' * (-len(data) % 512))
+
+    def test_pax_size_cannot_hide_oversized_nested_metadata(self):
+        record = self.physical_record
+        hidden = self.pax_record('comment', 'x' * 1048576)
+        inner = (record('hidden-meta', tarfile.XHDTYPE, hidden)
+                 + record(self.top + '/file', tarfile.REGTYPE, b'x'))
+        raw = (record('size-override', tarfile.XHDTYPE, self.pax_record('size', '0'))
+               + record(self.top + '/cover', tarfile.REGTYPE, inner) + b'\x00' * 1024)
+        self.archive.write_bytes(gzip.compress(raw, mtime=0))
+        with patch.object(builder, 'SOURCE_MAX_MEMBERS', 3), \
+                patch.object(builder.tarfile, 'open', wraps=tarfile.open) as parser:
+            with self.assertRaisesRegex(ValueError, 'PAX|structural'):
+                self.extract()
+            parser.assert_not_called()
+        self.assertEqual(list(self.work.iterdir()), [])
+
+    def test_local_and_global_size_overrides_are_refused_for_every_value(self):
+        for kind in [tarfile.XHDTYPE, tarfile.XGLTYPE]:
+            for value in ['0', '1', '512', '-1', 'invalid', '9999999999999999999999999']:
+                with self.subTest(kind=kind, size=value):
+                    self.make_extended_archive(kind, self.pax_record('size', value))
+                    with patch.object(builder.tarfile, 'open', wraps=tarfile.open) as parser:
+                        with self.assertRaisesRegex(ValueError, 'PAX|structural'):
+                            self.extract()
+                        parser.assert_not_called()
+                    self.assertEqual(list(self.work.iterdir()), [])
+
+    def test_nonregular_payload_cannot_hide_nested_extensions(self):
+        record = self.physical_record
+        for kind, link in [(tarfile.DIRTYPE, ''), (tarfile.SYMTYPE, 'file'),
+                           (tarfile.LNKTYPE, self.top + '/file')]:
+            with self.subTest(kind=kind):
+                if (self.work / self.top).exists():
+                    shutil.rmtree(self.work / self.top)
+                inner = (record('hidden-meta', tarfile.XHDTYPE,
+                                self.pax_record('comment', 'x' * 1048576))
+                         + record(self.top + '/file', tarfile.REGTYPE, b'x'))
+                raw = record(self.top + '/cover', kind, inner, link) + b'\x00' * 1024
+                self.archive.write_bytes(gzip.compress(raw, mtime=0))
+                with patch.object(builder.tarfile, 'open', wraps=tarfile.open) as parser:
+                    with self.assertRaisesRegex(ValueError, 'nonregular|payload'):
+                        self.extract()
+                    parser.assert_not_called()
+                self.assertEqual(list(self.work.iterdir()), [])
+
+    def test_unknown_sparse_and_malformed_pax_records_fail_before_parser(self):
+        records = [self.pax_record('GNU.sparse.major', '1'),
+                   self.pax_record('GNU.sparse.size', '0'),
+                   self.pax_record('SCHILY.realsize', '0'),
+                   self.pax_record('unknown.future.control', '0'),
+                   b'0 size=0\n', b'999 size=0\n', b'9 size=0X',
+                   b'5 a=\n9 size=0\n', b'11 comment=',
+                   b'00000000000000000000000000000000009 size=0\n',
+                   self.pax_record('comment', 'okay') + b'\x00' + self.pax_record('size', '0')]
+        for metadata in records:
+            with self.subTest(metadata=metadata):
+                self.make_extended_archive(tarfile.XHDTYPE, metadata)
+                with patch.object(builder.tarfile, 'open', wraps=tarfile.open) as parser:
+                    with self.assertRaisesRegex(ValueError, 'PAX|sparse'):
+                        self.extract()
+                    parser.assert_not_called()
+                self.assertEqual(list(self.work.iterdir()), [])
+
+    def test_pax_records_cannot_escape_declared_payload_into_tar_padding(self):
+        metadata = self.pax_record('comment', 'safe')
+        hidden = self.pax_record('size', '0')
+        extension = self.physical_record('pax', tarfile.XHDTYPE, metadata)
+        # tarfile reads a rounded block, so nonzero padding must not carry keys.
+        end = 512 + len(metadata)
+        extension = extension[:end] + hidden + extension[end + len(hidden):]
+        raw = (extension + self.physical_record(self.top + '/file', tarfile.REGTYPE, b'x')
+               + b'\x00' * 1024)
+        self.archive.write_bytes(gzip.compress(raw, mtime=0))
+        with patch.object(builder.tarfile, 'open', wraps=tarfile.open) as parser:
+            with self.assertRaisesRegex(ValueError, 'padding'):
+                self.extract()
+            parser.assert_not_called()
+        self.assertEqual(list(self.work.iterdir()), [])
+
+    def test_supported_pax_paths_and_nonstructural_values_remain_compatible(self):
+        metadata = b''.join(self.pax_record(key, value) for key, value in [
+            ('path', self.top + '/renamed'), ('mtime', '1.5'), ('uid', '0'),
+            ('comment', 'size=0 and GNU.sparse are harmless comment text')])
+        self.make_extended_archive(tarfile.XHDTYPE, metadata)
+        extracted = self.extract()
+        self.assertEqual((extracted / 'renamed').read_bytes(), b'x')
+
     def extract(self):
         return builder.extract_source_archive(self.archive, self.work, self.top)
 
