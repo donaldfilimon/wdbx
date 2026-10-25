@@ -1,0 +1,465 @@
+{
+  "format": "native-model-fixtures-v1",
+  "provenance": "Independent literal diagnostic worksheet; never Rust serializer output",
+  "fixtures": [
+    {
+      "name": "inference",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "ValidatedModelState",
+      "artifact_sha256": "acee30ea29e70c4e5d8773bebc5a449ade02c258907f3fbe47a65616e1e40e81",
+      "note": "Literal diagnostic only; nonconsecutive node/edge IDs; not trained.",
+      "package_digest": "ef9551c5ed7a7aa3be3724337aaaacbca1fa1851519704495de77cc760a12e04",
+      "state_root": "d4905f2710ad4e0f8f59e50f0654322a8bd6c76ee8d0d6689de355369325a446",
+      "generation_id": "5de6e48545922ddc76abbfb0d15d2f56fbe300589d37c8699cd95c4aabad2488"
+    },
+    {
+      "name": "resumable",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "ValidatedModelState",
+      "artifact_sha256": "ab29939e400cd525324aba26d9243be00edaced538ebddc7343a3e5fe715fd78",
+      "note": "Literal diagnostic only; nonconsecutive node/edge IDs; not trained.",
+      "package_digest": "94627624fb079513970f9247e24f01d44773b11a708df09d4b77104cf699aace",
+      "state_root": "a05862479a79bbdd65e2bb94653db895fd9d1cc9c502cd323786abfa75fe7e72",
+      "generation_id": "bccc9087285c8b59b2eb9a5e6515120c7655cccfd362f709f77a0cbd9fbeb9e8"
+    },
+    {
+      "name": "bpe",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "ValidatedModelState",
+      "artifact_sha256": "bcd1deef92a43249e3b891c95653d37fa801a0e3c63e72f5a62935aa3e25baba",
+      "note": "Literal diagnostic only; nonconsecutive node/edge IDs; not trained.",
+      "package_digest": "80d95141adee396c62aa1ff9b32ff13c8faa8976a15e53c8342dc38f14bfaa0d",
+      "state_root": "365ee9d514da6bfb1bc896f5ac054194ce5822a53a6fa2b4a0d02372de17aedc",
+      "generation_id": "021e0bbbcb7d30dd2d22f591652fd6fba4c12bbcb8accfd1c8ae98ce39626913"
+    },
+    {
+      "name": "signed-zero",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "ValidatedModelState",
+      "artifact_sha256": "fa966fb2c4c98d23b84106bf90c38b7cd1fa2886610fce655b114e2950144018",
+      "note": "Literal diagnostic only; nonconsecutive node/edge IDs; not trained.",
+      "package_digest": "9dc23c8c33874189d65f162611003f5e103891346decad81157ebf7d04ac2db5",
+      "state_root": "69174b9f88e229403c255abaa5ae07e684dbbd42005f6cf0725b4bafa774def1",
+      "generation_id": "99d5a77069da00f4ab8a1678ddfac8abcb1552391c9ce83891d98ac1e6b12f50"
+    },
+    {
+      "name": "annotation",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "ValidatedModelState",
+      "artifact_sha256": "b248f1ac58b39caac714055f1d47b09877013715f2a04fef72eb6d24ec7b6582",
+      "note": "Literal diagnostic only; nonconsecutive node/edge IDs; not trained.",
+      "package_digest": "7c93e6e5348e4d57e39baeb33bcb8338317d6a7331eced999ee941dcbd829dd6",
+      "state_root": "d4905f2710ad4e0f8f59e50f0654322a8bd6c76ee8d0d6689de355369325a446",
+      "generation_id": "5de6e48545922ddc76abbfb0d15d2f56fbe300589d37c8699cd95c4aabad2488"
+    },
+    {
+      "name": "partition",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "ValidatedModelState",
+      "artifact_sha256": "a950ab5afb371ea24db3d2174a8f568627251f5465aedb3a275f39f568ba1454",
+      "note": "Literal diagnostic only; nonconsecutive node/edge IDs; not trained.",
+      "package_digest": "133f7b3bec2d0fd602135c98b250ca96af59ae76a1a561421ecb75671c5d82ff",
+      "state_root": "d4905f2710ad4e0f8f59e50f0654322a8bd6c76ee8d0d6689de355369325a446",
+      "generation_id": "c25cac3f932d404a0c2ab43e809fe922708c0489d11269916cd459e866c8e2bf"
+    },
+    {
+      "name": "bad-role",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "NonCanonical",
+      "artifact_sha256": "e09c8645382c172213f18301477a33f6ce7b1b24285ffaa35c4556a288e61ceb",
+      "note": "All component and directory hashes recomputed; semantic rejection required."
+    },
+    {
+      "name": "missing-input",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidTopology",
+      "artifact_sha256": "bd2facb25c2909c2d13a99d334ea06307cc698209e7a622a7fd9f73f43b22637",
+      "note": "All component and directory hashes recomputed; semantic rejection required."
+    },
+    {
+      "name": "missing-readout",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidTopology",
+      "artifact_sha256": "67227d62ed8ebc226c1cafe490c74975c3e9fe4cbc01c8f75db056b7cf978921",
+      "note": "All component and directory hashes recomputed; semantic rejection required."
+    },
+    {
+      "name": "bad-relation",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidTopology",
+      "artifact_sha256": "6ca10e683ae2e18544781701e02fe7baa9ae2c47888fc3296e0e4164be8067ca",
+      "note": "All component and directory hashes recomputed; semantic rejection required."
+    },
+    {
+      "name": "unsupported-operator",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "NonCanonical",
+      "artifact_sha256": "60f67bf278c96db117a9b2750237d70724fd9c571646ce5af1cbfec9e12aeb07",
+      "note": "All component and directory hashes recomputed; semantic rejection required."
+    },
+    {
+      "name": "unsupported-numeric-profile",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "NonCanonical",
+      "artifact_sha256": "a402e0b609b77e0019028daf4946ce7cdd5b86d2e13a56acd3114c0454663753",
+      "note": "All component and directory hashes recomputed; semantic rejection required."
+    },
+    {
+      "name": "training-state-absent",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidOptimizer",
+      "artifact_sha256": "6e95d10b790bfd3c582db04f3ff253c9afa83ef6206013898988aa34b9bc9c10",
+      "note": "All component and directory hashes recomputed; semantic rejection required."
+    },
+    {
+      "name": "tensor-id-order",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidTensor",
+      "artifact_sha256": "e4393e506afc0413eb9c970014cc64cbcf8de3780318cc94eff4d5a8055f9b03",
+      "note": "All component and directory hashes recomputed; semantic rejection required."
+    },
+    {
+      "name": "equal-length-wrong-axis",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidTensor",
+      "artifact_sha256": "3fa98c24144c780897d636bd48e711dadf8ffc097ea6c0bdb705b1536f61182d",
+      "note": "All component and directory hashes recomputed; semantic rejection required."
+    },
+    {
+      "name": "shifted-node-axis",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidTensor",
+      "artifact_sha256": "2023365732fd2458ea1cbe0908891c1db3d5c7e846f65f36aa91984634ad21ee",
+      "note": "All component and directory hashes recomputed; semantic rejection required."
+    },
+    {
+      "name": "shifted-edge-axis",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidTensor",
+      "artifact_sha256": "f10ce2d5fa425ca1531d2f6b70ecaa18a9d09c45839ba78e742dfdee5df90a10",
+      "note": "All component and directory hashes recomputed; semantic rejection required."
+    },
+    {
+      "name": "coordinate-out-of-bounds",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidTensor",
+      "artifact_sha256": "1c5c0662a268fd9270aad251dd27072a2bdcc437c46add79b058154f043d120d",
+      "note": "All component and directory hashes recomputed; semantic rejection required."
+    },
+    {
+      "name": "tensor-nan",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidTensor",
+      "artifact_sha256": "b9f4ec608b84f99dae4182c428c780557ad7ec60ec29147ccc82f367ecd071ab",
+      "note": "All component and directory hashes recomputed; semantic rejection required."
+    },
+    {
+      "name": "base-byte-wrong",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidTokenizer",
+      "artifact_sha256": "2cfbbc0f3d892300a4bfcea686539a1ec5de9720355e10253238b90bc3b98d74",
+      "note": "All component and directory hashes recomputed; semantic rejection required."
+    },
+    {
+      "name": "special-token-nonempty",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidTokenizer",
+      "artifact_sha256": "d505175ba718dabc243c648f8a9b105b9b0641b3f73a4d3f6308d59551e503d4",
+      "note": ""
+    },
+    {
+      "name": "absent-state-trailing",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "NonCanonical",
+      "artifact_sha256": "ad9e7ff18cfb165601e9896894b65a2bfb91a857bf3c8bb999427d03abc8d236",
+      "note": ""
+    },
+    {
+      "name": "half-parent",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidProvenance",
+      "artifact_sha256": "1daae8bc4332a84e881025addf5d4884831d5e28c32ccf9c1d604c9b99cee4d6",
+      "note": ""
+    },
+    {
+      "name": "input-source-ref",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidTopology",
+      "artifact_sha256": "7ac83924e5f5168a8422d5cf4f7ddceb8bba86e87e036cc9514d022d93ca27bf",
+      "note": ""
+    },
+    {
+      "name": "missing-root",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidProvenance",
+      "artifact_sha256": "846d1a6c090126ec6ba601c70aa81345dec986c4d6c4859f5b076797b4aa6103",
+      "note": ""
+    },
+    {
+      "name": "annotation-cannot-supply-tensor",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidTensor",
+      "artifact_sha256": "72882d685d3a4ca2891cbbc5849aecab175966d29cbe0e3ce0433562c5e14ffc",
+      "note": ""
+    },
+    {
+      "name": "bpe-cycle",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidTokenizer",
+      "artifact_sha256": "71ea5049d5997a6ffa8869721c5e4a007570597fdac0ed42cce794526ea2ed5b",
+      "note": "All component and directory hashes recomputed; semantic rejection required."
+    },
+    {
+      "name": "bpe-special-parent",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidTokenizer",
+      "artifact_sha256": "427f5e51ab9559ad4531771ff4624f963c2d16993d178949cf124fcf6d501e4a",
+      "note": "All component and directory hashes recomputed; semantic rejection required."
+    },
+    {
+      "name": "bpe-wrong-result",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidTokenizer",
+      "artifact_sha256": "701b346d753415b01d0d7bda833fe113b46a44b7838cd7f7b53d1887a60240a9",
+      "note": "All component and directory hashes recomputed; semantic rejection required."
+    },
+    {
+      "name": "inference-with-state",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidOptimizer",
+      "artifact_sha256": "dcc2f368a6f55622c514dc13c5ed816405ccaf4e85fbed4bfd078f4df5dd9c86",
+      "note": "All component and directory hashes recomputed; semantic rejection required."
+    },
+    {
+      "name": "negative-second-moment",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidOptimizer",
+      "artifact_sha256": "0eaa942a8ababfc49b27987b2d03890f1b7fe68a77f5aa08efcfa4c254cb7306",
+      "note": "All component and directory hashes recomputed; semantic rejection required."
+    },
+    {
+      "name": "moment-membership",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidOptimizer",
+      "artifact_sha256": "e5b4dcf93c2c93d366d3b00bf89e224ae39b0235fa8ea0929c7d5b9d6454a017",
+      "note": "All component and directory hashes recomputed; semantic rejection required."
+    },
+    {
+      "name": "zero-rng",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidRngOrder",
+      "artifact_sha256": "6430da28a6eba83e3c4c748fab466f85a7713d4b6095e21e9c4a20f71fca1b4f",
+      "note": "All component and directory hashes recomputed; semantic rejection required."
+    },
+    {
+      "name": "wrong-initial-rng",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidRngOrder",
+      "artifact_sha256": "5068e4cd058a1484d6145a44cfaae292bb34ed14d4b0f29d6672dab0f367a2c3",
+      "note": "All component and directory hashes recomputed; semantic rejection required."
+    },
+    {
+      "name": "duplicate-permutation",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidRngOrder",
+      "artifact_sha256": "e0b516cd0866371b63bf9b698145bce45e15fdcf39194d629ecf6bd2b0144e36",
+      "note": "All component and directory hashes recomputed; semantic rejection required."
+    },
+    {
+      "name": "step-mismatch",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidRngOrder",
+      "artifact_sha256": "8c95d885d8bb47e2ffbc0ba88e827a6fa55f275f8de3f09178408d20b3747800",
+      "note": "All component and directory hashes recomputed; semantic rejection required."
+    },
+    {
+      "name": "container-minor",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "framing",
+      "expected": "UnsupportedContainerVersion",
+      "artifact_sha256": "8e3a2d278d5bc51e75793ef834732c4cbe70a9ad79871acb21191d9fccbfb976",
+      "note": ""
+    },
+    {
+      "name": "header-reserved",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "framing",
+      "expected": "NonCanonical",
+      "artifact_sha256": "37deab538ac487717dae62e4494bd9c011575fd36591dcf9d81d8fcda24a112e",
+      "note": ""
+    },
+    {
+      "name": "directory-reserved",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "framing",
+      "expected": "NonCanonical",
+      "artifact_sha256": "d776329ac1078cde549c64f70023232baa6dbe67962b82b6ed1d0bb002f46290",
+      "note": ""
+    },
+    {
+      "name": "directory-flags",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "framing",
+      "expected": "NonCanonical",
+      "artifact_sha256": "d7886d28c695fb2b4a086f5883c33dd1b42e2155cae67077f133f59145084d03",
+      "note": ""
+    },
+    {
+      "name": "optional-required",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "framing",
+      "expected": "MissingComponent",
+      "artifact_sha256": "bd4e807eb4744459cafd349249ad034fb43b636978b237ecbce5d7d1bbfb0ebe",
+      "note": ""
+    },
+    {
+      "name": "component-minor",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "framing",
+      "expected": "UnsupportedComponentVersion",
+      "artifact_sha256": "af32b1d48c81d6efd2fda68b6ecc6d4b8b9cf88b100629bd5d50b9a34a51908d",
+      "note": ""
+    },
+    {
+      "name": "directory-order",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "framing",
+      "expected": "NonCanonical",
+      "artifact_sha256": "c2cd2c7023d4772e8175c23813eae0983588257b1cd49143cea4b78fb7707516",
+      "note": ""
+    },
+    {
+      "name": "missing-component",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "framing",
+      "expected": "UnsupportedRequiredComponent",
+      "artifact_sha256": "a8b8f4a3cb6e9a57389c0c5e5088a952d3f7ac6183593f810ea635c318dbcc16",
+      "note": ""
+    },
+    {
+      "name": "payload-tamper",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "framing",
+      "expected": "IntegrityMismatch",
+      "artifact_sha256": "898ea1a3ed385127ad0dcbf5ef5472582d74b771c82f34e595b19c2cc644622c",
+      "note": ""
+    },
+    {
+      "name": "unknown-required",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "framing",
+      "expected": "UnsupportedRequiredComponent",
+      "artifact_sha256": "fb1dcd94bebb8b697fbd453ec5363a6ed7ebfde8ad1f65125e0d24d6ec2526fd",
+      "note": ""
+    },
+    {
+      "name": "missing-core-annotation",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "framing",
+      "expected": "MissingComponent",
+      "artifact_sha256": "c94c6cb2920a365273b0469f89458e1022394820790298251e597ab916aa568f",
+      "note": ""
+    },
+    {
+      "name": "truncated",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "framing",
+      "expected": "Truncated",
+      "artifact_sha256": "96890570259811a8dfc2908b5628d06df795cc78cefa50770b76595f8f24389a",
+      "note": ""
+    },
+    {
+      "name": "trailing",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "framing",
+      "expected": "TrailingBytes",
+      "artifact_sha256": "641ddbc3737ebf76acb06ba6c021a7c49eadfa2e7bee4bfc6f4a90c587317e7a",
+      "note": ""
+    },
+    {
+      "name": "saturated-counters",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "ValidatedModelState",
+      "artifact_sha256": "1d893685025d8f52cf2dee42b2eb4743c561f03809f04ac8f4660e4adbdaf3d4",
+      "note": "Online diagnostic, externally unqualified: epoch/accepted/next-step are u64::MAX; future increments must fail before mutation, never wrap.",
+      "package_digest": "84663c7cbaf72aa4c9247bd0c810c3e4d620f8a9612f8de40b91fbef8387fac6",
+      "state_root": "39f2f9343b9dee942b96f3089778191b73d3710a74b117b49b9ffe236379baa3",
+      "generation_id": "89a6f74416be7a0f96890966149c17391d6294b727e4134c2c7d9301c145ce41"
+    },
+    {
+      "name": "step-exhausted",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidOptimizer",
+      "artifact_sha256": "366d28b5ff2564ed43f940108119f958ac684faf1a09aa4b0cdbe0581896443d",
+      "note": "successful_step has explicit strict upper bound; hashes recomputed."
+    },
+    {
+      "name": "rng-consumed-exhausted",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidRngOrder",
+      "artifact_sha256": "b4349634ca4958e8980afa82dcf47cd6e43f8a0cbd9ac783dde97d463814282b",
+      "note": "consumed_u64 has explicit strict upper bound; hashes recomputed."
+    },
+    {
+      "name": "node-id-high-water-exhausted",
+      "schema": "wdbx-model-package-v1/1.0",
+      "stage": "semantic",
+      "expected": "InvalidTopology",
+      "artifact_sha256": "2815ba59936508e7779088c55ada23dacd35bc6b93a70fbcb094b8b0d5c83f9f",
+      "note": "Stable ID high-water must be <= u64::MAX-1; hashes recomputed."
+    }
+  ],
+  "auxiliary": [
+    {
+      "name": "rng-vectors.json",
+      "sha256": "2a724f790191bf5d09447832565625dd35f06f257de029074217540d9da9577d",
+      "schema": "xoshiro256starstar-v1/splitmix64-v1",
+      "stage": "contract"
+    },
+    {
+      "name": "field-table.json",
+      "sha256": "a0a40785bc1e404fd33073c52225f6ad0bf18155a2d8a82059d22b67c5bcc8bf",
+      "schema": "native-model-field-table-v1",
+      "stage": "contract"
+    }
+  ]
+}

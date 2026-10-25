@@ -44,6 +44,10 @@ step "python cose-sign1-p1 encoding witness tests (unittest)"
 "${WDBX_PYTHON:-python3}" -m unittest discover -s tools/tests \
     -p 'test_wdbx_cose_sign1_p1.py'
 
+step "python native-model binary/schema witness tests (unittest)"
+"${WDBX_PYTHON:-python3}" -m unittest discover -s tools/tests \
+    -p 'test_wdbx_model_reference.py'
+
 step "tests"
 # The pinned retrieval-baseline expectation is asserted, never rewritten by
 # the gate. Unsetting both regeneration opt-ins here means a stray
