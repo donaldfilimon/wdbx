@@ -3,12 +3,108 @@
 import argparse
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import platform
 import shutil
 import subprocess
 import tarfile
+import tempfile
 import urllib.request
+
+
+# Conservative bounds for the reviewed source archives, including linked files.
+SOURCE_MAX_ARCHIVE_BYTES = 512 * 1024 * 1024
+SOURCE_MAX_MEMBERS = 50000
+SOURCE_MAX_FILE_BYTES = 256 * 1024 * 1024
+SOURCE_MAX_BYTES = 2 * 1024 * 1024 * 1024
+WINDOWS_DEVICE_NAMES = {'CON', 'PRN', 'AUX', 'NUL', 'CONIN$', 'CONOUT$'} | {
+    prefix + digit for prefix in ('COM', 'LPT') for digit in '123456789¹²³'
+}
+
+
+def source_path_parts(name, expected_root=None):
+    """Reject ambiguous archive paths on both POSIX and Windows."""
+    path = PurePosixPath(name)
+    parts = name.rstrip('/').split('/')
+    if (not name or path.is_absolute() or len(parts) > 64
+            or len(name.encode('utf-8')) > 4096 or '\\' in name
+            or any(part in ('', '.', '..') or '\x00' in part
+                   or any(char in part for char in '<>:"|?*')
+                   or part.endswith(('.', ' '))
+                   or part.split('.', 1)[0].rstrip(' ').upper() in WINDOWS_DEVICE_NAMES
+                   for part in parts)
+            or (expected_root is not None and parts[0] != expected_root)):
+        raise ValueError('Unsafe or unexpected source archive path: ' + name)
+    return tuple(parts)
+
+
+def extract_source_archive(archive, work, expected_root):
+    """Validate first, then atomically publish a bounded Python 3.9 extraction.
+
+    Internal file links are materialized as regular files for Windows portability;
+    links to directories or other links are refused. No archive ownership, special
+    modes, devices, timestamps or symlinks are installed on the host.
+    """
+    source_path_parts(expected_root)
+    destination = work / expected_root
+    if (work.is_symlink() or destination.exists() or destination.is_symlink()
+            or archive.stat().st_size > SOURCE_MAX_ARCHIVE_BYTES):
+        raise ValueError('Existing tree, linked work directory or oversized source archive')
+    with tarfile.open(archive) as contents:
+        members = {}
+        total = 0
+        for member in contents:
+            if len(members) >= SOURCE_MAX_MEMBERS:
+                raise ValueError('Too many source archive members')
+            parts = source_path_parts(member.name, expected_root)
+            if parts in members or member.type not in (
+                    tarfile.REGTYPE, tarfile.AREGTYPE, tarfile.DIRTYPE,
+                    tarfile.SYMTYPE, tarfile.LNKTYPE):
+                raise ValueError('Duplicate path or unsupported source archive member')
+            if member.size < 0 or member.size > SOURCE_MAX_FILE_BYTES:
+                raise ValueError('Oversized source archive member')
+            total += member.size
+            if total > SOURCE_MAX_BYTES:
+                raise ValueError('Source archive exceeds expanded byte limit')
+            members[parts] = member
+        targets = {}
+        for parts, member in members.items():
+            for depth in range(1, len(parts)):
+                parent = members.get(parts[:depth])
+                if parent is not None and not parent.isdir():
+                    raise ValueError('Source member has a non-directory ancestor')
+            if member.issym() or member.islnk():
+                link = source_path_parts(member.linkname)
+                target = parts[:-1] + link if member.issym() else link
+                original = members.get(target)
+                if (not target or target[0] != expected_root or original is None
+                        or not original.isfile()):
+                    raise ValueError('Source link must name a regular file inside its root')
+                targets[parts] = original
+                total += original.size
+                if total > SOURCE_MAX_BYTES:
+                    raise ValueError('Source links exceed expanded byte limit')
+        with tempfile.TemporaryDirectory(prefix='.source-', dir=work) as stage:
+            stage = Path(stage)
+            for parts, member in members.items():
+                target = stage.joinpath(*parts)
+                if member.isdir():
+                    target.mkdir(parents=True, exist_ok=True, mode=0o755)
+                    continue
+                target.parent.mkdir(parents=True, exist_ok=True, mode=0o755)
+                original = targets.get(parts, member)
+                with contents.extractfile(original) as source, target.open('xb') as output:
+                    shutil.copyfileobj(source, output, length=1024 * 1024)
+                if target.stat().st_size != original.size:
+                    raise ValueError('Truncated source archive member')
+                target.chmod(0o755 if original.mode & 0o111 else 0o644)
+            for directory in stage.rglob('*'):
+                if directory.is_dir():
+                    directory.chmod(0o755)
+            if not (stage / expected_root).is_dir():
+                raise ValueError('Source archive has no expected root')
+            (stage / expected_root).rename(destination)
+    return destination
 
 
 def build_environment(work):
@@ -22,6 +118,16 @@ def build_environment(work):
         ceiling + os.pathsep + directory if ceiling else directory
     )
     return env
+
+
+def refuse_embedded_ui(source, build):
+    """Refuse stale UI inputs without removing user work or starting a download."""
+    for assets in (source / 'tools/ui/dist', build / 'tools/ui/dist'):
+        if (assets / 'index.html').exists():
+            raise ValueError(
+                'Preserve and inspect cached embedded UI assets before '
+                'building the headless API sidecar: ' + str(assets)
+            )
 
 
 def verify_executable(executable, revision, env):
@@ -50,16 +156,16 @@ def main(argv=None):
     def source(key):
         pin = pins[key]
         dest = work / (key + '-' + pin['revision'][:12])
+        if dest.is_symlink() or (dest.exists() and not (dest / 'CMakeLists.txt').is_file()):
+            raise ValueError('Preserve and inspect the existing incomplete or linked source tree: ' + str(dest))
         if not (dest / 'CMakeLists.txt').exists():
             archive = work / (key + '.tar.gz')
             urllib.request.urlretrieve(
                 'https://codeload.github.com/' + pin['repo'] + '/tar.gz/'
                 + pin['revision'], archive,
             )
-            with tarfile.open(archive) as contents:
-                top = contents.getnames()[0].split('/')[0]
-                contents.extractall(work, filter='data')
-            (work / top).rename(dest)
+            top = pin['repo'].rsplit('/', 1)[-1] + '-' + pin['revision']
+            extract_source_archive(archive, work, top).rename(dest)
         return dest
 
     out = root / 'src-tauri/binaries'
@@ -67,14 +173,19 @@ def main(argv=None):
     for key, target in [('llama', 'llama-server'), ('diffusion', 'sd-cli')]:
         if options.only and key != options.only:
             continue
+        build = work / (key + '-build')
+        if key == 'llama':
+            cached_source = work / (key + '-' + pins[key]['revision'][:12])
+            refuse_embedded_ui(cached_source, build)
         src = source(key)
+        if key == 'llama':
+            refuse_embedded_ui(src, build)
         if key == 'diffusion' and not (src / 'ggml/CMakeLists.txt').exists():
             ggml = source('ggml')
             shutil.copytree(
                 ggml, src / 'ggml', dirs_exist_ok=True,
                 ignore=shutil.ignore_patterns('.pi'),
             )
-        build = work / (key + '-build')
         args = [
             'cmake', '-S', str(src), '-B', str(build),
             '-DCMAKE_BUILD_TYPE=Release', '-DBUILD_SHARED_LIBS=OFF',
@@ -90,6 +201,9 @@ def main(argv=None):
             # Its bundled ggml belongs to this tree, not the external ggml pin.
             args += [
                 '-DLLAMA_BUILD_COMMIT:STRING=' + pins['llama']['revision'],
+                # Studio consumes the authenticated API, never an embedded UI.
+                # Prevent the upstream fallback from fetching mutable HF assets.
+                '-DLLAMA_BUILD_UI=OFF', '-DLLAMA_USE_PREBUILT_UI=OFF',
                 '-DLLAMA_BUILD_NUMBER:STRING=0',
             ]
         else:
