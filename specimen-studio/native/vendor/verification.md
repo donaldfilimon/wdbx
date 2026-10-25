@@ -71,3 +71,24 @@ Revert the task source commits to restore the previous graph/builder. No live
 store migration, SDK installation, model download, deployment or retirement was
 performed. Private command/environment/source/lock/artifact receipts are under
 `.work/gtk/receipts/`; no raw machine-specific environment is duplicated here.
+
+## Review fix: bounded TAR metadata
+
+The table and artifact hashes above remain evidence for the initial GTK/builder
+cohorts. Review I1 found that the initial extractor limited ordinary members only
+after TAR had parsed hidden PAX/GNU records. The follow-up builder SHA is
+`a7340c8531b85b8aaceb3b0607f13aee918b0290a81bab93b6fe0c686c1f4e82`.
+It streams gzip TAR into a private bounded spool before extended-header parsing,
+counts physical headers/payloads/padding and trailing decoded bytes, limits both
+individual/cumulative metadata and header recursion, rejects sparse extensions,
+and charges metadata alongside materialized file aliases. No unbounded pre-read
+or metadata exemption is used; cancellation closes the spool and removes staging.
+
+The retained reviewer input is now refused before publication on Python 3.9.6
+and 3.15.1. Covering extraction/provenance suites pass 31 tests on each; actual
+three-archive replay again matches all 6,070 file hashes and the one safe alias
+on both interpreters. Cached headless builder/provenance replay passes with both
+UI flags OFF and server ON; both sidecar hashes above are unchanged. CMake
+warnings remain visible. This scoped Python fix did not rerun or extend the
+earlier full Rust/browser qualification. Platform, advisory, stripping and
+service/model/installed-product limits above remain unchanged.

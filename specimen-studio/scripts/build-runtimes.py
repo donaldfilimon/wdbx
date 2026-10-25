@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Build the pinned inference executables for the current desktop target."""
 import argparse
+import gzip
 import json
 import os
 from pathlib import Path, PurePosixPath
@@ -17,6 +18,11 @@ SOURCE_MAX_ARCHIVE_BYTES = 512 * 1024 * 1024
 SOURCE_MAX_MEMBERS = 50000
 SOURCE_MAX_FILE_BYTES = 256 * 1024 * 1024
 SOURCE_MAX_BYTES = 2 * 1024 * 1024 * 1024
+# Physical TAR limits apply before tarfile consumes hidden extension records.
+SOURCE_MAX_TAR_BYTES = SOURCE_MAX_BYTES + SOURCE_MAX_MEMBERS * 1024 + 10240
+SOURCE_MAX_METADATA_BYTES = 64 * 1024
+SOURCE_MAX_METADATA_TOTAL = 256 * 1024
+SOURCE_MAX_METADATA_HEADERS = 32
 WINDOWS_DEVICE_NAMES = {'CON', 'PRN', 'AUX', 'NUL', 'CONIN$', 'CONOUT$'} | {
     prefix + digit for prefix in ('COM', 'LPT') for digit in '123456789¹²³'
 }
@@ -38,6 +44,78 @@ def source_path_parts(name, expected_root=None):
     return tuple(parts)
 
 
+def bounded_source_tar(archive, decoded):
+    """Spool gzip TAR in bounded chunks before any extended-header parsing.
+
+    Count physical headers (including PAX/GNU metadata), charge their payloads
+    and TAR padding, and cap metadata before reading it. The later parser sees
+    only this validated, bounded private spool. Sparse TAR extensions are not
+    supported; their parser can otherwise read extra metadata from file bodies.
+    """
+    decoded_bytes = payload_bytes = headers = metadata_bytes = metadata_headers = 0
+    with gzip.open(archive, 'rb') as source:
+        def read(size):
+            nonlocal decoded_bytes
+            remaining = SOURCE_MAX_TAR_BYTES - decoded_bytes
+            data = source.read(min(size, remaining + 1))
+            if len(data) > remaining:
+                raise ValueError('Source archive exceeds decoded TAR byte limit')
+            decoded_bytes += len(data)
+            decoded.write(data)
+            return data
+
+        while True:
+            block = read(512)
+            if len(block) != 512:
+                raise ValueError('Truncated source TAR header')
+            if block == b'\x00' * 512:
+                # Drain even concatenated gzip streams; trailing padding is
+                # charged, not skipped via TarFile's early end-of-archive.
+                while True:
+                    tail = read(512)
+                    if not tail:
+                        decoded.seek(0)
+                        return metadata_bytes
+                    if tail.strip(b'\x00'):
+                        raise ValueError('Unexpected data after source TAR end')
+            try:
+                header = tarfile.TarInfo.frombuf(block, 'utf-8', 'surrogateescape')
+            except tarfile.HeaderError as error:
+                raise ValueError('Invalid source TAR header') from error
+            headers += 1
+            if headers > SOURCE_MAX_MEMBERS:
+                raise ValueError('Too many physical source archive members')
+            metadata = header.type in (tarfile.XHDTYPE, tarfile.XGLTYPE,
+                                       tarfile.GNUTYPE_LONGNAME, tarfile.GNUTYPE_LONGLINK)
+            if not metadata and header.type not in (
+                    tarfile.REGTYPE, tarfile.AREGTYPE, tarfile.DIRTYPE,
+                    tarfile.SYMTYPE, tarfile.LNKTYPE):
+                raise ValueError('Unsupported physical source archive member')
+            if header.size < 0 or header.size > SOURCE_MAX_FILE_BYTES:
+                raise ValueError('Oversized physical source archive member')
+            payload_bytes += header.size
+            if payload_bytes > SOURCE_MAX_BYTES:
+                raise ValueError('Source archive exceeds physical payload byte limit')
+            if metadata:
+                metadata_headers += 1
+                metadata_bytes += header.size
+                if (header.size > SOURCE_MAX_METADATA_BYTES
+                        or metadata_bytes > SOURCE_MAX_METADATA_TOTAL
+                        or metadata_headers > SOURCE_MAX_METADATA_HEADERS):
+                    raise ValueError('Source archive exceeds TAR metadata limit')
+            remaining = header.size
+            while remaining:
+                data = read(min(remaining, 64 * 1024))
+                if not data:
+                    raise ValueError('Truncated source TAR member')
+                if metadata and b'GNU.sparse' in data:
+                    raise ValueError('Unsupported sparse source TAR metadata')
+                remaining -= len(data)
+            padding = -header.size % 512
+            if len(read(padding)) != padding:
+                raise ValueError('Truncated source TAR padding')
+
+
 def extract_source_archive(archive, work, expected_root):
     """Validate first, then atomically publish a bounded Python 3.9 extraction.
 
@@ -50,9 +128,15 @@ def extract_source_archive(archive, work, expected_root):
     if (work.is_symlink() or destination.exists() or destination.is_symlink()
             or archive.stat().st_size > SOURCE_MAX_ARCHIVE_BYTES):
         raise ValueError('Existing tree, linked work directory or oversized source archive')
-    with tarfile.open(archive) as contents:
+    with tempfile.TemporaryFile(dir=work) as decoded:
+        metadata_bytes = bounded_source_tar(archive, decoded)
+        return extract_bounded_source_tar(decoded, work, expected_root, destination, metadata_bytes)
+
+
+def extract_bounded_source_tar(decoded, work, expected_root, destination, metadata_bytes):
+    with tarfile.open(fileobj=decoded, mode='r:') as contents:
         members = {}
-        total = 0
+        total = metadata_bytes
         for member in contents:
             if len(members) >= SOURCE_MAX_MEMBERS:
                 raise ValueError('Too many source archive members')
