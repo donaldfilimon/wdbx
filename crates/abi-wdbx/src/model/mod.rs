@@ -1,10 +1,9 @@
-//! Native model contracts and independent fixture vocabulary (N01).
+//! Native packages and deterministic byte BPE, with sealed validation stages.
 //!
-//! No production reader, tokenizer, inference, training, provider, or publication
-//! implementation is exposed here. N02 will create the sealed validation states
-//! only after bounded snapshot, integrity and complete semantic checks. Raw
-//! contract records are deliberately distinct from those states. Provenance is
-//! not authorization, and semantic validity is not trained-model qualification.
+//! The owned reader, framing and semantic validation, exact writer/staging and
+//! tokenizer implement N02. This module supplies no inference, neural training,
+//! provider activation, selected generation or authorization service. Raw records
+//! remain distinct from validated state; provenance does not confer permission.
 //!
 //! ```compile_fail
 //! use abi_wdbx::model::ValidatedModelState;
@@ -19,14 +18,16 @@ pub mod contract;
 pub mod error;
 pub mod ids;
 pub mod limits;
+pub mod package;
+pub mod tokenizer;
 
 use contract::{DirectoryEntry, ModelComponents};
 use ids::{ArtifactSha256, Digest, GenerationId, PackageDigest, StateRoot};
 
-/// Owned bounded immutable snapshot. Construction is reserved for N02.
+/// Owned bounded immutable snapshot, constructed only by the bounded reader.
 #[derive(Debug)]
 pub struct PackageBytes {
-    bytes: Box<[u8]>,
+    bytes: Vec<u8>,
 }
 impl PackageBytes {
     /// Borrow the one owned snapshot; no mutable or cloning API is exposed.
@@ -125,8 +126,8 @@ pub struct LocalPolicyContext {
     pub policy_epoch: u64,
 }
 
-/// Resume-eligible state after exact identities and local authority checks.
-/// There is no public constructor, Default, Deserialize or execution API in N01.
+/// Resume-context-matched state; caller authorization remains an external check.
+/// There is no public constructor, Default, Deserialize or execution API.
 #[derive(Debug)]
 pub struct ResumableState {
     model: ValidatedModelState,

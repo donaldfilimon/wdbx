@@ -10,16 +10,17 @@ repository, not WDBX build/runtime dependencies or machine-specific locations.
 
 The [binding design](../contracts/model/native-package-design-v1.md), sections
 1–12, governs exact identities, bytes, schemas, bounds and ownership. The
-[N01 execution plan](2026-10-25-native-model-contracts.md) records the current
-packet. The [contract index](../contracts/model/README.md) links its implemented
+[N01 execution plan](2026-10-25-native-model-contracts.md) records the reviewed contract
+packet. The [N02 execution plan](2026-10-25-native-package.md) records the current
+parser/tokenizer implementation packet. The [contract index](../contracts/model/README.md) links its implemented
 schema and fixture references.
 
 ## Task sequence
 
 | Task | Responsibility and acceptance boundary | Current status |
 | --- | --- | --- |
-| N01 | Typed contracts, independent full binary/semantic witness and frozen diagnostic vectors. | Implemented in `a043e4f`; focused checks, root gate and completion checks passed. This missing index is the review fix; controller review acceptance remains pending. |
-| N02 | Bounded owned snapshot, real package parser/writer, staging and tokenizer; framing, semantic and resume validation remain distinct. | Pending N01 review acceptance; no production implementation claimed. See [section 14](../contracts/model/native-package-design-v1.md#14-n02-implementation-packet-bounded-readerwriter-staging-real-tokenizer). |
+| N01 | Typed contracts, independent full binary/semantic witness and frozen diagnostic vectors. | Implemented in `a043e4f`; focused checks, root gate and completion checks passed. Independent specification/code review and the index fix re-review accepted (`cb129cf`; retained `task-1-fix-1-review.md`). |
+| N02 | Bounded owned snapshot, real package parser/writer, staging and tokenizer; framing, semantic and resume validation remain distinct. | In progress in the isolated N02 worktree; independent review and integration remain pending. No runtime/activation claim. See [section 14](../contracts/model/native-package-design-v1.md#14-n02-implementation-packet-bounded-readerwriter-staging-real-tokenizer). |
 | N03 | Actual recurrent spatial CPU forward execution for causal text and graph ranking, with independent numerical and causal-isolation evidence. | Pending validated N02 inputs; contract fixtures do not qualify execution. |
 | N04 | Actual backward/loss/optimizer implementation, admitted data preparation, checkpointing, objective improvement and deterministic training/resume equivalence. | Pending N02/N03 execution and data contracts; no training outcome claimed. |
 | N05 | Real ABI native-package admission, license/audience/artifact authority and normal Models/CLI/MCP selection. | Pending actual N03/N04 model support; no dummy provider or activation. |
