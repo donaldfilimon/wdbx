@@ -112,8 +112,6 @@ class NativeModelContract(unittest.TestCase):
         self.assertEqual(error.exception.code, 'ResumeMismatch')
 
 
-if __name__ == '__main__':
-    unittest.main()
 
 class BpeTrainerReferenceTests(unittest.TestCase):
     def test_independent_trainer_has_literal_ties_and_overlapping_counts(self):
@@ -173,3 +171,7 @@ class BpeTrainerReferenceTests(unittest.TestCase):
             else:
                 self.assertFalse(row['removed_v1_offsets'])
             self.assertEqual(dict(row['field_offsets'], **row['removed_v1_offsets']), table[name])
+
+
+if __name__ == '__main__':
+    unittest.main()
