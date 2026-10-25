@@ -1,0 +1,19 @@
+[workspace]
+members = ["glib-0.18.5", "glib-macros-0.18.5", "gtk3-macros-0.18.2", "compat-tests"]
+default-members = ["compat-tests"]
+resolver = "2"
+
+[patch.crates-io]
+glib = { path = "glib-0.18.5" }
+glib-macros = { path = "glib-macros-0.18.5" }
+gtk3-macros = { path = "gtk3-macros-0.18.2" }
+
+[profile.dev]
+debug = 0
+
+[profile.dev.package."glib@0.18.5"]
+opt-level = 3
+
+[profile.release]
+strip = true
+codegen-units = 8
