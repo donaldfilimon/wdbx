@@ -1,0 +1,20 @@
+{
+  "legacy_source_commit": "81ae29a7c472d42765fd1f09f75c1288b0252d30",
+  "legacy_source_tree": "292851868645ad8b0727acffcbcb00a8acdd109d",
+  "legacy_zip_version": "4.6.1",
+  "source_sha256": {
+    "specimen-studio/native/specimen-core/src/persistence.rs": "31a82e06eb71d76dd4fbc709c39972387e53b888648a4c10bc2609017c3307a7",
+    "specimen-studio/native/specimen-core/Cargo.toml": "618b0a27d80dcdf66c5691a5ced0ceeb447976609cdebfcb0b3b4dd841e5595b",
+    "specimen-studio/Cargo.lock": "3cfc1a52cb398d429025e0fe0b020b002ffe9818ab8d3a52b58812a7a75d9e9b",
+    "specimen-studio/conformance/starter.json": "a3877f6cd58bc9ad7c4bfd806c17e5d00108e12ee6fc48a92fa655a7289207c0"
+  },
+  "producer_sha256": "ff056757b21b2be13d6933b3a62941cc57c037d640407ea66f39e8e1942c64ec",
+  "helper_lock_sha256": "96d810ac3a31f49fb64d6457e25d5e6231157780751e192deaeee53f074608cf",
+  "fixtures_sha256": {
+    "legacy-zip4.wdbxspecimen": "8163cc282aa8ae4408c9ebb5f27c2078600b8b0178148350d6d9c8fe89f554cd",
+    "manifest.json": "193dbfd8c618db291c5b7ba9c055a8839e6e2286d4b57b49e2a81fc2661f2951",
+    "asset.bin": "ae56e78c4b772a3b876c4bd277e9813f152042f9b016be36045822092029df9d",
+    "streamed-overrun.zip": "fc3e8e3428d86c2f1ef2329e3a0706ca26c35ffb9a6cb2ebf3522f6c9c55820e"
+  },
+  "producer_receipt_sha256": "3e7771793939f9fd0cb51ea73052f4fa7cc8bf5eb87f87440e2222bdf87c910c"
+}
