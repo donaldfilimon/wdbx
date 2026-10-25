@@ -162,22 +162,65 @@ fn overlapping_members_with_matching_headers_refuse() {
     let mut payload = b"prefix".to_vec();
     payload.extend(nested_local);
     payload.extend(b"suffix");
+    let embedded_asset = format!("assets/{}", specimen_core::digest(&payload));
+    let referenced_asset = format!("assets/{}", specimen_core::digest(ASSET));
     let entries = vec![
-        Entry::new(
-            format!("assets/{}", specimen_core::digest(&payload)),
-            &payload,
-        ),
+        Entry::new(&embedded_asset, &payload),
         Entry::new("manifest.json", MANIFEST),
+        Entry::new(&referenced_asset, ASSET),
     ];
     let mut zip = archive(&entries);
-    let nested_offset = zip.data[0] + 6;
-    set32(&mut zip.bytes, zip.central[1] + 42, nested_offset as u32);
-    assert_eq!(get32(&zip.bytes, nested_offset), 0x04034b50);
+    let control_bytes = zip.bytes.clone();
+    let control_members = stored_members(&zip);
+    assert_eq!(control_members.len(), 3);
+    assert_eq!(control_members["manifest.json"], MANIFEST);
+    assert_eq!(control_members[&referenced_asset], ASSET);
+    assert_eq!(control_members[&embedded_asset], payload);
+    let manifest: serde_json::Value =
+        serde_json::from_slice(&control_members["manifest.json"]).unwrap();
     assert_eq!(
-        &zip.bytes[nested_offset + 30..nested_offset + 43],
-        b"manifest.json"
+        manifest["specimen"]["nodes"][0]["provenance"]["asset"],
+        specimen_core::digest(ASSET)
     );
-    assert!(nested_offset + 30 + 13 + MANIFEST.len() < zip.data[0] + payload.len());
+    // All original local records are disjoint, including the referenced asset.
+    for (i, entry) in entries.iter().enumerate().take(entries.len() - 1) {
+        assert_eq!(zip.data[i] + entry.data.len(), zip.local[i + 1]);
+    }
+    // The non-overlapping form must be semantically importable first.
+    let control = tempfile::tempdir().unwrap();
+    let control_path = control.path().join("control.wdbxspecimen");
+    fs::write(&control_path, &zip.bytes).unwrap();
+    let mut control_store = Store::open(control.path().join("workspace")).unwrap();
+    let imported = control_store
+        .import(&control_path, 0)
+        .expect("non-overlapping control must import before redirecting the manifest offset");
+    assert_eq!(imported.specimen, manifest["specimen"]);
+    assert_eq!(
+        control_store.asset(&specimen_core::digest(ASSET)).unwrap(),
+        ASSET
+    );
+    assert_eq!(
+        control_store
+            .asset(&specimen_core::digest(&payload))
+            .unwrap(),
+        payload
+    );
+    drop(control_store);
+
+    let nested_offset = zip.data[0] + 6;
+    let offset_field = zip.central[1] + 42;
+    assert_eq!(get32(&zip.bytes, offset_field), zip.local[1] as u32);
+    set32(&mut zip.bytes, offset_field, nested_offset as u32);
+    // Only this central offset changes; every independently checked name,
+    // header field, CRC and semantic member payload remains identical.
+    assert_eq!(&zip.bytes[..offset_field], &control_bytes[..offset_field]);
+    assert_eq!(
+        &zip.bytes[offset_field + 4..],
+        &control_bytes[offset_field + 4..]
+    );
+    assert_eq!(stored_members(&zip), control_members);
+    assert!(nested_offset > zip.data[0]);
+    assert!(nested_offset + nested_local.len() < zip.data[0] + payload.len());
     refuses_without_writes(&zip.bytes, Some("MalformedSave"));
 }
 #[test]
