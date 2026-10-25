@@ -1,0 +1,28 @@
+[package]
+name = "gtk-compat-tests"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[features]
+default = []
+glib-runtime = ["dep:glib"]
+gtk-runtime = ["glib-runtime", "dep:gtk"]
+
+[dependencies]
+glib-macros = "=0.18.5"
+gtk3-macros = "=0.18.2"
+glib = { version = "=0.18.5", optional = true }
+# The GTK macro checks Cargo's package name before parsing invalid templates.
+gtk = { version = "=0.18.2", optional = true }
+
+[dev-dependencies]
+serde_json = "1"
+
+[[test]]
+name = "glib_runtime"
+required-features = ["glib-runtime"]
+
+[[test]]
+name = "gtk_runtime"
+required-features = ["gtk-runtime"]

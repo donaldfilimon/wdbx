@@ -22,9 +22,11 @@
     "desktop": "tauri dev --no-default-features",
     "desktop:package": "bun --bun tauri build",
     "test:native": "cargo test --locked -p specimen-kernel -p specimen-core -p specimen-wasm -p specimen-tui",
-    "check:native": "cargo clippy --workspace --all-targets -- -D warnings",
+    "check:native": "bun run check:gtk && cargo clippy --workspace --all-targets -- -D warnings",
     "check": "sh scripts/check-instructions.sh && bunx tsc --noEmit && bun run lint:studio && bun run build:wasm && bun test && bun run build",
-    "check:all": "bun run check && bun run check:native"
+    "check:all": "bun run check && bun run check:native",
+    "check:gtk": "python3 scripts/check_gtk_vendor.py --metadata && python3 -m unittest discover -s scripts/tests -p \"*gtk*.py\" -v",
+    "test:gtk": "cargo test --locked --manifest-path native/vendor/Cargo.toml -p gtk-compat-tests --no-default-features --test diagnostics"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",
