@@ -92,3 +92,15 @@ UI flags OFF and server ON; both sidecar hashes above are unchanged. CMake
 warnings remain visible. This scoped Python fix did not rerun or extend the
 earlier full Rust/browser qualification. Platform, advisory, stripping and
 service/model/installed-product limits above remain unchanged.
+
+Round 2 retains those bounds and closes I1's remaining parser disagreement.
+Builder SHA: `ad6b20c385817fac15cb82e4d96399813340bb8e553e608415e0ba4cf5284500`.
+Strict bounded PAX framing accepts only comments, names and ordinary attributes;
+all size/sparse/unknown controls are refused before parser use. Non-file members
+must have zero payload, and TAR padding must be zero, so preflight and parser
+cannot use different header boundaries. Both actual Python versions pass 28
+extraction + 9 provenance tests. Both independent reviewer probes are rejected
+before `tarfile.open`; the exact size-override probe reaches no PAX parser calls.
+Both archive replays retain 6,070 hashes and one alias; cached headless replay
+passes with unchanged sidecar hashes and existing warnings. Earlier full gates
+remain evidence for their original source, with all stated limits unchanged.
