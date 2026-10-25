@@ -1,0 +1,20 @@
+{
+  "schema": "wdbx.source-custody.v1",
+  "recorded_on": "2026-10-25",
+  "scope": "source-custody-only",
+  "source": {
+    "id": "AUDITED-SOURCE-02",
+    "title": "WDBX-3D-Neural-Specimen-Master-Plan-v5.md",
+    "path": "docs/source-records/wdbx-master-v5.md",
+    "sha256": "f98d61f6f80503a2d00687c8cb6f38ed654cf9ad46cf55407ba5e06765354822",
+    "byte_length": 344347
+  },
+  "origin": {
+    "repository": "LYLX",
+    "manifest": "docs/requirements/historical-sources/manifest.json",
+    "object": "docs/requirements/historical-sources/objects/f98d61f6f80503a2d00687c8cb6f38ed654cf9ad46cf55407ba5e06765354822",
+    "recovery": "read-only Time Machine snapshot 2026-10-20-181425",
+    "receipt": "artifacts/historical-source-recovery-20261022-001/missing-search/time-machine/findings.json",
+    "recovered_artifact": "artifacts/historical-source-recovery-20261022-001/missing-search/time-machine/recovered/AUDITED-SOURCE-02/WDBX-3D-Neural-Specimen-Master-Plan-v5.md"
+  }
+}
