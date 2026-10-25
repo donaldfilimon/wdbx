@@ -5,6 +5,22 @@
 **Specification:** Approved master milestone2/code-first addendum; no whole-source requirement promotion.
 **Technology:** Stable Rust1.99.1, current GTK3-compatible0.18 crates, proc-macro-error2 2.0.1.
 
+## Superseding advisory ruling: active macro target is version 3
+
+Actual scanner and RustSec RUSTSEC-2026-0173 show that proc-macro-error2 has no
+patched maintained release. The source contract below records the earlier
+candidate; its active replacement is now **proc-macro-error3 = 3.1.1**, with
+`default-features = false` and explicit `syn2-error`, subject to confirming the
+published manifest/API. Both macro parents use the real dependency/import path
+`proc_macro_error3`; do not alias it as version 1 or 2. Verify/pin the actual
+version-3 and attr3 archive/source/license/feature graph, update local provenance
+and locks, and repeat covering diagnostics/runtime checks and actual scans.
+Preserve rejected version-2 receipts and source attribution. No new ignore or
+version relabeling is permitted. This is the smallest compatibility update that
+satisfies the approved security goal; cost is explicit requalification on the new
+graph. Primary references: https://rustsec.org/advisories/RUSTSEC-2026-0173 and
+https://docs.rs/crate/proc-macro-error3/3.1.1 .
+
 ## Global Constraints
 
 - Own only Studio files listed under Studio owner below: specimen-studio manifests/lock/native/vendor/scripts/tests and necessary gate wiring. No root/fuzz lock, WDBX crate, ABI, kernel, ZIP importer, or old evidence changes.
