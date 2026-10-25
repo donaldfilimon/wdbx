@@ -67,3 +67,15 @@ sentinels outside the workspace. Accepted symlink/FIFO mode metadata remains
 inert byte content: no symlink or special file is created, external content is
 not read, and Unix executable bits are not applied. Unix mode assertions are
 conditional; native Windows/Linux execution is still required for those hosts.
+
+The overlap witness has a paired control containing the original referenced asset,
+a content-addressed asset embedding a second local manifest header, and the
+standalone manifest. The non-overlapping control must import successfully before
+only the manifest central-directory offset is redirected inside the embedding
+asset. A raw stored-member reader, independent of the production ZIP reader,
+checks matching local/central metadata, member names/sizes/CRCs and identical
+logical payloads in both forms. The manifest's referenced asset is present and
+readable. Thus the overlapping form's refusal is distinguished by overlap rather
+than missing-asset validation. The CRC corruption witness separately retains its
+nonblocking specificity limitation: altered asset bytes also violate their
+content address, so that case proves refusal but does not isolate ZIP CRC checks.

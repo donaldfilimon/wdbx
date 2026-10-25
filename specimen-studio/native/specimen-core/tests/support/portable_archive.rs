@@ -111,6 +111,41 @@ pub fn archive(entries: &[Entry]) -> Archive {
         data,
     }
 }
+/// Decode this fixture's stored members independently of the production ZIP reader.
+/// Check local/central metadata, names, sizes and CRCs, while allowing overlaps.
+pub fn stored_members(zip: &Archive) -> BTreeMap<String, Vec<u8>> {
+    fn get16(bytes: &[u8], offset: usize) -> usize {
+        u16::from_le_bytes(bytes[offset..offset + 2].try_into().unwrap()) as usize
+    }
+    let mut members = BTreeMap::new();
+    for &central in &zip.central {
+        assert_eq!(get32(&zip.bytes, central), 0x02014b50);
+        let local = get32(&zip.bytes, central + 42) as usize;
+        assert_eq!(get32(&zip.bytes, local), 0x04034b50);
+        // Version, flags, method, time/date, CRC and both sizes must agree.
+        assert_eq!(
+            &zip.bytes[local + 4..local + 26],
+            &zip.bytes[central + 6..central + 28]
+        );
+        assert_eq!(get16(&zip.bytes, local + 8), 0, "stored method only");
+        let name_len = get16(&zip.bytes, central + 28);
+        assert_eq!(get16(&zip.bytes, local + 26), name_len);
+        let name = &zip.bytes[central + 46..central + 46 + name_len];
+        assert_eq!(&zip.bytes[local + 30..local + 30 + name_len], name);
+        let start = local + 30 + name_len + get16(&zip.bytes, local + 28);
+        let size = get32(&zip.bytes, central + 20) as usize;
+        assert_eq!(size, get32(&zip.bytes, central + 24) as usize);
+        assert!(start + size <= zip.central[0]);
+        let data = zip.bytes[start..start + size].to_vec();
+        assert_eq!(crc32(&data), get32(&zip.bytes, central + 16));
+        assert!(
+            members
+                .insert(String::from_utf8(name.to_vec()).unwrap(), data)
+                .is_none()
+        );
+    }
+    members
+}
 pub fn valid_entries() -> Vec<Entry> {
     vec![
         Entry::new("manifest.json", MANIFEST),

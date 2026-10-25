@@ -106,3 +106,34 @@ those receipts; paths in this document are portable.
 Reverting this packet restores the prior ZIP reader/dependency. No live-store
 migration or production signing/deployment happened. These native archive checks
 do not qualify models, hardware, canonical recovery, desktop UI or release.
+
+
+## Review correction — overlap witness
+
+Review I1 found that the initial overlap fixture omitted the manifest's original
+referenced asset. Its refusal could therefore survive loss of overlap validation.
+Adding a successful non-overlapping control first exposed that defect: the exact
+focused test failed with `MalformedSave: Archive is missing a referenced asset`.
+The corrected fixture includes that asset, verifies that the control imports and
+both asset payloads are readable, and redirects only the manifest's central
+offset into the embedded local header. An independent raw stored-member reader
+checks header agreement, CRCs and identical logical member payloads before and
+after the redirect; explicit ranges distinguish disjoint control members from
+the nested overlap. The overlapping form refuses with the existing full
+unchanged-state assertions. Production and locks are unchanged.
+
+The final archive suite passes 12/12, package Clippy and exact-path rustfmt pass.
+The initial fix Clippy attempt rejected a needless range loop; the iterator fix
+and final passing receipts are retained. Native and audit gates were not rerun
+for this test-only correction. Existing CRC witness specificity (review M1) stays
+nonblocking and deferred: it establishes fail-closed refusal, while both CRC and
+asset content address disagree. Existing loader/audit/platform limits above stay
+unchanged. Concurrent root/Studio AGENTS.md edits were not authored, reverted or
+staged by this task.
+
+| Receipt | Executed command | Exit | Receipt SHA-256 |
+| --- | --- | --- | --- |
+| `fix1-red-overlap-control` | `cargo test --locked -p specimen-core --test portable_archive overlapping_members_with_matching_headers_refuse -- --exact` | 101 | `d0ca866cacca2fccec83d666f670e0a26fcdbb02ce2a3dc0218c83e78614f7af` |
+| `fix1-portable-suite-final` | `cargo test --locked -p specimen-core --test portable_archive` | 0 | `666944ae468d9c2e5067e4959f1e832e4023c2fb38952ede30e75d47188f3b98` |
+| `fix1-package-clippy-final` | `cargo clippy --locked -p specimen-core --all-targets -- -D warnings` | 0 | `599aebdd8e6499011dbb930e76ab09c9917d152c7063334f0ad58635637fd8aa` |
+| `fix1-rustfmt` | `rustfmt --edition 2024 --check native/specimen-core/tests/portable_archive.rs native/specimen-core/tests/support/portable_archive.rs` | 0 | `776946583f8b417e08ce152db6449ea14265fe05c3dd35b587fb2db507b1fb64` |
