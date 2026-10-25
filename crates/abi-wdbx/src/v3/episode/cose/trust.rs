@@ -47,6 +47,9 @@ pub enum TrustError {
     /// The key identifier is already registered.
     #[error("trust key is already registered")]
     AlreadyRegistered,
+    /// The identifier does not derive from the supplied verifying key.
+    #[error("trust key identifier does not match verifying key")]
+    KeyIdMismatch,
     /// The requested transition is not permitted from the current state.
     #[error("trust transition is not permitted")]
     InvalidTransition,
@@ -136,6 +139,9 @@ impl TrustList {
         if self.keys.contains_key(key_id) {
             return Err(TrustError::AlreadyRegistered);
         }
+        if SignerKeyId::for_key(&key) != *key_id {
+            return Err(TrustError::KeyIdMismatch);
+        }
         let revision = self.next_revision()?;
         self.keys.insert(
             key_id.clone(),
@@ -191,8 +197,14 @@ impl TrustList {
         if current == KeyStatus::Revoked {
             return Err(TrustError::Revoked);
         }
+        if current != KeyStatus::Active {
+            return Err(TrustError::InvalidTransition);
+        }
         if self.keys.contains_key(new_id) {
             return Err(TrustError::AlreadyRegistered);
+        }
+        if SignerKeyId::for_key(&new_key) != *new_id {
+            return Err(TrustError::KeyIdMismatch);
         }
         let revision = self.next_revision()?;
         if let Some(entry) = self.keys.get_mut(old) {
@@ -252,6 +264,63 @@ mod tests {
 
     fn verifying_key(seed: u8) -> VerifyingKey {
         SigningKey::from_bytes(&[seed; 32]).verifying_key()
+    }
+
+    #[test]
+    fn mismatched_registration_does_not_change_the_list() {
+        let mut list = TrustList::new();
+        assert_eq!(
+            list.register(&key_id(1), verifying_key(2)),
+            Err(TrustError::KeyIdMismatch)
+        );
+        assert_eq!(list.revision(), 0);
+        assert!(list.is_empty());
+        assert_eq!(list.resolve(&key_id(1)), None);
+    }
+
+    #[test]
+    fn rotation_requires_an_active_old_key_without_changing_history() {
+        for status in [KeyStatus::Pending, KeyStatus::Retired, KeyStatus::Revoked] {
+            let mut list = TrustList::new();
+            let old = key_id(1);
+            let new = key_id(2);
+            list.register(&old, verifying_key(1)).unwrap();
+            match status {
+                KeyStatus::Retired => list.retire(&old).unwrap(),
+                KeyStatus::Revoked => list.revoke(&old).unwrap(),
+                _ => {}
+            }
+            let revision = list.revision();
+            let expected = if status == KeyStatus::Revoked {
+                TrustError::Revoked
+            } else {
+                TrustError::InvalidTransition
+            };
+            assert_eq!(list.rotate(&old, &new, verifying_key(2)), Err(expected));
+            assert_eq!(list.revision(), revision);
+            assert_eq!(list.status(&old), Some(status));
+            assert_eq!(list.resolve(&old), Some(verifying_key(1)));
+            assert_eq!(list.status(&new), None);
+        }
+    }
+
+    #[test]
+    fn mismatched_rotation_preserves_the_active_old_key() {
+        let mut list = TrustList::new();
+        let old = key_id(1);
+        list.register(&old, verifying_key(1)).unwrap();
+        list.activate(&old).unwrap();
+        let revision = list.revision();
+        assert_eq!(
+            list.rotate(&old, &key_id(2), verifying_key(3)),
+            Err(TrustError::KeyIdMismatch)
+        );
+        assert_eq!(list.revision(), revision);
+        assert_eq!(list.status(&old), Some(KeyStatus::Active));
+        assert_eq!(list.resolve(&old), Some(verifying_key(1)));
+        assert!(list.admits(&old));
+        assert_eq!(list.status(&key_id(2)), None);
+        assert_eq!(list.len(), 1);
     }
 
     #[test]

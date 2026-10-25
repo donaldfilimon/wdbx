@@ -100,6 +100,13 @@
 //! both stay distinct from this ledger's key, so that a signature made in one
 //! domain can never be presented in another.
 //!
+//! [`CompleteEpisodeStore::open_authenticated`] instead requires a valid
+//! signature from a supplied historical key for every record. The host must
+//! select that mode on every open; the policy is not persisted in the ledger.
+//! This detects signature removal and unresolved-key substitution in that mode,
+//! but does not prove current key authority, prevent whole-ledger rollback,
+//! or turn the compatibility opens into authenticated readers.
+//!
 //! # Not implemented
 //!
 //! This is a private, provisional, crate-internal prototype. It has:
@@ -139,6 +146,7 @@ use crate::v3::commitment::CanonicalDecodeLimits;
 use crate::v3::episode::{
     EpisodeSignature, EpisodeSigner, SignatureStatus, SignerKeyId, check_signature,
 };
+use ed25519_dalek::VerifyingKey;
 use serde::Serialize;
 use sha2::{Digest, Sha256};
 use std::collections::BTreeSet;
@@ -259,7 +267,7 @@ impl CompleteEpisodeStore {
     /// A store opened this way appends unsigned records. Existing signed
     /// records remain readable; use [`Self::signature_status`] to check them.
     pub(crate) fn open(directory: impl AsRef<Path>) -> Result<Self, CompleteEpisodeStoreError> {
-        Self::open_inner(directory.as_ref(), None)
+        Self::open_inner(directory.as_ref(), None, None)
     }
 
     /// Open a ledger whose canonical writer signs every record it appends.
@@ -272,12 +280,30 @@ impl CompleteEpisodeStore {
         directory: impl AsRef<Path>,
         signer: EpisodeSigner,
     ) -> Result<Self, CompleteEpisodeStoreError> {
-        Self::open_inner(directory.as_ref(), Some(signer))
+        Self::open_inner(directory.as_ref(), Some(signer), None)
+    }
+
+    /// Require every historical signature to verify against the supplied keys.
+    ///
+    /// The host supplies this policy on every open. Keys are historical
+    /// verification keys, not proof of current authority or key custody.
+    /// The current signer must be included. This refuses unsigned history
+    /// and unresolved keys before crash-tail repair and changes no record bytes.
+    pub(crate) fn open_authenticated(
+        directory: impl AsRef<Path>,
+        signer: EpisodeSigner,
+        trusted_keys: &[VerifyingKey],
+    ) -> Result<Self, CompleteEpisodeStoreError> {
+        if !trusted_keys.contains(&signer.verifying_key()) {
+            return Err(CompleteEpisodeStoreError::Corrupt);
+        }
+        Self::open_inner(directory.as_ref(), Some(signer), Some(trusted_keys))
     }
 
     fn open_inner(
         directory: &Path,
         signer: Option<EpisodeSigner>,
+        trusted_keys: Option<&[VerifyingKey]>,
     ) -> Result<Self, CompleteEpisodeStoreError> {
         let directory = prepare_directory(directory)?;
         let ledger_path = directory.join(LEDGER_FILE);
@@ -289,7 +315,7 @@ impl CompleteEpisodeStore {
         acquire_writer_lock(&writer_lock)?;
         let raw = read_bounded_file(&ledger_path, MAX_LEDGER_BYTES)?;
         let (records, valid_bytes) = decode_lines(&raw)?;
-        let entries = replay(records, signer.as_ref())?;
+        let entries = replay(records, signer.as_ref(), trusted_keys)?;
         // A failed replay must not repair the file. Only a fully verified
         // prefix permits discarding an incomplete final line.
         if valid_bytes != raw.len() {
@@ -486,6 +512,7 @@ fn receipt(entry: &LedgerEntry) -> CompleteEpisodeReceipt {
 fn replay(
     records: Vec<format::LedgerRecord>,
     signer: Option<&EpisodeSigner>,
+    trusted_keys: Option<&[VerifyingKey]>,
 ) -> Result<Vec<LedgerEntry>, CompleteEpisodeStoreError> {
     let mut entries: Vec<LedgerEntry> = Vec::with_capacity(records.len());
     let mut digests: BTreeSet<[u8; 32]> = BTreeSet::new();
@@ -532,7 +559,16 @@ fn replay(
         let decoded =
             DecodedCompleteEpisode::from_canonical_bytes(&bytes, CanonicalDecodeLimits::default())
                 .map_err(|_| CompleteEpisodeStoreError::Corrupt)?;
-        if let Some(signer) = signer {
+        if let Some(keys) = trusted_keys {
+            let status = check_signature(&digest, signature.as_ref(), |id| {
+                keys.iter()
+                    .find(|key| &SignerKeyId::for_key(key) == id)
+                    .copied()
+            });
+            if !matches!(status, SignatureStatus::Valid(_)) {
+                return Err(CompleteEpisodeStoreError::Corrupt);
+            }
+        } else if let Some(signer) = signer {
             validate_own_signature(&digest, signature.as_ref(), signer)?;
         }
         if !digests.insert(digest) {

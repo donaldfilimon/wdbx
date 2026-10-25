@@ -1,5 +1,6 @@
 //! Provisional private complete-episode prototype; subject to ABI ratification.
-//! No compatibility promise, admission, persistence, or signature verification.
+//! No compatibility promise or governed admission. The ledger and signature
+//! primitives remain private experiments, without production qualification.
 //! Checked sizing precedes canonical-tree allocation. Temporary encoder buffers
 //! mean the output cap is not a claim about peak memory. Caller allocations are
 //! outside this guarantee. Explicit byte access intentionally discloses input.
@@ -14,6 +15,7 @@ macro_rules! redacted {
     })*};
 }
 mod canonical;
+mod crypto;
 mod decode;
 pub mod facade;
 mod ledger;
