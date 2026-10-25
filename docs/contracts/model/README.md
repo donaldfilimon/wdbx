@@ -5,6 +5,7 @@ fixes version 1.0. This additive packet supplies Rust contract types, a Python
 binary/semantic witness and frozen diagnostic fixtures. It supplies no production
 parser, tokenizer, inference engine, trainer, model provider or publication path.
 
+- [Task sequence and requirement mapping](../../plans/2026-10-25-native-model-cpu.md)
 - [Package framing and identities](package-v1.md)
 - [Eight component schemas and tensor catalog](components-v1.md)
 - [Tokenizer contract](tokenizer-v1.md)
