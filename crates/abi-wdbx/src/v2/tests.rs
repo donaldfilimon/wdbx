@@ -554,3 +554,35 @@ fn v2_refuses_a_batch_whose_vectors_disagree_on_width() {
     assert_eq!(store.snapshot().vector_count(), 0);
     std::fs::remove_dir_all(root).unwrap();
 }
+
+#[test]
+fn read_only_root_recovery_matches_the_writer_and_touches_nothing() {
+    let root = scratch();
+    assert!(matches!(
+        read_v2_root(&root, &ObjectSecurity::plaintext()),
+        Err(V2Error::Io { .. })
+    ));
+    let mut store = V2Store::open(&root).unwrap();
+    for key in ["beta", "alpha"] {
+        store
+            .commit(vec![V2Mutation::PutKv {
+                key: key.into(),
+                value: format!("{key}-value"),
+            }])
+            .unwrap();
+    }
+    let expected = store.snapshot();
+    drop(store);
+    let leases = || std::fs::read_dir(root.join("leases")).unwrap().count();
+    let before = leases();
+    let recovered = read_v2_root(&root, &ObjectSecurity::plaintext()).unwrap();
+    assert_eq!(&recovered, expected.as_ref());
+    assert_eq!(recovered.kv_keys().collect::<Vec<_>>(), ["alpha", "beta"]);
+    assert_eq!(leases(), before);
+    std::fs::write(root.join("VERSION"), b"ABI-WDBX 9\n").unwrap();
+    assert!(matches!(
+        read_v2_root(&root, &ObjectSecurity::plaintext()),
+        Err(V2Error::UnsupportedVersion { .. })
+    ));
+    std::fs::remove_dir_all(&root).ok();
+}

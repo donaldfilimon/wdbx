@@ -282,6 +282,12 @@ impl V2Snapshot {
         dimensions
     }
 
+    /// Every logical key/value key in deterministic order. Concurrent versions
+    /// of one key appear once; [`Self::get`] returns them.
+    pub fn kv_keys(&self) -> impl Iterator<Item = &str> {
+        self.kv.keys().map(String::as_str)
+    }
+
     /// Return the maximal causal versions for a key.
     #[must_use]
     pub fn get(&self, key: &str) -> Option<ConflictSet<String>> {

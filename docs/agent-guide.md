@@ -351,6 +351,24 @@ cargo test --workspace < /dev/null
 - `DurableStore` holds `<base>.writer.lock` for its lifetime. The bounded
   `WouldBlock` retry in `src/durable.rs` handles fork/exec descriptor inheritance;
   persistent contention is `WriterBusy`, not permission to open without a lock.
+- The `wdbx` binary (`crates/abi-wdbx/src/bin/wdbx/`) is the typed-host ledger
+  CLI quesar.cloud's commerce adapter shells out to: `wdbx typed inspect <dir>
+  <config> <host-key>` and `wdbx typed commit … <auth.json> <transaction.json>`
+  over one owner-only v2 root per business object. The typed layer, not V2,
+  owns the configured 16-byte writer: its frontier is `{writer: n}` with `n`
+  the root's committed v2 transactions, and a commit is admitted only under the
+  exclusive `typed.lock` (busy after 2 s → `WriterBusy`, exit 75) when it names
+  sequence `n + 1` and observed exactly that frontier (else `StaleFrontier`,
+  exit 3). Every stored value is a `wdbx-typed-kv-v1` envelope whose
+  HMAC-SHA256 under the 32-byte host key binds namespace, writer, sequence,
+  nonce, principal, policy/consent epoch, key and value; inspect refuses any
+  version that does not authenticate. V2 objects are written plaintext (there
+  is no public byte-key `ObjectSecurity` constructor), so confidentiality is the
+  caller's: quesar seals values with its own AES key. Reads use
+  `read_v2_root`, which recovers without a lease or any write; a fresh empty
+  directory inspects as empty. `tests/typed_cli.rs` pins the contract through
+  the built binary. This is local CLI evidence, not production host or
+  distributed-writer qualification.
 - `StorePaths::new` accepts a directory; ABI CLI arguments use a base path.
   Abbey's `<state>/wdbx/` directory is `<state>/wdbx/wdbx` to the ABI CLI.
 - `crates/abi-foundation/src/env.rs` owns ABI environment names and accessors.
