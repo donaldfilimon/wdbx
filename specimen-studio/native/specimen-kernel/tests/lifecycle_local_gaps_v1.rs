@@ -1,7 +1,14 @@
-//! Direct assertions for frozen Studio acceptance rows S29, S32 and S33
-//! (`docs/completion/studio-acceptance-v1.json`). Synthetic fixtures only.
+//! Direct assertions for frozen Studio acceptance rows S29 and S33
+//! (`docs/completion/studio-acceptance-v1.json`), plus adjacent mechanism
+//! tests for the current mutation shortening. Synthetic fixtures only.
 //! These tests are requirement-level candidate evidence; they do not qualify
 //! the requirements (all remain open/C0 in the execution register).
+//!
+//! S32 is deliberately NOT covered: the frozen design
+//! (`docs/completion/synthesis-contract-v1.md:131-132`, `designs.json`) retires
+//! tail slots by recipient-ref order and stores the selected mapping and
+//! permanent retired refs atomically. `engine::maintain` truncates by array
+//! position and stores neither, so S32 remains a local gap.
 use serde_json::{Value, json};
 use specimen_kernel::{engine, host::FixedHost, mutate, neural::Rng};
 use std::sync::atomic::AtomicBool;
@@ -19,8 +26,9 @@ fn seed_with_first_flip(lands: bool) -> u64 {
         .unwrap()
 }
 
-/// Two nodes sharing one patternId ("same-ID" peers), an attachment between
-/// them, a resource linked to that patternId, and a cycle crediting only `a`.
+/// Two nodes sharing one patternId ("same-ID" peers) plus an unrelated node
+/// `c`; attachments a->b and b->c; a resource linked to the shared patternId;
+/// and a cycle crediting only `a`.
 fn same_pattern_pair(strength_a: u64, flip_lands: bool) -> Value {
     let mut s = starter();
     let mut a = s["nodes"][0].clone();
@@ -31,9 +39,15 @@ fn same_pattern_pair(strength_a: u64, flip_lands: bool) -> Value {
     b["strength"] = json!(4);
     b["entries"][0]["id"] = json!("b-entry");
     b["entries"][0]["alternatives"][0]["id"] = json!("b-slot");
+    let mut c = s["nodes"][1].clone();
+    c["ref"] = json!("c");
     let pid = a["patternId"].clone();
-    s["nodes"] = json!([a, b]);
-    s["attachments"] = json!([{"id":"att","from":"a","to":"b","mode":"sequence"}]);
+    assert_ne!(c["patternId"], pid, "c is an unrelated pattern");
+    s["nodes"] = json!([a, b, c]);
+    s["attachments"] = json!([
+        {"id":"att","from":"a","to":"b","mode":"sequence"},
+        {"id":"keep","from":"b","to":"c","mode":"sequence"}
+    ]);
     s["resources"][0]["resourceId"] = pid;
     s["settings"]["seed"] = json!(seed_with_first_flip(flip_lands));
     s["history"] = json!([{
@@ -58,12 +72,16 @@ fn s29_spent_same_pattern_node_is_removed_and_peers_remain() {
     let fixed = FixedHost::default();
     let s = same_pattern_pair(1, true);
     let (next, _) = mutate::feedback(&fixed.host(), &s, "c1", false, None).unwrap();
-    assert_eq!(refs(&next), ["b"]);
+    assert_eq!(refs(&next), ["b", "c"]);
     assert_eq!(next["nodes"][0], s["nodes"][1], "peer record is untouched");
     assert_eq!(
+        next["nodes"][1], s["nodes"][2],
+        "unrelated record is untouched"
+    );
+    assert_eq!(
         next["attachments"],
-        json!([]),
-        "only the removed record's links go"
+        json!([s["attachments"][1]]),
+        "only the removed record's links go; unrelated links survive"
     );
     assert_eq!(
         next["resources"][0]["resourceId"], s["nodes"][1]["patternId"],
@@ -146,7 +164,7 @@ fn alt_ids(s: &Value, node: usize) -> Vec<&str> {
 }
 
 #[test]
-fn s32_five_weak_with_four_strong_shortens_recipient_to_four() {
+fn shortening_mechanism_keeps_first_min_slots_by_array_position() {
     let s = pairing(5, 4);
     let next = mutate_once(&s);
     assert_eq!(next["mutations"].as_array().unwrap().len(), 1);
@@ -167,7 +185,7 @@ fn s32_five_weak_with_four_strong_shortens_recipient_to_four() {
 }
 
 #[test]
-fn s32_remixed_tail_blocks_shortening() {
+fn shortening_mechanism_remixed_tail_blocks_shortening() {
     let mut s = pairing(5, 4);
     s["nodes"][0]["entries"][0]["alternatives"][4]["remixed"] = json!(true);
     let next = mutate_once(&s);

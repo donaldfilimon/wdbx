@@ -4,10 +4,10 @@ Every one of the 163 frozen requirements is reconciled to its owner, task,
 qualification plan and inspected local references. All remain **open/C0**.
 This is an execution inventory, not an evidence promotion schema.
 
-- **132 candidate mappings** have direct, hash-pinned partial implementation and
+- **131 candidate mappings** have direct, hash-pinned partial implementation and
   test references. Candidate code/tests do not establish complete requirement
   coverage, successful current execution, research efficacy or product conformance.
-- **15 local gaps** identify missing direct qualification or local implementation
+- **16 local gaps** identify missing direct qualification or local implementation
   work, with inspection references and exact frozen design/acceptance obligations.
   A gap does not claim no adjacent code exists.
 - **16 external gaps** require ABI/consumer owners, installed platform artifacts,
@@ -17,7 +17,7 @@ This is an execution inventory, not an evidence promotion schema.
   conclusions are recorded separately. No review is inferred from source presence.
 
 Local gaps: G01, G02, G05, G12; CH01, CH02, CH04, CH26; S16, S18, S24,
-S28, S36, S37, S41. Each acceptance gap repeats its exact frozen
+S28, S32, S36, S37, S41. Each acceptance gap repeats its exact frozen
 case and requires direct positive/boundary/negative assertions.
 
 External gaps: G10, G11; P05.01–P05.04; P10.01–P10.04; OS01–OS06.
@@ -210,14 +210,21 @@ qualification remain open. No live store or efficacy holdout was used.
 
 ## Wave 1 tranche 1 lifecycle observations (2026-10-26)
 
-The packet is `evidence/2026-10-26-wave1-tranche1/`. S29, S32 and S33 move from
-local gap to partial local mechanism candidates: 132 candidates / 15 local gaps /
-16 external gaps. All 163 requirements remain open/C0/unknown. Direct kernel
-assertions live in `specimen-kernel/tests/lifecycle_local_gaps_v1.rs` (six tests:
-positive, boundary and negative per case), with `requirement-mapping.json`, the
-test log and a three-mutant sensitivity log. S29 asserts same-patternId peer
-preservation through `mutate::feedback`; S32/S33 assert `engine::maintain`
-min(weak, strong) shortening and the remixed-slot guard. Fixtures are synthetic
-FixedHost states; saved-store, import, browser/WASM parity, UI and independent
-review remain open. The same packet records an explicit pin refresh for
+The packet is `evidence/2026-10-26-wave1-tranche1/`. S29 and S33 move from local
+gap to partial local mechanism candidates: 131 candidates / 16 local gaps / 16
+external gaps. All 163 requirements remain open/C0/unknown. Direct kernel
+assertions live in `specimen-kernel/tests/lifecycle_local_gaps_v1.rs`, with
+`requirement-mapping.json`, test logs and mutant sensitivity logs. S29 asserts
+same-patternId peer preservation through `mutate::feedback`, including survival
+of an unrelated attachment; S33 asserts `engine::maintain` keeps four recipient
+slots and adds no fifth. Fixtures are synthetic FixedHost states; saved-store,
+import, browser/WASM parity, UI and independent review remain open.
+
+S32 was briefly routed as a candidate and is withdrawn back to its original
+local-gap row. The frozen design (`synthesis-contract-v1.md:131-132`,
+`designs.json`) retires tail slots by recipient-ref order, not array position,
+and stores the selected mapping and permanent retired refs atomically.
+`engine::maintain` truncates by array position and stores neither. The adjacent
+`shortening_mechanism_*` tests describe current behaviour only and are not S32
+evidence. The same packet records an explicit pin refresh for
 `crypto/admission/mod.rs` (`reference-refresh.json`); no other pins changed.

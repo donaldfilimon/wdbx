@@ -12,7 +12,7 @@ CONTRACT_PINS = {'docs/completion/requirements.json': '571e55910ca882db6141c616f
 AUDIT_MANIFESTS = ['docs/completion/execution-status.json', 'docs/completion/complete-episode-decoder-v1-source.json', 'docs/completion/complete-episode-python-source.json']
 
 CANDIDATE_PATHS = 'docs/completion/execution/candidate-paths-v1.json'
-CANDIDATE_PATHS_SHA256 = 'da5bb9e1c51f9872fc6245ab2d9214885f30d288545bf10c9da76978d387d8e0'
+CANDIDATE_PATHS_SHA256 = '1e5b1946385d6914cb32ea3e45148fa855dcc1cd756ae53b679640664aed3502'
 
 def safe_file(root, path):
     if not isinstance(path, str) or not path or '\\' in path:
