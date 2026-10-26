@@ -1,0 +1,38 @@
+{
+  "recorded_date": "2026-10-26",
+  "scope": "Execution register pinned current-reference refresh only; inventory structure, dispositions and candidate routing unchanged; historical receipts untouched.",
+  "trigger": "Local integration of the 2026-10-25 modernization branches (Studio ZIP 9 portable-save migration) changed specimen-studio/native/specimen-core/src/persistence.rs and specimen-studio/native/specimen-core/Cargo.toml after the register snapshot was pinned; tools/check_completion_execution.py failed with reference drift on those two paths.",
+  "procedure": "Recomputed the current bytes of only the two drifted reference paths and replaced their register rows' sha256 pins in place. No disposition, routing, status, evidence level, test result or reconciled catalog changed.",
+  "changes": [
+    {
+      "path": "specimen-studio/native/specimen-core/src/persistence.rs",
+      "prior_sha256": "31a82e06eb71d76dd4fbc709c39972387e53b888648a4c10bc2609017c3307a7",
+      "current_sha256": "31528825e46c8d0f4c41ef97c3bf24051ea3f0c22c76dc126a5ac77b81c66de5",
+      "updated_reference_rows": 10
+    },
+    {
+      "path": "specimen-studio/native/specimen-core/Cargo.toml",
+      "prior_sha256": "618b0a27d80dcdf66c5691a5ced0ceeb447976609cdebfcb0b3b4dd841e5595b",
+      "current_sha256": "6c413af9dd1c0c5de6eb0c86b760edf8b3d80a02442413b32228b878d0afdec8",
+      "updated_reference_rows": 1
+    }
+  ],
+  "after_checks": [
+    {
+      "command": "python3 tools/check_completion_execution.py",
+      "log": "execution-checker-after.log",
+      "result": "Execution register valid: 163 reconciled open C0 requirements; no conformance or test-pass claim."
+    },
+    {
+      "command": "python3 tools/tests/test_check_completion_execution.py",
+      "log": "execution-checker-tests.log",
+      "result": "OK"
+    },
+    {
+      "command": "python3 tools/check_completion.py",
+      "log": "frozen-checker-after.log",
+      "result": "Completion contracts valid: 163 C0 requirements, 46 acceptance cases; no implementation/efficacy claim."
+    }
+  ],
+  "claims": "All 163 requirements remain open/C0/unknown; source-hash agreement establishes byte identity only."
+}

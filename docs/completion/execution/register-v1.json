@@ -1193,7 +1193,7 @@
             },
             {
               "path": "specimen-studio/native/specimen-core/Cargo.toml",
-              "sha256": "618b0a27d80dcdf66c5691a5ced0ceeb447976609cdebfcb0b3b4dd841e5595b"
+              "sha256": "6c413af9dd1c0c5de6eb0c86b760edf8b3d80a02442413b32228b878d0afdec8"
             },
             {
               "path": "specimen-studio/native/specimen-kernel/Cargo.toml",
@@ -7447,7 +7447,7 @@
           },
           {
             "path": "specimen-studio/native/specimen-core/src/persistence.rs",
-            "sha256": "31a82e06eb71d76dd4fbc709c39972387e53b888648a4c10bc2609017c3307a7"
+            "sha256": "31528825e46c8d0f4c41ef97c3bf24051ea3f0c22c76dc126a5ac77b81c66de5"
           }
         ]
       },
@@ -7519,7 +7519,7 @@
             },
             {
               "path": "specimen-studio/native/specimen-core/src/persistence.rs",
-              "sha256": "31a82e06eb71d76dd4fbc709c39972387e53b888648a4c10bc2609017c3307a7"
+              "sha256": "31528825e46c8d0f4c41ef97c3bf24051ea3f0c22c76dc126a5ac77b81c66de5"
             },
             {
               "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
@@ -7554,7 +7554,7 @@
         "references": [
           {
             "path": "specimen-studio/native/specimen-core/src/persistence.rs",
-            "sha256": "31a82e06eb71d76dd4fbc709c39972387e53b888648a4c10bc2609017c3307a7"
+            "sha256": "31528825e46c8d0f4c41ef97c3bf24051ea3f0c22c76dc126a5ac77b81c66de5"
           },
           {
             "path": "specimen-studio/native/specimen-core/src/canonical/rebuild.rs",
@@ -7622,7 +7622,7 @@
           "references": [
             {
               "path": "specimen-studio/native/specimen-core/src/persistence.rs",
-              "sha256": "31a82e06eb71d76dd4fbc709c39972387e53b888648a4c10bc2609017c3307a7"
+              "sha256": "31528825e46c8d0f4c41ef97c3bf24051ea3f0c22c76dc126a5ac77b81c66de5"
             },
             {
               "path": "specimen-studio/native/specimen-core/src/canonical/rebuild.rs",
@@ -14483,7 +14483,7 @@
         "references": [
           {
             "path": "specimen-studio/native/specimen-core/src/persistence.rs",
-            "sha256": "31a82e06eb71d76dd4fbc709c39972387e53b888648a4c10bc2609017c3307a7"
+            "sha256": "31528825e46c8d0f4c41ef97c3bf24051ea3f0c22c76dc126a5ac77b81c66de5"
           }
         ]
       },
@@ -14535,7 +14535,7 @@
           "references": [
             {
               "path": "specimen-studio/native/specimen-core/src/persistence.rs",
-              "sha256": "31a82e06eb71d76dd4fbc709c39972387e53b888648a4c10bc2609017c3307a7"
+              "sha256": "31528825e46c8d0f4c41ef97c3bf24051ea3f0c22c76dc126a5ac77b81c66de5"
             }
           ]
         }
@@ -24430,7 +24430,7 @@
         "references": [
           {
             "path": "specimen-studio/native/specimen-core/src/persistence.rs",
-            "sha256": "31a82e06eb71d76dd4fbc709c39972387e53b888648a4c10bc2609017c3307a7"
+            "sha256": "31528825e46c8d0f4c41ef97c3bf24051ea3f0c22c76dc126a5ac77b81c66de5"
           }
         ]
       },
@@ -24493,7 +24493,7 @@
           "references": [
             {
               "path": "specimen-studio/native/specimen-core/src/persistence.rs",
-              "sha256": "31a82e06eb71d76dd4fbc709c39972387e53b888648a4c10bc2609017c3307a7"
+              "sha256": "31528825e46c8d0f4c41ef97c3bf24051ea3f0c22c76dc126a5ac77b81c66de5"
             }
           ]
         }
@@ -24512,7 +24512,7 @@
         "references": [
           {
             "path": "specimen-studio/native/specimen-core/src/persistence.rs",
-            "sha256": "31a82e06eb71d76dd4fbc709c39972387e53b888648a4c10bc2609017c3307a7"
+            "sha256": "31528825e46c8d0f4c41ef97c3bf24051ea3f0c22c76dc126a5ac77b81c66de5"
           }
         ]
       },
@@ -24575,7 +24575,7 @@
           "references": [
             {
               "path": "specimen-studio/native/specimen-core/src/persistence.rs",
-              "sha256": "31a82e06eb71d76dd4fbc709c39972387e53b888648a4c10bc2609017c3307a7"
+              "sha256": "31528825e46c8d0f4c41ef97c3bf24051ea3f0c22c76dc126a5ac77b81c66de5"
             }
           ]
         }
