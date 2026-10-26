@@ -7,12 +7,16 @@ crate-type = ["cdylib", "rlib"]
 [features]
 identity-probe = []
 language-probe = []
+scoring-probe = []
 [[example]]
 name = "identity_probe"
 required-features = ["identity-probe"]
 [[example]]
 name = "language_probe"
 required-features = ["language-probe"]
+[[example]]
+name = "scoring_probe"
+required-features = ["scoring-probe"]
 [dependencies]
 specimen-kernel = { path = "../specimen-kernel" }
 serde_json.workspace = true

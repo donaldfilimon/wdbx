@@ -1,0 +1,81 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[82090]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[82092]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "scoring_v3_policy") generated 1 warning
+warning: `specimen-kernel` (test "scoring_v3_election") generated 1 warning
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[82095]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "scoring_v3_contributions") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 5.81s
+     Running tests/scoring_v3_contributions.rs (specimen-studio/target/debug/deps/scoring_v3_contributions-87156be70e9b2e8b)
+
+running 21 tests
+test attached_facts_and_referenced_dependencies_are_exempt ... ok
+test distinct_dependency_sets_remain_complementary ... ok
+test different_parent_captures_inhibition_and_tree_are_complementary ... ok
+test fanout_siblings_share_root_but_keep_distinct_origin_provenance ... ok
+test late_invalid_batch_and_arbitration_references_leave_draws_untouched ... ok
+test guards_and_blocked_automaton_never_become_successful_bypasses ... ok
+test lowering_arbitration_budget_refuses_without_partial_draws ... ok
+test canonical_actions_exclude_node_identity_and_election_weight ... ok
+test deep_and_many_argument_trees_fail_before_cloning ... ok
+test named_typed_capture_values_are_ordered_and_spans_are_only_provenance ... ok
+test s09_every_qualified_entry_in_a_node_can_contribute ... ok
+test s10_complementary_entries_survive_without_election ... ok
+test s11_actual_redundancy_elects_only_within_its_group ... ok
+test sorted_inhibition_sets_ignore_order_but_keep_input_target_codes_distinct ... ok
+test source_guard_mismatch_refuses_and_matching_inhibited_alternatives_cannot_emit ... ok
+test stale_explicit_binding_refuses_before_jitter ... ok
+test supplied_evidence_is_checked_but_cannot_construct_contributions ... ok
+test threshold_bypass_does_not_bypass_zero_strength_or_action_inhibition ... ok
+test oversized_action_vectors_and_payloads_refuse_before_copy_or_draw ... ok
+test zero_confidence_redundancy_abstains_without_forging_bypass_confidence ... ok
+test external_evidence_spans_are_bounded ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/scoring_v3_election.rs (specimen-studio/target/debug/deps/scoring_v3_election-3ac38173cf867a55)
+
+running 5 tests
+test cumulative_intervals_are_half_open_at_an_exact_grid_boundary ... ok
+test endpoint_zero_selects_first_positive_even_when_scaling_underflows ... ok
+test finite_extreme_weights_do_not_overflow_and_late_invalid_input_is_atomic ... ok
+test s09_alternatives_use_closed_grid_endpoints_and_inhibition ... ok
+test zero_and_single_positive_abstain_or_select_without_draw ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/scoring_v3_policy.rs (specimen-studio/target/debug/deps/scoring_v3_policy-9a116fa75c77fec3)
+
+running 11 tests
+test arithmetic_overflow_is_explicit_and_never_commits_partial_draws ... ok
+test exact_threshold_neighbors_and_strength_gate ... ok
+test explicit_seeded_helper_is_repeatable_bounded_and_has_no_ambient_state ... ok
+test invalid_policies_and_draw_exhaustion_are_atomic ... ok
+test jitter_cap_sign_independence_no_drift_and_trace ... ok
+test s08_maximum_strength_only_protects_qualified_baselines ... ok
+test no_draw_exceptions_still_retain_seed_and_stream_identity ... ok
+test zero_magnitude_still_uses_an_independent_sign_draw ... ok
+test numeric_balance_subtracts_before_clamp_and_positive_atp_does_not_boost ... ok
+test s07_atp_negative_valence_dampens_before_inclusive_gate ... ok
+test s07_endpoints_are_tested_after_atp ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

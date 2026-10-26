@@ -1,0 +1,5 @@
+Four owned Rust files: direct whitespace/EOF/conflict checks pass
+Three pre-edit sources match root fix1 baseline byte-for-byte
+Scoped layout-policy audit: 14 production files; zero matches; temporary observer absent
+All 21 non-owned files in original 24-file source/test freeze remain identical
+Fix1 source/API/test freeze: 25 files

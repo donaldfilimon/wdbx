@@ -1,0 +1,16 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+    Finished `test` profile [unoptimized] target(s) in 1.14s
+     Running tests/scoring_orchestration_budget_v1.rs (target/debug/deps/scoring_orchestration_budget_v1-2f7b6bed13ce0bb3)
+
+running 8 tests
+test overflowing_policy_and_overlarge_budget_refuse_without_consuming_draws ... ok
+test broker_admission_work_boundary_is_atomic ... ok
+test scoring_arbitration_uses_fixed_contribution_and_nested_metadata_reserves ... ok
+test scoring_batch_uses_fixed_entry_request_reserve ... ok
+test scoring_work_still_counts_items_independently_of_logical_metadata_bytes ... ok
+test scoring_entry_payload_minus_one_refuses_and_exact_charge_admits_without_draws ... ok
+test completion_cleanup_headroom_is_four_cycles_plus_four_jobs_plus_retained_bytes ... ok
+test completion_owned_boundary_preserves_the_lease_on_refusal ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

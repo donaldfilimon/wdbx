@@ -1,0 +1,55 @@
+{
+  "scope": "five new orchestration modules, three test targets, one test support module and minimal lib registration; full lib includes pre-existing registrations",
+  "files": [
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+      "sha256": "3e1dcf1622f4214e08597bf2938997f3e3ed9ec33d5e4f4254d830fd6a068510",
+      "lines": 393
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+      "sha256": "ffb33a99a4d114be0c3b69e6e4508f4b1826ee30b8f996ee05fc5eb5c44daadf",
+      "lines": 611
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/src/orchestration_v3/budget.rs",
+      "sha256": "6a9b1f1ab01161bcd78abaed16e432b37758f2e3ab9b0729867b72b6394ed36f",
+      "lines": 212
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs",
+      "sha256": "98c0e214f30c626282b45af3c66e7c1a0ba0633b453e79e0fad4904967585506",
+      "lines": 189
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/src/orchestration_v3/mod.rs",
+      "sha256": "32dbd43eb5f4ccaa610f984388745e03e6b310b9250ba66c7baa3e7f0f04f86a",
+      "lines": 118
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/tests/orchestration_v3.rs",
+      "sha256": "21dbabfd77a92bf20697b47b54989e81a6e351390cdd707aad1ffea0cab4902f",
+      "lines": 486
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs",
+      "sha256": "e6a6c317b0e7c353abdc05ea3909dfb0f3392c0e1f4b4543ed827cfd0e14f8e8",
+      "lines": 673
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/tests/orchestration_v3_graph.rs",
+      "sha256": "f64b65a5e7013f0751b7186df1a4de7e75b71992890b76306eeeb1103d5fc810",
+      "lines": 158
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/tests/orchestration_v3/support.rs",
+      "sha256": "50197f9bee25ad3984c7e6db5959d32a3bba89f7d50b43d8ecd7d390cce57547",
+      "lines": 209
+    },
+    {
+      "path": "/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/src/lib.rs",
+      "sha256": "361b35e56069f153008797b4975f4a5328a8c6fba0644fd6c9206d097f7d491c",
+      "lines": 47
+    }
+  ]
+}

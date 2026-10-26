@@ -1,0 +1,18 @@
+1185 |   eq(h.post_restart_refusal, 'Backpressure');
+1186 |   eq(h.post_retire_retry, 'Ok');
+1187 |   return true;
+1188 | }
+1189 | function parse(bytes) {
+1190 |   assert(
+         ^
+AssertionError: strict bounded fixture bytes
+ generatedMessage: false,
+     actual: false,
+   expected: true,
+   operator: "==",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at parse (/Users/donald/sources/repos/wdbx/specimen-studio/tests/scoring-parity.mjs:1190:3)
+
+Bun v1.4.4-canary.1+ea6a2c7b7 (macOS arm64)

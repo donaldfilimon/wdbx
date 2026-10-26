@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "bun",
+    "tests/scoring-parity.mjs",
+    "/Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/native.json",
+    "/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-scoring-parity.qdu7oH/scoring.wasm",
+    "/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-scoring-parity.qdu7oH/default.wasm",
+    "/Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/wasm.json",
+    "/Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/corrupt-arithmetic.json",
+    "/Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/corrupt-quarantine.json",
+    "/Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/corrupt-boundary.json"
+  ],
+  "cwd": "/Users/donald/sources/repos/wdbx/specimen-studio",
+  "env": {
+    "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+    "RUSTUP_TOOLCHAIN": "1.99.1",
+    "CARGO_NET_OFFLINE": "true",
+    "DYLD_LIBRARY_PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib"
+  },
+  "started_utc": "2026-10-23T05:49:10.001807+00:00",
+  "exit": 0,
+  "log": "03-positive.log",
+  "stdout": null
+}

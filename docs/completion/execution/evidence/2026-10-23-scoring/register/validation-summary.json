@@ -1,0 +1,125 @@
+{
+  "checks": [
+    {
+      "command": [
+        "/opt/homebrew/bin/python3",
+        "tools/check_completion_execution.py"
+      ],
+      "cwd": "/Users/donald/sources/repos/wdbx",
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_utc": "2026-10-23T05:59:28.542337+00:00",
+      "ended_utc": "2026-10-23T05:59:29.150478+00:00",
+      "exit_code": 0,
+      "log": {
+        "path": "docs/completion/execution/evidence/2026-10-23-scoring/register/current-checker.log",
+        "sha256": "7db51a594198bccc2ebeaa015f6c56c4aa8ef9d9ac56a324b1f859734c08c302"
+      },
+      "scope": "Mutable inventory/checker/observation closure only; no product or frozen-check rerun."
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/tests",
+        "-p",
+        "test_check_completion_execution.py"
+      ],
+      "cwd": "/Users/donald/sources/repos/wdbx",
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_utc": "2026-10-23T05:59:29.150680+00:00",
+      "ended_utc": "2026-10-23T05:59:38.374372+00:00",
+      "exit_code": 0,
+      "log": {
+        "path": "docs/completion/execution/evidence/2026-10-23-scoring/register/current-tests.log",
+        "sha256": "ba90cffbe729bd87845d1a91b52a8e5e97d78c2d738fc3682ddacf314af5dca6"
+      },
+      "scope": "Mutable inventory/checker/observation closure only; no product or frozen-check rerun."
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/python3",
+        "docs/completion/execution/evidence/2026-10-23-scoring/register/check-scoring-closure.py"
+      ],
+      "cwd": "/Users/donald/sources/repos/wdbx",
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_utc": "2026-10-23T05:59:38.374721+00:00",
+      "ended_utc": "2026-10-23T05:59:39.361787+00:00",
+      "exit_code": 0,
+      "log": {
+        "path": "docs/completion/execution/evidence/2026-10-23-scoring/register/current-closure.log",
+        "sha256": "8d3773e3434b1bd8e2775bce8d4a16f62d35f1d1b74134a1f65073ec6a47ae22"
+      },
+      "scope": "Mutable inventory/checker/observation closure only; no product or frozen-check rerun."
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "tools/check_completion_execution.py"
+      ],
+      "cwd": "/Users/donald/sources/repos/wdbx",
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_utc": "2026-10-23T05:59:39.361977+00:00",
+      "ended_utc": "2026-10-23T05:59:39.830608+00:00",
+      "exit_code": 0,
+      "log": {
+        "path": "docs/completion/execution/evidence/2026-10-23-scoring/register/system-checker.log",
+        "sha256": "7db51a594198bccc2ebeaa015f6c56c4aa8ef9d9ac56a324b1f859734c08c302"
+      },
+      "scope": "Mutable inventory/checker/observation closure only; no product or frozen-check rerun."
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/tests",
+        "-p",
+        "test_check_completion_execution.py"
+      ],
+      "cwd": "/Users/donald/sources/repos/wdbx",
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_utc": "2026-10-23T05:59:39.830797+00:00",
+      "ended_utc": "2026-10-23T05:59:49.485412+00:00",
+      "exit_code": 0,
+      "log": {
+        "path": "docs/completion/execution/evidence/2026-10-23-scoring/register/system-tests.log",
+        "sha256": "f9e13153156f770c45cd01456a45f3368c2d75c7b5a3982991196b54475ddd4a"
+      },
+      "scope": "Mutable inventory/checker/observation closure only; no product or frozen-check rerun."
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "docs/completion/execution/evidence/2026-10-23-scoring/register/check-scoring-closure.py"
+      ],
+      "cwd": "/Users/donald/sources/repos/wdbx",
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_utc": "2026-10-23T05:59:49.485583+00:00",
+      "ended_utc": "2026-10-23T05:59:50.308737+00:00",
+      "exit_code": 0,
+      "log": {
+        "path": "docs/completion/execution/evidence/2026-10-23-scoring/register/system-closure.log",
+        "sha256": "8d3773e3434b1bd8e2775bce8d4a16f62d35f1d1b74134a1f65073ec6a47ae22"
+      },
+      "scope": "Mutable inventory/checker/observation closure only; no product or frozen-check rerun."
+    }
+  ],
+  "all_pass": true
+}

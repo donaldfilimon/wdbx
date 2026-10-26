@@ -1,0 +1,32 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+error[E0716]: temporary value dropped while borrowed
+  --> native/specimen-kernel/tests/orchestration_v3_graph.rs:11:268
+   |
+11 | ...in [false,true]{let a=Fixture::new("2 + 3","2 + 3","same",1);let z=Fixture::new("2 + 3","2 + 3","same",2);let mut ca=a.comparison();ca.dependencies=if cyclic{&[2]}else{&[99]};let mut cz=z.comparison();if cyclic{cz.dependencies=&[1]};let (mut b,_)=issuer(&a.comparison()); //...
+   |                                                                                                                                                                                                                                                                   ^^^^^^^^^^^^^^ - temporary value is freed at the end of this statement
+   |                                                                                                                                                                                                                                                                   |
+   |                                                                                                                                                                                                                                                                   creates a temporary value which is freed while still in use
+12 | ...();b.begin(&p,1,2,CycleLimit::default()).unwrap();b.admit(&p,1,2,&[job(1,&ca,Priority::Foreground),job(2,&cz,Priority::Foreground)]).unwrap();for l in b.dispatch(&p,1,2).unwrap(){let c=if l.job()==1{&ca}else{&cz};b.complete(&p,1,&l,evaluate(l.job(),c)).unwrap();}b.close_dis...
+   |       - borrow later used here
+   |
+   = note: consider using a `let` binding to create a longer lived value
+
+For more information about this error, try `rustc --explain E0716`.
+error: could not compile `specimen-kernel` (test "orchestration_v3_graph") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[44598]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "orchestration_v3_attachments") generated 1 warning
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[44616]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "orchestration_v3") generated 1 warning

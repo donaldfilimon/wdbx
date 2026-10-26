@@ -1,0 +1,22 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+error[E0716]: temporary value dropped while borrowed
+ --> native/specimen-kernel/tests/scoring_v3_election.rs:5:40
+  |
+5 | ..."pool",&[draw],1).unwrap();let result=elect(&[100.0,1.0,0.0,3.0],&[false,true,true,true],&mut tape).unwrap();assert_eq!(result.win...
+  |            ^^^^^^            - temporary value is freed at the end of this statement        --------- borrow later used here
+  |            |
+  |            creates a temporary value which is freed while still in use
+  |
+  = note: consider using a `let` binding to create a longer lived value
+
+For more information about this error, try `rustc --explain E0716`.
+error: could not compile `specimen-kernel` (test "scoring_v3_election") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[41148]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "scoring_v3_policy") generated 1 warning

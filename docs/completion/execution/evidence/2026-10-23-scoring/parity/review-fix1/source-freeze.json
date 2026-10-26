@@ -1,0 +1,11 @@
+{
+  "utc": "2026-10-23T05:50:15.073726+00:00",
+  "scope": "I1 module binding rename only; no logic change",
+  "files": [
+    {
+      "path": "specimen-studio/tests/scoring-parity.mjs",
+      "sha256": "383f38db2e815634135093021ec953147dcb0568f111a353ef3e9022a4150e17",
+      "lines": 1997
+    }
+  ]
+}

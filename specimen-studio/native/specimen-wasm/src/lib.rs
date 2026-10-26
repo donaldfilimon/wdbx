@@ -5,6 +5,8 @@ pub mod dispatch;
 pub mod identity_probe;
 #[cfg(feature = "language-probe")]
 pub mod language_probe;
+#[cfg(feature = "scoring-probe")]
+pub mod scoring_probe;
 use serde_json::{Value, json};
 use specimen_kernel::{engine, host::FixedHost, neural::Network};
 use std::sync::atomic::AtomicBool;

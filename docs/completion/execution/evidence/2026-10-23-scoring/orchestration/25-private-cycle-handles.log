@@ -1,0 +1,174 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+error[E0425]: cannot find value `h1` in this scope
+   --> native/specimen-kernel/tests/orchestration_v3.rs:386:22
+    |
+386 |     b.cancel(&p, 1, &h1, CancelReason::Requested).unwrap();
+    |                      ^^ not found in this scope
+
+error[E0425]: cannot find value `h1` in this scope
+   --> native/specimen-kernel/tests/orchestration_v3.rs:387:39
+    |
+387 |     assert_eq!(b.retire_cycle(&p, 1, &h1).unwrap_err(), Error::Revoked);
+    |                                       ^^ not found in this scope
+
+error[E0425]: cannot find value `h1` in this scope
+   --> native/specimen-kernel/tests/orchestration_v3.rs:389:28
+    |
+389 |     b.retire_cycle(&p, 1, &h1).unwrap();
+    |                            ^^ not found in this scope
+
+error[E0425]: cannot find value `h2` in this scope
+   --> native/specimen-kernel/tests/orchestration_v3.rs:392:22
+    |
+392 |     b.cancel(&p, 1, &h2, CancelReason::Requested).unwrap();
+    |                      ^^ not found in this scope
+
+error[E0425]: cannot find value `h2` in this scope
+   --> native/specimen-kernel/tests/orchestration_v3.rs:393:28
+    |
+393 |     b.retire_cycle(&p, 1, &h2).unwrap();
+    |                            ^^ not found in this scope
+
+error[E0308]: mismatched types
+  --> native/specimen-kernel/tests/orchestration_v3_graph.rs:44:13
+   |
+41 |         .compose(
+   |          ------- arguments to this method are incorrect
+...
+44 |             1,
+   |             ^ expected `&CycleHandle`, found integer
+   |
+note: method defined here
+  --> native/specimen-kernel/src/orchestration_v3/compose.rs:77:12
+   |
+77 |     pub fn compose(
+   |            ^^^^^^^
+
+error[E0308]: mismatched types
+  --> native/specimen-kernel/tests/orchestration_v3_attachments.rs:54:13
+   |
+51 |         .compose(
+   |          ------- arguments to this method are incorrect
+...
+54 |             1,
+   |             ^ expected `&CycleHandle`, found integer
+   |
+note: method defined here
+  --> native/specimen-kernel/src/orchestration_v3/compose.rs:77:12
+   |
+77 |     pub fn compose(
+   |            ^^^^^^^
+
+error[E0308]: mismatched types
+   --> native/specimen-kernel/tests/orchestration_v3_graph.rs:143:25
+    |
+143 |         .compose(&p, 1, 1, &mut tape, ScoringBudget::default())
+    |          -------        ^ expected `&CycleHandle`, found integer
+    |          |
+    |          arguments to this method are incorrect
+    |
+note: method defined here
+   --> native/specimen-kernel/src/orchestration_v3/compose.rs:77:12
+    |
+ 77 |     pub fn compose(
+    |            ^^^^^^^
+
+error[E0308]: mismatched types
+   --> native/specimen-kernel/tests/orchestration_v3_attachments.rs:258:13
+    |
+255 |         .compose(
+    |          ------- arguments to this method are incorrect
+...
+258 |             1,
+    |             ^ expected `&CycleHandle`, found integer
+    |
+note: method defined here
+   --> native/specimen-kernel/src/orchestration_v3/compose.rs:77:12
+    |
+ 77 |     pub fn compose(
+    |            ^^^^^^^
+
+error[E0308]: mismatched types
+   --> native/specimen-kernel/tests/orchestration_v3_attachments.rs:498:13
+    |
+495 |         .compose(
+    |          ------- arguments to this method are incorrect
+...
+498 |             1,
+    |             ^ expected `&CycleHandle`, found integer
+    |
+note: method defined here
+   --> native/specimen-kernel/src/orchestration_v3/compose.rs:77:12
+    |
+ 77 |     pub fn compose(
+    |            ^^^^^^^
+
+For more information about this error, try `rustc --explain E0308`.
+error[E0308]: mismatched types
+  --> native/specimen-kernel/tests/orchestration_v3.rs:97:13
+   |
+94 |         .compose(
+   |          ------- arguments to this method are incorrect
+...
+97 |             1,
+   |             ^ expected `&CycleHandle`, found integer
+   |
+note: method defined here
+  --> native/specimen-kernel/src/orchestration_v3/compose.rs:77:12
+   |
+77 |     pub fn compose(
+   |            ^^^^^^^
+
+error[E0308]: mismatched types
+   --> native/specimen-kernel/tests/orchestration_v3.rs:382:24
+    |
+382 |         b.admit(&p, 1, id, &[job(id, &c, Priority::Foreground)])
+    |           -----        ^^ expected `&CycleHandle`, found `u128`
+    |           |
+    |           arguments to this method are incorrect
+    |
+note: method defined here
+   --> native/specimen-kernel/src/orchestration_v3/broker.rs:226:12
+    |
+226 |     pub fn admit(
+    |            ^^^^^
+
+error: could not compile `specimen-kernel` (test "orchestration_v3_graph") due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...
+warning: unused variable: `h1`
+  --> native/specimen-kernel/tests/orchestration_v3_attachments.rs:75:5
+   |
+75 | let h1 = proof.cycle_handle();
+   |     ^^ help: if this is intentional, prefix it with an underscore: `_h1`
+   |
+   = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `h1`
+   --> native/specimen-kernel/tests/orchestration_v3_attachments.rs:120:5
+    |
+120 | let h1 = proof.cycle_handle();
+    |     ^^ help: if this is intentional, prefix it with an underscore: `_h1`
+
+warning: unused variable: `h1`
+   --> native/specimen-kernel/tests/orchestration_v3_attachments.rs:353:5
+    |
+353 | let h1 = first.cycle_handle();
+    |     ^^ help: if this is intentional, prefix it with an underscore: `_h1`
+
+warning: unused variable: `h1`
+   --> native/specimen-kernel/tests/orchestration_v3_attachments.rs:417:5
+    |
+417 | let h1 = proof.cycle_handle();
+    |     ^^ help: if this is intentional, prefix it with an underscore: `_h1`
+
+warning: unused variable: `h1`
+   --> native/specimen-kernel/tests/orchestration_v3_attachments.rs:563:5
+    |
+563 | let h1 = proof.cycle_handle();
+    |     ^^ help: if this is intentional, prefix it with an underscore: `_h1`
+
+Some errors have detailed explanations: E0308, E0425.
+For more information about an error, try `rustc --explain E0308`.
+error: could not compile `specimen-kernel` (test "orchestration_v3") due to 7 previous errors
+warning: `specimen-kernel` (test "orchestration_v3_attachments") generated 5 warnings
+error: could not compile `specimen-kernel` (test "orchestration_v3_attachments") due to 3 previous errors; 5 warnings emitted

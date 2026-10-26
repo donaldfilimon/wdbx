@@ -1,0 +1,21 @@
+{
+  "scope": "All new scoring_v3 and orchestration_v3 production Rust plus their private logical-charge helper; no legacy scan",
+  "pattern": "size_of|align_of|target_pointer_width|target_arch|std::mem|core::mem|canonical_budget_layout_reference",
+  "files": [
+    "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs",
+    "specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+    "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+    "specimen-studio/native/specimen-kernel/src/orchestration_v3/budget.rs",
+    "specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs",
+    "specimen-studio/native/specimen-kernel/src/orchestration_v3/mod.rs",
+    "specimen-studio/native/specimen-kernel/src/scoring_v3/arbitration.rs",
+    "specimen-studio/native/specimen-kernel/src/scoring_v3/budget.rs",
+    "specimen-studio/native/specimen-kernel/src/scoring_v3/contribution.rs",
+    "specimen-studio/native/specimen-kernel/src/scoring_v3/draws.rs",
+    "specimen-studio/native/specimen-kernel/src/scoring_v3/election.rs",
+    "specimen-studio/native/specimen-kernel/src/scoring_v3/math.rs",
+    "specimen-studio/native/specimen-kernel/src/scoring_v3/mod.rs",
+    "specimen-studio/native/specimen-kernel/src/scoring_v3/policy.rs"
+  ],
+  "matches": []
+}

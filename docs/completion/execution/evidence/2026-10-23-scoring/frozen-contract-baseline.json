@@ -1,0 +1,17 @@
+{
+  "scope": "Frozen inventory byte preservation; no claim promotion",
+  "files": [
+    {
+      "path": "docs/completion/requirements.json",
+      "sha256": "571e55910ca882db6141c616f1a0de036baec7fe211c371ca1ddfeb04691fa65"
+    },
+    {
+      "path": "docs/completion/designs.json",
+      "sha256": "f67633ce920f802b75109b18e2786b09648bbd4b6d174cc42995e7d45e6258e9"
+    },
+    {
+      "path": "docs/completion/studio-acceptance-v1.json",
+      "sha256": "511cb9f85f6651143b59f4cd6c213059a2bce505c57d86861b8f22c377c4dec5"
+    }
+  ]
+}

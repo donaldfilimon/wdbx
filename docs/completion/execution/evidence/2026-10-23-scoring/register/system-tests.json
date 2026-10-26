@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/usr/bin/python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tools/tests",
+    "-p",
+    "test_check_completion_execution.py"
+  ],
+  "cwd": "/Users/donald/sources/repos/wdbx",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "started_utc": "2026-10-23T05:59:39.830797+00:00",
+  "ended_utc": "2026-10-23T05:59:49.485412+00:00",
+  "exit_code": 0,
+  "log": {
+    "path": "docs/completion/execution/evidence/2026-10-23-scoring/register/system-tests.log",
+    "sha256": "f9e13153156f770c45cd01456a45f3368c2d75c7b5a3982991196b54475ddd4a"
+  },
+  "scope": "Mutable inventory/checker/observation closure only; no product or frozen-check rerun."
+}

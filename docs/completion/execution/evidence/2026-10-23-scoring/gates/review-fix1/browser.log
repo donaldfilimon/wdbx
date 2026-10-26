@@ -1,0 +1,342 @@
+$ sh scripts/check-instructions.sh && bunx tsc --noEmit && bun run lint:studio && bun run build:wasm && bun test && bun run build
+check-instructions: ok
+$ oxlint app components/wdbx lib/specimen lib/webmcp.ts
+$ cargo build --locked -p specimen-wasm --target wasm32-unknown-unknown --release && mkdir -p lib/specimen/wasm && cp -f target/wasm32-unknown-unknown/release/specimen_wasm.wasm lib/specimen/wasm/
+    Finished `release` profile [optimized] target(s) in 0.08s
+bun test v1.4.4-canary.1 (ea6a2c7b7)
+
+tests/package-evidence.test.js:
+(pass) creates and verifies a current package qualification receipt [106.53ms]
+(pass) rejects a receipt for a different source commit [65.58ms]
+(pass) rejects a receipt from an unrelated workflow run [87.11ms]
+(pass) rejects evidence from a different runner [82.91ms]
+(pass) rejects a malformed digest [71.53ms]
+(pass) rejects a missing required helper [81.13ms]
+(pass) rejects an application changed after qualification [78.85ms]
+(pass) can validate an installer-only artifact before extraction [89.20ms]
+(pass) rejects failed workflow even with a matching package receipt [70.24ms]
+(pass) rejects unfinished workflow even with a matching package receipt [58.30ms]
+(pass) rejects unrelated workflow even with a matching package receipt [59.54ms]
+(pass) rejects foreign repository even with a matching package receipt [71.71ms]
+(pass) rejects stale workflow source even with a matching package receipt [91.62ms]
+(pass) accepts successful qualification workflow metadata for the exact source [86.18ms]
+(pass) rejects empty installers [74.10ms]
+(pass) rejects duplicate helpers [59.98ms]
+(pass) rejects renamed helper [57.31ms]
+
+tests/engine-panel.test.js:
+(pass) the live trace marks the running phase and exposes raft coverage [9.99ms]
+(pass) every chart has a data table beside it [3.10ms]
+(pass) ATP meters show the stored state the next cycle uses, and the decay [1.00ms]
+(pass) valence is drawn as a signed bar from the centre [0.71ms]
+(pass) charts are named images, not unnamed application tab stops [0.65ms]
+(pass) a cancelled run is labelled as cancelled, not as the last cycle [1.43ms]
+(pass) while running, earlier votes are labelled as the previous cycle [0.69ms]
+(pass) an idle specimen with no cycles explains itself [0.16ms]
+
+tests/desktop-config.test.js:
+(pass) the desktop CSP lets the webview fetch and compile the kernel WASM [0.04ms]
+(pass) desktop hooks build the kernel WASM before the web assets [0.01ms]
+(pass) plain cargo run selects the desktop with embedded assets [0.12ms]
+
+tests/readiness.test.js:
+(pass) ready settles, notifies and reports status [0.12ms]
+(pass) a failed load rejects waiters instead of hanging [0.34ms]
+
+tests/kernel.test.js:
+(pass) the seed is a valid native specimen [25.40ms]
+(pass) the starter arithmetic node answers one binary operation [30.84ms]
+(pass) the starter guides keep answering with the added pattern nodes [28.51ms]
+(pass) cycles are pure: the source specimen is untouched [13.49ms]
+(pass) repeat, negation and unmatched inputs behave [31.49ms]
+(pass) cycles stream trace steps in order [13.37ms]
+(pass) an aborted signal cancels before dispatch [5.44ms]
+(pass) custom bind patterns execute with the original text [12.95ms]
+(pass) duplicate originals are rejected with the user-facing message [4.46ms]
+(pass) editing preserves sibling entries and weights [11.06ms]
+(pass) feedback applies once per contributor and selection [11.28ms]
+(pass) pins survive and the pin limit holds [10.71ms]
+(pass) removing a node drops its attachments [4.58ms]
+(pass) memories accept exactly the registered subsystems [7.71ms]
+(pass) settings use native bounds [4.27ms]
+(pass) adaptImport turns markdown into a specimen and an untrained network [1.41ms]
+(pass) adaptImport understands question and answer pairs [0.79ms]
+(pass) adaptImport reads a named pattern table from CSV [0.79ms]
+(pass) adaptImport reads pattern rows from JSON memory lists [2.29ms]
+(pass) a saved specimen file keeps the network already on this device [14.79ms]
+(pass) malformed files are rejected before replacement [4.50ms]
+(pass) log appends in place [4.46ms]
+(pass) maintenance and review return valid specimens [26.12ms]
+(pass) browser saves from the TypeScript engine migrate to native IDs [4.88ms]
+(pass) importing a TypeScript-era file migrates before validating [3.07ms]
+(pass) the advanced editor cannot store a node without entries [4.32ms]
+(pass) imports with out-of-range records are rejected [9.13ms]
+(pass) raftPlan returns totals and a bounded prefix of the kernel partition [0.23ms]
+(pass) network commands run through the kernel and keep the decoder fixed [0.76ms]
+(pass) networkTrace returns every layer for encoded text [0.82ms]
+(pass) networkValidate rejects malformed networks [0.46ms]
+(pass) browser cycles compose with the network they are given [26.03ms]
+(pass) cycles fall back to the default network when browser storage is unavailable [0.79ms]
+(pass) parse accepts the composer spellings and rejects unknown commands [5.53ms]
+(pass) undo restores the specimen after a command [5.43ms]
+(pass) review with Type B on repeated unmatched produces proposals; dismiss/reconsider round trip and undo [28.10ms]
+(pass) graph view policy comes from the compiled kernel [0.06ms]
+(pass) notes round-trip through the kernel and drop raw html [5.35ms]
+(pass) move pins a node and a missing connect leaves attachments [9.27ms]
+
+tests/network-panel.test.js:
+(pass) the layer builder lists every layer and protects the decoder [4.21ms]
+(pass) the topology tab pairs the 3D view with node and attachment tables [5.26ms]
+
+tests/theme.test.js:
+(pass) dark is the default [0.04ms]
+(pass) a stored light choice wins
+(pass) throwing storage falls back without throwing [0.03ms]
+(pass) applyTheme toggles the dark class [0.02ms]
+(pass) both theme blocks define every token [0.18ms]
+
+tests/linux-package-evidence.test.js:
+(pass) binds an independent pre-installer Debian stage and verifies installed bytes [92.64ms]
+(pass) snapshots only one actual Tauri Debian data tree and refuses replacement [120.41ms]
+(pass) rejects tampered or missing retained Debian stage payload [119.57ms]
+(pass) rejects a missing executable before sealing the Debian stage [91.22ms]
+(pass) rejects stale Debian linkage, replaced installer, and installed mismatch [185.71ms]
+(pass) records independent final AppDir hashes bound to raw qualification and installer [33.74ms]
+(pass) rejects extracted AppImage bytes that differ from the independent AppDir stage [68.88ms]
+(pass) rejects an AppImage whose digest no longer matches the bound base receipt [63.72ms]
+(pass) rejects missing executable in the final AppDir [30.33ms]
+(pass) rejects duplicate executable in the final AppDir [30.97ms]
+(pass) rejects stale source and run linkage [90.24ms]
+(pass) rejects Debian payload bytes that differ from the raw build receipt [32.58ms]
+
+tests/linux-package-diagnostics.test.js:
+(pass) retains the failing package verifier output in the runner log [53.39ms]
+
+tests/console-dock.test.js:
+(pass) the activity dock renders a command line and keeps the event log [2.84ms]
+
+tests/native-network.test.js:
+(pass) a network edit commits at the revision it was loaded from [0.17ms]
+(pass) an import in between makes the edit stale instead of overwriting it [0.16ms]
+(pass) reading the network does not move the revision other writes are checked against [0.10ms]
+
+tests/lab-panel.test.js:
+(pass) the desktop Lab keeps the native contract selectors and has four tabs [2.27ms]
+(pass) the browser edition explains what the desktop adds [0.11ms]
+(pass) arrow keys nudge the focus box and keep it inside the image [0.07ms]
+
+tests/lab-api.test.js:
+(pass) model status and capabilities come back typed [0.09ms]
+(pass) generate sends the job, model, prompt and seed and returns the artifact [0.12ms]
+(pass) artifacts are parsed, not cast: malformed records are dropped [0.03ms]
+(pass) a busy model store is reported, not treated as an empty list [0.02ms]
+
+tests/network-graph.test.js:
+(pass) network view prefs fall back when storage is empty or corrupt [0.04ms]
+(pass) next camera cycles orbit, top, then side [0.02ms]
+(pass) neighborhood filter keeps the selection and its neighbors [0.03ms]
+
+tests/ui-contract.test.js:
+(pass) instrument console exposes a clear workflow and live telemetry [0.43ms]
+(pass) instrument console retains responsive access to inspector detail [0.08ms]
+(pass) the studio panel owns the workflow and telemetry markup [0.23ms]
+(pass) the shell exposes its landmarks [0.17ms]
+
+tests/ui-components.test.js:
+(pass) current breadcrumb page is text with current-page semantics [0.11ms]
+(pass) OTP visual separator does not split the accessible input [0.14ms]
+(pass) Label forwards explicit control association and children [0.07ms]
+(pass) PaginationLink forwards the page content and anchor target [0.30ms]
+(pass) mobile snapshot on the server is deterministic without window [0.03ms]
+(pass) chart scalar keys format numbers and function keys fall back to a configured name [0.63ms]
+
+tests/shell.test.js:
+(pass) palette opens from anywhere, including inputs [0.04ms]
+(pass) layout shortcuts never fire while typing [0.03ms]
+(pass) every view is reachable; side targets exclude the current view and settings [0.07ms]
+(pass) close side pane appears only with a split, and shortcuts are unique [0.03ms]
+(pass) no command label collides with a pinned e2e button name [0.06ms]
+
+tests/navigation.test.js:
+(pass) defaults to studio with no split [0.04ms]
+(pass) keeps existing view and chapter URLs working
+(pass) rejects unknown views and out-of-range chapters
+(pass) accepts a split view and drops invalid ones [0.01ms]
+(pass) serializes in a stable order that round-trips [0.16ms]
+
+tests/canonical-loss.test.js:
+(pass) the browser edition declares what it drops from the canonical ledger [0.02ms]
+(pass) the browser edition names the canonical ledger it does not own [0.02ms]
+(pass) the browser edition declares the commitment it drops
+(pass) the browser edition declares the signature evidence it drops
+(pass) the browser edition declares the replication scope it drops
+(pass) the two editions share one loss vocabulary [0.08ms]
+
+tests/production-bridge.test.js:
+(pass) production exclusion accepts production assets [28.86ms]
+(pass) production exclusion rejects native call bridge [28.06ms]
+(pass) production exclusion rejects WDIO bridge [27.05ms]
+(pass) production exclusion rejects WDIO spy [27.33ms]
+(pass) production exclusion rejects missing scripts [27.41ms]
+(pass) production exclusion rejects empty scripts [28.20ms]
+(pass) production exclusion rejects normal dependency tauri-plugin-wdio [26.27ms]
+(pass) production exclusion rejects normal dependency tauri-plugin-wdio-webdriver [26.41ms]
+(pass) production exclusion rejects normal dependency wdio-webdriver [26.07ms]
+(pass) production exclusion accepts the normal production graph [25.32ms]
+(pass) production exclusion rejects an empty or unrelated dependency graph [76.70ms]
+
+tests/styles.test.js:
+(pass) studio.css uses theme tokens instead of color literals [0.17ms]
+(pass) studio.css uses no named colors in color properties [0.21ms]
+(pass) studio.css defines no color layer of its own [0.04ms]
+
+tests/insights.test.js:
+(pass) phaseTimeline collapses repeated Index Rafts checkpoints into coverage [0.05ms]
+(pass) phaseTimeline marks the last phase active while running [0.02ms]
+(pass) voteBreakdown names nodes and sorts by confidence [0.02ms]
+(pass) cycleSeries summarizes the most recent cycles in time order [0.04ms]
+(pass) atpNow applies the kernel decay to the stored state [0.03ms]
+
+tests/wdbx-components.test.js:
+(pass) Panel is a labelled section with a heading [0.17ms]
+(pass) Panel without a title is an unlabelled section [0.06ms]
+(pass) WButton variants keep a 44px target and focus ring [0.08ms]
+(pass) Toolbar is a labelled toolbar [0.05ms]
+(pass) Stat pairs a label with its value [0.04ms]
+(pass) EventTimeline renders an ordered list with machine-readable times [0.25ms]
+(pass) EmptyState explains itself [0.02ms]
+(pass) CodeBlock is a focusable, labelled scroll region [0.06ms]
+(pass) Field labels its control and keeps the 44px control height [0.05ms]
+(pass) CheckboxField is a labelled checkbox with a 44px target [0.05ms]
+(pass) FormError is an alert; Disclosure has a 44px summary; FieldRow is a grid [0.11ms]
+
+tests/network-view.test.js:
+(pass) layerRows describe each layer and mark the decoder [0.01ms]
+(pass) neuronPositions places an input column and one column per layer [0.09ms]
+(pass) sampledEdges caps the edge count and maps to displayed neurons [0.08ms]
+(pass) traceStats summarizes each layer output [0.04ms]
+(pass) topologyLayout is deterministic and spreads nodes on a sphere [0.04ms]
+(pass) layer insert point stays on a real layer after a remove [0.01ms]
+(pass) describeRewiring names layers an edit rewired as a side effect [0.10ms]
+
+tests/kernel-worker.test.js:
+(pass) a cycle runs in the worker and streams trace steps [35.42ms]
+(pass) a trap inside the worker rejects and the next job still runs [36.84ms]
+
+tests/agent-policy.test.js:
+(pass) studio agent policy keeps writes behind a person and off sibling stores [0.03ms]
+(pass) agent audit keeps the newest call and drops the oldest [0.05ms]
+
+tests/sign-notarize-macos.test.js:
+(pass) refuses an Apple Development signing identity [34.36ms]
+(pass) macOS signing preflight accepts current portable image evidence [33.22ms]
+(pass) macOS signing preflight rejects stale portable image evidence [32.35ms]
+(pass) macOS signing preflight rejects altered portable image evidence [32.35ms]
+
+tests/ui-components-launcher.test.js:
+(pass) component e2e admits the requested chrome launcher [190.78ms]
+(pass) component e2e admits the requested firefox launcher [90.72ms]
+(pass) component e2e admits the requested webkit launcher [72.98ms]
+(pass) component e2e defaults to the installed Chrome launcher [73.33ms]
+(pass) component e2e refuses an unsupported engine before any launch [62.31ms]
+
+tests/store-panel.test.js:
+(pass) desktop view shows frontier, key version, conflicts and tombstones [0.99ms]
+(pass) a failed audit DAG is an alert naming the error [0.36ms]
+(pass) browser view is honest about best-effort storage and offers persistence [0.24ms]
+
+tests/store-info.test.js:
+(pass) formatBytes uses binary units and stays exact for small sizes [0.01ms]
+(pass) recordCounts counts collections and entries [0.03ms]
+(pass) browserStoreReport measures the stored record in UTF-8 bytes [0.03ms]
+(pass) browserStoreReport is honest when nothing is saved or APIs are missing
+(pass) an old record missing collections still reports what it has [0.01ms]
+
+tests/spec-figures.test.js:
+(pass) every diagram id names a real specification figure [0.02ms]
+(pass) prose segments carry no fenced code; figures carry the source [0.06ms]
+(pass) parseEntityOutline reads names, types, notes, optional and list fields [0.09ms]
+(pass) entityLinks finds known entity names inside a type [0.04ms]
+(pass) the ch5 model links resolve to entities defined in the model figures [0.12ms]
+(pass) pipeline stages link to real chapters [0.01ms]
+(pass) reachedPhases reports which lifecycle phases a trace reached [0.04ms]
+(pass) lifecycleState follows the run outcome, not the busy flag [0.07ms]
+
+tests/qualification-summary.test.js:
+(pass) consolidates exact run, artifact hash, local evidence, and signing blocker [71.68ms]
+(pass) rejects retained Linux AppDir bytes that differ from their independent stage receipt [38.78ms]
+(pass) rejects retained Debian stage bytes that differ from their independent receipt [40.99ms]
+(pass) rejects malformed metadata [36.34ms]
+(pass) rejects stale source [37.93ms]
+(pass) rejects unrelated repository [38.15ms]
+(pass) rejects unrelated workflow [36.40ms]
+(pass) marks successful workflow with missing receipt as unverified [31.27ms]
+(pass) rejects a tampered artifact whose recorded digest still names the original [40.20ms]
+(pass) records a completed failed job as failed without treating it as proof [33.77ms]
+(pass) accepts the real browser-checks receipt shape without treating it as inference [309.95ms]
+(pass) downgrades manual evidence without frozen-source provenance to unverified [40.73ms]
+(pass) rejects receipt paths that escape the downloaded artifact root [48.88ms]
+(pass) does not copy undeclared local evidence fields into outputs or logs [58.67ms]
+(pass) rejects a schema-only desktop receipt and still writes inspectable outputs [49.87ms]
+(pass) verifies real macOS absolute producer paths inside the receipt artifact scope [122.32ms]
+(pass) rejects the removed windows-signing kind instead of trusting its receipt [41.87ms]
+(pass) retains valid platforms when another receipt in the same run is tampered [58.64ms]
+(pass) preserves valid layers and concrete tampering errors in one summary [83.39ms]
+(pass) keeps portable macOS packaging passed while notarization is blocked [42.81ms]
+(pass) rejects an accelerator receipt that substitutes a weaker threshold [40.13ms]
+(pass) rejects hash-valid text inference whose actual generated text is empty [46.78ms]
+
+tests/wasm-probe.test.js:
+(pass) wasm probe reproduces the native golden digest [29.90ms]
+(pass) wasm probe reproduces the native imagine golden digest [25.52ms]
+(pass) wasm probe reproduces the native pow golden digest [26.97ms]
+(pass) wasm probe reports malformed input as an error [5.01ms]
+
+ 221 pass
+ 0 fail
+ 1030 expect() calls
+Ran 221 tests across 33 files. [5.43s]
+$ bun --bun vinext build
+
+  vinext build  (Vite 8.0.16)
+
+[1/5] analyze client references...
+[2Ktransforming...✓ 228 modules transformed.
+rendering chunks...
+✓ built in 2.17s
+[2/5] analyze server references...
+[2Ktransforming...✓ 1052 modules transformed.
+rendering chunks...
+✓ built in 778ms
+[3/5] build rsc environment...
+[2Ktransforming...✓ 225 modules transformed.
+rendering chunks...
+computing gzip size...
+✓ built in 178ms
+[4/5] build client environment...
+[2Ktransforming...✓ 2815 modules transformed.
+rendering chunks...
+computing gzip size...
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 1.00s
+[5/5] build ssr environment...
+[2Ktransforming...✓ 1062 modules transformed.
+rendering chunks...
+computing gzip size...
+✓ built in 502ms
+[0m
+  Route (app)
+  ─ ? /
+
+  ? Unknown
+
+  ? Some routes could not be classified. vinext currently uses static analysis
+    and cannot detect dynamic API usage (headers(), cookies(), etc.) at build time.
+    Automatic classification will be improved in a future release.
+
+  Build complete. Run `vinext start` to start the production server.
+

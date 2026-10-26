@@ -1,0 +1,35 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[38253]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "orchestration_v3") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 3.17s
+     Running tests/orchestration_v3.rs (specimen-studio/target/debug/deps/orchestration_v3-adb3570e0cb1cbd2)
+
+running 4 tests
+test s15_cancel_quarantines_until_generation_bound_fence ... ok
+test complete_graph_preserves_admission_order_not_numeric_job_order ... FAILED
+test s14_all_1501_admitted_comparisons_drain_without_truncation ... ok
+test s14_exact_pending_boundary_atomic_overlimit_and_byte_backpressure ... ok
+
+failures:
+
+---- complete_graph_preserves_admission_order_not_numeric_job_order stdout ----
+
+thread 'complete_graph_preserves_admission_order_not_numeric_job_order' (5540944) panicked at native/specimen-kernel/tests/orchestration_v3.rs:29:654:
+assertion `left == right` failed
+  left: [1, 9]
+ right: [9, 1]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    complete_graph_preserves_admission_order_not_numeric_job_order
+
+test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s
+
+error: test failed, to rerun pass `-p specimen-kernel --test orchestration_v3`

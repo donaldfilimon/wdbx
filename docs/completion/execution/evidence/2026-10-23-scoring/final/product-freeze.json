@@ -1,0 +1,165 @@
+{
+  "scope": "Current reviewed-tranche source snapshot; task reviews plus final review must be read; no authenticity claim.",
+  "files": [
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-scoring/continuation-rulings.md",
+      "sha256": "068682ab6a8ee3d4b3326b94d962ea9a6f5e3bbc61183bfd5f139dc7d5c918d4"
+    },
+    {
+      "path": "docs/completion/execution/scoring-orchestration-v3-profile.md",
+      "sha256": "e827c9a49c72b7b074a2a8e68ef46bb6ab8cf5eb79c4f85f8ef89dd210e2afaf"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/lib.rs",
+      "sha256": "0d6ec0758e32e8e94e2b8ca5c1d455a264dabd909d6712cf66651c956dce42b4"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs",
+      "sha256": "3b600819285ae3c27a79eee3b01b9fcb476f3f1b51103422cca3b7c6102c562f"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+      "sha256": "d0315c650a44ebde74bd47a9a821af9499b98dfaf58318929dc55283d28499d0"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+      "sha256": "8618d61f8ba27559d4f627aad199dbeb2a2401a0e3b2f9d56fc8630b1b37737c"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/orchestration_v3/budget.rs",
+      "sha256": "968a9a890e8525901354ef1ca860b2cb443cb02eca1b09a5134cfc2d97c3e47d"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs",
+      "sha256": "98c0e214f30c626282b45af3c66e7c1a0ba0633b453e79e0fad4904967585506"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/orchestration_v3/mod.rs",
+      "sha256": "32dbd43eb5f4ccaa610f984388745e03e6b310b9250ba66c7baa3e7f0f04f86a"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/scoring_v3/arbitration.rs",
+      "sha256": "bebb773f29b2aad6a9dd577330c98aedde1d49bc4dd741e8e40248ed4f1afba9"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/scoring_v3/budget.rs",
+      "sha256": "bd755696aff18e54eb92f1962243d9b9ebaf7adf9c4c71e02f87318c3a9b35af"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/scoring_v3/contribution.rs",
+      "sha256": "5fc433d8cce55ca728749eb0dee6ef142ecbee47a064cb586d0bf42351e3ae63"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/scoring_v3/draws.rs",
+      "sha256": "1dc1240e736117a106c3766ee1e9fc7e5df098fe81961193afc26a0f534931aa"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/scoring_v3/election.rs",
+      "sha256": "28eaedfb182e66c6de0fd8a819c6a8a9f4045f015bccfda505554f29b121dffa"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/scoring_v3/math.rs",
+      "sha256": "f9a17e784eb345a68f7e3d480367a99ad75eb645efca2799d48fbcb59670edb6"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/scoring_v3/mod.rs",
+      "sha256": "7d51beb8b5dc76a2c8189bd0976f6c24b6fcfdc9921364fbc8ddd31390164027"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/scoring_v3/policy.rs",
+      "sha256": "bb95769e8d297546d018b70eb490e502727f0039d144b5302e45527ecd14cfbb"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/orchestration_v3.rs",
+      "sha256": "21dbabfd77a92bf20697b47b54989e81a6e351390cdd707aad1ffea0cab4902f"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/orchestration_v3/support.rs",
+      "sha256": "50197f9bee25ad3984c7e6db5959d32a3bba89f7d50b43d8ecd7d390cce57547"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs",
+      "sha256": "e6a6c317b0e7c353abdc05ea3909dfb0f3392c0e1f4b4543ed827cfd0e14f8e8"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/orchestration_v3_fix1.rs",
+      "sha256": "6a8023405a31a961ab752523047a974b64be8ba54e1524907751c29ff17b8b03"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/orchestration_v3_graph.rs",
+      "sha256": "f64b65a5e7013f0751b7186df1a4de7e75b71992890b76306eeeb1103d5fc810"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs",
+      "sha256": "66f2e56c033c30ebbb52e8eb307b3a685f55a4b61bd20342f3763350d720c24a"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs",
+      "sha256": "7bd566b797a292bd6ce39b6956ad0e6541ea488b65b6985879405b33efbf644d"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/scoring_v3_contributions.rs",
+      "sha256": "8416b7d355eb2f004b151cd63b352ba70d3f22735a1cffba3baeba4e1696c898"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/scoring_v3_election.rs",
+      "sha256": "0cf8330041848198efb7f97adacc87063bd951aa83510247a911e40daab3eb6c"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/scoring_v3_policy.rs",
+      "sha256": "58d8f2a2ed080c759fda11d68fab7a22c5e5a31da21808697220158c968c4391"
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "sha256": "c5f140c3c5a78d9ed64b922f14e604f87a0516fa279234ed5ea74facac870104"
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/examples/scoring_probe.rs",
+      "sha256": "e6ef97ea22719c16b091180d5378d714d07a09c5641b12ae603335251b8f350e"
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "sha256": "a189f2cde52f2fd2f55e48c7b6d5e50782330cd0732f147d574999deaa87c3f1"
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/budget_probe.rs",
+      "sha256": "10c0d242dc0c81ecee57833d6ad602cc32d0401e8f0d7fec6313a7338e4d0d25"
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/budget_probe/attachment.rs",
+      "sha256": "effefe3d1735007ff2de1a222166190132baf7724bf96f9ecb971ca82d2d80ce"
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/entries.rs",
+      "sha256": "a7afe9ee6a9015eb7d0da4a404d2476adbb8da61599febce97541d0528b40a42"
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/mod.rs",
+      "sha256": "c04a74e932b28ed207a9008bede38edb597bbda726b7368023394fb9ca02d86f"
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/numeric.rs",
+      "sha256": "a057f079512b8e12115a5a9a47dcbf33970db44e352803a6e14537eb5de5f973"
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/orchestration.rs",
+      "sha256": "0b3b9a3c38e016607d1cf2ca6000cd43ef314dcb33437402c101e20731694589"
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/project.rs",
+      "sha256": "7bfe6ced1895c93218ce8078e0d008f7eaec5ee48e20f629c91636c52dc52ee5"
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/tests/scoring_probe.rs",
+      "sha256": "08890cdab8d388a4560e9f1c572b0773222fd9a21f843f3828840a7878ceb8a2"
+    },
+    {
+      "path": "specimen-studio/scripts/check-scoring-parity.sh",
+      "sha256": "68ba89109bb145855bbbae2a93bd1e47ea76f7e010a324fd0763ac5a9ab4a005"
+    },
+    {
+      "path": "specimen-studio/tests/scoring-parity.mjs",
+      "sha256": "383f38db2e815634135093021ec953147dcb0568f111a353ef3e9022a4150e17"
+    }
+  ]
+}

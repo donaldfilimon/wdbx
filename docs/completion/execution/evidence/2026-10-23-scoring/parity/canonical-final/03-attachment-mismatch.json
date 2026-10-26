@@ -1,0 +1,23 @@
+{
+  "retained_artifacts": "/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-scoring-parity.SGpaUi",
+  "semantic_equal": true,
+  "fourteen_fixed_boundary_rows_equal": true,
+  "mismatches": [
+    {
+      "path": "/orchestration/attachment/after_attach",
+      "native_owned": 3934,
+      "wasm_owned": 3866,
+      "delta": 68
+    },
+    {
+      "path": "/orchestration/attachment/final_counts",
+      "native_owned": 6532,
+      "wasm_owned": 6464,
+      "delta": 68
+    }
+  ],
+  "raw_sha256": {
+    "native.json": "9fdd69aaa3f5bfe10ac5d68f53ef6e612e4841cb5137c2a2eeea0107608eb082",
+    "wasm.json": "c8b75ce0bf6b42338c0a4a1e2f7194ccc4dbc523b5003e7e3a688788086456f7"
+  }
+}

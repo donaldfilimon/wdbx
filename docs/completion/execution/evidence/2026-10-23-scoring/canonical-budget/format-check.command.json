@@ -1,0 +1,25 @@
+{
+  "command": [
+    "rustfmt",
+    "--edition",
+    "2024",
+    "--check",
+    "--config",
+    "skip_children=true",
+    "native/specimen-kernel/src/lib.rs",
+    "native/specimen-kernel/src/logical_charge_v1.rs",
+    "native/specimen-kernel/src/scoring_v3/budget.rs",
+    "native/specimen-kernel/src/orchestration_v3/budget.rs",
+    "native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs"
+  ],
+  "cwd": "/Users/donald/sources/repos/wdbx/specimen-studio",
+  "env": {
+    "RUSTUP_TOOLCHAIN": "1.99.1",
+    "CARGO_NET_OFFLINE": "true",
+    "DYLD_LIBRARY_PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib",
+    "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/donald/.local/bin:/Users/donald/.nvm/versions/node/v26.12.0/bin:/Users/donald/.config/enconvo/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/opt/homebrew/bin:/Users/donald/.codex/tmp/arg0-macos/codex-arg03vJ0i7:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/donald/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Users/donald/.local/bin:/Users/donald/.nvm/versions/node/v26.12.0/bin:/Users/donald/.config/enconvo/bin:/Users/donald/.swiftly/bin:/opt/homebrew/sbin:/Users/donald/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS"
+  },
+  "exit": 0,
+  "started_utc": "2026-10-23T05:06:00.033568+00:00",
+  "completed_utc": "2026-10-23T05:06:00.060925+00:00"
+}

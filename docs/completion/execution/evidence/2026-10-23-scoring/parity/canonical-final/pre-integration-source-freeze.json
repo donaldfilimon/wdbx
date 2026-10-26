@@ -1,0 +1,66 @@
+{
+  "phase": "owned source frozen awaiting root attachment logical-charge integration correction and independent review",
+  "utc": "2026-10-23T05:17:50.289370+00:00",
+  "files": [
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/budget_probe.rs",
+      "sha256": "94075cdbe89bd934b5ae78296ced711ddd4421a50cf9e887c7198c58c704a115",
+      "lines": 276
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/entries.rs",
+      "sha256": "a7afe9ee6a9015eb7d0da4a404d2476adbb8da61599febce97541d0528b40a42",
+      "lines": 302
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/mod.rs",
+      "sha256": "c04a74e932b28ed207a9008bede38edb597bbda726b7368023394fb9ca02d86f",
+      "lines": 63
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/numeric.rs",
+      "sha256": "a057f079512b8e12115a5a9a47dcbf33970db44e352803a6e14537eb5de5f973",
+      "lines": 146
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/orchestration.rs",
+      "sha256": "0b3b9a3c38e016607d1cf2ca6000cd43ef314dcb33437402c101e20731694589",
+      "lines": 380
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/project.rs",
+      "sha256": "7bfe6ced1895c93218ce8078e0d008f7eaec5ee48e20f629c91636c52dc52ee5",
+      "lines": 46
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "sha256": "a189f2cde52f2fd2f55e48c7b6d5e50782330cd0732f147d574999deaa87c3f1",
+      "lines": 227
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "sha256": "c5f140c3c5a78d9ed64b922f14e604f87a0516fa279234ed5ea74facac870104",
+      "lines": 22
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/examples/scoring_probe.rs",
+      "sha256": "e6ef97ea22719c16b091180d5378d714d07a09c5641b12ae603335251b8f350e",
+      "lines": 3
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/tests/scoring_probe.rs",
+      "sha256": "a8541580abed301abe32b65d6ffca5c2bc13f10deb2bfdf2e2850d2d10f0ba60",
+      "lines": 82
+    },
+    {
+      "path": "specimen-studio/scripts/check-scoring-parity.sh",
+      "sha256": "68ba89109bb145855bbbae2a93bd1e47ea76f7e010a324fd0763ac5a9ab4a005",
+      "lines": 89
+    },
+    {
+      "path": "specimen-studio/tests/scoring-parity.mjs",
+      "sha256": "2f7ffa962f28f4e882c8d5d4fdce2e22f30f478fe4b32fee768540cd1348e303",
+      "lines": 1768
+    }
+  ]
+}

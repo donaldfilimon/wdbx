@@ -1,0 +1,39 @@
+--- before/specimen-studio/tests/scoring-parity.mjs
++++ after/specimen-studio/tests/scoring-parity.mjs
+@@ -1914,15 +1914,15 @@
+     'PASS: default WASM compile/export inspection only; not instantiated',
+   );
+   const bytes = readFileSync(featurePath),
+-    module = await WebAssembly.compile(bytes);
++    featureModule = await WebAssembly.compile(bytes);
+   assert(
+-    WebAssembly.Module.exports(module).some(
++    WebAssembly.Module.exports(featureModule).some(
+       (e) => e.name === 'scoring_probe_raw',
+     ),
+   );
+   let hostCalls = 0;
+   const imports = {};
+-  for (const i of WebAssembly.Module.imports(module)) {
++  for (const i of WebAssembly.Module.imports(featureModule)) {
+     assert(
+       i.kind === 'function',
+       'all observed imports must be throwing functions',
+@@ -1933,7 +1933,7 @@
+       throw Error(`forbidden host call ${i.module}.${i.name}`);
+     };
+   }
+-  const instance = await WebAssembly.instantiate(module, imports);
++  const instance = await WebAssembly.instantiate(featureModule, imports);
+   const packed = instance.exports.scoring_probe_raw();
+   const ptr = Number(packed >> 32n),
+     len = Number(packed & 0xffffffffn);
+@@ -1988,7 +1988,7 @@
+       native_sha256: hash(native),
+       wasm_sha256: hash(wasm),
+       host_calls: hostCalls,
+-      feature_imports: WebAssembly.Module.imports(module),
++      feature_imports: WebAssembly.Module.imports(featureModule),
+       default_exports: de,
+       feature_sha256: hash(bytes),
+       default_sha256: hash(defaultBytes),

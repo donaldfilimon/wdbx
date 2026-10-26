@@ -1,0 +1,71 @@
+{
+  "scope": "final owned probe sources plus unchanged minimal registrations; current kernel separately verified against reviewed fix1 freeze",
+  "utc": "2026-10-23T05:34:49.923366+00:00",
+  "files": [
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/budget_probe/attachment.rs",
+      "sha256": "effefe3d1735007ff2de1a222166190132baf7724bf96f9ecb971ca82d2d80ce",
+      "lines": 198
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/budget_probe.rs",
+      "sha256": "10c0d242dc0c81ecee57833d6ad602cc32d0401e8f0d7fec6313a7338e4d0d25",
+      "lines": 279
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/entries.rs",
+      "sha256": "a7afe9ee6a9015eb7d0da4a404d2476adbb8da61599febce97541d0528b40a42",
+      "lines": 302
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/mod.rs",
+      "sha256": "c04a74e932b28ed207a9008bede38edb597bbda726b7368023394fb9ca02d86f",
+      "lines": 63
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/numeric.rs",
+      "sha256": "a057f079512b8e12115a5a9a47dcbf33970db44e352803a6e14537eb5de5f973",
+      "lines": 146
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/orchestration.rs",
+      "sha256": "0b3b9a3c38e016607d1cf2ca6000cd43ef314dcb33437402c101e20731694589",
+      "lines": 380
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/project.rs",
+      "sha256": "7bfe6ced1895c93218ce8078e0d008f7eaec5ee48e20f629c91636c52dc52ee5",
+      "lines": 46
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "sha256": "a189f2cde52f2fd2f55e48c7b6d5e50782330cd0732f147d574999deaa87c3f1",
+      "lines": 227
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "sha256": "c5f140c3c5a78d9ed64b922f14e604f87a0516fa279234ed5ea74facac870104",
+      "lines": 22
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/examples/scoring_probe.rs",
+      "sha256": "e6ef97ea22719c16b091180d5378d714d07a09c5641b12ae603335251b8f350e",
+      "lines": 3
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/tests/scoring_probe.rs",
+      "sha256": "08890cdab8d388a4560e9f1c572b0773222fd9a21f843f3828840a7878ceb8a2",
+      "lines": 108
+    },
+    {
+      "path": "specimen-studio/scripts/check-scoring-parity.sh",
+      "sha256": "68ba89109bb145855bbbae2a93bd1e47ea76f7e010a324fd0763ac5a9ab4a005",
+      "lines": 89
+    },
+    {
+      "path": "specimen-studio/tests/scoring-parity.mjs",
+      "sha256": "6aeab3fdd2f069af0ddf42cc251bf3839586dddb1db60b5e541328aea6e696a8",
+      "lines": 1997
+    }
+  ]
+}

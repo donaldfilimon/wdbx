@@ -1,0 +1,44 @@
+{
+  "original_six_checks": "validation-summary.json",
+  "final_closures": [
+    {
+      "command": [
+        "/opt/homebrew/bin/python3",
+        "docs/completion/execution/evidence/2026-10-23-scoring/register/check-scoring-closure.py"
+      ],
+      "cwd": "/Users/donald/sources/repos/wdbx",
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_utc": "2026-10-23T06:01:17.730321+00:00",
+      "ended_utc": "2026-10-23T06:01:18.685766+00:00",
+      "exit_code": 0,
+      "closure_sha256": "baa5f94e2fcc3ed5b2171a27677909cc3bb5377e46fb0842c63061c302567e55",
+      "log": {
+        "path": "docs/completion/execution/evidence/2026-10-23-scoring/register/current-closure-final.log",
+        "sha256": "8d3773e3434b1bd8e2775bce8d4a16f62d35f1d1b74134a1f65073ec6a47ae22"
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "docs/completion/execution/evidence/2026-10-23-scoring/register/check-scoring-closure.py"
+      ],
+      "cwd": "/Users/donald/sources/repos/wdbx",
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_utc": "2026-10-23T06:01:18.686034+00:00",
+      "ended_utc": "2026-10-23T06:01:19.477291+00:00",
+      "exit_code": 0,
+      "closure_sha256": "baa5f94e2fcc3ed5b2171a27677909cc3bb5377e46fb0842c63061c302567e55",
+      "log": {
+        "path": "docs/completion/execution/evidence/2026-10-23-scoring/register/system-closure-final.log",
+        "sha256": "8d3773e3434b1bd8e2775bce8d4a16f62d35f1d1b74134a1f65073ec6a47ae22"
+      }
+    }
+  ],
+  "git_diff_exit": 0,
+  "owned_whitespace_exit": 0,
+  "product_or_frozen_checks_rerun": false
+}

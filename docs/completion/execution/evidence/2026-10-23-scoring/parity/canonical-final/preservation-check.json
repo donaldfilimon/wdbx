@@ -1,0 +1,485 @@
+{
+  "checked": 80,
+  "files": [
+    {
+      "path": "specimen-studio/AGENTS.md",
+      "sha256": "0eccace558435af55a8b6d0340166e23f801c6b4ba54d6b186904f823985bede",
+      "observed_sha256": "0eccace558435af55a8b6d0340166e23f801c6b4ba54d6b186904f823985bede",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/app/state/use-studio.ts",
+      "sha256": "1e096cae3a74826216a2f7ba3a7296a4a1d1c1a4223d383ab1721c92cc5f6d77",
+      "observed_sha256": "1e096cae3a74826216a2f7ba3a7296a4a1d1c1a4223d383ab1721c92cc5f6d77",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/lib/specimen/canonical-loss.json",
+      "sha256": "7b8f68c0da84ef8caed92f1a300091872b39fe730e02aa29c0cd6733f75a3551",
+      "observed_sha256": "7b8f68c0da84ef8caed92f1a300091872b39fe730e02aa29c0cd6733f75a3551",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/lib/specimen/kernel-worker.ts",
+      "sha256": "1494952934e2bcfa20beb3303efa5c104b1867729930f4cc88817f5ebe5b9faf",
+      "observed_sha256": "1494952934e2bcfa20beb3303efa5c104b1867729930f4cc88817f5ebe5b9faf",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/lib/specimen/native.ts",
+      "sha256": "14ae4ce37ff73e2c4c3e81069ca1ea4e1130fff7bb4ff168f799bfd042df3648",
+      "observed_sha256": "14ae4ce37ff73e2c4c3e81069ca1ea4e1130fff7bb4ff168f799bfd042df3648",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/lib/specimen/storage.ts",
+      "sha256": "ab64c091ea3badfb7e37152d2fa3f09444444bf9c529fdf42d373054e592c3b3",
+      "observed_sha256": "ab64c091ea3badfb7e37152d2fa3f09444444bf9c529fdf42d373054e592c3b3",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-core/Cargo.toml",
+      "sha256": "618b0a27d80dcdf66c5691a5ced0ceeb447976609cdebfcb0b3b4dd841e5595b",
+      "observed_sha256": "618b0a27d80dcdf66c5691a5ced0ceeb447976609cdebfcb0b3b4dd841e5595b",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-core/src/canonical/manifest.rs",
+      "sha256": "2fb63bf2b0ad9d45a83a14199d35901f0b8ca05248ed9ac9444e17594ac1604d",
+      "observed_sha256": "2fb63bf2b0ad9d45a83a14199d35901f0b8ca05248ed9ac9444e17594ac1604d",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-core/src/canonical/mod.rs",
+      "sha256": "2fd76768d207fd83ce4d79e8daa4b86eec38c234a98c558e7ab4a2bc29b44c5d",
+      "observed_sha256": "2fd76768d207fd83ce4d79e8daa4b86eec38c234a98c558e7ab4a2bc29b44c5d",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-core/src/canonical/rebuild.rs",
+      "sha256": "55f522a4d34e4297e1e4a2bc39e0824e1e557211360c96f3f7d3289baf046711",
+      "observed_sha256": "55f522a4d34e4297e1e4a2bc39e0824e1e557211360c96f3f7d3289baf046711",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-core/src/persistence.rs",
+      "sha256": "31a82e06eb71d76dd4fbc709c39972387e53b888648a4c10bc2609017c3307a7",
+      "observed_sha256": "31a82e06eb71d76dd4fbc709c39972387e53b888648a4c10bc2609017c3307a7",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-core/src/persistence/canonical.rs",
+      "sha256": "0da5a8135044562111f95e30c709e574ba18ea981c6ebb0db5784588f0f43f55",
+      "observed_sha256": "0da5a8135044562111f95e30c709e574ba18ea981c6ebb0db5784588f0f43f55",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-core/src/scheduler.rs",
+      "sha256": "94afe22e3923635d13ff64b14a8435ee43d7cf490f682cf69cb5a4ebe72a0738",
+      "observed_sha256": "94afe22e3923635d13ff64b14a8435ee43d7cf490f682cf69cb5a4ebe72a0738",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-core/src/vision.rs",
+      "sha256": "09cd5de6a09aa9f293ea4d35666f6d8645d8681122cac4ebc67d02373d071f64",
+      "observed_sha256": "09cd5de6a09aa9f293ea4d35666f6d8645d8681122cac4ebc67d02373d071f64",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-core/tests/canonical.rs",
+      "sha256": "6bec9ab7c534bed0fa4e042f4d1157cc9f7061c2c4ed1ccc7747a1841f786f76",
+      "observed_sha256": "6bec9ab7c534bed0fa4e042f4d1157cc9f7061c2c4ed1ccc7747a1841f786f76",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-core/tests/canonical_store.rs",
+      "sha256": "04ac10a05a48b7cd1e4e3911fc91644a164aae03950af3141e7a3bf6165c421f",
+      "observed_sha256": "04ac10a05a48b7cd1e4e3911fc91644a164aae03950af3141e7a3bf6165c421f",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "sha256": "f855272da8934bcce6d8d0bee3f2bfae7cfef71714fb1b70da408adb3e3da81f",
+      "observed_sha256": "f855272da8934bcce6d8d0bee3f2bfae7cfef71714fb1b70da408adb3e3da81f",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-core/tests/raft_partition.rs",
+      "sha256": "f7562fddf6986429185cb3947b0e121befee8fc2c2a5a41268d66d1646a8f350",
+      "observed_sha256": "f7562fddf6986429185cb3947b0e121befee8fc2c2a5a41268d66d1646a8f350",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/Cargo.toml",
+      "sha256": "1c107e1e6ae0047c386320b84b721ce6450cc92ac75a3a3c3278aafb9e40a869",
+      "observed_sha256": "1c107e1e6ae0047c386320b84b721ce6450cc92ac75a3a3c3278aafb9e40a869",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/command/apply.rs",
+      "sha256": "9e9b815ea3ea9190f470a163f79a6be50e87039ac24a3d5507f0bb2c955f0c24",
+      "observed_sha256": "9e9b815ea3ea9190f470a163f79a6be50e87039ac24a3d5507f0bb2c955f0c24",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/command/parse.rs",
+      "sha256": "1a2ea79a9f0b182ea0b5b08320159600074f38f4eeb9c439100353f7d6424e16",
+      "observed_sha256": "1a2ea79a9f0b182ea0b5b08320159600074f38f4eeb9c439100353f7d6424e16",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "sha256": "98ce45326436b9ed580a9aaa9f41ab2090f2d3f685fcaea50be0eca86a6ccba2",
+      "observed_sha256": "98ce45326436b9ed580a9aaa9f41ab2090f2d3f685fcaea50be0eca86a6ccba2",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/identity/index.rs",
+      "sha256": "99b7810b5cd10fc483aad1233298f00704af28c826e3337be013bd9266cb55bf",
+      "observed_sha256": "99b7810b5cd10fc483aad1233298f00704af28c826e3337be013bd9266cb55bf",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+      "sha256": "39c13866d6796260c85a618156b5fc177eeae3780bacca0503accf2ed42d62a0",
+      "observed_sha256": "39c13866d6796260c85a618156b5fc177eeae3780bacca0503accf2ed42d62a0",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/identity/model.rs",
+      "sha256": "12cda88d9ac5968b0d92279f4dc5ebaf1041c5d4b5c49c5ac5ee999be2373f35",
+      "observed_sha256": "12cda88d9ac5968b0d92279f4dc5ebaf1041c5d4b5c49c5ac5ee999be2373f35",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/identity/validate.rs",
+      "sha256": "6ecb1b0659f9261c4f56a9cf016fd0fe9fd075407d9d26b44d4609636d1218d8",
+      "observed_sha256": "6ecb1b0659f9261c4f56a9cf016fd0fe9fd075407d9d26b44d4609636d1218d8",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/language.rs",
+      "sha256": "d9682c1a5ce3ee27f0bdca9da0b9d208a695c95089bc478875d482a9543aaccc",
+      "observed_sha256": "d9682c1a5ce3ee27f0bdca9da0b9d208a695c95089bc478875d482a9543aaccc",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+      "sha256": "85cca7eb74f62ec4f0d46160ac1e3c3f67e277335bd837d2e6c2b9d14307aac9",
+      "observed_sha256": "85cca7eb74f62ec4f0d46160ac1e3c3f67e277335bd837d2e6c2b9d14307aac9",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+      "sha256": "b479b4d1426a30352fdb4a68212f84bebf36249963466a1cfa97656a11a3ac73",
+      "observed_sha256": "b479b4d1426a30352fdb4a68212f84bebf36249963466a1cfa97656a11a3ac73",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+      "sha256": "2ed6ce26fd2040da3db283b50b13aec0b7b478bd520b049b24df1d03c1b24c5f",
+      "observed_sha256": "2ed6ce26fd2040da3db283b50b13aec0b7b478bd520b049b24df1d03c1b24c5f",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+      "sha256": "6ca1696da4dbfd1ac96c148f6c7236719c36ed5fb07f19d49aa9a273a4b3050a",
+      "observed_sha256": "6ca1696da4dbfd1ac96c148f6c7236719c36ed5fb07f19d49aa9a273a4b3050a",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+      "sha256": "d03e3b54349ff73d5f58bf2f100baf1d47d10acc15411c1848c97611b2587187",
+      "observed_sha256": "d03e3b54349ff73d5f58bf2f100baf1d47d10acc15411c1848c97611b2587187",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+      "sha256": "5f4e4138fdb860288085f877ebe1eb81c7f336b599571a63d8f0e4216fb51c1f",
+      "observed_sha256": "5f4e4138fdb860288085f877ebe1eb81c7f336b599571a63d8f0e4216fb51c1f",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+      "sha256": "7fc3bd1fabcd7192a2b65355ebce4a48a07f7680bd7f3d72390033da35a474bc",
+      "observed_sha256": "7fc3bd1fabcd7192a2b65355ebce4a48a07f7680bd7f3d72390033da35a474bc",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs",
+      "sha256": "5cb736d802fa8bf7b932037b2feec26b90f71b5f04383d2d51068e4a2d5bd9d1",
+      "observed_sha256": "5cb736d802fa8bf7b932037b2feec26b90f71b5f04383d2d51068e4a2d5bd9d1",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "sha256": "7aaee9761ee5137312ce30904df85b40c7cc62068f05d2bf0018bff2f172fe0f",
+      "observed_sha256": "7aaee9761ee5137312ce30904df85b40c7cc62068f05d2bf0018bff2f172fe0f",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/neural.rs",
+      "sha256": "eb5c197df8679f6172441ca9c6727753c2a2643ccfc87eaacffdaff1e83624b8",
+      "observed_sha256": "eb5c197df8679f6172441ca9c6727753c2a2643ccfc87eaacffdaff1e83624b8",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/scanner_v3/mod.rs",
+      "sha256": "0e2f987d7ed96eabd1e07520f9e5f8428cba450b604a52c1b3a398e2544ba41b",
+      "observed_sha256": "0e2f987d7ed96eabd1e07520f9e5f8428cba450b604a52c1b3a398e2544ba41b",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/scanner_v3/rational.rs",
+      "sha256": "027c6411f4d167c9bbd4f2d8c2259f00a2387a30745b1e52f6329ba439953d50",
+      "observed_sha256": "027c6411f4d167c9bbd4f2d8c2259f00a2387a30745b1e52f6329ba439953d50",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs",
+      "sha256": "aacb965f10f31c98c71d2fbcf6dd5718b7359e4d24ec6037d52f0a226b9cd486",
+      "observed_sha256": "aacb965f10f31c98c71d2fbcf6dd5718b7359e4d24ec6037d52f0a226b9cd486",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs",
+      "sha256": "a76f83c1b99780917da3c18cc63b32676e25e9731ac1e4bff4969b69e188add6",
+      "observed_sha256": "a76f83c1b99780917da3c18cc63b32676e25e9731ac1e4bff4969b69e188add6",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/model.rs",
+      "sha256": "731254ac7cfe6547ca7f0dfb7814d8ca6a2331f387c5ae841f9f236725fe761e",
+      "observed_sha256": "731254ac7cfe6547ca7f0dfb7814d8ca6a2331f387c5ae841f9f236725fe761e",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/work.rs",
+      "sha256": "8a589b4d576fe588bd4ce32767e65a1121a49dbf44b8ad51d00229956b5d54cc",
+      "observed_sha256": "8a589b4d576fe588bd4ce32767e65a1121a49dbf44b8ad51d00229956b5d54cc",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/search.rs",
+      "sha256": "cfdec797d79b3925a5035bdc36f5ace9343dc2a21dea29047b5f021334440def",
+      "observed_sha256": "cfdec797d79b3925a5035bdc36f5ace9343dc2a21dea29047b5f021334440def",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/text_v3/mod.rs",
+      "sha256": "b82068b636c1aa3645da004637a2291b88c0758eebcb720603857fca3b37fb1d",
+      "observed_sha256": "b82068b636c1aa3645da004637a2291b88c0758eebcb720603857fca3b37fb1d",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/identity.rs",
+      "sha256": "cbd00705139c9ca9633ae8802284c472006da2289661d5797c966d1fb3b764c1",
+      "observed_sha256": "cbd00705139c9ca9633ae8802284c472006da2289661d5797c966d1fb3b764c1",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/identity_fixture.rs",
+      "sha256": "25ce6e4b7174218a6247ebb9261c04c74163bc019980629178945b197700a0d0",
+      "observed_sha256": "25ce6e4b7174218a6247ebb9261c04c74163bc019980629178945b197700a0d0",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/import_adapt.rs",
+      "sha256": "bf0780e7a8a759d27b9a85dbb42912905db040196124611c7c5adbc5248efef7",
+      "observed_sha256": "bf0780e7a8a759d27b9a85dbb42912905db040196124611c7c5adbc5248efef7",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
+      "sha256": "114dcb8684c1a439b97aeb6d2a2c37f6878a00625865d5dda4bb80cd634a8f9d",
+      "observed_sha256": "114dcb8684c1a439b97aeb6d2a2c37f6878a00625865d5dda4bb80cd634a8f9d",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+      "sha256": "220cd4fb3f979b62f37d261b3d87acf609980aeb237348ebef26eaa13c7571d7",
+      "observed_sha256": "220cd4fb3f979b62f37d261b3d87acf609980aeb237348ebef26eaa13c7571d7",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+      "sha256": "03d3fa508df82002ef9c62625bfcf8c1cf2ad45834d35ecd9fa5ef0a35287632",
+      "observed_sha256": "03d3fa508df82002ef9c62625bfcf8c1cf2ad45834d35ecd9fa5ef0a35287632",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+      "sha256": "cc035996fb04eea519daa164450ad67046693630309273a635df13106bb7664b",
+      "observed_sha256": "cc035996fb04eea519daa164450ad67046693630309273a635df13106bb7664b",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs",
+      "sha256": "c95e70412f381f09671392ddc7c384fbd732236b79ef27c934a45c7f2664b8ef",
+      "observed_sha256": "c95e70412f381f09671392ddc7c384fbd732236b79ef27c934a45c7f2664b8ef",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/mutate.rs",
+      "sha256": "bc7ce5137fa3d6769c4ddda6304b2745be17bdc64ca731b81c9c0983e9f467f3",
+      "observed_sha256": "bc7ce5137fa3d6769c4ddda6304b2745be17bdc64ca731b81c9c0983e9f467f3",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/network_edit.rs",
+      "sha256": "1750e10c8f44566d2085bb94b63bf229d0bd12852fecc76a7ef0c28386a14a66",
+      "observed_sha256": "1750e10c8f44566d2085bb94b63bf229d0bd12852fecc76a7ef0c28386a14a66",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/raft_plan.rs",
+      "sha256": "eeef7bbaec5b7ffca69df80089ea16e51b23a4e37c59ddd2bc42263262f503d3",
+      "observed_sha256": "eeef7bbaec5b7ffca69df80089ea16e51b23a4e37c59ddd2bc42263262f503d3",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/routes_final_fix.rs",
+      "sha256": "c8df21681a529d1f8851d4801e8a86488e7019cdd234751f0ffd41835c429e93",
+      "observed_sha256": "c8df21681a529d1f8851d4801e8a86488e7019cdd234751f0ffd41835c429e93",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/scanner_v3.rs",
+      "sha256": "ca4e3c4f5f648b8c7a8a4d636bce6802c5ec21035f8c375bb44cf71e17c9fc4e",
+      "observed_sha256": "ca4e3c4f5f648b8c7a8a4d636bce6802c5ec21035f8c375bb44cf71e17c9fc4e",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs",
+      "sha256": "8855f42229630cfd89921406bcc2e37accf9e2248c63847700dd38cd3451feda",
+      "observed_sha256": "8855f42229630cfd89921406bcc2e37accf9e2248c63847700dd38cd3451feda",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/text_v3.rs",
+      "sha256": "b2bfef9fce1ce85e3dd6214186679d7a17ea6e82573e0b118f1a8aefded34b6e",
+      "observed_sha256": "b2bfef9fce1ce85e3dd6214186679d7a17ea6e82573e0b118f1a8aefded34b6e",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/examples/identity_probe.rs",
+      "sha256": "5efecffd49a4912984914bb36c5be4468db17edd424f63ba6ad77c0a403c39f7",
+      "observed_sha256": "5efecffd49a4912984914bb36c5be4468db17edd424f63ba6ad77c0a403c39f7",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/examples/language_probe.rs",
+      "sha256": "aeab4b298e8d9ca3884d612eae5ab0625a0f6de2cb07d87069895641de83c55e",
+      "observed_sha256": "aeab4b298e8d9ca3884d612eae5ab0625a0f6de2cb07d87069895641de83c55e",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/dispatch.rs",
+      "sha256": "eb94eb78aa7fdc8c84eea95da259410d7105b0c49daa00039a21027837d97891",
+      "observed_sha256": "eb94eb78aa7fdc8c84eea95da259410d7105b0c49daa00039a21027837d97891",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/identity_probe.rs",
+      "sha256": "1219bef564855db408cd83fad1f95071e01afa501ef9715e0fbe17a615807c35",
+      "observed_sha256": "1219bef564855db408cd83fad1f95071e01afa501ef9715e0fbe17a615807c35",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "sha256": "15b81316e38e8019ccc2dd879f50644ef69a67a19b3547de90e105c039df986c",
+      "observed_sha256": "15b81316e38e8019ccc2dd879f50644ef69a67a19b3547de90e105c039df986c",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/language_probe/final_fix.rs",
+      "sha256": "1cc0657b901fad9f3047d55026f27e6c2d37aa4f65273eb68f0abdac492ceb72",
+      "observed_sha256": "1cc0657b901fad9f3047d55026f27e6c2d37aa4f65273eb68f0abdac492ceb72",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/tests/identity_probe.rs",
+      "sha256": "86316c8343f8c5d4f72d04d43ce67478bd0847b48aff93dd327320aabb3b5ab3",
+      "observed_sha256": "86316c8343f8c5d4f72d04d43ce67478bd0847b48aff93dd327320aabb3b5ab3",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "sha256": "0622daf6d5a87a073010f4c88a24df0c877a72c13a0bd4d8634b5a940a7bdc42",
+      "observed_sha256": "0622daf6d5a87a073010f4c88a24df0c877a72c13a0bd4d8634b5a940a7bdc42",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/scripts/check-identity-parity.sh",
+      "sha256": "d2a7f3978cf918e56af9e280e10153959094cc4588cb35a096022fff3996d80d",
+      "observed_sha256": "d2a7f3978cf918e56af9e280e10153959094cc4588cb35a096022fff3996d80d",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/scripts/check-language-parity.sh",
+      "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d",
+      "observed_sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/scripts/qualification-summary.py",
+      "sha256": "aeb6d04e78f681d133b4f5865f10edb6e6c2c27ba0d5d14e40782c2f2d057f20",
+      "observed_sha256": "aeb6d04e78f681d133b4f5865f10edb6e6c2c27ba0d5d14e40782c2f2d057f20",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/tests/canonical-loss.test.js",
+      "sha256": "d613b3e00333f9a7f74d1bc3c45db20bd51fd992d453245afda80f7e4b5ee75c",
+      "observed_sha256": "d613b3e00333f9a7f74d1bc3c45db20bd51fd992d453245afda80f7e4b5ee75c",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/tests/identity-parity.mjs",
+      "sha256": "938b098eab09f16b33151503603f9ee96a9e31984494b77cda4c0da00d5e7d48",
+      "observed_sha256": "938b098eab09f16b33151503603f9ee96a9e31984494b77cda4c0da00d5e7d48",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/tests/kernel-worker.test.js",
+      "sha256": "422381c4145a6a7903f14a396413811a0e94ffc9d30a61e0da8f9a1719ab4dab",
+      "observed_sha256": "422381c4145a6a7903f14a396413811a0e94ffc9d30a61e0da8f9a1719ab4dab",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/tests/kernel.test.js",
+      "sha256": "5ebd63c4db12f6bb16244663f10193c03a78548f5f2e5ecb0c8be592383da654",
+      "observed_sha256": "5ebd63c4db12f6bb16244663f10193c03a78548f5f2e5ecb0c8be592383da654",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/tests/language-parity.mjs",
+      "sha256": "dbb2ecb9cdaca06e3910013dcef1949a01a6511052e6797382d370480e045d61",
+      "observed_sha256": "dbb2ecb9cdaca06e3910013dcef1949a01a6511052e6797382d370480e045d61",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/tests/native-network.test.js",
+      "sha256": "e4283f5b7ccaa9c179db09de02ab2bcaf05b113b4925d542f4aa8de324e28b3c",
+      "observed_sha256": "e4283f5b7ccaa9c179db09de02ab2bcaf05b113b4925d542f4aa8de324e28b3c",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/tests/qualification-summary.test.js",
+      "sha256": "b62639bcd300f9223229a7fd3f482dc132b2a7687c947bbcab7524ff0486a25c",
+      "observed_sha256": "b62639bcd300f9223229a7fd3f482dc132b2a7687c947bbcab7524ff0486a25c",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/tests/ui-contract.test.js",
+      "sha256": "c2bd50a26fe01d1bbc60d24427f51f9dfba85054abf3cdf1813588bc289b80f9",
+      "observed_sha256": "c2bd50a26fe01d1bbc60d24427f51f9dfba85054abf3cdf1813588bc289b80f9",
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/tests/wasm-probe.test.js",
+      "sha256": "993858d6fe4ce16643ae04575978cac432e345f0d9ed1b92d20ba1436f70f46e",
+      "observed_sha256": "993858d6fe4ce16643ae04575978cac432e345f0d9ed1b92d20ba1436f70f46e",
+      "unchanged": true
+    }
+  ]
+}

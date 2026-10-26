@@ -1,0 +1,11 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+    Finished `test` profile [unoptimized] target(s) in 1.85s
+     Running tests/scoring_orchestration_attachment_budget_v1.rs (target/debug/deps/scoring_orchestration_attachment_budget_v1-20fae24f4fbfba63)
+
+running 3 tests
+test attachment_operation_work_minus_one_refuses_without_rng_visit_or_lease_mutation ... ok
+test attachment_selected_and_declined_owned_boundaries_retain_the_same_fixed_metadata ... ok
+test attachment_cleanup_boundary_reserves_four_cycles_four_jobs_and_retained_extra ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

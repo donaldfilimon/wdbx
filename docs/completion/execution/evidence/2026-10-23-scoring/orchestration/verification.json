@@ -1,0 +1,30 @@
+{
+  "environment": {
+    "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+    "RUSTUP_TOOLCHAIN": "1.99.1",
+    "CARGO_NET_OFFLINE": "true"
+  },
+  "results": {
+    "37-focused-freeze.log": {
+      "exit_code": 0,
+      "passed": 26,
+      "failed": 0,
+      "summaries": 3
+    },
+    "38-full-kernel-freeze.log": {
+      "exit_code": 0,
+      "passed": 221,
+      "failed": 0,
+      "summaries": 23
+    },
+    "39-clippy-freeze.log": {
+      "exit_code": 0
+    },
+    "40-owned-fmt-freeze.log": {
+      "exit_code": 0
+    },
+    "41-diff-check-freeze.log": {
+      "exit_code": 0
+    }
+  }
+}

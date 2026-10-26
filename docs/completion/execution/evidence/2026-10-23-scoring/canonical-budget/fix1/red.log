@@ -1,0 +1,36 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+    Finished `test` profile [unoptimized] target(s) in 4.49s
+     Running tests/scoring_orchestration_attachment_budget_v1.rs (target/debug/deps/scoring_orchestration_attachment_budget_v1-20fae24f4fbfba63)
+
+running 3 tests
+test attachment_cleanup_boundary_reserves_four_cycles_four_jobs_and_retained_extra ... FAILED
+test attachment_operation_work_minus_one_refuses_without_rng_visit_or_lease_mutation ... FAILED
+test attachment_selected_and_declined_owned_boundaries_retain_the_same_fixed_metadata ... FAILED
+
+failures:
+
+---- attachment_cleanup_boundary_reserves_four_cycles_four_jobs_and_retained_extra stdout ----
+
+thread 'attachment_cleanup_boundary_reserves_four_cycles_four_jobs_and_retained_extra' (6385114) panicked at native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs:176:35:
+called `Result::unwrap_err()` on an `Ok` value: AttachmentReceipt { disposition: Scheduled(1), trace: Some(AffinityTrace { random: DrawIdentity { seed: 1, stream: "attach" }, draw: Some((0, 0)), affinity: Some(Rational { numerator: 1, denominator: 2 }), selected: true }) }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- attachment_operation_work_minus_one_refuses_without_rng_visit_or_lease_mutation stdout ----
+
+thread 'attachment_operation_work_minus_one_refuses_without_rng_visit_or_lease_mutation' (6385115) panicked at native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs:74:31:
+called `Result::unwrap_err()` on an `Ok` value: AttachmentReceipt { disposition: Scheduled(1), trace: Some(AffinityTrace { random: DrawIdentity { seed: 1, stream: "attach" }, draw: Some((0, 0)), affinity: Some(Rational { numerator: 1, denominator: 2 }), selected: true }) }
+
+---- attachment_selected_and_declined_owned_boundaries_retain_the_same_fixed_metadata stdout ----
+
+thread 'attachment_selected_and_declined_owned_boundaries_retain_the_same_fixed_metadata' (6385116) panicked at native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs:128:35:
+called `Result::unwrap_err()` on an `Ok` value: AttachmentReceipt { disposition: Scheduled(1), trace: Some(AffinityTrace { random: DrawIdentity { seed: 1, stream: "attach" }, draw: Some((0, 0)), affinity: Some(Rational { numerator: 1, denominator: 2 }), selected: true }) }
+
+
+failures:
+    attachment_cleanup_boundary_reserves_four_cycles_four_jobs_and_retained_extra
+    attachment_operation_work_minus_one_refuses_without_rng_visit_or_lease_mutation
+    attachment_selected_and_declined_owned_boundaries_retain_the_same_fixed_metadata
+
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p specimen-kernel --test scoring_orchestration_attachment_budget_v1`

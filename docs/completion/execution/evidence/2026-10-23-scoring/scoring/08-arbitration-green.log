@@ -1,0 +1,57 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[52677]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[52678]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[52679]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "scoring_v3_election") generated 1 warning
+warning: `specimen-kernel` (test "scoring_v3_policy") generated 1 warning
+warning: `specimen-kernel` (test "scoring_v3_contributions") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 3.13s
+     Running tests/scoring_v3_contributions.rs (specimen-studio/target/debug/deps/scoring_v3_contributions-87156be70e9b2e8b)
+
+running 3 tests
+test s09_every_qualified_entry_in_a_node_can_contribute ... ok
+test stale_explicit_binding_refuses_before_jitter ... ok
+test s11_actual_redundancy_elects_only_within_its_group ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/scoring_v3_election.rs (specimen-studio/target/debug/deps/scoring_v3_election-3ac38173cf867a55)
+
+running 3 tests
+test zero_and_single_positive_abstain_or_select_without_draw ... ok
+test finite_extreme_weights_do_not_overflow_and_late_invalid_input_is_atomic ... ok
+test s09_alternatives_use_closed_grid_endpoints_and_inhibition ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/scoring_v3_policy.rs (specimen-studio/target/debug/deps/scoring_v3_policy-9a116fa75c77fec3)
+
+running 7 tests
+test invalid_policies_and_draw_exhaustion_are_atomic ... ok
+test s07_endpoints_are_tested_after_atp ... ok
+test s08_maximum_strength_only_protects_qualified_baselines ... ok
+test exact_threshold_neighbors_and_strength_gate ... ok
+test s07_atp_negative_valence_dampens_before_inclusive_gate ... ok
+test numeric_balance_subtracts_before_clamp_and_positive_atp_does_not_boost ... ok
+test jitter_cap_sign_independence_no_drift_and_trace ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

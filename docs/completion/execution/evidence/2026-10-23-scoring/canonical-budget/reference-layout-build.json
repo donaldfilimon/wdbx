@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin/rustc",
+    "--edition=2024",
+    "/Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/reference-layout.rs",
+    "--extern",
+    "specimen_kernel=/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libspecimen_kernel-5769d56d87c9be95.rlib",
+    "-L",
+    "dependency=/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps",
+    "-o",
+    "/Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/reference-layout"
+  ],
+  "exit": 0
+}

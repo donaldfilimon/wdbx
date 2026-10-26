@@ -1,0 +1,32 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[74493]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "scoring_v3_election") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 0.54s
+     Running tests/scoring_v3_election.rs (specimen-studio/target/debug/deps/scoring_v3_election-3ac38173cf867a55)
+
+running 1 test
+test endpoint_zero_selects_first_positive_even_when_scaling_underflows ... FAILED
+
+failures:
+
+---- endpoint_zero_selects_first_positive_even_when_scaling_underflows stdout ----
+
+thread 'endpoint_zero_selects_first_positive_even_when_scaling_underflows' (5280712) panicked at native/specimen-kernel/tests/scoring_v3_election.rs:17:122:
+assertion `left == right` failed
+  left: Some(1)
+ right: Some(0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    endpoint_zero_selects_first_positive_even_when_scaling_underflows
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p specimen-kernel --test scoring_v3_election`
