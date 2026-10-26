@@ -4146,7 +4146,7 @@
           },
           {
             "path": "specimen-studio/scripts/check-language-parity.sh",
-            "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+            "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
           },
           {
             "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -4516,7 +4516,7 @@
             },
             {
               "path": "specimen-studio/scripts/check-language-parity.sh",
-              "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+              "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
             },
             {
               "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -4672,7 +4672,7 @@
           },
           {
             "path": "specimen-studio/scripts/check-language-parity.sh",
-            "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+            "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
           },
           {
             "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -4899,7 +4899,7 @@
             },
             {
               "path": "specimen-studio/scripts/check-language-parity.sh",
-              "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+              "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
             },
             {
               "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -5059,7 +5059,7 @@
           },
           {
             "path": "specimen-studio/scripts/check-language-parity.sh",
-            "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+            "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
           },
           {
             "path": "specimen-studio/native/specimen-kernel/tests/scoring_v3_policy.rs",
@@ -5404,7 +5404,7 @@
             },
             {
               "path": "specimen-studio/scripts/check-language-parity.sh",
-              "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+              "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
             },
             {
               "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json",
@@ -6652,7 +6652,7 @@
           },
           {
             "path": "specimen-studio/scripts/check-language-parity.sh",
-            "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+            "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
           },
           {
             "path": "specimen-studio/native/specimen-wasm/tests/scoring_probe.rs",
@@ -6664,7 +6664,7 @@
           },
           {
             "path": "specimen-studio/scripts/check-scoring-parity.sh",
-            "sha256": "c6ab320b088c8ba165f3c05c1dc8f44daab1401039d102d0b409562bec72f3f4"
+            "sha256": "9a3bcef9b79a99a51fa175baec12b2fdea8b25b8f98f6afa4ee34c0286128438"
           }
         ]
       },
@@ -7113,7 +7113,7 @@
             },
             {
               "path": "specimen-studio/scripts/check-language-parity.sh",
-              "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+              "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
             },
             {
               "path": "docs/completion/execution/language-v3-profile.md",
@@ -7173,7 +7173,7 @@
             },
             {
               "path": "specimen-studio/scripts/check-scoring-parity.sh",
-              "sha256": "c6ab320b088c8ba165f3c05c1dc8f44daab1401039d102d0b409562bec72f3f4"
+              "sha256": "9a3bcef9b79a99a51fa175baec12b2fdea8b25b8f98f6afa4ee34c0286128438"
             },
             {
               "path": "docs/completion/execution/scoring-orchestration-v3-profile.md",
@@ -8324,7 +8324,7 @@
           },
           {
             "path": "specimen-studio/scripts/check-language-parity.sh",
-            "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+            "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
           },
           {
             "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -8673,7 +8673,7 @@
             },
             {
               "path": "specimen-studio/scripts/check-language-parity.sh",
-              "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+              "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
             },
             {
               "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -8825,7 +8825,7 @@
           },
           {
             "path": "specimen-studio/scripts/check-language-parity.sh",
-            "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+            "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
           },
           {
             "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -9195,7 +9195,7 @@
             },
             {
               "path": "specimen-studio/scripts/check-language-parity.sh",
-              "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+              "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
             },
             {
               "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -9327,7 +9327,7 @@
           },
           {
             "path": "specimen-studio/scripts/check-language-parity.sh",
-            "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+            "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
           },
           {
             "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -9534,7 +9534,7 @@
             },
             {
               "path": "specimen-studio/scripts/check-language-parity.sh",
-              "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+              "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
             },
             {
               "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -9682,7 +9682,7 @@
           },
           {
             "path": "specimen-studio/scripts/check-language-parity.sh",
-            "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+            "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
           },
           {
             "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -9909,7 +9909,7 @@
             },
             {
               "path": "specimen-studio/scripts/check-language-parity.sh",
-              "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+              "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
             },
             {
               "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -10049,7 +10049,7 @@
           },
           {
             "path": "specimen-studio/scripts/check-language-parity.sh",
-            "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+            "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
           },
           {
             "path": "specimen-studio/native/specimen-kernel/tests/scoring_v3_policy.rs",
@@ -10370,7 +10370,7 @@
             },
             {
               "path": "specimen-studio/scripts/check-language-parity.sh",
-              "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+              "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
             },
             {
               "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json",
@@ -13421,7 +13421,7 @@
           },
           {
             "path": "specimen-studio/scripts/check-language-parity.sh",
-            "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+            "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
           },
           {
             "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -13628,7 +13628,7 @@
             },
             {
               "path": "specimen-studio/scripts/check-language-parity.sh",
-              "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+              "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
             },
             {
               "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -14726,7 +14726,7 @@
           },
           {
             "path": "specimen-studio/scripts/check-language-parity.sh",
-            "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+            "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
           },
           {
             "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -15089,7 +15089,7 @@
             },
             {
               "path": "specimen-studio/scripts/check-language-parity.sh",
-              "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+              "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
             },
             {
               "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -15865,7 +15865,7 @@
           },
           {
             "path": "specimen-studio/scripts/check-language-parity.sh",
-            "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+            "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
           },
           {
             "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -16228,7 +16228,7 @@
             },
             {
               "path": "specimen-studio/scripts/check-language-parity.sh",
-              "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+              "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
             },
             {
               "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -16328,7 +16328,7 @@
           },
           {
             "path": "specimen-studio/scripts/check-language-parity.sh",
-            "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+            "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
           },
           {
             "path": "specimen-studio/native/specimen-kernel/tests/routes_final_fix.rs",
@@ -16539,7 +16539,7 @@
             },
             {
               "path": "specimen-studio/scripts/check-language-parity.sh",
-              "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+              "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
             },
             {
               "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json",
@@ -16623,7 +16623,7 @@
           },
           {
             "path": "specimen-studio/scripts/check-language-parity.sh",
-            "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+            "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
           }
         ]
       },
@@ -16814,7 +16814,7 @@
             },
             {
               "path": "specimen-studio/scripts/check-language-parity.sh",
-              "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+              "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
             },
             {
               "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json",
@@ -21103,7 +21103,7 @@
           },
           {
             "path": "specimen-studio/scripts/check-language-parity.sh",
-            "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+            "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
           },
           {
             "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -21318,7 +21318,7 @@
             },
             {
               "path": "specimen-studio/scripts/check-language-parity.sh",
-              "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+              "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
             },
             {
               "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -21462,7 +21462,7 @@
           },
           {
             "path": "specimen-studio/scripts/check-language-parity.sh",
-            "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+            "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
           },
           {
             "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -21697,7 +21697,7 @@
             },
             {
               "path": "specimen-studio/scripts/check-language-parity.sh",
-              "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+              "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
             },
             {
               "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -21853,7 +21853,7 @@
           },
           {
             "path": "specimen-studio/scripts/check-language-parity.sh",
-            "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+            "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
           },
           {
             "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -22088,7 +22088,7 @@
             },
             {
               "path": "specimen-studio/scripts/check-language-parity.sh",
-              "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+              "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
             },
             {
               "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -24753,7 +24753,7 @@
           },
           {
             "path": "specimen-studio/scripts/check-language-parity.sh",
-            "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+            "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
           },
           {
             "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
@@ -24988,7 +24988,7 @@
             },
             {
               "path": "specimen-studio/scripts/check-language-parity.sh",
-              "sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d"
+              "sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad"
             },
             {
               "path": "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs",
