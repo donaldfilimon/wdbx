@@ -335,7 +335,7 @@ class LiveRelease(unittest.TestCase):
                 self.assertEqual(1, checker.main())
             if flag:
                 self.assertFalse(json.loads(stdout.getvalue())['valid'])
-                self.assertEqual('', stderr.getvalue())
+                self.assertIn('FAIL:', stderr.getvalue())
             else:
                 self.assertIn('FAIL:', stderr.getvalue())
                 self.assertEqual('', stdout.getvalue())

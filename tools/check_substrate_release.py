@@ -217,12 +217,13 @@ def main():
     args = parser.parse_args()
     report = {} if args.drift_report else None
     errors = validate(args.root, live=not args.snapshot_only, report=report)
+    if errors:
+        for error in errors:
+            print('FAIL: ' + error, file=sys.stderr)
     if args.drift_report:
         print(json.dumps(report, indent=2))
         return 1 if errors else 0
     if errors:
-        for error in errors:
-            print('FAIL: ' + error, file=sys.stderr)
         return 1
     print('Substrate release C0 contract valid; no implementation, approval or release qualification claim.')
     return 0
