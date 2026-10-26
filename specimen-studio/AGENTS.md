@@ -1,5 +1,15 @@
 # Repository Guidelines
 
+## Checkout and Contribution Scope
+
+This guide applies to this checkout’s `specimen-studio/` workspace. Follow its
+own lockfiles and gates; do not substitute results from the substrate workspace
+or another worktree. Preserve the browser/native parity corpus and report each
+platform’s actual acceptance separately. Put temporary output in ignored
+`.work/` and keep concurrent build outputs, service ports, and stores isolated.
+
+## Maintained Project Instructions
+
 Canonical project guidance for both browser and native editions.
 
 This project lives in `specimen-studio/` inside the `donaldfilimon/wdbx` repository
