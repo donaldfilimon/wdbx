@@ -123,3 +123,9 @@ impl LoadLimits {
         }
     }
 }
+
+/// Native tokenizer API ceiling for input raw token IDs (structural wrappers separate).
+pub const MAX_DECODE_TOKEN_IDS: u64 = 65_536;
+/// Native tokenizer API output ceiling; larger than raw input to admit large merges.
+/// Together with the bounded vocabulary this stays below the package/session budget.
+pub const MAX_DECODE_OUTPUT_BYTES: u64 = 67_108_864;

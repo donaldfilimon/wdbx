@@ -112,5 +112,66 @@ class NativeModelContract(unittest.TestCase):
         self.assertEqual(error.exception.code, 'ResumeMismatch')
 
 
+
+class BpeTrainerReferenceTests(unittest.TestCase):
+    def test_independent_trainer_has_literal_ties_and_overlapping_counts(self):
+        result = ref.train_bpe(['aaaa', 'aaaa'], bytes([7]) * 32, 262)
+        self.assertEqual(result['merges'], [(101, 101, 260), (260, 260, 261)])
+        self.assertEqual(ref.encode(b'aaa', result), [260, 101])
+
+    def test_n02_training_vectors_are_independently_pinned(self):
+        raw = (FIXTURES / 'bpe-trainer-vectors-v1.json').read_bytes()
+        self.assertEqual(hashlib.sha256(raw).hexdigest(), '04eadb1cd0cc65d43afb764dbe6a622646fb142dd1b93bfc516a0456d7406fbd')
+        for row in json.loads(raw)['vectors']:
+            t = ref.train_bpe(row['documents'], bytes.fromhex(row['split']), row['requested'])
+            self.assertEqual(t['corpus'].hex(), row['corpus'])
+            self.assertEqual([list(m) for m in t['merges']], row['merges'])
+            self.assertEqual(t['visits'], row['visits'])
+            for sample in row['samples']:
+                self.assertEqual(ref.encode(sample['text'].encode(), t), sample['tokens'])
+
+    def test_unknown_tensor_identity_is_semantic_membership_failure(self):
+        raw = bytearray(bytes.fromhex((FIXTURES / 'inference.hex').read_text()))
+        entry = 96 + 2 * 80
+        offset, length = struct.unpack_from('<QQ', raw, entry + 16)
+        struct.pack_into('<H', raw, offset + 4, 17)
+        raw[entry + 32:entry + 64] = hashlib.sha256(raw[offset:offset + length]).digest()
+        count = struct.unpack_from('<I', raw, 24)[0]
+        raw[32:64] = hashlib.sha256(raw[96:96 + 80 * count]).digest()
+        self.assertEqual(ref.frame(bytes(raw))['stage'], 'FramedPackage')
+        with self.assertRaises(ref.ContractError) as error:
+            ref.validate(bytes(raw))
+        self.assertEqual(error.exception.code, 'InvalidTensor')
+
+    def test_versioned_offset_erratum_preserves_v1_and_marks_absent_payloads(self):
+        path = FIXTURES / 'field-table-errata-v2.json'
+        self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), '0b5064e396dcbaa365bd038fa611acb88ef9869d01edd6aa434dcbb60facd678')
+        corrected = json.loads(path.read_bytes())
+        self.assertEqual(corrected['format'], 'native-model-field-table-errata-v2')
+        original = (FIXTURES / corrected['source_table']).read_bytes()
+        self.assertEqual(hashlib.sha256(original).hexdigest(), corrected['source_table_sha256'])
+        table = json.loads(original)
+        for row in corrected['fixtures']:
+            name = row['name']
+            raw = bytes.fromhex((FIXTURES / (name + '.hex')).read_text())
+            self.assertEqual(hashlib.sha256(raw).hexdigest(), row['artifact_sha256'])
+            framed = ref.frame(raw)
+            for kind, parser in [(6, ref.optimizer), (7, ref.rng_order)]:
+                payload = framed['entries'][kind]['bytes']
+                state = parser(ref.Reader(payload, kind))
+                record = row['component_states'][str(kind)]
+                self.assertEqual(record['encoded_bytes'], len(payload))
+                self.assertEqual(record['state_tag_offset'], 0)
+                self.assertEqual(record['state'], 'Absent' if state is None else 'Present')
+                if state is None:
+                    self.assertEqual(payload, b'\x00')
+            if name in ('inference', 'bpe'):
+                self.assertTrue(row['removed_v1_offsets'])
+                self.assertFalse(any(k.startswith(('optimizer.', 'rng.')) for k in row['field_offsets']))
+            else:
+                self.assertFalse(row['removed_v1_offsets'])
+            self.assertEqual(dict(row['field_offsets'], **row['removed_v1_offsets']), table[name])
+
+
 if __name__ == '__main__':
     unittest.main()

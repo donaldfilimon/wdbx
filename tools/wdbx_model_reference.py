@@ -383,6 +383,53 @@ def encode(raw, tok):
     return tokens
 
 
+def train_bpe(documents, split, requested, max_visits=100000000):
+    """Independent slow diagnostic trainer; never publishes or authorizes data."""
+    require(len(split) == 32 and any(split), 'InvalidTokenizer', 'training-split')
+    require(260 <= requested <= 4096, 'InvalidTokenizer', 'requested-vocab')
+    require(len(documents) <= 4096, 'CapacityExceeded', 'document-count')
+    raw = [s.encode('utf-8') for s in documents]
+    require(all(len(s) <= 65536 for s in raw) and sum(map(len, raw)) <= 16777216,
+            'CapacityExceeded', 'corpus-size')
+    corpus = digest(b'wdbx-bpe-corpus-v1\0' + struct.pack('<I', len(raw)) +
+                    b''.join(struct.pack('<I', len(s)) + s for s in raw))
+    vocab, merges = [b''] * 4 + [bytes([i]) for i in range(256)], []
+    docs, visits = [[b + 4 for b in s] for s in raw], 0
+    while len(vocab) < requested:
+        counts = {}
+        for doc in docs:
+            for pair in zip(doc, doc[1:]):
+                visits += 1
+                require(visits <= max_visits, 'CapacityExceeded', 'trainer-work')
+                counts[pair] = counts.get(pair, 0) + 1
+        eligible = [p for p, n in counts.items() if n >= 2]
+        if not eligible:
+            break
+        left, right = min(eligible, key=lambda p: (-counts[p], p))
+        result = len(vocab)
+        token = vocab[left] + vocab[right]
+        require(len(token) <= 65536, 'CapacityExceeded', 'token-size')
+        vocab.append(token)
+        merges.append((left, right, result))
+        component_size = (4 + len(b'wdbx-byte-bpe-v1') + 4 + 16 + 64 + 8 + 8 +
+                          sum(4 + len(v) for v in vocab) + len(merges) * 12)
+        require(component_size <= 1048576, 'CapacityExceeded', 'tokenizer-size')
+        updated = []
+        for doc in docs:
+            output, i = [], 0
+            while i < len(doc):
+                merged = i + 1 < len(doc) and doc[i:i + 2] == [left, right]
+                consumed = 2 if merged else 1
+                visits += consumed
+                require(visits <= max_visits, 'CapacityExceeded', 'trainer-work')
+                output.append(result if merged else doc[i])
+                i += consumed
+            updated.append(output)
+        docs = updated
+    return dict(vocab=vocab, merges=merges, corpus=corpus, split=split,
+                visits=visits)
+
+
 def main():
     require(len(sys.argv) == 3 and sys.argv[1] in ('validate', 'frame'), 'NonCanonical', 'arguments')
     raw = bytes.fromhex(Path(sys.argv[2]).read_text())
