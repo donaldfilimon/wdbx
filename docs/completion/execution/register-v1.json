@@ -22919,11 +22919,21 @@
       "test_result": "unknown",
       "implementation": {
         "state": "unqualified",
-        "references": []
+        "references": [
+          {
+            "path": "specimen-studio/native/specimen-kernel/src/mutate.rs",
+            "sha256": "7aaee9761ee5137312ce30904df85b40c7cc62068f05d2bf0018bff2f172fe0f"
+          }
+        ]
       },
       "tests": {
         "state": "unqualified",
-        "references": []
+        "references": [
+          {
+            "path": "specimen-studio/native/specimen-kernel/tests/lifecycle_local_gaps_v1.rs",
+            "sha256": "72077df15d23d2f037d00ba3e3a04662af6a88cb734d315f9359202728a172b9"
+          }
+        ]
       },
       "artifacts": {
         "state": "unqualified",
@@ -22943,6 +22953,10 @@
           {
             "path": "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
             "sha256": "8d2de2473c7551bf1c0433a3342c24436745e491200552ae2b5833c01cc25143"
+          },
+          {
+            "path": "docs/completion/execution/evidence/2026-10-26-wave1-tranche1/requirement-mapping.json",
+            "sha256": "1ba5d06772038abe2d132d273987b5d609af88a849351db8709c88440e19a8f3"
           }
         ]
       },
@@ -22951,12 +22965,13 @@
         "references": []
       },
       "blockers": [
-        "Removal targets ref; existing zero fixture does not establish same logical ID peer preservation.",
-        "Whole frozen case/decision remains open/C0; no promotion."
+        "Logical ID is patternId; removal of the zero-strength record is by ref inside mutate::feedback. Other strength-decrement paths (maintenance, imports) are not exercised.",
+        "Synthetic in-memory fixtures on FixedHost only; no saved-store, import/ID-migration, UI, browser/WASM parity or installed-application path is exercised.",
+        "Whole frozen case/requirement remains open/C0/unknown; direct assertions are candidate evidence, not acceptance, efficacy or independent review."
       ],
       "reconciliation": {
-        "disposition": "local_gap",
-        "reason": "Direct case qualification not established for | One same-ID node reaches zero | Remove only that active record; its peers remain | Inspected engine/mutation/search and conformance assertions are adjacent only; implement or identify the exact positive, boundary and negative assertions before closure.",
+        "disposition": "candidate",
+        "reason": "Partial local mechanism candidate: direct positive/boundary/negative kernel assertions for the frozen row (Negative feedback taking one of two same-patternId nodes from strength 1 to 0 removes only that record and its attachments; the peer is byte-identical and keeps resource links. Removing the last same-patternId node unlinks resources (boundary); an unflipped coin leaves the node at 1 (negative).) Candidate code/tests do not establish whole-requirement coverage, acceptance or review.",
         "qualification_plan": {
           "state": "unqualified",
           "references": [
@@ -22992,6 +23007,14 @@
             {
               "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
               "sha256": "f855272da8934bcce6d8d0bee3f2bfae7cfef71714fb1b70da408adb3e3da81f"
+            },
+            {
+              "path": "specimen-studio/native/specimen-kernel/tests/lifecycle_local_gaps_v1.rs",
+              "sha256": "72077df15d23d2f037d00ba3e3a04662af6a88cb734d315f9359202728a172b9"
+            },
+            {
+              "path": "docs/completion/execution/evidence/2026-10-26-wave1-tranche1/requirement-mapping.json",
+              "sha256": "1ba5d06772038abe2d132d273987b5d609af88a849351db8709c88440e19a8f3"
             }
           ]
         }
@@ -23175,11 +23198,21 @@
       "test_result": "unknown",
       "implementation": {
         "state": "unqualified",
-        "references": []
+        "references": [
+          {
+            "path": "specimen-studio/native/specimen-kernel/src/engine.rs",
+            "sha256": "98ce45326436b9ed580a9aaa9f41ab2090f2d3f685fcaea50be0eca86a6ccba2"
+          }
+        ]
       },
       "tests": {
         "state": "unqualified",
-        "references": []
+        "references": [
+          {
+            "path": "specimen-studio/native/specimen-kernel/tests/lifecycle_local_gaps_v1.rs",
+            "sha256": "72077df15d23d2f037d00ba3e3a04662af6a88cb734d315f9359202728a172b9"
+          }
+        ]
       },
       "artifacts": {
         "state": "unqualified",
@@ -23199,6 +23232,10 @@
           {
             "path": "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
             "sha256": "8d2de2473c7551bf1c0433a3342c24436745e491200552ae2b5833c01cc25143"
+          },
+          {
+            "path": "docs/completion/execution/evidence/2026-10-26-wave1-tranche1/requirement-mapping.json",
+            "sha256": "1ba5d06772038abe2d132d273987b5d609af88a849351db8709c88440e19a8f3"
           }
         ]
       },
@@ -23207,12 +23244,13 @@
         "references": []
       },
       "blockers": [
-        "count=min and remixed trailing-slot rejection present; no five-to-four history-preserving shortening and retired-slot tombstone assertion.",
-        "Whole frozen case/decision remains open/C0; no promotion."
+        "'Valid history-preserving shortening rules' are asserted only as: never discard a remixed slot, keep surviving slot identities, record the mutation lineage. Other history rules in the frozen design are not separately asserted.",
+        "Synthetic in-memory fixtures on FixedHost only; no saved-store, import/ID-migration, UI, browser/WASM parity or installed-application path is exercised.",
+        "Whole frozen case/requirement remains open/C0/unknown; direct assertions are candidate evidence, not acceptance, efficacy or independent review."
       ],
       "reconciliation": {
-        "disposition": "local_gap",
-        "reason": "Direct case qualification not established for | Mutation pairs five weak alternatives with four strong alternatives | Recipient count becomes four only under valid history-preserving shortening rules | Inspected engine/mutation/search and conformance assertions are adjacent only; implement or identify the exact positive, boundary and negative assertions before closure.",
+        "disposition": "candidate",
+        "reason": "Partial local mechanism candidate: direct positive/boundary/negative kernel assertions for the frozen row (engine::maintain mutation with five weak and four strong alternatives commits one Markov remix and truncates the recipient to the first four slots (ids and surviving slot records preserved; donor unchanged). A remixed fifth slot blocks the mutation entirely and leaves pools unchanged (history-preserving boundary).) Candidate code/tests do not establish whole-requirement coverage, acceptance or review.",
         "qualification_plan": {
           "state": "unqualified",
           "references": [
@@ -23248,6 +23286,14 @@
             {
               "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
               "sha256": "f855272da8934bcce6d8d0bee3f2bfae7cfef71714fb1b70da408adb3e3da81f"
+            },
+            {
+              "path": "specimen-studio/native/specimen-kernel/tests/lifecycle_local_gaps_v1.rs",
+              "sha256": "72077df15d23d2f037d00ba3e3a04662af6a88cb734d315f9359202728a172b9"
+            },
+            {
+              "path": "docs/completion/execution/evidence/2026-10-26-wave1-tranche1/requirement-mapping.json",
+              "sha256": "1ba5d06772038abe2d132d273987b5d609af88a849351db8709c88440e19a8f3"
             }
           ]
         }
@@ -23263,11 +23309,21 @@
       "test_result": "unknown",
       "implementation": {
         "state": "unqualified",
-        "references": []
+        "references": [
+          {
+            "path": "specimen-studio/native/specimen-kernel/src/engine.rs",
+            "sha256": "98ce45326436b9ed580a9aaa9f41ab2090f2d3f685fcaea50be0eca86a6ccba2"
+          }
+        ]
       },
       "tests": {
         "state": "unqualified",
-        "references": []
+        "references": [
+          {
+            "path": "specimen-studio/native/specimen-kernel/tests/lifecycle_local_gaps_v1.rs",
+            "sha256": "72077df15d23d2f037d00ba3e3a04662af6a88cb734d315f9359202728a172b9"
+          }
+        ]
       },
       "artifacts": {
         "state": "unqualified",
@@ -23287,6 +23343,10 @@
           {
             "path": "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
             "sha256": "8d2de2473c7551bf1c0433a3342c24436745e491200552ae2b5833c01cc25143"
+          },
+          {
+            "path": "docs/completion/execution/evidence/2026-10-26-wave1-tranche1/requirement-mapping.json",
+            "sha256": "1ba5d06772038abe2d132d273987b5d609af88a849351db8709c88440e19a8f3"
           }
         ]
       },
@@ -23295,12 +23355,13 @@
         "references": []
       },
       "blockers": [
-        "min count prevents added fifth slot in source; no explicit four-versus-five success fixture.",
-        "Whole frozen case/decision remains open/C0; no promotion."
+        "Single seeded fixture; other pool sizes and multi-entry nodes are covered only by the shared min(weak,strong) mechanism.",
+        "Synthetic in-memory fixtures on FixedHost only; no saved-store, import/ID-migration, UI, browser/WASM parity or installed-application path is exercised.",
+        "Whole frozen case/requirement remains open/C0/unknown; direct assertions are candidate evidence, not acceptance, efficacy or independent review."
       ],
       "reconciliation": {
-        "disposition": "local_gap",
-        "reason": "Direct case qualification not established for | Mutation pairs four weak alternatives with five strong alternatives | Recipient remains four; no fifth alternative is added | Inspected engine/mutation/search and conformance assertions are adjacent only; implement or identify the exact positive, boundary and negative assertions before closure.",
+        "disposition": "candidate",
+        "reason": "Partial local mechanism candidate: direct positive/boundary/negative kernel assertions for the frozen row (engine::maintain mutation with four weak and five strong alternatives commits one remix; the recipient keeps exactly its four slot ids (no fifth added) and the donor keeps five, unchanged.) Candidate code/tests do not establish whole-requirement coverage, acceptance or review.",
         "qualification_plan": {
           "state": "unqualified",
           "references": [
@@ -23336,6 +23397,14 @@
             {
               "path": "specimen-studio/native/specimen-core/tests/conformance.rs",
               "sha256": "f855272da8934bcce6d8d0bee3f2bfae7cfef71714fb1b70da408adb3e3da81f"
+            },
+            {
+              "path": "specimen-studio/native/specimen-kernel/tests/lifecycle_local_gaps_v1.rs",
+              "sha256": "72077df15d23d2f037d00ba3e3a04662af6a88cb734d315f9359202728a172b9"
+            },
+            {
+              "path": "docs/completion/execution/evidence/2026-10-26-wave1-tranche1/requirement-mapping.json",
+              "sha256": "1ba5d06772038abe2d132d273987b5d609af88a849351db8709c88440e19a8f3"
             }
           ]
         }

@@ -4049,9 +4049,13 @@
     ]
   },
   "S29": {
-    "disposition": "local_gap",
-    "implementation": [],
-    "tests": [],
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/mutate.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-kernel/tests/lifecycle_local_gaps_v1.rs"
+    ],
     "qualification_plan": [
       "docs/completion/studio-acceptance-v1.json",
       "docs/completion/designs.json",
@@ -4061,7 +4065,9 @@
       "specimen-studio/native/specimen-kernel/src/engine.rs",
       "specimen-studio/native/specimen-kernel/src/mutate.rs",
       "specimen-studio/native/specimen-kernel/src/search.rs",
-      "specimen-studio/native/specimen-core/tests/conformance.rs"
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/native/specimen-kernel/tests/lifecycle_local_gaps_v1.rs",
+      "docs/completion/execution/evidence/2026-10-26-wave1-tranche1/requirement-mapping.json"
     ]
   },
   "S30": {
@@ -4098,9 +4104,13 @@
     ]
   },
   "S32": {
-    "disposition": "local_gap",
-    "implementation": [],
-    "tests": [],
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-kernel/tests/lifecycle_local_gaps_v1.rs"
+    ],
     "qualification_plan": [
       "docs/completion/studio-acceptance-v1.json",
       "docs/completion/designs.json",
@@ -4110,13 +4120,19 @@
       "specimen-studio/native/specimen-kernel/src/engine.rs",
       "specimen-studio/native/specimen-kernel/src/mutate.rs",
       "specimen-studio/native/specimen-kernel/src/search.rs",
-      "specimen-studio/native/specimen-core/tests/conformance.rs"
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/native/specimen-kernel/tests/lifecycle_local_gaps_v1.rs",
+      "docs/completion/execution/evidence/2026-10-26-wave1-tranche1/requirement-mapping.json"
     ]
   },
   "S33": {
-    "disposition": "local_gap",
-    "implementation": [],
-    "tests": [],
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-kernel/tests/lifecycle_local_gaps_v1.rs"
+    ],
     "qualification_plan": [
       "docs/completion/studio-acceptance-v1.json",
       "docs/completion/designs.json",
@@ -4126,7 +4142,9 @@
       "specimen-studio/native/specimen-kernel/src/engine.rs",
       "specimen-studio/native/specimen-kernel/src/mutate.rs",
       "specimen-studio/native/specimen-kernel/src/search.rs",
-      "specimen-studio/native/specimen-core/tests/conformance.rs"
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/native/specimen-kernel/tests/lifecycle_local_gaps_v1.rs",
+      "docs/completion/execution/evidence/2026-10-26-wave1-tranche1/requirement-mapping.json"
     ]
   },
   "S34": {

@@ -1,0 +1,63 @@
+{
+  "kind": "Current bounded requirement routing; no claim promotion",
+  "hash_policy": "Current source refs hash-bound; historical receipts never relabelled as current execution",
+  "recorded_date": "2026-10-26",
+  "test_file": "specimen-studio/native/specimen-kernel/tests/lifecycle_local_gaps_v1.rs",
+  "command": "PATH=<rustup 1.99.1 bin>:/usr/bin:$PATH CARGO_BUILD_JOBS=2 cargo test --locked -p specimen-kernel --test lifecycle_local_gaps_v1 < /dev/null (from specimen-studio/)",
+  "logs": {
+    "tests": "kernel-lifecycle-tests.log",
+    "mutants": "mutation-check.log"
+  },
+  "test_commit": "20007bd",
+  "cases": {
+    "S29": {
+      "test": "lifecycle_local_gaps_v1",
+      "names": [
+        "s29_spent_same_pattern_node_is_removed_and_peers_remain",
+        "s29_removing_last_same_pattern_node_unlinks_resources",
+        "s29_unflipped_node_at_one_is_not_removed"
+      ],
+      "impl": [
+        "specimen-studio/native/specimen-kernel/src/mutate.rs"
+      ],
+      "assertion": "Negative feedback taking one of two same-patternId nodes from strength 1 to 0 removes only that record and its attachments; the peer is byte-identical and keeps resource links. Removing the last same-patternId node unlinks resources (boundary); an unflipped coin leaves the node at 1 (negative).",
+      "blockers": [
+        "Logical ID is patternId; removal of the zero-strength record is by ref inside mutate::feedback. Other strength-decrement paths (maintenance, imports) are not exercised.",
+        "Synthetic in-memory fixtures on FixedHost only; no saved-store, import/ID-migration, UI, browser/WASM parity or installed-application path is exercised.",
+        "Whole frozen case/requirement remains open/C0/unknown; direct assertions are candidate evidence, not acceptance, efficacy or independent review."
+      ]
+    },
+    "S32": {
+      "test": "lifecycle_local_gaps_v1",
+      "names": [
+        "s32_five_weak_with_four_strong_shortens_recipient_to_four",
+        "s32_remixed_tail_blocks_shortening"
+      ],
+      "impl": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "assertion": "engine::maintain mutation with five weak and four strong alternatives commits one Markov remix and truncates the recipient to the first four slots (ids and surviving slot records preserved; donor unchanged). A remixed fifth slot blocks the mutation entirely and leaves pools unchanged (history-preserving boundary).",
+      "blockers": [
+        "'Valid history-preserving shortening rules' are asserted only as: never discard a remixed slot, keep surviving slot identities, record the mutation lineage. Other history rules in the frozen design are not separately asserted.",
+        "Synthetic in-memory fixtures on FixedHost only; no saved-store, import/ID-migration, UI, browser/WASM parity or installed-application path is exercised.",
+        "Whole frozen case/requirement remains open/C0/unknown; direct assertions are candidate evidence, not acceptance, efficacy or independent review."
+      ]
+    },
+    "S33": {
+      "test": "lifecycle_local_gaps_v1",
+      "names": [
+        "s33_four_weak_with_five_strong_keeps_four"
+      ],
+      "impl": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "assertion": "engine::maintain mutation with four weak and five strong alternatives commits one remix; the recipient keeps exactly its four slot ids (no fifth added) and the donor keeps five, unchanged.",
+      "blockers": [
+        "Single seeded fixture; other pool sizes and multi-entry nodes are covered only by the shared min(weak,strong) mechanism.",
+        "Synthetic in-memory fixtures on FixedHost only; no saved-store, import/ID-migration, UI, browser/WASM parity or installed-application path is exercised.",
+        "Whole frozen case/requirement remains open/C0/unknown; direct assertions are candidate evidence, not acceptance, efficacy or independent review."
+      ]
+    }
+  },
+  "disposition_change": "S29, S32, S33: local_gap -> candidate. Counts 129/18/16 -> 132/15/16. All 163 remain open/C0/unknown."
+}
