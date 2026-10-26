@@ -1,0 +1,51 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[15856]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "scanner_v3_routes") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 0.40s
+     Running tests/scanner_v3_routes.rs (specimen-studio/target/debug/deps/scanner_v3_routes-0e36100fb8daf36c)
+
+running 12 tests
+test population_scope_reference_and_registration_failures_are_atomic ... ok
+test declared_scopes_do_not_leak_route_hits_and_removed_refs_refuse ... ok
+test unresolved_condition_and_utf8_spans_survive_wildcard_routes ... ok
+test blocked_routes_retain_constraints_without_successful_automaton_execution ... ok
+test automata_share_output_reservations_and_registry_identity_is_current ... ok
+test duplicate_paths_and_repeated_contains_keep_distinct_capture_origins ... ok
+test s05_distinct_originals_share_low_key_but_full_scanner_evidence_differs ... ok
+test typed_grammar_total_pattern_bound_is_validated_atomically ... FAILED
+test runaway_and_shared_budgets_return_errors_without_partial_candidates ... ok
+test grammar_wildcard_and_automaton_routes_cross_literal_keys_and_keep_captures ... ok
+test wildcard_capture_copy_work_is_reserved_before_materializing_matches ... FAILED
+test wildcard_and_automaton_fixed_caps_are_checked_before_batch_publication ... ok
+
+failures:
+
+---- typed_grammar_total_pattern_bound_is_validated_atomically stdout ----
+
+thread 'typed_grammar_total_pattern_bound_is_validated_atomically' (4325319) panicked at native/specimen-kernel/tests/scanner_v3_routes.rs:141:2:
+assertion `left == right` failed
+  left: Ok(())
+ right: Err(InvalidRule)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- wildcard_capture_copy_work_is_reserved_before_materializing_matches stdout ----
+
+thread 'wildcard_capture_copy_work_is_reserved_before_materializing_matches' (4325322) panicked at native/specimen-kernel/tests/scanner_v3_routes.rs:135:2:
+assertion `left == right` failed
+  left: Ok([Candidate { entry: EntryRef(1), node: NodeRef(1001), original: "target", target_ast: ActionAst { bind: [], alternatives: [] }, origins: [CandidateOrigin { origin: Origin { input_id: "original", clause_id: 0, action_id: 0, fanout_id: 0, rule_refs: [] }, span: Span { start: 0, end: 4 }, token_spans: [Span { start: 0, end: 4 }], constraints: Constraints { inhibited: false, uncertain_negation: false, unresolved_frame: false, conditional: None, executable: true }, path: Wildcard("contains"), captures: [RouteCapture { name: "literal", span: Span { start: 0, end: 1 }, value: Text("x") }, RouteCapture { name: "before", span: Span { start: 0, end: 0 }, value: Text("") }, RouteCapture { name: "after", span: Span { start: 1, end: 4 }, value: Text("xxx") }], bypass: RequireFullScan }, CandidateOrigin { origin: Origin { input_id: "original", clause_id: 0, action_id: 0, fanout_id: 0, rule_refs: [] }, span: Span { start: 0, end: 4 }, token_spans: [Span { start: 0, end: 4 }], constraints: Constraints { inhibited: false, uncertain_negation: false, unresolved_frame: false, conditional: None, executable: true }, path: Wildcard("contains"), captures: [RouteCapture { name: "literal", span: Span { start: 1, end: 2 }, value: Text("x") }, RouteCapture { name: "before", span: Span { start: 0, end: 1 }, value: Text("x") }, RouteCapture { name: "after", span: Span { start: 2, end: 4 }, value: Text("xx") }], bypass: RequireFullScan }, CandidateOrigin { origin: Origin { input_id: "original", clause_id: 0, action_id: 0, fanout_id: 0, rule_refs: [] }, span: Span { start: 0, end: 4 }, token_spans: [Span { start: 0, end: 4 }], constraints: Constraints { inhibited: false, uncertain_negation: false, unresolved_frame: false, conditional: None, executable: true }, path: Wildcard("contains"), captures: [RouteCapture { name: "literal", span: Span { start: 2, end: 3 }, value: Text("x") }, RouteCapture { name: "before", span: Span { start: 0, end: 2 }, value: Text("xx") }, RouteCapture { name: "after", span: Span { start: 3, end: 4 }, value: Text("x") }], bypass: RequireFullScan }, CandidateOrigin { origin: Origin { input_id: "original", clause_id: 0, action_id: 0, fanout_id: 0, rule_refs: [] }, span: Span { start: 0, end: 4 }, token_spans: [Span { start: 0, end: 4 }], constraints: Constraints { inhibited: false, uncertain_negation: false, unresolved_frame: false, conditional: None, executable: true }, path: Wildcard("contains"), captures: [RouteCapture { name: "literal", span: Span { start: 3, end: 4 }, value: Text("x") }, RouteCapture { name: "before", span: Span { start: 0, end: 3 }, value: Text("xxx") }, RouteCapture { name: "after", span: Span { start: 4, end: 4 }, value: Text("") }], bypass: RequireFullScan }] }])
+ right: Err(BudgetExceeded)
+
+
+failures:
+    typed_grammar_total_pattern_bound_is_validated_atomically
+    wildcard_capture_copy_work_is_reserved_before_materializing_matches
+
+test result: FAILED. 10 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p specimen-kernel --test scanner_v3_routes`

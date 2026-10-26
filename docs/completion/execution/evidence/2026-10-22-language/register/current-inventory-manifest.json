@@ -1,0 +1,29 @@
+{
+  "qualification": "Final observation snapshot for pending independent task/whole-tranche review; no promotion.",
+  "files": [
+    {
+      "path": "docs/completion/execution/register-v1.json",
+      "sha256": "8de285b8258ae2793a9c285d5bba5f84f4b38741cd2ef858f709a751788aa628"
+    },
+    {
+      "path": "docs/completion/execution/candidate-paths-v1.json",
+      "sha256": "d75d30e4e7775c00a88b2084986b9e3ea707fe237a64c1424e0f55f889bf1418"
+    },
+    {
+      "path": "docs/completion/execution/studio-research-v1.json",
+      "sha256": "683b64e7045baf054389053d96609beef2dd5da62c5b73fdceb5a0cc4c4ee205"
+    },
+    {
+      "path": "docs/completion/execution/studio-research.md",
+      "sha256": "e29d74e9d73468cecf49aaa5e8ecc31645052663582c76859213383bf33f02ba"
+    },
+    {
+      "path": "docs/completion/execution/README.md",
+      "sha256": "153b1166f86c3a2215ebbc3cfd5a0b197429621faf8b959de2332b335d60245c"
+    },
+    {
+      "path": "tools/check_completion_execution.py",
+      "sha256": "615945768ee33b5ba1dea27c3e9cd7bd2845905d3efaf848ee6df3346e5ddf20"
+    }
+  ]
+}

@@ -6,9 +6,13 @@ edition = "2024"
 crate-type = ["cdylib", "rlib"]
 [features]
 identity-probe = []
+language-probe = []
 [[example]]
 name = "identity_probe"
 required-features = ["identity-probe"]
+[[example]]
+name = "language_probe"
+required-features = ["language-probe"]
 [dependencies]
 specimen-kernel = { path = "../specimen-kernel" }
 serde_json.workspace = true

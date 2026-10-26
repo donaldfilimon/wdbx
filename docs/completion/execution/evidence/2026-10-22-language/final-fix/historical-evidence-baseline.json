@@ -1,0 +1,1068 @@
+{
+  "files": [
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/legacy-baseline.json",
+      "sha256": "15d8d8fe9682da055b757536abaf0d856224b13596e2d0865d5069e987f8a4c0"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/gates/summary.json",
+      "sha256": "752353777aeca1e72c8ec5cbc6235ea4ce975d7de0fd88c0dae7be53f64f6fe4"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/gates/browser.log",
+      "sha256": "7e578defe1efd4e5b9e44d451179b2692f3a52576c1928d663abd4210344b846"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/gates/run-studio-gate.py",
+      "sha256": "d25a4283cabb46854447983e8c5766a8e2f71ceec2b32d7394bc69f8ebacf9fa"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/gates/lint.log",
+      "sha256": "fe82195262b09727902d8ea57ceb3e12a09e5df0c6f26157db77f5c51b45d9f5"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/gates/native-clippy.log",
+      "sha256": "fc0857391f3348dce4c4b341a0e73c04b2b902ae7016a86cba2d06be8eb44d86"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/gates/native-test.json",
+      "sha256": "7457f1af334415b0d38985af1a185d81556f3407d62510038b65496ece303b88"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/gates/lint.json",
+      "sha256": "54b6685d815c08b11826875f313a450c6c67a1d9daa28bb5281321e1a9b269ac"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/gates/native-clippy.json",
+      "sha256": "4c5a3118c30085620952e2d0c8201eebe9d9ff23ac648d7ce56027c511d466ff"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/gates/browser.json",
+      "sha256": "8ddcab82e81cf3b5a84be1d33ecf42df2710be5a96e9a3dbd6229e9f799d276f"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/gates/native-test.log",
+      "sha256": "962b8bcc636ff3dad3060e7e5d4cecc4a99cd7bdfc5524ee7ec1ea44c458654e"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/kernel-suite.log",
+      "sha256": "186cbd419863337f5019a765cae57327261aecf6da83f30a340629f37927820e"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/source-manifest.json",
+      "sha256": "99038842dd15678adeca820f4583851e80ef18f20555834185627e525a7c2d4d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/red-chunk-api.log",
+      "sha256": "a21c2fb8c2fb0838434ad173851a3afae284e2be01e58104c59da606f79d3845"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/red-api.log",
+      "sha256": "dad543b3a3088794c0201e94f32d1a7d8f538544bd715bf3d38413504297f03d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/red-lexical-transform.log",
+      "sha256": "3ff20749b59700a69badd5291bc4786517c81e4f159c480c9c3f2d2106c98b74"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/red-routes-api.log",
+      "sha256": "83104561d233e05c5c78817028cde475b178564f1cf0901f52397ef6365c348c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-review.md",
+      "sha256": "5ac0be0bff816c10aa6e5eaa54d77ae26d48b3689ca1ce78690f89eb59a72603"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/clippy.log",
+      "sha256": "f5fd95b1562368a3158a36a1c02076cd7212f50b991ae625cef05eb9cec251dc"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/green-focused-initial.log",
+      "sha256": "34d15187b368b1eb4881d3bfe9ad460501f4d249b93fec3761d19513b936d5eb"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/green-core-second.log",
+      "sha256": "a5071df5cc655d8f27c28f393b52d712e41cd02723213f773ed087cbe660bdcb"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fmt-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/legacy-hashes.json",
+      "sha256": "832c1b5b59f44377b943f93570e480d7f4f310a39547f2a1da6a020c16b0ea3a"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/green-routes-first.log",
+      "sha256": "37a9a58d6416866d149da7ce5a95c019b777961bf8918a484c6e7908defb7bd5"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/green-core-first.log",
+      "sha256": "d6395aae15ca17d853774129cbbd88c184fd8ce98adc1a56f0e292df5ff09c4a"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/green-focused.log",
+      "sha256": "e001ffa71439d188698b8daffb92f0bf79a38b79d4a99749ca3cbdb0d56f5c7c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/red-punctuation.log",
+      "sha256": "06e9fa19a55c91b32143c8627dfcdcf3a9b4b2e056d599ee562aa6e6d4627904"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/green-focused-second.log",
+      "sha256": "5f701c3e59428fe5d77f876b882b8cd6f5b42ccc7fe7bd3e3a78c139d1076ece"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/commands.txt",
+      "sha256": "06f9e1e09cf9aaad88f6b342c32edc5a45e8f0aa14f9ef477396312d77175c40"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/clippy-first.log",
+      "sha256": "9e342077bd42747fc2ed9defda37aa8d5e6471d7d7ac7b624081abb4e666b72d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/log-manifest.json",
+      "sha256": "d7a4cd53af06a20f05e6a364633ef549a4a06ee98b4eba09c216b27fae37e25e"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-report.md",
+      "sha256": "a55b4c71c775a008a976d8bc6f0dd0eaa0213b228ddef1ca1d09ee9b145d9a5d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/red-route-work.log",
+      "sha256": "f4aded31b00df8eef51ffb9f6adf3532b3382db6be746b3a8246256ca3332512"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/dependency-manifest.json",
+      "sha256": "d9d67623146bcd47a24dbf26a45e6117001e8c1426cdf025c1e180d8eecb9853"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/red-antecedent.log",
+      "sha256": "9fabc5f0e10938244792270338c85a4a9b17996b3dc7b56126e723177a327db1"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/green-native-first.log",
+      "sha256": "33de5cfbc25a34f5b0f9655ba0008dbc9a33aec26e71d0b109c2a84168abae9c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/source-manifest.json",
+      "sha256": "4fc1857088f1652948363a22d2093f708c51bb20528ba3adb55c5cba1cb82f4a"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/language-parity-review.md",
+      "sha256": "c1badeb8bbb7fec3655d4694540fea1994b48e198aeb91e57e422e6a3d7a3aa4"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/red-js.log",
+      "sha256": "d9e246f1851989b77697e390b5147ea5ad456f58dc2d735d920a02ee04444b27"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/native-js-green.log",
+      "sha256": "13608d49a833e255e0ce9501017eb0f8d47726ed11db8d7166b91916ada31025"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/default.wasm",
+      "sha256": "c52b4ae71741acaacdbc4612a39ea3c44cec1f66f5d6560cb0f89096a2fd95fd"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/native-suite.log",
+      "sha256": "fcf3673ed4f79a6f61820b2f00c3c9649e93300b865a5676bb6419908e583a21"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/green-js-first.log",
+      "sha256": "530cf1d57d0f1d8cc5f5e35e246c1e75651307bcee51e6494f6eb1122a8209ef"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/runtime-first.log",
+      "sha256": "faf5ce4ffa2d7f754d8ddc50b12b141ad43c0121ddc29b79c42efce8413218f8"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/task-8-language-parity-report.md",
+      "sha256": "036544a7c9c44ade7e6031d445554e23d936ca15917182007166265c2dbf3448"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/native-initial.log",
+      "sha256": "5beb1fcffbc2b2f5c8a0a81638462eaa89636232e46f84f650430ec43d4332f6"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/native-js-green.json",
+      "sha256": "253835aab337c769bcbd3487fdcfaf36474928989201088793f64655f2f804e1"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/wasm.json",
+      "sha256": "0874bb27c8a593db459c47f06faa46e62cf2c917f31e7eaa78845a5df7475bae"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/negative.log",
+      "sha256": "57ee1e9d44cd9a260c1dafdd50ffb68c89a84b0dd222bbeaead75a7ba497732d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/clippy.log",
+      "sha256": "bce14825910581bdb3fa5341262d3534481d5f4cdbb56007465bfe4d9dea203a"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/evidence-manifest.json",
+      "sha256": "4cab979d383edb4fdceee7aaf6271d17560f6336339ee2266ca8ba5fdafe3439"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/js-format.log",
+      "sha256": "9f27be3d01f072c8946d4183c712228ca11fddea943239cea315c4d090040981"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/corrupt-digest.json",
+      "sha256": "092d6eb9cda868d05803eea31b0c3a43e150fec6906b17b7474cb3236037ac6c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/artifact-paths.txt",
+      "sha256": "dd6614bde080c2a7a56cd3886533a57badc203a6d03856033e19143b01ba1c63"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/native-initial.json",
+      "sha256": "6cb12807e261caa42b1e295e4bb11a0745cc5b10ddc67e71dbd4157db91b17b2"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/native.json",
+      "sha256": "0874bb27c8a593db459c47f06faa46e62cf2c917f31e7eaa78845a5df7475bae"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/checks.json",
+      "sha256": "de07f5a0091b200e26e0e0e71690afb2cf06ebc60ec0ed97a172df0958b1b9e0"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/source.sha256",
+      "sha256": "d736f4fd444486f580d9164a37302810534383ca1eb4aae5df0baa7bf0b8b2b7"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/artifacts.sha256",
+      "sha256": "d943176adadd5d8b2dcf92ec97f7e45b6b8b624c45602b35d793c9668476eaff"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/fmt-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/green-native-second.log",
+      "sha256": "5caecf3b0a188cd5e380a9b4029e7652df1c6db1c2463368e2f457f4073ea451"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/green-js.log",
+      "sha256": "08f1fdc0993e6dc91360dfff24270ede2a4292ef22df23b3027abc26cf8b894f"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/red-native.log",
+      "sha256": "52c9f513542363488f6bf162c0c626eadf537fd7473bca5c9d0fde4bf3331deb"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/legacy-hashes.json",
+      "sha256": "0e1fbf92b3141ab922c26f97af5b38a9659a8c8fd0fd7ce87855ed45fb5f1c3b"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/js-lint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/runtime-final.log",
+      "sha256": "2706187f412bff95e1b57dd423725b306caba7877029edb3d8e0674386f38d4a"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/language.wasm",
+      "sha256": "d7e69e38feaa00b3d375f7bc9072bcb1b22abd38b976257c244337656b8b154e"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/kernel-suite.log",
+      "sha256": "c3f9799d0222a3cf70aa548cd16aae28e6adde5d6b2c0b4e71c8f8bee7f203bd"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/green-budgets.log",
+      "sha256": "65327c7e70abf223147a2ae1c3d1acd5e91c4450ae2d391a5f46086ceb97dbc5"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/source-manifest.json",
+      "sha256": "8e3a38678c09241a6edd543572dd0e50495c79a00cc237719f94be0f4107f2d6"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/language-task-review.md",
+      "sha256": "3db48313654969b8bc546f175917dbb5bf8e4a0205e4426280fb44c09c959d76"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/green-prepare-first.log",
+      "sha256": "4a26eed472973130c1e45566502ea38369740a17ed9dfef2e412001e6b134317"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/clippy-second.log",
+      "sha256": "51dec478ea5691492d0d249bde83da6718cbf128b3244056bbb53cc9e1080daf"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/clippy-final-first.log",
+      "sha256": "56b38922002ff2afa86ff8f74180fe52e6460d5ea8ff9c69d0c313fb797a141b"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/red-boundaries.log",
+      "sha256": "de8997e18f65a9399c3bde638081fea0ca78cdda3bdaea64108e42692b1b4d76"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/clippy-final.log",
+      "sha256": "5ac93376590e0fc65503aea58421eef9a6dec5ec5b430c8b5f95bb81157e640d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/green-self-review.log",
+      "sha256": "ce96c35e8714761ea9b8e585647a290c4cb6a877e9097d739866d6207fa55fbf"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/red-utility-work.log",
+      "sha256": "bf4b032ac72f9c5e23d5ef836ffe234fb928e38559c9824bb42213ffd81fdf4c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/clippy-fix.log",
+      "sha256": "265fe2da8ffd7237e89ce6e85c10d479decaf158ef536fdf9a6466afa136e7a6"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/red-self-review.log",
+      "sha256": "71425c111d4b9cdc357979c186b30ffd65e43103e5fb5e1621b2cbdcfe565740"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/red-prepare.log",
+      "sha256": "fc0422ce08f68a46fae7abb6e0d9e1349b93593664b2ddddf3e9cceed866ac21"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/red-root-literal.log",
+      "sha256": "b1e8c61989572867d209c4e5d04a764524a5471ff4ca2d0426019e6381ec1939"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fmt-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/green-basic.log",
+      "sha256": "9a35063a300f4e2d1ca798c48a7caa37609f8d0f498bbe5f376f4ebb08afc1f6"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/legacy-hashes.json",
+      "sha256": "5c936d818ea023afcd69fb3013b1db934f55e3755e7117c4f274dfdb6fcb5cae"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/green-first.log",
+      "sha256": "b491d197c055db0627b8dd12fc4f97842a93fccd6ad70355d19cc5a99b14c265"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/green-boundaries.log",
+      "sha256": "2f91d8f4e3eeae016b2a3ed0ae2b6bec19fe5fcb8726eab16a7da2bd4fe76c95"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/green-focused.log",
+      "sha256": "3970de367cb13b1820d0750c9fdcdc38cf1cef7318756b63619c9b384415e804"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/red-scripts.log",
+      "sha256": "8492b95f27946dcb38c3683d46b9893fc4342a84076037017b9a7accc167b208"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/commands.txt",
+      "sha256": "d8f501f5ab6d26b2a7adce21f36cb76d6f60f57b2246a92800d94c790c753d3c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/clippy-first.log",
+      "sha256": "878a638fa2ff0784c1e84f923f735385ef3df455a44e1ca13555b0119687a6ae"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/log-manifest.json",
+      "sha256": "29aa0fdccf030d9b4c8345485df5f86e9573406efb1ae07178f2b7a722f6a2db"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/task-8-language-report.md",
+      "sha256": "a9f8840c27cab4098f357b429ba8540ac5984788be2c780279ee0b1f07096551"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/red-compound-condition.log",
+      "sha256": "f2328315454f3ece68707d1528511801d0fe8f2e1517403fb8a380044d31345a"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/current-source-manifest.json",
+      "sha256": "8090f09eb2ad42278424139463b9083b813f428276e42e4b305f5652dfcb5b70"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/system-execution-27-mutations.log",
+      "sha256": "43552b5ad86dbe722f08c3a6711daf6fe8e8cd981331b722d2a9308b7661f284"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/current-README.md",
+      "sha256": "153b1166f86c3a2215ebbc3cfd5a0b197429621faf8b959de2332b335d60245c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/before-studio-research-v1.json",
+      "sha256": "27e55f78913a395012cce1c7a021042565803dfc4a2dbe46d7ad2e15c06d278d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/current-execution-27-mutations.log",
+      "sha256": "c52b8e3325d6af22342c23ce4a50650156b86268ebea12b557b8287c78c56ff0"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/before-candidate-paths-v1.json",
+      "sha256": "a16ae935f1bedcf851c23d5a64b7be3aed5807447b70216892dc8ded005c4ee2"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/requirement-mapping.json",
+      "sha256": "3dd64d10cef3e1c5cd9a26a9e1fa552e0b9cc3c7164c766c18c33c41ca16e6eb"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/check-observation-closure.py",
+      "sha256": "66fe4726b1b5dc6899ce8a085b9aec0ab70fe1287b0fdc739b85ee793824f669"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/current-frozen-completion-checker.log",
+      "sha256": "2f88e13061eb9a6f8cf0ae9d4a6efe063939a54ef1bb299cba4d2554389365d4"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/current-hash-refresh.json",
+      "sha256": "bddbabfe16d1af208c471ae1a93c395f66a8bbc855f484e596c925d53a70a257"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/refresh-observations.py",
+      "sha256": "f3ee8511fc511e873a0a663cd03ee5016859a5457494acb3baa293f238554c4f"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/current-commands.json",
+      "sha256": "caf2a2c7dea41957d7039cdff61a5bff7fd4605603b29c544d80be664fc84121"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/system-commands.json",
+      "sha256": "5cb461dc8866d78748a76eeb920e4dec450bcd08abb724d4d5e4d461986ddb4f"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/system-execution-checker.log",
+      "sha256": "7db51a594198bccc2ebeaa015f6c56c4aa8ef9d9ac56a324b1f859734c08c302"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/system-frozen-completion-checker.log",
+      "sha256": "2f88e13061eb9a6f8cf0ae9d4a6efe063939a54ef1bb299cba4d2554389365d4"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/system-frozen-completion-tests.log",
+      "sha256": "db1afb8f33569bacde7fa3646832ac8628f5c2afc4385a29543dd3fb0adf76ac"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/language-evidence-review.md",
+      "sha256": "8a954c15b470ad89a0822fa9fa878c35db96c13de66ae304f2c679787a53c9d9"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/current-inventory-manifest.json",
+      "sha256": "fb0048cd339206c4b791f9ff5e1e55d0b78ba7b04465cceb52f31e7c22c42763"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/run-validation.py",
+      "sha256": "1d2fad7ff20fe93f36e7ee5d74990997e327ec0e27e98c9d47d1e28dfbe5880c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/current-studio-research.md",
+      "sha256": "e29d74e9d73468cecf49aaa5e8ecc31645052663582c76859213383bf33f02ba"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/task-8-language-evidence-report.md",
+      "sha256": "6445a22bd89641e529328791d039bc02c3138104d9664732d196821b01b5aa69"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/frozen-before.json",
+      "sha256": "60c7954883d1a39693f75b6f66bcb314c00111745dd1df496fd22797109b5bb5"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/system-observation-closure.log",
+      "sha256": "3320a6c703633d9aa4bc5221786bb3d45663f66a85038d07d2136ad20a9e7e72"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/diff-check-command.json",
+      "sha256": "95250fb7fefa5847a9e5a87ae1f973103cfb5ade36e19f2997a8cd8494add3a7"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/prior-evidence-identities.json",
+      "sha256": "e2520a431b690a9d152ceb9d8411da17043eee54e19440a0aaf4a47eab720b1a"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/log-manifest.json",
+      "sha256": "ffedffe99eb60451e91ce5bf740f88205c2978e8ed93cbd020007050531ec95d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/current-observation-closure.log",
+      "sha256": "3320a6c703633d9aa4bc5221786bb3d45663f66a85038d07d2136ad20a9e7e72"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/current-execution-checker.log",
+      "sha256": "7db51a594198bccc2ebeaa015f6c56c4aa8ef9d9ac56a324b1f859734c08c302"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/before-register-v1.json",
+      "sha256": "535a89bf360bdc3a0fbbaa581455a426d0a2b49a367073dde0a37bfecc1179ec"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/current-frozen-completion-tests.log",
+      "sha256": "0b34927681c67e49cc9b53b9c76ad0372b036163c5a39dcc7bcb57bad15aa51f"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final/rulings.md",
+      "sha256": "9e5065ad0f3f574d4643575c7b9cf07e61b32bad22f6347facb6c32506686dc1"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final/review-counterexamples.log",
+      "sha256": "94f50d34151b69a45ac7c93802ec55c42e5eb0248e9f1171a1066ea752697620"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final/task-8-text-scan-brief.md",
+      "sha256": "794a92c0a5927c0ef267610164f633f1e55213fd92d373bc756cf610bcf038df"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final/language-final-review.md",
+      "sha256": "bdef9b15dd5527f4e1a8a1a8e7348a35c441f2aa1bf8cbb59f0d3691f5c02733"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final/task-8-language-evidence-brief.md",
+      "sha256": "d8f93f6a3f29297107ef76bcfd1e85b42aa83b58710023b6fd2a8faea7f09866"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final/task-8-language-parity-brief.md",
+      "sha256": "b7447de9be21b85b8b6f7ecfccb45a488626365c7d965c0c23a78ffecd267e07"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final/review-counterexamples.rs",
+      "sha256": "c772e4de8a108929af464d427a7e4b08cf9e4c4fe56728263b44c8723f3167be"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final/task-8-language-numeric-brief.md",
+      "sha256": "aeeb90974f83934cef1e31b6ccb5972a40dc99b9e4fad5da28094c48826707fd"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final/task-8-language-brief.md",
+      "sha256": "457fd2b3ddf384265d6fe15367e321b4bdff0790ac9a72f7cfa022ab81a3c36d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/kernel-suite.log",
+      "sha256": "9e819fdfbaf421b0fb011b13a414dc696c886a950adc21b666a9af8700819ab7"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/source-manifest.json",
+      "sha256": "ffac52e02ec0c2560e5b50f46e58d9220a4f4f0923261e809e66cba245a7e51c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/green-numeric.log",
+      "sha256": "10bc6601c6a5fa28656b7168fe3d7b71145fd2279f0bf05ff31d2eb35d11dd19"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/red.log",
+      "sha256": "8ae0891db7490b5610769e97c9663b75530aa1ce4208fa4138a5f98740e72838"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/numeric-followup.diff",
+      "sha256": "3785d634996fa70fd633722946af3966c320b6ebf341a539293ffa8930b94139"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/language-numeric-review.md",
+      "sha256": "882e14906d190e191cceb8a0099db4a465be95b977b004636b2a74e8aad3b3ec"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/clippy.log",
+      "sha256": "4982618ca99812ed56f18e0987858e34a699ea51d4713cc2526cd082038656f0"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/diff-check.log",
+      "sha256": "b27750bf93e460167a339013ede40c134f663c030e95dcb8b7a3b2918215b6ff"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/fmt-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/green-focused.log",
+      "sha256": "2fc47db883b953716c9ccb9ddd86a9696224e92cacf36e1e5c65e1724d7167a5"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/task-8-language-numeric-report.md",
+      "sha256": "d62660e05d6ae994230781a52b2383a56f89ef64bf2ef97a68c1644beecf4acb"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/commands.txt",
+      "sha256": "3b434220bc90bf0a74c1093d6b25b7e99ca09285689eebaae75d075a26925146"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/log-manifest.json",
+      "sha256": "33245729efb0f9132eda8dec669650b170b2693b55f6049dcc84dd2a559c359a"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/diff-check-final.log",
+      "sha256": "9577f55aefe87655e736fa2fa49b63dfdaeeb13060d81ce848d563f1bbd945ad"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/kernel-suite.log",
+      "sha256": "2d06bb56944ba16e3b17c90634194e635959a28238e914573cc09e2fd9a71baa"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/source-manifest.json",
+      "sha256": "970df267e9da688678595afa83c30e2d595c6eb79c5e7ffb1b0330e301be42b4"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/red-api.log",
+      "sha256": "410617e4a5248b94f26fe6d1c4d13151fd589d511abbefafd623c75647714aa8"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/green-second.log",
+      "sha256": "5c8f1bab48acb28467d09f1957f53f3db2339c6e05b44db4afa5954e507b3801"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/clippy.log",
+      "sha256": "0d61eae1a6e359b3248eb7c7b7271d2b7b1f5e66e165412ebad2489b79d78d90"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/red-behavior.log",
+      "sha256": "ed7ce8ba5fedd5aec38b058ff87a9889791e3651bd88b96e0b6bc456503de22a"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/fmt-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/green-first.log",
+      "sha256": "8ba839faf0da0f2ddf5b0138cee199838e770b330cf74d21b530e2b55d93397e"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/green-focused.log",
+      "sha256": "697fd124701b82763000d6db1bce3d35a39536e1b8d66209fb0e92b5d0d63206"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/commands.txt",
+      "sha256": "465ee5075508666035c07a27872d52fe88c7b243941b906d3758f564569ac84f"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/log-manifest.json",
+      "sha256": "379b256a5755b4d6499edc7932bdfdc986a3352e445927658632cf3d68cfdfab"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/task-8-language-report.md",
+      "sha256": "a9f8840c27cab4098f357b429ba8540ac5984788be2c780279ee0b1f07096551"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/language-fix2-review.md",
+      "sha256": "cd8617e5d1e0664f9f60d1c01bc957be759f47f4b5668dd6b2919a2a741fe8c0"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/kernel-suite.log",
+      "sha256": "74a4ac196ac85c21f964bb308e52d2ba42b8988edb17b4e2e5f7df882a5a7d89"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/source-manifest.json",
+      "sha256": "ba56ba1749c275c3871dce2e2f7907e9d9d1060015c07827a8fcaa6736456170"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/language-fix1-review.md",
+      "sha256": "01d98edf8cc08a3c993b6357b602e1caad97d7462eaeb4f65296c18ef674aafd"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/red.log",
+      "sha256": "7673d1fed32289e66ce76b64d2e4fc63cbb8a3c7400fd8f2d297188b46652ab9"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/fmt-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/green-first.log",
+      "sha256": "bdfe9ebb8e708e5f7d64a1d2d9f1f826681a91f22fe58ad9460de3e10aa029dd"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/green-focused.log",
+      "sha256": "e645b2c4f3a012ed19774df642c6c741213218c43e420afa5c20e3225e9c9b0d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/commands.txt",
+      "sha256": "09b4b3176d0105605afba9ff529092e05b88135a5f28e55d9266cc82b1834a95"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/clippy-first.log",
+      "sha256": "96305fead1d3ce70677ec8105c1f906f44ca76cd47709e6b3010f0e5a5f21adf"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/log-manifest.json",
+      "sha256": "5984bf5c2c7bf2e4c1c7d39033d558aadc5200db6dc4beb43833f301968bfa6e"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/task-8-language-report.md",
+      "sha256": "e907dea9296a8ebbe9d01d21a0f92eb5a6f433cc4611d4ff3bdd213e9211e90b"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/before/arithmetic.rs",
+      "sha256": "dbd2dfa4859c27c2d34dec0b94a50f71176490501f7f3bc032947d4cb6c820c7"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/before/prepare.rs",
+      "sha256": "79ca385b296208440f2d9ba464f8ab8f4a2f9c3af2200968921a4d223a907a64"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/kernel-suite.log",
+      "sha256": "c570ac005d15c50fe8228a32065eb66914508db19409e19008ee2b2d7b2168b8"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/source-manifest.json",
+      "sha256": "da3d99bd17a9366e8f9c9a013f6b5e3ead708eaf4e194a5fca47607331e84795"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-fix1-review.md",
+      "sha256": "22bfeff3fe72914c7dd3c01477e6d3b4c69646e52214e3ee3b69981b02d6b3dd"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/clippy.log",
+      "sha256": "e68a63e93ac2845f9ce09d908a87e97cb330c6437d1e167c3110b3d3c23c3f75"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/red-behavior.log",
+      "sha256": "9b4518c97f7f1373dc0ab285b060b6d22f1d86852cdbd0cc89a1b1544d2f17c2"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/red-scoped-behavior.log",
+      "sha256": "f9dec7267453b3636028620d79a5577ee176c84d482c9e43d4420563d8b92360"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/fmt-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/legacy-hashes.json",
+      "sha256": "108961b9296163fbd078893cea168208c8140137a51cb04e13654869e31f2102"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/green-focused.log",
+      "sha256": "888bc097cb567b4755c4de8bf7bea3aa526bce55ce9d2c06cac3ebfca2259ffa"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/commands.txt",
+      "sha256": "aadf69b379d8296925b673bd22351fffa64536334a6d9a9e0b6c6df87daf909a"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/log-manifest.json",
+      "sha256": "6fff7bb842ee0535b319de2115b47790e8219871cdddb3f9ef9c27b758557b7d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-report.md",
+      "sha256": "697b0cc6cf1744e57341b790937de3412950ef5b557bffb64f2a2f9d065ab9c1"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/dependency-manifest.json",
+      "sha256": "0b4d0b3af7c39f676066d95a167de750a25b4b6ef7f15dface86430448b14072"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/review-summary.md",
+      "sha256": "e17169bc3f5dff1de53050b1881a267940e7b9c1d40c03eae52140aefebe4629"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/native-test-gate-before-parity.log",
+      "sha256": "d3dd6a967220a077bc7d7131f76abdd69f654ad588f3e9d9ebea3900166bfbb6"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/parity-report.md",
+      "sha256": "00b591e8d34219be17e3f64ce2fe286095fcca26f114e1b7b3f48776f3059890"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix-report.md",
+      "sha256": "331ee098c53928f01314d840fdeaaa609787b1436eab4c07a9b21150ee6cf9f1"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/parity-task-review.md",
+      "sha256": "b8697ab7ee2eab7a04d74f941dd9ca77a28fb8eb8cda47e9dad89971843285bf"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/root-observation-closure-final.log",
+      "sha256": "bfc69a2031ca6e682e1b299b68360a9aea2717f2dd88c0c9841cd7c234490437"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "sha256": "6ba4a19fa95ba3c3c52f416dc55acdd9a91bb478e787e069649e8a4ad0c16331"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "sha256": "8d2de2473c7551bf1c0433a3342c24436745e491200552ae2b5833c01cc25143"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/lint.log",
+      "sha256": "fe82195262b09727902d8ea57ceb3e12a09e5df0c6f26157db77f5c51b45d9f5"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/kernel-baseline.log",
+      "sha256": "38e3dc08f02fba400646edad501914470ed6ae6b26e14fc05790e74bd587ab0e"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-review-before-fix.md",
+      "sha256": "ab99fc38bdb3822637a295b1486d77c6cc89fb019faf1631f0dc4a32595dd8bf"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/root-frozen-final.log",
+      "sha256": "2f88e13061eb9a6f8cf0ae9d4a6efe063939a54ef1bb299cba4d2554389365d4"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/evidence-task-review.md",
+      "sha256": "8d3bb9fb7df5bd395ce4d3a55abced73c43cd84e47a0174695537f9f9d9f29e5"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/root-frozen-after-fix.log",
+      "sha256": "2f88e13061eb9a6f8cf0ae9d4a6efe063939a54ef1bb299cba4d2554389365d4"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/browser-gate-before-parity.log",
+      "sha256": "427de1be37b4fa24ad2c8fbaee7922f01f4db08e777459d8cfe605b4cab60f6c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-repeat-red.log",
+      "sha256": "606fbe09fed1ad80a4d423e6b7c277a22833eeeb529012acd092bc48667456c8"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-green.log",
+      "sha256": "1b2747beeccde95770d7a8913804eff409b76c912d49a02b5c9e12d46078becc"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/evidence-report.md",
+      "sha256": "fc7d23876bbe30c2776de5900160fa09788874a01f7ae4288e2f7e4dec72981b"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/identity-task-review.md",
+      "sha256": "cf702b1431466a2079cf3569dd80f73ffe37f369284b6d18bc828abf98afaf60"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix-rereview.md",
+      "sha256": "8fa3afe3288ff0a0b0e31008e40e0e18a745f77eef956e3f60e1418e881c57fa"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/root-execution-final.log",
+      "sha256": "7db51a594198bccc2ebeaa015f6c56c4aa8ef9d9ac56a324b1f859734c08c302"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-red.log",
+      "sha256": "c63e8c47cfba2b371ae2a195c6eaec2df7caf4ec0ed9c9e2a520a1ec8bb5b300"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-runtime-green.log",
+      "sha256": "25e098e4eb69385bca7cee0cfac448710bb0f1a9f569a89b8dbefcb0a14a261d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/native-test-gate.log",
+      "sha256": "0761bbcccf57104eb31a196f8a865691cf5dc3abd2f623d27d22e1a353394564"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-negative.log",
+      "sha256": "e562e0c36b7e1ea2a714f5e19136f0523f0de6e2acba7ceb1b3a10117120b9c2"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-native-green.log",
+      "sha256": "7aa211f15110f641fc0536c5c528e4a8aeef80a2977c9491307add5daa9dd6be"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/prior-source-reuse.json",
+      "sha256": "6adca22b71f2b8956c03a7fcd5ebf3dc027582e3380d55c401b2e0404067e2af"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/root-execution-after-fix.log",
+      "sha256": "7db51a594198bccc2ebeaa015f6c56c4aa8ef9d9ac56a324b1f859734c08c302"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-fixture-green.log",
+      "sha256": "61e63994c74364a85392f7c3610e50428f773e287e59c1f13e967bde111b032c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-clippy.log",
+      "sha256": "35a70448344f7995cd96764c1f05bd69236020884053a920f97bd6e6e46a43fc"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/browser-gate.log",
+      "sha256": "ac42b9f4806f66605ba5e18e71969a43dc184962ed766fd68fe072db448c1e17"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/root-observation-closure-after-fix.log",
+      "sha256": "617de11c87fbfb084eb723b0aa0026c68296311c124d45b08da40499af5557c3"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/native-clippy-gate.log",
+      "sha256": "17ca166f05b3d66e7a34731d27e0ab0440fa096381ee9768e0e09e1a3f70ee65"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-kernel-suite.log",
+      "sha256": "ca526c7e9228b273fc8a1d671ff0808bb986bde014fa98372ba914a3b71da961"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-clippy.log",
+      "sha256": "b8b9cbcb38cd6d46e4d40764605fae05d11a347f9f044b0f30afef9a80ebb373"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-behavior-red.log",
+      "sha256": "1f20e9263f43ebf514ce5c6aceba15325f1ba290b601c5d1851b9323d87a23e3"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/receipt.json",
+      "sha256": "ca1d4bef9749f1b1cf36eb0c8e087d2dd029101acca30a5160071041dc0e1965"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-red.log",
+      "sha256": "29e6936f2cec73df731b0a390dcbb83467e7806864a5da06341436a12a1a80b1"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/lint-with-parity.log",
+      "sha256": "fe82195262b09727902d8ea57ceb3e12a09e5df0c6f26157db77f5c51b45d9f5"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/identity-report.md",
+      "sha256": "00d390ae6e61e42f91fe08e9299f7d20f6a5fd85c1910ea197843e9b2b868c31"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-current-execution-mutations.log",
+      "sha256": "d559ecb0378aec27a9b7b0ee82e15837134321620e7063aa7c1357be599244ee"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-system-execution-checker.log",
+      "sha256": "fd8795cae5015dfbeac608387906b520155fe2ae29c706da9cf72daded75707f"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-artifact-hashes.json",
+      "sha256": "32a6da2d3c1978b6d30fe19c0fffb367519764edfd417523a7832242f524ddff"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-current-observation-closure.log",
+      "sha256": "516fd717bb797571f7c325e4be4f8d6014d1f75d6a9a09a025d88c7594262102"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-results.json",
+      "sha256": "128ecc7bea72a15c5dfb7c0b1b8ba05e712a0ec7de4c2deae1703302c18a7c77"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/check-observation-closure.py",
+      "sha256": "79990e2ac98d48cd181a25eb556edcf65c6727496dcdf9227e8975a31983fa1e"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-preservation.log",
+      "sha256": "d49c290fe05e90bde662d4ad895355db56fb9e47a5cf2cea959fb646d1aae258"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-kind-negative.log",
+      "sha256": "8a790cf4a73de77a1c2c0bbca15bfe5256f1953939d70a28e50703dd2e1d4e47"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-clippy.log",
+      "sha256": "94a03ec56f4fbfa976d83e5405c17be60e15714d3e54b16c0d430d38e74f3666"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-js-red.log",
+      "sha256": "69c1bc40ded094bf9b97ed36ef4206b8b3d5f59a0f234c6341bb85d88088a929"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-before-hashes.json",
+      "sha256": "bf6e68089d5d97c1c33d8fafbe50bcd7160e9087a4219096714eb4e27bdfe093"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-diff-check.log",
+      "sha256": "a0d3b965215a5334a3e51eb1f93bc4bf15e87eea2d4056f9443dbb3ca4c79fb0"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-green.log",
+      "sha256": "734e733033a28bb9fd86cbfae576c20cab7386f72a7295adc976014a4c3b82d6"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-current-completion-checker.log",
+      "sha256": "42019881303d2d441aaa8338548fbfe2e5faa8651d08df270f99487e6f363d50"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-system-completion-checker.log",
+      "sha256": "b68f7234f9aeb9ad844768a31d3ea9ef62b2a8bfe17813dc092b15aa74d9b020"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-system-observation-closure.log",
+      "sha256": "2ed9ed2d8c49707774bd73826c2bc1988a5281336eff101bb603374a918fd8a0"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-current-execution-checker.log",
+      "sha256": "e1dcf5c9d9faf90928fb2378eae491f15ac2f5dc3837907ad16c5a78843f1aba"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-evidence-hashes.json",
+      "sha256": "91ef9ae89a697556dc268c25d207f6f6e6be99893c73814e9adba78c63d0ef3a"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-system-execution-mutations.log",
+      "sha256": "7570cffb6f32e07746cdf4e8f52b6bcc662a5c944a0f7da6c8278cb1fffe0d4c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-current-hashes.json",
+      "sha256": "33c762de7d9f1c84286e73e1151e5dd0c221f247374a6593c99b616b5b0fece7"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-red.log",
+      "sha256": "065b1daf4ed76a8a1f3b10281359c9a9418f10cc5f9d9fdc655dd5f2c7b20579"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-parity-green.log",
+      "sha256": "abb2e4e3a1f4f5892d9e81a955a549b50dba2d4c3bce549f557987a8169c6afb"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/register/current-frozen-completion.log",
+      "sha256": "4557a988573e8e5bfdc3343ecba9e55e6bc1292ebd178b44ef41f68f203912b7"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/register/check-observation-closure.py",
+      "sha256": "79990e2ac98d48cd181a25eb556edcf65c6727496dcdf9227e8975a31983fa1e"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/register/verification-summary.json",
+      "sha256": "be8e796c7ccf2ddcb26c462a0293b8695ffcd0452d7eb1ee9c4a5fb60740cd33"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/register/system-frozen-completion.log",
+      "sha256": "fa08533b648c34870335a4029f1c414014f33dc26c7e013770dd4ce4677a9baa"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/register/current-execution.log",
+      "sha256": "ae1fb5e51dfc0815434451d97a371e3f1326559c394e4ab9450cd277338f46ca"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/register/system-execution.log",
+      "sha256": "c31067118ec7d94925272c32499269ee1fb1608a7157193666b7adb460c1637f"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/register/system-execution-mutations.log",
+      "sha256": "fc3e34f08b50979344146fdae64a7b8fe119d078ca591022efec3e20df84b884"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/register/system-observation-closure.log",
+      "sha256": "9765b8c215d78cab103f6bf0abcdaf8a61febce2b0886ea9874324b74b147d8c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/register/current-observation-closure.log",
+      "sha256": "45602569e4142c94a1c37f763769277f4817a7b96013819ad9414afeb8f7b3b3"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/register/preservation-check.log",
+      "sha256": "bd5a4493e61be0796fc888662c909f347c3e2df98fe63f73e2463c35ce363e0d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/register/current-execution-mutations.log",
+      "sha256": "327c417538fec2ce35bcb3e91279c0771516cee14684235cc60839b17e3e7f3c"
+    }
+  ]
+}

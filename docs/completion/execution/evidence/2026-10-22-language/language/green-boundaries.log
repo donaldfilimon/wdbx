@@ -1,0 +1,43 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[46753]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[46752]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "language_v3_scripts") generated 1 warning
+warning: `specimen-kernel` (test "language_v3") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 0.84s
+     Running tests/language_v3.rs (specimen-studio/target/debug/deps/language_v3-7f6ed537601b8d80)
+
+running 9 tests
+test s19_numeric_grammar_preserves_exact_operands_and_source_spans ... ok
+test longest_phrase_context_ties_and_missing_frames_stay_explicit ... ok
+test conditional_action_ast_retains_condition_and_uncertain_negation_scope ... ok
+test all_nine_utilities_have_observable_semantics_and_safe_fanout ... ok
+test unicode_bounds_invalid_tables_and_variant_budgets_fail_deterministically ... ok
+test decimals_precedence_unary_and_errors_are_bounded ... ok
+test s20_quotes_negation_independent_clauses_and_conditionals ... ok
+test deterministic_host_draws_original_caps_zero_weights_and_protected_spans ... ok
+test table_rows_are_validated_before_lookup_and_unicode_spans_survive ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/language_v3_scripts.rs (specimen-studio/target/debug/deps/language_v3_scripts-c1cf172329f6bf1f)
+
+running 4 tests
+test execute_for_action_preserves_preparation_guards ... ok
+test s46_nested_contacts_narrow_parent_and_current_registry ... ok
+test scripts_math_pratt_and_literal_quotes_execute_once ... ok
+test s21_actual_tape_execution_and_atomic_failures ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

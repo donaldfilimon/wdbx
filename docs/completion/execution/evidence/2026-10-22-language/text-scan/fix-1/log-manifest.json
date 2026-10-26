@@ -1,0 +1,62 @@
+[
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/clippy.log",
+    "sha256": "e68a63e93ac2845f9ce09d908a87e97cb330c6437d1e167c3110b3d3c23c3f75",
+    "bytes": 224
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/commands.txt",
+    "sha256": "aadf69b379d8296925b673bd22351fffa64536334a6d9a9e0b6c6df87daf909a",
+    "bytes": 1731
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/dependency-manifest.json",
+    "sha256": "0b4d0b3af7c39f676066d95a167de750a25b4b6ef7f15dface86430448b14072",
+    "bytes": 2190
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/diff-check.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/fmt-check.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/green-focused.log",
+    "sha256": "888bc097cb567b4755c4de8bf7bea3aa526bce55ce9d2c06cac3ebfca2259ffa",
+    "bytes": 6231
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/kernel-suite.log",
+    "sha256": "c570ac005d15c50fe8228a32065eb66914508db19409e19008ee2b2d7b2168b8",
+    "bytes": 26910
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/legacy-hashes.json",
+    "sha256": "108961b9296163fbd078893cea168208c8140137a51cb04e13654869e31f2102",
+    "bytes": 5536
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/red-behavior.log",
+    "sha256": "9b4518c97f7f1373dc0ab285b060b6d22f1d86852cdbd0cc89a1b1544d2f17c2",
+    "bytes": 3648
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/red-scoped-behavior.log",
+    "sha256": "f9dec7267453b3636028620d79a5577ee176c84d482c9e43d4420563d8b92360",
+    "bytes": 4148
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/source-manifest.json",
+    "sha256": "da3d99bd17a9366e8f9c9a013f6b5e3ead708eaf4e194a5fca47607331e84795",
+    "bytes": 1859
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-report.md",
+    "sha256": "697b0cc6cf1744e57341b790937de3412950ef5b557bffb64f2a2f9d065ab9c1",
+    "bytes": 15971
+  }
+]

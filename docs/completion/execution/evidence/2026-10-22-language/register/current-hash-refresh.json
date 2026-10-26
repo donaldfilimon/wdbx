@@ -1,0 +1,79 @@
+[
+  {
+    "observation_file": "docs/completion/execution/register-v1.json",
+    "path": "docs/completion/execution/studio-research-v1.json",
+    "historical_reference_hashes": [
+      "27e55f78913a395012cce1c7a021042565803dfc4a2dbe46d7ad2e15c06d278d"
+    ],
+    "current_reference_hashes": [
+      "683b64e7045baf054389053d96609beef2dd5da62c5b73fdceb5a0cc4c4ee205"
+    ],
+    "qualification": "Current observation reference refreshed; historical files themselves remain byte-identical."
+  },
+  {
+    "observation_file": "docs/completion/execution/register-v1.json",
+    "path": "specimen-studio/native/specimen-kernel/src/lib.rs",
+    "historical_reference_hashes": [
+      "268b1480c2c25a4e78ad9ae5e818f2f9f9b1d4d8f505345c0ae655cd76350ee9"
+    ],
+    "current_reference_hashes": [
+      "3fd3d1bf50ca7837c5a24422f89dc5487bcd4d8b75a13a8c97ec0a954b4b2620"
+    ],
+    "qualification": "Current observation reference refreshed; historical files themselves remain byte-identical."
+  },
+  {
+    "observation_file": "docs/completion/execution/register-v1.json",
+    "path": "specimen-studio/native/specimen-wasm/Cargo.toml",
+    "historical_reference_hashes": [
+      "5e3c35f9bb576b9561a05c58b92837e45d001a11171b4c037082f0a75de60b2d"
+    ],
+    "current_reference_hashes": [
+      "90c9905912ff19fac35296d77c12d0433ab7f6af85b6081e7e9c4948b6d62211"
+    ],
+    "qualification": "Current observation reference refreshed; historical files themselves remain byte-identical."
+  },
+  {
+    "observation_file": "docs/completion/execution/register-v1.json",
+    "path": "specimen-studio/native/specimen-wasm/src/lib.rs",
+    "historical_reference_hashes": [
+      "d7b6b4896c2216f788121555facdd676bc1e49bd9d4fb8d1498f8119552970ad"
+    ],
+    "current_reference_hashes": [
+      "b5dc6568cb29126f7d3defbaba6da7095ad1508855a20c8101d51b5c6f311972"
+    ],
+    "qualification": "Current observation reference refreshed; historical files themselves remain byte-identical."
+  },
+  {
+    "observation_file": "docs/completion/execution/studio-research-v1.json",
+    "path": "specimen-studio/native/specimen-kernel/src/lib.rs",
+    "historical_reference_hashes": [
+      "268b1480c2c25a4e78ad9ae5e818f2f9f9b1d4d8f505345c0ae655cd76350ee9"
+    ],
+    "current_reference_hashes": [
+      "3fd3d1bf50ca7837c5a24422f89dc5487bcd4d8b75a13a8c97ec0a954b4b2620"
+    ],
+    "qualification": "Current observation reference refreshed; historical files themselves remain byte-identical."
+  },
+  {
+    "observation_file": "docs/completion/execution/studio-research-v1.json",
+    "path": "specimen-studio/native/specimen-wasm/Cargo.toml",
+    "historical_reference_hashes": [
+      "5e3c35f9bb576b9561a05c58b92837e45d001a11171b4c037082f0a75de60b2d"
+    ],
+    "current_reference_hashes": [
+      "90c9905912ff19fac35296d77c12d0433ab7f6af85b6081e7e9c4948b6d62211"
+    ],
+    "qualification": "Current observation reference refreshed; historical files themselves remain byte-identical."
+  },
+  {
+    "observation_file": "docs/completion/execution/studio-research-v1.json",
+    "path": "specimen-studio/native/specimen-wasm/src/lib.rs",
+    "historical_reference_hashes": [
+      "d7b6b4896c2216f788121555facdd676bc1e49bd9d4fb8d1498f8119552970ad"
+    ],
+    "current_reference_hashes": [
+      "b5dc6568cb29126f7d3defbaba6da7095ad1508855a20c8101d51b5c6f311972"
+    ],
+    "qualification": "Current observation reference refreshed; historical files themselves remain byte-identical."
+  }
+]

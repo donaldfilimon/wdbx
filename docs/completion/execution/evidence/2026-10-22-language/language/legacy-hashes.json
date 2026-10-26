@@ -1,0 +1,32 @@
+[
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language.rs",
+    "head_blob": "d3c86f250d6887b2ff491483eb883629376f482d",
+    "live_blob": "d3c86f250d6887b2ff491483eb883629376f482d",
+    "unchanged": true
+  },
+  {
+    "path": "specimen-studio/conformance/starter.json",
+    "head_blob": "3e1eae1550be705d72fdd6d42a300fa2464f8cee",
+    "live_blob": "3e1eae1550be705d72fdd6d42a300fa2464f8cee",
+    "unchanged": true
+  },
+  {
+    "path": "specimen-studio/conformance/p0-probe.sha256",
+    "head_blob": "08689743bb97c9b157e73bd7de7a5feb44808927",
+    "live_blob": "08689743bb97c9b157e73bd7de7a5feb44808927",
+    "unchanged": true
+  },
+  {
+    "path": "specimen-studio/conformance/p0-probe-imagine.sha256",
+    "head_blob": "c904b171e6ab3a3a0ec3d7df264e66aebe3d3c45",
+    "live_blob": "c904b171e6ab3a3a0ec3d7df264e66aebe3d3c45",
+    "unchanged": true
+  },
+  {
+    "path": "specimen-studio/conformance/p0-probe-pow.sha256",
+    "head_blob": "7e9795d2b6b480ceace311b286624b7f0c0dd81a",
+    "live_blob": "7e9795d2b6b480ceace311b286624b7f0c0dd81a",
+    "unchanged": true
+  }
+]

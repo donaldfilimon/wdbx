@@ -1,0 +1,57 @@
+[
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+    "sha256": "dbd2dfa4859c27c2d34dec0b94a50f71176490501f7f3bc032947d4cb6c820c7",
+    "lines": 214
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+    "sha256": "b479b4d1426a30352fdb4a68212f84bebf36249963466a1cfa97656a11a3ac73",
+    "lines": 66
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+    "sha256": "456295034cb3617810dd918d329edbfaec6115e8a26f8b9363a206cd4e79dee8",
+    "lines": 374
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+    "sha256": "79ca385b296208440f2d9ba464f8ab8f4a2f9c3af2200968921a4d223a907a64",
+    "lines": 752
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+    "sha256": "5f4e4138fdb860288085f877ebe1eb81c7f336b599571a63d8f0e4216fb51c1f",
+    "lines": 71
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+    "sha256": "c3e10e6f9a1b1c3209a81b4e1e4864b818cec019583f3fb461f6dfa86a7640fd",
+    "lines": 569
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+    "sha256": "00584d62dc7cc0af2d8ff14ae3088753caa8b6b5be4b8485696ad6a0315d6f0a",
+    "lines": 379
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs",
+    "sha256": "5cb736d802fa8bf7b932037b2feec26b90f71b5f04383d2d51068e4a2d5bd9d1",
+    "lines": 77
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+    "sha256": "220cd4fb3f979b62f37d261b3d87acf609980aeb237348ebef26eaa13c7571d7",
+    "lines": 991
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+    "sha256": "03d3fa508df82002ef9c62625bfcf8c1cf2ad45834d35ecd9fa5ef0a35287632",
+    "lines": 206
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs",
+    "sha256": "c95e70412f381f09671392ddc7c384fbd732236b79ef27c934a45c7f2664b8ef",
+    "lines": 398
+  }
+]

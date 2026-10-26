@@ -1,0 +1,7 @@
+retained-artifacts=/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-language-parity.aVnQxK
+native-executable=/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-language-parity.aVnQxK/target/debug/examples/language_probe
+default-wasm=/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-language-parity.aVnQxK/default.wasm
+feature-wasm=/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-language-parity.aVnQxK/language.wasm
+native-trace=/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-language-parity.aVnQxK/native.json
+wasm-trace=/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-language-parity.aVnQxK/wasm.json
+durable-copy=/Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-22-language/parity

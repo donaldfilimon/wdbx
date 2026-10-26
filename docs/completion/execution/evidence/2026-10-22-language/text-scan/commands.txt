@@ -1,0 +1,23 @@
+All commands from /Users/donald/sources/repos/wdbx; exported per invocation:
+PATH=/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin
+RUSTUP_TOOLCHAIN=1.99.1
+
+RED/core first runs:
+cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --test text_v3 --test scanner_v3
+RED routes/work runs:
+cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --test scanner_v3_routes
+RED antecedent:
+cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --test scanner_v3
+RED chunk/lexical:
+cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --test text_v3
+Final focused:
+cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --test text_v3 --test scanner_v3 --test scanner_v3_routes
+Final suite:
+cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked
+Final Clippy:
+cargo clippy --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --all-targets -- -D warnings
+Final owned formatting:
+rustfmt --edition 2024 --check specimen-studio/native/specimen-kernel/src/text_v3/mod.rs specimen-studio/native/specimen-kernel/src/scanner_v3/mod.rs specimen-studio/native/specimen-kernel/src/scanner_v3/rational.rs specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs specimen-studio/native/specimen-kernel/src/scanner_v3/routes/model.rs specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs specimen-studio/native/specimen-kernel/tests/text_v3.rs specimen-studio/native/specimen-kernel/tests/scanner_v3.rs specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs
+Final whitespace:
+git diff --check
+Legacy hash assertion: Python hashlib.sha256 over every path in ../legacy-baseline.json; asserted len(files)==23 and all actual==expected; wrote legacy-hashes.json.

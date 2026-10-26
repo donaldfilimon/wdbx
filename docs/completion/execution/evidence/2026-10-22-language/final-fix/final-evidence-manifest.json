@@ -1,0 +1,391 @@
+{
+  "scope": "Final evidence freeze after current/system inventory checks; source remains at product-freeze. Independent scoped rereview pending. Root-owned later rereview/handoff/ruling artifacts are outside this fixer freeze.",
+  "recorded_utc": "2026-10-23T03:01:16.456833+00:00",
+  "files": [
+    {
+      "path": "docs/completion/execution/README.md",
+      "sha256": "e6231b2c6a551daa303b944c810475e96bfee5384af9705dce20bc1745423112",
+      "bytes": 7568
+    },
+    {
+      "path": "docs/completion/execution/candidate-paths-v1.json",
+      "sha256": "2b9c55c5aa4ef46acf21ece5f30f8a7f35e2de2da9b9bdd691d058fed7acdc81",
+      "bytes": 178428
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/before-snapshot.json",
+      "sha256": "23bcee6d41db626008cbd9279f6d99589a497a6b4604ef5b135bbacff9f45521",
+      "bytes": 8443
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/check-final-closure.py",
+      "sha256": "356cd6257a7b205d1a272c62a25f539d8e23795d93d3916b7b66bb2304bd7e91",
+      "bytes": 9741
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/clippy.log",
+      "sha256": "c9b98b54482a5ef82530154c26bb800699d9cd007364c629625f7d7e2e80ef5c",
+      "bytes": 276
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-commands.json",
+      "sha256": "d2130513f314677ead048c050f67d417536fbcd6159ea9a525792ac598375fd8",
+      "bytes": 2987
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-execution-27-mutations.log",
+      "sha256": "553bc4fa5a2515829c05f9336abf9b3d2a97bc5784210d371002245da30b901f",
+      "bytes": 126
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-execution-checker.log",
+      "sha256": "7db51a594198bccc2ebeaa015f6c56c4aa8ef9d9ac56a324b1f859734c08c302",
+      "bytes": 98
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-final-closure.log",
+      "sha256": "9a5817e27d0339627228210ef13413d2432f595772ea00296999739c464de8ef",
+      "bytes": 1008
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-frozen-completion-checker.log",
+      "sha256": "2f88e13061eb9a6f8cf0ae9d4a6efe063939a54ef1bb299cba4d2554389365d4",
+      "bytes": 104
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-frozen-completion-tests.log",
+      "sha256": "a8ebbfa7392d607323756eaa2a559e6d39b26c685a9579b48ac42b3a8a1a12ce",
+      "bytes": 136
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-source-manifest.json",
+      "sha256": "cc9a55b941a4f5c67804c58ae6aa17f1f193062756f3a2747e3f25247fd136e1",
+      "bytes": 16388
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/fmt.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/focused-green.log",
+      "sha256": "96d10a91299c3b1c7db1be3d57f687ec8f2c00fe97efcfb087010c07ef877d2b",
+      "bytes": 2984
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/browser.json",
+      "sha256": "944d9d2dc9b0057d5271fa2dc7dd8de84ae665fa91651b2711fc26758b46a6f0",
+      "bytes": 48191
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/browser.log",
+      "sha256": "7002f4aa507309acf30c33d6542bd07acc2f2fd454d4a8549099b147171a459c",
+      "bytes": 19117
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/lint.json",
+      "sha256": "da333b889794d434883fb95bc8e261bac1981eee8f6106eb6f45be3b116715b1",
+      "bytes": 48190
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/lint.log",
+      "sha256": "fe82195262b09727902d8ea57ceb3e12a09e5df0c6f26157db77f5c51b45d9f5",
+      "bytes": 9
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/native-clippy.json",
+      "sha256": "adb98c8e45ce4ed8df89cec34ebaa1d10be1d0e772ed4f4fda4d0289aaa23b4f",
+      "bytes": 48198
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/native-clippy.log",
+      "sha256": "d807efd2e6923de589933835347d51b52ef40891b7a74957da76aba195d5e51c",
+      "bytes": 2486
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/native-clippy.stdout.json",
+      "sha256": "c93014e02443d94eb1301f7f0e7919d0d55a91c31a39d83827274fcdc773d4a8",
+      "bytes": 41780
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/native-test.json",
+      "sha256": "77560a6a20f68a272e450584c66f9bdfcf66c5594d9dde2ede33dc97e47e1223",
+      "bytes": 48197
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/native-test.log",
+      "sha256": "865ad4bb6cc3786d6c5a0ca085f8f684c170c0d3cfa9be4d28bb150ca2f779ec",
+      "bytes": 53523
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/native-test.stdout.json",
+      "sha256": "da155a9fba32c879c9403c9f1ec36f6cd7139b4a54d01d2e088136d14c3a9e34",
+      "bytes": 41779
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/run-studio-gate.py",
+      "sha256": "2c7f90b1c0891b0e3ab84ad15d3bf87995ea9f5fd636f7ce68186972820ac802",
+      "bytes": 2862
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/summary.json",
+      "sha256": "387f3299438976f18c2514cfc0fed8e42f52f8c96a3b356e7af264ba0e58cf58",
+      "bytes": 5913
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/git-diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/green-first.log",
+      "sha256": "95efdb7e68fc1d56fd56abc53bdc4d0a4f3479a9cab91a1e16ff7c4759a12dfc",
+      "bytes": 3016
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/historical-evidence-baseline.json",
+      "sha256": "522b3cfda282e65d8abb3718b9d9680fccb83ce7d6759bbfdef1ddebe9d1b44f",
+      "bytes": 52882
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json",
+      "sha256": "8c5086a075bd6822542f0f083743695346841a17848c888ed07f95bade755e1d",
+      "bytes": 669
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-mod.before.txt",
+      "sha256": "2b28dc381bc67ee27cb484618188b2457fc58f53a37da09057ace5e1b67182c1",
+      "bytes": 9006
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-parity.log",
+      "sha256": "7bfb461ebfa350f26e33bd83bf41c65851956ac61375027086cbc914ca15848c",
+      "bytes": 8307
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-runtime/default.wasm",
+      "sha256": "c3f56ce5fa884c05f619c508b066341592f3826df0007b3e7cf0cd21e9b978e3",
+      "bytes": 2568209
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-runtime/identity.wasm",
+      "sha256": "f8a0c5a272e9bbcbde8bb8b7c6e4f384652b588cce05228e3bcadf3ba87d925a",
+      "bytes": 2678186
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-runtime/native.json",
+      "sha256": "60aaef7f217d27a6fe505f2c6405239e3032902e9964472e24273bca97c07580",
+      "bytes": 4205
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-runtime/retention.json",
+      "sha256": "4c9630e0d6f7dd6f3ab45b280670ba60ada7239d3f094423203cd76a9daadc20",
+      "bytes": 1051
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-runtime/wasm.json",
+      "sha256": "60aaef7f217d27a6fe505f2c6405239e3032902e9964472e24273bca97c07580",
+      "bytes": 4205
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/kernel-feature-final.log",
+      "sha256": "8d8c86bc4041b05c10d5df478e56fed712f1470cb9c98f4a55186ba2c798893f",
+      "bytes": 37281
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/kernel-feature-tests.log",
+      "sha256": "9d7c3a5dd44293c805b52868e81b60cec476a82dd74894642eb9929c12067dae",
+      "bytes": 37585
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-parity.log",
+      "sha256": "23293fb35f9366a225f20d0af11a3790e42870f4d68d3957d423116a49c0399a",
+      "bytes": 18957
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/artifacts.sha256",
+      "sha256": "55ecbc8e0cc89120dfa2d7a48216f113d2450aedc82c7a12ea71758cd9c78670",
+      "bytes": 1300
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/corrupt-digest.json",
+      "sha256": "2c0b3eafcdc00aa43149154fc1ea46055f055a1d2f9054880d41022a3ed84987",
+      "bytes": 151786
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/corrupt-digest.json.label.json",
+      "sha256": "409bc58d88d8a1193383ff4e3e28a15e460aca025ace0399513ba410eb39f5ce",
+      "bytes": 151787
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/default.wasm",
+      "sha256": "c3f56ce5fa884c05f619c508b066341592f3826df0007b3e7cf0cd21e9b978e3",
+      "bytes": 2568209
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/language.wasm",
+      "sha256": "28fa421f31cc3f087bc81d4e66774913fe7e949781c39dbbe9023bfb243f0ddd",
+      "bytes": 3021967
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/native.json",
+      "sha256": "743d07418aadbe60c704d0d934c2bffb237e62e1e39c162ad731aba7d4a8e4d9",
+      "bytes": 151812
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/negative-label.log",
+      "sha256": "0f59fe8fbe0ad0fde30c4902e78f0a454fd5bfdbacb52516820a3daf35e65432",
+      "bytes": 972
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/negative.log",
+      "sha256": "08b239f6949bc7c2279e2242ac7b3febe0c6bd4324392a919f155cc84590a79c",
+      "bytes": 1182
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/retention.json",
+      "sha256": "7d5cb14dc8a663be8128a966ae734e5ebd2e6cecf7e1cd21ea259117dfbeae17",
+      "bytes": 2468
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/source.sha256",
+      "sha256": "5a482dc285e23b08035e99be390cd11bce9d98a2cecdf42cc5549af4a9210e41",
+      "bytes": 3619
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/wasm.json",
+      "sha256": "743d07418aadbe60c704d0d934c2bffb237e62e1e39c162ad731aba7d4a8e4d9",
+      "bytes": 151812
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/phase-a-commands.json",
+      "sha256": "dfeb118edb688a63c10ae4287bd2ac2b17e56519e70456443977e01c9ebd70f8",
+      "bytes": 3915
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/product-final-fix.diff",
+      "sha256": "3a4d759775d1b88c211a2579224e92ce1c4eca0f2315d0f2524dc10a82160ed5",
+      "bytes": 48241
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/product-freeze.json",
+      "sha256": "94c567b079532c225a63f31383aadde3bd75313b12f9182b646aaba1170c131c",
+      "bytes": 8550
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/red-comparator.log",
+      "sha256": "6d4d5318fb7931a8d8d009afa0b2dab6495d5e438c62c98c7bdfefa99b5d2d3b",
+      "bytes": 32
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/red-corrupt-label.json",
+      "sha256": "fbc78dbdad6f92c03a34e679b6588b19f9dca4c1a0c073abae9b343f39e253f7",
+      "bytes": 159699
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/red-routes.log",
+      "sha256": "086b74ee89e598f91dbef447b655174058f357dbfeb541117b97cd36f9fc3b4f",
+      "bytes": 699500
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/red.log",
+      "sha256": "9d034c8fe3f4fc15194f82c3ea47d1a235747b5ebda8fe0559cd0fb07de8f728",
+      "bytes": 4089
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/refresh-current.py",
+      "sha256": "419af4d7deb303aa034a9f95fe1d31eabcc3cf819b42134df9d9de8e1a331935",
+      "bytes": 9311
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/requirement-mapping.json",
+      "sha256": "70128cbc98d69d3974a8d4014a1ec73a539d7d4a30aba377680cdd4ad6a9d0f0",
+      "bytes": 15511
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/run-phase-a.py",
+      "sha256": "caa2f7b1508b3eabe13adf0827f7a98d49892fecd8ce5d7e934ee96173a87cde",
+      "bytes": 1736
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/run-validation.py",
+      "sha256": "c515fb42aac327d6eab64fc3934e74c25074cd91e8cbbb5dd0b5c003ea4fcbf8",
+      "bytes": 1512
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/system-commands.json",
+      "sha256": "42100717283d32a1da2bf7d4f125a587d5132146d2c34e7d405d0c4ca28f3588",
+      "bytes": 3072
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/system-execution-27-mutations.log",
+      "sha256": "e2df512da279568f096da16208ead20c6da660a88d854c09b435f327138a7ccf",
+      "bytes": 126
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/system-execution-checker.log",
+      "sha256": "7db51a594198bccc2ebeaa015f6c56c4aa8ef9d9ac56a324b1f859734c08c302",
+      "bytes": 98
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/system-final-closure.log",
+      "sha256": "9a5817e27d0339627228210ef13413d2432f595772ea00296999739c464de8ef",
+      "bytes": 1008
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/system-frozen-completion-checker.log",
+      "sha256": "2f88e13061eb9a6f8cf0ae9d4a6efe063939a54ef1bb299cba4d2554389365d4",
+      "bytes": 104
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/system-frozen-completion-tests.log",
+      "sha256": "6fca5b2812dfc25d93471776494a13402a38c502e399a6e979fc3bb70c8e1ac9",
+      "bytes": 136
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/task-8-language-final-fix-brief.md",
+      "sha256": "b011c5273f46cd181219d80901c845f7232bd63e0caddae3bfa7e443a026d8ef",
+      "bytes": 7120
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/task-8-language-final-fix-report.md",
+      "sha256": "2d0cf40996bff65d40de7bf7f70359dd277fc62c53db212a31098aa78fefe02a",
+      "bytes": 11899
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/wdbx-language-final-review-probe.log",
+      "sha256": "94f50d34151b69a45ac7c93802ec55c42e5eb0248e9f1171a1066ea752697620",
+      "bytes": 1061
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/wdbx-language-final-review-probe.rs",
+      "sha256": "c772e4de8a108929af464d427a7e4b08cf9e4c4fe56728263b44c8723f3167be",
+      "bytes": 3053
+    },
+    {
+      "path": "docs/completion/execution/language-v3-profile.md",
+      "sha256": "8faa968114eae692de06aef7e3b14580e63ebeb202d8ffb804559b64efb51810",
+      "bytes": 11184
+    },
+    {
+      "path": "docs/completion/execution/register-v1.json",
+      "sha256": "19014ccb321ed01a9a7edb3d6cd70ac84031e7e093a26742d55058f5f97024ae",
+      "bytes": 974038
+    },
+    {
+      "path": "docs/completion/execution/studio-research-v1.json",
+      "sha256": "d2c8e04ea25bc22940f34511ae38df97f1933641ff1b05e3717958cf64905471",
+      "bytes": 455892
+    },
+    {
+      "path": "docs/completion/execution/studio-research.md",
+      "sha256": "edab2d7f83e9e32cb5a8530c10b798c8bb097b48b4e182444868ff7779a27dee",
+      "bytes": 15661
+    },
+    {
+      "path": "tools/check_completion_execution.py",
+      "sha256": "952582b20b3f298140dbc484c9e205e398a25f5e0c5256a21dddda27561e32d1",
+      "bytes": 8956
+    }
+  ]
+}

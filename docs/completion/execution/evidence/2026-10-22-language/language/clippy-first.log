@@ -1,0 +1,211 @@
+    Checking specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+error: this `if` statement can be collapsed
+   --> native/specimen-kernel/src/language_v3/prepare.rs:289:9
+    |
+289 | /         if let Some((row, n)) = matches.first() {
+290 | |             if let UtilityEffect::Negation { uncertain: u } = row.effect {
+291 | |                 inhibited = true;
+292 | |                 uncertain |= u;
+...   |
+298 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#collapsible_if
+    = note: `-D clippy::collapsible-if` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::collapsible_if)]`
+help: collapse nested if block
+    |
+289 ~         if let Some((row, n)) = matches.first()
+290 ~             && let UtilityEffect::Negation { uncertain: u } = row.effect {
+291 |                 inhibited = true;
+...
+296 |                 }
+297 ~             }
+    |
+
+error: this `if` statement can be collapsed
+   --> native/specimen-kernel/src/language_v3/prepare.rs:315:9
+    |
+315 | /         if let Some((row, n)) = tables.matches(UtilityKind::Dictionary, &tokens, i).first() {
+316 | |             if let UtilityEffect::Dictionary { lemma, definition } = &row.effect {
+317 | |                 definitions.push(Definition {
+318 | |                     rule_ref: row.reference.clone(),
+...   |
+328 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+315 ~         if let Some((row, n)) = tables.matches(UtilityKind::Dictionary, &tokens, i).first()
+316 ~             && let UtilityEffect::Dictionary { lemma, definition } = &row.effect {
+317 |                 definitions.push(Definition {
+...
+326 |                 tokens[i].rule_refs.push(row.reference.clone());
+327 ~             }
+    |
+
+error: this `if` statement can be collapsed
+   --> native/specimen-kernel/src/language_v3/prepare.rs:329:9
+    |
+329 | /         if let Some((row, n)) = tables.matches(UtilityKind::Chargebook, &tokens, i).first() {
+330 | |             if let UtilityEffect::Charge { valence, intensity } = row.effect {
+331 | |                 charges.push(Charge {
+332 | |                     rule_ref: row.reference.clone(),
+...   |
+341 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+329 ~         if let Some((row, n)) = tables.matches(UtilityKind::Chargebook, &tokens, i).first()
+330 ~             && let UtilityEffect::Charge { valence, intensity } = row.effect {
+331 |                 charges.push(Charge {
+...
+339 |                 })
+340 ~             }
+    |
+
+error: this `if` statement can be collapsed
+   --> native/specimen-kernel/src/language_v3/prepare.rs:356:9
+    |
+356 | /         if tokens[i].kind == TokenKind::Word && safe_lexical(tokens[i].lemma()) {
+357 | |             if let Some(row) = suffix {
+358 | |                 if let UtilityEffect::Suffix { replacement } = &row.effect {
+359 | |                     let old = &tokens[i].lemma;
+...   |
+368 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+356 ~         if tokens[i].kind == TokenKind::Word && safe_lexical(tokens[i].lemma())
+357 ~             && let Some(row) = suffix {
+358 |                 if let UtilityEffect::Suffix { replacement } = &row.effect {
+...
+366 |                 }
+367 ~             }
+    |
+
+error: this `if` statement can be collapsed
+   --> native/specimen-kernel/src/language_v3/prepare.rs:357:13
+    |
+357 | /             if let Some(row) = suffix {
+358 | |                 if let UtilityEffect::Suffix { replacement } = &row.effect {
+359 | |                     let old = &tokens[i].lemma;
+360 | |                     let candidate =
+...   |
+367 | |             }
+    | |_____________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+357 ~             if let Some(row) = suffix
+358 ~                 && let UtilityEffect::Suffix { replacement } = &row.effect {
+359 |                     let old = &tokens[i].lemma;
+...
+365 |                     }
+366 ~                 }
+    |
+
+error: this `if` statement can be collapsed
+   --> native/specimen-kernel/src/language_v3/prepare.rs:467:9
+    |
+467 | /         if let Some((r, n)) = tables.matches(UtilityKind::Grammar, tokens, i).first() {
+468 | |             if let UtilityEffect::Role(role) = r.effect {
+469 | |                 for t in &mut tokens[i..i + n] {
+470 | |                     if t.role != Role::Negation {
+...   |
+476 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+467 ~         if let Some((r, n)) = tables.matches(UtilityKind::Grammar, tokens, i).first()
+468 ~             && let UtilityEffect::Role(role) = r.effect {
+469 |                 for t in &mut tokens[i..i + n] {
+...
+474 |                 }
+475 ~             }
+    |
+
+error: this `if` statement can be collapsed
+   --> native/specimen-kernel/src/language_v3/prepare.rs:485:5
+    |
+485 | /     if let Some((i, n, r)) = frame {
+486 | |         if let UtilityEffect::Frame {
+487 | |             subject,
+488 | |             object,
+...   |
+544 | |     }
+    | |_____^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+485 ~     if let Some((i, n, r)) = frame
+486 ~         && let UtilityEffect::Frame {
+487 |             subject,
+...
+542 |             }
+543 ~         }
+    |
+
+error: this `if` statement can be collapsed
+   --> native/specimen-kernel/src/language_v3/script.rs:352:9
+    |
+352 | /         if d.handler == Handler::LookUp {
+353 | |             if let ScriptNode::Literal(s) = &args[0] {
+354 | |                 if !narrowed.contains(s) {
+355 | |                     return Err(LanguageError::UndeclaredContact);
+...   |
+358 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+352 ~         if d.handler == Handler::LookUp
+353 ~             && let ScriptNode::Literal(s) = &args[0] {
+354 |                 if !narrowed.contains(s) {
+355 |                     return Err(LanguageError::UndeclaredContact);
+356 |                 }
+357 ~             }
+    |
+
+error: this `if` statement can be collapsed
+   --> native/specimen-kernel/src/language_v3/script.rs:353:13
+    |
+353 | /             if let ScriptNode::Literal(s) = &args[0] {
+354 | |                 if !narrowed.contains(s) {
+355 | |                     return Err(LanguageError::UndeclaredContact);
+356 | |                 }
+357 | |             }
+    | |_____________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+353 ~             if let ScriptNode::Literal(s) = &args[0]
+354 ~                 && !narrowed.contains(s) {
+355 |                     return Err(LanguageError::UndeclaredContact);
+356 ~                 }
+    |
+
+error: manual `RangeInclusive::contains` implementation
+   --> native/specimen-kernel/src/language_v3/tables.rs:213:22
+    |
+213 |     w.is_finite() && w >= 0.0 && w <= 1e12
+    |                      ^^^^^^^^^^^^^^^^^^^^^ help: use: `(0.0..=1e12).contains(&w)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#manual_range_contains
+    = note: `-D clippy::manual-range-contains` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::manual_range_contains)]`
+
+error: could not compile `specimen-kernel` (lib) due to 10 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `specimen-kernel` (lib test) due to 10 previous errors

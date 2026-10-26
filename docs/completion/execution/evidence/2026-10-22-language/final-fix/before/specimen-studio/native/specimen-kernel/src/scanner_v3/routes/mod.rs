@@ -1,0 +1,411 @@
+//! Population/scope fenced explicit routes and a pure structural/route join.
+mod matching;
+mod model;
+use crate::{
+    identity::*,
+    language_v3::{script::*, *},
+    text_v3,
+};
+pub use model::*;
+use std::collections::{BTreeMap, BTreeSet};
+
+/// Derived, bounded index. Registration checks a complete batch before mutation.
+/// Rules are ordered by stable rule ID; concrete references retain supplied order.
+pub struct RouteIndex {
+    population: Population,
+    scopes: BTreeSet<Scope>,
+    registry: Registry,
+    rules: Vec<RouteRule>,
+    grammar: Vec<usize>,
+    prefix: BTreeMap<u8, Vec<usize>>,
+    prefixless: Vec<usize>,
+    automata: Vec<usize>,
+}
+impl RouteIndex {
+    pub fn new(
+        population: Population,
+        scopes: Vec<Scope>,
+        registry: &Registry,
+    ) -> Result<Self, RouteError> {
+        let declared = scopes.iter().copied().collect::<BTreeSet<_>>();
+        if declared.is_empty()
+            || declared.len() != scopes.len()
+            || declared.contains(&Scope::Reserved)
+        {
+            return Err(RouteError::UndeclaredScope);
+        }
+        Ok(Self {
+            population,
+            scopes: declared,
+            registry: registry.clone(),
+            rules: vec![],
+            grammar: vec![],
+            prefix: BTreeMap::new(),
+            prefixless: vec![],
+            automata: vec![],
+        })
+    }
+    pub fn rule_count(&self) -> usize {
+        self.rules.len()
+    }
+    pub fn register(
+        &mut self,
+        table: &HybridTable,
+        current: &Registry,
+        new: Vec<RouteRule>,
+    ) -> Result<(), RouteError> {
+        if current != &self.registry {
+            return Err(RouteError::StaleRegistry);
+        }
+        if new.len() > 4096 || self.rules.len() + new.len() > 4096 {
+            return Err(RouteError::RuleLimit);
+        }
+        let snapshot = table.snapshot();
+        let mut ids = self
+            .rules
+            .iter()
+            .map(|r| r.id.clone())
+            .collect::<BTreeSet<_>>();
+        let mut prefixless = self.prefixless.len();
+        let mut automata = self.automata.len();
+        let mut references = self.rules.iter().map(|r| r.entries.len()).sum::<usize>();
+        for rule in &new {
+            if rule.id.is_empty()
+                || rule.id.len() > 128
+                || !ids.insert(rule.id.clone())
+                || rule.entries.is_empty()
+                || rule.entries.len() > 64
+                || rule
+                    .entries
+                    .iter()
+                    .map(|e| e.0)
+                    .collect::<BTreeSet<_>>()
+                    .len()
+                    != rule.entries.len()
+            {
+                return Err(RouteError::InvalidRule);
+            }
+            if rule.scopes.is_empty()
+                || rule.scopes.iter().any(|s| !self.scopes.contains(s))
+                || rule.scopes.iter().collect::<BTreeSet<_>>().len() != rule.scopes.len()
+            {
+                return Err(RouteError::UndeclaredScope);
+            }
+            references = references
+                .checked_add(rule.entries.len())
+                .ok_or(RouteError::RuleLimit)?;
+            if references > 4096 {
+                return Err(RouteError::RuleLimit);
+            }
+            for reference in &rule.entries {
+                let entry = snapshot
+                    .entries
+                    .iter()
+                    .find(|e| e.reference == *reference)
+                    .ok_or(RouteError::MissingEntry)?;
+                if entry.population != self.population {
+                    return Err(RouteError::PopulationMismatch);
+                }
+            }
+            match &rule.kind {
+                RouteKind::Grammar(atoms) => validate_grammar(atoms)?,
+                RouteKind::Wildcard { mode, literal, .. } => {
+                    if literal.chars().count() > 2000
+                        || (*mode == WildcardMode::Contains && literal.is_empty())
+                    {
+                        return Err(RouteError::InvalidRule);
+                    }
+                    if *mode == WildcardMode::Contains || literal.is_empty() {
+                        prefixless += 1;
+                    }
+                }
+                RouteKind::Automaton {
+                    handler,
+                    program,
+                    expected,
+                } => {
+                    automata += 1;
+                    if program.len() > 2000
+                        || expected.len() > 1024
+                        || rule.scopes != [Scope::NodeAction]
+                        || !current.declarations().any(|d| {
+                            d.name == *handler
+                                && d.handler == Handler::Tape
+                                && d.scopes.contains(&Scope::NodeAction)
+                        })
+                    {
+                        return Err(RouteError::InvalidRule);
+                    }
+                    // Quote-safe compilation binds names/scopes to this registry.
+                    compile(
+                        &matching::invocation(handler, program, "")?,
+                        Scope::NodeAction,
+                        current,
+                    )?;
+                }
+            }
+            if prefixless > 64 || automata > 64 {
+                return Err(RouteError::RuleLimit);
+            }
+        }
+        // Validation is complete. Publishing this owned batch cannot fail.
+        self.rules.extend(new);
+        self.rules.sort_by(|a, b| a.id.cmp(&b.id));
+        self.reindex();
+        Ok(())
+    }
+    fn reindex(&mut self) {
+        self.grammar.clear();
+        self.prefix.clear();
+        self.prefixless.clear();
+        self.automata.clear();
+        for (i, r) in self.rules.iter().enumerate() {
+            match &r.kind {
+                RouteKind::Grammar(_) => self.grammar.push(i),
+                RouteKind::Automaton { .. } => self.automata.push(i),
+                RouteKind::Wildcard {
+                    mode: WildcardMode::Prefix,
+                    literal,
+                    ..
+                } if !literal.is_empty() => self
+                    .prefix
+                    .entry(literal.as_bytes()[0])
+                    .or_default()
+                    .push(i),
+                RouteKind::Wildcard { .. } => self.prefixless.push(i),
+            }
+        }
+    }
+    fn possible(&self, original: &str) -> Vec<usize> {
+        let mut out = self.grammar.clone();
+        out.extend(&self.prefixless);
+        out.extend(&self.automata);
+        if let Some(first) = original.as_bytes().first()
+            && let Some(rules) = self.prefix.get(first)
+        {
+            out.extend(rules);
+        }
+        out.sort_unstable();
+        out
+    }
+}
+fn validate_grammar(atoms: &[GrammarAtom]) -> Result<(), RouteError> {
+    if atoms.is_empty() || atoms.len() > 256 {
+        return Err(RouteError::InvalidRule);
+    }
+    let characters = atoms
+        .iter()
+        .map(|a| match a {
+            GrammarAtom::Literal(s) | GrammarAtom::Quoted(s) => s.chars().count(),
+            _ => 1,
+        })
+        .sum::<usize>();
+    if characters > 2000 {
+        return Err(RouteError::InvalidRule);
+    }
+    let mut names = BTreeSet::new();
+    for a in atoms {
+        match a {
+            GrammarAtom::Literal(s) | GrammarAtom::Quoted(s) => {
+                if s.is_empty() || s.chars().count() > 2000 {
+                    return Err(RouteError::InvalidRule);
+                }
+            }
+            GrammarAtom::Number(name) | GrammarAtom::Operator { name, .. } => {
+                if name.is_empty() || name.len() > 128 || !names.insert(name) {
+                    return Err(RouteError::InvalidRule);
+                }
+            }
+        }
+        if let GrammarAtom::Operator { allowed, .. } = a
+            && (allowed.is_empty()
+                || allowed.len() > 8
+                || allowed
+                    .iter()
+                    .any(|s| !matches!(s.as_str(), "+" | "-" | "*" | "/" | "%" | "^" | "(" | ")")))
+        {
+            return Err(RouteError::InvalidRule);
+        }
+    }
+    Ok(())
+}
+struct Work {
+    steps: usize,
+    output: usize,
+    origins: usize,
+    tape_steps: usize,
+}
+impl Work {
+    fn new(b: RouteBudget) -> Result<Self, RouteError> {
+        if b.work_steps == 0
+            || b.work_steps > 1_000_000
+            || b.output_bytes == 0
+            || b.output_bytes > 65536
+            || b.origins == 0
+            || b.origins > 65536
+            || b.tape_steps == 0
+            || b.tape_steps > 10000
+        {
+            return Err(RouteError::InvalidBudget);
+        }
+        Ok(Self {
+            steps: b.work_steps,
+            output: b.output_bytes,
+            origins: b.origins,
+            tape_steps: b.tape_steps,
+        })
+    }
+    fn charge(&mut self, n: usize) -> Result<(), RouteError> {
+        self.steps = self
+            .steps
+            .checked_sub(n)
+            .ok_or(RouteError::BudgetExceeded)?;
+        Ok(())
+    }
+    fn tape(&mut self, program: &str, input: &str) -> Result<(), RouteError> {
+        self.charge(program.len() + input.len() + self.tape_steps + 500)?;
+        self.output = self
+            .output
+            .checked_sub(1024)
+            .ok_or(RouteError::BudgetExceeded)?;
+        Ok(())
+    }
+}
+/// Complete result or typed failure, never partial candidates. Structural first,
+/// then rule-ID order per clause/variant; only concrete EntryRef is deduplicated.
+#[allow(clippy::too_many_arguments)]
+pub fn candidates(
+    table: &HybridTable,
+    index: &RouteIndex,
+    population: &Population,
+    scope: Scope,
+    prepared: &Prepared,
+    current: &Registry,
+    caps: &CapabilityLedger,
+    budget: RouteBudget,
+) -> Result<Vec<Candidate>, RouteError> {
+    if population != &index.population {
+        return Err(RouteError::PopulationMismatch);
+    }
+    if !index.scopes.contains(&scope) {
+        return Err(RouteError::UndeclaredScope);
+    }
+    if current != &index.registry {
+        return Err(RouteError::StaleRegistry);
+    }
+    let mut work = Work::new(budget)?;
+    let snapshot = table.snapshot();
+    let records = snapshot
+        .entries
+        .iter()
+        .map(|e| (e.reference.0, e))
+        .collect::<BTreeMap<_, _>>();
+    // Stale refs/populations refuse the whole query before any matching.
+    for rule in &index.rules {
+        work.charge(1 + rule.entries.len())?;
+        for reference in &rule.entries {
+            let entry = records.get(&reference.0).ok_or(RouteError::MissingEntry)?;
+            if &entry.population != population {
+                return Err(RouteError::PopulationMismatch);
+            }
+        }
+    }
+    let mut result = vec![];
+    let mut positions = BTreeMap::new();
+    for clause in prepared.clauses() {
+        for action in clause.variants() {
+            work.charge(1 + action.tokens().len() + action.original().len())?;
+            let key = text_v3::encode(action)?;
+            for entry in table.find_all(population, key.pattern_key()) {
+                append(
+                    &mut result,
+                    &mut positions,
+                    &records,
+                    entry,
+                    origin(
+                        action,
+                        CandidatePath::Structural(key.pattern_key().clone()),
+                        vec![],
+                        SimilarityBypass::RequireFullScan,
+                    ),
+                    &mut work,
+                )?;
+            }
+            for number in index.possible(action.original()) {
+                let rule = &index.rules[number];
+                work.charge(1)?;
+                if !rule.scopes.contains(&scope) {
+                    continue;
+                }
+                for matched in matching::matches(rule, action, current, caps, &mut work)? {
+                    for entry in &rule.entries {
+                        append(
+                            &mut result,
+                            &mut positions,
+                            &records,
+                            *entry,
+                            origin(action, matched.0.clone(), matched.1.clone(), matched.2),
+                            &mut work,
+                        )?;
+                    }
+                }
+            }
+        }
+    }
+    Ok(result)
+}
+fn origin(
+    a: &PreparedAction,
+    path: CandidatePath,
+    captures: Vec<RouteCapture>,
+    bypass: SimilarityBypass,
+) -> CandidateOrigin {
+    CandidateOrigin {
+        origin: a.origin().clone(),
+        span: a.span(),
+        token_spans: a.tokens().iter().map(Token::span).collect(),
+        constraints: a.into(),
+        path,
+        captures,
+        bypass,
+    }
+}
+fn append(
+    out: &mut Vec<Candidate>,
+    positions: &mut BTreeMap<u128, usize>,
+    records: &BTreeMap<u128, &EntryRecord>,
+    reference: EntryRef,
+    origin: CandidateOrigin,
+    work: &mut Work,
+) -> Result<(), RouteError> {
+    work.charge(
+        1 + origin.token_spans.len()
+            + origin
+                .captures
+                .iter()
+                .map(|c| match &c.value {
+                    CaptureValue::Text(s) | CaptureValue::Operator(s) => s.len(),
+                    CaptureValue::Bytes(b) => b.len(),
+                    CaptureValue::Number(_) => 32,
+                })
+                .sum::<usize>(),
+    )?;
+    work.origins = work
+        .origins
+        .checked_sub(1)
+        .ok_or(RouteError::BudgetExceeded)?;
+    if let Some(position) = positions.get(&reference.0) {
+        out[*position].origins.push(origin);
+    } else {
+        let record = records.get(&reference.0).ok_or(RouteError::MissingEntry)?;
+        positions.insert(reference.0, out.len());
+        out.push(Candidate {
+            entry: reference,
+            node: record.node,
+            original: record.original.clone(),
+            target_ast: record.ast.clone(),
+            origins: vec![origin],
+        });
+    }
+    Ok(())
+}

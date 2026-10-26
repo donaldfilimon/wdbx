@@ -1,0 +1,437 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+error[E0425]: cannot find type `Registry` in this scope
+ --> native/specimen-kernel/tests/language_v3_scripts.rs:2:51
+  |
+2 | fn registry(revision:u64,parent_reads:Vec<&str>)->Registry {
+  |                                                   ^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `Scope` in this scope
+ --> native/specimen-kernel/tests/language_v3_scripts.rs:3:21
+  |
+3 |     let scopes=vec![Scope::Action,Scope::Pattern,Scope::Resource,Scope::Memory,Scope::Supervisor];
+  |                     ^^^^^ use of undeclared type `Scope`
+  |
+help: consider importing this struct
+  |
+1 + use std::thread::Scope;
+  |
+
+error[E0433]: cannot find type `Scope` in this scope
+ --> native/specimen-kernel/tests/language_v3_scripts.rs:3:35
+  |
+3 |     let scopes=vec![Scope::Action,Scope::Pattern,Scope::Resource,Scope::Memory,Scope::Supervisor];
+  |                                   ^^^^^ use of undeclared type `Scope`
+  |
+help: consider importing this struct
+  |
+1 + use std::thread::Scope;
+  |
+
+error[E0433]: cannot find type `Scope` in this scope
+ --> native/specimen-kernel/tests/language_v3_scripts.rs:3:50
+  |
+3 |     let scopes=vec![Scope::Action,Scope::Pattern,Scope::Resource,Scope::Memory,Scope::Supervisor];
+  |                                                  ^^^^^ use of undeclared type `Scope`
+  |
+help: consider importing this struct
+  |
+1 + use std::thread::Scope;
+  |
+
+error[E0433]: cannot find type `Scope` in this scope
+ --> native/specimen-kernel/tests/language_v3_scripts.rs:3:66
+  |
+3 |     let scopes=vec![Scope::Action,Scope::Pattern,Scope::Resource,Scope::Memory,Scope::Supervisor];
+  |                                                                  ^^^^^ use of undeclared type `Scope`
+  |
+help: consider importing this struct
+  |
+1 + use std::thread::Scope;
+  |
+
+error[E0433]: cannot find type `Scope` in this scope
+ --> native/specimen-kernel/tests/language_v3_scripts.rs:3:80
+  |
+3 |     let scopes=vec![Scope::Action,Scope::Pattern,Scope::Resource,Scope::Memory,Scope::Supervisor];
+  |                                                                                ^^^^^ use of undeclared type `Scope`
+  |
+help: consider importing this struct
+  |
+1 + use std::thread::Scope;
+  |
+
+error[E0422]: cannot find struct, variant or union type `Declaration` in this scope
+ --> native/specimen-kernel/tests/language_v3_scripts.rs:5:7
+  |
+5 |       Declaration{name:"Text".into(),aliases:vec!["literal".into()],scopes:scopes.clone(),reads:vec![],handler:Handler::Text},
+  |       ^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `Declaration` in this scope
+ --> native/specimen-kernel/tests/language_v3_scripts.rs:6:7
+  |
+6 |       Declaration{name:"Math".into(),aliases:vec!["math".into()],scopes:scopes.clone(),reads:vec![],handler:Handler::Math},
+  |       ^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `Declaration` in this scope
+ --> native/specimen-kernel/tests/language_v3_scripts.rs:7:7
+  |
+7 |       Declaration{name:"Tape".into(),aliases:vec![],scopes:scopes.clone(),reads:vec![],handler:Handler::Tape},
+  |       ^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `Declaration` in this scope
+ --> native/specimen-kernel/tests/language_v3_scripts.rs:8:7
+  |
+8 |       Declaration{name:"LookUp".into(),aliases:vec![],scopes:scopes.clone(),reads:vec!["resource".into(),"memory".into()],handler:Han...
+  |       ^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `Declaration` in this scope
+ --> native/specimen-kernel/tests/language_v3_scripts.rs:9:7
+  |
+9 |       Declaration{name:"Parent".into(),aliases:vec![],scopes:scopes.clone(),reads:parent_reads.into_iter().map(str::to_string).collec...
+  |       ^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `Declaration` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:10:7
+   |
+10 |       Declaration{name:"Bind".into(),aliases:vec![],scopes,reads:vec![],handler:Handler::Bind},
+   |       ^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `EffectPlan` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:13:28
+   |
+13 | fn execute(s:&str)->Result<EffectPlan,LanguageError> {let r=registry(1,vec!["resource","memory"]);let ast=compile(s,Scope::Action,&r...
+   |                            ^^^^^^^^^^ not found in this scope
+   |
+help: you might be missing a type parameter
+   |
+13 | fn execute<EffectPlan>(s:&str)->Result<EffectPlan,LanguageError> {let r=registry(1,vec!["resource","memory"]);let ast=compile(s,Scope::Action,&r)?;let caps=r.capabilities(vec!["resource".into(),"memory".into()])?;execute_script(&ast,&r,&caps,ScriptBudget::default())}
+   |           ++++++++++++
+
+error[E0433]: cannot find type `Scope` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:13:117
+   |
+13 | ...,vec!["resource","memory"]);let ast=compile(s,Scope::Action,&r)?;let caps=r.capabilities(vec!["resource".into(),"memory".into()])...
+   |                                                  ^^^^^ use of undeclared type `Scope`
+   |
+help: consider importing this struct
+   |
+ 1 + use std::thread::Scope;
+   |
+
+error[E0433]: cannot find type `Scope` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:38:56
+   |
+38 |     let a=compile("Parent(LookUp(\"memory\",\"key\"))",Scope::Action,&r).unwrap();
+   |                                                        ^^^^^ use of undeclared type `Scope`
+   |
+help: consider importing this struct
+   |
+ 1 + use std::thread::Scope;
+   |
+
+error[E0433]: cannot find type `Scope` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:40:58
+   |
+40 |     let a=compile("Parent(LookUp(\"resource\",\"key\"))",Scope::Action,&r).unwrap();
+   |                                                          ^^^^^ use of undeclared type `Scope`
+   |
+help: consider importing this struct
+   |
+ 1 + use std::thread::Scope;
+   |
+
+error[E0433]: cannot find type `Scope` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:44:52
+   |
+44 |     assert_eq!(compile("LookUp(\"unknown\",\"x\")",Scope::Action,&r).unwrap_err(),LanguageError::UndeclaredContact);
+   |                                                    ^^^^^ use of undeclared type `Scope`
+   |
+help: consider importing this struct
+   |
+ 1 + use std::thread::Scope;
+   |
+
+error[E0433]: cannot find type `Scope` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:45:59
+   |
+45 |     assert_eq!(compile("LookUp(Text(\"resource\"),\"x\")",Scope::Action,&r).unwrap_err(),LanguageError::DynamicContact);
+   |                                                           ^^^^^ use of undeclared type `Scope`
+   |
+help: consider importing this struct
+   |
+ 1 + use std::thread::Scope;
+   |
+
+error[E0433]: cannot find type `Scope` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:46:40
+   |
+46 |     assert_eq!(compile("Math(\"2+2\")",Scope::Reserved,&r).unwrap_err(),LanguageError::InvalidScope);
+   |                                        ^^^^^ use of undeclared type `Scope`
+   |
+help: consider importing this struct
+   |
+ 1 + use std::thread::Scope;
+   |
+
+error[E0433]: cannot find type `Scope` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:47:70
+   |
+47 |     let a=compile("Parent(LookUp(\"resource\",\"x\"),Math(\"1/0\"))",Scope::Action,&r).unwrap();
+   |                                                                      ^^^^^ use of undeclared type `Scope`
+   |
+help: consider importing this struct
+   |
+ 1 + use std::thread::Scope;
+   |
+
+error[E0433]: cannot find type `Scope` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:55:103
+   |
+55 |     let r=registry(1,vec![]);let caps=r.capabilities(vec![]).unwrap();let ast=compile("Math(\"2+2\")",Scope::Action,&r).unwrap();
+   |                                                                                                       ^^^^^ use of undeclared type `Scope`
+   |
+help: consider importing this struct
+   |
+ 1 + use std::thread::Scope;
+   |
+
+warning: unused import: `script::*`
+ --> native/specimen-kernel/tests/language_v3_scripts.rs:1:36
+  |
+1 | use specimen_kernel::language_v3::{script::*, *};
+  |                                    ^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+error[E0433]: cannot find type `Registry` in this scope
+ --> native/specimen-kernel/tests/language_v3_scripts.rs:4:5
+  |
+4 |     Registry::new("test-registry",revision,vec!["resource".into(),"memory".into()],vec![
+  |     ^^^^^^^^ use of undeclared type `Registry`
+
+error[E0433]: cannot find type `Handler` in this scope
+ --> native/specimen-kernel/tests/language_v3_scripts.rs:5:112
+  |
+5 |       Declaration{name:"Text".into(),aliases:vec!["literal".into()],scopes:scopes.clone(),reads:vec![],handler:Handler::Text},
+  |                                                                                                                ^^^^^^^ use of undeclared type `Handler`
+
+error[E0433]: cannot find type `Handler` in this scope
+ --> native/specimen-kernel/tests/language_v3_scripts.rs:6:109
+  |
+6 |       Declaration{name:"Math".into(),aliases:vec!["math".into()],scopes:scopes.clone(),reads:vec![],handler:Handler::Math},
+  |                                                                                                             ^^^^^^^ use of undeclared type `Handler`
+
+error[E0433]: cannot find type `Handler` in this scope
+ --> native/specimen-kernel/tests/language_v3_scripts.rs:7:96
+  |
+7 |       Declaration{name:"Tape".into(),aliases:vec![],scopes:scopes.clone(),reads:vec![],handler:Handler::Tape},
+  |                                                                                                ^^^^^^^ use of undeclared type `Handler`
+
+error[E0433]: cannot find type `Handler` in this scope
+ --> native/specimen-kernel/tests/language_v3_scripts.rs:8:131
+  |
+8 | ...!["resource".into(),"memory".into()],handler:Handler::LookUp},
+  |                                                 ^^^^^^^ use of undeclared type `Handler`
+
+error[E0433]: cannot find type `Handler` in this scope
+ --> native/specimen-kernel/tests/language_v3_scripts.rs:9:146
+  |
+9 | ...iter().map(str::to_string).collect(),handler:Handler::Concat},
+  |                                                 ^^^^^^^ use of undeclared type `Handler`
+
+error[E0433]: cannot find type `Handler` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:10:81
+   |
+10 |       Declaration{name:"Bind".into(),aliases:vec![],scopes,reads:vec![],handler:Handler::Bind},
+   |                                                                                 ^^^^^^^ use of undeclared type `Handler`
+
+error[E0425]: cannot find function `compile` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:13:107
+   |
+13 | ... r=registry(1,vec!["resource","memory"]);let ast=compile(s,Scope::Action,&r)?;let caps=r.capabilities(vec!["resource".into(),"mem...
+   |                                                     ^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `ScriptBudget` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:13:231
+   |
+13 | ...into()])?;execute_script(&ast,&r,&caps,ScriptBudget::default())}
+   |                                           ^^^^^^^^^^^^ use of undeclared type `ScriptBudget`
+
+error[E0425]: cannot find function `execute_script` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:13:202
+   |
+13 | ...es(vec!["resource".into(),"memory".into()])?;execute_script(&ast,&r,&caps,ScriptBudget::default())}
+   |                                                 ^^^^^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `Value` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:16:66
+   |
+16 |     assert_eq!(execute("math(\"-2^2+2^3^2\")").unwrap().value(),&Value::Number(508.0));
+   |                                                                  ^^^^^ use of undeclared type `Value`
+
+error[E0433]: cannot find type `Value` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:17:67
+   |
+17 |     let p=execute("Bind(\"2+2\")").unwrap();assert_eq!(p.value(),&Value::Number(4.0));
+   |                                                                   ^^^^^ use of undeclared type `Value`
+
+error[E0433]: cannot find type `Value` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:26:85
+   |
+26 |     assert_eq!(execute("Tape(\"++++++++[>++++++++<-]>+.\",\"\")").unwrap().value(),&Value::Bytes(vec![65]));
+   |                                                                                     ^^^^^ use of undeclared type `Value`
+
+error[E0433]: cannot find type `Value` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:27:66
+   |
+27 |     assert_eq!(execute("Tape(\",.,.\",\"é\")").unwrap().value(),&Value::Bytes(vec![195,169]));
+   |                                                                  ^^^^^ use of undeclared type `Value`
+
+error[E0433]: cannot find type `Value` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:28:64
+   |
+28 |     assert_eq!(execute("Tape(\"<-.\",\"\")").unwrap().value(),&Value::Bytes(vec![255]));
+   |                                                                ^^^^^ use of undeclared type `Value`
+
+error[E0425]: cannot find function `compile` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:38:11
+   |
+38 |     let a=compile("Parent(LookUp(\"memory\",\"key\"))",Scope::Action,&r).unwrap();
+   |           ^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `ScriptBudget` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:39:43
+   |
+39 |     assert_eq!(execute_script(&a,&r,&caps,ScriptBudget::default()).unwrap_err(),LanguageError::UndeclaredContact);
+   |                                           ^^^^^^^^^^^^ use of undeclared type `ScriptBudget`
+
+error[E0425]: cannot find function `execute_script` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:39:16
+   |
+39 |     assert_eq!(execute_script(&a,&r,&caps,ScriptBudget::default()).unwrap_err(),LanguageError::UndeclaredContact);
+   |                ^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `compile` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:40:11
+   |
+40 |     let a=compile("Parent(LookUp(\"resource\",\"key\"))",Scope::Action,&r).unwrap();
+   |           ^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `ScriptBudget` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:41:43
+   |
+41 |     assert_eq!(execute_script(&a,&r,&caps,ScriptBudget::default()).unwrap().effects(),&[Effect::Read{subsystem:"resource".into(),key...
+   |                                           ^^^^^^^^^^^^ use of undeclared type `ScriptBudget`
+
+error[E0425]: cannot find function `execute_script` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:41:16
+   |
+41 |     assert_eq!(execute_script(&a,&r,&caps,ScriptBudget::default()).unwrap().effects(),&[Effect::Read{subsystem:"resource".into(),key...
+   |                ^^^^^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `ScriptBudget` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:43:47
+   |
+43 |     assert_eq!(execute_script(&a,&newer,&caps,ScriptBudget::default()).unwrap_err(),LanguageError::StaleRegistry);
+   |                                               ^^^^^^^^^^^^ use of undeclared type `ScriptBudget`
+
+error[E0425]: cannot find function `execute_script` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:43:16
+   |
+43 |     assert_eq!(execute_script(&a,&newer,&caps,ScriptBudget::default()).unwrap_err(),LanguageError::StaleRegistry);
+   |                ^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `compile` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:44:16
+   |
+44 |     assert_eq!(compile("LookUp(\"unknown\",\"x\")",Scope::Action,&r).unwrap_err(),LanguageError::UndeclaredContact);
+   |                ^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `compile` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:45:16
+   |
+45 |     assert_eq!(compile("LookUp(Text(\"resource\"),\"x\")",Scope::Action,&r).unwrap_err(),LanguageError::DynamicContact);
+   |                ^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `compile` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:46:16
+   |
+46 |     assert_eq!(compile("Math(\"2+2\")",Scope::Reserved,&r).unwrap_err(),LanguageError::InvalidScope);
+   |                ^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `compile` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:47:11
+   |
+47 |     let a=compile("Parent(LookUp(\"resource\",\"x\"),Math(\"1/0\"))",Scope::Action,&r).unwrap();
+   |           ^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `ScriptBudget` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:48:43
+   |
+48 |     assert_eq!(execute_script(&a,&r,&caps,ScriptBudget::default()).unwrap_err(),LanguageError::DivisionByZero);
+   |                                           ^^^^^^^^^^^^ use of undeclared type `ScriptBudget`
+
+error[E0425]: cannot find function `execute_script` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:48:16
+   |
+48 |     assert_eq!(execute_script(&a,&r,&caps,ScriptBudget::default()).unwrap_err(),LanguageError::DivisionByZero);
+   |                ^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `compile` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:55:79
+   |
+55 |     let r=registry(1,vec![]);let caps=r.capabilities(vec![]).unwrap();let ast=compile("Math(\"2+2\")",Scope::Action,&r).unwrap();
+   |                                                                               ^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `ScriptBudget` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:56:79
+   |
+56 |     assert_eq!(execute_for_action(&ast,&p.clauses()[0].variants()[0],&r,&caps,ScriptBudget::default()).unwrap_err(),LanguageError::A...
+   |                                                                               ^^^^^^^^^^^^ use of undeclared type `ScriptBudget`
+
+error[E0425]: cannot find function `execute_for_action` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:56:16
+   |
+56 |     assert_eq!(execute_for_action(&ast,&p.clauses()[0].variants()[0],&r,&caps,ScriptBudget::default()).unwrap_err(),LanguageError::A...
+   |                ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `ScriptBudget` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:57:79
+   |
+57 |     assert_eq!(execute_for_action(&ast,&p.clauses()[1].variants()[0],&r,&caps,ScriptBudget::default()).unwrap().value(),&Value::Numb...
+   |                                                                               ^^^^^^^^^^^^ use of undeclared type `ScriptBudget`
+
+error[E0425]: cannot find function `execute_for_action` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:57:16
+   |
+57 |     assert_eq!(execute_for_action(&ast,&p.clauses()[1].variants()[0],&r,&caps,ScriptBudget::default()).unwrap().value(),&Value::Numb...
+   |                ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `Value` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:57:122
+   |
+57 | ...ps,ScriptBudget::default()).unwrap().value(),&Value::Number(4.0));
+   |                                                  ^^^^^ use of undeclared type `Value`
+
+error[E0433]: cannot find type `Trace` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:18:54
+   |
+18 |     assert_eq!(p.trace().iter().filter(|t|matches!(t,Trace::BindComputed)).count(),1);
+   |                                                      ^^^^^ use of undeclared type `Trace`
+
+error[E0433]: cannot find type `Trace` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:19:54
+   |
+19 |     assert_eq!(p.trace().iter().filter(|t|matches!(t,Trace::BindExecuted)).count(),1);
+   |                                                      ^^^^^ use of undeclared type `Trace`
+
+error[E0433]: cannot find type `Effect` in this scope
+  --> native/specimen-kernel/tests/language_v3_scripts.rs:41:89
+   |
+41 |     assert_eq!(execute_script(&a,&r,&caps,ScriptBudget::default()).unwrap().effects(),&[Effect::Read{subsystem:"resource".into(),key...
+   |                                                                                         ^^^^^^ use of undeclared type `Effect`
+
+Some errors have detailed explanations: E0422, E0425, E0433.
+For more information about an error, try `rustc --explain E0422`.
+warning: `specimen-kernel` (test "language_v3_scripts") generated 1 warning
+error: could not compile `specimen-kernel` (test "language_v3_scripts") due to 59 previous errors; 1 warning emitted

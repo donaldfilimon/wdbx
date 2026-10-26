@@ -1,0 +1,653 @@
+{
+  "scope": "Current bytes inspected for bounded partial mappings; historical manifest bytes remain untouched. Presence and byte identity do not establish execution.",
+  "files": [
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/lib.rs",
+      "sha256": "3fd3d1bf50ca7837c5a24422f89dc5487bcd4d8b75a13a8c97ec0a954b4b2620",
+      "bytes": 1097,
+      "mapped_ids": [
+        "P08.01",
+        "P08.02",
+        "P08.03"
+      ],
+      "mapped_decisions": [
+        "D01",
+        "D05",
+        "D06"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+      "sha256": "85cca7eb74f62ec4f0d46160ac1e3c3f67e277335bd837d2e6c2b9d14307aac9",
+      "bytes": 6923,
+      "mapped_ids": [
+        "P08.02",
+        "CH07",
+        "CH08",
+        "CH21",
+        "CH23",
+        "S19",
+        "S20",
+        "S21",
+        "S25",
+        "S46"
+      ],
+      "mapped_decisions": [
+        "D05",
+        "D17"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+      "sha256": "b479b4d1426a30352fdb4a68212f84bebf36249963466a1cfa97656a11a3ac73",
+      "bytes": 1797,
+      "mapped_ids": [
+        "P08.02",
+        "CH07",
+        "CH08",
+        "CH21",
+        "CH23",
+        "S19",
+        "S20",
+        "S21",
+        "S25",
+        "S46"
+      ],
+      "mapped_decisions": [
+        "D05",
+        "D17"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+      "sha256": "456295034cb3617810dd918d329edbfaec6115e8a26f8b9363a206cd4e79dee8",
+      "bytes": 8937,
+      "mapped_ids": [
+        "P08.02",
+        "CH07",
+        "CH08",
+        "CH21",
+        "CH23",
+        "S19",
+        "S20",
+        "S21",
+        "S25",
+        "S46"
+      ],
+      "mapped_decisions": [
+        "D05",
+        "D17"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+      "sha256": "fdd924811789d97eedc9bd1959f7d0fb812cea39bc8f3ad716a0d59f56f0a136",
+      "bytes": 25962,
+      "mapped_ids": [
+        "P08.02",
+        "CH07",
+        "CH08",
+        "CH21",
+        "CH23",
+        "S19",
+        "S20",
+        "S21",
+        "S25",
+        "S46"
+      ],
+      "mapped_decisions": [
+        "D05",
+        "D17"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+      "sha256": "5f4e4138fdb860288085f877ebe1eb81c7f336b599571a63d8f0e4216fb51c1f",
+      "bytes": 2090,
+      "mapped_ids": [
+        "P08.02",
+        "CH07",
+        "CH08",
+        "CH21",
+        "CH23",
+        "S19",
+        "S20",
+        "S21",
+        "S25",
+        "S46"
+      ],
+      "mapped_decisions": [
+        "D05",
+        "D17"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+      "sha256": "c3e10e6f9a1b1c3209a81b4e1e4864b818cec019583f3fb461f6dfa86a7640fd",
+      "bytes": 18227,
+      "mapped_ids": [
+        "P08.02",
+        "CH07",
+        "CH08",
+        "CH21",
+        "CH23",
+        "S19",
+        "S20",
+        "S21",
+        "S25",
+        "S46"
+      ],
+      "mapped_decisions": [
+        "D05",
+        "D17"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+      "sha256": "00584d62dc7cc0af2d8ff14ae3088753caa8b6b5be4b8485696ad6a0315d6f0a",
+      "bytes": 12331,
+      "mapped_ids": [
+        "P08.02",
+        "CH07",
+        "CH08",
+        "CH21",
+        "CH23",
+        "S19",
+        "S20",
+        "S21",
+        "S25",
+        "S46"
+      ],
+      "mapped_decisions": [
+        "D05",
+        "D17"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs",
+      "sha256": "5cb736d802fa8bf7b932037b2feec26b90f71b5f04383d2d51068e4a2d5bd9d1",
+      "bytes": 2553,
+      "mapped_ids": [
+        "P08.02",
+        "CH07",
+        "CH08",
+        "CH21",
+        "CH23",
+        "S19",
+        "S20",
+        "S21",
+        "S25",
+        "S46"
+      ],
+      "mapped_decisions": [
+        "D05",
+        "D17"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/text_v3/mod.rs",
+      "sha256": "30bdcf3a1f3ffe27c79afd9b9a4b4403c5d3c4573c9a7e0b398c2de8bdc3509e",
+      "bytes": 10292,
+      "mapped_ids": [
+        "P08.01",
+        "CH05",
+        "CH06",
+        "S01",
+        "S04"
+      ],
+      "mapped_decisions": [
+        "D01",
+        "D02"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/scanner_v3/mod.rs",
+      "sha256": "0e2f987d7ed96eabd1e07520f9e5f8428cba450b604a52c1b3a398e2544ba41b",
+      "bytes": 8686,
+      "mapped_ids": [
+        "P08.03",
+        "CH09",
+        "CH23",
+        "S05",
+        "S06"
+      ],
+      "mapped_decisions": [
+        "D06"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/scanner_v3/rational.rs",
+      "sha256": "027c6411f4d167c9bbd4f2d8c2259f00a2387a30745b1e52f6329ba439953d50",
+      "bytes": 3277,
+      "mapped_ids": [
+        "P08.03",
+        "CH09",
+        "CH23",
+        "S05",
+        "S06"
+      ],
+      "mapped_decisions": [
+        "D06"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs",
+      "sha256": "63163ece7522a23360eade9a57a225c4851539eadeb29c8f99e43149beee74f1",
+      "bytes": 6328,
+      "mapped_ids": [
+        "P08.01",
+        "P08.02",
+        "CH06",
+        "CH08",
+        "CH23",
+        "S05",
+        "S20",
+        "S21",
+        "S46"
+      ],
+      "mapped_decisions": [
+        "D05",
+        "D17"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs",
+      "sha256": "4bb28b576a27bbca4a9bacb734b2aa2ecabbd68fe306aec0bf8661b8ad1f2bb4",
+      "bytes": 13998,
+      "mapped_ids": [
+        "P08.01",
+        "P08.02",
+        "CH06",
+        "CH08",
+        "CH23",
+        "S05",
+        "S20",
+        "S21",
+        "S46"
+      ],
+      "mapped_decisions": [
+        "D05",
+        "D17"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/model.rs",
+      "sha256": "731254ac7cfe6547ca7f0dfb7814d8ca6a2331f387c5ae841f9f236725fe761e",
+      "bytes": 4233,
+      "mapped_ids": [
+        "P08.01",
+        "P08.02",
+        "CH06",
+        "CH08",
+        "CH23",
+        "S05",
+        "S20",
+        "S21",
+        "S46"
+      ],
+      "mapped_decisions": [
+        "D05",
+        "D17"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+      "sha256": "220cd4fb3f979b62f37d261b3d87acf609980aeb237348ebef26eaa13c7571d7",
+      "bytes": 27054,
+      "mapped_ids": [
+        "P08.02",
+        "CH07",
+        "CH08",
+        "CH21",
+        "CH23",
+        "S19",
+        "S20",
+        "S21",
+        "S25",
+        "S46"
+      ],
+      "mapped_decisions": [
+        "D05",
+        "D17"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+      "sha256": "03d3fa508df82002ef9c62625bfcf8c1cf2ad45834d35ecd9fa5ef0a35287632",
+      "bytes": 5193,
+      "mapped_ids": [
+        "P08.02",
+        "CH07",
+        "CH08",
+        "CH21",
+        "CH23",
+        "S19",
+        "S20",
+        "S21",
+        "S25",
+        "S46"
+      ],
+      "mapped_decisions": [
+        "D05",
+        "D17"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+      "sha256": "cc035996fb04eea519daa164450ad67046693630309273a635df13106bb7664b",
+      "bytes": 6416,
+      "mapped_ids": [
+        "P08.02",
+        "CH07",
+        "CH08",
+        "CH21",
+        "CH23",
+        "S19",
+        "S20",
+        "S21",
+        "S25",
+        "S46"
+      ],
+      "mapped_decisions": [
+        "D05",
+        "D17"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs",
+      "sha256": "c95e70412f381f09671392ddc7c384fbd732236b79ef27c934a45c7f2664b8ef",
+      "bytes": 11629,
+      "mapped_ids": [
+        "P08.02",
+        "CH07",
+        "CH08",
+        "CH21",
+        "CH23",
+        "S19",
+        "S20",
+        "S21",
+        "S25",
+        "S46"
+      ],
+      "mapped_decisions": [
+        "D05",
+        "D17"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/text_v3.rs",
+      "sha256": "b2bfef9fce1ce85e3dd6214186679d7a17ea6e82573e0b118f1a8aefded34b6e",
+      "bytes": 6375,
+      "mapped_ids": [
+        "P08.01",
+        "CH05",
+        "CH06",
+        "S01",
+        "S04"
+      ],
+      "mapped_decisions": [
+        "D01",
+        "D02"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/scanner_v3.rs",
+      "sha256": "ca4e3c4f5f648b8c7a8a4d636bce6802c5ec21035f8c375bb44cf71e17c9fc4e",
+      "bytes": 12608,
+      "mapped_ids": [
+        "P08.03",
+        "CH09",
+        "CH23",
+        "S05",
+        "S06"
+      ],
+      "mapped_decisions": [
+        "D06"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs",
+      "sha256": "8855f42229630cfd89921406bcc2e37accf9e2248c63847700dd38cd3451feda",
+      "bytes": 22039,
+      "mapped_ids": [
+        "P08.01",
+        "P08.02",
+        "CH06",
+        "CH08",
+        "CH23",
+        "S05",
+        "S20",
+        "S21",
+        "S46"
+      ],
+      "mapped_decisions": [
+        "D05",
+        "D17"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "sha256": "90c9905912ff19fac35296d77c12d0433ab7f6af85b6081e7e9c4948b6d62211",
+      "bytes": 400,
+      "mapped_ids": [
+        "P08.10",
+        "P08.01",
+        "P08.02",
+        "P08.03",
+        "CH05",
+        "CH06",
+        "CH07",
+        "CH08",
+        "CH09",
+        "CH21",
+        "S01",
+        "S04",
+        "S05",
+        "S06",
+        "S19",
+        "S20",
+        "S21",
+        "S46"
+      ],
+      "mapped_decisions": [
+        "D01",
+        "D02",
+        "D05",
+        "D06",
+        "D17"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "sha256": "b5dc6568cb29126f7d3defbaba6da7095ad1508855a20c8101d51b5c6f311972",
+      "bytes": 7885,
+      "mapped_ids": [
+        "P08.10",
+        "P08.01",
+        "P08.02",
+        "P08.03",
+        "CH05",
+        "CH06",
+        "CH07",
+        "CH08",
+        "CH09",
+        "CH21",
+        "S01",
+        "S04",
+        "S05",
+        "S06",
+        "S19",
+        "S20",
+        "S21",
+        "S46"
+      ],
+      "mapped_decisions": [
+        "D01",
+        "D02",
+        "D05",
+        "D06",
+        "D17"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "sha256": "41f6e3f37d71b0c8a95983c022d8f2f9cc89ca2c27cdf465b7327f3621866bbd",
+      "bytes": 18811,
+      "mapped_ids": [
+        "P08.10",
+        "P08.01",
+        "P08.02",
+        "P08.03",
+        "CH05",
+        "CH06",
+        "CH07",
+        "CH08",
+        "CH09",
+        "CH21",
+        "S01",
+        "S04",
+        "S05",
+        "S06",
+        "S19",
+        "S20",
+        "S21",
+        "S46"
+      ],
+      "mapped_decisions": [
+        "D01",
+        "D02",
+        "D05",
+        "D06",
+        "D17"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/examples/language_probe.rs",
+      "sha256": "aeab4b298e8d9ca3884d612eae5ab0625a0f6de2cb07d87069895641de83c55e",
+      "bytes": 70,
+      "mapped_ids": [
+        "P08.10",
+        "P08.01",
+        "P08.02",
+        "P08.03",
+        "CH05",
+        "CH06",
+        "CH07",
+        "CH08",
+        "CH09",
+        "CH21",
+        "S01",
+        "S04",
+        "S05",
+        "S06",
+        "S19",
+        "S20",
+        "S21",
+        "S46"
+      ],
+      "mapped_decisions": [
+        "D01",
+        "D02",
+        "D05",
+        "D06",
+        "D17"
+      ]
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "sha256": "5283897011654968430000ef6bab65844251edc84a30bb609d9371561d44dff4",
+      "bytes": 3882,
+      "mapped_ids": [
+        "P08.10",
+        "P08.01",
+        "P08.02",
+        "P08.03",
+        "CH05",
+        "CH06",
+        "CH07",
+        "CH08",
+        "CH09",
+        "CH21",
+        "S01",
+        "S04",
+        "S05",
+        "S06",
+        "S19",
+        "S20",
+        "S21",
+        "S46"
+      ],
+      "mapped_decisions": [
+        "D01",
+        "D02",
+        "D05",
+        "D06",
+        "D17"
+      ]
+    },
+    {
+      "path": "specimen-studio/tests/language-parity.mjs",
+      "sha256": "b96f0b5cee3013999b246b4441dc8ea79f8399bfaf379c3bfcc8a564274d8172",
+      "bytes": 18879,
+      "mapped_ids": [
+        "P08.10",
+        "P08.01",
+        "P08.02",
+        "P08.03",
+        "CH05",
+        "CH06",
+        "CH07",
+        "CH08",
+        "CH09",
+        "CH21",
+        "S01",
+        "S04",
+        "S05",
+        "S06",
+        "S19",
+        "S20",
+        "S21",
+        "S46"
+      ],
+      "mapped_decisions": [
+        "D01",
+        "D02",
+        "D05",
+        "D06",
+        "D17"
+      ]
+    },
+    {
+      "path": "specimen-studio/scripts/check-language-parity.sh",
+      "sha256": "5f5ee6d2b8b0bbbf4cedbcd27f77fddc1e77bbf59613b4813a0a1afb8d81ff5f",
+      "bytes": 3868,
+      "mapped_ids": [
+        "P08.10",
+        "P08.01",
+        "P08.02",
+        "P08.03",
+        "CH05",
+        "CH06",
+        "CH07",
+        "CH08",
+        "CH09",
+        "CH21",
+        "S01",
+        "S04",
+        "S05",
+        "S06",
+        "S19",
+        "S20",
+        "S21",
+        "S46"
+      ],
+      "mapped_decisions": [
+        "D01",
+        "D02",
+        "D05",
+        "D06",
+        "D17"
+      ]
+    }
+  ]
+}

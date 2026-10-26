@@ -1,0 +1,84 @@
+[
+  {
+    "command": [
+      "/opt/homebrew/opt/python@3.15/bin/python3.15",
+      "tools/check_completion_execution.py"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "python_version": "3.15.0 (main, Oct  9 2026, 11:16:41) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "started_utc": "2026-10-23T02:22:40.368400+00:00",
+    "exit_code": 0,
+    "log": "current-execution-checker.log"
+  },
+  {
+    "command": [
+      "/opt/homebrew/opt/python@3.15/bin/python3.15",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools/tests",
+      "-p",
+      "test_check_completion_execution.py"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "python_version": "3.15.0 (main, Oct  9 2026, 11:16:41) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "started_utc": "2026-10-23T02:22:40.817237+00:00",
+    "exit_code": 0,
+    "log": "current-execution-27-mutations.log"
+  },
+  {
+    "command": [
+      "/opt/homebrew/opt/python@3.15/bin/python3.15",
+      "/Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-22-language/register/check-observation-closure.py"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "python_version": "3.15.0 (main, Oct  9 2026, 11:16:41) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "started_utc": "2026-10-23T02:22:49.351688+00:00",
+    "exit_code": 0,
+    "log": "current-observation-closure.log"
+  },
+  {
+    "command": [
+      "/opt/homebrew/opt/python@3.15/bin/python3.15",
+      "tools/check_completion.py"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "python_version": "3.15.0 (main, Oct  9 2026, 11:16:41) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "started_utc": "2026-10-23T02:22:49.689743+00:00",
+    "exit_code": 0,
+    "log": "current-frozen-completion-checker.log"
+  },
+  {
+    "command": [
+      "/opt/homebrew/opt/python@3.15/bin/python3.15",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools/tests",
+      "-p",
+      "test_check_completion.py"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "python_version": "3.15.0 (main, Oct  9 2026, 11:16:41) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "started_utc": "2026-10-23T02:22:49.769604+00:00",
+    "exit_code": 0,
+    "log": "current-frozen-completion-tests.log"
+  }
+]

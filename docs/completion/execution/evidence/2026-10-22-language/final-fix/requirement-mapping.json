@@ -1,0 +1,363 @@
+{
+  "claim_policy": "C0-only; no promotion",
+  "groups": [
+    {
+      "name": "language preparation, utilities and bounded scripts",
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+        "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+        "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+        "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+        "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+        "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+        "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+        "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+        "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+        "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs",
+        "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs"
+      ],
+      "ids": [
+        "P08.02",
+        "CH07",
+        "CH08",
+        "CH21",
+        "CH23",
+        "S19",
+        "S20",
+        "S21",
+        "S25",
+        "S46"
+      ],
+      "decisions": [
+        "D05",
+        "D17"
+      ],
+      "boundary": "Pure immutable preparation and EffectPlans; no durable utility ingestion, authenticated host effects, active engine integration or general language efficacy."
+    },
+    {
+      "name": "class-specific text-v3 transforms",
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/text_v3/mod.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/text_v3.rs",
+        "specimen-studio/native/specimen-kernel/tests/language_final_fix.rs"
+      ],
+      "ids": [
+        "P08.01",
+        "CH05",
+        "CH06",
+        "S01",
+        "S04"
+      ],
+      "decisions": [
+        "D01",
+        "D02"
+      ],
+      "boundary": "Versioned local structural projection; no legacy ID conversion, saved schema migration, production registration or calibrated retrieval efficacy."
+    },
+    {
+      "name": "full-original checked scanner and exact reducer",
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/scanner_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/scanner_v3/rational.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scanner_v3.rs"
+      ],
+      "ids": [
+        "P08.03",
+        "CH09",
+        "CH23",
+        "S05",
+        "S06"
+      ],
+      "decisions": [
+        "D06"
+      ],
+      "boundary": "Action-scoped full validated features and checked i128 rational reducer; no whole-chunk scanner, jitter/ATP/voting/global scheduler or research calibration."
+    },
+    {
+      "name": "explicit routes and joined candidate origins",
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs",
+        "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/model.rs",
+        "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/work.rs",
+        "specimen-studio/native/specimen-kernel/src/identity/mod.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs",
+        "specimen-studio/native/specimen-kernel/tests/routes_final_fix.rs"
+      ],
+      "ids": [
+        "P08.01",
+        "P08.02",
+        "CH06",
+        "CH08",
+        "CH23",
+        "S05",
+        "S20",
+        "S21",
+        "S46"
+      ],
+      "decisions": [
+        "D05",
+        "D17"
+      ],
+      "boundary": "Population/scope-fenced local candidates and pure Tape adapter; no host authorization, vote/admission, production scheduler or durable registration. Logical query work reserves borrowed entry indexing and complete selected payloads before copying; identity accepts the same records and only gains an O(1) immutable slice accessor."
+    },
+    {
+      "name": "actual native/feature-WASM synthetic integration witness",
+      "sources": [
+        "specimen-studio/native/specimen-wasm/Cargo.toml",
+        "specimen-studio/native/specimen-wasm/src/lib.rs",
+        "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+        "specimen-studio/native/specimen-wasm/examples/language_probe.rs",
+        "specimen-studio/native/specimen-wasm/src/language_probe/final_fix.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+        "specimen-studio/tests/language-parity.mjs",
+        "specimen-studio/scripts/check-language-parity.sh"
+      ],
+      "ids": [
+        "P08.10",
+        "P08.01",
+        "P08.02",
+        "P08.03",
+        "CH05",
+        "CH06",
+        "CH07",
+        "CH08",
+        "CH09",
+        "CH21",
+        "S01",
+        "S04",
+        "S05",
+        "S06",
+        "S19",
+        "S20",
+        "S21",
+        "S46"
+      ],
+      "decisions": [
+        "D01",
+        "D02",
+        "D05",
+        "D06",
+        "D17"
+      ],
+      "boundary": "Executed feature WASM only, default compiled/export-inspected; one arm64 native/Bun runtime, no all-target, model/GPU/OCR, installed desktop or UI theme qualification."
+    }
+  ],
+  "reports": [
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/task-8-language-report.md",
+      "sha256": "a9f8840c27cab4098f357b429ba8540ac5984788be2c780279ee0b1f07096551"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/task-8-language-numeric-report.md",
+      "sha256": "d62660e05d6ae994230781a52b2383a56f89ef64bf2ef97a68c1644beecf4acb"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-report.md",
+      "sha256": "697b0cc6cf1744e57341b790937de3412950ef5b557bffb64f2a2f9d065ab9c1"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/task-8-language-parity-report.md",
+      "sha256": "036544a7c9c44ade7e6031d445554e23d936ca15917182007166265c2dbf3448"
+    }
+  ],
+  "independent_reviews": [
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/language-task-review.md",
+      "sha256": "3db48313654969b8bc546f175917dbb5bf8e4a0205e4426280fb44c09c959d76"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/language-fix1-review.md",
+      "sha256": "01d98edf8cc08a3c993b6357b602e1caad97d7462eaeb4f65296c18ef674aafd"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/language-fix2-review.md",
+      "sha256": "cd8617e5d1e0664f9f60d1c01bc957be759f47f4b5668dd6b2919a2a741fe8c0"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/language-numeric-review.md",
+      "sha256": "882e14906d190e191cceb8a0099db4a465be95b977b004636b2a74e8aad3b3ec"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-review.md",
+      "sha256": "5ac0be0bff816c10aa6e5eaa54d77ae26d48b3689ca1ce78690f89eb59a72603"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-fix1-review.md",
+      "sha256": "22bfeff3fe72914c7dd3c01477e6d3b4c69646e52214e3ee3b69981b02d6b3dd"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/language-parity-review.md",
+      "sha256": "c1badeb8bbb7fec3655d4694540fea1994b48e198aeb91e57e422e6a3d7a3aa4"
+    }
+  ],
+  "profile": {
+    "path": "docs/completion/execution/language-v3-profile.md",
+    "sha256": "8faa968114eae692de06aef7e3b14580e63ebeb202d8ffb804559b64efb51810"
+  },
+  "scope": "Final integrated fix source/test routing; three Important and three API/assertion Minors addressed locally; independent scoped rereview pending. No C0 promotion.",
+  "historical_raw_evidence": [
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/gates/summary.json",
+      "sha256": "752353777aeca1e72c8ec5cbc6235ea4ce975d7de0fd88c0dae7be53f64f6fe4"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/gates/browser.log",
+      "sha256": "7e578defe1efd4e5b9e44d451179b2692f3a52576c1928d663abd4210344b846"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/gates/lint.log",
+      "sha256": "fe82195262b09727902d8ea57ceb3e12a09e5df0c6f26157db77f5c51b45d9f5"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/gates/native-test.log",
+      "sha256": "962b8bcc636ff3dad3060e7e5d4cecc4a99cd7bdfc5524ee7ec1ea44c458654e"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/gates/native-clippy.log",
+      "sha256": "fc0857391f3348dce4c4b341a0e73c04b2b902ae7016a86cba2d06be8eb44d86"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/green-focused.log",
+      "sha256": "697fd124701b82763000d6db1bce3d35a39536e1b8d66209fb0e92b5d0d63206"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/green-focused.log",
+      "sha256": "2fc47db883b953716c9ccb9ddd86a9696224e92cacf36e1e5c65e1724d7167a5"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/green-focused.log",
+      "sha256": "888bc097cb567b4755c4de8bf7bea3aa526bce55ce9d2c06cac3ebfca2259ffa"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/runtime-final.log",
+      "sha256": "2706187f412bff95e1b57dd423725b306caba7877029edb3d8e0674386f38d4a"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/negative.log",
+      "sha256": "57ee1e9d44cd9a260c1dafdd50ffb68c89a84b0dd222bbeaead75a7ba497732d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/checks.json",
+      "sha256": "de07f5a0091b200e26e0e0e71690afb2cf06ebc60ec0ed97a172df0958b1b9e0"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/native.json",
+      "sha256": "0874bb27c8a593db459c47f06faa46e62cf2c917f31e7eaa78845a5df7475bae"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/wasm.json",
+      "sha256": "0874bb27c8a593db459c47f06faa46e62cf2c917f31e7eaa78845a5df7475bae"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/default.wasm",
+      "sha256": "c52b4ae71741acaacdbc4612a39ea3c44cec1f66f5d6560cb0f89096a2fd95fd"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/language.wasm",
+      "sha256": "d7e69e38feaa00b3d375f7bc9072bcb1b22abd38b976257c244337656b8b154e"
+    }
+  ],
+  "raw_evidence": [
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/phase-a-commands.json",
+      "sha256": "dfeb118edb688a63c10ae4287bd2ac2b17e56519e70456443977e01c9ebd70f8"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/product-freeze.json",
+      "sha256": "94c567b079532c225a63f31383aadde3bd75313b12f9182b646aaba1170c131c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json",
+      "sha256": "8c5086a075bd6822542f0f083743695346841a17848c888ed07f95bade755e1d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/focused-green.log",
+      "sha256": "96d10a91299c3b1c7db1be3d57f687ec8f2c00fe97efcfb087010c07ef877d2b"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/kernel-feature-final.log",
+      "sha256": "8d8c86bc4041b05c10d5df478e56fed712f1470cb9c98f4a55186ba2c798893f"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/clippy.log",
+      "sha256": "c9b98b54482a5ef82530154c26bb800699d9cd007364c629625f7d7e2e80ef5c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/fmt.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-parity.log",
+      "sha256": "23293fb35f9366a225f20d0af11a3790e42870f4d68d3957d423116a49c0399a"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-parity.log",
+      "sha256": "7bfb461ebfa350f26e33bd83bf41c65851956ac61375027086cbc914ca15848c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/native.json",
+      "sha256": "743d07418aadbe60c704d0d934c2bffb237e62e1e39c162ad731aba7d4a8e4d9"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/wasm.json",
+      "sha256": "743d07418aadbe60c704d0d934c2bffb237e62e1e39c162ad731aba7d4a8e4d9"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/default.wasm",
+      "sha256": "c3f56ce5fa884c05f619c508b066341592f3826df0007b3e7cf0cd21e9b978e3"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/language.wasm",
+      "sha256": "28fa421f31cc3f087bc81d4e66774913fe7e949781c39dbbe9023bfb243f0ddd"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/negative.log",
+      "sha256": "08b239f6949bc7c2279e2242ac7b3febe0c6bd4324392a919f155cc84590a79c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-runtime/negative-label.log",
+      "sha256": "0f59fe8fbe0ad0fde30c4902e78f0a454fd5bfdbacb52516820a3daf35e65432"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-runtime/native.json",
+      "sha256": "60aaef7f217d27a6fe505f2c6405239e3032902e9964472e24273bca97c07580"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-runtime/wasm.json",
+      "sha256": "60aaef7f217d27a6fe505f2c6405239e3032902e9964472e24273bca97c07580"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/summary.json",
+      "sha256": "387f3299438976f18c2514cfc0fed8e42f52f8c96a3b356e7af264ba0e58cf58"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/browser.log",
+      "sha256": "7002f4aa507309acf30c33d6542bd07acc2f2fd454d4a8549099b147171a459c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/lint.log",
+      "sha256": "fe82195262b09727902d8ea57ceb3e12a09e5df0c6f26157db77f5c51b45d9f5"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/native-test.log",
+      "sha256": "865ad4bb6cc3786d6c5a0ca085f8f684c170c0d3cfa9be4d28bb150ca2f779ec"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/native-clippy.log",
+      "sha256": "d807efd2e6923de589933835347d51b52ef40891b7a74957da76aba195d5e51c"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+error[E0282]: type annotations needed
+   --> native/specimen-kernel/src/language_v3/tables.rs:173:91
+    |
+173 | ...| t.lemma).collect())
+    |               ^^^^^^^ cannot infer type of the type parameter `B` declared on the method `collect`
+...
+178 | ...ffect,UtilityEffect::Negation{..}|UtilityEffect::Conjunction(_))).flat_map(|(_,p)|p.iter()).try_fold(0usize,|sum,word|sum.checke...
+    |                                                                                      - type must be known at this point
+    |
+help: consider specifying the generic argument
+    |
+173 |                 tokenize::tokenize(&r.phrase, 0).map(|ts| ts.into_iter().map(|t| t.lemma).collect::<Vec<_>>())
+    |                                                                                                  ++++++++++
+
+For more information about this error, try `rustc --explain E0282`.
+error: could not compile `specimen-kernel` (lib) due to 1 previous error

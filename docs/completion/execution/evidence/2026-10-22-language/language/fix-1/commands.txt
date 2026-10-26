@@ -1,0 +1,38 @@
+Fix wave 1, Task8.language, 2026-10-22
+Working directory: /Users/donald/sources/repos/wdbx
+Every cargo/rustfmt command used these exact explicit environment assignments:
+RUSTUP_TOOLCHAIN=1.99.1
+PATH=/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin
+No toolchain repair, RUSTFLAGS/LLVM workaround, installation, network or golden regeneration.
+
+red.log:
+cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --no-fail-fast --test language_v3 --test language_v3_scripts review_
+Actual result: eight preparation plus two script regression failures; both targets ran.
+
+green-first.log:
+cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --no-fail-fast --test language_v3 --test language_v3_scripts
+Actual result: 29 tests passed before moving the existing limits test for file-size compliance.
+
+Formatting (exact owned paths, no output log):
+rustfmt --edition 2024 specimen-studio/native/specimen-kernel/src/language_v3/mod.rs specimen-studio/native/specimen-kernel/tests/language_v3.rs specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs
+
+clippy-first.log (final source, passed):
+cargo clippy --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --all-targets -- -D warnings
+
+green-focused.log:
+cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --no-fail-fast --test language_v3 --test language_v3_scripts --test language_v3_limits
+Actual result: 20+1+8 = 29 passed.
+
+kernel-suite.log:
+cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked
+Actual result: 109 passed; no failures. Existing rust-objcopy/libLLVM warnings retained.
+
+fmt-check.log:
+rustfmt --edition 2024 --check specimen-studio/native/specimen-kernel/src/language_v3/mod.rs specimen-studio/native/specimen-kernel/tests/language_v3.rs specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs
+
+diff-check.log:
+git diff --check
+
+source-manifest.json: python3 hashlib.sha256/read_text().splitlines() over exact language_v3 source and tests/language_v3*.rs; every listed file <1000 lines asserted.
+log-manifest.json: python3 hashlib.sha256 over retained raw *.log files.
+No previous logs overwritten. Shell wrappers tail logs after cargo; use the actual compiler/test verdicts in raw logs, not the last tail command status.

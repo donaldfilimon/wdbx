@@ -1,0 +1,37 @@
+[
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/clippy-first.log",
+    "sha256": "96305fead1d3ce70677ec8105c1f906f44ca76cd47709e6b3010f0e5a5f21adf",
+    "bytes": 170
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/diff-check.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/fmt-check.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/green-first.log",
+    "sha256": "bdfe9ebb8e708e5f7d64a1d2d9f1f826681a91f22fe58ad9460de3e10aa029dd",
+    "bytes": 4553
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/green-focused.log",
+    "sha256": "e645b2c4f3a012ed19774df642c6c741213218c43e420afa5c20e3225e9c9b0d",
+    "bytes": 5746
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/kernel-suite.log",
+    "sha256": "74a4ac196ac85c21f964bb308e52d2ba42b8988edb17b4e2e5f7df882a5a7d89",
+    "bytes": 19047
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/red.log",
+    "sha256": "7673d1fed32289e66ce76b64d2e4fc63cbb8a3c7400fd8f2d297188b46652ab9",
+    "bytes": 7692
+  }
+]

@@ -1,0 +1,84 @@
+[
+  {
+    "command": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+      "tools/check_completion_execution.py"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "python_version": "3.9.6 (default, Oct 15 2026, 19:11:49) \n[Clang 21.0.0 (clang-2100.3.34.1)]",
+    "started_utc": "2026-10-23T02:22:40.391926+00:00",
+    "exit_code": 0,
+    "log": "system-execution-checker.log"
+  },
+  {
+    "command": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools/tests",
+      "-p",
+      "test_check_completion_execution.py"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "python_version": "3.9.6 (default, Oct 15 2026, 19:11:49) \n[Clang 21.0.0 (clang-2100.3.34.1)]",
+    "started_utc": "2026-10-23T02:22:40.844881+00:00",
+    "exit_code": 0,
+    "log": "system-execution-27-mutations.log"
+  },
+  {
+    "command": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+      "/Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-22-language/register/check-observation-closure.py"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "python_version": "3.9.6 (default, Oct 15 2026, 19:11:49) \n[Clang 21.0.0 (clang-2100.3.34.1)]",
+    "started_utc": "2026-10-23T02:22:50.156502+00:00",
+    "exit_code": 0,
+    "log": "system-observation-closure.log"
+  },
+  {
+    "command": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+      "tools/check_completion.py"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "python_version": "3.9.6 (default, Oct 15 2026, 19:11:49) \n[Clang 21.0.0 (clang-2100.3.34.1)]",
+    "started_utc": "2026-10-23T02:22:50.428547+00:00",
+    "exit_code": 0,
+    "log": "system-frozen-completion-checker.log"
+  },
+  {
+    "command": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools/tests",
+      "-p",
+      "test_check_completion.py"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "python_version": "3.9.6 (default, Oct 15 2026, 19:11:49) \n[Clang 21.0.0 (clang-2100.3.34.1)]",
+    "started_utc": "2026-10-23T02:22:50.514464+00:00",
+    "exit_code": 0,
+    "log": "system-frozen-completion-tests.log"
+  }
+]

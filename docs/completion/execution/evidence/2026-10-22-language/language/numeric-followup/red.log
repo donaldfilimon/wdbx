@@ -1,0 +1,47 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[19611]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "language_v3_numeric") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 0.87s
+     Running tests/language_v3_numeric.rs (target/debug/deps/language_v3_numeric-d70ddc11bbe00f4c)
+
+running 6 tests
+test explicit_word_arithmetic_keeps_operand_order_operators_and_value ... ok
+test explicit_numeric_frame_captures_number_word_but_keeps_quotes_opaque ... ok
+test quotes_negation_and_utf8_source_bytes_survive_numeric_recognition ... FAILED
+test malformed_explicit_arithmetic_still_returns_typed_failure ... ok
+test single_and_adjacent_number_words_need_arithmetic_intent_or_numeric_frame ... FAILED
+test seven_ordinary_number_words_remain_lexical_without_numeric_evidence ... FAILED
+
+failures:
+
+---- quotes_negation_and_utf8_source_bytes_survive_numeric_recognition stdout ----
+
+thread 'quotes_negation_and_utf8_source_bytes_survive_numeric_recognition' (4350348) panicked at native/specimen-kernel/tests/language_v3_numeric.rs:132:40:
+called `Result::unwrap()` on an `Err` value: Syntax
+
+---- single_and_adjacent_number_words_need_arithmetic_intent_or_numeric_frame stdout ----
+
+thread 'single_and_adjacent_number_words_need_arithmetic_intent_or_numeric_frame' (4350350) panicked at native/specimen-kernel/tests/language_v3_numeric.rs:72:9:
+zero
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- seven_ordinary_number_words_remain_lexical_without_numeric_evidence stdout ----
+
+thread 'seven_ordinary_number_words_remain_lexical_without_numeric_evidence' (4350349) panicked at native/specimen-kernel/tests/language_v3_numeric.rs:50:40:
+called `Result::unwrap()` on an `Err` value: Syntax
+
+
+failures:
+    quotes_negation_and_utf8_source_bytes_survive_numeric_recognition
+    seven_ordinary_number_words_remain_lexical_without_numeric_evidence
+    single_and_adjacent_number_words_need_arithmetic_intent_or_numeric_frame
+
+test result: FAILED. 3 passed; 3 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p specimen-kernel --test language_v3_numeric`

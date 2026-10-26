@@ -1,0 +1,47 @@
+[
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/clippy.log",
+    "sha256": "0d61eae1a6e359b3248eb7c7b7271d2b7b1f5e66e165412ebad2489b79d78d90",
+    "bytes": 170
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/diff-check.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/fmt-check.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/green-first.log",
+    "sha256": "8ba839faf0da0f2ddf5b0138cee199838e770b330cf74d21b530e2b55d93397e",
+    "bytes": 1056
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/green-focused.log",
+    "sha256": "697fd124701b82763000d6db1bce3d35a39536e1b8d66209fb0e92b5d0d63206",
+    "bytes": 5882
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/green-second.log",
+    "sha256": "5c8f1bab48acb28467d09f1957f53f3db2339c6e05b44db4afa5954e507b3801",
+    "bytes": 5815
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/kernel-suite.log",
+    "sha256": "2d06bb56944ba16e3b17c90634194e635959a28238e914573cc09e2fd9a71baa",
+    "bytes": 19183
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/red-api.log",
+    "sha256": "410617e4a5248b94f26fe6d1c4d13151fd589d511abbefafd623c75647714aa8",
+    "bytes": 713
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/red-behavior.log",
+    "sha256": "ed7ce8ba5fedd5aec38b058ff87a9889791e3651bd88b96e0b6bc456503de22a",
+    "bytes": 1972
+  }
+]

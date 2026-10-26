@@ -1,0 +1,253 @@
+source-head=36bc99b699de60be6c07b2838d74580084fb5d4c
+source-root=/Users/donald/sources/repos/wdbx/specimen-studio
+PATH=/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin
+RUSTUP_TOOLCHAIN=1.99.1 CARGO_NET_OFFLINE=true
+cargo=/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin/cargo
+cargo 1.99.1 (5f94df478 2026-08-27)
+rustc=/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin/rustc
+rustc 1.99.1 (58cf8f9c3 2026-10-13)
+binary: rustc
+commit-hash: 58cf8f9c35b355199727627d07ae34a4e2846d67
+commit-date: 2026-10-13
+host: aarch64-apple-darwin
+release: 1.99.1
+LLVM version: 23.1.1
+bun=/opt/homebrew/bin/bun
+1.4.4
+6d576d8058f8ca643e8fce55b64ee3c614ba64c9da2e536bae843e6a2e1f3951  /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin/cargo
+1ba7bb8e273bd64125f4048d2ecce530e0a6470e565ab1b3aecf0b82b532f7b1  /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin/rustc
+30b3578e2f0e4901998ed11d85566f294f7b654da00883fd2357eed7387b2621  /opt/homebrew/bin/bun
+99b7810b5cd10fc483aad1233298f00704af28c826e3337be013bd9266cb55bf  native/specimen-kernel/src/identity/index.rs
+39c13866d6796260c85a618156b5fc177eeae3780bacca0503accf2ed42d62a0  native/specimen-kernel/src/identity/mod.rs
+12cda88d9ac5968b0d92279f4dc5ebaf1041c5d4b5c49c5ac5ee999be2373f35  native/specimen-kernel/src/identity/model.rs
+6ecb1b0659f9261c4f56a9cf016fd0fe9fd075407d9d26b44d4609636d1218d8  native/specimen-kernel/src/identity/validate.rs
+85cca7eb74f62ec4f0d46160ac1e3c3f67e277335bd837d2e6c2b9d14307aac9  native/specimen-kernel/src/language_v3/arithmetic.rs
+b479b4d1426a30352fdb4a68212f84bebf36249963466a1cfa97656a11a3ac73  native/specimen-kernel/src/language_v3/mod.rs
+2ed6ce26fd2040da3db283b50b13aec0b7b478bd520b049b24df1d03c1b24c5f  native/specimen-kernel/src/language_v3/model.rs
+6ca1696da4dbfd1ac96c148f6c7236719c36ed5fb07f19d49aa9a273a4b3050a  native/specimen-kernel/src/language_v3/prepare.rs
+d03e3b54349ff73d5f58bf2f100baf1d47d10acc15411c1848c97611b2587187  native/specimen-kernel/src/language_v3/script.rs
+5f4e4138fdb860288085f877ebe1eb81c7f336b599571a63d8f0e4216fb51c1f  native/specimen-kernel/src/language_v3/script/tape.rs
+7fc3bd1fabcd7192a2b65355ebce4a48a07f7680bd7f3d72390033da35a474bc  native/specimen-kernel/src/language_v3/tables.rs
+5cb736d802fa8bf7b932037b2feec26b90f71b5f04383d2d51068e4a2d5bd9d1  native/specimen-kernel/src/language_v3/tokenize.rs
+0e2f987d7ed96eabd1e07520f9e5f8428cba450b604a52c1b3a398e2544ba41b  native/specimen-kernel/src/scanner_v3/mod.rs
+027c6411f4d167c9bbd4f2d8c2259f00a2387a30745b1e52f6329ba439953d50  native/specimen-kernel/src/scanner_v3/rational.rs
+aacb965f10f31c98c71d2fbcf6dd5718b7359e4d24ec6037d52f0a226b9cd486  native/specimen-kernel/src/scanner_v3/routes/matching.rs
+a76f83c1b99780917da3c18cc63b32676e25e9731ac1e4bff4969b69e188add6  native/specimen-kernel/src/scanner_v3/routes/mod.rs
+731254ac7cfe6547ca7f0dfb7814d8ca6a2331f387c5ae841f9f236725fe761e  native/specimen-kernel/src/scanner_v3/routes/model.rs
+8a589b4d576fe588bd4ce32767e65a1121a49dbf44b8ad51d00229956b5d54cc  native/specimen-kernel/src/scanner_v3/routes/work.rs
+b82068b636c1aa3645da004637a2291b88c0758eebcb720603857fca3b37fb1d  native/specimen-kernel/src/text_v3/mod.rs
+5efecffd49a4912984914bb36c5be4468db17edd424f63ba6ad77c0a403c39f7  native/specimen-wasm/examples/identity_probe.rs
+aeab4b298e8d9ca3884d612eae5ab0625a0f6de2cb07d87069895641de83c55e  native/specimen-wasm/examples/language_probe.rs
+eb94eb78aa7fdc8c84eea95da259410d7105b0c49daa00039a21027837d97891  native/specimen-wasm/src/dispatch.rs
+1219bef564855db408cd83fad1f95071e01afa501ef9715e0fbe17a615807c35  native/specimen-wasm/src/identity_probe.rs
+15b81316e38e8019ccc2dd879f50644ef69a67a19b3547de90e105c039df986c  native/specimen-wasm/src/language_probe.rs
+1cc0657b901fad9f3047d55026f27e6c2d37aa4f65273eb68f0abdac492ceb72  native/specimen-wasm/src/language_probe/final_fix.rs
+b5dc6568cb29126f7d3defbaba6da7095ad1508855a20c8101d51b5c6f311972  native/specimen-wasm/src/lib.rs
+86316c8343f8c5d4f72d04d43ce67478bd0847b48aff93dd327320aabb3b5ab3  native/specimen-wasm/tests/identity_probe.rs
+0622daf6d5a87a073010f4c88a24df0c877a72c13a0bd4d8634b5a940a7bdc42  native/specimen-wasm/tests/language_probe.rs
+1f9adcf3aac487c3d643fd87ff99e58d20ddc0700a31f40c6e3da74b8494474b  Cargo.toml
+164da1d1a61f57a16d651708af6959644c5d543f44f8e6bcb0bb0a7142ce7a98  Cargo.lock
+90c9905912ff19fac35296d77c12d0433ab7f6af85b6081e7e9c4948b6d62211  native/specimen-wasm/Cargo.toml
+6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d  scripts/check-language-parity.sh
+dbb2ecb9cdaca06e3910013dcef1949a01a6511052e6797382d370480e045d61  tests/language-parity.mjs
++ cargo run --locked -p specimen-wasm --features language-probe --example language_probe --target-dir /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/target
+   Compiling proc-macro2 v1.0.107
+   Compiling version_check v0.9.5
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.27
+   Compiling memchr v2.8.3
+   Compiling typenum v1.20.1
+   Compiling serde_core v1.0.229
+   Compiling libc v0.2.191
+   Compiling zmij v1.0.23
+   Compiling serde_json v1.0.154
+   Compiling serde v1.0.229
+   Compiling hashbrown v0.17.1
+   Compiling generic-array v0.14.7
+   Compiling equivalent v1.0.3
+   Compiling regex-syntax v0.8.11
+   Compiling pulldown-cmark v0.13.4
+   Compiling libm v0.2.16
+   Compiling thiserror v2.0.21
+   Compiling aho-corasick v1.1.5
+   Compiling indexmap v2.14.2
+   Compiling itoa v1.0.18
+   Compiling syn v3.0.9
+   Compiling foldhash v0.2.0
+   Compiling unicase v2.10.0
+   Compiling bitflags v2.13.2
+   Compiling cpufeatures v0.2.17
+   Compiling cfg-if v1.0.5
+   Compiling abi-compute v0.1.0 (/Users/donald/sources/repos/wdbx/crates/abi-compute)
+   Compiling crypto-common v0.1.7
+   Compiling block-buffer v0.10.4
+   Compiling digest v0.10.7
+   Compiling sha2 v0.10.9
+   Compiling regex-automata v0.4.18
+   Compiling thiserror-impl v2.0.21
+   Compiling serde_derive v1.0.229
+   Compiling regex v1.13.1
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+   Compiling specimen-wasm v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-wasm)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[31301]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-wasm` (lib) generated 1 warning
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[31308]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-wasm` (example "language_probe") generated 1 warning
+    Finished `dev` profile [unoptimized] target(s) in 6.22s
+     Running `/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/target/debug/examples/language_probe`
++ shasum -a 256 /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/target/debug/examples/language_probe
+749933261f9b5cd5cd218792ddbfb672437b4af232328baa0f0bd7fb3b9501f3  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/target/debug/examples/language_probe
++ cargo build --locked -p specimen-wasm --target wasm32-unknown-unknown --release --no-default-features --target-dir /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/target
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.27
+   Compiling version_check v0.9.5
+   Compiling memchr v2.8.3
+   Compiling typenum v1.20.1
+   Compiling serde_core v1.0.229
+   Compiling zmij v1.0.23
+   Compiling hashbrown v0.17.1
+   Compiling equivalent v1.0.3
+   Compiling serde_json v1.0.154
+   Compiling serde v1.0.229
+   Compiling generic-array v0.14.7
+   Compiling thiserror v2.0.21
+   Compiling regex-syntax v0.8.11
+   Compiling pulldown-cmark v0.13.4
+   Compiling libm v0.2.16
+   Compiling aho-corasick v1.1.5
+   Compiling itoa v1.0.18
+   Compiling foldhash v0.2.0
+   Compiling unicase v2.10.0
+   Compiling bitflags v2.13.2
+   Compiling cfg-if v1.0.5
+   Compiling indexmap v2.14.2
+   Compiling syn v3.0.9
+   Compiling abi-compute v0.1.0 (/Users/donald/sources/repos/wdbx/crates/abi-compute)
+   Compiling crypto-common v0.1.7
+   Compiling block-buffer v0.10.4
+   Compiling digest v0.10.7
+   Compiling sha2 v0.10.9
+   Compiling regex-automata v0.4.18
+   Compiling serde_derive v1.0.229
+   Compiling thiserror-impl v2.0.21
+   Compiling regex v1.13.1
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+   Compiling specimen-wasm v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-wasm)
+    Finished `release` profile [optimized] target(s) in 12.76s
++ cp /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/target/wasm32-unknown-unknown/release/specimen_wasm.wasm /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/default.wasm
++ cargo build --locked -p specimen-wasm --target wasm32-unknown-unknown --release --no-default-features --features language-probe --target-dir /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/target
+   Compiling specimen-wasm v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-wasm)
+    Finished `release` profile [optimized] target(s) in 3.58s
++ cp /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/target/wasm32-unknown-unknown/release/specimen_wasm.wasm /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/language.wasm
++ bun tests/language-parity.mjs /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/native.json /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/language.wasm /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/default.wasm /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/wasm.json /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/corrupt-digest.json
+default-wasm sha256=c3f56ce5fa884c05f619c508b066341592f3826df0007b3e7cf0cd21e9b978e3 compiled/export-inspected language_probe_raw=absent; not instantiated
+feature-wasm sha256=28fa421f31cc3f087bc81d4e66774913fe7e949781c39dbbe9023bfb243f0ddd language_probe_raw=executed free=executed host-calls={"now_ms":0,"random_u32":0,"progress":0}
+native-output sha256=743d07418aadbe60c704d0d934c2bffb237e62e1e39c162ad731aba7d4a8e4d9 bytes=151812
+wasm-output sha256=743d07418aadbe60c704d0d934c2bffb237e62e1e39c162ad731aba7d4a8e4d9 bytes=151812
+PASS exact runtime bytes; independent source/utility/numeric/typed-transform/LP/SHA256/BigInt-scanner/route semantics
++ bun tests/language-parity.mjs --self-test /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/native.json
+PASS comparator rejects changed digest, component name and count
++ negative_status=0
++ bun tests/language-parity.mjs --check-json /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/corrupt-digest.json
++ negative_status=1
++ echo negative-comparator-exit=1
+negative-comparator-exit=1
++ [[ 1 -eq 0 ]]
++ rg -q 'full32 digest' /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/negative.log
++ cat /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/negative.log
+104 |   const transform = cat(lp('text-v3'), content, u64(1), guards, extra);
+105 |   eq(Buffer.from(k.transform), transform, 'independent typed transform');
+106 |   const preimage = cat(lp(transform), lp(level), lp('text'));
+107 |   eq(Buffer.from(k.preimage), preimage, 'independent LP preimage');
+108 |   eq(Buffer.from(k.digest).length, 32);
+109 |   eq(Buffer.from(k.digest).toString('hex'), hash(preimage), 'full32 digest');
+        ^
+AssertionError: full32 digest
++ actual - expected
+
++ 'eda364ff1ab319b7f17866346906fd047efe67fdcc43fb09eedd20fcea95b1ca'
+- 'eca364ff1ab319b7f17866346906fd047efe67fdcc43fb09eedd20fcea95b1ca'
+
+ generatedMessage: false,
+     actual: "eda364ff1ab319b7f17866346906fd047efe67fdcc43fb09eedd20fcea95b1ca",
+   expected: "eca364ff1ab319b7f17866346906fd047efe67fdcc43fb09eedd20fcea95b1ca",
+   operator: "deepStrictEqual",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at checkKey (/Users/donald/sources/repos/wdbx/specimen-studio/tests/language-parity.mjs:109:3)
+      at forEach (native:1:11)
+      at validate (/Users/donald/sources/repos/wdbx/specimen-studio/tests/language-parity.mjs:428:68)
+
+Bun v1.4.4-canary.1+ea6a2c7b7 (macOS arm64)
++ echo 'PASS: load-bearing corrupted digest refused by same comparator with nonzero exit'
+PASS: load-bearing corrupted digest refused by same comparator with nonzero exit
++ label_status=0
++ bun tests/language-parity.mjs --check-json /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/corrupt-digest.json.label.json
++ label_status=1
++ echo negative-label-comparator-exit=1
+negative-label-comparator-exit=1
++ [[ 1 -eq 0 ]]
++ rg -q 'ordered scanner component names/count' /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/negative-label.log
++ cat /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/negative-label.log
+234 |     s: [exact ? 20n : 0n, 1n],
+235 |     reason: !present ? 'Missing' : exact ? 'Match' : 'Mismatch',
+236 |   });
+237 |   let totalS = [0n, 1n],
+238 |     totalD = [0n, 1n];
+239 |   eq(
+        ^
+AssertionError: ordered scanner component names/count
++ actual - expected
+
+  [
++   'corrupted-label',
+-   'lemma-multiset',
+    'ordered-bigram-multiset',
+    'spo',
+    'operands-operators'
+  ]
+
+ generatedMessage: false,
+     actual: [ "corrupted-label", "ordered-bigram-multiset", "spo", "operands-operators" ],
+   expected: [ "lemma-multiset", "ordered-bigram-multiset", "spo", "operands-operators" ],
+   operator: "deepStrictEqual",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at checkScan (/Users/donald/sources/repos/wdbx/specimen-studio/tests/language-parity.mjs:239:3)
+      at forEach (native:1:11)
+      at validate (/Users/donald/sources/repos/wdbx/specimen-studio/tests/language-parity.mjs:431:28)
+
+Bun v1.4.4-canary.1+ea6a2c7b7 (macOS arm64)
++ echo 'PASS: load-bearing corrupted label refused by same comparator with nonzero exit'
+PASS: load-bearing corrupted label refused by same comparator with nonzero exit
++ python3 -
+PASS: 22 legacy hashes unchanged; one exact reviewed immutable accessor extension only; original 23-file baseline retained
++ shasum -a 256 /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/native.json /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/default.wasm /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/language.wasm /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/wasm.json /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/corrupt-digest.json /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/negative.log /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/corrupt-digest.json.label.json /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/negative-label.log
++ cat /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/artifacts.sha256
+743d07418aadbe60c704d0d934c2bffb237e62e1e39c162ad731aba7d4a8e4d9  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/native.json
+c3f56ce5fa884c05f619c508b066341592f3826df0007b3e7cf0cd21e9b978e3  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/default.wasm
+28fa421f31cc3f087bc81d4e66774913fe7e949781c39dbbe9023bfb243f0ddd  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/language.wasm
+743d07418aadbe60c704d0d934c2bffb237e62e1e39c162ad731aba7d4a8e4d9  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/wasm.json
+2c0b3eafcdc00aa43149154fc1ea46055f055a1d2f9054880d41022a3ed84987  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/corrupt-digest.json
+08b239f6949bc7c2279e2242ac7b3febe0c6bd4324392a919f155cc84590a79c  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/negative.log
+409bc58d88d8a1193383ff4e3e28a15e460aca025ace0399513ba410eb39f5ce  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/corrupt-digest.json.label.json
+0f59fe8fbe0ad0fde30c4902e78f0a454fd5bfdbacb52516820a3daf35e65432  /var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC/negative-label.log
++ echo 'Evidence limit: synthetic pure API execution only; default WASM compiled/export-inspected, not instantiated; no production cutover, efficacy, effect hosting, migration, scheduling or target qualification.'
+Evidence limit: synthetic pure API execution only; default WASM compiled/export-inspected, not instantiated; no production cutover, efficacy, effect hosting, migration, scheduling or target qualification.
++ echo retained-artifacts=/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC
+retained-artifacts=/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T//task-8-language-parity.OH3pmC

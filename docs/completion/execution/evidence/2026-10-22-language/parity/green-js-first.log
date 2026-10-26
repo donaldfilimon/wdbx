@@ -1,0 +1,27 @@
+148 |   eq(out.decimal.actions[0].captures.map((c) => [c.source, c.decimal]), [['1.200', { coefficient: '12', scale: 1 }], ['0.00', { coefficient: '0', scale: 0 }]]);
+149 |   eq(out.boundaries.map((k) => [k.count, k.class]), [[6, 'low'], [7, 'medium'], [16, 'medium'], [17, 'high']]);
+150 |   [...out.boundaries, ...out.control_keys, ...out.shared_low.keys].forEach(checkKey);
+151 |   Object.values(out.scans).forEach(checkScan); out.shared_low.scans.forEach(checkScan);
+152 |   eq(out.scans.antecedent_body_conflict.components[2].reason, 'NegationConflict');
+153 |   eq(out.scans.antecedent_only.components[2].s, ['20', '1']); eq(out.scans.uncertain_antecedent.components[2].s, ['20', '1']);
+        ^
+AssertionError: Expected values to be strictly deep-equal:
++ actual - expected
+
+  [
++   '40',
++   '3'
+-   '20',
+-   '1'
+  ]
+
+ generatedMessage: true,
+     actual: [ "40", "3" ],
+   expected: [ "20", "1" ],
+   operator: "deepStrictEqual",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at validate (/Users/donald/sources/repos/wdbx/specimen-studio/tests/language-parity.mjs:153:3)
+
+Bun v1.4.4-canary.1+ea6a2c7b7 (macOS arm64)

@@ -1,0 +1,54 @@
+[
+  {
+    "path": "docs/completion/execution/language-v3-profile.md",
+    "sha256": "79ef5982ba2ad374d867c77af1b56bd9637b78295dc41556418b963cdf612d92"
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/identity/index.rs",
+    "sha256": "99b7810b5cd10fc483aad1233298f00704af28c826e3337be013bd9266cb55bf"
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+    "sha256": "2b28dc381bc67ee27cb484618188b2457fc58f53a37da09057ace5e1b67182c1"
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/identity/model.rs",
+    "sha256": "12cda88d9ac5968b0d92279f4dc5ebaf1041c5d4b5c49c5ac5ee999be2373f35"
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/identity/validate.rs",
+    "sha256": "6ecb1b0659f9261c4f56a9cf016fd0fe9fd075407d9d26b44d4609636d1218d8"
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+    "sha256": "85cca7eb74f62ec4f0d46160ac1e3c3f67e277335bd837d2e6c2b9d14307aac9"
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+    "sha256": "b479b4d1426a30352fdb4a68212f84bebf36249963466a1cfa97656a11a3ac73"
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+    "sha256": "456295034cb3617810dd918d329edbfaec6115e8a26f8b9363a206cd4e79dee8"
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+    "sha256": "fdd924811789d97eedc9bd1959f7d0fb812cea39bc8f3ad716a0d59f56f0a136"
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+    "sha256": "5f4e4138fdb860288085f877ebe1eb81c7f336b599571a63d8f0e4216fb51c1f"
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+    "sha256": "c3e10e6f9a1b1c3209a81b4e1e4864b818cec019583f3fb461f6dfa86a7640fd"
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+    "sha256": "00584d62dc7cc0af2d8ff14ae3088753caa8b6b5be4b8485696ad6a0315d6f0a"
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs",
+    "sha256": "5cb736d802fa8bf7b932037b2feec26b90f71b5f04383d2d51068e4a2d5bd9d1"
+  }
+]

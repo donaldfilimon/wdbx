@@ -1,0 +1,5 @@
+    Checking specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+       Fixed native/specimen-kernel/src/language_v3/prepare.rs (7 fixes)
+       Fixed native/specimen-kernel/src/language_v3/script.rs (2 fixes)
+       Fixed native/specimen-kernel/src/language_v3/tables.rs (1 fix)
+    Finished `dev` profile [unoptimized] target(s) in 1.27s

@@ -3,6 +3,8 @@
 pub mod dispatch;
 #[cfg(feature = "identity-probe")]
 pub mod identity_probe;
+#[cfg(feature = "language-probe")]
+pub mod language_probe;
 use serde_json::{Value, json};
 use specimen_kernel::{engine, host::FixedHost, neural::Network};
 use std::sync::atomic::AtomicBool;

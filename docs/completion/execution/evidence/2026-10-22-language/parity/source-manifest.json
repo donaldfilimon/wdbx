@@ -1,0 +1,39 @@
+{
+  "files": [
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "sha256": "41f6e3f37d71b0c8a95983c022d8f2f9cc89ca2c27cdf465b7327f3621866bbd",
+      "lines": 486
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/examples/language_probe.rs",
+      "sha256": "aeab4b298e8d9ca3884d612eae5ab0625a0f6de2cb07d87069895641de83c55e",
+      "lines": 3
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "sha256": "5283897011654968430000ef6bab65844251edc84a30bb609d9371561d44dff4",
+      "lines": 119
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "sha256": "90c9905912ff19fac35296d77c12d0433ab7f6af85b6081e7e9c4948b6d62211",
+      "lines": 18
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "sha256": "b5dc6568cb29126f7d3defbaba6da7095ad1508855a20c8101d51b5c6f311972",
+      "lines": 218
+    },
+    {
+      "path": "specimen-studio/scripts/check-language-parity.sh",
+      "sha256": "5f5ee6d2b8b0bbbf4cedbcd27f77fddc1e77bbf59613b4813a0a1afb8d81ff5f",
+      "lines": 69
+    },
+    {
+      "path": "specimen-studio/tests/language-parity.mjs",
+      "sha256": "b96f0b5cee3013999b246b4441dc8ea79f8399bfaf379c3bfcc8a564274d8172",
+      "lines": 599
+    }
+  ]
+}

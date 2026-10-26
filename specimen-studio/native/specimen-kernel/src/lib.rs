@@ -6,12 +6,16 @@ pub mod host;
 pub mod identity;
 pub mod import_adapt;
 pub mod language;
+pub mod language_v3;
+mod logical_charge_v1;
 pub mod mutate;
 pub mod network_edit;
 pub mod neural;
 pub mod notes;
 pub mod place;
+pub mod scanner_v3;
 pub mod search;
+pub mod text_v3;
 use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize, thiserror::Error)]
 #[error("{message}")]

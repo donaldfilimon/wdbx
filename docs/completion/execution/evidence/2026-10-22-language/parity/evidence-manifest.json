@@ -1,0 +1,159 @@
+{
+  "files": [
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/artifact-paths.txt",
+      "sha256": "dd6614bde080c2a7a56cd3886533a57badc203a6d03856033e19143b01ba1c63",
+      "bytes": 755
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/artifacts.sha256",
+      "sha256": "d943176adadd5d8b2dcf92ec97f7e45b6b8b624c45602b35d793c9668476eaff",
+      "bytes": 958
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/checks.json",
+      "sha256": "de07f5a0091b200e26e0e0e71690afb2cf06ebc60ec0ed97a172df0958b1b9e0",
+      "bytes": 1308
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/clippy.log",
+      "sha256": "bce14825910581bdb3fa5341262d3534481d5f4cdbb56007465bfe4d9dea203a",
+      "bytes": 166
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/corrupt-digest.json",
+      "sha256": "092d6eb9cda868d05803eea31b0c3a43e150fec6906b17b7474cb3236037ac6c",
+      "bytes": 133395
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/default.wasm",
+      "sha256": "c52b4ae71741acaacdbc4612a39ea3c44cec1f66f5d6560cb0f89096a2fd95fd",
+      "bytes": 2570601
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/fmt-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/green-js-first.log",
+      "sha256": "530cf1d57d0f1d8cc5f5e35e246c1e75651307bcee51e6494f6eb1122a8209ef",
+      "bytes": 1140
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/green-js.log",
+      "sha256": "08f1fdc0993e6dc91360dfff24270ede2a4292ef22df23b3027abc26cf8b894f",
+      "bytes": 39
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/green-native-first.log",
+      "sha256": "33de5cfbc25a34f5b0f9655ba0008dbc9a33aec26e71d0b109c2a84168abae9c",
+      "bytes": 1322
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/green-native-second.log",
+      "sha256": "5caecf3b0a188cd5e380a9b4029e7652df1c6db1c2463368e2f457f4073ea451",
+      "bytes": 2359
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/js-format.log",
+      "sha256": "9f27be3d01f072c8946d4183c712228ca11fddea943239cea315c4d090040981",
+      "bytes": 46
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/js-lint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/language.wasm",
+      "sha256": "d7e69e38feaa00b3d375f7bc9072bcb1b22abd38b976257c244337656b8b154e",
+      "bytes": 2991084
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/legacy-hashes.json",
+      "sha256": "0e1fbf92b3141ab922c26f97af5b38a9659a8c8fd0fd7ce87855ed45fb5f1c3b",
+      "bytes": 4278
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/native-initial.json",
+      "sha256": "6cb12807e261caa42b1e295e4bb11a0745cc5b10ddc67e71dbd4157db91b17b2",
+      "bytes": 105285
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/native-initial.log",
+      "sha256": "5beb1fcffbc2b2f5c8a0a81638462eaa89636232e46f84f650430ec43d4332f6",
+      "bytes": 2143
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/native-js-green.json",
+      "sha256": "253835aab337c769bcbd3487fdcfaf36474928989201088793f64655f2f804e1",
+      "bytes": 105702
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/native-js-green.log",
+      "sha256": "13608d49a833e255e0ce9501017eb0f8d47726ed11db8d7166b91916ada31025",
+      "bytes": 2143
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/native-suite.log",
+      "sha256": "fcf3673ed4f79a6f61820b2f00c3c9649e93300b865a5676bb6419908e583a21",
+      "bytes": 6692
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/native.json",
+      "sha256": "0874bb27c8a593db459c47f06faa46e62cf2c917f31e7eaa78845a5df7475bae",
+      "bytes": 133421
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/negative.log",
+      "sha256": "57ee1e9d44cd9a260c1dafdd50ffb68c89a84b0dd222bbeaead75a7ba497732d",
+      "bytes": 1182
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/red-js.log",
+      "sha256": "d9e246f1851989b77697e390b5147ea5ad456f58dc2d735d920a02ee04444b27",
+      "bytes": 624
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/red-native.log",
+      "sha256": "52c9f513542363488f6bf162c0c626eadf537fd7473bca5c9d0fde4bf3331deb",
+      "bytes": 2908
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/runtime-final.log",
+      "sha256": "2706187f412bff95e1b57dd423725b306caba7877029edb3d8e0674386f38d4a",
+      "bytes": 16411
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/runtime-first.log",
+      "sha256": "faf5ce4ffa2d7f754d8ddc50b12b141ad43c0121ddc29b79c42efce8413218f8",
+      "bytes": 16285
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/source-manifest.json",
+      "sha256": "4fc1857088f1652948363a22d2093f708c51bb20528ba3adb55c5cba1cb82f4a",
+      "bytes": 1318
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/source.sha256",
+      "sha256": "d736f4fd444486f580d9164a37302810534383ca1eb4aae5df0baa7bf0b8b2b7",
+      "bytes": 3381
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/task-8-language-parity-report.md",
+      "sha256": "036544a7c9c44ade7e6031d445554e23d936ca15917182007166265c2dbf3448",
+      "bytes": 10114
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/parity/wasm.json",
+      "sha256": "0874bb27c8a593db459c47f06faa46e62cf2c917f31e7eaa78845a5df7475bae",
+      "bytes": 133421
+    }
+  ]
+}
