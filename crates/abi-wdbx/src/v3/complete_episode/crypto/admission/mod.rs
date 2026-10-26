@@ -8,6 +8,7 @@ use crate::v3::episode::SignerKeyId;
 mod evaluate;
 mod simulator;
 pub(super) use evaluate::evaluate_admission;
+#[cfg(test)]
 pub(super) use simulator::AdmissionSimulator;
 #[cfg(test)]
 mod scenarios;
