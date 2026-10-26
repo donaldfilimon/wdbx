@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import { chromium, expect, firefox, webkit } from '@playwright/test';
 
 // Bundle the existing components into a disposable browser fixture; no preview
@@ -17,7 +18,7 @@ export default function useEmblaCarousel() { return [useCallback(() => {}, []), 
 `;
 const build = await Bun.build({
   entrypoints: [
-    new URL('./ui-components.fixture.tsx', import.meta.url).pathname,
+    fileURLToPath(new URL('./ui-components.fixture.tsx', import.meta.url)),
   ],
   target: 'browser',
   format: 'iife',
