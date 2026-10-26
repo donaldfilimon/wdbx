@@ -1,0 +1,253 @@
+{
+  "baseline_commit": "4c01514",
+  "source_commit": "3f79bbe63985aecf28c580a0a2237e33d281dba3",
+  "execution_identity": "Gates ran against the precommit working-tree bytes; source hashes below identify the final committed implementation. Final root gate ran after worktree consolidation.",
+  "environment": {
+    "head": "4c01514e4745321a67f2a2152e49e5a9546efa8f",
+    "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)\nbinary: rustc\ncommit-hash: 58cf8f9c35b355199727627d07ae34a4e2846d67\ncommit-date: 2026-10-13\nhost: aarch64-apple-darwin\nrelease: 1.99.1\nLLVM version: 23.1.1",
+    "cargo": "cargo 1.99.1 (5f94df478 2026-08-27)",
+    "bun": "1.4.4",
+    "python": "Python 3.15.1",
+    "hawk_api_key_present": false,
+    "hawk_available": false
+  },
+  "source_sha256": {
+    "crates/abi-wdbx/tests/v3_complete_episode_authenticated.rs": "d1b64cbc8acd99ac519fca31868b3e3dbb583724ddcca60e8ca40e02da7048b0",
+    "specimen-studio/scripts/check-scoring-parity.sh": "c6ab320b088c8ba165f3c05c1dc8f44daab1401039d102d0b409562bec72f3f4",
+    "specimen-studio/scripts/tests/test_scoring_loader.py": "31856de1518e80399fdbfcf6feced5ec4437820d19489b83118bb806c3b8764e",
+    "docs/completion/execution/register-v1.json": "7d74adfcf94a433c0cd10ecc0bb55e7c34ae50ac41c5d0be4d70cbbcdc84ee1c"
+  },
+  "runs": [
+    {
+      "name": "authenticated",
+      "command": "cargo test --locked -p abi-wdbx --test v3_complete_episode_authenticated",
+      "exit": 0,
+      "seconds": 3.58,
+      "sha256": "44be1095cb235d743740734156b8a1f4669de857484346982574e247eb40c5ca",
+      "log": ".work/p1-completion/authenticated.log",
+      "cwd": ".",
+      "rust_totals": {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    {
+      "name": "root",
+      "command": "bash tools/check.sh",
+      "exit": 0,
+      "seconds": 105.23,
+      "sha256": "c267a550480fdcbf51f21ef9b8c4cd53cefc9363f99e2515beddd533bf29e715",
+      "log": ".work/p1-completion/root.log",
+      "cwd": ".",
+      "rust_totals": {
+        "passed": 1201,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    {
+      "name": "abi-wdbx",
+      "command": "cargo test --locked -p abi-wdbx",
+      "exit": 0,
+      "seconds": 91.26,
+      "sha256": "982aca0bfc81177016e14ae29c0df109dcffcc9cc88b193d847b23e32c06aa35",
+      "log": ".work/p1-completion/abi-wdbx.log",
+      "cwd": ".",
+      "rust_totals": {
+        "passed": 932,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    {
+      "name": "completion",
+      "command": "python3 tools/check_completion.py",
+      "exit": 0,
+      "seconds": 0.41,
+      "sha256": "c632983e5efd9390303d38cd5a21e40fb6ca5ff18bd7ac3d177cb29d6567f4e7",
+      "log": ".work/p1-completion/completion.log",
+      "cwd": ".",
+      "rust_totals": null
+    },
+    {
+      "name": "validators-tests",
+      "command": "python3 -m unittest discover -s tools/tests -p \"test_check_completion*.py\"",
+      "exit": 1,
+      "seconds": 54.49,
+      "sha256": "42b20425f6eae6ee19cafc4aca158176a6943e283cecbd20f57093c59854c333",
+      "log": ".work/p1-completion/validators-tests.log",
+      "cwd": ".",
+      "rust_totals": null,
+      "superseded_by": "validators-final"
+    },
+    {
+      "name": "crypto-pyca",
+      "command": "WDBX_CRYPTO_BACKEND=pyca WDBX_CRYPTO_PYTHON=/Users/donald/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 bash tools/check_p1_crypto.sh",
+      "exit": 1,
+      "seconds": 136.08,
+      "sha256": "e31fa503f0d6adc5b004cc7b5863fcd366e2a2a11fb013c634ef38dabbe72dc5",
+      "log": ".work/p1-completion/crypto-pyca.log",
+      "cwd": ".",
+      "rust_totals": {
+        "passed": 57,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    {
+      "name": "crypto-libsodium",
+      "command": "WDBX_CRYPTO_BACKEND=libsodium WDBX_CRYPTO_PYTHON=/tmp/wdbx-p1-libsodium.0EvVu6/venv/bin/python bash tools/check_p1_crypto.sh",
+      "exit": 0,
+      "seconds": 12.97,
+      "sha256": "5d27c5d1836825e05c3d95a59c68a4cdd9ad69ccac4f6e2d03417612da89ff09",
+      "log": ".work/p1-completion/crypto-libsodium.log",
+      "cwd": ".",
+      "rust_totals": {
+        "passed": 57,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    {
+      "name": "studio-check",
+      "command": "bun run check",
+      "exit": 0,
+      "seconds": 44.94,
+      "sha256": "485ca9b2b7b1d4d9365b8f6a8b0b91c16ad3d70f198516c0cd69ba51e2e322ad",
+      "log": ".work/p1-completion/studio-check.log",
+      "cwd": "specimen-studio",
+      "rust_totals": null
+    },
+    {
+      "name": "studio-native",
+      "command": "bun run test:native",
+      "exit": 0,
+      "seconds": 119.59,
+      "sha256": "2c4f862c0cddafeaf58ec36b41ecb18175a53471f165d014ca50953f858137ab",
+      "log": ".work/p1-completion/studio-native.log",
+      "cwd": "specimen-studio",
+      "rust_totals": {
+        "passed": 343,
+        "failed": 0,
+        "ignored": 1
+      }
+    },
+    {
+      "name": "studio-clippy",
+      "command": "bun run check:native",
+      "exit": 0,
+      "seconds": 95.89,
+      "sha256": "94e6c787d56f5799e241b9c806e2dfc89e43893fe10c4c4ddfa8749337006c3c",
+      "log": ".work/p1-completion/studio-clippy.log",
+      "cwd": "specimen-studio",
+      "rust_totals": null
+    },
+    {
+      "name": "identity-parity",
+      "command": "bash scripts/check-identity-parity.sh",
+      "exit": 0,
+      "seconds": 104.42,
+      "sha256": "a57466da14f349a3c8e736113132ac0134f345d01be079b584c0dfe86b78d9a3",
+      "log": ".work/p1-completion/identity-parity.log",
+      "cwd": "specimen-studio",
+      "rust_totals": null
+    },
+    {
+      "name": "language-parity",
+      "command": "bash scripts/check-language-parity.sh",
+      "exit": 1,
+      "seconds": 80.04,
+      "sha256": "2aa58264d6fb7c68145febcccb22de40a1a4b2a94c8f6bdb52ddc9c0022ada19",
+      "log": ".work/p1-completion/language-parity.log",
+      "cwd": "specimen-studio",
+      "rust_totals": null
+    },
+    {
+      "name": "scoring-parity",
+      "command": "bash scripts/check-scoring-parity.sh",
+      "exit": 1,
+      "seconds": 80.83,
+      "sha256": "6c45b4321db205f1580f76e790f567b8749deab7fac99ec9ece83eda15a4cbbf",
+      "log": ".work/p1-completion/scoring-parity.log",
+      "cwd": "specimen-studio",
+      "rust_totals": null
+    },
+    {
+      "name": "root-final",
+      "command": "bash tools/check.sh",
+      "exit": 0,
+      "log": ".work/p1-completion/root-final.log",
+      "sha256": "2283ec0ab247a34123b349d21ff906bb2a07155e99bfffdc035fad4868776b4d",
+      "cwd": ".",
+      "rust_totals": {
+        "passed": 1201,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    {
+      "name": "authenticated-final",
+      "command": "cargo test --locked -p abi-wdbx --test v3_complete_episode_authenticated",
+      "exit": 0,
+      "log": ".work/p1-completion/authenticated-final.log",
+      "sha256": "f1a3bb720d10b3aa473cf091b99a0beb28e321eae35875ccc613e84c3d65dce7",
+      "cwd": ".",
+      "rust_totals": {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    {
+      "name": "execution-final",
+      "command": "python3 tools/check_completion_execution.py",
+      "exit": 0,
+      "log": ".work/p1-completion/execution-final.log",
+      "sha256": "7db51a594198bccc2ebeaa015f6c56c4aa8ef9d9ac56a324b1f859734c08c302",
+      "cwd": ".",
+      "rust_totals": null
+    },
+    {
+      "name": "validators-final",
+      "command": "python3 -m unittest discover -s tools/tests -p \"test_check_completion*.py\"",
+      "exit": 0,
+      "log": ".work/p1-completion/validators-final.log",
+      "sha256": "a1a81ae4ed172f88915741d6d4eaba8be5df94cfa5d70b37f1c4ba6d8f4f56b9",
+      "cwd": ".",
+      "rust_totals": null
+    },
+    {
+      "name": "loader-green",
+      "command": "python3 -m unittest discover -s specimen-studio/scripts/tests -p test_scoring_loader.py",
+      "exit": 0,
+      "log": ".work/p1-completion/loader-green.log",
+      "sha256": "f62ed079878f527a76f20efe7607461a215638caf6f5a72998bb0acdf1a9c4f7",
+      "cwd": ".",
+      "rust_totals": null
+    },
+    {
+      "name": "source-custody",
+      "command": "python3 tools/check_source_custody.py",
+      "exit": 0,
+      "log": ".work/p1-completion/source-custody.log",
+      "sha256": "91d4000ea08642ca304a281476539cae9954708102f3dea3584cab63342d5f17",
+      "cwd": ".",
+      "rust_totals": null
+    },
+    {
+      "name": "substrate-release",
+      "command": "python3 tools/check_substrate_release.py",
+      "exit": 1,
+      "log": ".work/p1-completion/substrate-release.log",
+      "sha256": "18a7355eb3a41c628dc522f472060b39f2051679a3bf3119747e6cd62218d531",
+      "cwd": ".",
+      "rust_totals": null
+    }
+  ],
+  "security_scan": {
+    "performed": false,
+    "reason": "hawk executable missing (preflight command not found); HAWK_API_KEY not set"
+  },
+  "qualification": "All requirements remain open/C0; private local experiments only."
+}

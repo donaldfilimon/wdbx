@@ -370,7 +370,7 @@
           },
           {
             "path": "crates/abi-wdbx/src/v2.rs",
-            "sha256": "28a6283b886b6290ea00cdd7500efa248724ab28d60ae3fa2bdba297eb8e0d64"
+            "sha256": "80e50d5537e148d0f6b36842881764c29f0ee3921c98cd7fb906e91c8fe62759"
           }
         ]
       },
@@ -434,7 +434,7 @@
             },
             {
               "path": "crates/abi-wdbx/src/v2.rs",
-              "sha256": "28a6283b886b6290ea00cdd7500efa248724ab28d60ae3fa2bdba297eb8e0d64"
+              "sha256": "80e50d5537e148d0f6b36842881764c29f0ee3921c98cd7fb906e91c8fe62759"
             },
             {
               "path": "crates/abi-wdbx/tests/v3_memory_candidate.rs",
@@ -1843,7 +1843,7 @@
           },
           {
             "path": "crates/abi-wdbx/tests/v3_complete_episode_authenticated.rs",
-            "sha256": "d114f5e5871bed914dde04d6fff9258cc18b47616778c046593bebbb7c9c625a"
+            "sha256": "d1b64cbc8acd99ac519fca31868b3e3dbb583724ddcca60e8ca40e02da7048b0"
           },
           {
             "path": "crates/abi-wdbx/tests/v3_complete_episode_ledger.rs",
@@ -2028,7 +2028,7 @@
           },
           {
             "path": "crates/abi-wdbx/tests/v3_complete_episode_authenticated.rs",
-            "sha256": "d114f5e5871bed914dde04d6fff9258cc18b47616778c046593bebbb7c9c625a"
+            "sha256": "d1b64cbc8acd99ac519fca31868b3e3dbb583724ddcca60e8ca40e02da7048b0"
           },
           {
             "path": "crates/abi-wdbx/tests/v3_complete_episode_ledger.rs",
@@ -2810,7 +2810,7 @@
           },
           {
             "path": "crates/abi-wdbx/tests/v3_complete_episode_authenticated.rs",
-            "sha256": "d114f5e5871bed914dde04d6fff9258cc18b47616778c046593bebbb7c9c625a"
+            "sha256": "d1b64cbc8acd99ac519fca31868b3e3dbb583724ddcca60e8ca40e02da7048b0"
           },
           {
             "path": "crates/abi-wdbx/tests/v3_complete_episode_ledger.rs",
@@ -6664,7 +6664,7 @@
           },
           {
             "path": "specimen-studio/scripts/check-scoring-parity.sh",
-            "sha256": "68ba89109bb145855bbbae2a93bd1e47ea76f7e010a324fd0763ac5a9ab4a005"
+            "sha256": "c6ab320b088c8ba165f3c05c1dc8f44daab1401039d102d0b409562bec72f3f4"
           }
         ]
       },
@@ -7173,7 +7173,7 @@
             },
             {
               "path": "specimen-studio/scripts/check-scoring-parity.sh",
-              "sha256": "68ba89109bb145855bbbae2a93bd1e47ea76f7e010a324fd0763ac5a9ab4a005"
+              "sha256": "c6ab320b088c8ba165f3c05c1dc8f44daab1401039d102d0b409562bec72f3f4"
             },
             {
               "path": "docs/completion/execution/scoring-orchestration-v3-profile.md",
@@ -26141,7 +26141,7 @@
           },
           {
             "path": "crates/abi-wdbx/tests/v3_complete_episode_authenticated.rs",
-            "sha256": "d114f5e5871bed914dde04d6fff9258cc18b47616778c046593bebbb7c9c625a"
+            "sha256": "d1b64cbc8acd99ac519fca31868b3e3dbb583724ddcca60e8ca40e02da7048b0"
           },
           {
             "path": "crates/abi-wdbx/tests/v3_complete_episode_ledger.rs",
@@ -27069,7 +27069,7 @@
           },
           {
             "path": "crates/abi-wdbx/tests/v3_complete_episode_authenticated.rs",
-            "sha256": "d114f5e5871bed914dde04d6fff9258cc18b47616778c046593bebbb7c9c625a"
+            "sha256": "d1b64cbc8acd99ac519fca31868b3e3dbb583724ddcca60e8ca40e02da7048b0"
           },
           {
             "path": "crates/abi-wdbx/tests/v3_complete_episode_ledger.rs",
