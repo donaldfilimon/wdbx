@@ -1,0 +1,31 @@
+   Compiling abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx/crates/abi-wdbx)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.45s
+     Running unittests src/lib.rs (target/debug/deps/abi_wdbx-9e84c1c4007efe3f)
+
+running 23 tests
+test v3::complete_episode::crypto::tests::every_container_truncation_and_trailing_bytes_fail ... ok
+test v3::complete_episode::crypto::tests::depth_32_is_syntax_only_while_depth_33_exhausts_the_reader ... ok
+test v3::complete_episode::crypto::tests::malformed_payload_and_static_diagnostics ... ok
+test v3::complete_episode::crypto::tests::malformed_small_corpus_is_panic_free ... ok
+test v3::complete_episode::crypto::tests::profile_shape_is_closed ... ok
+test v3::complete_episode::crypto::tests::each_payload_decoder_limit_keeps_its_zero_semantics ... ok
+test v3::complete_episode::crypto::tests::exact_p1_preserves_originals_and_sig_structure ... ok
+test v3::complete_episode::crypto::tests::exact_structure_budget_and_oversized_declared_lengths ... ok
+test v3::complete_episode::crypto::tests::protected_budget_and_closed_header_labels_are_explicit ... ok
+test v3::complete_episode::crypto::tests::bounds_and_zero_caller_limits_are_respected ... ok
+test v3::complete_episode::crypto::verify_tests::signing_refuses_origin_mismatch_and_verification_rejects_signed_substitution ... ok
+test v3::complete_episode::crypto::verify_tests::snapshots_reject_weak_duplicate_and_over_limit_keys_and_pin_order ... ok
+test v3::complete_episode::crypto::verify_tests::strict_full_payload_signature_retains_originals_and_bound_report ... ok
+test v3::complete_episode::crypto::verify_tests::altered_aad_and_changed_canonical_payload_are_rejected_without_reencoding ... ok
+test v3::complete_episode::crypto::verify_tests::strict_verification_refuses_noncanonical_scalar_and_low_order_r ... ok
+test v3::complete_episode::crypto::verify_tests::unresolved_key_is_unverifiable_and_never_rescued_by_other_keys ... ok
+test v3::complete_episode::crypto::verify_tests::changed_signature_and_digest_signature_are_not_valid_p1 ... ok
+test v3::complete_episode::crypto::verify_tests::trusted_context_mismatches_are_invalid_before_authority_can_be_inferred ... ok
+test v3::complete_episode::crypto::tests::oversized_caller_budgets_cannot_raise_hard_caps ... ok
+test v3::complete_episode::crypto::python_witness_tests::backend_characterization_preserves_known_low_order_disagreement ... ok
+test v3::complete_episode::crypto::python_witness_tests::python_and_rust_independently_sign_identical_full_payload_p1 ... ok
+test v3::complete_episode::crypto::python_witness_tests::independent_python_verifies_rust_and_refuses_signature_mutations ... ok
+test v3::complete_episode::crypto::python_witness_tests::malformed_profile_bytes_are_refused_in_both_languages ... ok
+
+test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 439 filtered out; finished in 0.61s
+

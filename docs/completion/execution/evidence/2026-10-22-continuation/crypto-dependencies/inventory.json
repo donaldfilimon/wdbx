@@ -1,0 +1,235 @@
+{
+  "captured_at_utc": "2026-10-22T22:56:01.994109+00:00",
+  "cargo_lock": {
+    "bytes": 49321,
+    "path": "Cargo.lock",
+    "sha256": "e2fac4f3f125cecc771a0dc7d6f33eb1629972b3979ac0771849fdf61368680e"
+  },
+  "limitations": [
+    "Installed-file hashes identify observed local bytes, not authenticated wheel provenance.",
+    "No Python package installation or dependency upgrade performed.",
+    "Raw PyCA/OpenSSL accepts identity-key vector that dalek strict refuses; strict parity is NOT qualified.",
+    "Public ABI/profile ratification and independent cryptographic review remain open."
+  ],
+  "machine": "arm64",
+  "openssl_backend": "OpenSSL 4.0.3 29 Sep 2026",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "probe_artifacts": [
+    {
+      "bytes": 2800,
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/crypto-dependencies/probe.py",
+      "sha256": "2d12282261109c31491dc1a721789365010b7c7d02e9b677a9932f32b303630c"
+    },
+    {
+      "bytes": 2367,
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/crypto-dependencies/probe.log",
+      "sha256": "8caf7cb494069fae25cf2fb53fedb51ab68081347d107cb68ef452d272ff65a1"
+    },
+    {
+      "bytes": 494,
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/crypto-dependencies/probe.rs",
+      "sha256": "2766326f02508f6c4d6b4dd92ac3be323512cc3b6f249c2e31d3045cb462aeab"
+    },
+    {
+      "bytes": 132,
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/crypto-dependencies/rust-probe.log",
+      "sha256": "d3b4f5750aa67993b8505cbbfbf9086f7c5daeea862c1eabe43ecb72776e7f8e"
+    },
+    {
+      "bytes": 1114,
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/crypto-dependencies/osv-query.json",
+      "sha256": "4311e9b374d4324bd5538a18cfebcd2981d20ae7169928caf86734c93aed43a3"
+    }
+  ],
+  "python": {
+    "executable": {
+      "bytes": 18058560,
+      "path": "/Users/donald/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "sha256": "494f72dd95d0dc196169c5821219fc6cfa9c1ef582332b95b53874b10acea6e0"
+    },
+    "version": "3.12.14"
+  },
+  "python_distributions": [
+    {
+      "license": "Apache-2.0 OR BSD-3-Clause",
+      "local_files": [
+        {
+          "bytes": 4394,
+          "path": "/Users/donald/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/cryptography-50.0.2.dist-info/METADATA",
+          "sha256": "047cfc71226409de4318b360aef15c63a2adf609731e3dcf7fe932f14ea042ee"
+        },
+        {
+          "bytes": 104,
+          "path": "/Users/donald/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/cryptography-50.0.2.dist-info/WHEEL",
+          "sha256": "96f985b465650f71b86992fc892c82e72b15557fbb9855563b0c8a6b1fa6d712"
+        },
+        {
+          "bytes": 10461808,
+          "path": "/Users/donald/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/cryptography/hazmat/bindings/_rust.abi3.so",
+          "sha256": "dd2350a511ec3f32e93ef3bcb983182b4fef1394f6bb387847aa8a76415d2ad1"
+        }
+      ],
+      "name": "cryptography",
+      "requires_dist": [
+        "cffi>=2.0.0 ; platform_python_implementation != 'PyPy'",
+        "typing-extensions>=4.13.2 ; python_full_version < '3.11'",
+        "bcrypt>=3.1.5 ; extra == 'ssh'"
+      ],
+      "requires_python": ">=3.9, !=3.9.0, !=3.9.1",
+      "version": "50.0.2"
+    },
+    {
+      "license": "MIT-0",
+      "local_files": [
+        {
+          "bytes": 246048,
+          "path": "/Users/donald/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/_cffi_backend.cpython-312-darwin.so",
+          "sha256": "5f3cfc66760f729047650b93615ef4db9956bfae86c5ce02ad6ca0cc2f62497f"
+        },
+        {
+          "bytes": 2527,
+          "path": "/Users/donald/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/cffi-2.1.1.dist-info/METADATA",
+          "sha256": "558bafb9093a8e790175d9ecff9688382981d744877dad86fd6770db0f4dc918"
+        },
+        {
+          "bytes": 136,
+          "path": "/Users/donald/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/cffi-2.1.1.dist-info/WHEEL",
+          "sha256": "65d47419e480660d7ba329a734f3f7358ce8eba23b2db4806ef595c5328959fe"
+        }
+      ],
+      "name": "cffi",
+      "requires_dist": [
+        "pycparser; implementation_name != \"PyPy\""
+      ],
+      "requires_python": ">=3.10",
+      "version": "2.1.1"
+    },
+    {
+      "license": "BSD-3-Clause",
+      "local_files": [
+        {
+          "bytes": 8238,
+          "path": "/Users/donald/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/pycparser-3.11.dist-info/METADATA",
+          "sha256": "e3a74c846648bb55f4f907284b745e2003b87b96d9c9d17a8a50cf37804541c9"
+        },
+        {
+          "bytes": 91,
+          "path": "/Users/donald/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/pycparser-3.11.dist-info/WHEEL",
+          "sha256": "61532836a2b3111b7ec23519c09df7c41180c27165fb872a6d8913b566b88ad1"
+        }
+      ],
+      "name": "pycparser",
+      "requires_dist": [],
+      "requires_python": ">=3.10",
+      "version": "3.11"
+    }
+  ],
+  "resolved_graph_artifacts": [
+    {
+      "bytes": 722171,
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/crypto-dependencies/cargo-metadata.json",
+      "sha256": "629bf9eda63c9fdaa1c18b6ce2044eb4c7402619465c887e66ea2481959dded8"
+    },
+    {
+      "bytes": 4690,
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/crypto-dependencies/cargo-tree.txt",
+      "sha256": "a89172e71f3636f672c1563092676bb8f4e8629b26bb7770a7e74c32d624822d"
+    }
+  ],
+  "resolved_graph_scope": "cargo metadata --locked --offline default workspace resolution and cargo tree -p abi-wdbx --locked --offline --edges normal,build; host/default features; optional FHE and all platform feature combinations not qualified.",
+  "rust_packages": [
+    {
+      "direct_locked_dependencies": [
+        "curve25519-dalek",
+        "ed25519",
+        "sha2",
+        "subtle",
+        "zeroize"
+      ],
+      "license": "BSD-3-Clause",
+      "local_manifest": {
+        "bytes": 4331,
+        "path": "/Users/donald/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ed25519-dalek-3.0.0/Cargo.toml",
+        "sha256": "956ebf89493683eebfba8fc50659ce561f70c5ed93524ee98ece80555e02d042"
+      },
+      "name": "ed25519-dalek",
+      "registry_checksum": "6ebaa1a2bf1290ab3bfe5a7b771d050ebffab2711c19a81691c683a5144a25de",
+      "rust_version": "1.85",
+      "version": "3.0.0"
+    },
+    {
+      "direct_locked_dependencies": [
+        "cfg-if",
+        "cpufeatures 0.3.1",
+        "curve25519-dalek-derive",
+        "digest 0.11.3",
+        "fiat-crypto",
+        "rustc_version",
+        "subtle",
+        "zeroize"
+      ],
+      "license": "BSD-3-Clause",
+      "local_manifest": {
+        "bytes": 3816,
+        "path": "/Users/donald/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/curve25519-dalek-5.0.0/Cargo.toml",
+        "sha256": "a11061e5d76b2a9696bbd5eb3ef4002fe3d1a402db82100c729bb75fb2bd4367"
+      },
+      "name": "curve25519-dalek",
+      "registry_checksum": "b5eed333089e2e1c1ac8c6c0398e5e2497b4c9926ca6d0365ed1e099afa5bc23",
+      "rust_version": "1.85.0",
+      "version": "5.0.0"
+    },
+    {
+      "direct_locked_dependencies": [
+        "signature"
+      ],
+      "license": "Apache-2.0 OR MIT",
+      "local_manifest": {
+        "bytes": 3104,
+        "path": "/Users/donald/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ed25519-3.0.0/Cargo.toml",
+        "sha256": "7adbaf0eaff63f763bdfaaf6fe82bf3f7e2ef9352e0fba1f7b37cefb610ea06a"
+      },
+      "name": "ed25519",
+      "registry_checksum": "29fcf32e6c73d1079f83ab4d782de2d81620346a5f38c6237a86a22f8368980a",
+      "rust_version": "1.85",
+      "version": "3.0.0"
+    },
+    {
+      "direct_locked_dependencies": [
+        "cfg-if",
+        "cpufeatures 0.3.1",
+        "digest 0.11.3"
+      ],
+      "license": "MIT OR Apache-2.0",
+      "local_manifest": {
+        "bytes": 2099,
+        "path": "/Users/donald/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sha2-0.11.1/Cargo.toml",
+        "sha256": "a2eb64ea4fa73cd686f453b7428c415dad6dda57c4e0b6825ffc6f6d765dcc05"
+      },
+      "name": "sha2",
+      "registry_checksum": "47d7069beb7d6ac7b9acd1039986e73443f24234f41074da099d6f994ac9ad19",
+      "rust_version": "1.88",
+      "version": "0.11.1"
+    },
+    {
+      "direct_locked_dependencies": [],
+      "license": "Apache-2.0 OR MIT",
+      "local_manifest": {
+        "bytes": 2436,
+        "path": "/Users/donald/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/signature-3.0.0/Cargo.toml",
+        "sha256": "758bad4841d2eaf9f6d79464d99039ef6a96d6bee3c1065b933f682df418e734"
+      },
+      "name": "signature",
+      "registry_checksum": "28d567dcbaf0049cb8ac2608a76cd95ff9e4412e1899d389ee400918ca7537f5",
+      "rust_version": "1.85",
+      "version": "3.0.0"
+    }
+  ],
+  "rust_probe_library": {
+    "bytes": 383240,
+    "path": "target/debug/deps/libed25519_dalek-f9a32590d171c0e3.rlib",
+    "sha256": "b45df92f543b2db6b2c31662ffdd124450b56d2a44f64c634992e7be0ebafb3e"
+  },
+  "schema": "wdbx-local-crypto-dependency-observation-v1",
+  "status": "proposed experimental use; NOT approval or production qualification"
+}

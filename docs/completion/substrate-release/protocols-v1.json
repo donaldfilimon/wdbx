@@ -1,0 +1,316 @@
+{
+  "version": 1,
+  "protocols": {
+    "task-01": {
+      "owner": "WDBX contract maintainer",
+      "depends_on": [],
+      "experiment": "Run contract mutation tests including coordinated deletion and forbidden promotion.",
+      "expected_evidence": [
+        "Exact source/dependency/configuration hashes and nonzero discovered cases",
+        "Raw positive/boundary/refusal/recovery results with independent oracle and review",
+        "Failed assertions, missing source/device/owner approval block acceptance"
+      ],
+      "closure": "All obligation-specific oracle clauses and relevant positive/boundary/refusal/recovery cases pass with named independent acceptance; missing prerequisites block."
+    },
+    "task-02": {
+      "owner": "ABI schema owner and independent cryptographic reviewer",
+      "depends_on": [
+        "TASK-01"
+      ],
+      "experiment": "Named owner reviews exact profile/dependency hashes; test downgrade and reader-floor rejection.",
+      "expected_evidence": [
+        "Exact source/dependency/configuration hashes and nonzero discovered cases",
+        "Raw positive/boundary/refusal/recovery results with independent oracle and review",
+        "Failed assertions, missing source/device/owner approval block acceptance"
+      ],
+      "closure": "All obligation-specific oracle clauses and relevant positive/boundary/refusal/recovery cases pass with named independent acceptance; missing prerequisites block."
+    },
+    "task-03": {
+      "owner": "WDBX compatibility maintainer",
+      "depends_on": [
+        "TASK-01"
+      ],
+      "experiment": "Run root gate plus old-reader/new-writer, malformed fixture, lock and numeric boundary cases.",
+      "expected_evidence": [
+        "Exact source/dependency/configuration hashes and nonzero discovered cases",
+        "Raw positive/boundary/refusal/recovery results with independent oracle and review",
+        "Failed assertions, missing source/device/owner approval block acceptance"
+      ],
+      "closure": "All obligation-specific oracle clauses and relevant positive/boundary/refusal/recovery cases pass with named independent acceptance; missing prerequisites block."
+    },
+    "task-04": {
+      "owner": "WDBX canonical episode writer maintainer",
+      "depends_on": [
+        "TASK-02",
+        "TASK-03"
+      ],
+      "experiment": "Inject crashes before/after append, sync, receipt and replay; retry identical and changed request; revoke signer.",
+      "expected_evidence": [
+        "Exact source/dependency/configuration hashes and nonzero discovered cases",
+        "Raw positive/boundary/refusal/recovery results with independent oracle and review",
+        "Failed assertions, missing source/device/owner approval block acceptance"
+      ],
+      "closure": "All obligation-specific oracle clauses and relevant positive/boundary/refusal/recovery cases pass with named independent acceptance; missing prerequisites block."
+    },
+    "task-05": {
+      "owner": "WDBX lifecycle and deletion maintainer",
+      "depends_on": [
+        "TASK-04"
+      ],
+      "experiment": "Delete synthetic record plus derivatives; restore quarantined backup and repeat cleanup twice under crash injection.",
+      "expected_evidence": [
+        "Exact source/dependency/configuration hashes and nonzero discovered cases",
+        "Raw positive/boundary/refusal/recovery results with independent oracle and review",
+        "Failed assertions, missing source/device/owner approval block acceptance"
+      ],
+      "closure": "All obligation-specific oracle clauses and relevant positive/boundary/refusal/recovery cases pass with named independent acceptance; missing prerequisites block."
+    },
+    "task-06": {
+      "owner": "ABI privacy/custody owner and Abbey Bot consumer owner",
+      "depends_on": [
+        "TASK-02",
+        "TASK-04",
+        "TASK-05"
+      ],
+      "experiment": "After named privacy approval, test synthetic custody migration, key-provider destruction, stale restore and operator rollback.",
+      "expected_evidence": [
+        "Exact source/dependency/configuration hashes and nonzero discovered cases",
+        "Raw positive/boundary/refusal/recovery results with independent oracle and review",
+        "Failed assertions, missing source/device/owner approval block acceptance"
+      ],
+      "closure": "All obligation-specific oracle clauses and relevant positive/boundary/refusal/recovery cases pass with named independent acceptance; missing prerequisites block."
+    },
+    "task-07": {
+      "owner": "WDBX geometry maintainer",
+      "depends_on": [
+        "TASK-03"
+      ],
+      "experiment": "Compare exact geometry/read-view outcomes with independent dyadic scan for touching, zero, NaN, overflow and causal conflicts.",
+      "expected_evidence": [
+        "Exact source/dependency/configuration hashes and nonzero discovered cases",
+        "Raw positive/boundary/refusal/recovery results with independent oracle and review",
+        "Failed assertions, missing source/device/owner approval block acceptance"
+      ],
+      "closure": "All obligation-specific oracle clauses and relevant positive/boundary/refusal/recovery cases pass with named independent acceptance; missing prerequisites block."
+    },
+    "task-08": {
+      "owner": "WDBX index publication maintainer",
+      "depends_on": [
+        "TASK-07"
+      ],
+      "experiment": "Crash and race two index publishers; verify removal deltas, pinned view isolation and scan fallback.",
+      "expected_evidence": [
+        "Exact source/dependency/configuration hashes and nonzero discovered cases",
+        "Raw positive/boundary/refusal/recovery results with independent oracle and review",
+        "Failed assertions, missing source/device/owner approval block acceptance"
+      ],
+      "closure": "All obligation-specific oracle clauses and relevant positive/boundary/refusal/recovery cases pass with named independent acceptance; missing prerequisites block."
+    },
+    "task-09": {
+      "owner": "WDBX query authorization maintainer",
+      "depends_on": [
+        "TASK-04",
+        "TASK-08"
+      ],
+      "experiment": "Compare authorized exact/hybrid query to scan oracle; test hidden topology, mismatched spaces, cursor tamper and time boundaries.",
+      "expected_evidence": [
+        "Exact source/dependency/configuration hashes and nonzero discovered cases",
+        "Raw positive/boundary/refusal/recovery results with independent oracle and review",
+        "Failed assertions, missing source/device/owner approval block acceptance"
+      ],
+      "closure": "All obligation-specific oracle clauses and relevant positive/boundary/refusal/recovery cases pass with named independent acceptance; missing prerequisites block."
+    },
+    "task-10": {
+      "owner": "WDBX retrieval qualification owner",
+      "depends_on": [
+        "TASK-09"
+      ],
+      "experiment": "Execute frozen held-out equivalent-vector baseline and ablations; preserve failed thresholds and unknown evidence dimensions.",
+      "expected_evidence": [
+        "Exact source/dependency/configuration hashes and nonzero discovered cases",
+        "Raw positive/boundary/refusal/recovery results with independent oracle and review",
+        "Failed assertions, missing source/device/owner approval block acceptance"
+      ],
+      "closure": "All obligation-specific oracle clauses and relevant positive/boundary/refusal/recovery cases pass with named independent acceptance; missing prerequisites block."
+    },
+    "task-11": {
+      "owner": "WDBX codec maintainer and independent FHE reviewer",
+      "depends_on": [
+        "TASK-02",
+        "TASK-03"
+      ],
+      "experiment": "Run feature-specific crypto tests and independent plaintext oracle; reject wrong keys, bombs, malformed values and exhaustion.",
+      "expected_evidence": [
+        "Exact source/dependency/configuration hashes and nonzero discovered cases",
+        "Raw positive/boundary/refusal/recovery results with independent oracle and review",
+        "Failed assertions, missing source/device/owner approval block acceptance"
+      ],
+      "closure": "All obligation-specific oracle clauses and relevant positive/boundary/refusal/recovery cases pass with named independent acceptance; missing prerequisites block."
+    },
+    "task-12": {
+      "owner": "WDBX multiway and projection maintainer",
+      "depends_on": [
+        "TASK-03",
+        "TASK-09"
+      ],
+      "experiment": "Interrupt and resume overlapping multiway publication; compare deterministic PCA replay and deletion invalidation.",
+      "expected_evidence": [
+        "Exact source/dependency/configuration hashes and nonzero discovered cases",
+        "Raw positive/boundary/refusal/recovery results with independent oracle and review",
+        "Failed assertions, missing source/device/owner approval block acceptance"
+      ],
+      "closure": "All obligation-specific oracle clauses and relevant positive/boundary/refusal/recovery cases pass with named independent acceptance; missing prerequisites block."
+    },
+    "task-13": {
+      "owner": "abi-compute contract maintainer",
+      "depends_on": [
+        "TASK-02",
+        "TASK-03"
+      ],
+      "experiment": "Inject uncertain cancellation, malformed accelerator output and fallback cycles; assert reservations, privacy and model binding.",
+      "expected_evidence": [
+        "Exact source/dependency/configuration hashes and nonzero discovered cases",
+        "Raw positive/boundary/refusal/recovery results with independent oracle and review",
+        "Failed assertions, missing source/device/owner approval block acceptance"
+      ],
+      "closure": "All obligation-specific oracle clauses and relevant positive/boundary/refusal/recovery cases pass with named independent acceptance; missing prerequisites block."
+    },
+    "task-14": {
+      "owner": "Host GPU adapter maintainers",
+      "depends_on": [
+        "TASK-13"
+      ],
+      "experiment": "Execute real Metal/CUDA/Vulkan device matrix against independent CPU oracle including OOM/reset/cancel and transfer timings.",
+      "expected_evidence": [
+        "Exact source/dependency/configuration hashes and nonzero discovered cases",
+        "Raw positive/boundary/refusal/recovery results with independent oracle and review",
+        "Failed assertions, missing source/device/owner approval block acceptance"
+      ],
+      "closure": "All obligation-specific oracle clauses and relevant positive/boundary/refusal/recovery cases pass with named independent acceptance; missing prerequisites block."
+    },
+    "task-15": {
+      "owner": "Host neural-provider and TPU adapter maintainers",
+      "depends_on": [
+        "TASK-13"
+      ],
+      "experiment": "Execute fixed redistributable neural model/provider/TPU matrix; verify output, placement and authenticated export refusal.",
+      "expected_evidence": [
+        "Exact source/dependency/configuration hashes and nonzero discovered cases",
+        "Raw positive/boundary/refusal/recovery results with independent oracle and review",
+        "Failed assertions, missing source/device/owner approval block acceptance"
+      ],
+      "closure": "All obligation-specific oracle clauses and relevant positive/boundary/refusal/recovery cases pass with named independent acceptance; missing prerequisites block."
+    },
+    "task-16": {
+      "owner": "WDBX consensus/storage maintainer and ABI transport owner",
+      "depends_on": [
+        "TASK-02",
+        "TASK-04"
+      ],
+      "experiment": "Run three actual voters on separate hosts; kill leader, partition minority, fill disk and interrupt snapshots; reconcile acknowledged writes.",
+      "expected_evidence": [
+        "Exact source/dependency/configuration hashes and nonzero discovered cases",
+        "Raw positive/boundary/refusal/recovery results with independent oracle and review",
+        "Failed assertions, missing source/device/owner approval block acceptance"
+      ],
+      "closure": "All obligation-specific oracle clauses and relevant positive/boundary/refusal/recovery cases pass with named independent acceptance; missing prerequisites block."
+    },
+    "task-17": {
+      "owner": "Federation administrators and WDBX federation maintainer",
+      "depends_on": [
+        "TASK-04",
+        "TASK-16"
+      ],
+      "experiment": "Use independently administered hosts; revoke grants, replay/equivocate/rollback and reconnect with current deletion checks.",
+      "expected_evidence": [
+        "Exact source/dependency/configuration hashes and nonzero discovered cases",
+        "Raw positive/boundary/refusal/recovery results with independent oracle and review",
+        "Failed assertions, missing source/device/owner approval block acceptance"
+      ],
+      "closure": "All obligation-specific oracle clauses and relevant positive/boundary/refusal/recovery cases pass with named independent acceptance; missing prerequisites block."
+    },
+    "task-18": {
+      "owner": "WDBX offline API maintainer",
+      "depends_on": [
+        "TASK-04",
+        "TASK-05"
+      ],
+      "experiment": "Persist offline operations; reorder, duplicate and crash send/ack; reconnect after schema skew and deletion without resurrection.",
+      "expected_evidence": [
+        "Exact source/dependency/configuration hashes and nonzero discovered cases",
+        "Raw positive/boundary/refusal/recovery results with independent oracle and review",
+        "Failed assertions, missing source/device/owner approval block acceptance"
+      ],
+      "closure": "All obligation-specific oracle clauses and relevant positive/boundary/refusal/recovery cases pass with named independent acceptance; missing prerequisites block."
+    },
+    "task-19": {
+      "owner": "ABI authenticated service/schema owner",
+      "depends_on": [
+        "TASK-02",
+        "TASK-04",
+        "TASK-09",
+        "TASK-18"
+      ],
+      "experiment": "Exercise owner-reviewed ABI authenticated service schemas, scope spoofing, cancel boundaries, lost receipts and reader rollback.",
+      "expected_evidence": [
+        "Exact source/dependency/configuration hashes and nonzero discovered cases",
+        "Raw positive/boundary/refusal/recovery results with independent oracle and review",
+        "Failed assertions, missing source/device/owner approval block acceptance"
+      ],
+      "closure": "All obligation-specific oracle clauses and relevant positive/boundary/refusal/recovery cases pass with named independent acceptance; missing prerequisites block."
+    },
+    "task-20": {
+      "owner": "Independent security reviewer and affected subsystem maintainers",
+      "depends_on": [
+        "TASK-04",
+        "TASK-05",
+        "TASK-06",
+        "TASK-09",
+        "TASK-11",
+        "TASK-12",
+        "TASK-14",
+        "TASK-15",
+        "TASK-16",
+        "TASK-17",
+        "TASK-18",
+        "TASK-19"
+      ],
+      "experiment": "Run bounded fuzz and adversarial scenarios with independent exact-artifact security review and blocker retest.",
+      "expected_evidence": [
+        "Exact source/dependency/configuration hashes and nonzero discovered cases",
+        "Raw positive/boundary/refusal/recovery results with independent oracle and review",
+        "Failed assertions, missing source/device/owner approval block acceptance"
+      ],
+      "closure": "All obligation-specific oracle clauses and relevant positive/boundary/refusal/recovery cases pass with named independent acceptance; missing prerequisites block."
+    },
+    "task-21": {
+      "owner": "Native platform release maintainers",
+      "depends_on": [
+        "TASK-03",
+        "TASK-19",
+        "TASK-20"
+      ],
+      "experiment": "Execute all four native platform artifacts plus ABI/Studio path compatibility; test permissions, locks, recovery and rollback.",
+      "expected_evidence": [
+        "Exact source/dependency/configuration hashes and nonzero discovered cases",
+        "Raw positive/boundary/refusal/recovery results with independent oracle and review",
+        "Failed assertions, missing source/device/owner approval block acceptance"
+      ],
+      "closure": "All obligation-specific oracle clauses and relevant positive/boundary/refusal/recovery cases pass with named independent acceptance; missing prerequisites block."
+    },
+    "task-22": {
+      "owner": "Linux x64 and macOS ARM64 service operators",
+      "depends_on": [
+        "TASK-20",
+        "TASK-21"
+      ],
+      "experiment": "Run exact candidate for 30 consecutive days on both service targets; measure node-loss/revoke/delete/restore drills and acceptance thresholds.",
+      "expected_evidence": [
+        "Exact source/dependency/configuration hashes and nonzero discovered cases",
+        "Raw positive/boundary/refusal/recovery results with independent oracle and review",
+        "Failed assertions, missing source/device/owner approval block acceptance"
+      ],
+      "closure": "All obligation-specific oracle clauses and relevant positive/boundary/refusal/recovery cases pass with named independent acceptance; missing prerequisites block."
+    }
+  }
+}

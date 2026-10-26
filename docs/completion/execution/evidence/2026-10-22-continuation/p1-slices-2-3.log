@@ -1,0 +1,188 @@
+   Compiling abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx/crates/abi-wdbx)
+error[E0425]: cannot find type `AdmissionContext` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:14:50
+   |
+14 | fn fixture() -> (TrustState, VerificationReport, AdmissionContext) {
+   |                                                  ^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `AdmissionContext` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:57:19
+   |
+57 |     let context = AdmissionContext {
+   |                   ^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `ExpectedAdmission` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:58:19
+   |
+58 |         expected: ExpectedAdmission {
+   |                   ^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `SyntheticHostAuthority` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:74:25
+   |
+74 |         authority: Some(SyntheticHostAuthority {
+   |                         ^^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `CurrentPolicy` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:82:22
+   |
+82 |         policy: Some(CurrentPolicy {
+   |                      ^^^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `HostBudget` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:88:17
+   |
+88 |         budget: HostBudget {
+   |                 ^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `AdmissionReason` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:184:18
+    |
+184 |             Some(AdmissionReason::VerificationBindingMismatch)
+    |                  ^^^^^^^^^^^^^^^ use of undeclared type `AdmissionReason`
+    |
+help: consider importing this enum through its public re-export
+    |
+  3 + use crate::v3::episode::AdmissionReason;
+    |
+
+error[E0433]: cannot find type `AdmissionReason` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:265:17
+    |
+265 |             Err(AdmissionReason::Quota)
+    |                 ^^^^^^^^^^^^^^^ use of undeclared type `AdmissionReason`
+    |
+help: consider importing this enum through its public re-export
+    |
+  3 + use crate::v3::episode::AdmissionReason;
+    |
+
+warning: unused import: `super::*`
+ --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:3:5
+  |
+3 | use super::*;
+  |     ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+error[E0308]: mismatched types
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:37:63
+    |
+ 37 |             TrustCommand::new("register", Operation::Register(registration)).unwrap(),
+    |                                           ------------------- ^^^^^^^^^^^^ expected `Box<KeyRegistration>`, found `KeyRegistration`
+    |                                           |
+    |                                           arguments to this enum variant are incorrect
+    |
+    = note: expected struct `Box<KeyRegistration>`
+               found struct `KeyRegistration`
+    = note: for more on the distinction between the stack and the heap, read https://doc.rust-lang.org/book/ch15-01-box.html, https://doc.rust-lang.org/rust-by-example/std/box.html, and https://doc.rust-lang.org/std/boxed/index.html
+note: tuple variant defined here
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/trust/mod.rs:173:5
+    |
+173 |     Register(Box<KeyRegistration>),
+    |     ^^^^^^^^
+help: store this in the heap by calling `Box::new`
+    |
+ 37 |             TrustCommand::new("register", Operation::Register(Box::new(registration))).unwrap(),
+    |                                                               +++++++++            +
+
+error[E0433]: cannot find type `AdmissionSimulator` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:123:25
+    |
+123 |     let mut simulator = AdmissionSimulator::new();
+    |                         ^^^^^^^^^^^^^^^^^^ use of undeclared type `AdmissionSimulator`
+
+error[E0425]: cannot find function `evaluate_admission` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:125:20
+    |
+125 |     let decision = evaluate_admission(&report, &context, &current);
+    |                    ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `DecisionClass` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:126:34
+    |
+126 |     assert_eq!(decision.class(), DecisionClass::Eligible);
+    |                                  ^^^^^^^^^^^^^ use of undeclared type `DecisionClass`
+
+error[E0433]: cannot find type `AdmissionSimulator` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:179:29
+    |
+179 |         let mut simulator = AdmissionSimulator::new();
+    |                             ^^^^^^^^^^^^^^^^^^ use of undeclared type `AdmissionSimulator`
+
+error[E0425]: cannot find function `evaluate_admission` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:181:24
+    |
+181 |         let decision = evaluate_admission(&report, &context, &current);
+    |                        ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `AdmissionSimulator` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:212:29
+    |
+212 |         let mut simulator = AdmissionSimulator::new();
+    |                             ^^^^^^^^^^^^^^^^^^ use of undeclared type `AdmissionSimulator`
+
+error[E0425]: cannot find function `evaluate_admission` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:214:24
+    |
+214 |         let decision = evaluate_admission(&report, &context, &current);
+    |                        ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `DecisionClass` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:218:17
+    |
+218 |                 DecisionClass::Indeterminate
+    |                 ^^^^^^^^^^^^^ use of undeclared type `DecisionClass`
+
+error[E0433]: cannot find type `DecisionClass` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:220:17
+    |
+220 |                 DecisionClass::Rejected
+    |                 ^^^^^^^^^^^^^ use of undeclared type `DecisionClass`
+
+error[E0425]: cannot find function `evaluate_admission` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:236:20
+    |
+236 |     let decision = evaluate_admission(&report, &context, &old);
+    |                    ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `DecisionClass` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:237:34
+    |
+237 |     assert_eq!(decision.class(), DecisionClass::Eligible);
+    |                                  ^^^^^^^^^^^^^ use of undeclared type `DecisionClass`
+
+error[E0433]: cannot find type `AdmissionSimulator` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:240:25
+    |
+240 |     let mut simulator = AdmissionSimulator::new();
+    |                         ^^^^^^^^^^^^^^^^^^ use of undeclared type `AdmissionSimulator`
+
+error[E0425]: cannot find function `evaluate_admission` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:260:24
+    |
+260 |         let decision = evaluate_admission(&report, &context, &current);
+    |                        ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0433]: cannot find type `AdmissionSimulator` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:261:29
+    |
+261 |         let mut simulator = AdmissionSimulator::new();
+    |                             ^^^^^^^^^^^^^^^^^^ use of undeclared type `AdmissionSimulator`
+
+error[E0433]: cannot find type `CurrentConsent` in this scope
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:87:23
+   |
+87 |         consent: Some(CurrentConsent::NotRequired { epoch: 4 }),
+   |                       ^^^^^^^^^^^^^^ use of undeclared type `CurrentConsent`
+
+error[E0433]: cannot find type `SimulatedOutcome` in this scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:132:12
+    |
+132 |         Ok(SimulatedOutcome::Accepted(_))
+    |            ^^^^^^^^^^^^^^^^ use of undeclared type `SimulatedOutcome`
+
+Some errors have detailed explanations: E0308, E0422, E0425, E0433.
+For more information about an error, try `rustc --explain E0308`.
+warning: `abi-wdbx` (lib test) generated 1 warning
+error: could not compile `abi-wdbx` (lib test) due to 25 previous errors; 1 warning emitted

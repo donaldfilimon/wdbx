@@ -1,0 +1,185 @@
+{
+  "version": 1,
+  "qualification": "local execution evidence only; no requirement promotion",
+  "date": "2026-10-22",
+  "baseline_head": "36bc99b699de60be6c07b2838d74580084fb5d4c",
+  "source_coverage": "changed implementation/tests and selected dependency pins; reconstruct unchanged tracked files from baseline",
+  "environment": {
+    "rustc": "1.99.1 (58cf8f9c3 2026-10-13)",
+    "cargo": "1.99.1 (5f94df478 2026-08-27)",
+    "os": "macOS 27.2 (26B118) arm64",
+    "python": "3.15.0",
+    "system_python": "3.9.6"
+  },
+  "checks": [
+    {
+      "command": "RUSTUP_TOOLCHAIN=1.99.1 bash tools/check.sh",
+      "exit_code": 0,
+      "rust_passed": 1095,
+      "rust_ignored": 0,
+      "python_witness_passed": [
+        52,
+        28
+      ]
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 tools/check_completion.py",
+      "exit_code": 0
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tools/tests -p test_check_completion.py",
+      "exit_code": 0,
+      "passed": 37
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 tools/check_completion_execution.py",
+      "exit_code": 0
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tools/tests -p test_check_completion_execution.py",
+      "exit_code": 0,
+      "passed": 20
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 /usr/bin/python3 -m unittest discover -s tools/tests -p test_check_completion_execution.py",
+      "exit_code": 0,
+      "passed": 20
+    }
+  ],
+  "sources": [
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/facade.rs",
+      "sha256": "593b2b1c35a9fd3df489639be9911bcc1e8772eb4d66aebb6e7ad240bd70e6c3"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/ledger.rs",
+      "sha256": "753a8c400796a70e61d310ce1e86c47509083edb9fe8b4bc096222182b719df0"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/mod.rs",
+      "sha256": "183fa078923aba0d0ddcb3a30e377c43956ab2006d139652e7ee69b51df78e59"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/mod.rs",
+      "sha256": "5db34dbc195bd3124155da0375e3b5d93a04fdddef646529e70f86db79f986d5"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/profile.rs",
+      "sha256": "65d5ca44be6b76611a25e20a1b328ff6d177436f683594c53775481f8ae43ae3"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/tests.rs",
+      "sha256": "882c05e8ada9827143172f97f245eb0e3df54ebbc88ff53c2a478a396ceb7d63"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/episode/cose/trust.rs",
+      "sha256": "4ace7beb5f0b3fb61d725975c70c1d743435e90a5c9db4e8a4767cac683f2592"
+    },
+    {
+      "path": "crates/abi-wdbx/tests/v3_complete_episode_authenticated.rs",
+      "sha256": "d114f5e5871bed914dde04d6fff9258cc18b47616778c046593bebbb7c9c625a"
+    },
+    {
+      "path": "crates/abi-wdbx/tests/v3_complete_episode_ledger.rs",
+      "sha256": "c58e1b2873f92ad5a764981713aff393001a025d27ba884b4844a1269895fb4f"
+    },
+    {
+      "path": "tools/check_completion_execution.py",
+      "sha256": "9d52b16b4543badb1ac206faa1c6d7c2e2a13a29079c747c54ffeaca6957e6ff"
+    },
+    {
+      "path": "tools/tests/test_check_completion_execution.py",
+      "sha256": "c13332d8dfcd4e4b9025faeb91012e62f784811ee28c76cae298a00ff6f18f73"
+    },
+    {
+      "path": "docs/completion/execution/register-v1.json",
+      "sha256": "e20d4d8aea8a4ff209ad321960ed3efa2ec26b60303e8c688175b424fccf304e"
+    },
+    {
+      "path": "docs/completion/execution/candidate-paths-v1.json",
+      "sha256": "fcfab38a40949949aaa4adb8a8983d38dce28f4415b61923c6652c7537aab5a8"
+    },
+    {
+      "path": "Cargo.lock",
+      "sha256": "e2fac4f3f125cecc771a0dc7d6f33eb1629972b3979ac0771849fdf61368680e"
+    },
+    {
+      "path": "Cargo.toml",
+      "sha256": "f8cb4e0cc0e74b16620b686dfd314599e12b4fa750bfed50beef17acbf62a57d"
+    },
+    {
+      "path": "rust-toolchain.toml",
+      "sha256": "511d40d52e2c79df3d3b5c724f47325141ee83c74a6c112a37cb8114e8fb7698"
+    },
+    {
+      "path": "tools/check.sh",
+      "sha256": "909b3264286a474fc159e1e25ecea38774602864fdb1f552ba8d1f6df50104db"
+    },
+    {
+      "path": "docs/contracts/README.md",
+      "sha256": "3f9b2f66399ab4bf8659b0c61ca3ef42cbf7d59b4a68b7714253b02d93cfa15f"
+    },
+    {
+      "path": "docs/completion/execution/progress.md",
+      "sha256": "a989c4081d9b303d97a53ee75661dd19158f9e6923e2ab2098eb673562cb5540"
+    },
+    {
+      "path": "docs/completion/execution/owner-review.md",
+      "sha256": "7bf8c6b7ced8f09ecd401c18f3cc3caf373de5caab94b3f993ed4499dcf16874"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22/execution-check.log",
+      "sha256": "4caf2228cf4a093dc2a4b4da635e0969c3f815713a49183af2e41c9080415189"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22/execution-tests-system-python.log",
+      "sha256": "b7620c06c5b5fbd4b30426152577ba7d2bba2ac49c63afd63ca887bc7df7d9af"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22/execution-tests.log",
+      "sha256": "a3573d4ec4d121cb5246908e5c0b0ef51c28e68fcb455091b2e7e7f0bd0f7da6"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22/frozen-contract-check.log",
+      "sha256": "2f88e13061eb9a6f8cf0ae9d4a6efe063939a54ef1bb299cba4d2554389365d4"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22/frozen-contract-tests.log",
+      "sha256": "c544b5ac40c284d679160422009d6c4e5f00e7076ac4ab7b3e5dd200f0ef723b"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22/p1-structure-vector.json",
+      "sha256": "49e99dab8ba1f43d32f58dd5bb84c1128439a5a77a5de48ac3f535f27c3f0015"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22/p1-structure-vector.py",
+      "sha256": "acdcdf1049751d816b15308db36c655f6b91e14bb78fd92e1cd533ef0df61fbc"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22/review-summary.md",
+      "sha256": "11b11291975df6fdc1db6801af335ececf5a5e3c15aa73098cf5c1e2c011cec6"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22/root-gate-clippy-failed.log",
+      "sha256": "b8705d23deda4eae7e5f71b851d822fe44b30a2c4c6aec84fc0a44b2f512c98b"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22/root-gate-final.log",
+      "sha256": "5c491fa40f89c56dc09738758439b5b0ee94c712e8388184b95423d26c615923"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22/root-gate-initial-failed.log",
+      "sha256": "6c2a2081dae19d4232d631281d58bc3642ba411b4c5e64c850e2416dcc0e5de6"
+    }
+  ],
+  "open": [
+    "163 frozen C0 requirements remain open",
+    "68 requirement mappings unknown; 95 are unqualified candidates",
+    "ABI owner ratification and reviewed crypto dependencies/independent signature verifier",
+    "durable governance and complete-episode integration; packages 3-10",
+    "research, consumer/platform/private staging and elapsed operation"
+  ],
+  "commits_created": 0
+}

@@ -1,0 +1,318 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFF.
+======================================================================
+FAIL: test_altered_source_hash (red_tests.ReleaseContract.test_altered_source_hash)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 100, in test_altered_source_hash
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_boolean_version (red_tests.ReleaseContract.test_boolean_version)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 143, in test_boolean_version
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_coordinated_shrink (red_tests.ReleaseContract.test_coordinated_shrink)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 42, in test_coordinated_shrink
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_dependency (red_tests.ReleaseContract.test_dependency)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 92, in test_dependency
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_directory_symlink (red_tests.ReleaseContract.test_directory_symlink)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 123, in test_directory_symlink
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_duplicate (red_tests.ReleaseContract.test_duplicate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 46, in test_duplicate
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_duplicate_json_key (red_tests.ReleaseContract.test_duplicate_json_key)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 149, in test_duplicate_json_key
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_extra_row_success (red_tests.ReleaseContract.test_extra_row_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 135, in test_extra_row_success
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_extra_top_level_success (red_tests.ReleaseContract.test_extra_top_level_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 139, in test_extra_top_level_success
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_fabricated_success (red_tests.ReleaseContract.test_fabricated_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 55, in test_fabricated_success
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_invalid_utf8 (red_tests.ReleaseContract.test_invalid_utf8)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 127, in test_invalid_utf8
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_justified_but_unapproved_exclusion (red_tests.ReleaseContract.test_justified_but_unapproved_exclusion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 67, in test_justified_but_unapproved_exclusion
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_missing_artifact (red_tests.ReleaseContract.test_missing_artifact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 59, in test_missing_artifact
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_missing_protocol (red_tests.ReleaseContract.test_missing_protocol)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 112, in test_missing_protocol
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_missing_reference (red_tests.ReleaseContract.test_missing_reference)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 96, in test_missing_reference
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_missing_requirement (red_tests.ReleaseContract.test_missing_requirement)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 37, in test_missing_requirement
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_missing_test (red_tests.ReleaseContract.test_missing_test)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 71, in test_missing_test
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_oracle_substitution (red_tests.ReleaseContract.test_oracle_substitution)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 104, in test_oracle_substitution
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_oversized (red_tests.ReleaseContract.test_oversized)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 88, in test_oversized
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_parent_escape (red_tests.ReleaseContract.test_parent_escape)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 75, in test_parent_escape
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_policy_promotion (red_tests.ReleaseContract.test_policy_promotion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 131, in test_policy_promotion
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_protocol_success_forgery (red_tests.ReleaseContract.test_protocol_success_forgery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 108, in test_protocol_success_forgery
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_removed_inspection_anchor (red_tests.ReleaseContract.test_removed_inspection_anchor)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 116, in test_removed_inspection_anchor
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_source (red_tests.ReleaseContract.test_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 51, in test_source
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_symlink (red_tests.ReleaseContract.test_symlink)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 84, in test_symlink
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_unjustified_exclusion (red_tests.ReleaseContract.test_unjustified_exclusion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_substrate_release.py", line 63, in test_unjustified_exclusion
+    self.rejected()
+    ~~~~~~~~~~~~~^^
+  File "tools/tests/test_check_substrate_release.py", line 30, in rejected
+    self.assertTrue(checker.validate(self.root, live=False))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+----------------------------------------------------------------------
+Ran 27 tests in 0.240s
+
+FAILED (failures=26)
+Deliberate red control: validator replaced with initial accept-all stub; no product behavior changed. Traceback checkout prefixes removed.

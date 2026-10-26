@@ -1,0 +1,4554 @@
+{
+  "version": 1,
+  "method": "Reviewed v6 section/profile prose classification; all decisions source-linked; no keyword-only inclusion rule.",
+  "decisions": [
+    {
+      "source_ref": "v6:81",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:83",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:85",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:89",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:91",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:95",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:97",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:99",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:103",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:105",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:112",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:114",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:118",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Table header names columns; it is not a behavioral clause."
+    },
+    {
+      "source_ref": "v6:119",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:120",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:121",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:122",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:123",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:124",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:126",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:130",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:132",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:137",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:139",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Table header names columns; it is not a behavioral clause."
+    },
+    {
+      "source_ref": "v6:140",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:141",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:142",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:143",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:144",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:145",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:146",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:147",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:148",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:150",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:155",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Table header names columns; it is not a behavioral clause."
+    },
+    {
+      "source_ref": "v6:156",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:157",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:158",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:159",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:160",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:161",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:162",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:163",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:164",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:165",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:166",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:167",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:168",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:169",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:170",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:171",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:172",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:173",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:174",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:176",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:181",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:184",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:185",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:186",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:187",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:188",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:189",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:190",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:191",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:192",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:193",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:194",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:195",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:196",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:197",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:198",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:199",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:200",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:203",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:205",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:212",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:214",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:216",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:219",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:220",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:221",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:222",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:223",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:226",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:230",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:232",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:234",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:238",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:243",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:245",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:247",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:249",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:251",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:258",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:260",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:263",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:264",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:267",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:271",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:273",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:277",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:279",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:286",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:288",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:292",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:294",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:298",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:300",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:307",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Table header names columns; it is not a behavioral clause."
+    },
+    {
+      "source_ref": "v6:308",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:309",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:310",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:311",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:313",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:317",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:319",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:323",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:325",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:329",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Table header names columns; it is not a behavioral clause."
+    },
+    {
+      "source_ref": "v6:330",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:331",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:332",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:333",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:334",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:335",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:336",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:337",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:338",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:343",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:345",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:347",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:349",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:356",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:360",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:362",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:364",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:368",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:370",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:377",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:379",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:381",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:385",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:387",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:389",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:393",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:395",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:400",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:402",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:404",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:406",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:408",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:415",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:418",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:419",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:420",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:421",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:422",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:423",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:424",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:425",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:428",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:433",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:434",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:435",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:438",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:440",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:444",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:446",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:453",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:455",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:459",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:461",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:463",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:468",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:470",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:472",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:474",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:476",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:481",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:483",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:485",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:487",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:492",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:494",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:496",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:498",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:500",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:505",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:507",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:509",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:511",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:513",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:518",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:520",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:522",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:524",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:531",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:533",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:538",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:539",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:540",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:541",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:542",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:543",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:544",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:545",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:546",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:547",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:548",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:549",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:552",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:554",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:558",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:560",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:565",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:567",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Table header names columns; it is not a behavioral clause."
+    },
+    {
+      "source_ref": "v6:568",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:569",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:570",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:571",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:572",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:573",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:574",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:575",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:576",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:578",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:580",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:582",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:587",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:589",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:591",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:593",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:598",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:600",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:602",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:604",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:606",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:611",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:613",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:615",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:617",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:619",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:626",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:628",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:632",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:634",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:638",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:640",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:644",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:651",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:653",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:657",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:659",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:663",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:665",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:669",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:676",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:678",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:682",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:684",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:688",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:690",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:692",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:699",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:701",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:705",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:707",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:711",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:713",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:715",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:722",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:724",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:728",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:730",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:734",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:736",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:740",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:747",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:749",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:753",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:755",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:759",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:761",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:768",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:771",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:772",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:773",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:774",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:775",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:777",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:778",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:779",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:780",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:781",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:782",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:785",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:789",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:791",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:795",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:800",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:802",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:804",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:806",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:808",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:813",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:815",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:817",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:819",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:821",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:826",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:828",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:830",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:832",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:834",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:839",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:841",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:843",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:845",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:847",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:854",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:856",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:859",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:860",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:863",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:867",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:869",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:873",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:875",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:882",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:884",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:888",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:890",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:892",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:896",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:898",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:905",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:907",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:911",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:913",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:917",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:919",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:926",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:928",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:930",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:934",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:936",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:940",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:942",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:944",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:952",
+      "classification": "inspection-only",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:953",
+      "classification": "inspection-only",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:954",
+      "classification": "inspection-only",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:957",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:959",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:963",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:965",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:969",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:971",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:975",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:977",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:984",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:986",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:990",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:992",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:996",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:998",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1002",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1004",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1009",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1011",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1013",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1015",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1017",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1024",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1026",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1030",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1032",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1036",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1038",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1042",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1044",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1051",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1053",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1057",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1061",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1063",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1067",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1069",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1071",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1078",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1080",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1084",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1086",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Table header names columns; it is not a behavioral clause."
+    },
+    {
+      "source_ref": "v6:1087",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1088",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1089",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1090",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1091",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1092",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1093",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1094",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1095",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1096",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1097",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1098",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1099",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1100",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1102",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1106",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1108",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1115",
+      "classification": "excluded-profile-obligation",
+      "profile": "explorer-ui",
+      "reason": "Explorer UI is explicitly excluded by the approved release scope."
+    },
+    {
+      "source_ref": "v6:1117",
+      "classification": "excluded-profile-obligation",
+      "profile": "explorer-ui",
+      "reason": "Explorer UI is explicitly excluded by the approved release scope."
+    },
+    {
+      "source_ref": "v6:1119",
+      "classification": "excluded-profile-obligation",
+      "profile": "explorer-ui",
+      "reason": "Explorer UI is explicitly excluded by the approved release scope."
+    },
+    {
+      "source_ref": "v6:1123",
+      "classification": "behavior-obligation",
+      "profile": "substrate-operations",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1125",
+      "classification": "behavior-obligation",
+      "profile": "substrate-operations",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1127",
+      "classification": "behavior-obligation",
+      "profile": "substrate-operations",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1131",
+      "classification": "behavior-obligation",
+      "profile": "substrate-operations",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1133",
+      "classification": "behavior-obligation",
+      "profile": "substrate-operations",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1140",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1142",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1146",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1148",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1152",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1154",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1158",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1160",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1163",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1164",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1165",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1166",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1167",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1170",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1175",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1177",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1179",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1181",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1188",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1190",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1194",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1196",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1200",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1202",
+      "classification": "behavior-obligation",
+      "profile": "substrate",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1207",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-profile-only",
+      "reason": "Mixed conformance decisions apply only to their named affected storage/geometry/cluster/compute/privacy/release profile; unrelated work is not blocked."
+    },
+    {
+      "source_ref": "v6:1209",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-profile-only",
+      "reason": "Mixed conformance decisions apply only to their named affected storage/geometry/cluster/compute/privacy/release profile; unrelated work is not blocked."
+    },
+    {
+      "source_ref": "v6:1210",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-profile-only",
+      "reason": "Mixed conformance decisions apply only to their named affected storage/geometry/cluster/compute/privacy/release profile; unrelated work is not blocked."
+    },
+    {
+      "source_ref": "v6:1211",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Decision applies only to excluded Specimen research profile; it cannot gate substrate Task 2."
+    },
+    {
+      "source_ref": "v6:1212",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Decision applies only to excluded Specimen research profile; it cannot gate substrate Task 2."
+    },
+    {
+      "source_ref": "v6:1213",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Decision applies only to excluded Specimen research profile; it cannot gate substrate Task 2."
+    },
+    {
+      "source_ref": "v6:1214",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Decision applies only to excluded Specimen research profile; it cannot gate substrate Task 2."
+    },
+    {
+      "source_ref": "v6:1215",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-profile-only",
+      "reason": "Mixed conformance decisions apply only to their named affected storage/geometry/cluster/compute/privacy/release profile; unrelated work is not blocked."
+    },
+    {
+      "source_ref": "v6:1216",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-profile-only",
+      "reason": "Mixed conformance decisions apply only to their named affected storage/geometry/cluster/compute/privacy/release profile; unrelated work is not blocked."
+    },
+    {
+      "source_ref": "v6:1217",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-profile-only",
+      "reason": "Mixed conformance decisions apply only to their named affected storage/geometry/cluster/compute/privacy/release profile; unrelated work is not blocked."
+    },
+    {
+      "source_ref": "v6:1218",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-profile-only",
+      "reason": "Mixed conformance decisions apply only to their named affected storage/geometry/cluster/compute/privacy/release profile; unrelated work is not blocked."
+    },
+    {
+      "source_ref": "v6:1219",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-profile-only",
+      "reason": "Mixed conformance decisions apply only to their named affected storage/geometry/cluster/compute/privacy/release profile; unrelated work is not blocked."
+    },
+    {
+      "source_ref": "v6:1220",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-profile-only",
+      "reason": "Mixed conformance decisions apply only to their named affected storage/geometry/cluster/compute/privacy/release profile; unrelated work is not blocked."
+    },
+    {
+      "source_ref": "v6:1222",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-profile-only",
+      "reason": "Mixed conformance decisions apply only to their named affected storage/geometry/cluster/compute/privacy/release profile; unrelated work is not blocked."
+    },
+    {
+      "source_ref": "v6:1224",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-profile-only",
+      "reason": "Mixed conformance decisions apply only to their named affected storage/geometry/cluster/compute/privacy/release profile; unrelated work is not blocked."
+    },
+    {
+      "source_ref": "v6:1229",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1233",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Table header names columns; it is not a behavioral clause."
+    },
+    {
+      "source_ref": "v6:1234",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1235",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1236",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1237",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1238",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1239",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1240",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1241",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1242",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1243",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1244",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1246",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1250",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1252",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1256",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1258",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1262",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1264",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1268",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1270",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1274",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1276",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1280",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Table header names columns; it is not a behavioral clause."
+    },
+    {
+      "source_ref": "v6:1281",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1282",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1283",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1284",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1285",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1286",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1287",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1288",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1290",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1294",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1296",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1298",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1302",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1304",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1308",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1311",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1312",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1313",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1314",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1315",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1316",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1317",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1318",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1319",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1320",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1321",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1322",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1323",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1324",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1325",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1326",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1327",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1328",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1329",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1330",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1331",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1332",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1335",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1340",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1341",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1342",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1343",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1344",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1345",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1346",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1347",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1348",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1349",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1350",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1351",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1352",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1353",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1354",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1355",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1356",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1357",
+      "classification": "inspection-only",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1360",
+      "classification": "behavior-obligation",
+      "profile": "affected-substrate-schema-only",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1365",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1367",
+      "classification": "inspection-only",
+      "profile": "substrate-adversarial",
+      "reason": "Table header names columns; it is not a behavioral clause."
+    },
+    {
+      "source_ref": "v6:1368",
+      "classification": "inspection-only",
+      "profile": "substrate-adversarial",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1369",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1370",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1371",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1372",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1373",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1374",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1375",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1376",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1377",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1378",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1379",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1380",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1381",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1382",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1383",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1384",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1385",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1386",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1387",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1388",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1389",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1390",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1391",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1392",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1393",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1394",
+      "classification": "behavior-obligation",
+      "profile": "substrate-adversarial",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1399",
+      "classification": "behavior-obligation",
+      "profile": "substrate-compatibility",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1401",
+      "classification": "inspection-only",
+      "profile": "substrate-compatibility",
+      "reason": "Table header names columns; it is not a behavioral clause."
+    },
+    {
+      "source_ref": "v6:1402",
+      "classification": "inspection-only",
+      "profile": "substrate-compatibility",
+      "reason": "Schema/example syntax, navigation or structural markup; behavior is carried by surrounding prose."
+    },
+    {
+      "source_ref": "v6:1403",
+      "classification": "behavior-obligation",
+      "profile": "substrate-compatibility",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1404",
+      "classification": "behavior-obligation",
+      "profile": "substrate-compatibility",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1405",
+      "classification": "behavior-obligation",
+      "profile": "substrate-compatibility",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1406",
+      "classification": "behavior-obligation",
+      "profile": "substrate-compatibility",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1407",
+      "classification": "behavior-obligation",
+      "profile": "substrate-compatibility",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1408",
+      "classification": "behavior-obligation",
+      "profile": "substrate-compatibility",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1409",
+      "classification": "behavior-obligation",
+      "profile": "substrate-compatibility",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1410",
+      "classification": "behavior-obligation",
+      "profile": "substrate-compatibility",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1411",
+      "classification": "behavior-obligation",
+      "profile": "substrate-compatibility",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1412",
+      "classification": "behavior-obligation",
+      "profile": "substrate-compatibility",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1413",
+      "classification": "behavior-obligation",
+      "profile": "substrate-compatibility",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1414",
+      "classification": "behavior-obligation",
+      "profile": "substrate-compatibility",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1415",
+      "classification": "behavior-obligation",
+      "profile": "substrate-compatibility",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1416",
+      "classification": "behavior-obligation",
+      "profile": "substrate-compatibility",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1417",
+      "classification": "behavior-obligation",
+      "profile": "substrate-compatibility",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1418",
+      "classification": "behavior-obligation",
+      "profile": "substrate-compatibility",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1419",
+      "classification": "behavior-obligation",
+      "profile": "substrate-compatibility",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1420",
+      "classification": "behavior-obligation",
+      "profile": "substrate-compatibility",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1421",
+      "classification": "behavior-obligation",
+      "profile": "substrate-compatibility",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1422",
+      "classification": "behavior-obligation",
+      "profile": "substrate-compatibility",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1423",
+      "classification": "behavior-obligation",
+      "profile": "substrate-compatibility",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1424",
+      "classification": "behavior-obligation",
+      "profile": "substrate-compatibility",
+      "reason": "Observable contract prose in reviewed substrate section; normative irrespective of modal keywords."
+    },
+    {
+      "source_ref": "v6:1430",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1432",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1436",
+      "classification": "inspection-only",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1437",
+      "classification": "inspection-only",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1438",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1439",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1440",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1441",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1442",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1443",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1444",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1445",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1446",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1447",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1448",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1449",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1450",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1451",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1452",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1453",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1454",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1455",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1456",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1457",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1458",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1459",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1460",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1461",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1462",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1463",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1467",
+      "classification": "inspection-only",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1468",
+      "classification": "inspection-only",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1469",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1470",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1471",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1472",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1473",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1474",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1475",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1476",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1477",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1478",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1479",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1480",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1481",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1482",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1483",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1484",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1485",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1486",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1487",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1488",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1489",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1490",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1491",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1495",
+      "classification": "inspection-only",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1496",
+      "classification": "inspection-only",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1497",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1498",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1499",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1500",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1501",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1502",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1503",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1504",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1505",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1506",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1507",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1508",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1509",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1510",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1511",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1512",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1513",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1514",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1515",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1516",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1517",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1518",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1519",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1520",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1525",
+      "classification": "excluded-profile-obligation",
+      "profile": "specimen-research",
+      "reason": "Original Specimen runtime/equality/voting/ATP/learning/graves and its schema are excluded research; compatibility only is Task 21."
+    },
+    {
+      "source_ref": "v6:1530",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1532",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1533",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1534",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1535",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1536",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1537",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1538",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1539",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1540",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1541",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1542",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1543",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1544",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1545",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1546",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1547",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1548",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1549",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1550",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1551",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1552",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1553",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1554",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1555",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1556",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1557",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1558",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1559",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1560",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1561",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1562",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1563",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1564",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1565",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1566",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1567",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1568",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1569",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1570",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1571",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1572",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1573",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1574",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1575",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1576",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1577",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1578",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1579",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1580",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1581",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1582",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1583",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1584",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1585",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1586",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1587",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1588",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1589",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1590",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1591",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "v5 task-index cross-reference only; not an independently adopted release obligation."
+    },
+    {
+      "source_ref": "v6:1598",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Bibliography/authoring evidence, not product behavior; original-source availability remains separately recorded."
+    },
+    {
+      "source_ref": "v6:1600",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Bibliography/authoring evidence, not product behavior; original-source availability remains separately recorded."
+    },
+    {
+      "source_ref": "v6:1602",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Bibliography/authoring evidence, not product behavior; original-source availability remains separately recorded."
+    },
+    {
+      "source_ref": "v6:1604",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Bibliography/authoring evidence, not product behavior; original-source availability remains separately recorded."
+    },
+    {
+      "source_ref": "v6:1606",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Bibliography/authoring evidence, not product behavior; original-source availability remains separately recorded."
+    },
+    {
+      "source_ref": "v6:1607",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Bibliography/authoring evidence, not product behavior; original-source availability remains separately recorded."
+    },
+    {
+      "source_ref": "v6:1608",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Bibliography/authoring evidence, not product behavior; original-source availability remains separately recorded."
+    },
+    {
+      "source_ref": "v6:1609",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Bibliography/authoring evidence, not product behavior; original-source availability remains separately recorded."
+    },
+    {
+      "source_ref": "v6:1610",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Bibliography/authoring evidence, not product behavior; original-source availability remains separately recorded."
+    },
+    {
+      "source_ref": "v6:1611",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Bibliography/authoring evidence, not product behavior; original-source availability remains separately recorded."
+    },
+    {
+      "source_ref": "v6:1612",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Bibliography/authoring evidence, not product behavior; original-source availability remains separately recorded."
+    },
+    {
+      "source_ref": "v6:1613",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Bibliography/authoring evidence, not product behavior; original-source availability remains separately recorded."
+    },
+    {
+      "source_ref": "v6:1614",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Bibliography/authoring evidence, not product behavior; original-source availability remains separately recorded."
+    },
+    {
+      "source_ref": "v6:1616",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Bibliography/authoring evidence, not product behavior; original-source availability remains separately recorded."
+    },
+    {
+      "source_ref": "v6:1620",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Bibliography/authoring evidence, not product behavior; original-source availability remains separately recorded."
+    },
+    {
+      "source_ref": "v6:1622",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Bibliography/authoring evidence, not product behavior; original-source availability remains separately recorded."
+    },
+    {
+      "source_ref": "v6:1624",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Bibliography/authoring evidence, not product behavior; original-source availability remains separately recorded."
+    },
+    {
+      "source_ref": "v6:1626",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Bibliography/authoring evidence, not product behavior; original-source availability remains separately recorded."
+    },
+    {
+      "source_ref": "v6:1628",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Bibliography/authoring evidence, not product behavior; original-source availability remains separately recorded."
+    },
+    {
+      "source_ref": "v6:1632",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Bibliography/authoring evidence, not product behavior; original-source availability remains separately recorded."
+    },
+    {
+      "source_ref": "v6:1634",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Bibliography/authoring evidence, not product behavior; original-source availability remains separately recorded."
+    },
+    {
+      "source_ref": "v6:1636",
+      "classification": "inspection-only",
+      "profile": "substrate",
+      "reason": "Bibliography/authoring evidence, not product behavior; original-source availability remains separately recorded."
+    }
+  ]
+}

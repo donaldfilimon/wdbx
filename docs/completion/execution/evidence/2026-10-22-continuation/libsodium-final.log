@@ -1,0 +1,408 @@
+............
+----------------------------------------------------------------------
+Ran 12 tests in 0.249s
+
+OK
+    Blocking waiting for file lock on build directory
+   Compiling abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx/crates/abi-wdbx)
+warning: unused import: `simulator::AdmissionSimulator`
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/mod.rs:11:16
+   |
+11 | pub(super) use simulator::AdmissionSimulator;
+   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `abi-wdbx` (lib) generated 1 warning (run `cargo fix --lib -p abi-wdbx` to apply 1 suggestion)
+warning: missing documentation for the crate
+   --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:1:1
+    |
+  1 | / #[path = "support/dyadic_reference.rs"]
+  2 | | mod dyadic_reference;
+  3 | | #[path = "support/spatial_oracle.rs"]
+  4 | | mod spatial_oracle;
+...   |
+219 | | }
+    | |_^
+    |
+    = note: requested on the command line with `-W missing-docs`
+
+warning: `abi-wdbx` (test "wdbx_3d_oracle") generated 1 warning
+warning: function `rank_fixture` is never used
+   --> crates/abi-wdbx/tests/support/dimension_ranking.rs:519:8
+    |
+519 | pub fn rank_fixture(fixture: &Fixture) -> DimensionRanking {
+    |        ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `digests_of` is never used
+   --> crates/abi-wdbx/tests/support/dimension_ranking.rs:530:8
+    |
+530 | pub fn digests_of(ranking: &DimensionRanking) -> Vec<[u8; 32]> {
+    |        ^^^^^^^^^^
+
+warning: function `labels_of` is never used
+   --> crates/abi-wdbx/tests/support/dimension_ranking.rs:540:8
+    |
+540 | pub fn labels_of(ranking: &DimensionRanking, dimension: EvidenceDimension) -> Vec<&'static str> {
+    |        ^^^^^^^^^
+
+warning: function `label_of` is never used
+   --> crates/abi-wdbx/tests/support/dimension_ranking.rs:550:8
+    |
+550 | pub fn label_of(
+    |        ^^^^^^^^
+
+warning: function `expected_lifecycle_signal` is never used
+   --> crates/abi-wdbx/tests/support/dimension_ranking.rs:568:8
+    |
+568 | pub fn expected_lifecycle_signal(
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `vector_arm` is never used
+   --> crates/abi-wdbx/tests/support/dimension_ranking.rs:597:8
+    |
+597 | pub fn vector_arm(fixture: &Fixture) -> (Vec<VectorHit>, Vec<[u8; 32]>) {
+    |        ^^^^^^^^^^
+
+warning: `abi-wdbx` (test "v3_vector_adapter") generated 6 warnings
+warning: missing documentation for the crate
+   --> crates/abi-wdbx/tests/wdbx_3d_numeric.rs:1:1
+    |
+  1 | / use abi_wdbx::{
+  2 | |     Point3D,
+  3 | |     spatial3d::{Point3, Radius, SpatialError},
+  4 | | };
+...   |
+114 | |     );
+115 | | }
+    | |_^
+    |
+    = note: requested on the command line with `-W missing-docs`
+
+warning: `abi-wdbx` (test "wdbx_3d_numeric") generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 13.62s
+     Running unittests src/lib.rs (target/debug/deps/abi_wdbx-9e84c1c4007efe3f)
+
+running 57 tests
+test v3::complete_episode::crypto::admission::scenarios::current_scope_grants_cannot_be_inferred_from_mathematical_key_presence ... ok
+test v3::complete_episode::crypto::admission::scenarios::decision_binds_current_trust_digest_even_when_revisions_and_grants_are_equal ... ok
+test v3::complete_episode::crypto::admission::scenarios::erasure_retains_tombstones_and_both_identity_indexes_without_resurrection ... ok
+test v3::complete_episode::crypto::admission::scenarios::historical_lookup_rejects_current_foreign_namespace_and_reused_host_token ... ok
+test v3::complete_episode::crypto::admission::scenarios::competing_write_and_changed_current_decision_state_cannot_commit_old_eligibility ... ok
+test v3::complete_episode::crypto::admission::scenarios::checked_writer_overflow_and_backdated_compromise_claims_never_authorize ... ok
+test v3::complete_episode::crypto::admission::scenarios::invalid_or_unverifiable_math_cannot_create_or_replay_acceptance ... ok
+test v3::complete_episode::crypto::admission::scenarios::replay_cannot_substitute_a_different_trust_namespace_for_same_signed_bytes ... ok
+test v3::complete_episode::crypto::admission::scenarios::a_one_record_host_budget_refuses_a_second_identity_and_keeps_the_first ... ok
+test v3::complete_episode::crypto::admission::scenarios::signed_required_consent_matches_current_evidence_and_never_infers_exemption ... ok
+test v3::complete_episode::crypto::admission::scenarios::unavailable_originals_preserve_receipt_and_indexes_without_faking_exact_replay ... ok
+test v3::complete_episode::crypto::admission::tests::pure_evaluation_never_changes_the_simulator_and_acceptance_retains_originals ... ok
+test v3::complete_episode::crypto::admission::tests::revocation_between_evaluation_and_commit_cannot_use_the_old_key_snapshot ... ok
+test v3::complete_episode::crypto::admission::tests::host_zero_budget_refuses_new_work_without_reserving_ids ... ok
+test v3::complete_episode::crypto::admission::scenarios::changed_signature_payload_and_either_identity_collision_never_replay ... ok
+test v3::complete_episode::crypto::admission::scenarios::eligible_decision_cannot_transfer_to_other_verified_bytes_or_new_policy_epochs ... ok
+test v3::complete_episode::crypto::admission::scenarios::historical_retry_after_retire_or_revoke_uses_fresh_read_access_not_write_permission ... ok
+test v3::complete_episode::crypto::tests::bounds_and_zero_caller_limits_are_respected ... ok
+test v3::complete_episode::crypto::tests::depth_32_is_syntax_only_while_depth_33_exhausts_the_reader ... ok
+test v3::complete_episode::crypto::tests::each_payload_decoder_limit_keeps_its_zero_semantics ... ok
+test v3::complete_episode::crypto::tests::every_container_truncation_and_trailing_bytes_fail ... ok
+test v3::complete_episode::crypto::tests::exact_p1_preserves_originals_and_sig_structure ... ok
+test v3::complete_episode::crypto::tests::exact_structure_budget_and_oversized_declared_lengths ... ok
+test v3::complete_episode::crypto::tests::malformed_payload_and_static_diagnostics ... ok
+test v3::complete_episode::crypto::tests::malformed_small_corpus_is_panic_free ... ok
+test v3::complete_episode::crypto::admission::tests::missing_current_evidence_is_indeterminate_and_actor_claims_are_not_authentication ... ok
+test v3::complete_episode::crypto::tests::profile_shape_is_closed ... ok
+test v3::complete_episode::crypto::tests::protected_budget_and_closed_header_labels_are_explicit ... ok
+test v3::complete_episode::crypto::trust::tests::canonical_command_binds_grant_order_principal_revision_and_optional_zero ... ok
+test v3::complete_episode::crypto::tests::oversized_caller_budgets_cannot_raise_hard_caps ... ok
+test v3::complete_episode::crypto::trust::tests::current_authorization_precedes_replay_and_no_failure_reserves_id ... ok
+test v3::complete_episode::crypto::trust::tests::exact_retry_after_revocation_is_historical_and_immutable ... ok
+test v3::complete_episode::crypto::trust::tests::independent_command_and_snapshot_vectors_and_typed_rejections ... ok
+test v3::complete_episode::crypto::admission::scenarios::stale_epochs_signed_policy_and_missing_or_wrong_consent_refuse_without_mutation ... ok
+test v3::complete_episode::crypto::trust::tests::old_history_scope_is_authorized_before_conflict_or_receipt ... ok
+test v3::complete_episode::crypto::trust::tests::registration_identifiers_grants_purpose_and_key_refusals ... ok
+test v3::complete_episode::crypto::trust::tests::complete_single_key_transition_matrix_and_failure_atomicity ... ok
+test v3::complete_episode::crypto::admission::tests::expected_binding_substitution_matrix_never_reserves_an_identity ... ok
+test v3::complete_episode::crypto::trust::tests::stale_revision_unknown_key_and_invalid_transition_leave_id_reusable ... ok
+test v3::complete_episode::crypto::trust_snapshot_is_readable_from_crypto_siblings ... ok
+test v3::complete_episode::crypto::trust::tests::rotation_is_atomic_and_requires_all_metadata_equal ... ok
+test v3::complete_episode::crypto::verify_tests::altered_aad_and_changed_canonical_payload_are_rejected_without_reencoding ... ok
+test v3::complete_episode::crypto::trust::tests::snapshots_are_immutable_and_math_keys_remain_resolvable_in_all_states ... ok
+test v3::complete_episode::crypto::verify_tests::snapshots_reject_weak_duplicate_and_over_limit_keys_and_pin_order ... ok
+test v3::complete_episode::crypto::verify_tests::signing_refuses_origin_mismatch_and_verification_rejects_signed_substitution ... ok
+test v3::complete_episode::crypto::verify_tests::changed_signature_and_digest_signature_are_not_valid_p1 ... ok
+test v3::complete_episode::crypto::verify_tests::strict_full_payload_signature_retains_originals_and_bound_report ... ok
+test v3::complete_episode::crypto::verify_tests::strict_verification_refuses_noncanonical_scalar_and_low_order_r ... ok
+test v3::complete_episode::crypto::verify_tests::unresolved_key_is_unverifiable_and_never_rescued_by_other_keys ... ok
+test v3::complete_episode::crypto::verify_tests::trusted_context_mismatches_are_invalid_before_authority_can_be_inferred ... ok
+test v3::complete_episode::crypto::python_witness_tests::independently_generated_ed25519ph_is_refused_as_pure_message_p1 ... ok
+test v3::complete_episode::crypto::python_witness_tests::backend_characterization_preserves_known_low_order_disagreement ... ok
+test v3::complete_episode::crypto::python_witness_tests::python_and_rust_independently_sign_identical_full_payload_p1 ... ok
+test v3::complete_episode::crypto::trust::tests::resource_boundaries_overflow_and_failed_id_correction ... ok
+test v3::complete_episode::crypto::python_witness_tests::independent_python_verifies_rust_and_refuses_signature_mutations ... ok
+test v3::complete_episode::crypto::python_witness_tests::malformed_profile_bytes_are_refused_in_both_languages ... ok
+test v3::complete_episode::crypto::admission::scenarios::failed_budget_attempt_reserves_no_ids_and_caps_never_evict_history ... ok
+
+test result: ok. 57 passed; 0 failed; 0 ignored; 0 measured; 439 filtered out; finished in 3.93s
+
+     Running tests/abbey_bot_projection_conformance.rs (target/debug/deps/abbey_bot_projection_conformance-19a166715270cdc3)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+     Running tests/abbey_contracts.rs (target/debug/deps/abbey_contracts-c9bbce914fb6ba2f)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 9 filtered out; finished in 0.01s
+
+     Running tests/durable_writer_lock.rs (target/debug/deps/durable_writer_lock-711cd055b9589110)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.00s
+
+     Running tests/multiway_zig_compat.rs (target/debug/deps/multiway_zig_compat-6b4285391bc5819a)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.01s
+
+     Running tests/real_store.rs (target/debug/deps/real_store-68324dc154d7ee99)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.00s
+
+     Running tests/v2_process_stress.rs (target/debug/deps/v2_process_stress-d56cf0fbc906258d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+     Running tests/v3_admission_decision.rs (target/debug/deps/v3_admission_decision-94b57ef2e4e2be21)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.00s
+
+     Running tests/v3_canonical_commitment.rs (target/debug/deps/v3_canonical_commitment-3c9c36cbd9630157)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.00s
+
+     Running tests/v3_canonical_decode.rs (target/debug/deps/v3_canonical_decode-e3dcd1adc62e37b6)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 9 filtered out; finished in 0.00s
+
+     Running tests/v3_canonical_decode_limits.rs (target/debug/deps/v3_canonical_decode_limits-76e7e998e887a26c)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 7 filtered out; finished in 0.01s
+
+     Running tests/v3_complete_episode_authenticated.rs (target/debug/deps/v3_complete_episode_authenticated-1466342e0131f70b)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.00s
+
+     Running tests/v3_complete_episode_ledger.rs (target/debug/deps/v3_complete_episode_ledger-f27281c470a52811)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 11 filtered out; finished in 0.01s
+
+     Running tests/v3_constitutional_query.rs (target/debug/deps/v3_constitutional_query-f1b0c638288063b8)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 11 filtered out; finished in 0.00s
+
+     Running tests/v3_constitutional_query_holds.rs (target/debug/deps/v3_constitutional_query_holds-06eb808e3f22f1aa)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 12 filtered out; finished in 0.00s
+
+     Running tests/v3_cross_language_commitment.rs (target/debug/deps/v3_cross_language_commitment-042e6d5d34f4f969)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.01s
+
+     Running tests/v3_cross_language_cose.rs (target/debug/deps/v3_cross_language_cose-59c8c396ca6c693e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.00s
+
+     Running tests/v3_cross_language_decode.rs (target/debug/deps/v3_cross_language_decode-79e52cdb636be005)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.00s
+
+     Running tests/v3_cross_language_episode.rs (target/debug/deps/v3_cross_language_episode-037dd7e80b631c75)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+     Running tests/v3_deletion_authority.rs (target/debug/deps/v3_deletion_authority-5a0f8466dd30a968)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.00s
+
+     Running tests/v3_deletion_lifecycle.rs (target/debug/deps/v3_deletion_lifecycle-0dcd6b804788f2df)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 11 filtered out; finished in 0.00s
+
+     Running tests/v3_dimension_ranking.rs (target/debug/deps/v3_dimension_ranking-badf50f69174acf7)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 9 filtered out; finished in 0.00s
+
+     Running tests/v3_episode_cose.rs (target/debug/deps/v3_episode_cose-d0fb7d64a275af14)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 12 filtered out; finished in 0.00s
+
+     Running tests/v3_episode_signing.rs (target/debug/deps/v3_episode_signing-69fbbdcbd5e3e673)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 7 filtered out; finished in 0.00s
+
+     Running tests/v3_episode_store.rs (target/debug/deps/v3_episode_store-2b4c7e9eef9a144c)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 13 filtered out; finished in 0.00s
+
+     Running tests/v3_federation.rs (target/debug/deps/v3_federation-2f2deefad6493563)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 17 filtered out; finished in 0.00s
+
+     Running tests/v3_guild_authority.rs (target/debug/deps/v3_guild_authority-3a68b84fbac3866f)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 11 filtered out; finished in 0.00s
+
+     Running tests/v3_holds_revocation.rs (target/debug/deps/v3_holds_revocation-6d011f0664fb1269)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 11 filtered out; finished in 0.00s
+
+     Running tests/v3_memory_candidate.rs (target/debug/deps/v3_memory_candidate-38a04a360550aa61)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.00s
+
+     Running tests/v3_memory_edge.rs (target/debug/deps/v3_memory_edge-3d30bf3b2b3aaceb)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 9 filtered out; finished in 0.00s
+
+     Running tests/v3_offline_outbox.rs (target/debug/deps/v3_offline_outbox-4ca818840ac3e824)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 33 filtered out; finished in 0.00s
+
+     Running tests/v3_quorum_shard.rs (target/debug/deps/v3_quorum_shard-b3e9a690c7b15c1d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 14 filtered out; finished in 0.00s
+
+     Running tests/v3_quota_windows.rs (target/debug/deps/v3_quota_windows-4df0b3b6f8de8304)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 15 filtered out; finished in 0.00s
+
+     Running tests/v3_retention_expiry.rs (target/debug/deps/v3_retention_expiry-9d18510766759e03)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.00s
+
+     Running tests/v3_retention_windows.rs (target/debug/deps/v3_retention_windows-357c49cc1705e4e8)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.00s
+
+     Running tests/v3_retrieval_baseline.rs (target/debug/deps/v3_retrieval_baseline-a39dca1a95fb3586)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.00s
+
+     Running tests/v3_supersession_lineage.rs (target/debug/deps/v3_supersession_lineage-12f4f91a7a526342)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 7 filtered out; finished in 0.00s
+
+     Running tests/v3_vector_adapter.rs (target/debug/deps/v3_vector_adapter-cbd94e72b7c49b72)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 16 filtered out; finished in 0.00s
+
+     Running tests/wdbx_3d_checked_points.rs (target/debug/deps/wdbx_3d_checked_points-00fc66f459869298)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.00s
+
+     Running tests/wdbx_3d_compatibility.rs (target/debug/deps/wdbx_3d_compatibility-2ccf3a71cccc9ad3)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+     Running tests/wdbx_3d_numeric.rs (target/debug/deps/wdbx_3d_numeric-3784b7de9af277dd)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.00s
+
+     Running tests/wdbx_3d_octree_parity.rs (target/debug/deps/wdbx_3d_octree_parity-2e23624c6ac46ae8)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 12 filtered out; finished in 0.00s
+
+     Running tests/wdbx_3d_oracle.rs (target/debug/deps/wdbx_3d_oracle-2599987a051e0afe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.00s
+
+     Running tests/zig_writer_compat.rs (target/debug/deps/zig_writer_compat-c941305dd41e8370)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+{"backend": "libsodium bundled by PyNaCl 1.6.2 (wheel provenance pinned separately)", "distributions": {"PyNaCl": "1.6.2", "cffi": "2.1.1", "pycparser": "3.11"}, "profile": "wdbx-complete-cose-sign1-prototype-v1", "python": "3.12.14", "qualification_scope": "single known disagreement probe only; no full qualification", "raw_weak_key_accepted": false, "selected_backend": "libsodium", "strict_parity_qualified": false}
+Unratified bounded P1 differential matrix passed; production qualification remains open.

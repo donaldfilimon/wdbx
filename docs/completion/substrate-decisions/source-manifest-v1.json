@@ -1,0 +1,667 @@
+{
+  "version": 1,
+  "status": "inspection_only_not_approval",
+  "identity_rule": "repository plus repository-relative path; sibling ABI inputs are read-only",
+  "files": [
+    {
+      "repository": "wdbx",
+      "path": "docs/completion/execution/owner-review.md",
+      "sha256": "11fb26bd7f346597b88005a56391a9235fff94a8f29b947a4d3c0e776030d86b",
+      "bytes": 4315,
+      "kind": "source",
+      "inspection": {
+        "lines": 68
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "docs/superpowers/plans/2026-10-20-complete-episode-abi-ratification-dossier.md",
+      "sha256": "2b6263a85ef358eecf44df92d94c983862bc1772f794cfecc2c8610c748258eb",
+      "bytes": 22821,
+      "kind": "source",
+      "inspection": {
+        "lines": 136
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "docs/completion/shared-types-v1.json",
+      "sha256": "5d51d33a6ce4adc8628f780bd913520f65e9d7f5ae6b875fe03027bd408d527b",
+      "bytes": 8470,
+      "kind": "schema_or_vector",
+      "inspection": [
+        "version",
+        "status",
+        "authority",
+        "types",
+        "gates"
+      ]
+    },
+    {
+      "repository": "wdbx",
+      "path": "docs/execution/p1-local-slices-summary.md",
+      "sha256": "5b55968c4ec60a4009bc3a8ea0ed689bc3ff6bfba2448b38a7c19b268c790b12",
+      "bytes": 7447,
+      "kind": "source",
+      "inspection": {
+        "lines": 110
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/canonical.rs",
+      "sha256": "931af7aa3863bbe1459fecbfb8ac126481867e69f474309d021295d321ee469b",
+      "bytes": 9067,
+      "kind": "source",
+      "inspection": {
+        "lines": 285
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/decode.rs",
+      "sha256": "43ee0cf34743b16c45d60de8c93fb85f444760748f3af65b7cbcd44ee018b8a1",
+      "bytes": 3587,
+      "kind": "source",
+      "inspection": {
+        "lines": 97
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/facade.rs",
+      "sha256": "593b2b1c35a9fd3df489639be9911bcc1e8772eb4d66aebb6e7ad240bd70e6c3",
+      "bytes": 8135,
+      "kind": "source",
+      "inspection": {
+        "lines": 238
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/ledger.rs",
+      "sha256": "753a8c400796a70e61d310ce1e86c47509083edb9fe8b4bc096222182b719df0",
+      "bytes": 25133,
+      "kind": "source",
+      "inspection": {
+        "lines": 609
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/mod.rs",
+      "sha256": "69508342cd1868ea752b1116bc3c443837b97bc1f8cc5ac970065fffe0837d12",
+      "bytes": 3207,
+      "kind": "source",
+      "inspection": {
+        "lines": 99
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/primitives.rs",
+      "sha256": "913fa1f392325aa43e07db713bdea064319a5d28f69dd6b6db9e226429d604ab",
+      "bytes": 5590,
+      "kind": "source",
+      "inspection": {
+        "lines": 206
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/tests.rs",
+      "sha256": "4c40c6b794264d60c3a28c916a4aba0a3e975d70341d02be588a3df4fe87823a",
+      "bytes": 3614,
+      "kind": "source",
+      "inspection": {
+        "lines": 126
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "sha256": "dd709ac43d64400a4eaa90be16277111397cd43dcaa17a7cb5d8e577cdc8eaa1",
+      "bytes": 19229,
+      "kind": "source",
+      "inspection": {
+        "lines": 764
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/validate.rs",
+      "sha256": "4fcae5471fad604d3cc5e9b2ebbdd171be27e757474ed177856d7a9002f4c3b5",
+      "bytes": 9288,
+      "kind": "source",
+      "inspection": {
+        "lines": 300
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/canonical/mapping.rs",
+      "sha256": "c16dad612896339a02e282cb81973c3caf791e3bfc6f18f21de6772590525cf5",
+      "bytes": 15082,
+      "kind": "source",
+      "inspection": {
+        "lines": 494
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/commitment/decode.rs",
+      "sha256": "c72781bc25a8aaeb2e9cf6404db8fb41177381551ff0baf42c66c448162378b3",
+      "bytes": 14068,
+      "kind": "source",
+      "inspection": {
+        "lines": 357
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/evaluate.rs",
+      "sha256": "362c8c191af591cf973d04c8b8c8119b29ea58a6f73809c399fde1a3385b89de",
+      "bytes": 4599,
+      "kind": "source",
+      "inspection": {
+        "lines": 123
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/mod.rs",
+      "sha256": "e42d996f32cb8316da05d2cb2b2043c8c9778622a64ceb9c57e9da8fd80dbc60",
+      "bytes": 5599,
+      "kind": "source",
+      "inspection": {
+        "lines": 189
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/scenarios.rs",
+      "sha256": "2f476d0b7243500a0a58765acfa652c056576babc3fd037e7b5da08ba832eeed",
+      "bytes": 28511,
+      "kind": "source",
+      "inspection": {
+        "lines": 737
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/simulator.rs",
+      "sha256": "c9d08a48e1109dc0db8e2279fa715137e4658b9dd46d132961653fbb0e6e66e6",
+      "bytes": 10824,
+      "kind": "source",
+      "inspection": {
+        "lines": 263
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs",
+      "sha256": "6ee16787bd91deb9369ed7c654a53e5535cef21f4cafb21ceeadc278cb37a8e7",
+      "bytes": 10243,
+      "kind": "source",
+      "inspection": {
+        "lines": 270
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/mod.rs",
+      "sha256": "3c67d8fbe0f7eb152f92b6856851130c4922b016f556ac5a25a362a8f375eef1",
+      "bytes": 1446,
+      "kind": "source",
+      "inspection": {
+        "lines": 39
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/profile.rs",
+      "sha256": "30110ee1ecb5a0d214f6564c6a9426a00d045dc997465866ada91030c2044a05",
+      "bytes": 10312,
+      "kind": "source",
+      "inspection": {
+        "lines": 301
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/python_witness_tests.rs",
+      "sha256": "a580b56f2f688de108f81629316b2da71f9ed69f71bf1500c407363ed745044a",
+      "bytes": 7436,
+      "kind": "source",
+      "inspection": {
+        "lines": 207
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/tests.rs",
+      "sha256": "882c05e8ada9827143172f97f245eb0e3df54ebbc88ff53c2a478a396ceb7d63",
+      "bytes": 12739,
+      "kind": "source",
+      "inspection": {
+        "lines": 404
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/apply.rs",
+      "sha256": "2b2848eb378b63bf427f0218b1ad2487e8636126fc7846283ce00e0a6931e002",
+      "bytes": 6449,
+      "kind": "source",
+      "inspection": {
+        "lines": 167
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/command.rs",
+      "sha256": "41869e254acca2dd9ce04385ce1064a0f87af5afd6c3c2b369e31e71a20946b4",
+      "bytes": 2033,
+      "kind": "source",
+      "inspection": {
+        "lines": 59
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/mod.rs",
+      "sha256": "ec4c7dc34a3817410106de8faa08b9197f58eba607cdab38a93d125c11e6f391",
+      "bytes": 7350,
+      "kind": "source",
+      "inspection": {
+        "lines": 266
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/snapshot.rs",
+      "sha256": "b79f8784e783ef5dcaed058bf2f3261e88927c12ccbc2980ec2a6e85e2b83099",
+      "bytes": 3813,
+      "kind": "source",
+      "inspection": {
+        "lines": 111
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/tests.rs",
+      "sha256": "88fd718c06216f94c60b94e49dba1eca0c0a01a4f1127fee25a7b496102d3587",
+      "bytes": 25319,
+      "kind": "source",
+      "inspection": {
+        "lines": 764
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/verify.rs",
+      "sha256": "3f82562b5a7456ffc3040d5b23cd7bd6c3ad3b5fe5c3f9487402ee938309706c",
+      "bytes": 8554,
+      "kind": "source",
+      "inspection": {
+        "lines": 260
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs",
+      "sha256": "7d23d94d31188e3051a79a1fac042aefee20754a94542f254fc593ca97668d98",
+      "bytes": 10873,
+      "kind": "source",
+      "inspection": {
+        "lines": 287
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/SPEC.md",
+      "sha256": "62eaabb7d7f9752c15253764fff67304d635ffd054b2f2ac9e64224fb3db4506",
+      "bytes": 9580,
+      "kind": "source",
+      "inspection": {
+        "lines": 147
+      }
+    },
+    {
+      "repository": "abi",
+      "path": "contracts/abbey/v1/schemas/common/definitions.schema.json",
+      "sha256": "e3ccda4ce5c999842c0a5f2535c2a9c843213f824d0cf25fe809dd3e3503f530",
+      "bytes": 720,
+      "kind": "schema_or_vector",
+      "inspection": [
+        "$schema",
+        "$id",
+        "title",
+        "x-abbey-data-class",
+        "x-abbey-max-bytes",
+        "x-abbey-unknown-fields",
+        "$defs"
+      ]
+    },
+    {
+      "repository": "abi",
+      "path": "contracts/abbey/v2/schemas/common/definitions.schema.json",
+      "sha256": "b656c95b813e0bf949834a896b5ba4df33d59bb373a4949b3f6427913a6f80e6",
+      "bytes": 2180,
+      "kind": "schema_or_vector",
+      "inspection": [
+        "$schema",
+        "$id",
+        "title",
+        "x-abbey-data-class",
+        "x-abbey-max-bytes",
+        "x-abbey-unknown-fields",
+        "$defs"
+      ]
+    },
+    {
+      "repository": "abi",
+      "path": "contracts/abbey/v1/schemas/episode/claim.schema.json",
+      "sha256": "30dae8dd338393c29677f8eb32c1030ee6503bd0a7aa327a544ffd2e50caf75f",
+      "bytes": 2135,
+      "kind": "schema_or_vector",
+      "inspection": [
+        "$schema",
+        "$id",
+        "title",
+        "x-abbey-data-class",
+        "x-abbey-max-bytes",
+        "x-abbey-unknown-fields",
+        "type",
+        "additionalProperties",
+        "required",
+        "properties"
+      ]
+    },
+    {
+      "repository": "abi",
+      "path": "contracts/abbey/v1/schemas/episode/evidence.schema.json",
+      "sha256": "ee81e175b4413f9e98e00da5e441f5b55fad2e629da658280d76be23964370fb",
+      "bytes": 1466,
+      "kind": "schema_or_vector",
+      "inspection": [
+        "$schema",
+        "$id",
+        "title",
+        "x-abbey-data-class",
+        "x-abbey-max-bytes",
+        "x-abbey-unknown-fields",
+        "type",
+        "additionalProperties",
+        "required",
+        "properties"
+      ]
+    },
+    {
+      "repository": "abi",
+      "path": "contracts/abbey/v1/schemas/episode/proposal.schema.json",
+      "sha256": "d965e8740f3728c0bb1a455a64de9b0c084dd292d3e03db81003c91893a79a35",
+      "bytes": 2820,
+      "kind": "schema_or_vector",
+      "inspection": [
+        "$schema",
+        "$id",
+        "title",
+        "x-abbey-data-class",
+        "x-abbey-max-bytes",
+        "x-abbey-unknown-fields",
+        "type",
+        "additionalProperties",
+        "required",
+        "properties"
+      ]
+    },
+    {
+      "repository": "abi",
+      "path": "contracts/abbey/v1/schemas/episode/tombstone.schema.json",
+      "sha256": "dcc0b5eed552286ce370821afb26c61674182761e67c9682e304e08515f1fbd4",
+      "bytes": 1613,
+      "kind": "schema_or_vector",
+      "inspection": [
+        "$schema",
+        "$id",
+        "title",
+        "x-abbey-data-class",
+        "x-abbey-max-bytes",
+        "x-abbey-unknown-fields",
+        "type",
+        "additionalProperties",
+        "required",
+        "properties"
+      ]
+    },
+    {
+      "repository": "abi",
+      "path": "contracts/abbey/v2/schemas/authorization/grant.schema.json",
+      "sha256": "7d0b9b5b1c5866fa7e565dddda1466106e6dc3e5beb20b698bbe2c79af3f971f",
+      "bytes": 2805,
+      "kind": "schema_or_vector",
+      "inspection": [
+        "$schema",
+        "$id",
+        "title",
+        "x-abbey-data-class",
+        "x-abbey-max-bytes",
+        "x-abbey-unknown-fields",
+        "type",
+        "additionalProperties",
+        "required",
+        "properties"
+      ]
+    },
+    {
+      "repository": "abi",
+      "path": "contracts/abbey/v2/schemas/authorization/approval.schema.json",
+      "sha256": "c03bbd6b31c4b5c9530734954f1c121196bba56f9bb9d6c5772bdbfd195c5909",
+      "bytes": 2448,
+      "kind": "schema_or_vector",
+      "inspection": [
+        "$schema",
+        "$id",
+        "title",
+        "x-abbey-data-class",
+        "x-abbey-max-bytes",
+        "x-abbey-unknown-fields",
+        "type",
+        "additionalProperties",
+        "required",
+        "properties"
+      ]
+    },
+    {
+      "repository": "abi",
+      "path": "contracts/abbey/v2/schemas/authorization/policy-decision.schema.json",
+      "sha256": "6b4af26256743912807545933c914314bf5068423da1d4174c18355132dff211",
+      "bytes": 1673,
+      "kind": "schema_or_vector",
+      "inspection": [
+        "$schema",
+        "$id",
+        "title",
+        "x-abbey-data-class",
+        "x-abbey-max-bytes",
+        "x-abbey-unknown-fields",
+        "type",
+        "additionalProperties",
+        "required",
+        "properties"
+      ]
+    },
+    {
+      "repository": "abi",
+      "path": "contracts/abbey/v2/schemas/receipt/outcome-receipt.schema.json",
+      "sha256": "d378ff41f3b1ae2a32a0a0ed7b24534054fb288890bbcc7c08aa520bba017d40",
+      "bytes": 2063,
+      "kind": "schema_or_vector",
+      "inspection": [
+        "$schema",
+        "$id",
+        "title",
+        "x-abbey-data-class",
+        "x-abbey-max-bytes",
+        "x-abbey-unknown-fields",
+        "type",
+        "additionalProperties",
+        "required",
+        "properties"
+      ]
+    },
+    {
+      "repository": "wdbx",
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/trust/build_vectors.py",
+      "sha256": "e68b00e35ebaeeb3ce0d7a6f661b815678189631b65cf7797e8f98c812bdbdda",
+      "bytes": 4338,
+      "kind": "source",
+      "inspection": {
+        "lines": 85
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/trust/commands.json",
+      "sha256": "295c4ffc9ea8dbe079235d4d7181a6e8d72065de98667bb904727f50404b0eda",
+      "bytes": 4719,
+      "kind": "schema_or_vector",
+      "inspection": [
+        "version",
+        "scope",
+        "public_keys_hex",
+        "cases",
+        "claimed_zero_command_hex",
+        "typed_rejections"
+      ]
+    },
+    {
+      "repository": "wdbx",
+      "path": "docs/superpowers/specs/2026-10-20-wdbx-cose-trust-prototype-design.md",
+      "sha256": "e140132d9682e3193dcd2b2a69aeb0a4ac7514989f0f839224f2db6dcd03a60a",
+      "bytes": 29116,
+      "kind": "source",
+      "inspection": {
+        "lines": 128
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "docs/completion/execution/p1-dependency-decision.md",
+      "sha256": "10e287a40e71ac18112926ae82629b045678a56a6557c5318e7b813974fed405",
+      "bytes": 8850,
+      "kind": "source",
+      "inspection": {
+        "lines": 136
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "docs/completion/execution/p1-libsodium-decision.md",
+      "sha256": "e7cfa994f9c8a131dbb7e0d69f98c7461dbf1c79bfc1c59e25ee09005cdde05f",
+      "bytes": 5561,
+      "kind": "source",
+      "inspection": {
+        "lines": 89
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "docs/completion/substrate-release/sources/plan.md",
+      "sha256": "ec1bd139b0b17f36a89093b838c52aeebed7f4e7339d79c74e61f486fd18cf50",
+      "bytes": 18746,
+      "kind": "source",
+      "inspection": {
+        "lines": 276
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "Cargo.toml",
+      "sha256": "f8cb4e0cc0e74b16620b686dfd314599e12b4fa750bfed50beef17acbf62a57d",
+      "bytes": 1656,
+      "kind": "dependency_or_toolchain",
+      "inspection": [
+        "workspace",
+        "profile"
+      ]
+    },
+    {
+      "repository": "wdbx",
+      "path": "Cargo.lock",
+      "sha256": "e2fac4f3f125cecc771a0dc7d6f33eb1629972b3979ac0771849fdf61368680e",
+      "bytes": 49321,
+      "kind": "dependency_or_toolchain",
+      "inspection": [
+        "version",
+        "package"
+      ]
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/Cargo.toml",
+      "sha256": "a4dca8395b0768d127b42e106eb28bfbcacd0672a91c06322638db5f83d95975",
+      "bytes": 994,
+      "kind": "dependency_or_toolchain",
+      "inspection": [
+        "package",
+        "features",
+        "dependencies",
+        "dev-dependencies",
+        "lints"
+      ]
+    },
+    {
+      "repository": "wdbx",
+      "path": "rust-toolchain.toml",
+      "sha256": "511d40d52e2c79df3d3b5c724f47325141ee83c74a6c112a37cb8114e8fb7698",
+      "bytes": 358,
+      "kind": "dependency_or_toolchain",
+      "inspection": [
+        "toolchain"
+      ]
+    },
+    {
+      "repository": "wdbx",
+      "path": "specimen-studio/Cargo.lock",
+      "sha256": "164da1d1a61f57a16d651708af6959644c5d543f44f8e6bcb0bb0a7142ce7a98",
+      "bytes": 172305,
+      "kind": "dependency_or_toolchain",
+      "inspection": [
+        "version",
+        "package"
+      ]
+    },
+    {
+      "repository": "wdbx",
+      "path": "tools/wdbx_complete_p1_crypto.py",
+      "sha256": "9a9df3ae043d1da6a2084c1a29b25ac7f668e485716404ce0c38e820bbe3985d",
+      "bytes": 13221,
+      "kind": "source",
+      "inspection": {
+        "lines": 336
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "docs/completion/substrate-release/sources/specification-v6.md",
+      "sha256": "7f361f63b90e4f0d22018338ecb18f30ca81fc574ee49b15fbb1299d38977072",
+      "bytes": 161831,
+      "kind": "semantic_source",
+      "inspection": {
+        "sections": "9, 22, 25, 29, 31, A.4\u2013A.9"
+      }
+    },
+    {
+      "repository": "wdbx",
+      "path": "crates/abi-wdbx/src/v3/episode/signing.rs",
+      "sha256": "904fc87abab52f5500c9890fbcb725021fb27c851801950376d057e239b95930",
+      "bytes": 14653,
+      "kind": "semantic_source",
+      "inspection": {
+        "sections": "SignerKeyId derivation and parser"
+      }
+    }
+  ]
+}

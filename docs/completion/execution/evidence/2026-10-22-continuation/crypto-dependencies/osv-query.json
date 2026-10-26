@@ -1,0 +1,53 @@
+{
+  "endpoint": "https://api.osv.dev/v1/querybatch",
+  "queried_at_utc": "2026-10-22T22:56:01.993738+00:00",
+  "request": {
+    "queries": [
+      {
+        "package": {
+          "ecosystem": "PyPI",
+          "name": "cryptography"
+        },
+        "version": "50.0.2"
+      },
+      {
+        "package": {
+          "ecosystem": "PyPI",
+          "name": "cffi"
+        },
+        "version": "2.1.1"
+      },
+      {
+        "package": {
+          "ecosystem": "PyPI",
+          "name": "pycparser"
+        },
+        "version": "3.11"
+      },
+      {
+        "package": {
+          "ecosystem": "crates.io",
+          "name": "ed25519-dalek"
+        },
+        "version": "3.0.0"
+      },
+      {
+        "package": {
+          "ecosystem": "crates.io",
+          "name": "curve25519-dalek"
+        },
+        "version": "5.0.0"
+      }
+    ]
+  },
+  "response": {
+    "results": [
+      {},
+      {},
+      {},
+      {},
+      {}
+    ]
+  },
+  "scope": "Exact five package versions only; no complete transitive, native binary, operating-system or provenance audit. Empty results are not proof of absence."
+}

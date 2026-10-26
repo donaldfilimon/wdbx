@@ -1,0 +1,2667 @@
+
+==> agent instructions (CLAUDE.md is the AGENTS.md pointer form)
+Agent instructions: CLAUDE.md matches its AGENTS.md pointer form
+
+==> Rust source size limits
+Rust source sizes: all within limits
+
+==> format (check only)
+
+==> clippy (workspace lints; no -D warnings)
+    Blocking waiting for file lock on build directory
+warning: this function has too many lines (297/100)
+   --> crates/abi-wdbx/src/evaluation/harness.rs:333:1
+    |
+333 | pub fn run(config: &EvaluationConfig) -> Result<ResultRecord, EvaluationError> {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+    = note: `-W clippy::too-many-lines` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::too_many_lines)]`
+
+warning: this function has too many lines (152/100)
+   --> crates/abi-wdbx/src/evaluation/ledger.rs:313:1
+    |
+313 | pub fn build(corpus: &Corpus) -> Result<BuiltLedger, LedgerError> {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+
+warning: this function has too many lines (145/100)
+   --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:366:1
+    |
+366 | / pub fn checked_octree_query<'a>(
+367 | |     index: &'a mut SpatialIndex3D,
+368 | |     query: &CheckedPointQuery<'_>,
+369 | | ) -> Result<CheckedPointOutcome<'a>, SpatialError> {
+    | |__________________________________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/canonical.rs:2:5
+  |
+2 | use super::*;
+  |     ^^^^^^^^ help: try: `super::{TenantRef, Result, OrganizationRef, PrincipalRef, GuildRef, NodeRef, RegimeRef, ClockRef, ComponentRef, ActionRef, ParameterClassRef, EpisodeId, RequestId, TaskId, Digest32, UtcMillis, MonoNanos, UnitPpm, SignedMicros, EpisodeDomain, Route, ActionPhase, MeasurementUnit, ResourceKind, ArtifactKind, SafetyEffect, RollbackState, LifecycleRelation, ScopeBinding, VersionRef, Digest, LocalEpisodeRef, ArtifactRef, ForeignEvidenceRef, Actor, Measurement, MonotonicRange, ResourceReading, ActionDescriptor, ConsentRef, ObjectKeyRef, LifecycleLink, Identity, Time, Origin, Context, Decision, Outcome, Authority, RecordedEvidence, Evidence, Lifecycle, Provenance, CompleteEpisodeInput, COMPLETE_EPISODE_DOMAIN, CompleteEpisodeError, OpaqueRef, Estimate, Scope, ConsultedRef, RetentionIntent, RegimeDistribution}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+  = note: `-W clippy::wildcard-imports` implied by `-W clippy::pedantic`
+  = help: to override `-W clippy::pedantic` add `#[allow(clippy::wildcard_imports)]`
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/canonical/mapping.rs:2:5
+  |
+2 | use super::*;
+  |     ^^^^^^^^ help: try: `super::{Wire, TenantRef, Builder, Result, OrganizationRef, PrincipalRef, GuildRef, NodeRef, RegimeRef, ClockRef, ComponentRef, ActionRef, ParameterClassRef, EpisodeId, RequestId, TaskId, Digest32, UtcMillis, MonoNanos, UnitPpm, SignedMicros, EpisodeDomain, Route, ActionPhase, MeasurementUnit, ResourceKind, ArtifactKind, SafetyEffect, RollbackState, LifecycleRelation, ScopeBinding, VersionRef, Digest, LocalEpisodeRef, ArtifactRef, ForeignEvidenceRef, Actor, Measurement, MonotonicRange, ResourceReading, ActionDescriptor, parameters, ConsentRef, ObjectKeyRef, LifecycleLink, Identity, Time, Origin, Context, Decision, sequence, Outcome, Authority, versions, RecordedEvidence, Evidence, Lifecycle, Provenance, CompleteEpisodeInput, COMPLETE_EPISODE_DOMAIN}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: casting `usize` to `u8` may truncate the value
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/profile.rs:202:33
+    |
+202 |         1 => output.push(0x40 | bytes.len() as u8),
+    |                                 ^^^^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+    = note: `-W clippy::cast-possible-truncation` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::cast_possible_truncation)]`
+help: ... or use `try_from` and handle the error accordingly
+    |
+202 -         1 => output.push(0x40 | bytes.len() as u8),
+202 +         1 => output.push(0x40 | u8::try_from(bytes.len())),
+    |
+
+warning: casting `usize` to `u8` may truncate the value
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/profile.rs:203:47
+    |
+203 |         2 => output.extend_from_slice(&[0x58, bytes.len() as u8]),
+    |                                               ^^^^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+203 -         2 => output.extend_from_slice(&[0x58, bytes.len() as u8]),
+203 +         2 => output.extend_from_slice(&[0x58, u8::try_from(bytes.len())]),
+    |
+
+warning: casting `usize` to `u16` may truncate the value
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/profile.rs:206:39
+    |
+206 |             output.extend_from_slice(&(bytes.len() as u16).to_be_bytes());
+    |                                       ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+206 -             output.extend_from_slice(&(bytes.len() as u16).to_be_bytes());
+206 +             output.extend_from_slice(&u16::try_from(bytes.len()).to_be_bytes());
+    |
+
+warning: casting `usize` to `u32` may truncate the value on targets with 64-bit wide pointers
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/profile.rs:210:39
+    |
+210 |             output.extend_from_slice(&(bytes.len() as u32).to_be_bytes());
+    |                                       ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+210 -             output.extend_from_slice(&(bytes.len() as u32).to_be_bytes());
+210 +             output.extend_from_slice(&u32::try_from(bytes.len()).to_be_bytes());
+    |
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/decode.rs:2:5
+  |
+2 | use super::*;
+  |     ^^^^^^^^ help: try: `super::{CompleteEpisodeError, UnitPpm, Digest, Digest32, UtcMillis, Estimate, Identity, EpisodeId, RequestId, Time, Origin, NodeRef, Context, TaskId, RegimeRef, Decision, Outcome, Authority, RecordedEvidence, Evidence, Lifecycle, Provenance, ScopeBinding, TenantRef, VersionRef, ComponentRef, OpaqueRef, LocalEpisodeRef, ArtifactRef, ForeignEvidenceRef, OrganizationRef, Actor, PrincipalRef, ResourceReading, ActionDescriptor, ActionRef, ParameterClassRef, ConsentRef, ObjectKeyRef, LifecycleLink, Scope, GuildRef, ConsultedRef, RetentionIntent, Measurement, SignedMicros, MonotonicRange, ClockRef, MonoNanos, RegimeDistribution, EpisodeDomain, Route, ActionPhase, MeasurementUnit, ResourceKind, ArtifactKind, SafetyEffect, RollbackState, LifecycleRelation, CompleteEpisodeInput, CompleteEpisode, MAX_ENCODED_SIZE, COMPLETE_EPISODE_DOMAIN}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/decode/containers.rs:2:5
+  |
+2 | use super::*;
+  |     ^^^^^^^^ help: try: `super::{C, DResult, E, CompleteEpisodeError, UnitPpm, Digest, Digest32, UtcMillis, Estimate}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: this argument is passed by value, but not consumed in the function body
+  --> crates/abi-wdbx/src/v3/complete_episode/decode/containers.rs:12:31
+   |
+12 | pub(super) fn unsigned(value: C) -> DResult<u64> {
+   |                               ^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_pass_by_value
+   = note: `-W clippy::needless-pass-by-value` implied by `-W clippy::pedantic`
+   = help: to override `-W clippy::pedantic` add `#[allow(clippy::needless_pass_by_value)]`
+help: consider taking a reference instead
+   |
+12 | pub(super) fn unsigned(value: &C) -> DResult<u64> {
+   |                               +
+
+warning: this argument is passed by value, but not consumed in the function body
+  --> crates/abi-wdbx/src/v3/complete_episode/decode/containers.rs:18:29
+   |
+18 | pub(super) fn signed(value: C) -> DResult<i64> {
+   |                             ^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_pass_by_value
+help: consider taking a reference instead
+   |
+18 | pub(super) fn signed(value: &C) -> DResult<i64> {
+   |                             +
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/decode/groups.rs:2:5
+  |
+2 | use super::*;
+  |     ^^^^^^^^ help: try: `super::{C, DResult, Identity, Fields, Digest, EpisodeId, fixed, RequestId, binding, version, Time, utc, monotonic, Origin, token, NodeRef, actor, signer, Context, TaskId, RegimeRef, estimate, posterior, ppm, artifact, list, resource, Decision, route, action, Outcome, measurement, safety, rollback, Authority, local, consent, RecordedEvidence, Evidence, maturity, Lifecycle, retention, object_key, link, Provenance, consulted}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/decode/references.rs:2:5
+  |
+2 | use super::*;
+  |     ^^^^^^^^ help: try: `super::{C, DResult, ScopeBinding, Fields, Digest, token, TenantRef, VersionRef, ComponentRef, OpaqueRef, digest, LocalEpisodeRef, episode_domain, ArtifactRef, unsigned, artifact_kind, ForeignEvidenceRef, OrganizationRef, Actor, PrincipalRef, actor_kind, ResourceReading, resource_kind, ActionDescriptor, ActionRef, list, ParameterClassRef, phase, ConsentRef, ObjectKeyRef, LifecycleLink, relation, Scope, variant, GuildRef, E, ConsultedRef, RetentionIntent, array, next, utc, Measurement, measurement_unit, SignedMicros, signed, MonotonicRange, ClockRef, MonoNanos, RegimeDistribution, CompleteEpisodeError, RegimeRef, ppm, text}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/decode/vocabulary.rs:2:5
+  |
+2 | use super::*;
+  |     ^^^^^^^^ help: try: `super::{C, DResult, EpisodeDomain, unit, E, Route, ActionPhase, MeasurementUnit, ResourceKind, ArtifactKind, SafetyEffect, RollbackState, LifecycleRelation, text}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/decode.rs:8:5
+  |
+8 | use containers::*;
+  |     ^^^^^^^^^^^^^ help: try: `containers::{Fields, fixed, utc, token, estimate, ppm, list, digest, unsigned, variant, array, next, signed, text, unit}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/decode.rs:9:5
+  |
+9 | use groups::*;
+  |     ^^^^^^^^^ help: try: `groups::{identity, time, origin, context, decision, outcome, authority, evidence, lifecycle, provenance}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: usage of wildcard import
+  --> crates/abi-wdbx/src/v3/complete_episode/decode.rs:10:5
+   |
+10 | use references::*;
+   |     ^^^^^^^^^^^^^ help: try: `references::{binding, version, monotonic, actor, signer, posterior, artifact, resource, action, measurement, local, consent, retention, object_key, link, consulted}`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: usage of wildcard import
+  --> crates/abi-wdbx/src/v3/complete_episode/decode.rs:11:5
+   |
+11 | use vocabulary::*;
+   |     ^^^^^^^^^^^^^ help: try: `vocabulary::{route, safety, rollback, maturity, episode_domain, artifact_kind, actor_kind, resource_kind, phase, relation, measurement_unit}`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/types.rs:2:5
+  |
+2 | use super::primitives::*;
+  |     ^^^^^^^^^^^^^^^^^^^^ help: try: `super::primitives::{GuildRef, PrincipalRef, OrganizationRef, OpaqueRef, UtcMillis, TenantRef, ComponentRef, Digest32, SignedMicros, ClockRef, MonoNanos, ActionRef, ParameterClassRef, EpisodeId, RequestId, NodeRef, TaskId, RegimeRef, Estimate, UnitPpm}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/validate.rs:2:5
+  |
+2 | use super::*;
+  |     ^^^^^^^^ help: try: `super::{CompleteEpisodeError, Result, E, ScopeBinding, Estimate, CompleteEpisodeInput, RetentionIntent, ConsultedRef, Scope, LocalEpisodeRef, ArtifactRef, ArtifactKind, EpisodeDomain, Digest}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: this function's return value is unnecessarily wrapped by `Result`
+  --> crates/abi-wdbx/src/v3/complete_episode/mod.rs:81:5
+   |
+81 |     pub(crate) fn canonical_bytes(&self) -> Result<Vec<u8>> {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#unnecessary_wraps
+   = note: `-W clippy::unnecessary-wraps` implied by `-W clippy::pedantic`
+   = help: to override `-W clippy::pedantic` add `#[allow(clippy::unnecessary_wraps)]`
+help: remove `Result` from the return type...
+   |
+81 -     pub(crate) fn canonical_bytes(&self) -> Result<Vec<u8>> {
+81 +     pub(crate) fn canonical_bytes(&self) -> std::vec::Vec<u8> {
+   |
+help: ...and then remove the surrounding `Ok()` from returning expressions
+   |
+82 -         Ok(self.bytes.clone())
+82 +         self.bytes.clone()
+   |
+
+warning: this function's return value is unnecessarily wrapped by `Result`
+  --> crates/abi-wdbx/src/v3/complete_episode/mod.rs:84:5
+   |
+84 |     pub(crate) fn digest(&self) -> Result<[u8; 32]> {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#unnecessary_wraps
+help: remove `Result` from the return type...
+   |
+84 -     pub(crate) fn digest(&self) -> Result<[u8; 32]> {
+84 +     pub(crate) fn digest(&self) -> [u8; 32] {
+   |
+help: ...and then remove the surrounding `Ok()` from returning expressions
+   |
+85 -         Ok(self.digest)
+85 +         self.digest
+   |
+
+warning: `abi-wdbx` (lib) generated 24 warnings (run `cargo clippy --fix --lib -p abi-wdbx -- ` to apply 13 suggestions)
+    Checking abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx/crates/abi-wdbx)
+warning: 5 bindings with single-character names in scope
+  --> crates/abi-wdbx/tests/support/spatial_oracle.rs:20:9
+   |
+20 |     let a = row.point.coordinates();
+   |         ^
+21 |     let b = center.coordinates();
+   |         ^
+22 |     let x = a[0] - b[0];
+   |         ^
+23 |     let y = a[1] - b[1];
+   |         ^
+24 |     let z = a[2] - b[2];
+   |         ^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#many_single_char_names
+   = note: `-W clippy::many-single-char-names` implied by `-W clippy::pedantic`
+   = help: to override `-W clippy::pedantic` add `#[allow(clippy::many_single_char_names)]`
+
+warning: missing documentation for the crate
+   --> crates/abi-wdbx/tests/wdbx_3d_numeric.rs:1:1
+    |
+  1 | / use abi_wdbx::{
+  2 | |     Point3D,
+  3 | |     spatial3d::{Point3, Radius, SpatialError},
+  4 | | };
+...   |
+114 | |     );
+115 | | }
+    | |_^
+    |
+    = note: requested on the command line with `-W missing-docs`
+
+warning: `abi-wdbx` (test "wdbx_3d_numeric") generated 1 warning
+warning: item in documentation is missing backticks
+ --> crates/abi-wdbx/tests/support/spatial_oracle.rs:1:35
+  |
+1 | //! Independent complete scan for defined_float_profile, not exact-real predicates.
+  |                                   ^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#doc_markdown
+  = note: `-W clippy::doc-markdown` implied by `-W clippy::pedantic`
+  = help: to override `-W clippy::pedantic` add `#[allow(clippy::doc_markdown)]`
+help: try
+  |
+1 - //! Independent complete scan for defined_float_profile, not exact-real predicates.
+1 + //! Independent complete scan for `defined_float_profile`, not exact-real predicates.
+  |
+
+warning: this function has too many lines (133/100)
+  --> crates/abi-wdbx/tests/v3_retention_windows.rs:84:1
+   |
+84 | fn a_policy_without_the_new_fields_still_parses_and_means_the_previous_behaviour() {
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+   = note: `-W clippy::too-many-lines` implied by `-W clippy::pedantic`
+   = help: to override `-W clippy::pedantic` add `#[allow(clippy::too_many_lines)]`
+
+warning: used `assert!` to check that a value is empty
+  --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:85:5
+   |
+85 |     assert!(reference_knn(&points, o, 0).is_empty());
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#assert_is_empty
+   = note: `-W clippy::assert-is-empty` implied by `-W clippy::pedantic`
+   = help: to override `-W clippy::pedantic` add `#[allow(clippy::assert_is_empty)]`
+help: use `assert_eq!` to show the value on failure
+   |
+85 -     assert!(reference_knn(&points, o, 0).is_empty());
+85 +     assert_eq!(reference_knn(&points, o, 0), [] as [spatial_oracle::OracleHit; 0]);
+   |
+
+warning: used `assert!` to check that a value is empty
+   --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:125:5
+    |
+125 |     assert!(reference_radius(&[], o, r).is_empty());
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#assert_is_empty
+help: use `assert_eq!` to show the value on failure
+    |
+125 -     assert!(reference_radius(&[], o, r).is_empty());
+125 +     assert_eq!(reference_radius(&[], o, r), [] as [spatial_oracle::OracleHit; 0]);
+    |
+
+warning: casting `u64` to `f64` may cause a loss of precision (`u64` is 64 bits wide, but `f64`'s mantissa is only 52 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:174:13
+    |
+174 |             (next() % 65) as f64 - 32.,
+    |             ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+    = note: `-W clippy::cast-precision-loss` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::cast_precision_loss)]`
+
+warning: casting `u64` to `f64` may cause a loss of precision (`u64` is 64 bits wide, but `f64`'s mantissa is only 52 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:175:13
+    |
+175 |             (next() % 65) as f64 - 32.,
+    |             ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `u64` to `f64` may cause a loss of precision (`u64` is 64 bits wide, but `f64`'s mantissa is only 52 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:176:13
+    |
+176 |             (next() % 65) as f64 - 32.,
+    |             ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `u64` to `f64` may cause a loss of precision (`u64` is 64 bits wide, but `f64`'s mantissa is only 52 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:178:38
+    |
+178 |         let radius = Radius::try_new((next() % 33) as f64).unwrap();
+    |                                      ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `u64` to `f64` may cause a loss of precision (`u64` is 64 bits wide, but `f64`'s mantissa is only 52 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:185:25
+    |
+185 |                         (next() % 65) as f64 - 32.,
+    |                         ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `u64` to `f64` may cause a loss of precision (`u64` is 64 bits wide, but `f64`'s mantissa is only 52 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:186:25
+    |
+186 |                         (next() % 65) as f64 - 32.,
+    |                         ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `u64` to `f64` may cause a loss of precision (`u64` is 64 bits wide, but `f64`'s mantissa is only 52 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:187:25
+    |
+187 |                         (next() % 65) as f64 - 32.,
+    |                         ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: missing documentation for the crate
+   --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:1:1
+    |
+  1 | / #[path = "support/dyadic_reference.rs"]
+  2 | | mod dyadic_reference;
+  3 | | #[path = "support/spatial_oracle.rs"]
+  4 | | mod spatial_oracle;
+...   |
+219 | | }
+    | |_^
+    |
+    = note: requested on the command line with `-W missing-docs`
+
+warning: `abi-wdbx` (test "v3_retention_windows") generated 1 warning
+warning: `abi-wdbx` (test "wdbx_3d_oracle") generated 12 warnings (1 duplicate) (run `cargo clippy --fix --test "wdbx_3d_oracle" -p abi-wdbx -- ` to apply 3 suggestions)
+warning: `abi-wdbx` (test "wdbx_3d_checked_points") generated 2 warnings (1 duplicate)
+warning: long literal lacking separators
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:111:31
+    |
+111 |                 .wrapping_mul(6364136223846793005)
+    |                               ^^^^^^^^^^^^^^^^^^^ help: consider: `6_364_136_223_846_793_005`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#unreadable_literal
+    = note: `-W clippy::unreadable-literal` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::unreadable_literal)]`
+
+warning: long literal lacking separators
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:112:31
+    |
+112 |                 .wrapping_add(1442695040888963407);
+    |                               ^^^^^^^^^^^^^^^^^^^ help: consider: `1_442_695_040_888_963_407`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#unreadable_literal
+
+warning: casting `usize` to `u32` may truncate the value on targets with 64-bit wide pointers
+  --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:27:13
+   |
+27 |             j as u32,
+   |             ^^^^^^^^
+   |
+   = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+   = note: `-W clippy::cast-possible-truncation` implied by `-W clippy::pedantic`
+   = help: to override `-W clippy::pedantic` add `#[allow(clippy::cast_possible_truncation)]`
+help: ... or use `try_from` and handle the error accordingly
+   |
+27 -             j as u32,
+27 +             u32::try_from(j),
+   |
+
+warning: casting `usize` to `f32` may cause a loss of precision (`usize` can be up to 64 bits wide depending on the target architecture, but `f32`'s mantissa is only 23 bits wide)
+  --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:29:20
+   |
+29 |                 x: j as f32,
+   |                    ^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+   = note: `-W clippy::cast-precision-loss` implied by `-W clippy::pedantic`
+   = help: to override `-W clippy::pedantic` add `#[allow(clippy::cast_precision_loss)]`
+
+warning: this function has too many lines (118/100)
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:101:1
+    |
+101 | fn thousand_seeded_independent_cases() {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+    = note: `-W clippy::too-many-lines` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::too_many_lines)]`
+
+warning: casting `u64` to `usize` may truncate the value on targets with 32-bit wide pointers
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:105:30
+    |
+105 |         let n = [63, 64, 65][seed as usize % 3];
+    |                              ^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+105 -         let n = [63, 64, 65][seed as usize % 3];
+105 +         let n = [63, 64, 65][usize::try_from(seed) % 3];
+    |
+
+warning: casting `i32` to `f32` may cause a loss of precision (`i32` is 32 bits wide, but `f32`'s mantissa is only 23 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:113:21
+    |
+113 |             let a = ((state >> 32) as i32 % 1024) as f32 / 16.;
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `i32` to `f32` may cause a loss of precision (`i32` is 32 bits wide, but `f32`'s mantissa is only 23 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:115:21
+    |
+115 |             let b = ((state >> 32) as i32 % 1024) as f32 / 16.;
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `usize` to `u32` may truncate the value on targets with 64-bit wide pointers
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:135:39
+    |
+135 |                     x: f32::from_bits((ordinal % 5) as u32),
+    |                                       ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+135 -                     x: f32::from_bits((ordinal % 5) as u32),
+135 +                     x: f32::from_bits(u32::try_from(ordinal % 5)),
+    |
+
+warning: casting `usize` to `f32` may cause a loss of precision (`usize` can be up to 64 bits wide depending on the target architecture, but `f32`'s mantissa is only 23 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:147:24
+    |
+147 |                     z: (ordinal % 7) as f32,
+    |                        ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `usize` to `u32` may truncate the value on targets with 64-bit wide pointers
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:150:22
+    |
+150 |             let id = (ordinal % 11) as u32;
+    |                      ^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+150 -             let id = (ordinal % 11) as u32;
+150 +             let id = u32::try_from(ordinal % 11);
+    |
+
+warning: casting `usize` to `u8` may truncate the value
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:151:35
+    |
+151 |             index.insert(id, p, &[(ordinal % 251) as u8]);
+    |                                   ^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+151 -             index.insert(id, p, &[(ordinal % 251) as u8]);
+151 +             index.insert(id, p, &[u8::try_from(ordinal % 251)]);
+    |
+
+warning: casting `usize` to `u8` may truncate the value
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:187:46
+    |
+187 |                 assert_eq!(actual.payload, &[(want.ordinal % 251) as u8]);
+    |                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+187 -                 assert_eq!(actual.payload, &[(want.ordinal % 251) as u8]);
+187 +                 assert_eq!(actual.payload, &[u8::try_from(want.ordinal % 251)]);
+    |
+
+warning: casting `u32` to `u8` may truncate the value
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:329:15
+    |
+329 |             &[id as u8],
+    |               ^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+329 -             &[id as u8],
+329 +             &[u8::try_from(id)],
+    |
+
+warning: casting `u32` to `u8` may truncate the value
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:340:15
+    |
+340 |             &[id as u8],
+    |               ^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+340 -             &[id as u8],
+340 +             &[u8::try_from(id)],
+    |
+
+warning: casting `u32` to `u8` may truncate the value
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:359:33
+    |
+359 |         assert_eq!(h.payload, &[h.id as u8]);
+    |                                 ^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+359 -         assert_eq!(h.payload, &[h.id as u8]);
+359 +         assert_eq!(h.payload, &[u8::try_from(h.id)]);
+    |
+
+warning: casting `usize` to `f32` may cause a loss of precision (`usize` can be up to 64 bits wide depending on the target architecture, but `f32`'s mantissa is only 23 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:369:17
+    |
+369 |                 ((ordinal * 17 + seed * 3) % 21) as f32 - 10.,
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `usize` to `f32` may cause a loss of precision (`usize` can be up to 64 bits wide depending on the target architecture, but `f32`'s mantissa is only 23 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:370:17
+    |
+370 |                 ((ordinal * 7 + seed) % 17) as f32 - 8.,
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `usize` to `f32` may cause a loss of precision (`usize` can be up to 64 bits wide depending on the target architecture, but `f32`'s mantissa is only 23 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:371:17
+    |
+371 |                 ((ordinal * 3 + seed * 11) % 13) as f32 - 6.,
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `usize` to `u32` may truncate the value on targets with 64-bit wide pointers
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:373:22
+    |
+373 |             let id = (ordinal % 9) as u32;
+    |                      ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+373 -             let id = (ordinal % 9) as u32;
+373 +             let id = u32::try_from(ordinal % 9);
+    |
+
+warning: casting `usize` to `u8` may truncate the value
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:381:19
+    |
+381 |                 &[ordinal as u8],
+    |                   ^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+381 -                 &[ordinal as u8],
+381 +                 &[u8::try_from(ordinal)],
+    |
+
+warning: this function has too many lines (123/100)
+   --> crates/abi-wdbx/tests/v3_memory_edge.rs:185:1
+    |
+185 | fn resolution_provenance_is_per_edge_and_survives_reopen() {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+    = note: `-W clippy::too-many-lines` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::too_many_lines)]`
+
+warning: `abi-wdbx` (test "v3_memory_edge") generated 1 warning
+warning: `abi-wdbx` (test "wdbx_3d_octree_parity") generated 23 warnings (2 duplicates)
+warning: function `rank_fixture` is never used
+   --> crates/abi-wdbx/tests/support/dimension_ranking.rs:519:8
+    |
+519 | pub fn rank_fixture(fixture: &Fixture) -> DimensionRanking {
+    |        ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `digests_of` is never used
+   --> crates/abi-wdbx/tests/support/dimension_ranking.rs:530:8
+    |
+530 | pub fn digests_of(ranking: &DimensionRanking) -> Vec<[u8; 32]> {
+    |        ^^^^^^^^^^
+
+warning: function `labels_of` is never used
+   --> crates/abi-wdbx/tests/support/dimension_ranking.rs:540:8
+    |
+540 | pub fn labels_of(ranking: &DimensionRanking, dimension: EvidenceDimension) -> Vec<&'static str> {
+    |        ^^^^^^^^^
+
+warning: function `label_of` is never used
+   --> crates/abi-wdbx/tests/support/dimension_ranking.rs:550:8
+    |
+550 | pub fn label_of(
+    |        ^^^^^^^^
+
+warning: function `expected_lifecycle_signal` is never used
+   --> crates/abi-wdbx/tests/support/dimension_ranking.rs:568:8
+    |
+568 | pub fn expected_lifecycle_signal(
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `vector_arm` is never used
+   --> crates/abi-wdbx/tests/support/dimension_ranking.rs:597:8
+    |
+597 | pub fn vector_arm(fixture: &Fixture) -> (Vec<VectorHit>, Vec<[u8; 32]>) {
+    |        ^^^^^^^^^^
+
+warning: `abi-wdbx` (test "v3_vector_adapter") generated 6 warnings
+warning: binding's name is too similar to existing binding
+   --> crates/abi-wdbx/src/v3/federation/tests.rs:227:13
+    |
+227 |     let mut peers_a = PeerDirectory::new();
+    |             ^^^^^^^
+    |
+note: existing binding defined here
+   --> crates/abi-wdbx/src/v3/federation/tests.rs:220:9
+    |
+220 |     let peer_a = PeerIdentity::new(
+    |         ^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#similar_names
+    = note: `-W clippy::similar-names` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::similar_names)]`
+
+warning: binding's name is too similar to existing binding
+   --> crates/abi-wdbx/src/v3/federation/tests.rs:270:13
+    |
+270 |     let mut peers_b = PeerDirectory::new();
+    |             ^^^^^^^
+    |
+note: existing binding defined here
+   --> crates/abi-wdbx/src/v3/federation/tests.rs:225:13
+    |
+225 |     let (_, peer_b) = peer(2, &org_b, ResidencyClass::Unrestricted);
+    |             ^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#similar_names
+
+warning: used `assert!` to check that a value is empty
+   --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:546:9
+    |
+546 |         assert!(selected.hits.is_empty());
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#assert_is_empty
+    = note: `-W clippy::assert-is-empty` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::assert_is_empty)]`
+help: use `assert_eq!` to show the value on failure
+    |
+546 -         assert!(selected.hits.is_empty());
+546 +         assert_eq!(selected.hits, [] as [spatial3d::legacy_checked::CheckedSpatialHit<'_>; 0]);
+    |
+
+warning: casting `usize` to `u8` may truncate the value
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/tests.rs:19:40
+   |
+19 |     let mut v = vec![0xd2, 0x84, 0x58, header.len() as u8];
+   |                                        ^^^^^^^^^^^^^^^^^^
+   |
+   = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+   |
+19 -     let mut v = vec![0xd2, 0x84, 0x58, header.len() as u8];
+19 +     let mut v = vec![0xd2, 0x84, 0x58, u8::try_from(header.len())];
+   |
+
+warning: use of `format!` to build up a string from an iterator
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/tests.rs:47:9
+   |
+47 | /         Sha256::digest(structure)
+48 | |             .iter()
+49 | |             .map(|byte| format!("{byte:02x}"))
+50 | |             .collect::<String>(),
+   | |________________________________^
+   |
+help: call `fold` instead
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/tests.rs:49:14
+   |
+49 |             .map(|byte| format!("{byte:02x}"))
+   |              ^^^
+help: ... and use the `write!` macro here
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/tests.rs:49:25
+   |
+49 |             .map(|byte| format!("{byte:02x}"))
+   |                         ^^^^^^^^^^^^^^^^^^^^^
+   = note: this can be written more efficiently by appending to a `String` directly
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#format_collect
+   = note: `-W clippy::format-collect` implied by `-W clippy::pedantic`
+   = help: to override `-W clippy::pedantic` add `#[allow(clippy::format_collect)]`
+
+warning: this function has too many lines (115/100)
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/fixtures.rs:119:1
+    |
+119 | pub(super) fn populated() -> CompleteEpisodeInput {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+
+warning: this function has too many lines (135/100)
+ --> crates/abi-wdbx/src/v3/complete_episode/tests/coverage.rs:5:1
+  |
+5 | fn every_group_leaf_changes_the_commitment() {
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+
+warning: this function has too many lines (106/100)
+ --> crates/abi-wdbx/src/v3/complete_episode/tests/diagnostics.rs:5:1
+  |
+5 | fn every_new_type_redacts_private_leaves_and_signer_containment() {
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+
+warning: use of `format!` to build up a string from an iterator
+   --> crates/abi-wdbx/src/v3/complete_episode/tests.rs:101:22
+    |
+101 |           let actual = bytes(input)
+    |  ______________________^
+102 | |             .iter()
+103 | |             .map(|b| format!("{b:02x}"))
+104 | |             .collect::<String>();
+    | |________________________________^
+    |
+help: call `fold` instead
+   --> crates/abi-wdbx/src/v3/complete_episode/tests.rs:103:14
+    |
+103 |             .map(|b| format!("{b:02x}"))
+    |              ^^^
+help: ... and use the `write!` macro here
+   --> crates/abi-wdbx/src/v3/complete_episode/tests.rs:103:22
+    |
+103 |             .map(|b| format!("{b:02x}"))
+    |                      ^^^^^^^^^^^^^^^^^^
+    = note: this can be written more efficiently by appending to a `String` directly
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#format_collect
+
+warning: this function has too many lines (220/100)
+  --> crates/abi-wdbx/src/v3/complete_episode/tests/draft_corpus.rs:34:1
+   |
+34 | pub(super) fn vocabulary_cases() -> Vec<Value> {
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+
+warning: this function has too many lines (145/100)
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/draft_shape.rs:182:1
+    |
+182 | pub(super) fn validate(fixture: &Value) -> R {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+
+warning: this argument is passed by value, but not consumed in the function body
+  --> crates/abi-wdbx/src/v3/complete_episode/tests/draft_mapping.rs:14:22
+   |
+14 | fn field(v: &C, key: C) -> &C {
+   |                      ^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_pass_by_value
+help: consider taking a reference instead
+   |
+14 | fn field(v: &C, key: &C) -> &C {
+   |                      +
+
+warning: this argument is passed by value, but not consumed in the function body
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/decode_bounds.rs:203:21
+    |
+203 | fn cap_error(input: CompleteEpisodeInput, expected: CompleteEpisodeError) {
+    |                     ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_pass_by_value
+help: consider taking a reference instead
+    |
+203 | fn cap_error(input: &CompleteEpisodeInput, expected: CompleteEpisodeError) {
+    |                     +
+
+warning: this function has too many lines (121/100)
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/decode_bounds.rs:208:1
+    |
+208 | fn realizable_positive_typed_caps_and_cap_plus_one() {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+
+warning: this argument is passed by value, but not consumed in the function body
+ --> crates/abi-wdbx/src/v3/complete_episode/tests/decode_malformed.rs:7:29
+  |
+7 | pub(super) fn decode(value: C) -> std::result::Result<DecodedCompleteEpisode, E> {
+  |                             ^
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_pass_by_value
+help: consider taking a reference instead
+  |
+7 | pub(super) fn decode(value: &C) -> std::result::Result<DecodedCompleteEpisode, E> {
+  |                             +
+
+warning: this argument is passed by value, but not consumed in the function body
+  --> crates/abi-wdbx/src/v3/complete_episode/tests/decode_malformed.rs:79:26
+   |
+79 | fn maps(value: &C, path: Vec<Step>, output: &mut Vec<Vec<Step>>) {
+   |                          ^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_pass_by_value
+help: consider changing the type to
+   |
+79 - fn maps(value: &C, path: Vec<Step>, output: &mut Vec<Vec<Step>>) {
+79 + fn maps(value: &C, path: &[Step], output: &mut Vec<Vec<Step>>) {
+   |
+help: change `path.clone()` to
+   |
+82 -             output.push(path.clone());
+82 +             output.push(path.to_owned());
+   |
+help: change `path.clone()` to
+   |
+84 -                 let mut p = path.clone();
+84 +                 let mut p = path.to_owned();
+   |
+help: change `path.clone()` to
+   |
+91 -                 let mut p = path.clone();
+91 +                 let mut p = path.to_owned();
+   |
+
+warning: this argument is passed by value, but not consumed in the function body
+ --> crates/abi-wdbx/src/v3/complete_episode/tests/decode_semantics.rs:5:21
+  |
+5 | fn malformed(input: CompleteEpisodeInput, expected: CompleteEpisodeError) {
+  |                     ^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_pass_by_value
+help: consider taking a reference instead
+  |
+5 | fn malformed(input: &CompleteEpisodeInput, expected: CompleteEpisodeError) {
+  |                     +
+
+warning: this function has too many lines (110/100)
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/decode_semantics.rs:173:1
+    |
+173 | fn all_labels_and_unit_variants_retain_exact_typed_identity() {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+
+warning: item in documentation is missing backticks
+  --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:26:41
+   |
+26 | //! unreachable for this envelope (e.g. ParentLimit, which is inert) are
+   |                                         ^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#doc_markdown
+   = note: `-W clippy::doc-markdown` implied by `-W clippy::pedantic`
+   = help: to override `-W clippy::pedantic` add `#[allow(clippy::doc_markdown)]`
+help: try
+   |
+26 - //! unreachable for this envelope (e.g. ParentLimit, which is inert) are
+26 + //! unreachable for this envelope (e.g. `ParentLimit`, which is inert) are
+   |
+
+warning: this argument (1 byte) is passed by reference, but would be more efficient if passed by value (limit: 8 byte)
+  --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:47:23
+   |
+47 | fn reader_word(error: &CanonicalDecodeError) -> Option<&'static str> {
+   |                       ^^^^^^^^^^^^^^^^^^^^^ help: consider passing by value instead: `CanonicalDecodeError`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#trivially_copy_pass_by_ref
+   = note: `-W clippy::trivially-copy-pass-by-ref` implied by `-W clippy::pedantic`
+   = help: to override `-W clippy::pedantic` add `#[allow(clippy::trivially_copy_pass_by_ref)]`
+
+warning: this argument (1 byte) is passed by reference, but would be more efficient if passed by value (limit: 8 byte)
+  --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:72:24
+   |
+72 | fn episode_word(error: &crate::v3::complete_episode::CompleteEpisodeError) -> Option<&'static str> {
+   |                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: consider passing by value instead: `crate::v3::complete_episode::CompleteEpisodeError`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#trivially_copy_pass_by_ref
+
+warning: this argument is passed by value, but not consumed in the function body
+  --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:91:21
+   |
+91 | fn category(result: std::result::Result<DecodedCompleteEpisode, E>) -> String {
+   |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_pass_by_value
+help: consider taking a reference instead
+   |
+91 | fn category(result: &std::result::Result<DecodedCompleteEpisode, E>) -> String {
+   |                     +
+
+warning: all fields have the same prefix: `max`
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:265:1
+    |
+265 | / pub(super) struct Limits {
+266 | |     pub max_input_bytes: Option<usize>,
+267 | |     pub max_value_count: Option<usize>,
+268 | |     pub max_collection_entries: Option<usize>,
+269 | |     pub max_string_bytes: Option<usize>,
+270 | |     pub max_parent_count: Option<usize>,
+271 | | }
+    | |_^
+    |
+    = help: remove the prefixes
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#struct_field_names
+    = note: `-W clippy::struct-field-names` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::struct_field_names)]`
+
+warning: this argument is passed by value, but not consumed in the function body
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:404:30
+    |
+404 | pub(super) fn execute(cases: Vec<Case>) {
+    |                              ^^^^^^^^^ help: consider changing the type to: `&[Case]`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_pass_by_value
+
+warning: consider adding a `;` to the last statement for consistent formatting
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:455:17
+    |
+455 |                 assert_eq!(got, *error, "case {} ingress category", case.name)
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: add a `;` here: `assert_eq!(got, *error, "case {} ingress category", case.name);`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#semicolon_if_nothing_returned
+    = note: `-W clippy::semicolon-if-nothing-returned` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::semicolon_if_nothing_returned)]`
+
+warning: casts from `u8` to `u64` can be expressed infallibly using `From`
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:677:20
+    |
+677 |         0..=23 => (info as u64, start + 1),
+    |                    ^^^^^^^^^^^
+    |
+    = help: an `as` cast can become silently lossy if the types change in the future
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_lossless
+    = note: `-W clippy::cast-lossless` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::cast_lossless)]`
+help: use `u64::from` instead
+    |
+677 -         0..=23 => (info as u64, start + 1),
+677 +         0..=23 => (u64::from(info), start + 1),
+    |
+
+warning: casts from `u8` to `u64` can be expressed infallibly using `From`
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:678:16
+    |
+678 |         24 => (data[start + 1] as u64, start + 2),
+    |                ^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: an `as` cast can become silently lossy if the types change in the future
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_lossless
+help: use `u64::from` instead
+    |
+678 -         24 => (data[start + 1] as u64, start + 2),
+678 +         24 => (u64::from(data[start + 1]), start + 2),
+    |
+
+warning: casts from `u16` to `u64` can be expressed infallibly using `From`
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:680:13
+    |
+680 |             u16::from_be_bytes(data[start + 1..start + 3].try_into().unwrap()) as u64,
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: an `as` cast can become silently lossy if the types change in the future
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_lossless
+help: use `u64::from` instead
+    |
+680 -             u16::from_be_bytes(data[start + 1..start + 3].try_into().unwrap()) as u64,
+680 +             u64::from(u16::from_be_bytes(data[start + 1..start + 3].try_into().unwrap())),
+    |
+
+warning: casts from `u32` to `u64` can be expressed infallibly using `From`
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:684:13
+    |
+684 |             u32::from_be_bytes(data[start + 1..start + 5].try_into().unwrap()) as u64,
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: an `as` cast can become silently lossy if the types change in the future
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_lossless
+help: use `u64::from` instead
+    |
+684 -             u32::from_be_bytes(data[start + 1..start + 5].try_into().unwrap()) as u64,
+684 +             u64::from(u32::from_be_bytes(data[start + 1..start + 5].try_into().unwrap())),
+    |
+
+warning: casting `u64` to `usize` may truncate the value on targets with 32-bit wide pointers
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:698:21
+    |
+698 |             after + count as usize
+    |                     ^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+698 -             after + count as usize
+698 +             after + usize::try_from(count)
+    |
+
+warning: called `map(<f>).unwrap_or_else(<g>)` on an `Option` value
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:899:17
+    |
+899 |       let error = command
+    |  _________________^
+900 | |         .spawn()
+901 | |         .err()
+902 | |         .map(|error| error.to_string())
+903 | |         .unwrap_or_else(|| "unexpectedly spawned".to_owned());
+    | |_____________________________________________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#map_unwrap_or
+    = note: `-W clippy::map-unwrap-or` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::map_unwrap_or)]`
+help: try
+    |
+899 ~     let error = command
+900 +         .spawn()
+901 ~         .err().map_or_else(|| "unexpectedly spawned".to_owned(), |error| error.to_string());
+    |
+
+warning: `abi-wdbx` (lib test) generated 42 warnings (11 duplicates) (run `cargo clippy --fix --lib -p abi-wdbx --tests -- ` to apply 8 suggestions)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 12.01s
+
+==> python complete-episode decode witness tests (unittest)
+....................................................
+----------------------------------------------------------------------
+Ran 52 tests in 7.708s
+
+OK
+
+==> python cose-sign1-p1 encoding witness tests (unittest)
+............................
+----------------------------------------------------------------------
+Ran 28 tests in 0.065s
+
+OK
+
+==> tests
+   Compiling abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx/crates/abi-wdbx)
+warning: missing documentation for the crate
+   --> crates/abi-wdbx/tests/wdbx_3d_numeric.rs:1:1
+    |
+  1 | / use abi_wdbx::{
+  2 | |     Point3D,
+  3 | |     spatial3d::{Point3, Radius, SpatialError},
+  4 | | };
+...   |
+114 | |     );
+115 | | }
+    | |_^
+    |
+    = note: requested on the command line with `-W missing-docs`
+
+warning: missing documentation for the crate
+   --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:1:1
+    |
+  1 | / #[path = "support/dyadic_reference.rs"]
+  2 | | mod dyadic_reference;
+  3 | | #[path = "support/spatial_oracle.rs"]
+  4 | | mod spatial_oracle;
+...   |
+219 | | }
+    | |_^
+    |
+    = note: requested on the command line with `-W missing-docs`
+
+warning: `abi-wdbx` (test "wdbx_3d_numeric") generated 1 warning
+warning: `abi-wdbx` (test "wdbx_3d_oracle") generated 1 warning
+warning: function `rank_fixture` is never used
+   --> crates/abi-wdbx/tests/support/dimension_ranking.rs:519:8
+    |
+519 | pub fn rank_fixture(fixture: &Fixture) -> DimensionRanking {
+    |        ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `digests_of` is never used
+   --> crates/abi-wdbx/tests/support/dimension_ranking.rs:530:8
+    |
+530 | pub fn digests_of(ranking: &DimensionRanking) -> Vec<[u8; 32]> {
+    |        ^^^^^^^^^^
+
+warning: function `labels_of` is never used
+   --> crates/abi-wdbx/tests/support/dimension_ranking.rs:540:8
+    |
+540 | pub fn labels_of(ranking: &DimensionRanking, dimension: EvidenceDimension) -> Vec<&'static str> {
+    |        ^^^^^^^^^
+
+warning: function `label_of` is never used
+   --> crates/abi-wdbx/tests/support/dimension_ranking.rs:550:8
+    |
+550 | pub fn label_of(
+    |        ^^^^^^^^
+
+warning: function `expected_lifecycle_signal` is never used
+   --> crates/abi-wdbx/tests/support/dimension_ranking.rs:568:8
+    |
+568 | pub fn expected_lifecycle_signal(
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `vector_arm` is never used
+   --> crates/abi-wdbx/tests/support/dimension_ranking.rs:597:8
+    |
+597 | pub fn vector_arm(fixture: &Fixture) -> (Vec<VectorHit>, Vec<[u8; 32]>) {
+    |        ^^^^^^^^^^
+
+warning: `abi-wdbx` (test "v3_vector_adapter") generated 6 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 10.73s
+     Running unittests src/lib.rs (target/debug/deps/abi_compute-1d7f16798f78caf3)
+
+running 11 tests
+test backend::tests::compatibility_capabilities_keep_fallback_availability ... ok
+test backend::tests::backend_names_and_classes_are_stable ... ok
+test cpu::tests::cosine_and_norm_match_reference_values ... ok
+test backend::tests::baseline_capabilities_never_claim_accelerator_execution ... ok
+test cpu::tests::execution_evidence_changes_only_after_success ... ok
+test cpu::tests::dot_preserves_ragged_tail_and_dimension_behavior ... ok
+test backend::tests::invalid_evidence_combinations_are_rejected ... ok
+test cpu::tests::accelerator_selection_preserves_cpu_fallback_parity ... ok
+test accelerator::tests::trait_is_object_safe_and_defaults_are_deterministic ... ok
+test backend::tests::compiled_backend_does_not_imply_acceleration ... ok
+test cpu::tests::top_k_is_score_sorted_with_stable_index_ties ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running unittests src/lib.rs (target/debug/deps/abi_core-3ae0bf58808113c6)
+
+running 78 tests
+test config::tests::limit_defaults_match_the_zig_values ... ok
+test config::tests::log_level_maps_onto_the_logger_level ... ok
+test config::tests::config_defaults_to_info_and_the_dev_version ... ok
+test config::tests::loopback_detection_covers_the_forms_that_matter ... ok
+test config::tests::empty_json_object_is_the_default_config ... ok
+test config::tests::partial_json_fills_in_defaults ... ok
+test config::tests::malformed_json_is_an_error ... ok
+test config::tests::config_roundtrips_through_json ... ok
+test config::tests::log_level_serializes_as_err_like_the_zig_field_name ... ok
+test config::tests::ai_defaults_match_the_zig_values ... ok
+test memory::tests::format_bytes_matches_the_status_output_format ... ok
+test memory::tests::over_freeing_saturates_instead_of_wrapping ... ok
+test memory::tests::peak_records_the_high_water_mark ... ok
+test config::tests::server_defaults_match_the_zig_values ... ok
+test config::tests::the_default_bind_address_is_loopback ... ok
+test memory::tests::a_double_free_is_reported_and_does_not_double_count ... ok
+test memory::tests::a_new_tracker_is_zeroed ... ok
+test memory::tests::freeing_reduces_current_but_not_total ... ok
+test memory::tests::ids_are_never_reused ... ok
+test memory::tests::leaked_bytes_reports_the_unfreed_remainder ... ok
+test memory::tests::a_tracker_is_shareable_across_threads ... ok
+test memory::tests::records_are_ordered_by_track_time ... ok
+test memory::tests::reset_zeroes_everything ... ok
+test memory::tests::resize_downward_frees_the_delta ... ok
+test memory::tests::resize_then_free_uses_the_new_size ... ok
+test memory::tests::resize_upward_adds_the_delta ... ok
+test memory::tests::resizing_an_unknown_id_records_nothing ... ok
+test memory::tests::tracking_an_allocation_moves_totals_and_records ... ok
+test memory::tests::untagged_tracking_moves_totals_without_a_record ... ok
+test registry::tests::a_new_alias_cannot_shadow_an_existing_command_name ... ok
+test registry::tests::a_new_command_name_cannot_shadow_an_existing_alias ... ok
+test registry::tests::a_new_registry_is_empty ... ok
+test registry::tests::an_unknown_plugin_is_none ... ok
+test registry::tests::command_tokens_lists_name_then_aliases ... ok
+test registry::tests::find_command_resolves_names_and_aliases ... ok
+test registry::tests::plugin_list_drops_the_entry_point_when_absent ... ok
+test registry::tests::plugin_list_falls_back_to_name_and_description ... ok
+test registry::tests::plugin_list_matches_the_golden_header_shape ... ok
+test registry::tests::plugin_list_of_an_empty_registry_is_just_the_header ... ok
+test registry::tests::plugin_list_uses_the_full_form_when_all_fields_are_present ... ok
+test registry::tests::re_registering_a_name_replaces_in_place ... ok
+test registry::tests::re_registering_a_plugin_does_not_collide_with_itself ... ok
+test registry::tests::register_stores_name_and_description ... ok
+test registry::tests::registration_order_is_preserved ... ok
+test registry::tests::two_plugins_cannot_claim_the_same_command_name ... ok
+test registry::tests::two_plugins_cannot_claim_the_same_context_provider ... ok
+test registry::tests::two_plugins_cannot_share_an_alias ... ok
+test scheduler::tests::a_new_scheduler_is_empty ... ok
+test scheduler::tests::a_failing_task_records_its_message ... ok
+test scheduler::tests::a_scheduler_can_be_shared_across_threads ... ok
+test scheduler::tests::a_task_may_submit_more_work_without_deadlocking ... ok
+test scheduler::tests::cancel_keeps_the_counters_consistent ... ok
+test scheduler::tests::cancel_prevents_execution ... ok
+test scheduler::tests::an_adversarial_panic_payload_cannot_strand_later_work ... ok
+test scheduler::tests::cancelling_a_finished_task_is_an_invalid_state ... ok
+test scheduler::tests::cancelling_an_unknown_id_reports_not_found ... ok
+test scheduler::tests::cancelling_twice_fails_the_second_time ... ok
+test scheduler::tests::equal_priority_runs_in_submission_order ... ok
+test scheduler::tests::concurrent_callers_never_execute_more_than_one_task ... ok
+test scheduler::tests::higher_priority_runs_first ... ok
+test scheduler::tests::ids_start_at_one_and_increase ... ok
+test scheduler::tests::memory_tracker_attachment_is_observable ... ok
+test scheduler::tests::peek_does_not_consume ... ok
+test scheduler::tests::peek_on_an_empty_scheduler_is_none ... ok
+test scheduler::tests::peek_skips_a_cancelled_higher_priority_task ... ok
+test scheduler::tests::run_all_drains_past_a_failure_and_reports_the_first ... ok
+test scheduler::tests::run_next_on_an_empty_scheduler_returns_none ... ok
+test scheduler::tests::stats_render_matches_the_frozen_output_format ... ok
+test scheduler::tests::submit_then_run_reaches_completed ... ok
+test scheduler::tests::tasks_are_listed_in_submission_order ... ok
+test scheduler::tests::total_tasks_is_the_sum_of_the_other_counters ... ok
+test task::tests::duration_needs_both_timestamps ... ok
+test task::tests::priority_default_is_normal ... ok
+test task::tests::priority_discriminants_match_the_zig_values ... ok
+test task::tests::priority_orders_low_to_critical ... ok
+test task::tests::priority_parses_by_name ... ok
+test task::tests::status_names_match_the_status_output_contract ... ok
+test task::tests::terminal_states_are_exactly_the_finished_ones ... ok
+
+test result: ok. 78 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+
+     Running unittests src/lib.rs (target/debug/deps/abi_foundation-1d6ba4bbb2ee518c)
+
+running 176 tests
+test credentials::file::tests::home_is_the_final_fallback ... ok
+test credentials::file::tests::explicit_path_env_wins ... ok
+test credentials::file::tests::missing_file_loads_as_empty_credentials ... ok
+test credentials::file::tests::xdg_config_home_is_used_when_no_explicit_path ... ok
+test credentials::keychain::tests::backend_defaults_to_file ... ok
+test credentials::keychain::tests::backend_selects_keychain_on_exact_match ... ok
+test credentials::keychain::tests::keychain_roundtrip_including_stale_deletion ... ok
+test credentials::file::tests::non_string_field_values_are_ignored ... ok
+test credentials::keychain::tests::support_matches_the_documented_platform_boundary ... ok
+test credentials::keychain::tests::unrecognised_backend_values_keep_the_file_store ... ok
+test credentials::linux_secret_service::tests::item_metadata_is_fixed_bounded_and_unique_per_field ... ok
+test credentials::file::tests::credential_directory_is_owner_only ... ok
+test credentials::file::tests::non_object_json_is_a_parse_error ... ok
+test credentials::linux_secret_service::tests::non_linux_operations_fail_closed ... ok
+test credentials::file::tests::malformed_json_is_a_parse_error ... ok
+test credentials::provider::tests::capability_report_is_stable_secret_free_and_complete ... ok
+test credentials::provider::tests::failed_operation_does_not_invent_runtime_verification ... ok
+test credentials::provider::tests::platform_capabilities_are_stable_and_claim_honest ... ok
+test credentials::file::tests::absent_fields_are_omitted_not_nulled ... ok
+test credentials::provider::tests::provider_trait_is_object_safe_and_debug_is_redacted ... ok
+test credentials::file::tests::save_creates_a_locked_down_parent_directory ... ok
+test credentials::provider::tests::unavailable_adapters_fail_without_inventing_runtime_evidence ... ok
+test credentials::secret::tests::clone_produces_an_independent_secret ... ok
+test credentials::file::tests::save_does_not_repermission_a_pre_existing_parent ... ok
+test credentials::secret::tests::debug_never_prints_the_plaintext ... ok
+test credentials::secret::tests::equality_compares_plaintext ... ok
+test credentials::secret::tests::exposes_the_plaintext ... ok
+test credentials::secret::tests::from_conversions_are_available ... ok
+test credentials::file::tests::save_then_load_roundtrips_every_field ... ok
+test credentials::secret::tests::redacted_fully_masks_short_secrets ... ok
+test credentials::file::tests::save_tightens_an_existing_permissive_file ... ok
+test credentials::secret::tests::redacted_shows_a_short_prefix_only ... ok
+test credentials::tests::debug_output_redacts_every_secret ... ok
+test credentials::tests::field_keys_are_unique ... ok
+test credentials::tests::field_list_is_the_documented_set ... ok
+test credentials::tests::get_and_set_roundtrip ... ok
+test credentials::tests::iter_follows_declaration_order_not_insertion_order ... ok
+test credentials::tests::setting_none_clears_the_field ... ok
+test credentials::provider::tests::successful_file_operation_is_the_only_source_of_runtime_verification ... ok
+test credentials::tests::clear_keychain_is_a_noop_success_under_the_file_backend ... ok
+test credentials::tests::default_backend_is_the_file_store ... ok
+test credentials::tests::setting_twice_replaces_rather_than_duplicates ... ok
+test env::tests::canonical_names_are_stable ... ok
+test env::tests::empty_value_counts_as_unset ... ok
+test env::tests::get_or_supplies_the_default ... ok
+test env::tests::get_parsed_reads_integers_and_rejects_junk ... ok
+test env::tests::get_bool_accepts_the_documented_truthy_set ... ok
+test env::tests::override_is_visible_and_removable ... ok
+test env::tests::unset_variable_reports_none ... ok
+test errors::tests::describe_matches_zig_strings ... ok
+test errors::tests::describe_name_falls_back_for_unknown ... ok
+test errors::tests::display_uses_description ... ok
+test errors::tests::error_context_renders_location ... ok
+test errors::tests::io_errors_map_onto_the_error_set ... ok
+test errors::tests::name_roundtrips_through_from_name ... ok
+test hash_feature::tests::fnv1a_is_stable ... ok
+test hash_feature::tests::wyhash128_halves_differ ... ok
+test hash_feature::tests::wyhash_is_seed_sensitive ... ok
+test http::tests::a_closed_connection_reads_as_empty ... ok
+test credentials::tests::file_backend_roundtrips_through_the_public_api ... ok
+test http::tests::a_missing_or_non_bearer_authorization_is_rejected ... ok
+test credentials::tests::keychain_request_resolves_by_platform_support ... ok
+test http::tests::a_truncated_body_reads_as_incomplete_not_a_request ... ok
+test http::tests::absent_or_malformed_content_length_is_none ... ok
+test http::tests::ambiguous_or_unsupported_body_framing_is_malformed ... ok
+test http::tests::an_empty_configured_token_never_authorizes_a_bearer_header ... ok
+test http::tests::an_oversize_declared_body_reads_as_too_large ... ok
+test http::tests::content_length_in_the_request_line_is_not_matched ... ok
+test http::tests::bearer_token_is_accepted_and_mismatches_rejected ... ok
+test http::tests::bind_loopback_returns_a_usable_loopback_port ... ok
+test http::tests::find_body_returns_none_when_there_is_no_body ... ok
+test http::tests::fixed_work_eq_is_not_fooled_by_zero_padding ... ok
+test http::tests::fixed_work_eq_matches_equal_and_rejects_unequal ... ok
+test http::tests::header_value_reads_only_the_header_block ... ok
+test http::tests::headers_with_no_terminator_read_as_incomplete ... ok
+test http::tests::headers_that_fill_the_buffer_read_as_too_large ... ok
+test http::tests::loopback_authorities_reject_aliases_bad_ports_and_duplicate_headers ... ok
+test http::tests::parses_content_length_case_insensitively_with_padding ... ok
+test http::tests::read_request_excludes_bytes_beyond_the_declared_body ... ok
+test http::tests::read_response_is_bounded_by_max_size ... ok
+test http::tests::reads_a_complete_request ... ok
+test http::tests::reads_a_request_with_no_body ... ok
+test http::tests::reason_phrases_cover_the_codes_the_listeners_emit ... ok
+test http::tests::request_target_rejects_oversize_without_overflowing ... ok
+test http::tests::unauthorized_response_is_well_formed_and_escapes_its_message ... ok
+test http::tests::unauthorized_message_cannot_break_out_of_the_json_body ... ok
+test io::tests::counting_writer_tracks_byte_total ... ok
+test io::tests::for_each_line_streams_every_line ... ok
+test io::tests::stats_accumulate_and_snapshot ... ok
+test io::tests::append_extends_and_creates ... ok
+test io::tests::resolve_path_fails_for_a_missing_path ... ok
+test io::tests::stats_are_shareable_across_threads ... ok
+test io::tests::stats_reset_zeroes_everything ... ok
+test json::tests::escapes_low_control_bytes_as_lowercase_unicode ... ok
+test json::tests::escapes_metacharacters_and_control_chars ... ok
+test json::tests::matches_serde_semantics_across_all_control_bytes ... ok
+test json::tests::multibyte_utf8_passes_through_unchanged ... ok
+test io::tests::read_file_limited_caps_the_read ... ok
+test json::tests::non_finite_numbers_become_null ... ok
+test json::tests::output_is_parseable_by_serde ... ok
+test json::tests::raw_variant_omits_the_quotes ... ok
+test io::tests::existence_checks_distinguish_files_from_dirs ... ok
+test json::tests::str_field_and_str_member_read_strings_only ... ok
+test json::tests::uses_short_escapes_for_backspace_and_formfeed ... ok
+test json::tests::write_json_string_matches_the_allocating_form ... ok
+test logger::tests::clear_drops_entries_but_keeps_the_level ... ok
+test logger::tests::entries_at_filters_by_exact_level ... ok
+test io::tests::resolve_path_canonicalizes_an_existing_path ... ok
+test logger::tests::entry_renders_like_the_zig_output ... ok
+test logger::tests::filters_entries_below_the_minimum_level ... ok
+test logger::tests::level_parse_accepts_zig_abbreviation ... ok
+test logger::tests::levels_are_ordered_by_severity ... ok
+test io::tests::write_then_read_roundtrips ... ok
+test logger::tests::new_logger_starts_empty_at_the_given_level ... ok
+test logger::tests::records_entries_with_level_and_module ... ok
+test logger::tests::set_level_changes_subsequent_filtering_only ... ok
+test io::tests::ensure_dir_creates_nested_directories ... ok
+test io::tests::write_file_creates_missing_parents ... ok
+test plugin_manifest::tests::a_missing_manifest_is_rejected ... ok
+test plugin_manifest::tests::an_absent_required_field_is_reported_by_name ... ok
+test plugin_manifest::tests::a_non_object_manifest_is_rejected ... ok
+test plugin_manifest::tests::an_absent_entry_point_file_is_rejected ... ok
+test plugin_manifest::tests::safe_entry_points_are_accepted ... ok
+test plugin_manifest::tests::a_well_formed_plugin_validates ... ok
+test plugin_manifest::tests::unsafe_entry_points_are_rejected ... ok
+test io::tests::atomic_write_replaces_existing_contents ... ok
+test plugin_manifest::tests::a_missing_stub_is_rejected ... ok
+test system::tests::arch_is_recognised_on_this_host ... ok
+test system::tests::cpu_count_is_at_least_one ... ok
+test plugin_manifest::tests::missing_directory_is_rejected ... ok
+test system::tests::default_limits_match_the_zig_values ... ok
+test system::tests::hostname_prefers_the_environment_override ... ok
+test system::tests::current_dir_resolves ... ok
+test system::tests::pid_is_nonzero ... ok
+test system::tests::platform_and_arch_render_lowercase_names ... ok
+test system::tests::platform_is_recognised_on_supported_hosts ... ok
+test temp_path::tests::successive_calls_do_not_collide ... ok
+test plugin_manifest::tests::an_empty_required_field_is_rejected ... ok
+test system::tests::list_directory_errors_on_a_missing_path ... ok
+test system::tests::list_directory_sees_a_created_file ... ok
+test text::tests::basename_matches_zig_edge_cases ... ok
+test text::tests::contains_ignore_case_matches_either_case ... ok
+test text::tests::contains_ignore_case_treats_empty_needle_as_a_match ... ok
+test text::tests::dirname_matches_zig_edge_cases ... ok
+test text::tests::extension_keeps_the_leading_dot ... ok
+test text::tests::path_join_collapses_duplicate_separators ... ok
+test text::tests::starts_with_ignore_case_compares_the_prefix_only ... ok
+test text::tests::truncate_respects_char_boundaries ... ok
+test time::tests::monotonic_ns_advances ... ok
+test plugin_manifest::tests::an_escaping_entry_point_is_rejected ... ok
+test plugin_manifest::tests::camel_case_aliases_and_a_nested_entry_point_are_accepted ... ok
+test time::tests::unix_ms_does_not_go_backwards ... ok
+test time::tests::unix_ms_is_positive ... ok
+test time::tests::unix_secs_agrees_with_unix_ms ... ok
+test validation::tests::contains_one_of_needs_a_single_match ... ok
+test validation::tests::does_not_contain_names_the_offending_pattern ... ok
+test validation::tests::errors_render_readable_messages ... ok
+test validation::tests::is_all_digits_rejects_empty_and_mixed ... ok
+test system::tests::system_info_is_internally_consistent ... ok
+test validation::tests::is_hex_digit_covers_all_three_ranges ... ok
+test validation::tests::length_checks_report_actual_and_expected ... ok
+test validation::tests::no_null_bytes_finds_interior_nul ... ok
+test validation::tests::non_empty_rejects_only_empty ... ok
+test wyhash::tests::differs_from_the_rust_wyhash_crate ... ok
+test system::tests::hostname_is_never_empty ... ok
+test wyhash::tests::matches_zig_on_the_embedding_gram_shapes ... ok
+test wyhash::tests::matches_zig_on_the_empty_input ... ok
+test wyhash::tests::seed_changes_the_digest ... ok
+test wyhash::tests::length_boundaries_do_not_panic ... ok
+test temp_path::tests::temp_dir_is_non_empty_and_exists ... ok
+test temp_path::tests::temp_file_path_lands_in_temp_dir_with_the_extension ... ok
+test temp_path::tests::tmpdir_override_is_honoured_on_unix ... ok
+test wyhash::tests::matches_every_zig_reference_vector ... ok
+test time::tests::stopwatch_measures_a_sleep ... ok
+test io::tests::atomic_write_leaves_no_temp_file_behind ... ok
+test io::tests::concurrent_atomic_writers_use_independent_temp_files ... ok
+
+test result: ok. 176 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.20s
+
+     Running unittests src/lib.rs (target/debug/deps/abi_telemetry-8959376bf7c4cbe6)
+
+running 4 tests
+test tests::prometheus_names_are_sanitized_without_colliding_by_truncation ... ok
+test tests::invalid_and_excess_names_are_observable ... ok
+test tests::counters_accumulate_and_render_in_insertion_order ... ok
+test metrics::tests::counters_and_gauges_round_trip ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/abi_wdbx-3a7f4a090aa34a18)
+
+running 450 tests
+test ans::tests::repetitive_large_input_exercises_rans_instead_of_stored_fallback ... ok
+test ans::tests::malformed_modes_and_truncated_streams_are_rejected ... ok
+test ans::tests::empty_and_incompressible_inputs_use_exact_stored_mode ... ok
+test ans::tests::order_zero_and_order_one_round_trip ... ok
+test ans::tests::encoding_is_deterministic ... ok
+test cluster::placement::tests::placement_is_deterministic_distinct_and_capped ... ok
+test cluster::placement::tests::draining_and_removed_nodes_are_never_selected ... ok
+test cluster::tests::configured_quorum_is_not_redefined_after_failures ... ok
+test cluster::tests::leader_failover_uses_a_higher_term_and_surviving_majority ... ok
+test cluster::tests::primitives_match_the_cluster_driver ... ok
+test cluster::tests::replication_reaches_every_alive_replica_and_commits ... ok
+test cluster::tests::single_leader_is_elected_with_a_configured_quorum ... ok
+test cluster::tests::status_line_matches_the_cli_shape ... ok
+test cluster_rpc::tests::auth_and_allowlist_rejections_do_not_mutate_state ... ok
+test cluster::placement::tests::one_join_changes_only_keys_won_by_the_new_node ... ok
+test cluster_rpc::tests::authenticated_multi_node_round_reaches_vote_and_append_quorum ... ok
+test cluster_rpc::tests::graceful_shutdown_requires_authentication_and_stops_the_server ... ok
+test cluster_rpc::tests::data_plane_rejects_an_oversized_request_before_connecting ... ok
+test cluster_rpc::tests::legacy_unauthenticated_append_accepts_an_empty_payload ... ok
+test cluster_rpc::tests::loopback_vote_and_append_mutate_the_node ... ok
+test cluster_rpc::tests::missing_auth_and_missing_authenticated_leader_are_rejected ... ok
+test cluster_rpc::tests::non_loopback_bind_fails_closed_before_opening_a_socket ... ok
+test cluster::membership::tests::signed_generations_apply_in_order_and_removal_is_a_tombstone ... ok
+test cluster_rpc::tests::policy_validation_and_reload_are_explicit ... ok
+test cluster_rpc::tests::peer_reload_admits_a_previously_rejected_candidate ... ok
+test codecs::pq::tests::deterministic_quality_fixture_and_reload ... ok
+test codecs::pq::tests::tampered_artifacts_codes_and_tables_fail_closed ... ok
+test codecs::autoencoder::tests::artifact_shape_bounds_and_finite_checks_fail_closed ... ok
+test codecs::pq::tests::ties_choose_the_lowest_centroid_and_inputs_are_strict ... ok
+test codecs::tests::source_digest_is_record_id_sorted_and_bit_exact ... ok
+test codecs::tests::source_validation_rejects_empty_mixed_nonfinite_and_duplicates ... ok
+test compression::tests::constant_vector_is_lossless_and_empty_is_rejected ... ok
+test codecs::autoencoder::tests::trained_artifact_round_trips_deterministically ... ok
+test compression::tests::quantization_is_deterministic ... ok
+test compression::tests::realistic_vector_round_trip_stays_within_one_step ... ok
+test crypto_he::tests::ciphertext_sum_decrypts_to_plaintext_sum ... ok
+test crypto_he::tests::encryption_round_trips_and_rejects_invalid_inputs ... ok
+test cluster::membership::tests::unsigned_wrong_key_tampered_replayed_gapped_and_forked_records_fail_closed ... ok
+test crypto_he::tests::many_values_aggregate_without_operand_decryption ... ok
+test crypto_he::tests::wrong_key_does_not_recover_plaintext ... ok
+test durable::tests::a_lock_released_moments_later_is_waited_out_rather_than_reported_busy ... ok
+test cluster_rpc::tests::authenticated_data_plane_preserves_exact_objects_and_conflict_state ... ok
+test cluster::tests::read_repair_refuses_a_value_without_its_exact_transaction ... ok
+test durable::tests::kv_and_vector_mutations_survive_reopen ... ok
+test cluster::tests::vector_fanout_is_deduplicated_and_stably_sorted ... ok
+test durable::tests::corrupt_complete_wal_frame_releases_writer_lock_for_repair_and_reopen ... ok
+test durable::tests::checkpoint_resets_wal_and_preserves_id_continuity ... ok
+test durable::tests::every_mutation_family_survives_recovery ... ok
+test durable::tests::open_empty_creates_an_epoch_zero_wal ... ok
+test entropy::tests::all_byte_values_and_incompressible_data_round_trip ... ok
+test entropy::tests::corrupt_code_lengths_and_truncated_payload_are_rejected ... ok
+test entropy::tests::edge_case_alphabets_round_trip_exactly ... ok
+test entropy::tests::encoding_is_deterministic ... ok
+test entropy::tests::skewed_text_uses_huffman_and_compresses_after_table_overhead ... ok
+test fhe::tests::addition_and_multiplication_hold_over_seeded_keys_and_bits ... ok
+test fhe::tests::chained_multiplication_is_verified_through_depth_three ... ok
+test fhe::tests::depth_two_circuit_evaluates_correctly ... ok
+test fhe::tests::identical_seed_reproduces_keys_and_ciphertexts ... ok
+test fhe::tests::parameter_constants_and_fresh_noise_bound_are_explicit ... ok
+test format::tests::a_missing_manifest_is_an_empty_store_not_an_error ... ok
+test format::tests::a_complete_final_line_is_not_treated_as_torn ... ok
+test format::tests::corruption_that_is_not_the_final_line_is_an_error ... ok
+test format::tests::drops_a_torn_final_line_and_reports_it ... ok
+test format::tests::empty_manifest_renders_and_reparses ... ok
+test durable::tests::wal_failure_rolls_back_the_graph_without_burning_the_id ... ok
+test format::tests::genesis_hash_is_all_zero_and_reports_itself ... ok
+test format::tests::hash_reads_a_non_zero_string_encoding ... ok
+test format::tests::hash_reads_the_array_encoding ... ok
+test format::tests::hash_reads_the_string_encoding_used_by_genesis_blocks ... ok
+test format::tests::hash_rejects_out_of_range_values ... ok
+test format::tests::hash_rejects_the_wrong_length_in_either_encoding ... ok
+test format::tests::hash_serializes_as_an_array_so_it_always_round_trips ... ok
+test format::tests::latin1_range_characters_decode_to_their_byte_values ... ok
+test format::tests::manifest_active_is_sorted_and_deduplicated ... ok
+test format::tests::manifest_ignores_unknown_keys_for_forward_compatibility ... ok
+test format::tests::manifest_infers_next_epoch_when_absent ... ok
+test format::tests::manifest_rejects_a_bad_magic_line ... ok
+test format::tests::manifest_renders_in_the_readable_form ... ok
+test format::tests::manifest_tolerates_a_sparse_active_list ... ok
+test format::tests::parses_a_block_with_either_hash_encoding ... ok
+test format::tests::parses_a_kv_record_keeping_the_value_opaque ... ok
+test durable::tests::torn_wal_is_checkpointed_before_future_appends ... ok
+test format::tests::parses_a_manifest ... ok
+test format::tests::parses_a_kv_record_whose_value_is_not_json ... ok
+test format::tests::parses_a_segment_containing_only_its_magic_line ... ok
+test format::tests::mirror_epoch_defaults_legacy_to_zero_and_rejects_corruption ... ok
+test format::tests::parses_spatial_and_temporal_records ... ok
+test format::tests::parses_a_vector_record_of_any_dimension ... ok
+test durable::tests::one_writer_session_excludes_concurrent_opens_and_releases_on_drop ... ok
+test format::tests::reads_the_optional_checksum_trailer ... ok
+test format::tests::record_type_names_round_trip ... ok
+test cluster::tests::selected_replication_requires_quorum_and_preserves_exact_identity ... ok
+test format::tests::rejects_a_segment_with_a_bad_magic_line ... ok
+test format::tests::rejects_an_empty_segment_file ... ok
+test format::tests::rejects_an_unknown_record_type ... ok
+test format::tests::reports_a_missing_field_by_name ... ok
+test format::tests::store_paths_match_the_observed_layout ... ok
+test hnsw::tests::dimensions_are_validated_at_construction_and_use ... ok
+test hnsw::tests::empty_and_zero_limit_searches_return_no_results ... ok
+test hnsw::tests::insert_get_and_duplicate_rejection_are_consistent ... ok
+test hnsw::tests::rollback_is_scoped_to_the_matching_newest_insert ... ok
+test hnsw::tests::search_results_are_score_sorted_and_borrow_storage ... ok
+test hnsw::tests::snapshot_rebuild_preserves_ids_and_vectors ... ok
+test hnsw::tests::rollback_restores_the_complete_prior_graph ... ok
+test hnsw::tests::inserted_vectors_are_found_as_their_own_nearest_neighbor ... ok
+test hnsw::tests::identical_seed_and_insertion_order_produce_identical_graphs ... ok
+test hnsw::tests::vector_storage_supports_sparse_ids_without_zero_filled_presence ... ok
+test index::tests::absolute_ids_must_continue_the_sequence ... ok
+test cluster::tests::read_fanout_retains_conflicts_and_repairs_with_exact_objects ... ok
+test durable::tests::compaction_preserves_latest_checkpoint_plus_wal_recovery ... ok
+test index::tests::dimensions_are_established_once ... ok
+test index::tests::empty_and_oversize_vectors_are_rejected ... ok
+test index::tests::exact_search_orders_by_cosine_similarity ... ok
+test index::tests::generated_ids_start_at_one_and_are_contiguous ... ok
+test index::tests::limit_zero_returns_no_matches_after_validation ... ok
+test index::tests::results_borrow_the_stored_vector_without_copying ... ok
+test index::tests::snapshot_load_preserves_ids_and_selects_the_next_one ... ok
+test index::tests::snapshot_load_rejects_mixed_dimensions ... ok
+test index::tests::zero_norm_vectors_have_zero_similarity ... ok
+test index::tests::ties_are_stable_by_id ... ok
+test multiway::tests::cycles_convergence_and_empty_payloads_are_measured ... ok
+test multiway::tests::duplicate_events_survive_state_deduplication ... ok
+test multiway::tests::canonical_exports_are_byte_deterministic_and_dot_keeps_multiplicity ... ok
+test multiway::tests::overlapping_matches_preserve_rule_then_offset_order ... ok
+test multiway::tests::every_hard_cap_is_atomic_and_never_exceeded ... ok
+test multiway::tests::resume_rejects_mismatch_malformed_and_completed_documents ... ok
+test multiway::tests::max_depth_and_cancellation_return_resumable_partial_state ... ok
+test multiway::tests::rule_parsing_hashing_and_validation_match_the_oracle ... ok
+test multiway::tests::token_lineage_links_producer_events_to_consumers ... ok
+test mvcc::tests::append_hash_linking_lookup_and_tail_match_the_oracle ... ok
+test multiway::tests::repeated_runs_are_structurally_deterministic ... ok
+test multiway::tests::interrupted_resume_matches_an_uninterrupted_canonical_export ... ok
+test mvcc::tests::cloned_chain_handles_share_one_sequence ... ok
+test mvcc::tests::empty_profiles_are_rejected_without_burning_a_sequence ... ok
+test net_line::tests::rejects_a_frame_that_fills_the_buffer_without_newline ... ok
+test mvcc::tests::snapshot_remains_frozen_after_later_appends ... ok
+test neural_compress::tests::caller_buffers_and_dimension_validation_are_explicit ... ok
+test net_line::tests::strips_crlf_and_returns_partial_eof_frames ... ok
+test mvcc::tests::snapshots_are_stable_while_another_thread_appends ... ok
+test neural_compress::tests::higher_learning_rate_remains_stable ... ok
+test neural_compress::tests::identical_seed_and_training_order_are_deterministic ... ok
+test neural_compress::tests::reference_generator_matches_zig_xoshiro256_sequence ... ok
+test persistence::tests::serialized_records_reparse_individually ... ok
+test neural_compress::tests::learns_to_reconstruct_low_rank_vectors ... ok
+test persistence::tests::writer_rejects_an_invalid_audit_chain ... ok
+test persistence::tests::writer_rejects_mixed_dimensions_before_creating_files ... ok
+test rate_limit::tests::capacity_denial_and_counters_match_the_oracle ... ok
+test persistence::tests::checksum_detects_body_tampering ... ok
+test persistence::tests::snapshot_round_trips_all_record_types ... ok
+test persistence::tests::writer_rejects_non_finite_spatial_coordinates ... ok
+test rate_limit::tests::refill_advances_only_after_a_whole_token_is_available ... ok
+test remote_compute::tests::endpoint_port_parsing_matches_the_oracle ... ok
+test remote_compute::tests::loopback_dispatch_matches_the_local_reference ... ok
+test remote_compute::tests::authenticated_adapter_executes_and_matches_cpu_oracle ... ok
+test remote_compute::tests::non_loopback_listener_policy_requires_authentication ... ok
+test remote_compute::tests::unreachable_or_malformed_endpoint_falls_back_locally ... ok
+test remote_compute::tests::malformed_request_is_rejected ... ok
+test remote_compute::tests::oversized_and_non_finite_inputs_are_not_mis_served ... ok
+test remote_compute::tests::wrong_or_missing_token_fails_closed_to_cpu ... ok
+test remote_compute::tests::malformed_tokens_and_oversized_client_frames_are_bounded ... ok
+test persistence::tests::a_second_flush_publishes_a_new_full_checkpoint ... ok
+test cluster::tests::rebalance_plan_is_hash_verified_and_resumes_without_repeating_steps ... ok
+test rest::tests::overload_delivers_503_even_with_unread_invalid_request_bytes ... ok
+test rest::tests::overload_rejection_does_not_wait_for_peer_eof ... ok
+test rest::tests::hostile_host_or_origin_cannot_reach_rest_store ... ok
+test rest::tests::failed_auth_consumes_the_bucket_before_a_valid_request ... ok
+test hnsw::tests::graph_invariants_hold_after_neighbor_pruning ... ok
+test rest::tests::malformed_route_inputs_preserve_oracle_errors ... ok
+test rest::tests::insert_block_and_verify_recompute_the_chain ... ok
+test rest::tests::insert_and_query_kv_survive_reopen_and_escape_json ... ok
+test rest::tests::pure_routes_cover_health_stats_and_unknown_paths ... ok
+test rest::tests::real_tcp_auth_accepts_only_the_configured_bearer ... ok
+test rest::tests::mismatched_vector_width_is_refused_and_queries_keep_working ... ok
+test rest::tests::real_tcp_reassembles_body_and_embeds_rate_stats ... ok
+test rest::tests::real_tcp_rejects_ambiguous_body_framing_before_routing ... ok
+test rest::tests::real_tcp_rejects_incomplete_and_oversize_requests ... ok
+test rest::tests::undeclared_coalesced_insert_body_cannot_mutate_the_store ... ok
+test retrieval::tests::recency_causality_and_persona_re_rank_equal_semantics ... ok
+test retrieval::tests::persona_scope_isolates_vectors_and_preserves_borrowing ... ok
+test rest::tests::saturated_rest_readers_get_503_without_store_routing ... ok
+test rest::tests::slow_partial_request_times_out_then_next_request_is_served ... ok
+test remote_compute::tests::incorrect_or_slow_remote_results_fall_back_without_verification ... ok
+test retrieval::tests::spatial_blend_recovers_pure_semantic_and_pure_spatial_rankings ... ok
+test rest::tests::slow_reader_does_not_hold_the_rest_accept_loop ... ok
+test multiway::tests::wdbx_persistence_round_trips_latest_and_config_hash ... ok
+test spatial3d::octree_checked::tests::radius_payload_budget_rejects_before_reservation ... ok
+test spatial::tests::distance_metrics_match_the_oracle_values ... ok
+test segments::tests::reset_removes_only_manifest_listed_checkpoints ... ok
+test spatial::tests::insert_radius_and_nearest_neighbor_match_the_oracle_example ... ok
+test segments::tests::active_and_latest_epochs_follow_the_manifest ... ok
+test rest::tests::vector_query_applies_temporal_causal_and_persona_components ... ok
+test spatial::tests::insert_after_first_octree_build_invalidates_and_rebuilds ... ok
+test spatial::tests::octree_matches_linear_scan_across_threshold_and_distributions ... ok
+test store::tests::a_chain_not_starting_at_genesis_is_a_break ... ok
+test store::tests::a_break_reports_where_it_happened ... ok
+test store::tests::a_tampered_block_hash_is_rejected_even_when_links_match ... ok
+test store::tests::a_well_formed_chain_verifies_from_genesis ... ok
+test store::tests::an_empty_chain_verifies ... ok
+test store::tests::a_missing_active_segment_is_skipped_not_fatal ... ok
+test store::tests::disagreeing_vector_dimensions_report_none_rather_than_guessing ... ok
+test store::tests::a_segment_not_listed_as_active_is_not_read ... ok
+test store::tests::an_empty_store_loads_as_an_empty_snapshot ... ok
+test store::tests::a_torn_segment_tail_is_counted ... ok
+test store::tests::no_vectors_means_no_dimensions_and_no_max_id ... ok
+test store::tests::newest_valid_recovery_reports_corruption_when_no_checkpoint_survives ... ok
+test store::tests::merging_all_epochs_is_available_for_recovery_and_does_duplicate ... ok
+test segments::tests::retaining_zero_is_rejected_without_mutation ... ok
+test segments::tests::missing_retired_file_is_already_reclaimed ... ok
+test store::tests::loading_does_not_duplicate_the_block_chain_across_epochs ... ok
+test segments::tests::single_and_empty_stores_are_no_ops ... ok
+test store::tests::newest_valid_recovery_falls_back_without_merging_checkpoints ... ok
+test store::tests::stats_count_each_record_kind ... ok
+test store::tests::vectors_shadow_by_id_and_report_dimensions ... ok
+test store_path::tests::env_wrapper_reads_the_registry_and_treats_empty_as_unset ... ok
+test store_path::tests::resolution_follows_the_documented_precedence ... ok
+test store_path::tests::xdg_data_home_wins_over_home_off_windows_only ... ok
+test temporal::tests::graph_accepts_both_historical_edge_spellings ... ok
+test temporal::tests::hybrid_score_matches_the_zig_multiplicative_model ... ok
+test store::tests::only_the_latest_checkpoint_is_loaded ... ok
+test temporal::tests::temporal_weight_halves_and_clamps_future_timestamps ... ok
+test segments::tests::compaction_retains_the_newest_checkpoints_and_next_epoch ... ok
+test store::tests::recovery_mode_sees_a_segment_the_manifest_omits ... ok
+test store::tests::the_latest_epoch_is_chosen_numerically_not_lexicographically ... ok
+test tls_config::tests::environment_requires_a_complete_pair ... ok
+test tls_config::tests::explicit_paths_require_both_files_to_be_accessible ... ok
+test v2::lease::tests::maintenance_reclaims_crash_stale_unlocked_lease_files ... ok
+test v2::lifecycle::tests::activation_rejects_path_traversal_and_bad_v2_version_markers ... ok
+test v2::lease::tests::writers_do_not_contend_but_maintenance_excludes_live_leases ... ok
+test v2::index::tests::accelerator_batch_search_rejects_invalid_adapter_rankings ... ok
+test v2::index::tests::accelerator_batch_search_preserves_ids_ties_and_snapshot_lifetime ... ok
+test v2::index::tests::dense_slots_preserve_public_ids_and_snapshot_lifetimes ... ok
+test v2::lifecycle::tests::new_store_uses_v2_and_read_only_empty_open_is_non_mutating ... ok
+test v2::index::tests::v2_hnsw_accepts_4096_dimensions_without_widening_v1 ... ok
+test v2::lifecycle::tests::read_only_v1_open_does_not_remove_a_stale_wal ... ok
+test v2::lifecycle::tests::retry_discards_only_unpublished_v2_temporary_generations ... ok
+test v2::lifecycle::tests::failed_verification_never_publishes_or_changes_v1 ... ok
+test v2::lifecycle::tests::legacy_monolithic_snapshot_migrates_without_a_manifest ... ok
+test v2::lifecycle::tests::confirmed_gc_requires_no_live_writer_and_keeps_one_covering_segment ... ok
+test v2::security::tests::every_encrypted_object_gets_a_fresh_24_byte_nonce ... ok
+test v2::security::tests::generated_key_files_are_redacted_owner_only_and_never_overwritten ... ok
+test v2::security::tests::mismatched_signing_and_verifying_keys_are_rejected_before_writes ... ok
+test v2::security::tests::plaintext_and_encrypted_signed_objects_round_trip ... ok
+test v2::security::tests::private_key_files_must_be_owner_only ... ok
+test v2::security::tests::signature_requirement_rejects_plaintext_compatibility_objects ... ok
+test v2::lifecycle::tests::rekey_refuses_active_writers_then_atomically_activates_verified_generation ... ok
+test v2::lifecycle::tests::wal_ahead_and_torn_tail_migrate_only_committed_v1_frames ... ok
+test v2::security::tests::wrong_missing_and_tampered_keys_or_objects_fail_closed ... ok
+test v2::replication::tests::failed_head_publication_rolls_back_a_new_journal ... ok
+test v2::segment::tests::artifact_security_policy_mismatch_fails_before_publishing_a_segment ... ok
+test v2::segment::tests::concurrent_vector_versions_are_all_encoded_without_collapsing_conflicts ... ok
+test v2::replication::tests::exact_export_import_preserves_versions_values_and_bytes ... ok
+test v2::segment::tests::autoencoder_segment_uses_fixture_quality_and_reopens ... ok
+test v2::segment::tests::format_two_none_is_exact_and_declares_no_artifact ... ok
+test v2::replication::tests::identical_repeat_is_idempotent_but_conflicting_repeat_fails_closed ... ok
+test v2::segment::tests::legacy_exact_segment_remains_readable_without_format_drift ... ok
+test v2::segment::tests::encrypted_signed_artifact_authenticates_before_parse_and_tampering_fails ... ok
+test v2::replication::tests::encrypted_signed_import_preserves_envelope_and_wrong_key_fails_closed ... ok
+test v2::replication::tests::tamper_invalid_mutation_and_gap_leave_target_unchanged ... ok
+test v2::segment::tests::incomparable_segments_still_fall_back_conservatively ... ok
+test v2::segment::tests::pq_segment_uses_fixture_quality_and_preserves_all_metadata ... ok
+test v2::lifecycle::tests::writable_open_migrates_every_v1_family_and_keeps_a_byte_exact_backup ... ok
+test v2::segment::tests::sequential_mixed_generations_select_the_covering_codec_segment ... ok
+test v2::tests::a_published_head_without_its_transaction_fails_closed ... ok
+test v2::tests::a_torn_authenticated_object_tail_is_ignored ... ok
+test v2::tests::a_tampered_committed_transaction_fails_closed ... ok
+test v2::segment::tests::missing_wrong_and_digest_mismatched_artifacts_fail_closed ... ok
+test v2::tests::record_ids_keep_legacy_numbers_and_v2_strings ... ok
+test v2::tests::compaction_preserves_covered_state_and_replays_uncovered_journals ... ok
+test v2::tests::encrypted_signed_journals_recover_and_hide_plaintext ... ok
+test v2::tests::mutations_in_one_transaction_are_causal_peers ... ok
+test v2::tests::encrypted_signed_segments_hide_plaintext_and_fail_closed_on_tampering ... ok
+test v2::types::record_id_tests::record_ids_preserve_value_encoding_and_accept_json_map_keys ... ok
+test v3::commitment::tests::deeply_nested_values_are_rejected ... ok
+test v3::commitment::tests::non_negative_negative_variant_is_rejected ... ok
+test v3::commitment::tests::preferred_integer_encodings_cover_boundaries ... ok
+test v3::complete_episode::crypto::tests::bounds_and_zero_caller_limits_are_respected ... ok
+test v3::complete_episode::crypto::tests::depth_32_is_syntax_only_while_depth_33_exhausts_the_reader ... ok
+test v3::complete_episode::crypto::tests::each_payload_decoder_limit_keeps_its_zero_semantics ... ok
+test v2::tests::v2_accepts_4096_dimensions_but_rejects_bad_vectors ... ok
+test v3::complete_episode::crypto::tests::every_container_truncation_and_trailing_bytes_fail ... ok
+test v2::tests::a_synced_commit_is_invisible_until_its_writer_head_is_published ... ok
+test v3::complete_episode::crypto::tests::exact_p1_preserves_originals_and_sig_structure ... ok
+test v2::tests::v2_refuses_a_batch_whose_vectors_disagree_on_width ... ok
+test v3::complete_episode::crypto::tests::malformed_payload_and_static_diagnostics ... ok
+test v3::complete_episode::crypto::tests::malformed_small_corpus_is_panic_free ... ok
+test v3::complete_episode::crypto::tests::exact_structure_budget_and_oversized_declared_lengths ... ok
+test v3::complete_episode::crypto::tests::oversized_caller_budgets_cannot_raise_hard_caps ... ok
+test v3::complete_episode::crypto::tests::profile_shape_is_closed ... ok
+test v3::complete_episode::crypto::tests::protected_budget_and_closed_header_labels_are_explicit ... ok
+test v2::tests::incomplete_transaction_is_ignored_and_old_views_survive_mutation ... ok
+test v3::complete_episode::decode::containers::tests::cap_rejection_never_invokes_child_mapper ... ok
+test v3::complete_episode::tests::boundaries::all_primitive_boundaries ... ok
+test v3::complete_episode::tests::boundaries::integer_shortest_forms_and_checked_size_agree ... ok
+test v3::complete_episode::tests::boundaries::posterior_cardinality_and_exact_sum ... ok
+test v3::complete_episode::tests::boundaries::temporal_and_artifact_boundaries ... ok
+test v3::complete_episode::tests::collections::all_set_reversals_and_sequence_order ... ok
+test v3::complete_episode::tests::collections::every_set_rejects_duplicates ... ok
+test v3::complete_episode::tests::collections::exact_cardinality_caps_and_cap_plus_one ... ok
+test v3::complete_episode::tests::collections::valid_bounded_shape_exercises_production_output_cap ... ok
+test v3::complete_episode::tests::complete_minimal_and_populated_roundtrip ... ok
+test v3::complete_episode::tests::coverage::every_evidence_dimension_and_absence_are_independent ... ok
+test v3::complete_episode::tests::coverage::every_numeric_enum_has_explicit_singleton_tag ... ok
+test v2::tests::v2_refuses_a_vector_whose_width_differs_from_the_store ... ok
+test v2::tests::concurrent_writers_surface_conflicts_and_resolution_dominates_them ... ok
+test v3::complete_episode::tests::coverage::retention_data_and_foreign_descriptor_leaves ... ok
+test v3::complete_episode::tests::coverage::reused_enum_labels_are_exact ... ok
+test v3::complete_episode::tests::decode_bounds::diagnostics_are_content_free ... ok
+test v3::complete_episode::tests::decode_bounds::every_typed_list_cap_before_child_conversion ... ok
+test v3::complete_episode::tests::coverage::every_group_leaf_changes_the_commitment ... ok
+test v3::complete_episode::tests::decode_bounds::hostile_syntax_and_finite_nonpanic_corpus ... ok
+test v3::complete_episode::tests::decode_bounds::independent_generic_limits_zero_and_exact_input ... ok
+test v2::tests::required_signature_policy_rejects_plaintext_and_accepts_signed_generations ... ok
+test v3::complete_episode::tests::decode_malformed::envelope_domain_version_and_primitives ... ok
+test v3::complete_episode::tests::decode_malformed::duplicate_and_unsorted_semantic_sets ... ok
+test v3::complete_episode::tests::decode_roundtrip::populated_and_minimal_pins_retain_every_leaf ... ok
+test v3::complete_episode::tests::decode_malformed::identifiers_widths_numbers_and_ranges ... ok
+test v3::complete_episode::tests::decode_roundtrip::self_reference_validation_propagates ... ok
+test v3::complete_episode::tests::decode_malformed::option_estimate_and_variant_shapes ... ok
+test v3::complete_episode::tests::decode_roundtrip::typed_decoder_retains_minimal_input ... ok
+test v3::complete_episode::tests::decode_semantics::absence_unknown_and_known_empty_artifact_remain_distinct ... ok
+test v3::complete_episode::tests::decode_roundtrip::set_permutations_and_action_sequences ... ok
+test v3::complete_episode::tests::decode_malformed::every_semantic_sort_is_rejected_if_wire_order_changes ... ok
+test v3::complete_episode::tests::decode_semantics::scope_identity_domains_uuid_boundaries_and_known_values ... ok
+test v3::complete_episode::tests::decode_semantics::posterior_probability_and_foreign_origin_failures ... ok
+test v3::complete_episode::tests::diagnostics::every_new_type_redacts_private_leaves_and_signer_containment ... ok
+test v3::complete_episode::tests::decode_malformed::every_unit_variant_checks_arity_before_unknown_tag ... ok
+test v2::tests::fifty_independent_writers_recover_every_commit_without_a_global_lock ... ok
+test v3::complete_episode::tests::draft_mapping::complete_domain_substitution_changes_bytes_and_digest ... ok
+test v3::complete_episode::tests::draft_vectors ... ok
+test v3::complete_episode::tests::decode_semantics::all_labels_and_unit_variants_retain_exact_typed_identity ... ok
+test v3::complete_episode::tests::decode_bounds::realizable_positive_typed_caps_and_cap_plus_one ... ok
+test v3::complete_episode::tests::identifiers_ranges_and_redaction ... ok
+test v3::complete_episode::tests::draft_mapping::wrapper_shapes_posterior_and_optional_distinctions ... ok
+test v3::complete_episode::tests::ledger::a_duplicate_episode_is_refused ... ok
+test v3::complete_episode::tests::ledger::a_hand_written_line_is_the_format_the_writer_writes ... ok
+test v3::complete_episode::tests::decode_semantics::every_local_and_artifact_scope_and_kind_reaches_final_validation ... ok
+test v3::complete_episode::tests::draft_witness::strict_requests_and_protocol_failures ... ok
+test v3::complete_episode::tests::draft_corpus::independent_set_reversals_and_action_sequence ... ok
+test v3::complete_episode::tests::ledger::a_mutated_ledger_byte_is_refused ... ok
+test v3::complete_episode::tests::ledger::an_oversized_episode_is_refused ... ok
+test v3::complete_episode::tests::ledger::a_second_writer_is_refused ... ok
+test rest::tests::repeated_query_joined_teardown_and_reopen_preserve_searchability ... ok
+test v3::complete_episode::tests::ledger::an_appended_episode_survives_a_reopen ... ok
+test v3::complete_episode::tests::ledger::an_incomplete_tail_is_discarded_and_a_failed_replay_is_left_alone ... ok
+test v3::complete_episode::tests::decode_malformed::every_present_scalar_rejects_boolean_null_and_wrong_byte_width ... ok
+test v3::complete_episode::tests::ledger::the_ledger_is_a_different_store_from_the_v3_episode_ledger ... ok
+test v3::complete_episode::tests::decode_malformed::every_present_map_rejects_missing_extra_and_nontext_keys ... ok
+test v3::complete_episode::tests::ledger::the_append_path_and_the_replay_path_agree ... ok
+test v3::complete_episode::tests::ledger::the_ledger_and_record_ceilings_are_enforced ... ok
+test v3::complete_episode::tests::ledger::the_receipt_carries_no_episode_content ... ok
+test v3::complete_episode::tests::python_decode::caller_limit_zeros_agree_on_both_sides ... ok
+test v3::complete_episode::tests::python_decode::missing_witness_interpreter_fails_loudly ... ok
+test v3::complete_episode::tests::ledger::the_chain_names_the_prior_record ... ok
+test v3::complete_episode::tests::python_decode::envelope_order_arity_and_set_reversal ... ok
+test v3::complete_episode::tests::ledger::the_typed_validation_runs_on_replay ... ok
+test v3::complete_episode::tests::python_decode::ingress_rejections_are_python_only ... ok
+test v3::complete_episode::tests::ledger::signing_states_are_kept_apart ... ok
+test v3::complete_episode::tests::python_decode::trailing_and_argument_encoding_reject ... ok
+test v3::complete_episode::tests::python_decode::positive_typed_agreement ... ok
+test v3::complete_episode::tests::python_decode_mutations::ingress_category_census_agrees ... ok
+test v3::complete_episode::tests::references::constructor_checks_computed_digest_and_propagates_self_reference_rejection ... ok
+test v3::complete_episode::tests::references::foreign_origin_consistency_and_distinct_import_claims ... ok
+test v3::complete_episode::tests::references::member_and_dm_identity_are_part_of_every_binding ... ok
+test v3::complete_episode::tests::references::self_reference_inventory_is_complete_without_fabricating_hash_fixed_point ... ok
+test v3::complete_episode::tests::scope_kind_and_duplicate_validation ... ok
+test v3::complete_episode::tests::unknown_zero_and_tag_shape_are_distinct ... ok
+test v3::episode::cose::encode::tests::the_protected_header_is_the_expected_canonical_map ... ok
+test v3::episode::cose::encode::tests::the_sig_structure_starts_with_the_rfc_9052_context_string ... ok
+test v3::episode::cose::trust::tests::mismatched_registration_does_not_change_the_list ... ok
+test v3::episode::cose::trust::tests::mismatched_rotation_preserves_the_active_old_key ... ok
+test v3::episode::cose::trust::tests::revocation_is_terminal_and_history_still_resolves ... ok
+test v3::episode::cose::trust::tests::rotation_requires_an_active_old_key_without_changing_history ... ok
+test v3::episode::cose::trust::tests::the_revision_advances_by_one_per_accepted_transition ... ok
+test v3::episode::signing::tests::a_mutated_signature_byte_is_invalid ... ok
+test v3::episode::signing::tests::a_signature_round_trips_through_json_and_rejects_a_short_one ... ok
+test v3::episode::signing::tests::a_signature_verifies_over_exactly_its_digest ... ok
+test v3::episode::signing::tests::a_valid_signature_is_never_credited_to_a_key_id_it_was_not_made_under ... ok
+test v3::episode::signing::tests::another_key_cannot_verify_even_with_a_forged_key_id ... ok
+test v3::episode::signing::tests::debug_never_prints_the_secret_key ... ok
+test v3::episode::signing::tests::key_ids_are_derived_and_parsed_strictly ... ok
+test v3::episode::signing::tests::unsigned_and_unknown_key_are_not_invalid ... ok
+test v3::episode::store::expiry::tests::the_stamp_line_bound_covers_every_line ... ok
+test v3::episode::store::filesystem::tests::ancestor_alias_is_compatible_but_direct_symlinks_are_rejected ... ok
+test v3::episode::store::filesystem::tests::existing_directory_sync_is_bounded_and_failure_propagates ... ok
+test v3::episode::store::filesystem::tests::failed_parent_sync_stops_creation_and_is_retried ... ok
+test v3::episode::store::filesystem::tests::final_parent_sync_failure_is_not_swallowed ... ok
+test v3::episode::store::filesystem::tests::nested_entries_are_synchronized_before_descending ... ok
+test v3::complete_episode::tests::references::every_nested_scope_and_kind_is_checked ... ok
+test v3::episode::store::filesystem::tests::persistent_writer_contention_is_bounded_without_mutation ... ok
+test v3::episode::store::filesystem::tests::rejects_non_directory_ancestors_and_oversized_ledger ... ok
+test v3::complete_episode::tests::python_decode_mutations::relational_slot_mutations_agree ... ok
+test v3::episode::store::filesystem::tests::transient_writer_contention_is_retried_after_release ... ok
+test v3::episode::store::filesystem::tests::relative_dot_and_parent_components_preserve_filesystem_semantics ... ok
+test v3::episode::store::filesystem::tests::writer_lock_io_errors_are_not_retried ... ok
+test v3::episode::store::filesystem::tests::real_directory_sync_and_file_creation ... ok
+test v3::episode::store::filesystem::tests::writer_lock_is_retained_until_the_owner_is_dropped ... ok
+test v3::episode::store::validate::tests::replay_rejects_digest_correct_success_after_inexact_compensation ... ok
+test v3::federation::tests::a_bundle_manifest_digest_binds_the_checkpoint_and_the_deletions ... ok
+test v3::federation::tests::a_grant_covers_only_what_it_names ... ok
+test v3::federation::tests::a_peer_identity_is_derived_from_its_key ... ok
+test v3::federation::tests::a_record_digest_is_deterministic_and_binds_every_field ... ok
+test v3::federation::tests::a_residency_class_is_ordered ... ok
+test v3::federation::tests::a_revoked_trust_record_authorizes_nothing ... ok
+test v3::federation::tests::an_error_never_carries_peer_supplied_content ... ok
+test v3::federation::tests::the_bundle_profile_is_explicit ... ok
+test v3::episode::store::quota::tests::the_decision_reads_no_clock_and_the_commit_refuses_without_one ... ok
+test v3::federation::tests::a_deletion_watermark_that_skips_a_deletion_is_refused ... ok
+test v3::replication::tests::fencing::a_stale_acknowledgement_is_refused_by_the_shard ... ok
+test v3::complete_episode::tests::draft_witness::pinned_fixtures_and_duplex_batch ... ok
+test v3::complete_episode::tests::python_decode::oversized_input_clamps_with_huge_caller_caps_on_both_sides ... ok
+test v3::replication::tests::fencing::a_stale_writer_is_refused_after_the_term_advances ... ok
+test v3::replication::tests::quorum::a_minority_accepts_locally_and_never_acknowledges ... ok
+test v3::complete_episode::tests::ledger::the_record_count_ceiling_is_enforced ... ok
+test v3::replication::tests::fencing::a_voter_refuses_an_acknowledgement_under_an_older_term ... ok
+test v3::replication::tests::fencing::a_term_survives_a_restart_and_only_moves_forward ... ok
+test v3::replication::tests::quorum::the_minority_api_cannot_return_a_receipt ... ok
+test v3::replication::tests::quorum::a_proposal_the_shard_never_made_cannot_be_certified ... ok
+test v3::replication::tests::quorum::a_quorum_of_two_produces_a_receipt_on_both_members ... ok
+test v3::complete_episode::tests::draft_corpus::every_vocabulary_scope_and_integer_mapping ... ok
+test v3::replication::tests::quorum::a_write_for_another_scope_is_refused ... ok
+test v3::replication::tests::quorum::acknowledgements_of_another_proposal_are_refused ... ok
+test v3::replication::tests::recovery::a_corrupt_shard_state_file_is_refused ... ok
+test v3::replication::tests::quorum::the_members_agree_on_the_acknowledged_sequence ... ok
+test v3::replication::tests::recovery::a_damaged_member_is_not_treated_as_an_unreachable_one ... ok
+test v3::replication::tests::recovery::a_failed_member_does_not_lose_an_acknowledged_write ... ok
+test v3::replication::tests::recovery::a_member_that_lost_an_acknowledged_write_is_detected ... ok
+test versioned::tests::audit_block_uses_the_same_refreshed_frontier_as_its_commit ... ok
+test versioned::tests::facade_exposes_all_causal_record_families ... ok
+test v3::replication::tests::recovery::a_restart_recovers_the_term_membership_and_acknowledged_writes ... ok
+test versioned::tests::vector_pair_and_audit_publish_as_one_transaction ... ok
+test versioned::tests::facade_exposes_exact_transaction_portability_and_explicit_compaction ... ok
+test wal::tests::crc_matches_the_frozen_zig_algorithm ... ok
+test wal::tests::create_with_epoch_never_truncates_an_existing_delta ... ok
+test wal::tests::flipped_payload_byte_is_corruption_even_on_the_last_frame ... ok
+test wal::tests::incomplete_mid_log_frame_is_corruption ... ok
+test wal::tests::append_verify_and_replay_all_mutation_families ... ok
+test wal::tests::incomplete_last_frame_is_a_soft_torn_tail ... ok
+test versioned::tests::result_views_survive_mutations_and_audit_blocks_form_a_dag ... ok
+test wal::tests::legacy_snapshot_without_wal_reports_snapshot_source ... ok
+test wal::tests::checkpoint_resets_wal_to_the_new_epoch ... ok
+test wal::tests::matching_epoch_wal_merges_onto_checkpoint ... ok
+test wal::tests::vector_ids_must_continue_the_checkpoint ... ok
+test versioned::tests::versioned_focus_preserves_v1_order_and_v2_causality ... ok
+test versioned::tests::first_product_write_migrates_v1_and_allocates_uuid_ids ... ok
+test wal::tests::legacy_checkpoint_is_recovered_then_refreshed_on_segment_cutover ... ok
+test wal::tests::stale_wal_is_removed_without_double_applying ... ok
+test wal::tests::mirror_epoch_preserves_a_newer_wal_delta_without_a_manifest ... ok
+test v3::complete_episode::tests::python_decode_mutations::draft_corpus_breadth_agrees ... ok
+test v3::complete_episode::tests::python_decode_mutations::exhaustive_leaf_mutations_agree ... ok
+test v3::complete_episode::tests::python_decode::every_truncation_point_rejects_categorically ... ok
+
+test result: ok. 450 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 22.87s
+
+     Running tests/abbey_bot_projection_conformance.rs (target/debug/deps/abbey_bot_projection_conformance-6743fb7ca47f83d9)
+
+running 2 tests
+test the_projections_vectors_and_memory_facts_survive_the_crossing ... ok
+test abi_wdbx_parses_a_segment_written_by_the_abbey_bot_projection ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/abbey_contracts.rs (target/debug/deps/abbey_contracts-6bb7df768532dd13)
+
+running 9 tests
+test manifest_line_ending_mutation_is_not_normalized_away ... ok
+test transport_json_is_never_accepted_as_a_canonical_episode_commitment ... ok
+test adapter_projection_cannot_decode_as_a_canonical_episode ... ok
+test adapter_supplied_episode_digest_is_rejected ... ok
+test corpus_lock_and_manifest_match_the_qualified_abi_source ... ok
+test deletion_key_and_retention_policy_are_fail_closed ... ok
+test valid_episode_evidence_claim_retention_and_link_shapes_decode ... ok
+test every_episode_family_fixture_has_its_declared_native_disposition ... ok
+test artifact_byte_mutation_and_extra_inventory_fail_native_verification ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests/durable_writer_lock.rs (target/debug/deps/durable_writer_lock-be5dd79c25999949)
+
+running 4 tests
+test child_process_entry ... ok
+test child_opens_after_normal_parent_drop ... ok
+test parent_opens_after_terminating_lock_owning_child ... ok
+test parent_held_store_rejects_child_without_mutating_durable_artifacts ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.32s
+
+     Running tests/multiway_zig_compat.rs (target/debug/deps/multiway_zig_compat-a63e972e8e6a514e)
+
+running 1 test
+test rust_canonical_export_matches_zig_when_opted_in ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/real_store.rs (target/debug/deps/real_store-9103e8c6ed79f49e)
+
+running 6 tests
+test reads_the_real_store_when_opted_in ... ok
+test parses_the_magic_only_sample_segment ... ok
+test parses_the_sample_manifest ... ok
+test reports_the_torn_sample_segment ... ok
+test the_sample_chain_verifies ... ok
+test parses_the_sample_segment_with_both_hash_encodings ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/v2_process_stress.rs (target/debug/deps/v2_process_stress-734296ada6b73877)
+
+running 2 tests
+test child_process_entry ... ok
+test fifty_processes_recover_reported_commits_conflicts_and_audit_dag ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.33s
+
+     Running tests/v3_admission_decision.rs (target/debug/deps/v3_admission_decision-952b18a3237361cf)
+
+running 8 tests
+test v3_admission_decision_classifies_the_requested_retention_and_defaults_to_durable ... ok
+test v3_admission_decision_does_not_consume_the_request_it_refused ... ok
+test v3_admission_decision_accepts_a_valid_write_without_touching_the_ledger ... ok
+test v3_admission_decision_accepts_a_terminal_chain_alike_the_append_path ... ok
+test v3_admission_decision_and_the_append_always_agree ... ok
+test v3_admission_decision_refuses_a_budget_exhausted_write_before_any_append ... ok
+test v3_admission_decision_the_outcome_never_fails_and_agrees_with_the_decision ... ok
+test v3_admission_decision_maps_every_refusal_to_its_own_reason ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+
+     Running tests/v3_canonical_commitment.rs (target/debug/deps/v3_canonical_commitment-6e1603915fe9b66f)
+
+running 8 tests
+test absent_and_present_zero_are_distinct ... ok
+test duplicate_encoded_map_keys_fail_closed_without_content ... ok
+test duplicate_parents_are_preserved_not_silently_deduplicated ... ok
+test header_and_payload_must_be_maps_and_schema_version_is_nonzero ... ok
+test map_keys_follow_rfc_8949_length_first_order ... ok
+test parent_permutations_have_identical_bytes_and_digest ... ok
+test positive_golden_cbor_fixtures_match_exact_bytes_and_digests ... ok
+test profile_and_envelope_bytes_are_exact ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/v3_canonical_decode.rs (target/debug/deps/v3_canonical_decode-f520e6749ce06c75)
+
+running 9 tests
+test all_argument_widths_are_minimal_for_integers_and_lengths ... ok
+test compound_keys_and_length_first_order_are_preserved ... ok
+test envelope_exact_members_types_and_root_context_are_enforced ... ok
+test envelope_shape_failures_are_rejected ... ok
+test golden_envelopes_reencode_and_retain_pinned_digests ... ok
+test malformed_syntax_is_rejected_without_private_content ... ok
+test scalar_boundaries_are_exact_and_text_is_not_normalized ... ok
+test sorted_duplicate_parents_survive_and_future_schema_is_syntactic ... ok
+test deterministic_mutations_never_panic_and_success_reencodes_exactly ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/v3_canonical_decode_limits.rs (target/debug/deps/v3_canonical_decode_limits-99f80c5f0c7dd959)
+
+running 7 tests
+test giant_declared_lengths_fail_with_tiny_input_even_under_large_policy ... ok
+test collection_caps_accept_exact_and_reject_next ... ok
+test input_and_global_value_caps_include_root_keys_and_values ... ok
+test string_caps_and_zero_collection_caps_accept_exact_and_reject_next ... ok
+test parent_caps_apply_before_children_only_in_episode_context ... ok
+test root_zero_depth_boundary_counts_leaves_empty_containers_and_map_keys ... ok
+test operational_defaults_bound_real_inputs_at_exact_thresholds ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/v3_complete_episode_authenticated.rs (target/debug/deps/v3_complete_episode_authenticated-43e730129ba67313)
+
+running 5 tests
+test untrusted_current_writer_is_refused_before_creating_a_store ... ok
+test required_signatures_reject_stripping_before_tail_repair ... ok
+test trusted_signature_corruption_and_key_substitution_are_refused ... ok
+test valid_authenticated_append_survives_reopen_without_changing_record_bytes ... ok
+test authentication_checks_historical_keys_after_rotation ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/v3_complete_episode_ledger.rs (target/debug/deps/v3_complete_episode_ledger-b5e30a9436f0b0eb)
+
+running 11 tests
+test the_bounds_are_enforced ... ok
+test an_appended_episode_survives_a_reopen ... ok
+test a_tampered_foreign_signature_is_not_this_stores_to_judge ... ok
+test a_second_writer_is_refused ... ok
+test an_incomplete_final_line_is_discarded ... ok
+test a_tampered_own_signature_is_corruption ... ok
+test the_ledger_is_a_different_store_from_the_v3_episode_ledger ... ok
+test the_chain_names_the_prior_record ... ok
+test the_receipt_carries_no_episode_content ... ok
+test a_mutated_ledger_byte_is_refused ... ok
+test signing_states_are_kept_apart ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.21s
+
+     Running tests/v3_constitutional_query.rs (target/debug/deps/v3_constitutional_query-96267b7716ed6243)
+
+running 11 tests
+test v3_constitutional_query_quarantined_candidate_is_returned ... ok
+test v3_constitutional_query_evidence_floor_and_edge_filters ... ok
+test v3_constitutional_query_limit_is_bounded ... ok
+test v3_constitutional_query_no_opaque_scalar ... ok
+test v3_constitutional_query_forgotten_candidate_is_still_listed ... ok
+test v3_constitutional_query_contradicted_candidate_keeps_its_counterpart_visible ... ok
+test v3_constitutional_query_no_cross_guild_recall ... ok
+test v3_constitutional_query_replay_parity ... ok
+test v3_constitutional_query_reports_eight_dimensions_separately ... ok
+test v3_constitutional_query_invalid_signature_is_rejected ... ok
+test v3_constitutional_query_mutating_one_dimension_in_isolation ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.44s
+
+     Running tests/v3_constitutional_query_holds.rs (target/debug/deps/v3_constitutional_query_holds-5e827cd40002680e)
+
+running 12 tests
+test v3_constitutional_query_a_record_with_neither_reads_exactly_as_before ... ok
+test v3_constitutional_query_mutating_the_revocation_state_moves_only_the_lifecycle_dimension ... ok
+test v3_constitutional_query_reports_the_kinds_of_the_live_hold ... ok
+test v3_constitutional_query_held_candidate_is_listed_with_its_hold_state ... ok
+test v3_constitutional_query_a_released_hold_reads_as_no_hold ... ok
+test v3_constitutional_query_mutating_the_hold_state_moves_only_the_lifecycle_dimension ... ok
+test v3_constitutional_query_revoked_candidate_is_listed_with_its_revocation_state ... ok
+test v3_constitutional_query_a_hold_and_a_revocation_are_named_together ... ok
+test v3_constitutional_query_a_hold_and_a_revocation_do_not_cross_guilds ... ok
+test v3_constitutional_query_the_constraint_flags_exclude_held_and_revoked_records ... ok
+test v3_constitutional_query_the_hold_and_the_revocation_survive_close_and_reopen ... ok
+test v3_constitutional_query_the_revocation_takes_precedence_over_a_contradiction ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.20s
+
+     Running tests/v3_cross_language_commitment.rs (target/debug/deps/v3_cross_language_commitment-990715ed284a320e)
+
+running 2 tests
+ok   empty-parents: python envelope bytes == golden .hex
+ok   empty-parents: sha256(python envelope) == golden .sha256
+ok   empty-parents: sha256(golden .hex bytes) == golden .sha256
+ok   two-parents: python envelope bytes == golden .hex
+ok   two-parents: sha256(python envelope) == golden .sha256
+ok   two-parents: sha256(golden .hex bytes) == golden .sha256
+ok   boundary 17
+ok   boundary 1818
+ok   boundary 18ff
+ok   boundary 190100
+ok   boundary 20
+ok   boundary 3818
+ok   map keys sort by encoded length then bytes
+0 failure(s)
+test python_verifies_the_golden_vectors_standalone ... ok
+test python_reimplementation_agrees_on_bytes_digests_and_errors ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+
+     Running tests/v3_cross_language_cose.rs (target/debug/deps/v3_cross_language_cose-82789011f20189bf)
+
+running 10 tests
+test v3_cross_language_cose::the_container_bytes_are_pinned_by_the_golden ... ok
+test v3_cross_language_cose::rust_side_verification_succeeds ... ok
+test v3_cross_language_cose::a_missing_witness_interpreter_is_a_hard_failure_not_a_skip ... ok
+ok: container: sha256(golden bytes) == container.sha256
+ok: container: protected bytes == protected.hex
+ok: container: payload bytes == payload.hex
+ok: container: kid bytes == kid.hex
+ok: container: alg == alg.txt
+ok: protected: the canonical header of {1: alg, 4: kid} == the carried bytes
+ok: sig_structure: the rebuilt structure == sig_structure.hex
+ok: sig_structure: sha256(rebuilt structure) == sig_structure.sha256
+0 failure(s)
+test v3_cross_language_cose::the_signed_bytes_are_the_agreed_sig_structure ... ok
+test v3_cross_language_cose::the_witness_runner_fails_loudly_without_an_interpreter ... ok
+test v3_cross_language_cose::the_witness_verifies_the_golden_vectors_standalone ... ok
+test v3_cross_language_cose::python_and_rust_agree_on_every_encoding_fact ... ok
+test v3_cross_language_cose::a_content_mutation_keeps_the_shape_and_breaks_only_the_rust_side_check ... ok
+test v3_cross_language_cose::a_mutated_container_is_refused_by_the_python_parser_too ... ok
+test v3_cross_language_cose::both_sides_refuse_the_same_malformed_containers ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running tests/v3_cross_language_decode.rs (target/debug/deps/v3_cross_language_decode-646763e413b20f56)
+
+running 4 tests
+test strict_requests_and_protocol_failures ... ok
+test episode_shapes_parents_and_compound_depth ... ok
+test literal_contract_and_controlled_bad_children ... ok
+test canonical_malformed_bounds_and_duplex_corpus ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.19s
+
+     Running tests/v3_cross_language_episode.rs (target/debug/deps/v3_cross_language_episode-6f01b7deddcc428f)
+
+running 2 tests
+ok   episode_write_memory_candidate.json: python episode digest == pinned 3c19a479…
+ok   episode_write_memory_edge.json: python episode digest == pinned dfc839a6…
+0 failure(s)
+test python_re_derives_the_pinned_golden_episode_digests_standalone ... ok
+test python_reproduces_every_receipt_digest_the_store_appended ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+
+     Running tests/v3_deletion_authority.rs (target/debug/deps/v3_deletion_authority-77235d8e47624745)
+
+running 10 tests
+test a_service_may_not_order_a_destruction ... ok
+test a_principal_the_map_does_not_name_is_refused ... ok
+test the_guild_and_not_the_principal_decides_the_refusal ... ok
+test a_human_subject_may_not_order_a_destruction ... ok
+test an_unserved_guild_is_refused_as_stale ... ok
+test the_refusal_leaks_nothing ... ok
+test a_principal_named_for_another_guild_is_refused ... ok
+test a_live_target_is_refused_and_a_forgotten_one_is_allowed ... ok
+test a_permitted_authority_orders_a_destruction_that_survives_reopen ... ok
+test a_truncated_or_mis_checksummed_sidecar_is_corrupt ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s
+
+     Running tests/v3_deletion_lifecycle.rs (target/debug/deps/v3_deletion_lifecycle-c1c208245e538366)
+
+running 11 tests
+test a_redaction_request_for_a_live_target_is_refused ... ok
+test a_record_with_an_unknown_deadline_is_never_reclaimed ... ok
+test an_object_key_destruction_is_refused_for_a_live_target_and_allowed_for_a_forgotten_one ... ok
+test a_redaction_request_for_a_forgotten_target_is_recorded_and_survives_reopen ... ok
+test an_interrupted_collection_leaves_the_original_ledger_intact ... ok
+test a_reclaimed_record_never_becomes_live_again ... ok
+test the_plan_never_reclaims_a_tombstone_a_live_record_a_reviewed_record_or_an_unknown_deadline ... ok
+test the_collection_keeps_the_surviving_signatures_verifiable ... ok
+test a_forgotten_and_expired_record_disappears_while_its_tombstone_remains ... ok
+test the_sidecar_files_carry_no_episode_content ... ok
+test the_surviving_records_keep_their_digests_after_the_collection ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.41s
+
+     Running tests/v3_dimension_ranking.rs (target/debug/deps/v3_dimension_ranking-c3e17ed308845cde)
+
+running 9 tests
+test v3_dimension_ranking_exposes_no_opaque_scalar ... ok
+test v3_dimension_ranking_the_lifecycle_signal_agrees_with_the_disposition ... ok
+test v3_dimension_ranking_keeps_missing_and_zero_apart ... ok
+test v3_dimension_ranking_keeps_eight_dimensions_separately ... ok
+test v3_dimension_ranking_answers_end_to_end_from_a_real_store ... ok
+test v3_dimension_ranking_merges_the_vector_arm_without_collapsing ... ok
+test v3_dimension_ranking_orders_by_any_chosen_dimension ... ok
+test v3_dimension_ranking_is_deterministic ... ok
+test v3_dimension_ranking_is_compatible_with_the_frozen_baseline_harness ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.34s
+
+     Running tests/v3_episode_cose.rs (target/debug/deps/v3_episode_cose-385757deb56a14ac)
+
+running 12 tests
+test v3_episode_cose::a_container_against_another_digest_is_invalid ... ok
+test v3_episode_cose::a_container_with_the_wrong_shape_is_refused ... ok
+test v3_episode_cose::a_container_round_trips_and_verifies_as_valid ... ok
+test v3_episode_cose::an_unresolved_key_is_unverifiable_and_not_invalid ... ok
+test v3_episode_cose::a_tampered_container_is_never_valid ... ok
+test v3_episode_cose::a_transplanted_key_id_does_not_verify ... ok
+test v3_episode_cose::rotation_retires_the_old_key_and_activates_the_new_one ... ok
+test v3_episode_cose::the_golden_container_bytes_are_pinned ... ok
+test v3_episode_cose::the_container_is_detached_and_the_ledger_signature_is_untouched ... ok
+test v3_episode_cose::trailing_bytes_and_oversized_containers_are_refused ... ok
+test v3_episode_cose::a_container_stored_beside_the_record_still_verifies ... ok
+test v3_episode_cose::trust_transitions_keep_history_and_separate_the_two_axes ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/v3_episode_signing.rs (target/debug/deps/v3_episode_signing-47bf8a662d7fe1ff)
+
+running 7 tests
+test a_signing_key_file_must_be_owner_only_and_32_bytes ... ok
+test a_signed_store_reports_valid_and_survives_reopen ... ok
+test an_existing_unsigned_ledger_opens_with_a_signer_and_mixes_states ... ok
+test a_malformed_key_id_on_disk_is_corruption_for_every_reader ... ok
+test a_relabelled_key_id_does_not_let_another_key_vouch_for_the_record ... ok
+test signing_leaves_the_digest_and_the_unsigned_ledger_bytes_unchanged ... ok
+test a_tampered_own_signature_fails_replay_but_a_foreign_one_is_left_to_the_verifier ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+     Running tests/v3_episode_store.rs (target/debug/deps/v3_episode_store-9d4243edd09bb39c)
+
+running 13 tests
+test raw_content_and_voice_collection_overflow_cannot_enter_the_typed_gate ... ok
+test policy_version_drift_is_rejected_as_stale_binding_without_partial_write ... ok
+test global_ledger_limit_rejects_an_append_before_it_becomes_unreopenable ... ok
+test consent_epoch_drift_is_rejected_as_stale_binding_without_partial_write ... ok
+test partial_tail_recovers_but_a_mutated_complete_commitment_fails_closed ... ok
+test lifecycle_is_linked_sanitized_and_stable_across_reopen ... ok
+test failed_replay_preserves_an_incomplete_tail_until_the_prefix_is_repaired ... ok
+test quiet_opt_out_stale_bindings_and_budgets_fail_before_append ... ok
+test compensation::inexact_compensation_cannot_report_success_before_or_after_reopen ... ok
+test replay_identity_order_and_commitment_mutation_are_rejected ... ok
+test replay_attributes_each_persisted_line_to_its_own_guild ... ok
+test replay_charges_original_json_bytes_and_enforces_remaining_storage_budget ... ok
+test find_receipt_scans_the_whole_ledger_not_a_window ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.84s
+
+     Running tests/v3_federation.rs (target/debug/deps/v3_federation-ae3a2600ab2c2d16)
+
+running 17 tests
+test exchange::a_tampered_bundle_does_not_verify ... ok
+test exchange::an_export_is_deterministic ... ok
+test exchange::a_replayed_bundle_is_a_no_op ... ok
+test reconciliation::an_interrupted_import_resumes_without_duplicating_or_losing ... ok
+test exchange::a_round_trip_keeps_the_origin_authority ... ok
+test exchange::a_bundle_behind_the_newest_checkpoint_is_refused ... ok
+test deletion::one_organizations_records_never_enter_another_organizations_ledger ... ok
+test reconciliation::an_incomplete_ancestry_is_refused_and_a_delivered_parent_is_kept ... ok
+test exchange::the_same_record_under_two_bundles_is_imported_once ... ok
+test trust::a_grant_that_does_not_cover_the_scope_permits_neither_export_nor_import ... ok
+test trust::a_residency_restriction_is_enforced_against_both_ends ... ok
+test deletion::a_deletion_at_the_origin_propagates_and_a_stale_watermark_cannot_resurrect_it ... ok
+test trust::a_grant_that_permits_only_one_direction_permits_only_that_direction ... ok
+test trust::a_peer_without_a_live_bilateral_trust_cannot_import ... ok
+test trust::an_unknown_peer_cannot_sign_a_bundle_this_organization_accepts ... ok
+test reconciliation::two_bundles_at_one_checkpoint_are_refused_as_an_equivocation ... ok
+test trust::a_revoked_trust_stops_authorizing_the_next_import ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.44s
+
+     Running tests/v3_guild_authority.rs (target/debug/deps/v3_guild_authority-70442d292a23f59a)
+
+running 11 tests
+test a_named_principal_is_refused_for_another_guild ... ok
+test a_different_principal_with_the_same_class_is_refused ... ok
+test one_guild_constrained_leaves_the_others_alone ... ok
+test every_governance_path_honours_the_map ... ok
+test a_listed_service_is_still_refused ... ok
+test the_refusal_leaks_nothing ... ok
+test the_map_is_read_from_the_policy_at_the_call ... ok
+test the_map_moves_no_committed_digest ... ok
+test an_empty_map_constrains_nobody ... ok
+test absent_map_keeps_the_legacy_class_rule ... ok
+test a_named_principal_may_act_for_its_own_guild ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running tests/v3_holds_revocation.rs (target/debug/deps/v3_holds_revocation-af2a5539389f95a8)
+
+running 11 tests
+test a_revoked_candidate_is_not_live_and_cannot_be_superseded ... ok
+test a_hold_names_a_candidate_and_refuses_an_unknown_digest ... ok
+test an_authority_above_the_placing_one_may_release_a_hold ... ok
+test a_hold_is_placed_reported_and_survives_close_and_reopen ... ok
+test the_revocation_state_survives_close_and_reopen ... ok
+test a_revoked_candidate_is_never_resurrected ... ok
+test a_hold_is_released_only_by_the_placing_authority_or_one_above_it ... ok
+test a_held_candidate_is_not_expired_away_and_not_silently_superseded ... ok
+test a_service_cannot_revoke_but_a_governance_authority_can ... ok
+test the_sidecar_files_carry_no_episode_content ... ok
+test a_held_candidate_is_neither_reclaimed_nor_destroyed ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.21s
+
+     Running tests/v3_memory_candidate.rs (target/debug/deps/v3_memory_candidate-821d971aef10e195)
+
+running 6 tests
+test wire_form_and_digest_are_pinned_for_transcriptions ... ok
+test shape_rules_hold_before_any_append ... ok
+test payload_bytes_are_charged_against_the_storage_budget ... ok
+test a_candidate_is_one_completed_operation_with_a_content_free_receipt ... ok
+test forgetting_tombstones_cannot_be_forgotten_or_superseded_again ... ok
+test supersede_and_forget_edges_name_admitted_digests_only ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running tests/v3_memory_edge.rs (target/debug/deps/v3_memory_edge-fa890b6f7832978c)
+
+running 9 tests
+test wire_form_and_digest_are_pinned_for_transcriptions ... ok
+test edge_authority_and_single_event_rules ... ok
+test edge_shapes_are_closed_before_any_append ... ok
+test a_forgetting_tombstone_is_not_a_live_edge_target ... ok
+test a_quarantine_opens_closes_by_human_resolution_and_survives_reopen ... ok
+test contradictions_have_one_encoding_and_obey_scope ... ok
+test quarantine_never_blocks_forgetting_or_correction ... ok
+test replay_rejects_a_resolution_whose_edge_was_removed ... ok
+test resolution_provenance_is_per_edge_and_survives_reopen ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.21s
+
+     Running tests/v3_offline_outbox.rs (target/debug/deps/v3_offline_outbox-f02c49e54703c0c7)
+
+running 33 tests
+test a_service_may_not_remove_an_operation_with_a_dependent ... ok
+test format::a_corrupted_sidecar_is_refused ... ok
+test a_removal_that_another_operation_depends_on_is_refused ... ok
+test format::a_trailing_fragment_is_refused_as_corrupt ... ok
+test asset::a_corrupted_chunk_is_detected_by_the_asset_digest ... ok
+test format::a_truncated_file_is_refused_as_corrupt ... ok
+test asset::the_chunk_order_does_not_change_the_asset_digest ... ok
+test asset::an_asset_transfer_resumes_and_verifies_its_digest ... ok
+test format::an_operation_survives_an_arbitrary_elapsed_time ... ok
+test format::the_outbox_carries_no_episode_content ... ok
+test format::the_file_carries_a_header_that_names_its_operations ... ok
+test a_discard_that_another_operation_depends_on_is_refused ... ok
+test lifecycle::a_contract_revision_that_moved_yields_schema_skew ... ok
+test lifecycle::an_authorized_caller_removes_a_queued_operation ... ok
+test lifecycle::a_moved_consent_epoch_yields_needs_consent ... ok
+test format::the_outbox_is_not_a_canonical_writer ... ok
+test lifecycle::a_refused_operation_is_preserved_with_its_reason ... ok
+test lifecycle::a_delete_proposal_is_reauthorized_by_the_same_gate ... ok
+test lifecycle::a_dependent_operation_waits_for_its_dependency ... ok
+test lifecycle::queued_operation_survives_a_reopen_and_is_pending ... ok
+test lifecycle::draining_an_authorized_operation_acknowledges_it_and_never_resends_it ... ok
+test lifecycle::only_a_governance_authority_may_resolve_an_operation ... ok
+test lifecycle::an_authorized_caller_removes_an_acknowledged_operation ... ok
+test lifecycle::only_an_explicit_authorized_discard_removes_an_operation ... ok
+test merge::the_merge_is_deterministic_and_order_independent ... ok
+test merge::two_edits_over_one_field_conflict_and_are_preserved ... ok
+test merge::the_drain_records_a_conflict_and_submits_neither_branch ... ok
+test merge::two_edits_over_incompatible_versions_conflict_whole ... ok
+test merge::two_edits_over_disjoint_fields_merge_automatically ... ok
+test the_refusal_of_a_removal_with_a_dependent_is_content_free ... ok
+test the_dependent_of_a_refused_removal_is_still_drainable ... ok
+test the_dependents_are_resolved_first_and_the_removal_then_succeeds ... ok
+test format::a_full_outbox_refuses_new_work_with_capacity ... ok
+
+test result: ok. 33 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.62s
+
+     Running tests/v3_quorum_shard.rs (target/debug/deps/v3_quorum_shard-2e5ba8894effa03c)
+
+running 14 tests
+test a_write_that_reaches_only_one_voter_is_refused ... ok
+test the_minority_api_cannot_return_a_receipt ... ok
+test a_partitioned_minority_cannot_produce_a_canonical_receipt ... ok
+test a_shard_never_holds_another_scope_records ... ok
+test a_quorum_produces_a_receipt_and_the_record_is_on_the_acknowledging_voters ... ok
+test a_voter_that_lost_an_acknowledged_write_is_detected_and_refused ... ok
+test the_members_agree_on_the_acknowledged_sequence ... ok
+test a_restart_recovers_the_term_membership_and_acknowledged_state ... ok
+test a_damaged_member_blocks_new_acknowledgements ... ok
+test one_failed_voter_does_not_lose_a_quorum_acknowledged_write ... ok
+test v3_quorum_shard_the_only_public_path_to_a_receipt_is_the_proposal ... ok
+test a_second_shard_cannot_take_over_the_same_root ... ok
+test the_shard_is_deterministic_and_uses_explicit_terms ... ok
+test the_term_fences_stale_writers_and_stale_acknowledgements ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.60s
+
+     Running tests/v3_quota_windows.rs (target/debug/deps/v3_quota_windows-19abe43b73281b5d)
+
+running 15 tests
+test only_a_governance_authority_may_adjust_a_budget ... ok
+test no_adjustment_may_raise_a_budget_above_the_policy ... ok
+test a_policy_lowered_below_the_recorded_usage_is_reported_not_refused ... ok
+test an_adjustment_below_the_recorded_usage_is_refused ... ok
+test a_policy_lowered_below_an_override_takes_effect ... ok
+test an_adjustment_lowers_the_effective_token_budget ... ok
+test a_service_may_freeze_a_guild_and_the_host_restores_the_budget ... ok
+test an_owner_may_clear_an_adjustment_and_a_service_may_not ... ok
+test the_decision_and_the_append_agree_after_an_adjustment ... ok
+test the_decision_and_the_commit_agree_on_every_outcome ... ok
+test a_damaged_quota_sidecar_is_corruption ... ok
+test a_service_may_lower_a_budget_and_an_authority_may_set_it_within_the_policy ... ok
+test the_quota_sidecar_holds_no_episode_content ... ok
+test the_quota_history_reports_every_decision_in_order ... ok
+test the_quota_state_reports_the_effective_budgets_and_survives_a_reopen ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+
+     Running tests/v3_retention_expiry.rs (target/debug/deps/v3_retention_expiry-3fad05ae3f0f05a7)
+
+running 10 tests
+test a_host_policy_without_the_ttl_field_still_parses ... ok
+test a_durable_candidate_never_expires ... ok
+test a_policy_without_a_ttl_expires_nothing ... ok
+test the_gate_refuses_a_candidate_whose_ttl_is_zero ... ok
+test a_forgotten_candidate_is_never_forgotten_or_superseded_again ... ok
+test an_operational_candidate_is_due_only_after_its_ttl ... ok
+test the_emitted_forget_write_is_accepted_and_yields_a_receipt ... ok
+test the_store_leaves_the_ledger_untouched_until_a_write_is_accepted ... ok
+test the_retention_state_survives_close_and_reopen ... ok
+test a_candidate_under_review_is_not_silently_forgotten ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running tests/v3_retention_windows.rs (target/debug/deps/v3_retention_windows-4bbd56c0fd9889db)
+
+running 4 tests
+test a_durable_candidate_never_expires_whatever_the_windows_say ... ok
+test a_per_class_zero_window_is_refused_by_the_write_gate ... ok
+test a_per_class_window_binds_the_right_deadline ... ok
+test a_policy_without_the_new_fields_still_parses_and_means_the_previous_behaviour ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running tests/v3_retrieval_baseline.rs (target/debug/deps/v3_retrieval_baseline-cce7e17feab0d3b4)
+
+running 8 tests
+test v3_retrieval_baseline::the_constitutional_dispositions_match_the_hand_authored_ground_truth ... ok
+test v3_retrieval_baseline::the_measurement_matches_the_pinned_expectation ... ok
+test v3_retrieval_baseline::the_harness_can_report_no_benefit ... ok
+test v3_retrieval_baseline::the_ablation_lists_all_eight_dimensions ... ok
+test v3_retrieval_baseline::the_constitutional_arm_never_presents_an_uncertain_record_as_usable ... ok
+test v3_retrieval_baseline::the_plain_vector_baseline_really_fails ... ok
+test v3_retrieval_baseline::both_arms_receive_the_same_candidates_after_the_shared_filter ... ok
+test v3_retrieval_baseline::the_harness_is_deterministic ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.54s
+
+     Running tests/v3_supersession_lineage.rs (target/debug/deps/v3_supersession_lineage-a298e81c13abf1d6)
+
+running 7 tests
+test an_unknown_digest_has_no_lineage ... ok
+test a_superseding_candidate_names_its_target_and_its_target_names_it ... ok
+test a_forgotten_candidate_still_reports_its_superseder ... ok
+test chained_corrections_keep_every_edge ... ok
+test the_most_recent_correction_of_a_target_is_reported ... ok
+test a_digest_is_invisible_in_another_guild ... ok
+test the_lineage_survives_close_and_reopen ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+     Running tests/v3_vector_adapter.rs (target/debug/deps/v3_vector_adapter-7ff92c44c452572a)
+
+running 16 tests
+test v3_vector_adapter_does_not_change_the_directory_mode ... ok
+test v3_vector_adapter_ignores_a_leftover_temporary_file ... ok
+test v3_vector_adapter_refuses_a_digest_that_is_not_admitted ... ok
+test v3_vector_adapter_isolates_scopes ... ok
+test v3_vector_adapter_keeps_both_snapshots_bindings_when_both_write ... ok
+test v3_vector_adapter_binding_survives_reopen_and_refuses_corruption ... ok
+test v3_vector_adapter_seals_the_admission_set ... ok
+test v3_vector_adapter_refuses_a_second_writer_on_the_same_directory ... ok
+test v3_vector_adapter_refuses_a_file_the_writer_cannot_produce ... ok
+test v3_vector_adapter_refuses_an_externally_forged_admission_set ... ok
+test v3_vector_adapter_builds_the_admission_set_from_the_canonical_answer ... ok
+test v3_vector_adapter_round_trips_a_digest_through_the_vector_index ... ok
+test v3_vector_adapter_counts_an_unbound_hit_and_never_invents_it ... ok
+test v3_vector_adapter_merged_ranking_carries_the_digest_and_keeps_the_dimensions_apart ... ok
+test v3_vector_adapter_ranks_end_to_end_against_a_real_store ... ok
+test v3_vector_adapter_agrees_with_the_exact_oracle_and_is_deterministic ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.48s
+
+     Running tests/wdbx_3d_checked_points.rs (target/debug/deps/wdbx_3d_checked_points-2616f5e66ef88896)
+
+running 10 tests
+test invalid_queries_empty_and_cancellation ... ok
+test invalid_legacy_population_is_not_silently_skipped ... ok
+test equal_distance_uses_checked_total_order ... ok
+test rounded_display_distance_does_not_replace_squared_order_key ... ok
+test invalid_insert_is_atomic ... ok
+test legacy_duplicates_are_retained ... ok
+test resource_caps_are_complete_or_error ... ok
+test zero_k_returns_no_hits ... ok
+test widening_extrema_subnormals_and_closed_boundaries_match_independent_scan ... ok
+test bounded_topk_matches_independent_scan_across_thresholds ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/wdbx_3d_compatibility.rs (target/debug/deps/wdbx_3d_compatibility-bcfaaca18a2d8231)
+
+running 3 tests
+test legacy_api_order_is_characterized ... ok
+test legacy_reader_is_nonmutating ... ok
+test signed_bytes_remain_identical ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+     Running tests/wdbx_3d_numeric.rs (target/debug/deps/wdbx_3d_numeric-674e0c6fba9adaaf)
+
+running 4 tests
+test radius_domain_is_closed ... ok
+test normalizes_only_new_geometric_zero ... ok
+test rejects_nonfinite_and_out_of_domain ... ok
+test widens_all_finite_f32 ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/wdbx_3d_octree_parity.rs (target/debug/deps/wdbx_3d_octree_parity-7a9cf8eacdbcf187)
+
+running 12 tests
+test conservative_bounds_do_not_drop_boundary_hits ... ok
+test cosine_nontrivial_normalization_and_payloads ... ok
+test degenerate_points_do_not_explode_tree ... ok
+test invalid_legacy_and_cancelled_queries_fail_closed ... ok
+test insert_after_build_invalidates_correctly ... ok
+test manhattan_and_cosine_have_independent_ordering ... ok
+test radius_payload_budget_exact_and_one_byte_under_on_both_paths ... ok
+test unsupported_cosine_pruning_falls_back ... ok
+test threshold_63_64_65_has_same_semantics ... ok
+test resource_caps_fallback_and_cumulative_work ... ok
+test fifty_seeded_manhattan_radius_and_knn_oracles ... ok
+test thousand_seeded_independent_cases ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.35s
+
+     Running tests/wdbx_3d_oracle.rs (target/debug/deps/wdbx_3d_oracle-01619e6e31d176c4)
+
+running 8 tests
+test extreme_coordinates_have_finite_reported_distance ... ok
+test oracle_does_not_call_production_kernel ... ok
+test squared_key_precedes_rounded_distance ... ok
+test known_answers_degenerate_extreme_and_subnormal ... ok
+test identity_breaks_true_metric_ties ... ok
+test boundary_neighbors_are_distinct ... ok
+test defined_float_and_exact_dyadic_intentionally_disagree ... ok
+test seeded_integer_corpus_agrees_with_exact_reference ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.66s
+
+     Running tests/zig_writer_compat.rs (target/debug/deps/zig_writer_compat-400e6b60a054bc25)
+
+running 1 test
+test zig_verifies_a_rust_written_checkpoint_when_opted_in ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests abi_compute
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests abi_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests abi_foundation
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests abi_telemetry
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests abi_wdbx
+
+running 1 test
+test crates/abi-wdbx/src/v3/ranking/vector.rs - v3::ranking::vector::AdmittedScope (line 154) - compile ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 1 test
+test crates/abi-wdbx/src/v3/ranking/vector.rs - v3::ranking::vector::AdmittedScope (line 178) - compile fail ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+all doctests ran in 0.82s; merged doctests compilation took 0.66s
+
+check: all green

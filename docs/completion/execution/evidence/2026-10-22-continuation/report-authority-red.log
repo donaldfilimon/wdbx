@@ -1,0 +1,25 @@
+   Compiling abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx/crates/abi-wdbx)
+error[E0599]: no method named `origin_actor` found for struct `crypto::verify::VerificationReport` in the current scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:95:23
+    |
+ 95 |     assert_eq!(report.origin_actor(), &typed.input().origin.actor);
+    |                       ^^^^^^^^^^^^ method not found in `crypto::verify::VerificationReport`
+    |
+   ::: crates/abi-wdbx/src/v3/complete_episode/crypto/verify.rs:111:1
+    |
+111 | pub(super) struct VerificationReport {
+    | ------------------------------------ method `origin_actor` not found for this struct
+
+error[E0599]: no method named `authority` found for struct `crypto::verify::VerificationReport` in the current scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:96:23
+    |
+ 96 |     assert_eq!(report.authority(), &typed.input().authority);
+    |                       ^^^^^^^^^ method not found in `crypto::verify::VerificationReport`
+    |
+   ::: crates/abi-wdbx/src/v3/complete_episode/crypto/verify.rs:111:1
+    |
+111 | pub(super) struct VerificationReport {
+    | ------------------------------------ method `authority` not found for this struct
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `abi-wdbx` (lib test) due to 2 previous errors

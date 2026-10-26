@@ -1,0 +1,1524 @@
+warning: unused import: `simulator::AdmissionSimulator`
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/mod.rs:11:16
+   |
+11 | pub(super) use simulator::AdmissionSimulator;
+   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: this function has too many lines (297/100)
+   --> crates/abi-wdbx/src/evaluation/harness.rs:333:1
+    |
+333 | pub fn run(config: &EvaluationConfig) -> Result<ResultRecord, EvaluationError> {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+    = note: `-W clippy::too-many-lines` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::too_many_lines)]`
+
+warning: this function has too many lines (152/100)
+   --> crates/abi-wdbx/src/evaluation/ledger.rs:313:1
+    |
+313 | pub fn build(corpus: &Corpus) -> Result<BuiltLedger, LedgerError> {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+
+warning: this function has too many lines (145/100)
+   --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:366:1
+    |
+366 | / pub fn checked_octree_query<'a>(
+367 | |     index: &'a mut SpatialIndex3D,
+368 | |     query: &CheckedPointQuery<'_>,
+369 | | ) -> Result<CheckedPointOutcome<'a>, SpatialError> {
+    | |__________________________________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/canonical.rs:2:5
+  |
+2 | use super::*;
+  |     ^^^^^^^^ help: try: `super::{TenantRef, Result, OrganizationRef, PrincipalRef, GuildRef, NodeRef, RegimeRef, ClockRef, ComponentRef, ActionRef, ParameterClassRef, EpisodeId, RequestId, TaskId, Digest32, UtcMillis, MonoNanos, UnitPpm, SignedMicros, EpisodeDomain, Route, ActionPhase, MeasurementUnit, ResourceKind, ArtifactKind, SafetyEffect, RollbackState, LifecycleRelation, ScopeBinding, VersionRef, Digest, LocalEpisodeRef, ArtifactRef, ForeignEvidenceRef, Actor, Measurement, MonotonicRange, ResourceReading, ActionDescriptor, ConsentRef, ObjectKeyRef, LifecycleLink, Identity, Time, Origin, Context, Decision, Outcome, Authority, RecordedEvidence, Evidence, Lifecycle, Provenance, CompleteEpisodeInput, COMPLETE_EPISODE_DOMAIN, CompleteEpisodeError, OpaqueRef, Estimate, Scope, ConsultedRef, RetentionIntent, RegimeDistribution}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+  = note: `-W clippy::wildcard-imports` implied by `-W clippy::pedantic`
+  = help: to override `-W clippy::pedantic` add `#[allow(clippy::wildcard_imports)]`
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/canonical/mapping.rs:2:5
+  |
+2 | use super::*;
+  |     ^^^^^^^^ help: try: `super::{Wire, TenantRef, Builder, Result, OrganizationRef, PrincipalRef, GuildRef, NodeRef, RegimeRef, ClockRef, ComponentRef, ActionRef, ParameterClassRef, EpisodeId, RequestId, TaskId, Digest32, UtcMillis, MonoNanos, UnitPpm, SignedMicros, EpisodeDomain, Route, ActionPhase, MeasurementUnit, ResourceKind, ArtifactKind, SafetyEffect, RollbackState, LifecycleRelation, ScopeBinding, VersionRef, Digest, LocalEpisodeRef, ArtifactRef, ForeignEvidenceRef, Actor, Measurement, MonotonicRange, ResourceReading, ActionDescriptor, parameters, ConsentRef, ObjectKeyRef, LifecycleLink, Identity, Time, Origin, Context, Decision, sequence, Outcome, Authority, versions, RecordedEvidence, Evidence, Lifecycle, Provenance, CompleteEpisodeInput, COMPLETE_EPISODE_DOMAIN}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/evaluate.rs:2:5
+  |
+2 | use super::*;
+  |     ^^^^^^^^ help: try: `super::{VerificationReport, ExpectedAdmission, SyntheticHostAuthority, DecisionClass, AdmissionReason, Integrity, AdmissionContext, TrustSnapshot, AdmissionDecision, RevocationReason, CurrentConsent, KeyStatus}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/simulator.rs:3:5
+  |
+3 | use super::*;
+  |     ^^^^^^^^ help: try: `super::{SimulatedReceipt, ExpectedAdmission, AdmissionReason, VerificationReport, AdmissionDecision, AdmissionContext, TrustSnapshot, SimulatedOutcome, evaluate_admission, DecisionClass, RECORD_CAP}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: this function has too many lines (127/100)
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/simulator.rs:48:5
+   |
+48 | /     pub(in crate::v3::complete_episode::crypto) fn simulate_commit(
+49 | |         &mut self,
+50 | |         report: VerificationReport,
+51 | |         decision: &AdmissionDecision,
+52 | |         context: &AdmissionContext,
+53 | |         trust: &TrustSnapshot,
+54 | |     ) -> Result<SimulatedOutcome, AdmissionReason> {
+   | |__________________________________________________^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+
+warning: this argument is passed by value, but not consumed in the function body
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/simulator.rs:50:17
+   |
+50 |         report: VerificationReport,
+   |                 ^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_pass_by_value
+   = note: `-W clippy::needless-pass-by-value` implied by `-W clippy::pedantic`
+   = help: to override `-W clippy::pedantic` add `#[allow(clippy::needless_pass_by_value)]`
+help: consider taking a reference instead
+   |
+50 |         report: &VerificationReport,
+   |                 +
+
+warning: casting `usize` to `u8` may truncate the value
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/profile.rs:220:33
+    |
+220 |         1 => output.push(0x40 | bytes.len() as u8),
+    |                                 ^^^^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+    = note: `-W clippy::cast-possible-truncation` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::cast_possible_truncation)]`
+help: ... or use `try_from` and handle the error accordingly
+    |
+220 -         1 => output.push(0x40 | bytes.len() as u8),
+220 +         1 => output.push(0x40 | u8::try_from(bytes.len())),
+    |
+
+warning: casting `usize` to `u8` may truncate the value
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/profile.rs:221:47
+    |
+221 |         2 => output.extend_from_slice(&[0x58, bytes.len() as u8]),
+    |                                               ^^^^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+221 -         2 => output.extend_from_slice(&[0x58, bytes.len() as u8]),
+221 +         2 => output.extend_from_slice(&[0x58, u8::try_from(bytes.len())]),
+    |
+
+warning: casting `usize` to `u16` may truncate the value
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/profile.rs:224:39
+    |
+224 |             output.extend_from_slice(&(bytes.len() as u16).to_be_bytes());
+    |                                       ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+224 -             output.extend_from_slice(&(bytes.len() as u16).to_be_bytes());
+224 +             output.extend_from_slice(&u16::try_from(bytes.len()).to_be_bytes());
+    |
+
+warning: casting `usize` to `u32` may truncate the value on targets with 64-bit wide pointers
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/profile.rs:228:39
+    |
+228 |             output.extend_from_slice(&(bytes.len() as u32).to_be_bytes());
+    |                                       ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+228 -             output.extend_from_slice(&(bytes.len() as u32).to_be_bytes());
+228 +             output.extend_from_slice(&u32::try_from(bytes.len()).to_be_bytes());
+    |
+
+warning: unused `self` argument
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify.rs:146:27
+    |
+146 |     pub(super) fn profile(&self) -> &'static str {
+    |                           ^^^^^
+    |
+    = help: consider refactoring to an associated function
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#unused_self
+    = note: `-W clippy::unused-self` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::unused_self)]`
+
+warning: unused `self` argument
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify.rs:149:26
+    |
+149 |     pub(super) fn domain(&self) -> &'static str {
+    |                          ^^^^^
+    |
+    = help: consider refactoring to an associated function
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#unused_self
+
+warning: unused `self` argument
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify.rs:152:27
+    |
+152 |     pub(super) fn version(&self) -> u64 {
+    |                           ^^^^^
+    |
+    = help: consider refactoring to an associated function
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#unused_self
+
+warning: consider adding a `;` to the last statement for consistent formatting
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/trust/apply.rs:97:17
+   |
+97 |                 transition(&mut keys, id, KeyStatus::Pending, KeyStatus::Active, next)?
+   |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: add a `;` here: `transition(&mut keys, id, KeyStatus::Pending, KeyStatus::Active, next)?;`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#semicolon_if_nothing_returned
+   = note: `-W clippy::semicolon-if-nothing-returned` implied by `-W clippy::pedantic`
+   = help: to override `-W clippy::pedantic` add `#[allow(clippy::semicolon_if_nothing_returned)]`
+
+warning: consider adding a `;` to the last statement for consistent formatting
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/trust/apply.rs:100:17
+    |
+100 |                 transition(&mut keys, id, KeyStatus::Active, KeyStatus::Retired, next)?
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: add a `;` here: `transition(&mut keys, id, KeyStatus::Active, KeyStatus::Retired, next)?;`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#semicolon_if_nothing_returned
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/crypto/trust/command.rs:2:5
+  |
+2 | use super::*;
+  |     ^^^^^^^^ help: try: `super::{KeyRegistration, C, text, TrustCommand, OpaqueRef, Result, Operation, Wire, TrustError, RevocationReason, encode}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: this argument is passed by value, but not consumed in the function body
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/trust/mod.rs:97:18
+   |
+97 | fn encode(value: C) -> Result<Vec<u8>> {
+   |                  ^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_pass_by_value
+help: consider taking a reference instead
+   |
+97 | fn encode(value: &C) -> Result<Vec<u8>> {
+   |                  +
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/decode.rs:2:5
+  |
+2 | use super::*;
+  |     ^^^^^^^^ help: try: `super::{CompleteEpisodeError, UnitPpm, Digest, Digest32, UtcMillis, Estimate, Identity, EpisodeId, RequestId, Time, Origin, NodeRef, Context, TaskId, RegimeRef, Decision, Outcome, Authority, RecordedEvidence, Evidence, Lifecycle, Provenance, ScopeBinding, TenantRef, VersionRef, ComponentRef, OpaqueRef, LocalEpisodeRef, ArtifactRef, ForeignEvidenceRef, OrganizationRef, Actor, PrincipalRef, ResourceReading, ActionDescriptor, ActionRef, ParameterClassRef, ConsentRef, ObjectKeyRef, LifecycleLink, Scope, GuildRef, ConsultedRef, RetentionIntent, Measurement, SignedMicros, MonotonicRange, ClockRef, MonoNanos, RegimeDistribution, EpisodeDomain, Route, ActionPhase, MeasurementUnit, ResourceKind, ArtifactKind, SafetyEffect, RollbackState, LifecycleRelation, CompleteEpisodeInput, CompleteEpisode, MAX_ENCODED_SIZE, COMPLETE_EPISODE_DOMAIN}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/decode/containers.rs:2:5
+  |
+2 | use super::*;
+  |     ^^^^^^^^ help: try: `super::{C, DResult, E, CompleteEpisodeError, UnitPpm, Digest, Digest32, UtcMillis, Estimate}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: this argument is passed by value, but not consumed in the function body
+  --> crates/abi-wdbx/src/v3/complete_episode/decode/containers.rs:12:31
+   |
+12 | pub(super) fn unsigned(value: C) -> DResult<u64> {
+   |                               ^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_pass_by_value
+help: consider taking a reference instead
+   |
+12 | pub(super) fn unsigned(value: &C) -> DResult<u64> {
+   |                               +
+
+warning: this argument is passed by value, but not consumed in the function body
+  --> crates/abi-wdbx/src/v3/complete_episode/decode/containers.rs:18:29
+   |
+18 | pub(super) fn signed(value: C) -> DResult<i64> {
+   |                             ^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_pass_by_value
+help: consider taking a reference instead
+   |
+18 | pub(super) fn signed(value: &C) -> DResult<i64> {
+   |                             +
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/decode/groups.rs:2:5
+  |
+2 | use super::*;
+  |     ^^^^^^^^ help: try: `super::{C, DResult, Identity, Fields, Digest, EpisodeId, fixed, RequestId, binding, version, Time, utc, monotonic, Origin, token, NodeRef, actor, signer, Context, TaskId, RegimeRef, estimate, posterior, ppm, artifact, list, resource, Decision, route, action, Outcome, measurement, safety, rollback, Authority, local, consent, RecordedEvidence, Evidence, maturity, Lifecycle, retention, object_key, link, Provenance, consulted}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/decode/references.rs:2:5
+  |
+2 | use super::*;
+  |     ^^^^^^^^ help: try: `super::{C, DResult, ScopeBinding, Fields, Digest, token, TenantRef, VersionRef, ComponentRef, OpaqueRef, digest, LocalEpisodeRef, episode_domain, ArtifactRef, unsigned, artifact_kind, ForeignEvidenceRef, OrganizationRef, Actor, PrincipalRef, actor_kind, ResourceReading, resource_kind, ActionDescriptor, ActionRef, list, ParameterClassRef, phase, ConsentRef, ObjectKeyRef, LifecycleLink, relation, Scope, variant, GuildRef, E, ConsultedRef, RetentionIntent, array, next, utc, Measurement, measurement_unit, SignedMicros, signed, MonotonicRange, ClockRef, MonoNanos, RegimeDistribution, CompleteEpisodeError, RegimeRef, ppm, text}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/decode/vocabulary.rs:2:5
+  |
+2 | use super::*;
+  |     ^^^^^^^^ help: try: `super::{C, DResult, EpisodeDomain, unit, E, Route, ActionPhase, MeasurementUnit, ResourceKind, ArtifactKind, SafetyEffect, RollbackState, LifecycleRelation, text}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/decode.rs:8:5
+  |
+8 | use containers::*;
+  |     ^^^^^^^^^^^^^ help: try: `containers::{Fields, fixed, utc, token, estimate, ppm, list, digest, unsigned, variant, array, next, signed, text, unit}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/decode.rs:9:5
+  |
+9 | use groups::*;
+  |     ^^^^^^^^^ help: try: `groups::{identity, time, origin, context, decision, outcome, authority, evidence, lifecycle, provenance}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: usage of wildcard import
+  --> crates/abi-wdbx/src/v3/complete_episode/decode.rs:10:5
+   |
+10 | use references::*;
+   |     ^^^^^^^^^^^^^ help: try: `references::{binding, version, monotonic, actor, signer, posterior, artifact, resource, action, measurement, local, consent, retention, object_key, link, consulted}`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: usage of wildcard import
+  --> crates/abi-wdbx/src/v3/complete_episode/decode.rs:11:5
+   |
+11 | use vocabulary::*;
+   |     ^^^^^^^^^^^^^ help: try: `vocabulary::{route, safety, rollback, maturity, episode_domain, artifact_kind, actor_kind, resource_kind, phase, relation, measurement_unit}`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/types.rs:2:5
+  |
+2 | use super::primitives::*;
+  |     ^^^^^^^^^^^^^^^^^^^^ help: try: `super::primitives::{GuildRef, PrincipalRef, OrganizationRef, OpaqueRef, UtcMillis, TenantRef, ComponentRef, Digest32, SignedMicros, ClockRef, MonoNanos, ActionRef, ParameterClassRef, EpisodeId, RequestId, NodeRef, TaskId, RegimeRef, Estimate, UnitPpm}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: usage of wildcard import
+ --> crates/abi-wdbx/src/v3/complete_episode/validate.rs:2:5
+  |
+2 | use super::*;
+  |     ^^^^^^^^ help: try: `super::{CompleteEpisodeError, Result, E, ScopeBinding, Estimate, CompleteEpisodeInput, RetentionIntent, ConsultedRef, Scope, LocalEpisodeRef, ArtifactRef, ArtifactKind, EpisodeDomain, Digest}`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#wildcard_imports
+
+warning: this function's return value is unnecessarily wrapped by `Result`
+  --> crates/abi-wdbx/src/v3/complete_episode/mod.rs:82:5
+   |
+82 |     pub(crate) fn canonical_bytes(&self) -> Result<Vec<u8>> {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#unnecessary_wraps
+   = note: `-W clippy::unnecessary-wraps` implied by `-W clippy::pedantic`
+   = help: to override `-W clippy::pedantic` add `#[allow(clippy::unnecessary_wraps)]`
+help: remove `Result` from the return type...
+   |
+82 -     pub(crate) fn canonical_bytes(&self) -> Result<Vec<u8>> {
+82 +     pub(crate) fn canonical_bytes(&self) -> std::vec::Vec<u8> {
+   |
+help: ...and then remove the surrounding `Ok()` from returning expressions
+   |
+83 -         Ok(self.bytes.clone())
+83 +         self.bytes.clone()
+   |
+
+warning: this function's return value is unnecessarily wrapped by `Result`
+  --> crates/abi-wdbx/src/v3/complete_episode/mod.rs:85:5
+   |
+85 |     pub(crate) fn digest(&self) -> Result<[u8; 32]> {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#unnecessary_wraps
+help: remove `Result` from the return type...
+   |
+85 -     pub(crate) fn digest(&self) -> Result<[u8; 32]> {
+85 +     pub(crate) fn digest(&self) -> [u8; 32] {
+   |
+help: ...and then remove the surrounding `Ok()` from returning expressions
+   |
+86 -         Ok(self.digest)
+86 +         self.digest
+   |
+
+warning: `abi-wdbx` (lib) generated 36 warnings (run `cargo clippy --fix --lib -p abi-wdbx -- ` to apply 19 suggestions)
+warning: binding's name is too similar to existing binding
+   --> crates/abi-wdbx/src/v3/federation/tests.rs:227:13
+    |
+227 |     let mut peers_a = PeerDirectory::new();
+    |             ^^^^^^^
+    |
+note: existing binding defined here
+   --> crates/abi-wdbx/src/v3/federation/tests.rs:220:9
+    |
+220 |     let peer_a = PeerIdentity::new(
+    |         ^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#similar_names
+    = note: `-W clippy::similar-names` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::similar_names)]`
+
+warning: binding's name is too similar to existing binding
+   --> crates/abi-wdbx/src/v3/federation/tests.rs:270:13
+    |
+270 |     let mut peers_b = PeerDirectory::new();
+    |             ^^^^^^^
+    |
+note: existing binding defined here
+   --> crates/abi-wdbx/src/v3/federation/tests.rs:225:13
+    |
+225 |     let (_, peer_b) = peer(2, &org_b, ResidencyClass::Unrestricted);
+    |             ^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#similar_names
+
+warning: used `assert!` to check that a value is empty
+   --> crates/abi-wdbx/src/spatial3d/octree_checked.rs:546:9
+    |
+546 |         assert!(selected.hits.is_empty());
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#assert_is_empty
+    = note: `-W clippy::assert-is-empty` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::assert_is_empty)]`
+help: use `assert_eq!` to show the value on failure
+    |
+546 -         assert!(selected.hits.is_empty());
+546 +         assert_eq!(selected.hits, [] as [spatial3d::legacy_checked::CheckedSpatialHit<'_>; 0]);
+    |
+
+warning: consider adding a `;` to the last statement for consistent formatting
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/scenarios.rs:166:21
+    |
+166 | /                     input.origin.source_node =
+167 | |                         crate::v3::complete_episode::NodeRef::new("changed-source").unwrap()
+    | |____________________________________________________________________________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#semicolon_if_nothing_returned
+    = note: `-W clippy::semicolon-if-nothing-returned` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::semicolon_if_nothing_returned)]`
+help: add a `;` here
+    |
+166 |                     input.origin.source_node =
+167 ~                         crate::v3::complete_episode::NodeRef::new("changed-source").unwrap();
+    |
+
+warning: consider adding a `;` to the last statement for consistent formatting
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/scenarios.rs:170:21
+    |
+170 | /                     input.identity.request_id =
+171 | |                         RequestId::new(next_id(input.identity.request_id.0)).unwrap()
+    | |_____________________________________________________________________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#semicolon_if_nothing_returned
+help: add a `;` here
+    |
+170 |                     input.identity.request_id =
+171 ~                         RequestId::new(next_id(input.identity.request_id.0)).unwrap();
+    |
+
+warning: consider adding a `;` to the last statement for consistent formatting
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/scenarios.rs:174:21
+    |
+174 | /                     input.identity.episode_id =
+175 | |                         EpisodeId::new(next_id(input.identity.episode_id.0)).unwrap()
+    | |_____________________________________________________________________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#semicolon_if_nothing_returned
+help: add a `;` here
+    |
+174 |                     input.identity.episode_id =
+175 ~                         EpisodeId::new(next_id(input.identity.episode_id.0)).unwrap();
+    |
+
+warning: consider adding a `;` to the last statement for consistent formatting
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/scenarios.rs:233:17
+    |
+233 |                 context.policy.as_mut().unwrap().policy.revision = OpaqueRef::new("stale").unwrap()
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: add a `;` here: `context.policy.as_mut().unwrap().policy.revision = OpaqueRef::new("stale").unwrap();`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#semicolon_if_nothing_returned
+
+warning: consider adding a `;` to the last statement for consistent formatting
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/scenarios.rs:236:17
+    |
+236 | /                 context.policy.as_mut().unwrap().safety_policy.revision =
+237 | |                     OpaqueRef::new("stale").unwrap()
+    | |____________________________________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#semicolon_if_nothing_returned
+help: add a `;` here
+    |
+236 |                 context.policy.as_mut().unwrap().safety_policy.revision =
+237 ~                     OpaqueRef::new("stale").unwrap();
+    |
+
+warning: consider adding a `;` to the last statement for consistent formatting
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/scenarios.rs:240:17
+    |
+240 | /                 context.consent = Some(CurrentConsent::Required {
+241 | |                     epoch: 4,
+242 | |                     policy: report.authority().policy.clone(),
+243 | |                 })
+    | |__________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#semicolon_if_nothing_returned
+help: add a `;` here
+    |
+240 |                 context.consent = Some(CurrentConsent::Required {
+241 |                     epoch: 4,
+242 |                     policy: report.authority().policy.clone(),
+243 ~                 });
+    |
+
+warning: consider adding a `;` to the last statement for consistent formatting
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/scenarios.rs:246:17
+    |
+246 | /                 context.authority.as_mut().unwrap().writer_principal =
+247 | |                     OpaqueRef::new("other-writer").unwrap()
+    | |___________________________________________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#semicolon_if_nothing_returned
+help: add a `;` here
+    |
+246 |                 context.authority.as_mut().unwrap().writer_principal =
+247 ~                     OpaqueRef::new("other-writer").unwrap();
+    |
+
+warning: consider adding a `;` to the last statement for consistent formatting
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/scenarios.rs:574:17
+    |
+574 | /                 input.origin.source_node =
+575 | |                     crate::v3::complete_episode::NodeRef::new("another-source").unwrap()
+    | |________________________________________________________________________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#semicolon_if_nothing_returned
+help: add a `;` here
+    |
+574 |                 input.origin.source_node =
+575 ~                     crate::v3::complete_episode::NodeRef::new("another-source").unwrap();
+    |
+
+warning: unnecessary semicolon
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/scenarios.rs:591:10
+    |
+591 |         };
+    |          ^ help: remove
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#unnecessary_semicolon
+    = note: `-W clippy::unnecessary-semicolon` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::unnecessary_semicolon)]`
+
+warning: adding items after statements is confusing, since items exist from the start of the scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/scenarios.rs:615:5
+    |
+615 |     use crate::v3::complete_episode::crypto::trust::{KeyPurpose, KeyRegistration};
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#items_after_statements
+    = note: `-W clippy::items-after-statements` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::items_after_statements)]`
+
+warning: adding items after statements is confusing, since items exist from the start of the scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/scenarios.rs:615:54
+    |
+615 |     use crate::v3::complete_episode::crypto::trust::{KeyPurpose, KeyRegistration};
+    |                                                      ^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#items_after_statements
+
+warning: adding items after statements is confusing, since items exist from the start of the scope
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/scenarios.rs:615:66
+    |
+615 |     use crate::v3::complete_episode::crypto::trust::{KeyPurpose, KeyRegistration};
+    |                                                                  ^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#items_after_statements
+
+warning: consider adding a `;` to the last statement for consistent formatting
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:157:17
+    |
+157 | /                 context.expected.identity.request_id =
+158 | |                     crate::v3::complete_episode::RequestId::new([
+159 | |                         2, 2, 3, 4, 5, 6, 0x40, 8, 0x80, 10, 11, 12, 13, 14, 15, 16,
+160 | |                     ])
+161 | |                     .unwrap()
+    | |_____________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#semicolon_if_nothing_returned
+help: add a `;` here
+    |
+157 |                 context.expected.identity.request_id =
+...
+160 |                     ])
+161 ~                     .unwrap();
+    |
+
+warning: consider adding a `;` to the last statement for consistent formatting
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:164:17
+    |
+164 | /                 context.expected.identity.episode_id =
+165 | |                     crate::v3::complete_episode::EpisodeId::new([
+166 | |                         2, 2, 3, 4, 5, 6, 0x40, 8, 0x80, 10, 11, 12, 13, 14, 15, 16,
+167 | |                     ])
+168 | |                     .unwrap()
+    | |_____________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#semicolon_if_nothing_returned
+help: add a `;` here
+    |
+164 |                 context.expected.identity.episode_id =
+...
+167 |                     ])
+168 ~                     .unwrap();
+    |
+
+warning: consider adding a `;` to the last statement for consistent formatting
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:171:17
+    |
+171 | /                 context.expected.identity.binding.tenant =
+172 | |                     crate::v3::complete_episode::TenantRef::new("other-tenant").unwrap()
+    | |________________________________________________________________________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#semicolon_if_nothing_returned
+help: add a `;` here
+    |
+171 |                 context.expected.identity.binding.tenant =
+172 ~                     crate::v3::complete_episode::TenantRef::new("other-tenant").unwrap();
+    |
+
+warning: consider adding a `;` to the last statement for consistent formatting
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:175:17
+    |
+175 | /                 context.expected.identity.contract.revision =
+176 | |                     OpaqueRef::new("other-version").unwrap()
+    | |____________________________________________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#semicolon_if_nothing_returned
+help: add a `;` here
+    |
+175 |                 context.expected.identity.contract.revision =
+176 ~                     OpaqueRef::new("other-version").unwrap();
+    |
+
+warning: consider adding a `;` to the last statement for consistent formatting
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs:205:17
+    |
+205 | /                 context.authority.as_mut().unwrap().actor =
+206 | |                     Actor::new((PrincipalRef::new("spoofed").unwrap(), ActorKind::Service))
+    | |___________________________________________________________________________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#semicolon_if_nothing_returned
+help: add a `;` here
+    |
+205 |                 context.authority.as_mut().unwrap().actor =
+206 ~                     Actor::new((PrincipalRef::new("spoofed").unwrap(), ActorKind::Service));
+    |
+
+warning: casting `usize` to `u8` may truncate the value
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/tests.rs:19:40
+   |
+19 |     let mut v = vec![0xd2, 0x84, 0x58, header.len() as u8];
+   |                                        ^^^^^^^^^^^^^^^^^^
+   |
+   = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+   |
+19 -     let mut v = vec![0xd2, 0x84, 0x58, header.len() as u8];
+19 +     let mut v = vec![0xd2, 0x84, 0x58, u8::try_from(header.len())];
+   |
+
+warning: use of `format!` to build up a string from an iterator
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/tests.rs:47:9
+   |
+47 | /         Sha256::digest(structure)
+48 | |             .iter()
+49 | |             .map(|byte| format!("{byte:02x}"))
+50 | |             .collect::<String>(),
+   | |________________________________^
+   |
+help: call `fold` instead
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/tests.rs:49:14
+   |
+49 |             .map(|byte| format!("{byte:02x}"))
+   |              ^^^
+help: ... and use the `write!` macro here
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/tests.rs:49:25
+   |
+49 |             .map(|byte| format!("{byte:02x}"))
+   |                         ^^^^^^^^^^^^^^^^^^^^^
+   = note: this can be written more efficiently by appending to a `String` directly
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#format_collect
+   = note: `-W clippy::format-collect` implied by `-W clippy::pedantic`
+   = help: to override `-W clippy::pedantic` add `#[allow(clippy::format_collect)]`
+
+warning: consider adding a `;` to the last statement for consistent formatting
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:154:17
+    |
+154 |                 context.binding.tenant = TenantRef::new("other").unwrap()
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: add a `;` here: `context.binding.tenant = TenantRef::new("other").unwrap();`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#semicolon_if_nothing_returned
+
+warning: consider adding a `;` to the last statement for consistent formatting
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs:157:17
+    |
+157 |                 context.namespace = OpaqueRef::new("foreign").unwrap()
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: add a `;` here: `context.namespace = OpaqueRef::new("foreign").unwrap();`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#semicolon_if_nothing_returned
+
+warning: consider adding a `;` to the last statement for consistent formatting
+  --> crates/abi-wdbx/src/v3/complete_episode/crypto/trust/apply.rs:97:17
+   |
+97 |                 transition(&mut keys, id, KeyStatus::Pending, KeyStatus::Active, next)?
+   |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: add a `;` here: `transition(&mut keys, id, KeyStatus::Pending, KeyStatus::Active, next)?;`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#semicolon_if_nothing_returned
+
+warning: this function has too many lines (103/100)
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/trust/tests.rs:510:1
+    |
+510 | fn resource_boundaries_overflow_and_failed_id_correction() {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+
+warning: this function has too many lines (119/100)
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/trust/tests.rs:644:1
+    |
+644 | fn independent_command_and_snapshot_vectors_and_typed_rejections() {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+
+warning: use of `format!` to build up a string from an iterator
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/trust/tests.rs:658:30
+    |
+658 |     let hex = |bytes: &[u8]| bytes.iter().map(|v| format!("{v:02x}")).collect::<String>();
+    |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: call `fold` instead
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/trust/tests.rs:658:43
+    |
+658 |     let hex = |bytes: &[u8]| bytes.iter().map(|v| format!("{v:02x}")).collect::<String>();
+    |                                           ^^^
+help: ... and use the `write!` macro here
+   --> crates/abi-wdbx/src/v3/complete_episode/crypto/trust/tests.rs:658:51
+    |
+658 |     let hex = |bytes: &[u8]| bytes.iter().map(|v| format!("{v:02x}")).collect::<String>();
+    |                                                   ^^^^^^^^^^^^^^^^^^
+    = note: this can be written more efficiently by appending to a `String` directly
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#format_collect
+
+warning: this function has too many lines (115/100)
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/fixtures.rs:119:1
+    |
+119 | pub(super) fn populated() -> CompleteEpisodeInput {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+
+warning: this function has too many lines (135/100)
+ --> crates/abi-wdbx/src/v3/complete_episode/tests/coverage.rs:5:1
+  |
+5 | fn every_group_leaf_changes_the_commitment() {
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+
+warning: this function has too many lines (106/100)
+ --> crates/abi-wdbx/src/v3/complete_episode/tests/diagnostics.rs:5:1
+  |
+5 | fn every_new_type_redacts_private_leaves_and_signer_containment() {
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+
+warning: use of `format!` to build up a string from an iterator
+   --> crates/abi-wdbx/src/v3/complete_episode/tests.rs:101:22
+    |
+101 |           let actual = bytes(input)
+    |  ______________________^
+102 | |             .iter()
+103 | |             .map(|b| format!("{b:02x}"))
+104 | |             .collect::<String>();
+    | |________________________________^
+    |
+help: call `fold` instead
+   --> crates/abi-wdbx/src/v3/complete_episode/tests.rs:103:14
+    |
+103 |             .map(|b| format!("{b:02x}"))
+    |              ^^^
+help: ... and use the `write!` macro here
+   --> crates/abi-wdbx/src/v3/complete_episode/tests.rs:103:22
+    |
+103 |             .map(|b| format!("{b:02x}"))
+    |                      ^^^^^^^^^^^^^^^^^^
+    = note: this can be written more efficiently by appending to a `String` directly
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#format_collect
+
+warning: this function has too many lines (220/100)
+  --> crates/abi-wdbx/src/v3/complete_episode/tests/draft_corpus.rs:34:1
+   |
+34 | pub(super) fn vocabulary_cases() -> Vec<Value> {
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+
+warning: this function has too many lines (145/100)
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/draft_shape.rs:182:1
+    |
+182 | pub(super) fn validate(fixture: &Value) -> R {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+
+warning: this argument is passed by value, but not consumed in the function body
+  --> crates/abi-wdbx/src/v3/complete_episode/tests/draft_mapping.rs:14:22
+   |
+14 | fn field(v: &C, key: C) -> &C {
+   |                      ^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_pass_by_value
+help: consider taking a reference instead
+   |
+14 | fn field(v: &C, key: &C) -> &C {
+   |                      +
+
+warning: this argument is passed by value, but not consumed in the function body
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/decode_bounds.rs:203:21
+    |
+203 | fn cap_error(input: CompleteEpisodeInput, expected: CompleteEpisodeError) {
+    |                     ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_pass_by_value
+help: consider taking a reference instead
+    |
+203 | fn cap_error(input: &CompleteEpisodeInput, expected: CompleteEpisodeError) {
+    |                     +
+
+warning: this function has too many lines (121/100)
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/decode_bounds.rs:208:1
+    |
+208 | fn realizable_positive_typed_caps_and_cap_plus_one() {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+
+warning: this argument is passed by value, but not consumed in the function body
+ --> crates/abi-wdbx/src/v3/complete_episode/tests/decode_malformed.rs:7:29
+  |
+7 | pub(super) fn decode(value: C) -> std::result::Result<DecodedCompleteEpisode, E> {
+  |                             ^
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_pass_by_value
+help: consider taking a reference instead
+  |
+7 | pub(super) fn decode(value: &C) -> std::result::Result<DecodedCompleteEpisode, E> {
+  |                             +
+
+warning: this argument is passed by value, but not consumed in the function body
+  --> crates/abi-wdbx/src/v3/complete_episode/tests/decode_malformed.rs:79:26
+   |
+79 | fn maps(value: &C, path: Vec<Step>, output: &mut Vec<Vec<Step>>) {
+   |                          ^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_pass_by_value
+help: consider changing the type to
+   |
+79 - fn maps(value: &C, path: Vec<Step>, output: &mut Vec<Vec<Step>>) {
+79 + fn maps(value: &C, path: &[Step], output: &mut Vec<Vec<Step>>) {
+   |
+help: change `path.clone()` to
+   |
+82 -             output.push(path.clone());
+82 +             output.push(path.to_owned());
+   |
+help: change `path.clone()` to
+   |
+84 -                 let mut p = path.clone();
+84 +                 let mut p = path.to_owned();
+   |
+help: change `path.clone()` to
+   |
+91 -                 let mut p = path.clone();
+91 +                 let mut p = path.to_owned();
+   |
+
+warning: this argument is passed by value, but not consumed in the function body
+ --> crates/abi-wdbx/src/v3/complete_episode/tests/decode_semantics.rs:5:21
+  |
+5 | fn malformed(input: CompleteEpisodeInput, expected: CompleteEpisodeError) {
+  |                     ^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_pass_by_value
+help: consider taking a reference instead
+  |
+5 | fn malformed(input: &CompleteEpisodeInput, expected: CompleteEpisodeError) {
+  |                     +
+
+warning: this function has too many lines (110/100)
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/decode_semantics.rs:173:1
+    |
+173 | fn all_labels_and_unit_variants_retain_exact_typed_identity() {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+
+warning: item in documentation is missing backticks
+  --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:26:41
+   |
+26 | //! unreachable for this envelope (e.g. ParentLimit, which is inert) are
+   |                                         ^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#doc_markdown
+   = note: `-W clippy::doc-markdown` implied by `-W clippy::pedantic`
+   = help: to override `-W clippy::pedantic` add `#[allow(clippy::doc_markdown)]`
+help: try
+   |
+26 - //! unreachable for this envelope (e.g. ParentLimit, which is inert) are
+26 + //! unreachable for this envelope (e.g. `ParentLimit`, which is inert) are
+   |
+
+warning: this argument (1 byte) is passed by reference, but would be more efficient if passed by value (limit: 8 byte)
+  --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:47:23
+   |
+47 | fn reader_word(error: &CanonicalDecodeError) -> Option<&'static str> {
+   |                       ^^^^^^^^^^^^^^^^^^^^^ help: consider passing by value instead: `CanonicalDecodeError`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#trivially_copy_pass_by_ref
+   = note: `-W clippy::trivially-copy-pass-by-ref` implied by `-W clippy::pedantic`
+   = help: to override `-W clippy::pedantic` add `#[allow(clippy::trivially_copy_pass_by_ref)]`
+
+warning: this argument (1 byte) is passed by reference, but would be more efficient if passed by value (limit: 8 byte)
+  --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:72:24
+   |
+72 | fn episode_word(error: &crate::v3::complete_episode::CompleteEpisodeError) -> Option<&'static str> {
+   |                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: consider passing by value instead: `crate::v3::complete_episode::CompleteEpisodeError`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#trivially_copy_pass_by_ref
+
+warning: this argument is passed by value, but not consumed in the function body
+  --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:91:21
+   |
+91 | fn category(result: std::result::Result<DecodedCompleteEpisode, E>) -> String {
+   |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_pass_by_value
+help: consider taking a reference instead
+   |
+91 | fn category(result: &std::result::Result<DecodedCompleteEpisode, E>) -> String {
+   |                     +
+
+warning: all fields have the same prefix: `max`
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:265:1
+    |
+265 | / pub(super) struct Limits {
+266 | |     pub max_input_bytes: Option<usize>,
+267 | |     pub max_value_count: Option<usize>,
+268 | |     pub max_collection_entries: Option<usize>,
+269 | |     pub max_string_bytes: Option<usize>,
+270 | |     pub max_parent_count: Option<usize>,
+271 | | }
+    | |_^
+    |
+    = help: remove the prefixes
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#struct_field_names
+    = note: `-W clippy::struct-field-names` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::struct_field_names)]`
+
+warning: this argument is passed by value, but not consumed in the function body
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:404:30
+    |
+404 | pub(super) fn execute(cases: Vec<Case>) {
+    |                              ^^^^^^^^^ help: consider changing the type to: `&[Case]`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_pass_by_value
+
+warning: consider adding a `;` to the last statement for consistent formatting
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:455:17
+    |
+455 |                 assert_eq!(got, *error, "case {} ingress category", case.name)
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: add a `;` here: `assert_eq!(got, *error, "case {} ingress category", case.name);`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#semicolon_if_nothing_returned
+
+warning: casts from `u8` to `u64` can be expressed infallibly using `From`
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:677:20
+    |
+677 |         0..=23 => (info as u64, start + 1),
+    |                    ^^^^^^^^^^^
+    |
+    = help: an `as` cast can become silently lossy if the types change in the future
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_lossless
+    = note: `-W clippy::cast-lossless` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::cast_lossless)]`
+help: use `u64::from` instead
+    |
+677 -         0..=23 => (info as u64, start + 1),
+677 +         0..=23 => (u64::from(info), start + 1),
+    |
+
+warning: casts from `u8` to `u64` can be expressed infallibly using `From`
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:678:16
+    |
+678 |         24 => (data[start + 1] as u64, start + 2),
+    |                ^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: an `as` cast can become silently lossy if the types change in the future
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_lossless
+help: use `u64::from` instead
+    |
+678 -         24 => (data[start + 1] as u64, start + 2),
+678 +         24 => (u64::from(data[start + 1]), start + 2),
+    |
+
+warning: casts from `u16` to `u64` can be expressed infallibly using `From`
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:680:13
+    |
+680 |             u16::from_be_bytes(data[start + 1..start + 3].try_into().unwrap()) as u64,
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: an `as` cast can become silently lossy if the types change in the future
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_lossless
+help: use `u64::from` instead
+    |
+680 -             u16::from_be_bytes(data[start + 1..start + 3].try_into().unwrap()) as u64,
+680 +             u64::from(u16::from_be_bytes(data[start + 1..start + 3].try_into().unwrap())),
+    |
+
+warning: casts from `u32` to `u64` can be expressed infallibly using `From`
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:684:13
+    |
+684 |             u32::from_be_bytes(data[start + 1..start + 5].try_into().unwrap()) as u64,
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: an `as` cast can become silently lossy if the types change in the future
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_lossless
+help: use `u64::from` instead
+    |
+684 -             u32::from_be_bytes(data[start + 1..start + 5].try_into().unwrap()) as u64,
+684 +             u64::from(u32::from_be_bytes(data[start + 1..start + 5].try_into().unwrap())),
+    |
+
+warning: casting `u64` to `usize` may truncate the value on targets with 32-bit wide pointers
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:698:21
+    |
+698 |             after + count as usize
+    |                     ^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+698 -             after + count as usize
+698 +             after + usize::try_from(count)
+    |
+
+warning: called `map(<f>).unwrap_or_else(<g>)` on an `Option` value
+   --> crates/abi-wdbx/src/v3/complete_episode/tests/python_decode.rs:899:17
+    |
+899 |       let error = command
+    |  _________________^
+900 | |         .spawn()
+901 | |         .err()
+902 | |         .map(|error| error.to_string())
+903 | |         .unwrap_or_else(|| "unexpectedly spawned".to_owned());
+    | |_____________________________________________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#map_unwrap_or
+    = note: `-W clippy::map-unwrap-or` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::map_unwrap_or)]`
+help: try
+    |
+899 ~     let error = command
+900 +         .spawn()
+901 ~         .err().map_or_else(|| "unexpectedly spawned".to_owned(), |error| error.to_string());
+    |
+
+warning: this function has too many lines (123/100)
+   --> crates/abi-wdbx/tests/v3_memory_edge.rs:185:1
+    |
+185 | fn resolution_provenance_is_per_edge_and_survives_reopen() {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+    = note: `-W clippy::too-many-lines` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::too_many_lines)]`
+
+warning: 5 bindings with single-character names in scope
+  --> crates/abi-wdbx/tests/support/spatial_oracle.rs:20:9
+   |
+20 |     let a = row.point.coordinates();
+   |         ^
+21 |     let b = center.coordinates();
+   |         ^
+22 |     let x = a[0] - b[0];
+   |         ^
+23 |     let y = a[1] - b[1];
+   |         ^
+24 |     let z = a[2] - b[2];
+   |         ^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#many_single_char_names
+   = note: `-W clippy::many-single-char-names` implied by `-W clippy::pedantic`
+   = help: to override `-W clippy::pedantic` add `#[allow(clippy::many_single_char_names)]`
+
+warning: item in documentation is missing backticks
+ --> crates/abi-wdbx/tests/support/spatial_oracle.rs:1:35
+  |
+1 | //! Independent complete scan for defined_float_profile, not exact-real predicates.
+  |                                   ^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#doc_markdown
+  = note: `-W clippy::doc-markdown` implied by `-W clippy::pedantic`
+  = help: to override `-W clippy::pedantic` add `#[allow(clippy::doc_markdown)]`
+help: try
+  |
+1 - //! Independent complete scan for defined_float_profile, not exact-real predicates.
+1 + //! Independent complete scan for `defined_float_profile`, not exact-real predicates.
+  |
+
+warning: used `assert!` to check that a value is empty
+  --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:85:5
+   |
+85 |     assert!(reference_knn(&points, o, 0).is_empty());
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#assert_is_empty
+   = note: `-W clippy::assert-is-empty` implied by `-W clippy::pedantic`
+   = help: to override `-W clippy::pedantic` add `#[allow(clippy::assert_is_empty)]`
+help: use `assert_eq!` to show the value on failure
+   |
+85 -     assert!(reference_knn(&points, o, 0).is_empty());
+85 +     assert_eq!(reference_knn(&points, o, 0), [] as [spatial_oracle::OracleHit; 0]);
+   |
+
+warning: used `assert!` to check that a value is empty
+   --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:125:5
+    |
+125 |     assert!(reference_radius(&[], o, r).is_empty());
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#assert_is_empty
+help: use `assert_eq!` to show the value on failure
+    |
+125 -     assert!(reference_radius(&[], o, r).is_empty());
+125 +     assert_eq!(reference_radius(&[], o, r), [] as [spatial_oracle::OracleHit; 0]);
+    |
+
+warning: casting `u64` to `f64` may cause a loss of precision (`u64` is 64 bits wide, but `f64`'s mantissa is only 52 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:174:13
+    |
+174 |             (next() % 65) as f64 - 32.,
+    |             ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+    = note: `-W clippy::cast-precision-loss` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::cast_precision_loss)]`
+
+warning: casting `u64` to `f64` may cause a loss of precision (`u64` is 64 bits wide, but `f64`'s mantissa is only 52 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:175:13
+    |
+175 |             (next() % 65) as f64 - 32.,
+    |             ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `u64` to `f64` may cause a loss of precision (`u64` is 64 bits wide, but `f64`'s mantissa is only 52 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:176:13
+    |
+176 |             (next() % 65) as f64 - 32.,
+    |             ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `u64` to `f64` may cause a loss of precision (`u64` is 64 bits wide, but `f64`'s mantissa is only 52 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:178:38
+    |
+178 |         let radius = Radius::try_new((next() % 33) as f64).unwrap();
+    |                                      ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `u64` to `f64` may cause a loss of precision (`u64` is 64 bits wide, but `f64`'s mantissa is only 52 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:185:25
+    |
+185 |                         (next() % 65) as f64 - 32.,
+    |                         ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `u64` to `f64` may cause a loss of precision (`u64` is 64 bits wide, but `f64`'s mantissa is only 52 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:186:25
+    |
+186 |                         (next() % 65) as f64 - 32.,
+    |                         ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `u64` to `f64` may cause a loss of precision (`u64` is 64 bits wide, but `f64`'s mantissa is only 52 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:187:25
+    |
+187 |                         (next() % 65) as f64 - 32.,
+    |                         ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: missing documentation for the crate
+   --> crates/abi-wdbx/tests/wdbx_3d_oracle.rs:1:1
+    |
+  1 | / #[path = "support/dyadic_reference.rs"]
+  2 | | mod dyadic_reference;
+  3 | | #[path = "support/spatial_oracle.rs"]
+  4 | | mod spatial_oracle;
+...   |
+219 | | }
+    | |_^
+    |
+    = note: requested on the command line with `-W missing-docs`
+
+warning: missing documentation for the crate
+   --> crates/abi-wdbx/tests/wdbx_3d_numeric.rs:1:1
+    |
+  1 | / use abi_wdbx::{
+  2 | |     Point3D,
+  3 | |     spatial3d::{Point3, Radius, SpatialError},
+  4 | | };
+...   |
+114 | |     );
+115 | | }
+    | |_^
+    |
+    = note: requested on the command line with `-W missing-docs`
+
+warning: `abi-wdbx` (lib test) generated 72 warnings (18 duplicates) (run `cargo clippy --fix --lib -p abi-wdbx --tests -- ` to apply 25 suggestions)
+warning: `abi-wdbx` (test "v3_memory_edge") generated 1 warning
+warning: `abi-wdbx` (test "wdbx_3d_oracle") generated 12 warnings (run `cargo clippy --fix --test "wdbx_3d_oracle" -p abi-wdbx -- ` to apply 3 suggestions)
+warning: `abi-wdbx` (test "wdbx_3d_numeric") generated 1 warning
+warning: this function has too many lines (133/100)
+  --> crates/abi-wdbx/tests/v3_retention_windows.rs:84:1
+   |
+84 | fn a_policy_without_the_new_fields_still_parses_and_means_the_previous_behaviour() {
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+   = note: `-W clippy::too-many-lines` implied by `-W clippy::pedantic`
+   = help: to override `-W clippy::pedantic` add `#[allow(clippy::too_many_lines)]`
+
+warning: `abi-wdbx` (test "wdbx_3d_checked_points") generated 2 warnings (2 duplicates)
+warning: `abi-wdbx` (test "v3_retention_windows") generated 1 warning
+warning: long literal lacking separators
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:111:31
+    |
+111 |                 .wrapping_mul(6364136223846793005)
+    |                               ^^^^^^^^^^^^^^^^^^^ help: consider: `6_364_136_223_846_793_005`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#unreadable_literal
+    = note: `-W clippy::unreadable-literal` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::unreadable_literal)]`
+
+warning: long literal lacking separators
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:112:31
+    |
+112 |                 .wrapping_add(1442695040888963407);
+    |                               ^^^^^^^^^^^^^^^^^^^ help: consider: `1_442_695_040_888_963_407`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#unreadable_literal
+
+warning: casting `usize` to `u32` may truncate the value on targets with 64-bit wide pointers
+  --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:27:13
+   |
+27 |             j as u32,
+   |             ^^^^^^^^
+   |
+   = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+   = note: `-W clippy::cast-possible-truncation` implied by `-W clippy::pedantic`
+   = help: to override `-W clippy::pedantic` add `#[allow(clippy::cast_possible_truncation)]`
+help: ... or use `try_from` and handle the error accordingly
+   |
+27 -             j as u32,
+27 +             u32::try_from(j),
+   |
+
+warning: casting `usize` to `f32` may cause a loss of precision (`usize` can be up to 64 bits wide depending on the target architecture, but `f32`'s mantissa is only 23 bits wide)
+  --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:29:20
+   |
+29 |                 x: j as f32,
+   |                    ^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+   = note: `-W clippy::cast-precision-loss` implied by `-W clippy::pedantic`
+   = help: to override `-W clippy::pedantic` add `#[allow(clippy::cast_precision_loss)]`
+
+warning: this function has too many lines (118/100)
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:101:1
+    |
+101 | fn thousand_seeded_independent_cases() {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#too_many_lines
+    = note: `-W clippy::too-many-lines` implied by `-W clippy::pedantic`
+    = help: to override `-W clippy::pedantic` add `#[allow(clippy::too_many_lines)]`
+
+warning: casting `u64` to `usize` may truncate the value on targets with 32-bit wide pointers
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:105:30
+    |
+105 |         let n = [63, 64, 65][seed as usize % 3];
+    |                              ^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+105 -         let n = [63, 64, 65][seed as usize % 3];
+105 +         let n = [63, 64, 65][usize::try_from(seed) % 3];
+    |
+
+warning: casting `i32` to `f32` may cause a loss of precision (`i32` is 32 bits wide, but `f32`'s mantissa is only 23 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:113:21
+    |
+113 |             let a = ((state >> 32) as i32 % 1024) as f32 / 16.;
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `i32` to `f32` may cause a loss of precision (`i32` is 32 bits wide, but `f32`'s mantissa is only 23 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:115:21
+    |
+115 |             let b = ((state >> 32) as i32 % 1024) as f32 / 16.;
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `usize` to `u32` may truncate the value on targets with 64-bit wide pointers
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:135:39
+    |
+135 |                     x: f32::from_bits((ordinal % 5) as u32),
+    |                                       ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+135 -                     x: f32::from_bits((ordinal % 5) as u32),
+135 +                     x: f32::from_bits(u32::try_from(ordinal % 5)),
+    |
+
+warning: casting `usize` to `f32` may cause a loss of precision (`usize` can be up to 64 bits wide depending on the target architecture, but `f32`'s mantissa is only 23 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:147:24
+    |
+147 |                     z: (ordinal % 7) as f32,
+    |                        ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `usize` to `u32` may truncate the value on targets with 64-bit wide pointers
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:150:22
+    |
+150 |             let id = (ordinal % 11) as u32;
+    |                      ^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+150 -             let id = (ordinal % 11) as u32;
+150 +             let id = u32::try_from(ordinal % 11);
+    |
+
+warning: casting `usize` to `u8` may truncate the value
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:151:35
+    |
+151 |             index.insert(id, p, &[(ordinal % 251) as u8]);
+    |                                   ^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+151 -             index.insert(id, p, &[(ordinal % 251) as u8]);
+151 +             index.insert(id, p, &[u8::try_from(ordinal % 251)]);
+    |
+
+warning: casting `usize` to `u8` may truncate the value
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:187:46
+    |
+187 |                 assert_eq!(actual.payload, &[(want.ordinal % 251) as u8]);
+    |                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+187 -                 assert_eq!(actual.payload, &[(want.ordinal % 251) as u8]);
+187 +                 assert_eq!(actual.payload, &[u8::try_from(want.ordinal % 251)]);
+    |
+
+warning: casting `u32` to `u8` may truncate the value
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:329:15
+    |
+329 |             &[id as u8],
+    |               ^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+329 -             &[id as u8],
+329 +             &[u8::try_from(id)],
+    |
+
+warning: casting `u32` to `u8` may truncate the value
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:340:15
+    |
+340 |             &[id as u8],
+    |               ^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+340 -             &[id as u8],
+340 +             &[u8::try_from(id)],
+    |
+
+warning: casting `u32` to `u8` may truncate the value
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:359:33
+    |
+359 |         assert_eq!(h.payload, &[h.id as u8]);
+    |                                 ^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+359 -         assert_eq!(h.payload, &[h.id as u8]);
+359 +         assert_eq!(h.payload, &[u8::try_from(h.id)]);
+    |
+
+warning: casting `usize` to `f32` may cause a loss of precision (`usize` can be up to 64 bits wide depending on the target architecture, but `f32`'s mantissa is only 23 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:369:17
+    |
+369 |                 ((ordinal * 17 + seed * 3) % 21) as f32 - 10.,
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `usize` to `f32` may cause a loss of precision (`usize` can be up to 64 bits wide depending on the target architecture, but `f32`'s mantissa is only 23 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:370:17
+    |
+370 |                 ((ordinal * 7 + seed) % 17) as f32 - 8.,
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `usize` to `f32` may cause a loss of precision (`usize` can be up to 64 bits wide depending on the target architecture, but `f32`'s mantissa is only 23 bits wide)
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:371:17
+    |
+371 |                 ((ordinal * 3 + seed * 11) % 13) as f32 - 6.,
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_precision_loss
+
+warning: casting `usize` to `u32` may truncate the value on targets with 64-bit wide pointers
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:373:22
+    |
+373 |             let id = (ordinal % 9) as u32;
+    |                      ^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+373 -             let id = (ordinal % 9) as u32;
+373 +             let id = u32::try_from(ordinal % 9);
+    |
+
+warning: casting `usize` to `u8` may truncate the value
+   --> crates/abi-wdbx/tests/wdbx_3d_octree_parity.rs:381:19
+    |
+381 |                 &[ordinal as u8],
+    |                   ^^^^^^^^^^^^^
+    |
+    = help: if this is intentional allow the lint with `#[allow(clippy::cast_possible_truncation)]` ...
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#cast_possible_truncation
+help: ... or use `try_from` and handle the error accordingly
+    |
+381 -                 &[ordinal as u8],
+381 +                 &[u8::try_from(ordinal)],
+    |
+
+warning: `abi-wdbx` (test "wdbx_3d_octree_parity") generated 23 warnings (2 duplicates)
+warning: function `rank_fixture` is never used
+   --> crates/abi-wdbx/tests/support/dimension_ranking.rs:519:8
+    |
+519 | pub fn rank_fixture(fixture: &Fixture) -> DimensionRanking {
+    |        ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `digests_of` is never used
+   --> crates/abi-wdbx/tests/support/dimension_ranking.rs:530:8
+    |
+530 | pub fn digests_of(ranking: &DimensionRanking) -> Vec<[u8; 32]> {
+    |        ^^^^^^^^^^
+
+warning: function `labels_of` is never used
+   --> crates/abi-wdbx/tests/support/dimension_ranking.rs:540:8
+    |
+540 | pub fn labels_of(ranking: &DimensionRanking, dimension: EvidenceDimension) -> Vec<&'static str> {
+    |        ^^^^^^^^^
+
+warning: function `label_of` is never used
+   --> crates/abi-wdbx/tests/support/dimension_ranking.rs:550:8
+    |
+550 | pub fn label_of(
+    |        ^^^^^^^^
+
+warning: function `expected_lifecycle_signal` is never used
+   --> crates/abi-wdbx/tests/support/dimension_ranking.rs:568:8
+    |
+568 | pub fn expected_lifecycle_signal(
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `vector_arm` is never used
+   --> crates/abi-wdbx/tests/support/dimension_ranking.rs:597:8
+    |
+597 | pub fn vector_arm(fixture: &Fixture) -> (Vec<VectorHit>, Vec<[u8; 32]>) {
+    |        ^^^^^^^^^^
+
+warning: `abi-wdbx` (test "v3_vector_adapter") generated 6 warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.16s

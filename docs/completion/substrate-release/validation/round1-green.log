@@ -1,0 +1,9 @@
+.......................................
+----------------------------------------------------------------------
+Ran 39 tests in 1.061s
+
+OK
+Substrate release C0 contract valid; no implementation, approval or release qualification claim.
+Substrate release C0 contract valid; no implementation, approval or release qualification claim.
+Completion contracts valid: 163 C0 requirements, 46 acceptance cases; no implementation/efficacy claim.
+Execution register valid: 163 reconciled open C0 requirements; no conformance or test-pass claim.
