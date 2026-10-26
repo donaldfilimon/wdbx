@@ -1,0 +1,185 @@
+{
+  "profile": "logicalf32-v1",
+  "frozen_at_utc": "2026-10-23T06:30:43.908645+00:00",
+  "source": [
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/atp_v3/advance.rs",
+      "sha256": "e95a1eccd90f88a791ebf3ced38b1532cf79e2afe62494b40f279d3743c3f4cd",
+      "lines": 74
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/atp_v3/mod.rs",
+      "sha256": "4d49058592d17757d83eba510f54a6753cad05b8eb4511e649914afdf900763b",
+      "lines": 4
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/atp_v3/model.rs",
+      "sha256": "dd49a2639fe6d1a3484e405adce4ffbd5fe175b795cd74f2f035a4c7251a23c8",
+      "lines": 105
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/atp_v3.rs",
+      "sha256": "a875d3819af1ce122999f80cdef63fdfb991ae23ae2e7b0acc128f5292e4d395",
+      "lines": 339
+    }
+  ],
+  "report_sha256": "f1d94edd1be2518b2643bb7907e7e80b81df3a9611912a2def4cadaf08d6eab9",
+  "packet_files": [
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/format-apply.json",
+      "sha256": "521a409651cb7a692323a1df17fbdfc207a818a4f00e84014ffa92d603b5e7ee"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/format-apply.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/git-status-after.txt",
+      "sha256": "da6be56ca3403b82c3f36e7a9a2d6e9a553ad3bf08cba13890666750ee1046a0"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/git-status-before.txt",
+      "sha256": "44dda490832e24dbc053ec6703a928d78a3e95d4f1e2dfa324f77e73e95c5f0d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/git-tracked-after.diff",
+      "sha256": "5db5ba21427b56a638a056ce72a6f165df2dafe81850325f2bea147b44b65e45"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/git-tracked-before.diff",
+      "sha256": "5db5ba21427b56a638a056ce72a6f165df2dafe81850325f2bea147b44b65e45"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/kernel-clippy.json",
+      "sha256": "8169202a5d83e2d9f77736f10e2bc19e78714041661f5346635a2ce8b8fbe808"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/kernel-clippy.log",
+      "sha256": "f99444127b96286ad6e717ecb82ad7957717c343ffcc42399b430951a03b9143"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/kernel-format.json",
+      "sha256": "7d8538fb8f869ea15d5443b8e93a63d6f0ae3b5121551ed197f52036497aa4f8"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/kernel-format.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/kernel-tests.json",
+      "sha256": "4aa0f7d137f1e61de04686c9e508efadbabc9aec133342b061cde8e286b15763"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/kernel-tests.log",
+      "sha256": "814cbb365c0faa77db4b0a1a8c1a9f9887c86238566fa71dcdc68301a829a876"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/preservation-after.json",
+      "sha256": "ac1b055928a2bd4f07becc312f417bcbb6408aecf6e663e23252eff4aecb242c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/preservation-before.json",
+      "sha256": "ac1b055928a2bd4f07becc312f417bcbb6408aecf6e663e23252eff4aecb242c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/private-format.json",
+      "sha256": "ea3f5fe3392e8e820f84111cc39f002144312539417489393dfba9c3b7531a0c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/private-format.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/source-freeze/specimen-studio/native/specimen-kernel/src/atp_v3/advance.rs",
+      "sha256": "e95a1eccd90f88a791ebf3ced38b1532cf79e2afe62494b40f279d3743c3f4cd"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/source-freeze/specimen-studio/native/specimen-kernel/src/atp_v3/mod.rs",
+      "sha256": "4d49058592d17757d83eba510f54a6753cad05b8eb4511e649914afdf900763b"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/source-freeze/specimen-studio/native/specimen-kernel/src/atp_v3/model.rs",
+      "sha256": "dd49a2639fe6d1a3484e405adce4ffbd5fe175b795cd74f2f035a4c7251a23c8"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/source-freeze/specimen-studio/native/specimen-kernel/tests/atp_v3.rs",
+      "sha256": "a875d3819af1ce122999f80cdef63fdfb991ae23ae2e7b0acc128f5292e4d395"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/summary.json",
+      "sha256": "3bc06436794c4a6b84ad397859d9f4730689882ce2a27903d56a9cb3b04ded71"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/task-8-atp-report.md",
+      "sha256": "f1d94edd1be2518b2643bb7907e7e80b81df3a9611912a2def4cadaf08d6eab9"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/tdd-green-admission.json",
+      "sha256": "eb778791efdef17e870ee62ab5a925c270f0adb79679ae3279a63c7fe462bef0"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/tdd-green-admission.log",
+      "sha256": "60e09a64f7181a56fbd32b928689b22818388b4ce13034567bd4187b61e9e653"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/tdd-green-transition.json",
+      "sha256": "c500f7292c8adb4847b6ecd2bae559190ac96d54caa8524523b27af4573400b3"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/tdd-green-transition.log",
+      "sha256": "705949b2382de5f2a954e95000c07d86d37f95793fe8426c5098d045ccacb769"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/tdd-red-admission-source/specimen-studio/native/specimen-kernel/src/atp_v3/mod.rs",
+      "sha256": "7fddd3a2028d17d42fb6ee0a17b787481785a1e0f3764460b6cc95f1ec7b7db3"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/tdd-red-admission-source/specimen-studio/native/specimen-kernel/src/atp_v3/model.rs",
+      "sha256": "12a6e5ab255b49f31fc8ba7ae55dba5d466fc72cc90aed760ae1d52971d8a261"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/tdd-red-admission-source/specimen-studio/native/specimen-kernel/tests/atp_v3.rs",
+      "sha256": "fdbc91154757bbce1409ed5445e84f69dd19e435ab1511f242640e5f4b66c72c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/tdd-red-admission.json",
+      "sha256": "dc3313c1ebda9f2bb5f23b7c42cfd1f0f77be256b4d5a22ae3921cb5b8ff8791"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/tdd-red-admission.log",
+      "sha256": "103bf85dcc8c1ddb7c5b6a19cb4709918a97d16b202135e83305241e66cbb897"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/tdd-red-transition-source/specimen-studio/native/specimen-kernel/src/atp_v3/advance.rs",
+      "sha256": "f8d046f46b96d9ac51d7749f39667dbbbbb7fdda98573eef11f85e6dde25277f"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/tdd-red-transition-source/specimen-studio/native/specimen-kernel/src/atp_v3/mod.rs",
+      "sha256": "4d49058592d17757d83eba510f54a6753cad05b8eb4511e649914afdf900763b"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/tdd-red-transition-source/specimen-studio/native/specimen-kernel/src/atp_v3/model.rs",
+      "sha256": "fa2ff3da94f598d14266a88714c72c09eccce3ce657102002b57fadb90d91eeb"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/tdd-red-transition-source/specimen-studio/native/specimen-kernel/tests/atp_v3.rs",
+      "sha256": "a0a7f53377939f682b29038eee57c996104d66436873151df118544ab2d17427"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/tdd-red-transition.json",
+      "sha256": "9d44f76a5f50047796ae79b3f1a533f0953ceb3b7112c88882eabe89d57c27bd"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/tdd-red-transition.log",
+      "sha256": "698b8356513ca1274670832a28853f7af6bd722879f2c498abf0f8821c113915"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/toolchain.json",
+      "sha256": "9a8c2ba1b799ce4c5a4962a413e8dce3ecad0f2f6583b50f6e1be0376c242891"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-23-atp/arithmetic/toolchain.log",
+      "sha256": "e003fd3d385fcd0de16bc6b049124efb20207831dd810fd4ab39ff079bbb12a5"
+    }
+  ]
+}

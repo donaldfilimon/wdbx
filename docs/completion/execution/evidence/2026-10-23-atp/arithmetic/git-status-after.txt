@@ -1,0 +1,60 @@
+ M crates/abi-wdbx/Cargo.toml
+ M crates/abi-wdbx/src/v3/complete_episode/facade.rs
+ M crates/abi-wdbx/src/v3/complete_episode/ledger.rs
+ M crates/abi-wdbx/src/v3/complete_episode/mod.rs
+ M crates/abi-wdbx/src/v3/episode/cose/trust.rs
+ M docs/contracts/README.md
+ M specimen-studio/native/specimen-kernel/src/lib.rs
+ M specimen-studio/native/specimen-wasm/Cargo.toml
+ M specimen-studio/native/specimen-wasm/src/lib.rs
+?? crates/abi-wdbx/src/v3/complete_episode/crypto/
+?? crates/abi-wdbx/tests/v3_complete_episode_authenticated.rs
+?? docs/completion/execution/
+?? docs/execution/p1-local-slices-summary.md
+?? specimen-studio/native/specimen-kernel/src/atp_v3/
+?? specimen-studio/native/specimen-kernel/src/identity/
+?? specimen-studio/native/specimen-kernel/src/language_v3/
+?? specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs
+?? specimen-studio/native/specimen-kernel/src/orchestration_v3/
+?? specimen-studio/native/specimen-kernel/src/scanner_v3/
+?? specimen-studio/native/specimen-kernel/src/scoring_v3/
+?? specimen-studio/native/specimen-kernel/src/text_v3/
+?? specimen-studio/native/specimen-kernel/tests/atp_v3.rs
+?? specimen-studio/native/specimen-kernel/tests/identity.rs
+?? specimen-studio/native/specimen-kernel/tests/identity_fixture.rs
+?? specimen-studio/native/specimen-kernel/tests/language_final_fix.rs
+?? specimen-studio/native/specimen-kernel/tests/language_v3.rs
+?? specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs
+?? specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs
+?? specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs
+?? specimen-studio/native/specimen-kernel/tests/orchestration_v3.rs
+?? specimen-studio/native/specimen-kernel/tests/orchestration_v3/
+?? specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs
+?? specimen-studio/native/specimen-kernel/tests/orchestration_v3_fix1.rs
+?? specimen-studio/native/specimen-kernel/tests/orchestration_v3_graph.rs
+?? specimen-studio/native/specimen-kernel/tests/routes_final_fix.rs
+?? specimen-studio/native/specimen-kernel/tests/scanner_v3.rs
+?? specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs
+?? specimen-studio/native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs
+?? specimen-studio/native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs
+?? specimen-studio/native/specimen-kernel/tests/scoring_v3_contributions.rs
+?? specimen-studio/native/specimen-kernel/tests/scoring_v3_election.rs
+?? specimen-studio/native/specimen-kernel/tests/scoring_v3_policy.rs
+?? specimen-studio/native/specimen-kernel/tests/text_v3.rs
+?? specimen-studio/native/specimen-wasm/examples/
+?? specimen-studio/native/specimen-wasm/src/identity_probe.rs
+?? specimen-studio/native/specimen-wasm/src/language_probe.rs
+?? specimen-studio/native/specimen-wasm/src/language_probe/
+?? specimen-studio/native/specimen-wasm/src/scoring_probe/
+?? specimen-studio/native/specimen-wasm/tests/
+?? specimen-studio/scripts/check-identity-parity.sh
+?? specimen-studio/scripts/check-language-parity.sh
+?? specimen-studio/scripts/check-scoring-parity.sh
+?? specimen-studio/tests/identity-parity.mjs
+?? specimen-studio/tests/language-parity.mjs
+?? specimen-studio/tests/scoring-parity.mjs
+?? tools/check_completion_execution.py
+?? tools/check_p1_crypto.sh
+?? tools/tests/test_check_completion_execution.py
+?? tools/tests/test_wdbx_complete_p1_crypto.py
+?? tools/wdbx_complete_p1_crypto.py
