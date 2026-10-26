@@ -432,11 +432,17 @@ impl Store {
             if zip.len() > 10001 {
                 return Err(error("BudgetExceeded", "Archive contains too many entries"));
             }
+            // Reject ambiguous metadata before any payload or durable-state writes.
+            zip.validate_header_consistency()
+                .map_err(|e| error("MalformedSave", e))?;
             let mut manifest = None;
             let mut total = 0u64;
             for i in 0..zip.len() {
                 let mut file = zip.by_index(i).map_err(|e| error("MalformedSave", e))?;
-                let name = file.name().to_owned();
+                let name = file
+                    .name()
+                    .map_err(|e| error("MalformedSave", e))?
+                    .into_owned();
                 let max = if name == "manifest.json" {
                     64 * 1024 * 1024
                 } else {

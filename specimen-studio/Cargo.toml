@@ -2,7 +2,7 @@
 members = ["native/specimen-kernel", "native/specimen-core", "native/specimen-wasm", "native/specimen-tui", "src-tauri"]
 resolver = "2"
 default-members = ["src-tauri"]
-exclude = ["native/vendor/glib-0.18.5"]
+exclude = ["native/vendor"]
 [workspace.dependencies]
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1", features = ["float_roundtrip"] }
@@ -27,6 +27,8 @@ opt-level = 3
 
 [patch.crates-io]
 glib = { path = "native/vendor/glib-0.18.5" }
+glib-macros = { path = "native/vendor/glib-macros-0.18.5" }
+gtk3-macros = { path = "native/vendor/gtk3-macros-0.18.2" }
 
 [profile.dev.package."glib@0.18.5"]
 opt-level = 3

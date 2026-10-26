@@ -44,6 +44,7 @@ pub mod hash;
 pub mod hnsw;
 pub mod index;
 pub mod manifest;
+pub mod model;
 pub mod multiway;
 pub mod mvcc;
 pub mod net_line;
