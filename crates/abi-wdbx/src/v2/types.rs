@@ -294,6 +294,13 @@ impl V2Snapshot {
         current_versions(self.kv.get(key)?)
     }
 
+    /// Borrow every retained version for a key, including superseded values.
+    /// This is history inspection, not a current-value or conflict projection.
+    #[must_use]
+    pub fn kv_versions(&self, key: &str) -> Option<&[Version<String>]> {
+        self.kv.get(key).map(Vec::as_slice)
+    }
+
     /// Borrow the deterministic preferred key/value version without resolving
     /// or discarding concurrent values.
     #[must_use]

@@ -348,3 +348,122 @@ fn concurrent_processes_at_one_sequence_admit_exactly_one() {
         1
     );
 }
+
+fn stored_envelope(fixture: &Fixture) -> String {
+    abi_wdbx::read_v2_root(&fixture.store, &abi_wdbx::v2::ObjectSecurity::plaintext())
+        .unwrap()
+        .preferred_value("invoice")
+        .unwrap()
+        .to_owned()
+}
+
+#[test]
+fn superseded_values_must_authenticate_before_inspect_or_commit() {
+    use abi_wdbx::{V2Mutation, V2Store};
+    let source = fixture();
+    assert!(
+        source
+            .commit(&auth(), &transaction(1, "first"))
+            .status
+            .success()
+    );
+    let first = stored_envelope(&source);
+    assert!(
+        source
+            .commit(&auth(), &transaction(2, "second"))
+            .status
+            .success()
+    );
+    let second = stored_envelope(&source);
+    for tamper in [false, true] {
+        let target = fixture();
+        let mut envelope: Value = serde_json::from_str(&first).unwrap();
+        if tamper {
+            envelope["value"] = json!("forged superseded value");
+        }
+        let mut store = V2Store::open(&target.store).unwrap();
+        store
+            .commit(vec![V2Mutation::PutKv {
+                key: "invoice".into(),
+                value: envelope.to_string(),
+            }])
+            .unwrap();
+        store
+            .commit(vec![V2Mutation::PutKv {
+                key: "invoice".into(),
+                value: second.clone(),
+            }])
+            .unwrap();
+        drop(store);
+        // The ordinary writer builds internally consistent V2 objects; only
+        // the historical envelope's keyed authentication is invalid.
+        if tamper {
+            assert_refused(&target.inspect_with(&target.key), 1, "AdmissionInvalid");
+            assert_refused(
+                &target.commit(&auth(), &transaction(3, "third")),
+                1,
+                "AdmissionInvalid",
+            );
+            assert_eq!(
+                abi_wdbx::read_v2_root(&target.store, &abi_wdbx::v2::ObjectSecurity::plaintext())
+                    .unwrap()
+                    .committed_transactions(),
+                2
+            );
+        } else {
+            assert_eq!(target.inspect()["frontier"][0]["sequence"], 2);
+            assert!(
+                target
+                    .commit(&auth(), &transaction(3, "third"))
+                    .status
+                    .success()
+            );
+        }
+    }
+}
+
+#[test]
+fn typed_stores_reject_temporal_nodes_and_edges() {
+    use abi_wdbx::v2::{V2TemporalKind, V2TemporalRecord};
+    use abi_wdbx::{V2Mutation, V2Store};
+    let source = fixture();
+    assert!(
+        source
+            .commit(&auth(), &transaction(1, "valid"))
+            .status
+            .success()
+    );
+    let value = stored_envelope(&source);
+    for kind in [V2TemporalKind::Node, V2TemporalKind::Edge] {
+        let target = fixture();
+        let mut store = V2Store::open(&target.store).unwrap();
+        store
+            .commit(vec![
+                V2Mutation::PutKv {
+                    key: "invoice".into(),
+                    value: value.clone(),
+                },
+                V2Mutation::PutTemporal {
+                    key: "extra".into(),
+                    record: V2TemporalRecord {
+                        kind,
+                        fields: serde_json::Map::new(),
+                    },
+                },
+            ])
+            .unwrap();
+        drop(store);
+        assert_refused(&target.inspect_with(&target.key), 1, "StoreCorrupt");
+        assert_refused(
+            &target.commit(&auth(), &transaction(2, "next")),
+            1,
+            "StoreCorrupt",
+        );
+        assert_eq!(
+            abi_wdbx::read_v2_root(&target.store, &abi_wdbx::v2::ObjectSecurity::plaintext())
+                .unwrap()
+                .committed_transactions(),
+            1
+        );
+    }
+}

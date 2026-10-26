@@ -9,7 +9,7 @@
 use crate::admission::{self, Admission, hex};
 use crate::error::TypedError;
 use crate::files;
-use abi_wdbx::v2::{ObjectSecurity, V2Snapshot};
+use abi_wdbx::v2::{ObjectSecurity, V2Snapshot, V2TemporalKind};
 use abi_wdbx::{V2Mutation, V2Store, read_v2_root};
 use serde::Deserialize;
 use serde_json::json;
@@ -226,7 +226,12 @@ fn verified_state(host: &Host, dir: &Path) -> Result<State, TypedError> {
             rows: Vec::new(),
         });
     };
-    if snapshot.vector_count() + snapshot.spatial_count() + snapshot.audit_count() > 0 {
+    if snapshot.vector_count() > 0
+        || snapshot.spatial_count() > 0
+        || snapshot.audit_count() > 0
+        || snapshot.temporal_count(V2TemporalKind::Node) > 0
+        || snapshot.temporal_count(V2TemporalKind::Edge) > 0
+    {
         return Err(TypedError::new(
             "StoreCorrupt",
             "the store holds records outside the typed key/value contract",
@@ -239,14 +244,10 @@ fn verified_state(host: &Host, dir: &Path) -> Result<State, TypedError> {
     let mut highest = 0;
     let mut rows = Vec::new();
     for key in snapshot.kv_keys() {
-        let Some(set) = snapshot.get(key) else {
-            continue;
-        };
-        let mut value = None;
-        let mut ids = Vec::new();
-        for version in std::iter::once(&set.preferred).chain(&set.conflicts) {
-            let (admitted, inner) =
-                admission::open(&host.key, &host.namespace, key, &version.value)?;
+        // Authenticate history before using the maximal-version projection:
+        // a valid replacement must not conceal an invalid earlier envelope.
+        for version in snapshot.kv_versions(key).unwrap_or_default() {
+            let (admitted, _) = admission::open(&host.key, &host.namespace, key, &version.value)?;
             if admitted.writer != writer
                 || admitted.principal != principal
                 || !host.knows_epoch(&admitted.policy, &admitted.consent)
@@ -257,6 +258,14 @@ fn verified_state(host: &Host, dir: &Path) -> Result<State, TypedError> {
                 ));
             }
             highest = highest.max(admitted.sequence);
+        }
+        let Some(set) = snapshot.get(key) else {
+            continue;
+        };
+        let mut value = None;
+        let mut ids = Vec::new();
+        for version in std::iter::once(&set.preferred).chain(&set.conflicts) {
+            let (_, inner) = admission::open(&host.key, &host.namespace, key, &version.value)?;
             ids.push(version.version_id.to_string());
             value.get_or_insert(inner);
         }

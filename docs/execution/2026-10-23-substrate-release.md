@@ -33,3 +33,18 @@ Only independently specified numerical work proceeded around that gate. No durab
 Tasks 4–6 and dependent portions of 7–19 remain unfinished behind their applicable design/approval gates; existing neighboring/reference code is not promoted by this work. Whole-release security acceptance, every required native platform/device combination, multi-host/two-administration qualification and the 30-day Linux/macOS service campaign remain outstanding (Tasks 20–22). This record does not state that all hardware is absent; it states that required qualification has not been delivered.
 
 No public or production release is claimed. Infrastructure changes, purchases, live migrations, actual key destruction and publication retain their separate authorization requirements.
+
+## 2026-10-26 Task 7b continuation
+
+The additive local frame-conversion subset and its exact remaining obligations
+are recorded in [the Task 7b packet](2026-10-26-task7-frame-conversion.md).
+It supplies frame-bound points, explicit proper axis rotations, unit scaling and
+translation with checked output. It supplies no registry authority or durable
+binding. Task 7 remains incomplete; the frozen C0 register and source pins are
+unchanged. The earlier numerical slice's verification counts above remain
+historical observations, not counts for this continuation.
+
+The subsequent [typed-history remediation](2026-10-26-typed-history-validation.md)
+fixes two review findings: superseded KV authentication and temporal-record
+refusal in typed-only roots. Its checks do not close a release task or promote
+the frozen C0 register.
