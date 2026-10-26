@@ -1,0 +1,4 @@
+Command: /usr/bin/python3 tools/check_completion.py
+Completion contracts valid: 163 C0 requirements, 46 acceptance cases; no implementation/efficacy claim.
+
+exit=0

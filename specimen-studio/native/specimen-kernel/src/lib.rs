@@ -3,6 +3,7 @@ pub mod command;
 pub mod engine;
 pub mod graph;
 pub mod host;
+pub mod identity;
 pub mod import_adapt;
 pub mod language;
 pub mod mutate;

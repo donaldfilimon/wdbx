@@ -1,0 +1,93 @@
+{
+  "status": "DONE_WITH_CONCERNS",
+  "stable_sources": true,
+  "no_staging_or_commits": true,
+  "command_outcomes": [
+    {
+      "log": "final-fix-native-red.log",
+      "exit": 101,
+      "expected": "missing kind assertion before serializer fix"
+    },
+    {
+      "log": "final-fix-js-red.log",
+      "exit": 1,
+      "expected": "independent kind expectations reject old trace"
+    },
+    {
+      "log": "final-fix-native-green.log",
+      "exit": 0,
+      "passed": 1
+    },
+    {
+      "log": "final-fix-clippy.log",
+      "exit": 0
+    },
+    {
+      "log": "final-fix-parity-green.log",
+      "exit": 0,
+      "bytes": 4205,
+      "sha256": "60aaef7f217d27a6fe505f2c6405239e3032902e9964472e24273bca97c07580"
+    },
+    {
+      "log": "final-fix-kind-negative.log",
+      "exit": 1,
+      "expected": "kind-only corruption rejected"
+    },
+    {
+      "log": "final-fix-current-completion-checker.log",
+      "exit": 0
+    },
+    {
+      "log": "final-fix-current-execution-checker.log",
+      "exit": 0
+    },
+    {
+      "log": "final-fix-current-execution-mutations.log",
+      "exit": 0,
+      "passed": 27
+    },
+    {
+      "log": "final-fix-current-observation-closure.log",
+      "exit": 0
+    },
+    {
+      "log": "final-fix-system-completion-checker.log",
+      "exit": 0
+    },
+    {
+      "log": "final-fix-system-execution-checker.log",
+      "exit": 0
+    },
+    {
+      "log": "final-fix-system-execution-mutations.log",
+      "exit": 0,
+      "passed": 27
+    },
+    {
+      "log": "final-fix-system-observation-closure.log",
+      "exit": 0
+    },
+    {
+      "log": "final-fix-diff-check.log",
+      "exit": 0
+    }
+  ],
+  "python_runtimes": {
+    "current": "/opt/homebrew/bin/python3; Python 3.15.0",
+    "system": "/usr/bin/python3; Python 3.9.6"
+  },
+  "historical_durable_files_preserved": 44,
+  "counts": {
+    "open_C0_unknown": 163,
+    "candidate": 118,
+    "local_gap": 29,
+    "external_gap": 16
+  },
+  "limitations": [
+    "Full default Studio gates remain historical; affected opt-in native/Clippy/actual parity rerun only.",
+    "Nonfatal native rust-objcopy SIGABRT/missing @rpath/libLLVM.dylib retained; no pristine-link qualification.",
+    "Bun 1.4.4-canary.1+ea6a2c7b7 differs from CI 1.4.0.",
+    "Existing dependency block 0.1.6 future-incompatibility remains disclosed in prior native Clippy log.",
+    "Synthetic pure-kernel fixture only; broader scientific/production/hardware/ABI-owner/crypto blockers remain."
+  ]
+}

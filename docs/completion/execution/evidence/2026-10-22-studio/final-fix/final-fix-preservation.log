@@ -1,0 +1,5 @@
+PASS: 44 historical durable evidence files unchanged byte-for-byte.
+PASS: exact six reviewed snapshot paths changed: ["docs/completion/execution/register-v1.json", "docs/completion/execution/studio-research-v1.json", "docs/completion/execution/studio-research.md", "specimen-studio/native/specimen-wasm/src/identity_probe.rs", "specimen-studio/native/specimen-wasm/tests/identity_probe.rs", "specimen-studio/tests/identity-parity.mjs"]
+PASS: kernel source/tests/fixture, Cargo features/manifests/lockfiles, parity gate/export, catalog and execution checker unchanged against pre-fix snapshot.
+PASS: 163 identities/routing/open/C0/unknown fields and 118/29/16 dispositions unchanged; implementation/test/review/inspection path mappings unchanged; historical audits unchanged.
+PASS: removing only new spill/repeat kind fields reproduces prior decoded successful trace; default WASM binary SHA256 unchanged.

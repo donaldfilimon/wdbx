@@ -1,0 +1,19 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+error[E0432]: unresolved import `specimen_kernel::identity`
+ --> native/specimen-kernel/tests/identity.rs:1:22
+  |
+1 | use specimen_kernel::identity::*;
+  |                      ^^^^^^^^ could not find `identity` in `specimen_kernel`
+
+error[E0689]: can't call method `div_ceil` on ambiguous numeric type `{integer}`
+   --> native/specimen-kernel/tests/identity.rs:207:103
+    |
+203 |     for size in [64, 65, 10000] {
+    |         ---- you must specify a type for this binding, like `i32`
+...
+207 |         assert_eq!(table.find_resource_links(&population(), &ResourceId("shared".into())).len(), size.div_ceil(2));
+    |                                                                                                       ^^^^^^^^
+
+Some errors have detailed explanations: E0432, E0689.
+For more information about an error, try `rustc --explain E0432`.
+error: could not compile `specimen-kernel` (test "identity") due to 2 previous errors
