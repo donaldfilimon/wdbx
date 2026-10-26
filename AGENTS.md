@@ -1,4 +1,35 @@
-# WDBX: legacy migration source
+# Repository Guidelines
+
+## Project Structure & Module Organization
+
+`crates/` contains the five-crate substrate; crate `src/` and `tests/` own implementation and contracts. `tools/` holds gates and independent witnesses. `docs/` holds format and evidence rules. `specimen-studio/` is a separate browser/native workspace with its own guide and gates.
+
+## Build, Test, and Development Commands
+
+`bash tools/check.sh` runs the substrate gate with the pinned rustup toolchain
+on PATH. `cargo build --locked --workspace` builds; `cargo test --locked
+-p abi-wdbx < /dev/null` focuses substrate tests. Run studio commands from
+`specimen-studio/`; root checks do not qualify that application.
+
+## Coding Style & Naming Conventions
+
+Use rustfmt for Rust (four-space indentation), `snake_case` modules/functions, and
+`PascalCase` types. Follow local lint settings and preserve public contracts.
+Keep documentation paths relative to the project. Do not reformat unrelated code.
+
+## Testing Guidelines
+
+Rust uses `#[test]` unit tests and package integration suites; retain existing independent oracles and golden fixtures. Python `unittest` suites validate cross-language witnesses. Name tests after observable behavior and cover affected failure paths.
+Use isolated fixtures rather than live data. Report executed checks and skips;
+compilation alone does not establish runtime or platform qualification.
+
+## Commit & Pull Request Guidelines
+
+Use short imperative subjects; recent history also uses `docs:`, `fix:`, and `chore:` prefixes. Keep commits focused. PRs should describe the behavior and rationale, link relevant issues or
+plans, and list actual checks and remaining platform gaps. Include screenshots
+for visual changes. Preserve unrelated edits and existing generated-file rules.
+
+## Maintained Project Instructions
 
 AGENTS.md is canonical. Read the relevant sections of
 [docs/agent-guide.md](docs/agent-guide.md) before changing a subsystem.
