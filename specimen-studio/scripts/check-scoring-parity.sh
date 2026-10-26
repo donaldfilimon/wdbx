@@ -4,7 +4,11 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 export RUSTUP_TOOLCHAIN=1.99.1
 export CARGO_NET_OFFLINE=true
-export DYLD_LIBRARY_PATH=/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib
+toolchain_lib="$(rustc --print sysroot)/lib"
+export DYLD_LIBRARY_PATH="$toolchain_lib${DYLD_LIBRARY_PATH:+:$DYLD_LIBRARY_PATH}"
+toolchain_host="$(rustc -vV | sed -n 's/^host: //p')"
+objcopy="$toolchain_lib/rustlib/$toolchain_host/bin/rust-objcopy"
+case "$toolchain_host" in *windows*) objcopy="$objcopy.exe" ;; esac
 for tool in cargo rustc bun shasum mktemp cp python3 rg; do
   command -v "$tool" >/dev/null || { echo "missing required tool: $tool" >&2; exit 1; }
 done
@@ -19,16 +23,20 @@ echo "PATH=$PATH"
 echo "RUSTUP_TOOLCHAIN=$RUSTUP_TOOLCHAIN CARGO_NET_OFFLINE=$CARGO_NET_OFFLINE"
 echo "DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH"
 printf '%s\n' "PATH=$PATH" "RUSTUP_TOOLCHAIN=$RUSTUP_TOOLCHAIN" "CARGO_NET_OFFLINE=$CARGO_NET_OFFLINE" "DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH" > "$artifacts/environment.txt"
-"$(rustc --print sysroot)/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy" --version > "$artifacts/objcopy-load.log"
+"$objcopy" --version > "$artifacts/objcopy-load.log"
 cat "$artifacts/objcopy-load.log"
-shasum -a 256 "$DYLD_LIBRARY_PATH/libLLVM.dylib" > "$artifacts/loader-library.sha256"
+if [[ "$toolchain_host" == *apple-darwin ]]; then
+  shasum -a 256 "$toolchain_lib/libLLVM.dylib" > "$artifacts/loader-library.sha256"
+else
+  echo "Darwin loader evidence not applicable: $toolchain_host" > "$artifacts/loader-library.sha256"
+fi
 echo "cargo=$(command -v cargo)"
 cargo --version
 echo "rustc=$(command -v rustc)"
 rustc -vV
 echo "bun=$(command -v bun)"
 bun --version
-shasum -a 256 "$(command -v cargo)" "$(command -v rustc)" "$(command -v bun)" "$(command -v python3)" "$(rustc --print sysroot)/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy" > "$artifacts/tools.sha256"
+shasum -a 256 "$(command -v cargo)" "$(command -v rustc)" "$(command -v bun)" "$(command -v python3)" "$objcopy" > "$artifacts/tools.sha256"
 cat "$artifacts/tools.sha256"
 rg --files native/specimen-kernel/src/identity native/specimen-kernel/src/language_v3 \
   native/specimen-kernel/src/text_v3 native/specimen-kernel/src/scanner_v3 \
