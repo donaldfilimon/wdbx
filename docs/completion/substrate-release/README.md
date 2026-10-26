@@ -77,3 +77,28 @@ missing protocols, path escapes, symlink components and oversized reads refuse.
 All paths below the caller's trusted checkout root are bounded regular files;
 the checker is a local document validator, not a hostile concurrent filesystem
 service and makes no race-free adversarial path-resolution claim.
+
+## Live drift diagnostics
+
+Run `python3 tools/check_substrate_release.py --drift-report` for JSON diagnostics
+on stdout. This live mode is mutually exclusive with `--snapshot-only`; it keeps
+exit status 1 for drift or invalid contracts and omits the normal success sentence.
+The version-1 report contains `mode`, `valid`, `complete`, `errors` and
+`drifted_paths`. Each drifted path appears once with `expected_sha256`,
+`actual_sha256`, affected `declaration_ids` and `source_ids`, and `read_error`.
+Missing, unreadable, oversized and symlink-refused files have a null actual hash
+and an explicit read error. Unique live paths are read once per validation.
+Conflicting expected hashes refuse. Unpinned or malformed catalogs yield an
+incomplete invalid report; an empty path list in such a report proves nothing
+about live identity. `complete` means validation reached its end, not acceptance
+or qualification; inspect `valid`, `errors` and the exit status together.
+
+At the 2026-10-26 continuation, live validation refuses 39 declaration rows grouped
+under `crates/abi-wdbx/src/lib.rs` (38 module rows) and
+`crates/abi-wdbx/src/v2.rs` (one format row). The changed source introduces the
+`model` declaration and `read_v2_root` in addition to byte drift. Resolving this
+requires independently reviewed source/version and declaration-inventory
+migration, not a blanket refresh of two hashes. Diagnostics never modify pins,
+contracts or source snapshots and do not approve that migration. Isolated tests
+materialize synthetic live declarations and mock only their temporary catalog
+pin; the real immutable-pin and promotion-refusal tests remain enforced.

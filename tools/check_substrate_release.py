@@ -64,8 +64,25 @@ def load_json(data):
     return json.loads(data, object_pairs_hook=unique_object)
 
 
-def validate(root, live=True):
+def validate(root, live=True, report=None):
     errors = []
+    drifted = []
+    complete = False
+    live_cache = {}
+
+    def finish():
+        if report is not None:
+            report.update(version=1, mode='live' if live else 'snapshot-only',
+                          valid=not errors, complete=complete, errors=errors,
+                          drifted_paths=drifted)
+        return errors
+
+    def live_identity(path, expected_hash, message):
+        actual, read_error = live_cache[path]
+        if read_error:
+            errors.append(message + ': ' + read_error)
+        elif actual != expected_hash:
+            errors.append(message)
 
     def check(condition, message):
         if not condition:
@@ -80,7 +97,34 @@ def validate(root, live=True):
     try:
         raw = artifact('catalog-v1.json')
         check(digest(raw) == CATALOG_PIN, 'catalog changed; independently reviewed version/pin migration required')
+        if digest(raw) != CATALOG_PIN:
+            return finish()
         catalog = load_json(raw)
+        if live:
+            identities = {}
+            def identity(path, expected_hash, rid, kind):
+                if not isinstance(expected_hash, str) or not re.fullmatch('[0-9a-f]{64}', expected_hash):
+                    raise ValueError('invalid live source hash: ' + str(rid))
+                entry = identities.setdefault(path, dict(path=path, expected_sha256=expected_hash,
+                    actual_sha256=None, declaration_ids=[], source_ids=[], read_error=None))
+                if entry['expected_sha256'] != expected_hash:
+                    raise ValueError('conflicting expected hashes: ' + str(path))
+                entry[kind].append(rid)
+            for source in catalog['sources']:
+                if source['live_path']:
+                    identity(source['live_path'], source['sha256'], source['id'], 'source_ids')
+            for kind in ('modules', 'features', 'formats'):
+                for row in catalog[kind]:
+                    identity(row['path'], row['sha256'], row['id'], 'declaration_ids')
+            for path, entry in identities.items():
+                try:
+                    entry['actual_sha256'] = digest(read(root, path))
+                except (OSError, ValueError) as error:
+                    entry['read_error'] = str(error)
+                live_cache[path] = (entry['actual_sha256'], entry['read_error'])
+                if entry['read_error'] or entry['actual_sha256'] != entry['expected_sha256']:
+                    drifted.append(entry)
+
         check(type(catalog['version']) is int and catalog['version'] == 1, 'catalog version')
         source_lines = {}
         for source in catalog['sources']:
@@ -88,7 +132,7 @@ def validate(root, live=True):
             check(digest(data) == source['sha256'], source['id'] + ': altered source snapshot')
             source_lines[source['id']] = data.decode('utf-8').splitlines()
             if live and source['live_path']:
-                check(digest(read(root, source['live_path'])) == source['sha256'], source['id'] + ': live source drift')
+                live_identity(source['live_path'], source['sha256'], source['id'] + ': live source drift')
         expected = {r['id']: r for r in catalog['items']}
         check(len(expected) == len(catalog['items']), 'duplicate catalog IDs')
         historical = load_json(artifact('sources/historical-requirements.json'))['requirements']
@@ -99,7 +143,7 @@ def validate(root, live=True):
             check(all(r['id'] not in expected for r in catalog[kind]), kind + ': declaration cannot be a behavior obligation')
             for row in catalog[kind]:
                 if live:
-                    check(digest(read(root, row['path'])) == row['sha256'], row['id'] + ': source identity drift')
+                    live_identity(row['path'], row['sha256'], row['id'] + ': source identity drift')
                 check(bool(re.fullmatch('[0-9a-f]{64}', row['sha256'])), row['id'] + ': source hash')
                 check(row['classification'] == 'declaration-coverage-only', row['id'] + ': invalid declaration classification')
                 check(all(link in expected and expected[link]['route'] == 'included' for link in row['behavior_links']), row['id'] + ': missing linked behavior')
@@ -158,17 +202,24 @@ def validate(root, live=True):
         for row in baseline['dirty_files'] + baseline['existing_receipts']:
             check(bool(re.fullmatch('[0-9a-f]{64}', row['sha256'])) and not row['path'].startswith('/') and '..' not in PurePosixPath(row['path']).parts, 'invalid baseline public identity')
         check(all(r['status'] == 'unavailable-original' and nonempty(r['impact']) for r in catalog['missing_sources']), 'missing original cannot become evidence')
+        complete = True
     except (OSError, ValueError, KeyError, TypeError, IndexError, AttributeError) as error:
         errors.append('invalid release contract: ' + str(error))
-    return errors
+    return finish()
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, default=Path(__file__).resolve().parents[1])
-    parser.add_argument('--snapshot-only', action='store_true', help='validate frozen contract only; do not qualify live source identities')
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument('--drift-report', action='store_true', help='emit live drift diagnostics as JSON; retain refusal exit status')
+    modes.add_argument('--snapshot-only', action='store_true', help='validate frozen contract only; do not qualify live source identities')
     args = parser.parse_args()
-    errors = validate(args.root, live=not args.snapshot_only)
+    report = {} if args.drift_report else None
+    errors = validate(args.root, live=not args.snapshot_only, report=report)
+    if args.drift_report:
+        print(json.dumps(report, indent=2))
+        return 1 if errors else 0
     if errors:
         for error in errors:
             print('FAIL: ' + error, file=sys.stderr)
