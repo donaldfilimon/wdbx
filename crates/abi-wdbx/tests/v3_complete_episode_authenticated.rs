@@ -74,10 +74,25 @@ fn authentication_checks_historical_keys_after_rotation() {
         PrototypeLedger::open_authenticated(directory.path(), signer(2), &[new_key]),
         Err(CompleteEpisodeStoreError::Corrupt)
     ));
+    {
+        let mut ledger =
+            PrototypeLedger::open_authenticated(directory.path(), signer(2), &[old_key, new_key])
+                .unwrap();
+        assert_eq!(ledger.record_count(), 1);
+        let mut bytes = episode().canonical_bytes().to_vec();
+        let position = bytes
+            .windows(b"synthetic-node".len())
+            .position(|window| window == b"synthetic-node")
+            .unwrap();
+        bytes[position..position + b"synthetic-peer".len()].copy_from_slice(b"synthetic-peer");
+        ledger
+            .append(&PrototypeEpisode::from_canonical_bytes(&bytes).unwrap())
+            .unwrap();
+    }
     let ledger =
         PrototypeLedger::open_authenticated(directory.path(), signer(2), &[old_key, new_key])
             .unwrap();
-    assert_eq!(ledger.record_count(), 1);
+    assert_eq!(ledger.record_count(), 2);
 }
 
 #[test]
@@ -134,4 +149,56 @@ fn trusted_signature_corruption_and_key_substitution_are_refused() {
         ));
         assert_eq!(fs::read(&path).unwrap(), bytes.as_bytes());
     }
+}
+
+#[test]
+fn unsigned_history_is_refused_without_a_torn_tail() {
+    let directory = tempdir().unwrap();
+    let path;
+    {
+        let mut ledger = PrototypeLedger::open(directory.path()).unwrap();
+        ledger.append(&episode()).unwrap();
+        path = ledger.ledger_path();
+    }
+    let original = fs::read(&path).unwrap();
+    assert!(matches!(
+        PrototypeLedger::open_authenticated(
+            directory.path(),
+            signer(1),
+            &[signer(1).verifying_key()]
+        ),
+        Err(CompleteEpisodeStoreError::Corrupt)
+    ));
+    assert_eq!(fs::read(&path).unwrap(), original);
+}
+
+#[test]
+fn authenticated_prefix_allows_only_incomplete_tail_repair() {
+    let directory = tempdir().unwrap();
+    let key = signer(1).verifying_key();
+    let path;
+    {
+        let mut ledger =
+            PrototypeLedger::open_authenticated(directory.path(), signer(1), &[key]).unwrap();
+        ledger.append(&episode()).unwrap();
+        path = ledger.ledger_path();
+    }
+    let original = fs::read(&path).unwrap();
+    let mut torn = original.clone();
+    torn.extend_from_slice(b"{\"torn\":");
+    fs::write(&path, &torn).unwrap();
+    {
+        let ledger =
+            PrototypeLedger::open_authenticated(directory.path(), signer(1), &[key]).unwrap();
+        assert_eq!(ledger.record_count(), 1);
+        assert_eq!(fs::read(&path).unwrap(), original);
+    }
+    let mut malformed = original.clone();
+    malformed.extend_from_slice(b"{\"torn\":\n");
+    fs::write(&path, &malformed).unwrap();
+    assert!(matches!(
+        PrototypeLedger::open_authenticated(directory.path(), signer(1), &[key]),
+        Err(CompleteEpisodeStoreError::Corrupt)
+    ));
+    assert_eq!(fs::read(&path).unwrap(), malformed);
 }
