@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 # Explicit opt-in; every build stays in a retained temporary target directory.
 set -euo pipefail
+preservation_mode=current
+case "$#:$*" in
+  0:) ;;
+  1:--historical-preservation) preservation_mode=historical ;;
+  *) echo 'usage: check-language-parity.sh [--historical-preservation]' >&2; exit 2 ;;
+esac
 cd "$(dirname "$0")/.."
 export RUSTUP_TOOLCHAIN=1.99.1
 export CARGO_NET_OFFLINE=true
@@ -29,6 +35,11 @@ rg --files native/specimen-kernel/src/identity native/specimen-kernel/src/langua
   | sort | while IFS= read -r path; do shasum -a 256 "$path"; done > "$artifacts/source.sha256"
 shasum -a 256 Cargo.toml Cargo.lock native/specimen-wasm/Cargo.toml \
   scripts/check-language-parity.sh tests/language-parity.mjs >> "$artifacts/source.sha256"
+shasum -a 256 scripts/check_preservation.py scripts/tests/test_check_preservation.py \
+  ../docs/completion/execution/evidence/2026-10-26-studio-preservation-transition.json \
+  ../docs/completion/execution/evidence/2026-10-22-language/legacy-baseline.json \
+  ../docs/completion/execution/evidence/2026-10-23-scoring/preservation-baseline.json \
+  >> "$artifacts/source.sha256"
 cat "$artifacts/source.sha256"
 set -x
 cargo run --locked -p specimen-wasm --features language-probe --example language_probe \
@@ -64,22 +75,9 @@ rg -q 'ordered scanner component names/count' "$artifacts/negative-label.log"
 cat "$artifacts/negative-label.log"
 echo 'PASS: load-bearing corrupted label refused by same comparator with nonzero exit'
 
-python3 - <<'PY'
-import hashlib, json
-from pathlib import Path
-root = Path.cwd().parent
-baseline = json.loads((root / 'docs/completion/execution/evidence/2026-10-22-language/legacy-baseline.json').read_text())
-for row in baseline['files']:
-    data = (root / row['path']).read_bytes()
-    if row['path'] == 'specimen-studio/native/specimen-kernel/src/identity/mod.rs':
-        extension = b"    /// Borrow entries in insertion order in O(1), without copying any records.\n    /// Callers can reserve traversal/materialization work before inspecting them.\n    pub fn entries(&self) -> &[EntryRecord] {\n        &self.records.entries\n    }\n"
-        assert data.count(extension) == 1
-        data = data.replace(extension, b'', 1)
-    assert hashlib.sha256(data).hexdigest() == row['sha256'], row['path']
-print('PASS: 22 legacy hashes unchanged; one exact reviewed immutable accessor extension only; original 23-file baseline retained')
-PY
 shasum -a 256 "$artifacts/native.json" "$artifacts/default.wasm" "$artifacts/language.wasm" \
   "$artifacts/wasm.json" "$artifacts/corrupt-digest.json" "$artifacts/negative.log" \
   "$artifacts/corrupt-digest.json.label.json" "$artifacts/negative-label.log" > "$artifacts/artifacts.sha256"
 cat "$artifacts/artifacts.sha256"
+python3 scripts/check_preservation.py --profile language --mode "$preservation_mode"
 echo 'Evidence limit: synthetic pure API execution only; default WASM compiled/export-inspected, not instantiated; no production cutover, efficacy, effect hosting, migration, scheduling or target qualification.'

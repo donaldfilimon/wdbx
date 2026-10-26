@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 # Explicit opt-in, cached dependencies only; all build artifacts are retained.
 set -euo pipefail
+preservation_mode=current
+case "$#:$*" in
+  0:) ;;
+  1:--historical-preservation) preservation_mode=historical ;;
+  *) echo 'usage: check-scoring-parity.sh [--historical-preservation]' >&2; exit 2 ;;
+esac
 cd "$(dirname "$0")/.."
 export RUSTUP_TOOLCHAIN=1.99.1
 export CARGO_NET_OFFLINE=true
@@ -45,6 +51,11 @@ rg --files native/specimen-kernel/src/identity native/specimen-kernel/src/langua
   | sort | while IFS= read -r path; do shasum -a 256 "$path"; done > "$artifacts/source.sha256"
 shasum -a 256 Cargo.toml Cargo.lock native/specimen-wasm/Cargo.toml native/specimen-kernel/src/logical_charge_v1.rs native/specimen-kernel/src/lib.rs \
   scripts/check-scoring-parity.sh tests/scoring-parity.mjs >> "$artifacts/source.sha256"
+shasum -a 256 scripts/check_preservation.py scripts/tests/test_check_preservation.py \
+  ../docs/completion/execution/evidence/2026-10-26-studio-preservation-transition.json \
+  ../docs/completion/execution/evidence/2026-10-22-language/legacy-baseline.json \
+  ../docs/completion/execution/evidence/2026-10-23-scoring/preservation-baseline.json \
+  >> "$artifacts/source.sha256"
 cat "$artifacts/source.sha256"
 set -x
 cargo run --offline --locked -p specimen-wasm --features scoring-probe --example scoring_probe \
@@ -75,16 +86,6 @@ for kind in arithmetic quarantine boundary; do
   fi
   cat "$artifacts/negative-$kind.log"
 done
-python3 - <<'PY'
-import hashlib, json
-from pathlib import Path
-root = Path.cwd().parent
-baseline = json.loads((root / 'docs/completion/execution/evidence/2026-10-23-scoring/preservation-baseline.json').read_text())
-assert len(baseline['files']) == 80
-for row in baseline['files']:
-    assert hashlib.sha256((root / row['path']).read_bytes()).hexdigest() == row['sha256'], row['path']
-print('PASS: all 80 preservation-baseline source hashes unchanged')
-PY
 shasum -a 256 "$artifacts/native.json" "$artifacts/wasm.json" \
   "$artifacts/native.json.semantic.json" "$artifacts/wasm.json.semantic.json" \
   "$artifacts/default.wasm" "$artifacts/scoring.wasm" \
@@ -94,4 +95,5 @@ shasum -a 256 "$artifacts/native.json" "$artifacts/wasm.json" \
   "$artifacts/environment.txt" "$artifacts/objcopy-load.log" "$artifacts/loader-library.sha256" \
   > "$artifacts/artifacts.sha256"
 cat "$artifacts/artifacts.sha256"
+python3 scripts/check_preservation.py --profile scoring --mode "$preservation_mode"
 echo 'Evidence limit: finite synthetic pure mechanisms; default WASM compile/export inspection only; feature WASM executed with throwing imports and zero actual host calls. No physical concurrency, host fencing, efficacy, installed execution, ABI acceptance or production cutover claim; every requirement remains open/C0/unknown.'
