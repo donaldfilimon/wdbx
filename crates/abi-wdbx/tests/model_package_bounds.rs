@@ -316,7 +316,7 @@ fn concurrent_in_place_source_rewrite_is_not_certified_by_a_stable_descriptor() 
         path: std::path::PathBuf,
         after: Vec<u8>,
         first: bool,
-    };
+    }
     impl Read for Rewrite {
         fn read(&mut self, out: &mut [u8]) -> io::Result<usize> {
             let n = self.file.read(out)?;
@@ -367,4 +367,52 @@ fn known_schema_and_cross_link_failures_keep_bounded_component_context() {
                 .is_some_and(|offset| offset <= raw.len() as u64)
         );
     }
+}
+#[test]
+fn writer_rejects_retained_capacity_peak_before_output_allocation() {
+    use abi_wdbx::model::{contract::tensors::TensorValues, package::build_package};
+    let mut c = load(&fixture("inference")).unwrap().components().clone();
+    if let TensorValues::F32(values) = &mut c.tensors[0].data {
+        values.reserve_exact(1_000_000);
+        assert!(values.capacity() >= 1_000_000);
+    }
+    let limits = LoadLimits {
+        loading_bytes: LOADING_OVERHEAD_BYTES + 1024 * 1024,
+        ..LoadLimits::default()
+    };
+    let error =
+        build_package(c, &[], limits).expect_err("excessive retained capacity was accepted");
+    assert_eq!(error.kind, E::CapacityExceeded);
+    assert_eq!(error.field, "writer-peak-budget");
+}
+#[test]
+fn writer_accounts_for_spare_string_and_annotation_capacity() {
+    use abi_wdbx::model::{
+        contract::Version,
+        package::{Annotation, build_package},
+    };
+    let limits = LoadLimits {
+        loading_bytes: LOADING_OVERHEAD_BYTES + 1024 * 1024,
+        ..LoadLimits::default()
+    };
+    let mut c = load(&fixture("inference")).unwrap().components().clone();
+    c.provenance.source_cohorts[0]
+        .revision
+        .reserve_exact(2 * 1024 * 1024);
+    let error =
+        build_package(c, &[], limits).expect_err("excessive retained capacity was accepted");
+    assert_eq!(error.kind, E::CapacityExceeded);
+    assert_eq!(error.field, "writer-peak-budget");
+    let c = load(&fixture("inference")).unwrap().components().clone();
+    let mut payload = Vec::with_capacity(2 * 1024 * 1024);
+    payload.push(1);
+    let annotation = Annotation {
+        kind: 99,
+        version: Version { major: 1, minor: 0 },
+        bytes: payload,
+    };
+    let error = build_package(c, &[annotation], limits)
+        .expect_err("excessive retained capacity was accepted");
+    assert_eq!(error.kind, E::CapacityExceeded);
+    assert_eq!(error.field, "writer-peak-budget");
 }

@@ -39,3 +39,16 @@ before writes. This is neither a generation-head journal nor a supported-platfor
 qualification. Incomplete task-created files remain for explicit retention;
 unknown leftovers are never removed. Every future load still captures and
 validates bytes rather than trusting a stable path or descriptor.
+
+Writer preflight rejects contradictory raw tensor dtype/storage, rank/axes,
+shape/byte length and separate moment-vector lengths before serialization. A
+nonallocating counting pass checks wire and metadata sizes. Peak admission counts
+all consumed record Vec/String capacities and accessible annotation payload
+capacities, plus the one exact output and fixed overhead, for both serialization
+and independent decoding. No directory Vec or growing output buffer is used;
+borrowed annotations remain charged during decoding. Unrelated caller allocations
+outside the supplied values/slice are outside this per-call budget.
+
+Idempotent staging verifies and syncs the same existing file handle, then syncs
+the directory. Both an already-present object and a no-clobber collision require
+this data sync; a sync failure returns an error rather than a durable receipt.

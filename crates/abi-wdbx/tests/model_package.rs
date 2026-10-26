@@ -29,7 +29,7 @@ fn frozen_independent_corpus_has_exact_validation_results_and_identities() {
             .and_then(|f| validate_model(f, LoadLimits::default()));
         if row["expected"] == "ValidatedModelState" {
             let state = result.unwrap_or_else(|e| panic!("{name}: {e}"));
-            let h = |b: &[u8]| b.iter().map(|b| format!("{b:02x}")).collect::<String>();
+            let h = |b: &[u8]| support::hex(b);
             assert_eq!(h(&state.state_root().0), row["state_root"], "{name}");
             assert_eq!(h(&state.generation_id().0), row["generation_id"], "{name}");
             assert_eq!(
@@ -67,7 +67,9 @@ fn real_writer_matches_independent_bytes_including_signed_zero_and_unknown_annot
             .map(|e| Annotation {
                 kind: e.kind,
                 version: e.version,
-                bytes: raw[e.offset as usize..(e.offset + e.length) as usize].to_vec(),
+                bytes: raw[usize::try_from(e.offset).unwrap()
+                    ..usize::try_from(e.offset + e.length).unwrap()]
+                    .to_vec(),
             })
             .collect::<Vec<_>>();
         let out = build_package(
@@ -189,6 +191,8 @@ fn existing_object_verification_observes_cancellation_before_its_read() {
 #[cfg(unix)]
 #[test]
 fn concurrent_stagers_resolve_one_object_and_symlinks_cannot_supply_it() {
+    use std::os::unix::fs::{PermissionsExt, symlink};
+
     use abi_wdbx::model::package::import_staged;
     let directory = support::temporary();
     let model = support::load(&fixture("inference")).unwrap();
@@ -203,7 +207,6 @@ fn concurrent_stagers_resolve_one_object_and_symlinks_cannot_supply_it() {
     });
     assert_eq!(results.iter().filter(|r| r.created).count(), 1);
     assert_eq!(fs::read_dir(&directory).unwrap().count(), 1);
-    use std::os::unix::fs::{PermissionsExt, symlink};
     assert_eq!(
         fs::metadata(&results[0].path).unwrap().permissions().mode() & 0o777,
         0o600
@@ -222,13 +225,162 @@ fn legacy_authenticated_object_reader_does_not_reinterpret_model_bytes() {
 }
 #[test]
 fn independently_decoded_writer_handles_a_different_shape_and_trained_tokenizer() {
+    use abi_wdbx::model::package::build_package;
+    let c = different_shape_records();
+    let result = build_package(c, &[], LoadLimits::default()).unwrap();
+    let directory = support::temporary();
+    let path = directory.join("diagnostic.hex");
+    let bytes = result.framed().snapshot().as_bytes();
+    fs::write(&path, support::hex(bytes)).unwrap();
+    let python = std::env::var_os("WDBX_PYTHON").unwrap_or_else(|| "python3".into());
+    let output = std::process::Command::new(python)
+        .arg(PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../tools/wdbx_model_reference.py"))
+        .arg("validate")
+        .arg(path)
+        .output()
+        .expect("Python witness is required");
+    assert!(
+        output.status.success(),
+        "{}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    let checked: serde_json::Value = serde_json::from_slice(&output.stdout).unwrap();
+    let hex = |b: &[u8]| support::hex(b);
+    assert_eq!(checked["state_root"], hex(&result.state_root().0));
+    assert_eq!(checked["generation_id"], hex(&result.generation_id().0));
+    assert_eq!(
+        checked["package_digest"],
+        hex(&result.framed().package_digest().0)
+    );
+    fs::remove_dir_all(directory).unwrap();
+}
+#[test]
+fn coordinate_signed_zero_reexports_with_exact_binary64_bits() {
+    use abi_wdbx::model::{contract::tensors::TensorValues, package::build_package};
+    let raw = fixture("inference");
+    let mut tensor = support::component(&raw, 3).to_vec();
+    // Independent N01 worksheet: tensor2's first F64 is at component-relative120.
+    tensor[120..128].copy_from_slice(&0x8000_0000_0000_0000u64.to_le_bytes());
+    let raw = support::replace(&raw, 3, &tensor);
+    let state = support::load(&raw).unwrap();
+    if let TensorValues::F64(values) = &state.components().tensors[1].data {
+        assert_eq!(values[0].to_bits(), 0x8000_0000_0000_0000);
+    } else {
+        panic!("coordinate dtype");
+    }
+    let output = build_package(state.components().clone(), &[], LoadLimits::default()).unwrap();
+    assert_eq!(output.framed().snapshot().as_bytes(), raw);
+}
+#[test]
+fn partial_export_io_failure_is_not_reported_as_a_complete_artifact() {
+    struct Broken {
+        bytes: Vec<u8>,
+    }
+    impl std::io::Write for Broken {
+        fn write(&mut self, input: &[u8]) -> std::io::Result<usize> {
+            if self.bytes.is_empty() {
+                self.bytes.extend_from_slice(&input[..3]);
+                Ok(3)
+            } else {
+                Err(std::io::ErrorKind::BrokenPipe.into())
+            }
+        }
+        fn flush(&mut self) -> std::io::Result<()> {
+            panic!("failed export must not flush or succeed")
+        }
+    }
+    let state = support::load(&fixture("inference")).unwrap();
+    let mut output = Broken { bytes: Vec::new() };
+    let error = export_exact(&state, &mut output, || false).unwrap_err();
+    assert_eq!(error.kind, abi_wdbx::model::error::ErrorKind::Io);
+    assert_eq!(output.bytes, &fixture("inference")[..3]);
+}
+#[cfg(unix)]
+#[test]
+fn public_destination_directory_is_refused_before_any_artifact_write() {
+    use abi_wdbx::model::package::import_staged;
+    use std::os::unix::fs::PermissionsExt;
+    let directory = support::temporary();
+    fs::set_permissions(&directory, fs::Permissions::from_mode(0o755)).unwrap();
+    let model = support::load(&fixture("inference")).unwrap();
+    let error = import_staged(&model, &directory, || false).unwrap_err();
+    assert_eq!(error.field, "private-staging-directory");
+    assert_eq!(fs::read_dir(&directory).unwrap().count(), 0);
+    fs::remove_dir_all(directory).unwrap();
+}
+#[test]
+fn writer_refuses_dtype_variant_alias() {
+    use abi_wdbx::model::{
+        contract::tensors::TensorValues, error::ErrorKind, package::build_package,
+    };
+    let mut c = support::load(&fixture("inference"))
+        .unwrap()
+        .components()
+        .clone();
+    c.tensors[0].data = TensorValues::F64(vec![1.0; 3]);
+    assert_eq!(
+        build_package(c, &[], LoadLimits::default())
+            .expect_err("inconsistent raw record was accepted")
+            .kind,
+        ErrorKind::InvalidTensor
+    );
+}
+#[test]
+fn writer_refuses_moment_length_redistribution() {
+    use abi_wdbx::model::{
+        contract::training::OptimizerState, error::ErrorKind, package::build_package,
+    };
+    let mut c = support::load(&fixture("resumable"))
+        .unwrap()
+        .components()
+        .clone();
+    if let OptimizerState::AdamW(o) = &mut c.optimizer {
+        let moved = o.moments[0].first_moment.pop().unwrap();
+        o.moments[0].second_moment.push(moved);
+    }
+    assert_eq!(
+        build_package(c, &[], LoadLimits::default())
+            .expect_err("inconsistent raw record was accepted")
+            .kind,
+        ErrorKind::InvalidOptimizer
+    );
+}
+#[test]
+fn writer_refuses_raw_rank_shape_and_declared_payload_length_disagreement() {
+    use abi_wdbx::model::{
+        contract::tensors::TensorValues, error::ErrorKind, package::build_package,
+    };
+    for case in 0..3 {
+        let mut c = support::load(&fixture("inference"))
+            .unwrap()
+            .components()
+            .clone();
+        match case {
+            0 => c.tensors[0].rank = 1,
+            1 => c.tensors[0].data_byte_length -= 4,
+            _ => {
+                if let TensorValues::F32(values) = &mut c.tensors[0].data {
+                    values.pop();
+                }
+            }
+        }
+        assert_eq!(
+            build_package(c, &[], LoadLimits::default())
+                .expect_err("inconsistent raw record was accepted")
+                .kind,
+            ErrorKind::InvalidTensor,
+            "case {case}"
+        );
+    }
+}
+
+fn different_shape_records() -> abi_wdbx::model::contract::ModelComponents {
     use abi_wdbx::model::{
         contract::{
             tensors::{Axis, AxisKind, Dtype, TENSOR_CATALOG, TensorValues},
             topology::{Edge, Node, NodeRole, Relation},
         },
         ids::{EdgeId, NodeId, RelationId},
-        package::build_package,
         tokenizer::{ByteBpe, TokenizerLimits},
     };
     let model = support::load(&fixture("inference")).unwrap();
@@ -303,88 +455,6 @@ fn independently_decoded_writer_handles_a_different_shape_and_trained_tokenizer(
             TensorValues::F64(vec![0.5; count])
         };
     }
-    let result = build_package(c, &[], LoadLimits::default()).unwrap();
-    let directory = support::temporary();
-    let path = directory.join("diagnostic.hex");
-    let bytes = result.framed().snapshot().as_bytes();
-    fs::write(
-        &path,
-        bytes.iter().map(|b| format!("{b:02x}")).collect::<String>(),
-    )
-    .unwrap();
-    let python = std::env::var_os("WDBX_PYTHON").unwrap_or_else(|| "python3".into());
-    let output = std::process::Command::new(python)
-        .arg(PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../tools/wdbx_model_reference.py"))
-        .arg("validate")
-        .arg(path)
-        .output()
-        .expect("Python witness is required");
-    assert!(
-        output.status.success(),
-        "{}",
-        String::from_utf8_lossy(&output.stderr)
-    );
-    let checked: serde_json::Value = serde_json::from_slice(&output.stdout).unwrap();
-    let hex = |b: &[u8]| b.iter().map(|b| format!("{b:02x}")).collect::<String>();
-    assert_eq!(checked["state_root"], hex(&result.state_root().0));
-    assert_eq!(checked["generation_id"], hex(&result.generation_id().0));
-    assert_eq!(
-        checked["package_digest"],
-        hex(&result.framed().package_digest().0)
-    );
-    fs::remove_dir_all(directory).unwrap();
-}
-#[test]
-fn coordinate_signed_zero_reexports_with_exact_binary64_bits() {
-    use abi_wdbx::model::{contract::tensors::TensorValues, package::build_package};
-    let raw = fixture("inference");
-    let mut tensor = support::component(&raw, 3).to_vec();
-    // Independent N01 worksheet: tensor2's first F64 is at component-relative120.
-    tensor[120..128].copy_from_slice(&0x8000_0000_0000_0000u64.to_le_bytes());
-    let raw = support::replace(&raw, 3, &tensor);
-    let state = support::load(&raw).unwrap();
-    if let TensorValues::F64(values) = &state.components().tensors[1].data {
-        assert_eq!(values[0].to_bits(), 0x8000_0000_0000_0000);
-    } else {
-        panic!("coordinate dtype");
-    }
-    let output = build_package(state.components().clone(), &[], LoadLimits::default()).unwrap();
-    assert_eq!(output.framed().snapshot().as_bytes(), raw);
-}
-#[test]
-fn partial_export_io_failure_is_not_reported_as_a_complete_artifact() {
-    struct Broken {
-        bytes: Vec<u8>,
-    }
-    impl std::io::Write for Broken {
-        fn write(&mut self, input: &[u8]) -> std::io::Result<usize> {
-            if self.bytes.is_empty() {
-                self.bytes.extend_from_slice(&input[..3]);
-                Ok(3)
-            } else {
-                Err(std::io::ErrorKind::BrokenPipe.into())
-            }
-        }
-        fn flush(&mut self) -> std::io::Result<()> {
-            panic!("failed export must not flush or succeed")
-        }
-    }
-    let state = support::load(&fixture("inference")).unwrap();
-    let mut output = Broken { bytes: Vec::new() };
-    let error = export_exact(&state, &mut output, || false).unwrap_err();
-    assert_eq!(error.kind, abi_wdbx::model::error::ErrorKind::Io);
-    assert_eq!(output.bytes, &fixture("inference")[..3]);
-}
-#[cfg(unix)]
-#[test]
-fn public_destination_directory_is_refused_before_any_artifact_write() {
-    use abi_wdbx::model::package::import_staged;
-    use std::os::unix::fs::PermissionsExt;
-    let directory = support::temporary();
-    fs::set_permissions(&directory, fs::Permissions::from_mode(0o755)).unwrap();
-    let model = support::load(&fixture("inference")).unwrap();
-    let error = import_staged(&model, &directory, || false).unwrap_err();
-    assert_eq!(error.field, "private-staging-directory");
-    assert_eq!(fs::read_dir(&directory).unwrap().count(), 0);
-    fs::remove_dir_all(directory).unwrap();
+
+    c
 }

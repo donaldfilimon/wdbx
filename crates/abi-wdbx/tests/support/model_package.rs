@@ -26,8 +26,8 @@ pub fn u64_at(b: &[u8], p: usize) -> u64 {
 }
 pub fn component(raw: &[u8], kind: usize) -> &[u8] {
     let p = 96 + (kind - 1) * 80;
-    let start = u64_at(raw, p + 16) as usize;
-    let len = u64_at(raw, p + 24) as usize;
+    let start = usize::try_from(u64_at(raw, p + 16)).unwrap();
+    let len = usize::try_from(u64_at(raw, p + 24)).unwrap();
     &raw[start..start + len]
 }
 // An independent wire worksheet for adversarial semantic changes. Rehashes bytes,
@@ -73,4 +73,13 @@ pub fn temporary() -> std::path::PathBuf {
         std::fs::set_permissions(&p, std::fs::Permissions::from_mode(0o700)).unwrap();
     }
     p
+}
+
+pub fn hex(bytes: &[u8]) -> String {
+    use std::fmt::Write as _;
+    let mut text = String::with_capacity(bytes.len() * 2);
+    for byte in bytes {
+        write!(&mut text, "{byte:02x}").unwrap();
+    }
+    text
 }

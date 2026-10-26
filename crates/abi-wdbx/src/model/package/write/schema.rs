@@ -132,12 +132,12 @@ fn tensors(c: &ModelComponents, e: &mut Encoder) -> Result<()> {
         match &t.data {
             TensorValues::F32(v) => {
                 for f in v {
-                    e.bytes(&f.to_le_bytes())?;
+                    e.numeric(&f.to_le_bytes())?;
                 }
             }
             TensorValues::F64(v) => {
                 for f in v {
-                    e.f64(*f)?;
+                    e.numeric(&f.to_le_bytes())?;
                 }
             }
         }
@@ -161,7 +161,7 @@ fn tokenizer(c: &ModelComponents, e: &mut Encoder) -> Result<()> {
     fields!(e, u32, t, minimum_pair_frequency, requested_vocab_size);
     e.count(t.vocabulary.len())?;
     for v in &t.vocabulary {
-        e.blob(v)?;
+        e.vocabulary_blob(v)?;
     }
     e.count(t.merges.len())?;
     for m in &t.merges {
@@ -212,10 +212,10 @@ fn optimizer(c: &ModelComponents, e: &mut Encoder) -> Result<()> {
             e.u16(m.tensor_id as u16)?;
             e.u64(m.scalar_count)?;
             for f in &m.first_moment {
-                e.f64(*f)?;
+                e.numeric(&f.to_le_bytes())?;
             }
             for f in &m.second_moment {
-                e.f64(*f)?;
+                e.numeric(&f.to_le_bytes())?;
             }
         }
     } else {

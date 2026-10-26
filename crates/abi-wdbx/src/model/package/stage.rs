@@ -26,6 +26,27 @@ pub fn import_staged(
     directory: &Path,
     mut cancel: impl FnMut() -> bool,
 ) -> Result<StagedObject> {
+    import_with_durability(model, directory, &mut cancel, &LocalDurability)
+}
+trait Durability {
+    fn sync_file(&self, file: &File) -> std::io::Result<()>;
+    fn sync_directory(&self, path: &Path) -> std::io::Result<()>;
+}
+struct LocalDurability;
+impl Durability for LocalDurability {
+    fn sync_file(&self, file: &File) -> std::io::Result<()> {
+        file.sync_all()
+    }
+    fn sync_directory(&self, path: &Path) -> std::io::Result<()> {
+        File::open(path)?.sync_all()
+    }
+}
+fn import_with_durability(
+    model: &ValidatedModelState,
+    directory: &Path,
+    mut cancel: impl FnMut() -> bool,
+    durability: &impl Durability,
+) -> Result<StagedObject> {
     cancelled(&mut cancel)?;
     platform_directory(directory)?;
     let mut name = String::new();
@@ -36,8 +57,10 @@ pub fn import_staged(
     }
     let path = directory.join(format!("{name}.wdbx"));
     if fs::symlink_metadata(&path).is_ok() {
-        verify_existing(model, &path, &mut cancel)?;
-        sync_directory(directory)?;
+        verify_existing(model, &path, &mut cancel, durability)?;
+        durability
+            .sync_directory(directory)
+            .map_err(|_| err(E::Io, "staging-directory-sync"))?;
         return Ok(StagedObject {
             path,
             created: false,
@@ -57,27 +80,33 @@ pub fn import_staged(
         .open(&temporary)
         .map_err(|_| err(E::Io, "staging-create-new"))?;
     export_exact(model, &mut file, &mut cancel)?;
-    file.sync_all()
+    durability
+        .sync_file(&file)
         .map_err(|_| err(E::Io, "staging-file-sync"))?;
     cancelled(&mut cancel)?;
     let created = match fs::hard_link(&temporary, &path) {
         Ok(()) => true,
         Err(error) if error.kind() == std::io::ErrorKind::AlreadyExists => {
-            verify_existing(model, &path, &mut cancel)?;
+            verify_existing(model, &path, &mut cancel, durability)?;
             false
         }
         Err(_) => return Err(err(E::Io, "staging-no-clobber-link")),
     };
-    sync_directory(directory)?;
+    durability
+        .sync_directory(directory)
+        .map_err(|_| err(E::Io, "staging-directory-sync"))?;
     // Remove only this call's uniquely created, fully synced temporary name.
     fs::remove_file(&temporary).map_err(|_| err(E::Io, "staging-temporary-unlink"))?;
-    sync_directory(directory)?;
+    durability
+        .sync_directory(directory)
+        .map_err(|_| err(E::Io, "staging-directory-sync"))?;
     Ok(StagedObject { path, created })
 }
 fn verify_existing(
     model: &ValidatedModelState,
     path: &Path,
     cancel: &mut impl FnMut() -> bool,
+    durability: &impl Durability,
 ) -> Result<()> {
     use sha2::{Digest as _, Sha256};
     use std::io::Read;
@@ -111,7 +140,11 @@ fn verify_existing(
         n == 0 && digest == model.framed().package_digest().0,
         E::IntegrityMismatch,
         "existing-object-digest",
-    )
+    )?;
+    cancelled(cancel)?;
+    durability
+        .sync_file(&file)
+        .map_err(|_| err(E::Io, "existing-file-sync"))
 }
 #[cfg(unix)]
 fn platform_directory(path: &Path) -> Result<()> {
@@ -136,8 +169,5 @@ fn private_options(options: &mut OpenOptions) {
 }
 #[cfg(not(unix))]
 fn private_options(_: &mut OpenOptions) {}
-fn sync_directory(path: &Path) -> Result<()> {
-    File::open(path)
-        .and_then(|f| f.sync_all())
-        .map_err(|_| err(E::Io, "staging-directory-sync"))
-}
+#[cfg(all(test, unix))]
+mod tests;

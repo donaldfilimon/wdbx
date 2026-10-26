@@ -4,9 +4,10 @@ use crate::model::{
     PackageBytes, ValidatedModelState,
     contract::{ModelComponents, Version},
     error::ErrorKind as E,
-    limits::{LOADING_OVERHEAD_BYTES, LoadLimits},
+    limits::LoadLimits,
 };
 use std::io::Write;
+mod preflight;
 mod schema;
 /// Optional annotation is opaque and computationally inert.
 #[derive(Debug)]
@@ -25,6 +26,21 @@ pub fn build_package(
     annotations: &[Annotation],
     limits: LoadLimits,
 ) -> Result<ValidatedModelState> {
+    build_with_reservation(components, annotations, limits, |bytes| {
+        let mut out = Vec::new();
+        out.try_reserve_exact(bytes)
+            .map_err(|_| err(E::CapacityExceeded, "writer-allocation"))?;
+        Ok(out)
+    })
+}
+// Keep fallible output reservation behind completed preflight. This boundary also
+// allows a memory owner to provide an already reserved buffer without a copy.
+fn build_with_reservation(
+    components: ModelComponents,
+    annotations: &[Annotation],
+    limits: LoadLimits,
+    reserve: impl FnOnce(usize) -> Result<Vec<u8>>,
+) -> Result<ValidatedModelState> {
     let limits = limits.effective();
     require(
         annotations.len() <= 24,
@@ -39,49 +55,56 @@ pub fn build_package(
         E::NonCanonical,
         "annotation-order",
     )?;
+    let plan = preflight::calculate(&components, annotations, limits)?;
     let count = 8 + annotations.len();
     let directory_end = 96 + 80 * count;
+    let out = reserve(plan.output_len)?;
+    require(
+        out.is_empty(),
+        E::NonCanonical,
+        "writer-reserved-buffer-not-empty",
+    )?;
+    let extra = out
+        .capacity()
+        .checked_sub(plan.output_len)
+        .ok_or_else(|| err(E::CapacityExceeded, "writer-allocation-capacity"))?;
+    require(
+        plan.peak
+            .checked_add(extra as u64)
+            .is_some_and(|peak| peak <= limits.loading_bytes),
+        E::CapacityExceeded,
+        "writer-peak-budget",
+    )?;
     let mut e = Encoder {
-        out: Vec::new(),
-        limit: super::size(
-            limits
-                .artifact_bytes
-                .min(limits.loading_bytes.saturating_sub(LOADING_OVERHEAD_BYTES)),
-        )?,
+        out,
+        limit: plan.output_len,
+        measured: None,
+        metadata: 0,
+        metadata_limit: limits.metadata_bytes,
     };
     e.zeroes(directory_end)?;
-    let mut entries: Vec<(u32, Version, u32, usize, usize)> = Vec::new();
-    entries
-        .try_reserve_exact(count)
-        .map_err(|_| err(E::CapacityExceeded, "writer-directory"))?;
     for kind in 1..=8 {
         let start = e.out.len();
         schema::component(kind, &components, &mut e)?;
-        entries.push((
+        e.entry(
+            (kind - 1) as usize,
             kind,
             Version { major: 1, minor: 0 },
             1,
             start,
-            e.out.len() - start,
-        ));
+        )?;
     }
-    for a in annotations {
+    for (i, a) in annotations.iter().enumerate() {
         let start = e.out.len();
         e.bytes(&a.bytes)?;
-        entries.push((a.kind, a.version, 0, start, e.out.len() - start));
+        e.entry(i + 8, a.kind, a.version, 0, start)?;
     }
     drop(components);
-    for (i, (kind, version, flags, offset, length)) in entries.into_iter().enumerate() {
-        let digest = sha(&e.out[offset..offset + length]);
-        let entry = &mut e.out[96 + i * 80..96 + (i + 1) * 80];
-        entry[..4].copy_from_slice(&kind.to_le_bytes());
-        entry[4..6].copy_from_slice(&version.major.to_le_bytes());
-        entry[6..8].copy_from_slice(&version.minor.to_le_bytes());
-        entry[8..12].copy_from_slice(&flags.to_le_bytes());
-        entry[16..24].copy_from_slice(&(offset as u64).to_le_bytes());
-        entry[24..32].copy_from_slice(&(length as u64).to_le_bytes());
-        entry[32..64].copy_from_slice(&digest);
-    }
+    require(
+        e.out.len() == plan.output_len,
+        E::NonCanonical,
+        "writer-measured-size",
+    )?;
     let digest = sha(&e.out[96..directory_end]);
     let total = e.out.len() as u64;
     let header = &mut e.out[..96];
@@ -95,9 +118,15 @@ pub fn build_package(
             .to_le_bytes(),
     );
     header[32..64].copy_from_slice(&digest);
+    // Borrowed annotation buffers remain live during independent decoding.
+    let mut decoder_limits = limits;
+    decoder_limits.loading_bytes = limits
+        .loading_bytes
+        .checked_sub(plan.borrowed_annotations)
+        .ok_or_else(|| err(E::CapacityExceeded, "writer-peak-budget"))?;
     validate_model(
-        validate_framing(PackageBytes { bytes: e.out }, limits)?,
-        limits,
+        validate_framing(PackageBytes { bytes: e.out }, decoder_limits)?,
+        decoder_limits,
     )
 }
 /// Re-export exactly the captured artifact, preserving signed zeros and annotations.
@@ -123,32 +152,93 @@ pub fn export_exact(
 pub(super) struct Encoder {
     out: Vec<u8>,
     limit: usize,
+    measured: Option<usize>,
+    metadata: u64,
+    metadata_limit: u64,
 }
 impl Encoder {
-    fn reserve(&mut self, n: usize) -> Result<()> {
+    fn measure(limits: LoadLimits) -> Result<Self> {
+        Ok(Self {
+            out: Vec::new(),
+            limit: super::size(limits.artifact_bytes)?,
+            measured: Some(0),
+            metadata: 0,
+            metadata_limit: limits.metadata_bytes,
+        })
+    }
+    fn len(&self) -> usize {
+        self.measured.unwrap_or(self.out.len())
+    }
+    fn reserve(&self, n: usize) -> Result<()> {
         let end = self
-            .out
             .len()
             .checked_add(n)
             .ok_or_else(|| err(E::CapacityExceeded, "writer-size"))?;
         require(end <= self.limit, E::CapacityExceeded, "writer-size")?;
-        if end > self.out.capacity() {
-            let capacity = end.saturating_add(65535) / 65536 * 65536;
-            let target = capacity.min(self.limit).max(end);
-            self.out
-                .try_reserve_exact(target - self.out.len())
-                .map_err(|_| err(E::CapacityExceeded, "writer-allocation"))?;
+        if self.measured.is_none() {
+            require(
+                end <= self.out.capacity(),
+                E::CapacityExceeded,
+                "writer-unplanned-growth",
+            )?;
+        }
+        Ok(())
+    }
+    fn raw(&mut self, b: &[u8]) -> Result<()> {
+        self.reserve(b.len())?;
+        if let Some(n) = &mut self.measured {
+            *n += b.len();
+        } else {
+            self.out.extend_from_slice(b);
         }
         Ok(())
     }
     fn bytes(&mut self, b: &[u8]) -> Result<()> {
-        self.reserve(b.len())?;
-        self.out.extend_from_slice(b);
-        Ok(())
+        self.metadata = self
+            .metadata
+            .checked_add(b.len() as u64)
+            .ok_or_else(|| err(E::CapacityExceeded, "writer-metadata-sum"))?;
+        require(
+            self.metadata <= self.metadata_limit,
+            E::CapacityExceeded,
+            "writer-metadata-budget",
+        )?;
+        self.raw(b)
+    }
+    fn numeric(&mut self, b: &[u8]) -> Result<()> {
+        self.raw(b)
     }
     fn zeroes(&mut self, n: usize) -> Result<()> {
         self.reserve(n)?;
-        self.out.resize(self.out.len() + n, 0);
+        if let Some(count) = &mut self.measured {
+            *count += n;
+        } else {
+            self.out.resize(self.out.len() + n, 0);
+        }
+        Ok(())
+    }
+    fn entry(
+        &mut self,
+        index: usize,
+        kind: u32,
+        version: Version,
+        flags: u32,
+        offset: usize,
+    ) -> Result<()> {
+        let length = self
+            .out
+            .len()
+            .checked_sub(offset)
+            .ok_or_else(|| err(E::NonCanonical, "writer-offset"))?;
+        let digest = sha(&self.out[offset..]);
+        let entry = &mut self.out[96 + index * 80..96 + (index + 1) * 80];
+        entry[..4].copy_from_slice(&kind.to_le_bytes());
+        entry[4..6].copy_from_slice(&version.major.to_le_bytes());
+        entry[6..8].copy_from_slice(&version.minor.to_le_bytes());
+        entry[8..12].copy_from_slice(&flags.to_le_bytes());
+        entry[16..24].copy_from_slice(&(offset as u64).to_le_bytes());
+        entry[24..32].copy_from_slice(&(length as u64).to_le_bytes());
+        entry[32..64].copy_from_slice(&digest);
         Ok(())
     }
     fn u8(&mut self, v: u8) -> Result<()> {
@@ -173,6 +263,10 @@ impl Encoder {
         self.count(b.len())?;
         self.bytes(b)
     }
+    fn vocabulary_blob(&mut self, b: &[u8]) -> Result<()> {
+        self.count(b.len())?;
+        self.numeric(b)
+    }
     fn string(&mut self, s: &str) -> Result<()> {
         self.blob(s.as_bytes())
     }
@@ -185,3 +279,5 @@ impl Encoder {
         }
     }
 }
+#[cfg(test)]
+mod tests;

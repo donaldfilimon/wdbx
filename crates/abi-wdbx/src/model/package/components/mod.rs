@@ -23,6 +23,7 @@ use sha2::{Digest as _, Sha256};
 pub fn validate_model(framed: FramedPackage, limits: LoadLimits) -> Result<ValidatedModelState> {
     let limits = limits.effective();
     let mut budget = Budget::new(framed.snapshot().as_bytes().len() as u64, limits)?;
+    budget.allocate((framed.snapshot.bytes.capacity() - framed.snapshot.bytes.len()) as u64)?;
     macro_rules! parse {
         ($kind:literal,$parser:ident) => {{
             let e = &framed.directory()[($kind - 1) as usize];

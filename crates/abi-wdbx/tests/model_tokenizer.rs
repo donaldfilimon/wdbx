@@ -38,7 +38,7 @@ fn ties_overlaps_and_document_boundaries_have_literal_ids() {
         ),
         (101, 102)
     );
-    assert!(train(&["a", "a"], 280).contract().merges.is_empty());
+    assert_eq!(train(&["a", "a"], 280).contract().merges.len(), 0);
 }
 #[test]
 fn raw_and_structural_decode_are_distinct_and_unicode_is_byte_exact() {
@@ -127,10 +127,7 @@ fn independent_python_training_vectors_pin_merges_corpus_and_exact_token_ids() {
     use sha2::{Digest as _, Sha256};
     let bytes = include_bytes!("fixtures/model-v1/bpe-trainer-vectors-v1.json");
     assert_eq!(
-        Sha256::digest(bytes)
-            .iter()
-            .map(|b| format!("{b:02x}"))
-            .collect::<String>(),
+        hex(&Sha256::digest(bytes)),
         "04eadb1cd0cc65d43afb764dbe6a622646fb142dd1b93bfc516a0456d7406fbd"
     );
     let rows: serde_json::Value = serde_json::from_slice(bytes).unwrap();
@@ -141,15 +138,12 @@ fn independent_python_training_vectors_pin_merges_corpus_and_exact_token_ids() {
             .iter()
             .map(|s| s.as_str().unwrap())
             .collect::<Vec<_>>();
-        let t = train(&docs, row["requested"].as_u64().unwrap() as u32);
-        let hex = t
-            .contract()
-            .training_corpus_digest
-            .0
-            .iter()
-            .map(|b| format!("{b:02x}"))
-            .collect::<String>();
-        assert_eq!(hex, row["corpus"]);
+        let t = train(
+            &docs,
+            u32::try_from(row["requested"].as_u64().unwrap()).unwrap(),
+        );
+        let actual_digest = hex(&t.contract().training_corpus_digest.0);
+        assert_eq!(actual_digest, row["corpus"]);
         let merges = t
             .contract()
             .merges
@@ -287,6 +281,15 @@ fn legal_large_tokens_decode_beyond_raw_encode_input_limit() {
     t.requested_vocab_size = 276;
     let t = ByteBpe::from_contract(t, TokenizerLimits::default()).unwrap();
     let decoded = t.decode_bytes(&[TokenId(275), TokenId(275)]).unwrap();
-    assert_eq!(decoded.len(), 131072);
+    assert_eq!(decoded.len(), 131_072);
     assert!(decoded.iter().all(|b| *b == b'a'));
+}
+
+fn hex(bytes: &[u8]) -> String {
+    use std::fmt::Write as _;
+    let mut result = String::with_capacity(bytes.len() * 2);
+    for byte in bytes {
+        write!(&mut result, "{byte:02x}").unwrap();
+    }
+    result
 }
