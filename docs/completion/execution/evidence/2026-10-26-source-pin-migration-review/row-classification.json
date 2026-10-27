@@ -1,0 +1,658 @@
+{
+  "version": 1,
+  "claim_policy": "review record only; no pin, catalog, contract or C0 status change",
+  "pinned_at_commit": "96c4b13",
+  "paths": {
+    "crates/abi-wdbx/src/lib.rs": {
+      "expected_sha256": "ca24c1bf76f97ef897d3bce1bfa31bebd9871bad702b91cd054c51937e477dc7",
+      "actual_sha256": "afb2a62420f0fa8632248ddda78d9329331efc22d50cf40e50a09d0d9bcf9210",
+      "content_origin": "31f1d57",
+      "transitions": [
+        {
+          "commit": "a043e4f",
+          "reached_main_via": "2b4c231 / da4ba2b integration merges",
+          "sha256_after": "41d3ab4b67988f363b1e7713e9d11e85826f6a0e013dd45ca39d7e88203ba02d",
+          "change": "+ pub mod model; (line 47)"
+        },
+        {
+          "commit": "4c01514",
+          "sha256_after": "afb2a62420f0fa8632248ddda78d9329331efc22d50cf40e50a09d0d9bcf9210",
+          "change": "+ read_v2_root in pub use v2::{...}"
+        }
+      ]
+    },
+    "crates/abi-wdbx/src/v2.rs": {
+      "expected_sha256": "28a6283b886b6290ea00cdd7500efa248724ab28d60ae3fa2bdba297eb8e0d64",
+      "actual_sha256": "80e50d5537e148d0f6b36842881764c29f0ee3921c98cd7fb906e91c8fe62759",
+      "content_origin": "b83f142",
+      "transitions": [
+        {
+          "commit": "4c01514",
+          "sha256_after": "80e50d5537e148d0f6b36842881764c29f0ee3921c98cd7fb906e91c8fe62759",
+          "change": "+ pub fn read_v2_root with doc comment (added lines 452-468)"
+        }
+      ]
+    }
+  },
+  "uncatalogued_growth": [
+    {
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "line": 47,
+      "declaration": "pub mod model;",
+      "commit": "a043e4f"
+    },
+    {
+      "path": "crates/abi-wdbx/src/model/mod.rs",
+      "declaration": "pub mod contract;",
+      "commit": "a043e4f"
+    },
+    {
+      "path": "crates/abi-wdbx/src/model/mod.rs",
+      "declaration": "pub mod error;",
+      "commit": "a043e4f"
+    },
+    {
+      "path": "crates/abi-wdbx/src/model/mod.rs",
+      "declaration": "pub mod ids;",
+      "commit": "a043e4f"
+    },
+    {
+      "path": "crates/abi-wdbx/src/model/mod.rs",
+      "declaration": "pub mod limits;",
+      "commit": "a043e4f"
+    },
+    {
+      "path": "crates/abi-wdbx/src/model/mod.rs",
+      "declaration": "pub mod package;",
+      "commit": "55f33a6"
+    },
+    {
+      "path": "crates/abi-wdbx/src/model/mod.rs",
+      "declaration": "pub mod tokenizer;",
+      "commit": "55f33a6"
+    }
+  ],
+  "rows": [
+    {
+      "id": "MOD-0032",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod ans;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 31,
+      "head_line": 31,
+      "row_classification": "identity-only",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0033",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod cluster;",
+      "task": 16,
+      "owner": "WDBX consensus/storage maintainer and ABI transport owner",
+      "pinned_line": 32,
+      "head_line": 32,
+      "row_classification": "identity-only",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0034",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod cluster_rpc;",
+      "task": 16,
+      "owner": "WDBX consensus/storage maintainer and ABI transport owner",
+      "pinned_line": 33,
+      "head_line": 33,
+      "row_classification": "identity-only",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0035",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod codecs;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 34,
+      "head_line": 34,
+      "row_classification": "identity-only",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0036",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod compression;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 35,
+      "head_line": 35,
+      "row_classification": "identity-only",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0037",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod compute;",
+      "task": 13,
+      "owner": "abi-compute contract maintainer",
+      "pinned_line": 36,
+      "head_line": 36,
+      "row_classification": "identity-only",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0038",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod crypto_he;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 37,
+      "head_line": 37,
+      "row_classification": "identity-only",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0039",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod durable;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 38,
+      "head_line": 38,
+      "row_classification": "identity-only",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0040",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod entropy;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 39,
+      "head_line": 39,
+      "row_classification": "identity-only",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0041",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod evaluation;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 40,
+      "head_line": 40,
+      "row_classification": "identity-only",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0042",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod fhe;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 41,
+      "head_line": 41,
+      "row_classification": "identity-only",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0043",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod format;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 42,
+      "head_line": 42,
+      "row_classification": "identity-only",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0044",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod hash;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 43,
+      "head_line": 43,
+      "row_classification": "identity-only",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0045",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod hnsw;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 44,
+      "head_line": 44,
+      "row_classification": "identity-only",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0046",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod index;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 45,
+      "head_line": 45,
+      "row_classification": "identity-only",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0047",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod manifest;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 46,
+      "head_line": 46,
+      "row_classification": "identity-only",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0048",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod multiway;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 47,
+      "head_line": 48,
+      "row_classification": "identity-only (line anchor +1)",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0049",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod mvcc;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 48,
+      "head_line": 49,
+      "row_classification": "identity-only (line anchor +1)",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0050",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod net_line;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 49,
+      "head_line": 50,
+      "row_classification": "identity-only (line anchor +1)",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0051",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod neural_compress;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 50,
+      "head_line": 51,
+      "row_classification": "identity-only (line anchor +1)",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0052",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod persistence;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 51,
+      "head_line": 52,
+      "row_classification": "identity-only (line anchor +1)",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0053",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod rate_limit;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 52,
+      "head_line": 53,
+      "row_classification": "identity-only (line anchor +1)",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0054",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod record;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 53,
+      "head_line": 54,
+      "row_classification": "identity-only (line anchor +1)",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0055",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod remote_compute;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 54,
+      "head_line": 55,
+      "row_classification": "identity-only (line anchor +1)",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0056",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod rest;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 55,
+      "head_line": 56,
+      "row_classification": "identity-only (line anchor +1)",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0057",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod retrieval;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 56,
+      "head_line": 57,
+      "row_classification": "identity-only (line anchor +1)",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0058",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod segment;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 57,
+      "head_line": 58,
+      "row_classification": "identity-only (line anchor +1)",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0059",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod segments;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 58,
+      "head_line": 59,
+      "row_classification": "identity-only (line anchor +1)",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0060",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod spatial;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 59,
+      "head_line": 60,
+      "row_classification": "identity-only (line anchor +1)",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0061",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod spatial3d;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 60,
+      "head_line": 61,
+      "row_classification": "identity-only (line anchor +1)",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0062",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod store;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 61,
+      "head_line": 62,
+      "row_classification": "identity-only (line anchor +1)",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0063",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod store_path;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 62,
+      "head_line": 63,
+      "row_classification": "identity-only (line anchor +1)",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0064",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod temporal;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 63,
+      "head_line": 64,
+      "row_classification": "identity-only (line anchor +1)",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0065",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod tls_config;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 64,
+      "head_line": 65,
+      "row_classification": "identity-only (line anchor +1)",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0066",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod v2;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 65,
+      "head_line": 66,
+      "row_classification": "identity-only (line anchor +1)",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0067",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod v3;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 66,
+      "head_line": 67,
+      "row_classification": "identity-only (line anchor +1)",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0068",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod versioned;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 67,
+      "head_line": 68,
+      "row_classification": "identity-only (line anchor +1)",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "MOD-0069",
+      "path": "crates/abi-wdbx/src/lib.rs",
+      "declaration": "pub mod wal;",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "pinned_line": 68,
+      "head_line": 69,
+      "row_classification": "identity-only (line anchor +1)",
+      "file_transitions": [
+        "a043e4f: additive `pub mod model;` (uncatalogued public module + native package format)",
+        "4c01514: additive `read_v2_root` reexport"
+      ],
+      "verdict": "not migrated: shared lib.rs identity also carries uncatalogued semantic growth (model)"
+    },
+    {
+      "id": "FORMAT-v2-journals",
+      "path": "crates/abi-wdbx/src/v2.rs",
+      "task": 3,
+      "owner": "WDBX compatibility maintainer",
+      "row_classification": "additive export",
+      "file_transitions": [
+        "4c01514: adds `pub fn read_v2_root` (17 lines) calling existing `recover`; no encoder, writer, journal layout or VERSION marker change"
+      ],
+      "verdict": "not migrated: reviewed-additive candidate; catalog pin migration requires independent review (self-review only here)"
+    }
+  ]
+}

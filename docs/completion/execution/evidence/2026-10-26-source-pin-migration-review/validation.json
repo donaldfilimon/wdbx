@@ -1,0 +1,58 @@
+{
+  "reviewed_head": "e5fd43b",
+  "gate_head": "952bb66",
+  "toolchain": "rustc 1.99.1 (58cf8f9c3 2026-10-13); cargo 1.99.1",
+  "environment": "RUSTUP_TOOLCHAIN=1.99.1 CARGO_BUILD_JOBS=2 CARGO_TARGET_DIR=.work/target, pinned toolchain bin and /usr/bin first, stdin </dev/null",
+  "commands": [
+    {
+      "command": "python3 tools/check_substrate_release.py --drift-report",
+      "exit": 1,
+      "result": "39 errors; 2 drifted paths (lib.rs 38 rows, v2.rs 1 row); stdout sha256 0c4d2ffe4b233c9606d6d8e7538ffbab5057a42734a750833f930417a5238457"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 tools/check_completion.py",
+      "exit": 0,
+      "when": "before and after"
+    },
+    {
+      "command": "python3 tools/check_completion_execution.py",
+      "exit": 0,
+      "when": "before and after"
+    },
+    {
+      "command": "python3 tools/check_substrate_release.py --snapshot-only",
+      "exit": 0,
+      "when": "before and after"
+    },
+    {
+      "command": "python3 tools/check_substrate_release.py",
+      "exit": 1,
+      "result": "39 FAIL lines, all explained in README.md"
+    },
+    {
+      "command": "python3 -m unittest discover -s tools/tests -p test_check_substrate_release.py",
+      "exit": 0,
+      "result": "52 tests OK"
+    },
+    {
+      "command": "bash tools/check.sh < /dev/null (run 1)",
+      "exit": 101,
+      "result": "abi-wdbx lib: 495 passed, 1 failed (tls_config::tests::environment_requires_a_complete_pair); log sha256 49c538f7b9f4d2e9444cee77d8c2ecda052300a2d64772aa08900dccb870f819"
+    },
+    {
+      "command": "cargo test --locked -p abi-wdbx --lib tls_config (x3)",
+      "exit": "0,101,0",
+      "result": "pre-existing race: the sibling test's Fixture::drop clears the process-global TLS env overrides; file unchanged since 2a22bf5"
+    },
+    {
+      "command": "bash tools/check.sh < /dev/null (run 2)",
+      "exit": 0,
+      "result": "check: all green; 1210 cargo tests passed, 0 failed across 62 results; python 52/28/14; log sha256 80f84b533de73363497e0bb960a2dc35401276c366fea3864037d110070446a5"
+    }
+  ],
+  "frozen_unchanged": {
+    "docs/completion/substrate-release/catalog-v1.json": "d9b2cbe9ea14c65166bfa407686aae0eeffe76608d0bca46f1a246ee0c419248",
+    "tools/check_substrate_release.py": "unchanged"
+  },
+  "claim": "No pin, catalog or C0 status change; no qualification."
+}

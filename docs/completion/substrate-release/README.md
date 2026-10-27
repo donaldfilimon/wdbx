@@ -102,3 +102,8 @@ migration, not a blanket refresh of two hashes. Diagnostics never modify pins,
 contracts or source snapshots and do not approve that migration. Isolated tests
 materialize synthetic live declarations and mock only their temporary catalog
 pin; the real immutable-pin and promotion-refusal tests remain enforced.
+
+The per-row review of these 39 rows (16 identity-only, 22 identity-only with a
++1 line anchor, 1 additive export, blocked by uncatalogued `model` growth) and a
+proposed, unapplied migration are recorded in
+[the source-pin migration review](../execution/evidence/2026-10-26-source-pin-migration-review/README.md).
