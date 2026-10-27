@@ -178,7 +178,10 @@ The row stays `declaration-coverage-only` with its open
 `missing_behavior_blocker`. An identity pin does not qualify behaviour or move
 anything past C0.
 
-## Proposed remaining migration (not applied)
+## Proposed remaining migration (superseded 2026-10-27)
+
+Applied on 2026-10-27; see [Applied migration](#applied-migration-model-routing-and-librs-2026-10-27)
+below. The proposal is kept as it was reviewed.
 
 1. Owner decision: route `model` to a release task or record an explicit
    exclusion. Reuse N01's accepted review for `contract`, `error`, `ids` and
@@ -201,6 +204,11 @@ anything past C0.
 - [drift-report-after-v2-migration.json](drift-report-after-v2-migration.json):
   `--drift-report` after the v2.rs migration (38 errors, 1 path).
 - [validation.json](validation.json): commands and exit codes.
+- [catalog-model-migration-review.md](catalog-model-migration-review.md) and
+  [n02-fixes-review.md](n02-fixes-review.md): the two 2026-10-27 independent reviews.
+- [drift-report-after-model-migration.json](drift-report-after-model-migration.json):
+  `--drift-report` after the 2026-10-27 migration (0 errors, 0 paths), SHA-256
+  `e0a8fdca85437880ac48c5c67ec33c520b230d74d292ee07a2cf4167b5b467fa`.
 
 ## Applied migration: `model` routing and `lib.rs` (2026-10-27)
 
