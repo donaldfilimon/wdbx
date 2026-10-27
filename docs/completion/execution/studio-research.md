@@ -158,7 +158,10 @@ source identities are unchanged. Their earlier raw gates remain historical;
 this Studio packet does not rerun or relabel them as new substrate conformance.
 Final automated review scope and a current-byte manifest accompany this packet.
 
-## Current language/text/scanner observations after integrated final fix
+## Language/text/scanner observations after integrated final fix (2026-10-22 packet, superseded)
+
+Superseded: this section describes the 2026-10-22 language packet. Current
+register counts are 131 / 16 / 16 in `register-v1.json`.
 
 The additive opt-in packet implements immutable versioned preparation with all
 nine utility effects, quote-aware clauses/conditions/negation and original UTF-8
@@ -247,16 +250,20 @@ all targets, installed desktop, browser UI/theme/accessibility and elapsed-opera
 qualification. No frozen holdouts, live store, credentials or production effects
 were used. Inventory checks do not establish acceptance or scientific adequacy.
 
-## Current scoring and orchestration observations
+## Scoring and orchestration observations (2026-10-23 packet, superseded)
 
-The current packet is `evidence/2026-10-23-scoring/register/`, with final runtime
-and scoped review receipts in `parity/canonical-final/` and `parity/review-fix1/`,
-and four separate Studio gates in `gates/review-fix1/`. The resolved mapping is
-also copied to `evidence/2026-10-23-scoring/evidence/requirement-mapping.json` for
-final-review routing. Only S07–S15 move to partial local mechanism candidates:
-129 candidates / 18 local gaps / 16 external gaps. All 163 requirements remain
-open/C0/unknown; all 46 S and 18 D frozen rows and baseline observations remain.
-There are 24 distinct bounded observations, preserving the previous 15 IDs.
+Superseded: the counts here describe the 2026-10-23 packet. `register-v1.json`
+currently holds 131 candidates / 16 local gaps / 16 external gaps (see the
+execution README). The packet is `evidence/2026-10-23-scoring/register/`, with
+final runtime and scoped review receipts in `parity/canonical-final/` and
+`parity/review-fix1/`, and four separate Studio gates in `gates/review-fix1/`. The
+resolved mapping is also copied to
+`evidence/2026-10-23-scoring/evidence/requirement-mapping.json` for final-review
+routing. Only S07–S15 moved to partial local mechanism candidates, leaving 129
+candidates / 18 local gaps / 16 external gaps at that packet. All 163 requirements
+remain open/C0/unknown; all 46 S and 18 D frozen rows and baseline observations
+remain. There are 24 distinct bounded observations, preserving the previous 15
+IDs.
 
 S07/S08 expose exact rational supplied-ATP, strength and jitter policy, with
 inclusive endpoints/thresholds and draw accounting. These numeric policy fixtures
