@@ -155,3 +155,42 @@ fn stage_reports_success_when_only_temporary_unlink_fails() {
     assert!(!again.created);
     fs::remove_dir_all(root).unwrap();
 }
+/// Replaces this call's temporary with a non-empty directory during the
+/// post-link sync, so `remove_file` really fails and the name is retained.
+struct TemporaryPinned;
+impl Durability for TemporaryPinned {
+    fn sync_file(&self, file: &File) -> std::io::Result<()> {
+        file.sync_all()
+    }
+    fn sync_directory(&self, path: &Path) -> std::io::Result<()> {
+        for entry in fs::read_dir(path)? {
+            let entry = entry?;
+            if entry.file_name().to_string_lossy().ends_with(".partial") && entry.path().is_file() {
+                fs::remove_file(entry.path())?;
+                fs::create_dir(entry.path())?;
+                fs::write(entry.path().join("pin"), b"x")?;
+            }
+        }
+        File::open(path)?.sync_all()
+    }
+}
+#[test]
+fn failed_temporary_unlink_after_durable_link_is_retained_not_reported() {
+    let model = state();
+    let root = directory();
+    let object = import_with_durability(&model, &root, || false, &TemporaryPinned)
+        .expect("durable linked object reported as failure");
+    assert!(object.created);
+    let mut names = fs::read_dir(&root)
+        .unwrap()
+        .map(|e| e.unwrap().file_name().into_string().unwrap())
+        .collect::<Vec<_>>();
+    names.sort();
+    assert_eq!(names.len(), 2, "{names:?}");
+    assert!(names.iter().any(|n| n.ends_with(".partial")));
+    assert_eq!(
+        fs::read(&object.path).unwrap(),
+        model.framed().snapshot().as_bytes()
+    );
+    fs::remove_dir_all(root).unwrap();
+}

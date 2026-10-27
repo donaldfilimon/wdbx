@@ -50,12 +50,15 @@ and 14 are silent, following the [N02 independent review](../../completion/execu
 - **Staging precondition (M4).** `import_staged` requires a caller-owned private
   directory. The existence check and the verifying open are separate path
   operations; with an attacker-writable directory that would be a TOCTOU window.
-  The crate denies `unsafe` code and has no `libc` dependency, so no
-  `O_NOFOLLOW` open is used. The precondition is the mitigation.
+  Safe alternatives exist (`OpenOptionsExt::custom_flags` with an
+  `O_NOFOLLOW` constant, or comparing the opened handle's metadata with the
+  earlier check), but none is used in 1.0: the private-directory precondition
+  is the mitigation.
 - **Best-effort temporary unlink (M3).** Once the object is linked and the
   directory synced, a failed removal of this call's temporary name no longer
-  reports `Io`. The `.partial` file is retained for explicit cleanup, like other
-  incomplete task-owned files.
+  reports `Io`. The `.partial` file (`.wdbx-stage-{pid}-{sequence}.partial`) is
+  retained for explicit cleanup, like other incomplete task-owned files;
+  `StagedObject` does not report it, so cleanup scans for that name pattern.
 
 `n02-matrix-negatives-v1.json` adds single-defect vectors for section 14 matrix
 items that previously had no fixture (finding M6); see `n02-fixtures.md`.

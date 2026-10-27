@@ -92,7 +92,7 @@ fn n02_matrix_negatives_have_the_same_family_as_the_witness() {
     let bytes = include_bytes!("fixtures/model-v1/n02-matrix-negatives-v1.json");
     assert_eq!(
         support::hex(&Sha256::digest(bytes)),
-        "1a724aa256436a1c8c2f4b95edc25513ac4b7bcff19de338ac401e238f38c966"
+        "b279d24f3c07a469c5cab76864b18ae34041b2d8d20d1c7c899fd20bdeda2a8c"
     );
     let doc: serde_json::Value = serde_json::from_slice(bytes).unwrap();
     let rows = doc["vectors"].as_array().unwrap();

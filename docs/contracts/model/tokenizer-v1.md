@@ -42,8 +42,11 @@ inside records (topology node role, tensor dtype and axis kind, manifest
 purpose, learning profile and operator set, provenance kinds) and components
 without a domain family keep `NonCanonical`; the frozen `bad-role`,
 `unsupported-operator` and `unsupported-numeric-profile` vectors are unchanged.
-The check happens while component 4 is read, before its trailing-byte check, as
-in the witness.
+The `normalization` and `special_policy` checks happen while component 4 is
+read, before its trailing-byte check, as in the witness. The other fixed-value
+fields are checked after the trailing-byte check in Rust and while reading in
+the witness; see the within-component precedence note in package clarification
+1.0.2.
 
 `tokenizer-profile-negatives-v1.json` pins one semantic negative per byte (both
 derived from frozen `inference` with recomputed component and directory hashes);

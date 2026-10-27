@@ -64,13 +64,15 @@ the file digest and expect `InvalidTokenizer`; Python also checks that only the
 named byte and the two hashes differ from `inference`.
 
 `n02-matrix-negatives-v1.json`, SHA-256
-`1a724aa256436a1c8c2f4b95edc25513ac4b7bcff19de338ac401e238f38c966`, adds eight
+`b279d24f3c07a469c5cab76864b18ae34041b2d8d20d1c7c899fd20bdeda2a8c`, adds eight
 single-defect semantic negatives for N02 review finding M6, without touching
 `manifest.json` or any `.hex`. Each changes one field of frozen `resumable` and
 recomputes that component's SHA-256 and the directory SHA-256: RNG
 `next_example_cursor == example_count` (`InvalidRngOrder`); objective profile tag
-and policy tag 2 (`InvalidObjective`); objective dataset, split and preparation
-digests that no longer match component 7 (`InvalidRngOrder`); and a NaN and an
+and policy tag 2 (`InvalidObjective`); RNG (component 7) dataset, split and
+preparation digests that no longer match the objective (`InvalidRngOrder`,
+`state-crosslinks`; component 7 digests are not provenance data roots, so no
+second cross-component check is violated); and a NaN and an
 infinite first AdamW moment (`InvalidOptimizer`). A scratch `struct`/`hashlib`
 worksheet produced them, never the witness or the Rust writer. Both languages pin
 the file digest and the expected family; Python also checks that only the named

@@ -169,7 +169,7 @@ class BpeTrainerReferenceTests(unittest.TestCase):
 
     def test_n02_matrix_negatives_have_the_same_family_as_rust(self):
         path = FIXTURES / 'n02-matrix-negatives-v1.json'
-        self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), '1a724aa256436a1c8c2f4b95edc25513ac4b7bcff19de338ac401e238f38c966')
+        self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), 'b279d24f3c07a469c5cab76864b18ae34041b2d8d20d1c7c899fd20bdeda2a8c')
         doc = json.loads(path.read_bytes())
         self.assertEqual(doc['format'], 'native-model-n02-matrix-negatives-v1')
         self.assertEqual(len(doc['vectors']), 8)
@@ -185,8 +185,8 @@ class BpeTrainerReferenceTests(unittest.TestCase):
                 old, new = bytes.fromhex(row['original_hex']), bytes.fromhex(row['value_hex'])
                 self.assertEqual((base[start:start + len(old)], raw[start:start + len(new)]), (old, new))
                 changed = {i for i in range(len(raw)) if raw[i] != base[i]}
-                allowed = set(range(32, 64)) | set(range(entry + 32, entry + 64)) | set(range(start, start + len(new)))
-                self.assertLessEqual(changed, allowed)
+                hashes = set(range(32, 64)) | set(range(entry + 32, entry + 64))
+                self.assertEqual(changed - hashes, {start + i for i in range(len(new)) if old[i] != new[i]})
                 self.assertEqual(ref.frame(raw)['stage'], 'FramedPackage')
                 with self.assertRaises(ref.ContractError) as error:
                     ref.validate(raw)
