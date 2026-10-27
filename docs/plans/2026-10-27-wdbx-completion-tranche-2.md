@@ -37,7 +37,7 @@ All of this is implementation, tests and evidence only. Every requirement stays 
 
 ## Audit baseline (2026-10-27, HEAD `19db4fa`, read-only)
 
-- Branch `task/finish-wdbx-20261027`, clean tree at audit time. The prior tranche recorded its outcome in `fe5bc02` and `19db4fa`.
+- Local `main` at `19db4fa` (finish tranche merged ff-only, nothing pushed); this tranche runs on branch `task/wdbx-tranche2-20261027`, clean tree at audit time. The prior tranche recorded its outcome in `fe5bc02` and `19db4fa`.
 - `check_completion.py`: 163 C0 valid, 46 cases. `check_completion_execution.py`: 163 reconciled open C0. The live split is 131 candidate / 16 local_gap / 16 external_gap. The "95/68" figure in `progress.md:11-12` is historical.
 - Tests observed by scouts:
   - Model suites: `model_contracts` 5, `model_package` 17, `model_package_bounds` 16, `model_tokenizer` 7, model witness 16 OK.
@@ -69,7 +69,7 @@ All of this is implementation, tests and evidence only. Every requirement stays 
 - **Precondition:**
   - The prior finish tranche is merged into local `main`, and its lease release row is in `organize-2026-10-25/leases.md`.
   - This tranche's writer appends its own lease row before the first write.
-  - Work on one task branch from local `main`. Rebase before every register or catalog task.
+  - Work on the one task branch `task/wdbx-tranche2-20261027` from local `main` `19db4fa`. Do not rebase: local `main` is static during the tranche, so rebasing would only rewrite history.
   - No push.
 - **Pinned environment:** every cargo command runs with `export PATH="$(dirname $(rustup +1.99.1 which rustc)):/usr/bin:$PATH"` and `export CARGO_TARGET_DIR=<scratchpad>/wf-target-<task>`, and stdin is at EOF (`< /dev/null`). Every Python command runs with `PYTHONDONTWRITEBYTECODE=1`. Do not stage `__pycache__`.
 - **No promotion:**
@@ -109,8 +109,8 @@ All of this is implementation, tests and evidence only. Every requirement stays 
 
 **Files:** `organize-2026-10-25/leases.md` (append only).
 
-- [ ] Step 1: Confirm `git log main` contains `19db4fa`, that the prior lease release row exists, and that `git status --short` is clean. If the precondition fails, stop.
-- [ ] Step 2: Append this tranche's lease row. Create the task branch from local `main`.
+- [ ] Step 1: Confirm `git log main` contains `19db4fa`, that the branch is `task/wdbx-tranche2-20261027`, and that `git status --short` is clean. If the precondition fails, stop.
+- [ ] Step 2: The controller session holds the wdbx lease and has already appended this tranche's lease row; workflow agents never write `leases.md`.
 - [ ] Step 3: Record the baseline in `.work/tranche2-baseline/` (ignored):
   - `bash tools/check.sh < /dev/null` must end with `check: all green`.
   - `python3 tools/check_completion.py`, `python3 tools/check_completion_execution.py`, `python3 tools/check_source_custody.py` and `python3 tools/check_substrate_release.py` (live, `--drift-report`) all pass.
@@ -729,7 +729,7 @@ No scalar is added to ranking. `rank_with_vector_source` keeps its pinned contra
 - Modify: `docs/completion/execution/register-v1.json`, `docs/completion/execution/candidate-paths-v1.json`, `tools/check_completion_execution.py` (`CANDIDATE_PATHS_SHA256` and, if artifacts change, `REVIEW_ARTIFACT_PATHS_SHA256`), `docs/completion/execution/review-artifact-paths-v1.json`, `docs/completion/execution/progress.md` (append).
 - Create: `docs/completion/execution/evidence/2026-10-27-register-refresh/{requirement-mapping.json,reference-refresh.json,review.md,*.log}`.
 
-- [ ] Step 1: Rebase on the current `main`. Confirm that every file from Tasks 2–18 exists and is committed. Compute all sha256 values from the committed bytes.
+- [ ] Step 1: Do not rebase (local `main` is static). Confirm that every file from Tasks 2–18 exists and is committed. Compute all sha256 values from the committed bytes.
 - [ ] Step 2: Write the mapping table in `requirement-mapping.json`, with per-row before and after paths and hashes. Implementation and test refs are also added to `inspected`, and register and catalog lists are edited together.
 
   Existing suites:
@@ -832,7 +832,7 @@ No scalar is added to ranking. `rank_with_vector_source` keeps its pinned contra
 
   Record the opt-in P1 gate's result, or record it as unexecuted. Record every skipped Studio gate explicitly.
 - [ ] Step 2: Append an execution outcome section to this plan, listing per task the commits, observed counts, findings and withdrawn routings.
-- [ ] Step 3: `git merge --ff-only` into local `main`. Delete the task branch. Append a lease release row. No push.
+- [ ] Step 3: Stop. The controller session performs `git merge --ff-only` into local `main`, deletes the task branch and appends the lease row after reading the final whole-branch review. Workflow agents never merge. No push.
 
 ## Not in this tranche
 
