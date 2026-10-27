@@ -20,7 +20,8 @@ pub struct StagedObject {
 /// directory. Unix private-directory support only; other platforms explicitly
 /// return Io with field `unsupported-directory-durability` before any writes.
 /// Destination must be a caller-owned private directory, not attacker-controlled.
-/// Incomplete create-new files are retained for explicit cleanup on failure.
+/// Incomplete create-new files are retained for explicit cleanup on failure, and
+/// a temporary whose best-effort unlink fails after a durable link is retained too.
 pub fn import_staged(
     model: &ValidatedModelState,
     directory: &Path,
@@ -95,8 +96,10 @@ fn import_with_durability(
     durability
         .sync_directory(directory)
         .map_err(|_| err(E::Io, "staging-directory-sync"))?;
-    // Remove only this call's uniquely created, fully synced temporary name.
-    fs::remove_file(&temporary).map_err(|_| err(E::Io, "staging-temporary-unlink"))?;
+    // The object is linked and durable here. Removing this call's uniquely
+    // created temporary name is best-effort: a failed unlink leaves a
+    // `.partial` file for explicit cleanup, never a reported failure (N02 M3).
+    let _ = fs::remove_file(&temporary);
     durability
         .sync_directory(directory)
         .map_err(|_| err(E::Io, "staging-directory-sync"))?;

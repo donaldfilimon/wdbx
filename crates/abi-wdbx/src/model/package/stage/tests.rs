@@ -123,3 +123,35 @@ fn no_clobber_collision_cannot_skip_existing_file_sync_or_ignore_its_failure() {
     );
     fs::remove_dir_all(root).unwrap();
 }
+/// Removes this call's temporary during the post-link directory sync, so the
+/// later unlink fails after the object is already linked and durable (N02 M3).
+struct TemporaryVanishes;
+impl Durability for TemporaryVanishes {
+    fn sync_file(&self, file: &File) -> std::io::Result<()> {
+        file.sync_all()
+    }
+    fn sync_directory(&self, path: &Path) -> std::io::Result<()> {
+        for entry in fs::read_dir(path)? {
+            let entry = entry?;
+            if entry.file_name().to_string_lossy().ends_with(".partial") {
+                fs::remove_file(entry.path())?;
+            }
+        }
+        File::open(path)?.sync_all()
+    }
+}
+#[test]
+fn stage_reports_success_when_only_temporary_unlink_fails() {
+    let model = state();
+    let root = directory();
+    let object = import_with_durability(&model, &root, || false, &TemporaryVanishes)
+        .expect("durable linked object reported as failure");
+    assert!(object.created);
+    assert_eq!(
+        fs::read(&object.path).unwrap(),
+        model.framed().snapshot().as_bytes()
+    );
+    let again = import_staged(&model, &root, || false).unwrap();
+    assert!(!again.created);
+    fs::remove_dir_all(root).unwrap();
+}
