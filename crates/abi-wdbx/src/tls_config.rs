@@ -59,10 +59,15 @@ mod tests {
         directory: std::path::PathBuf,
         cert: std::path::PathBuf,
         key: std::path::PathBuf,
+        // Declared last: fields drop after `Drop::drop`, so the override
+        // cleanup below still runs while the lock is held.
+        _env_guard: std::sync::MutexGuard<'static, ()>,
     }
 
     impl Fixture {
         fn new() -> Self {
+            // Overrides are process-global; serialize every test that owns them.
+            let env_guard = abi_foundation::env::lock_for_test();
             let directory = abi_foundation::temp_path::temp_file_path("abi_tls_config", "fixture");
             std::fs::create_dir_all(&directory).expect("fixture directory");
             let cert = directory.join("cert.pem");
@@ -73,6 +78,7 @@ mod tests {
                 directory,
                 cert,
                 key,
+                _env_guard: env_guard,
             }
         }
     }
