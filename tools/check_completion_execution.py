@@ -18,7 +18,7 @@ CANDIDATE_PATHS_SHA256 = '1e5b1946385d6914cb32ea3e45148fa855dcc1cd756ae53b679640
 # Exact per-ID artifact and review path identities. The pin is set only after an
 # independent reviewer verifies that the catalog reproduces the live register.
 REVIEW_ARTIFACT_PATHS = 'docs/completion/execution/review-artifact-paths-v1.json'
-REVIEW_ARTIFACT_PATHS_SHA256 = None
+REVIEW_ARTIFACT_PATHS_SHA256 = '0a753f848ad7aa0816b6b6abe9adac6326eaa2a710404959deb236987cca7fcf'
 
 # README count statements. Bullet integers are compared exactly, and the
 # "Local gaps:"/"External gaps:" lists are compared as ID sets after expanding

@@ -67,7 +67,22 @@ refusing duplicates.
 
 ## Review status
 
-Pending. An independent read-only reviewer must verify that the catalog pins the
-status quo before `REVIEW_ARTIFACT_PATHS_SHA256` is set (plan Step 4). The
-reviewer's verdict is recorded in this directory after review. This file is not
-a verdict.
+Reviewed. An independent read-only reviewer verified range `93dbeab..8abe9df`
+and returned PASS/APPROVE with no required fixes. The report is recorded
+verbatim in `review.md`, followed by the author disposition of its five minor
+notes. `REVIEW_ARTIFACT_PATHS_SHA256` is now set to the reviewed bytes,
+`0a753f848ad7aa0816b6b6abe9adac6326eaa2a710404959deb236987cca7fcf`. The catalog was
+not changed after review.
+
+Gates rerun after the pin was set:
+
+- `checker-pinned.log`: the execution register is valid (163 reconciled open C0
+  requirements).
+- `pinned-unittest.log` (current Python) and
+  `pinned-unittest-system-python.log` (`/usr/bin/python3` 3.9.6): 33 tests, OK.
+- `check-completion-pinned.log`: completion contracts valid.
+- `substrate-release-drift-pinned.json`: live release drift is empty.
+
+The earlier unpinned logs remain as the pre-review record. This review covers
+only checker and catalog integrity. It is not requirement, review or platform
+qualification, and every row stays open/C0/unknown.
