@@ -2,8 +2,10 @@
 
 The binding [native package design](native-package-design-v1.md), sections 1–12,
 fixes version 1.0. This additive packet supplies Rust contract types, a Python
-binary/semantic witness and frozen diagnostic fixtures. It supplies no production
-parser, tokenizer, inference engine, trainer, model provider or publication path.
+binary/semantic witness and frozen diagnostic fixtures. N02 later added the bounded
+production package parser/writer, staging and byte-level BPE tokenizer
+(`abi_wdbx::model::{package,tokenizer}`). There is still no inference engine,
+trainer runtime, model provider or publication path.
 
 - [Task sequence and requirement mapping](../../plans/2026-10-25-native-model-cpu.md)
 - [Package framing and identities](package-v1.md)

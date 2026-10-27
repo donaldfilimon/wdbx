@@ -27,3 +27,35 @@ count fully. N02 must prove its allocation upper bound before reservation, retai
 one immutable snapshot, and implement fallible allocation and EOF handling.
 The Python witness is an independent schema oracle, not production allocation
 qualification or a secure staged-import implementation.
+
+## Clarification 1.0.2: N02 review precedence and staging notes (2026-10-27)
+
+This clarification changes no wire byte, field, version, accepted package or
+error family. It records how the N02 parsers behave where design sections 11
+and 14 are silent, following the [N02 independent review](../../completion/execution/evidence/2026-10-26-source-pin-migration-review/n02-independent-review.md).
+
+- **Zero training-split digest (M1).** The tokenizer trainer refuses a zero split
+  digest as `InvalidTokenizer`. The package decoder and `ByteBpe::from_contract`
+  refuse the same zero digest inside a stored tokenizer as `InvalidProvenance`.
+  The witness agrees with each entry point. The two families are intentional:
+  one is a trainer input error, the other a stored-provenance error.
+- **Within-component precedence (M2).** Design section 11 pins first-error order
+  between stages only. Inside one component, an input with more than one defect
+  (for example a semantic fault and trailing bytes) may get a different family
+  from the Rust parser and the witness. Both always reject it. Single-defect
+  vectors are the comparison unit for cross-language agreement.
+- **Directory hash before entry canonicality (M5).** `directory_sha256` is
+  checked before directory entries are read, in both Rust and the witness, so a
+  tampered noncanonical directory reports `IntegrityMismatch`.
+- **Staging precondition (M4).** `import_staged` requires a caller-owned private
+  directory. The existence check and the verifying open are separate path
+  operations; with an attacker-writable directory that would be a TOCTOU window.
+  The crate denies `unsafe` code and has no `libc` dependency, so no
+  `O_NOFOLLOW` open is used. The precondition is the mitigation.
+- **Best-effort temporary unlink (M3).** Once the object is linked and the
+  directory synced, a failed removal of this call's temporary name no longer
+  reports `Io`. The `.partial` file is retained for explicit cleanup, like other
+  incomplete task-owned files.
+
+`n02-matrix-negatives-v1.json` adds single-defect vectors for section 14 matrix
+items that previously had no fixture (finding M6); see `n02-fixtures.md`.

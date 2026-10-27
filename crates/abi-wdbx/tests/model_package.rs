@@ -86,6 +86,41 @@ fn tokenizer_profile_bytes_have_tokenizer_family_like_the_witness() {
     }
 }
 
+#[test]
+fn n02_matrix_negatives_have_the_same_family_as_the_witness() {
+    use sha2::{Digest as _, Sha256};
+    let bytes = include_bytes!("fixtures/model-v1/n02-matrix-negatives-v1.json");
+    assert_eq!(
+        support::hex(&Sha256::digest(bytes)),
+        "1a724aa256436a1c8c2f4b95edc25513ac4b7bcff19de338ac401e238f38c966"
+    );
+    let doc: serde_json::Value = serde_json::from_slice(bytes).unwrap();
+    let rows = doc["vectors"].as_array().unwrap();
+    assert_eq!(rows.len(), 8);
+    for row in rows {
+        let name = row["name"].as_str().unwrap();
+        let text = row["hex"].as_str().unwrap();
+        let raw: Vec<u8> = (0..text.len())
+            .step_by(2)
+            .map(|i| u8::from_str_radix(&text[i..i + 2], 16).unwrap())
+            .collect();
+        assert_eq!(
+            support::hex(&Sha256::digest(&raw)),
+            row["artifact_sha256"],
+            "{name}"
+        );
+        let framed = read_bounded_snapshot(raw.as_slice(), LoadLimits::default())
+            .and_then(|b| validate_framing(b, LoadLimits::default()))
+            .unwrap_or_else(|e| panic!("{name} must frame: {e}"));
+        let error = validate_model(framed, LoadLimits::default()).unwrap_err();
+        assert_eq!(
+            format!("{:?}", error.kind),
+            row["expected"].as_str().unwrap(),
+            "{name}"
+        );
+    }
+}
+
 #[path = "support/model_package.rs"]
 mod support;
 #[test]

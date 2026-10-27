@@ -62,3 +62,18 @@ with recomputed component-4 and directory SHA-256. A scratch `struct`/`hashlib`
 worksheet produced them, never the witness or the Rust writer. Both languages pin
 the file digest and expect `InvalidTokenizer`; Python also checks that only the
 named byte and the two hashes differ from `inference`.
+
+`n02-matrix-negatives-v1.json`, SHA-256
+`1a724aa256436a1c8c2f4b95edc25513ac4b7bcff19de338ac401e238f38c966`, adds eight
+single-defect semantic negatives for N02 review finding M6, without touching
+`manifest.json` or any `.hex`. Each changes one field of frozen `resumable` and
+recomputes that component's SHA-256 and the directory SHA-256: RNG
+`next_example_cursor == example_count` (`InvalidRngOrder`); objective profile tag
+and policy tag 2 (`InvalidObjective`); objective dataset, split and preparation
+digests that no longer match component 7 (`InvalidRngOrder`); and a NaN and an
+infinite first AdamW moment (`InvalidOptimizer`). A scratch `struct`/`hashlib`
+worksheet produced them, never the witness or the Rust writer. Both languages pin
+the file digest and the expected family; Python also checks that only the named
+field and the two hashes differ from `resumable`. Remaining M6 items (held-out
+sentinel documents in trainer input, decoder-side dtype mismatch, and probing more
+legacy readers with model bytes) are not covered by this file.

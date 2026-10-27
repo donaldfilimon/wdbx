@@ -167,6 +167,31 @@ class BpeTrainerReferenceTests(unittest.TestCase):
                     ref.validate(raw)
                 self.assertEqual(error.exception.code, row['expected'])
 
+    def test_n02_matrix_negatives_have_the_same_family_as_rust(self):
+        path = FIXTURES / 'n02-matrix-negatives-v1.json'
+        self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), '1a724aa256436a1c8c2f4b95edc25513ac4b7bcff19de338ac401e238f38c966')
+        doc = json.loads(path.read_bytes())
+        self.assertEqual(doc['format'], 'native-model-n02-matrix-negatives-v1')
+        self.assertEqual(len(doc['vectors']), 8)
+        for row in doc['vectors']:
+            with self.subTest(row['name']):
+                raw = bytes.fromhex(row['hex'])
+                self.assertEqual(hashlib.sha256(raw).hexdigest(), row['artifact_sha256'])
+                base = bytes.fromhex((FIXTURES / (row['base'] + '.hex')).read_text())
+                self.assertEqual(hashlib.sha256(base).hexdigest(), row['base_artifact_sha256'])
+                entry = 96 + (row['component_kind'] - 1) * 80
+                self.assertEqual(struct.unpack_from('<H', raw, entry)[0], row['component_kind'])
+                start = struct.unpack_from('<Q', raw, entry + 16)[0] + row['component_offset']
+                old, new = bytes.fromhex(row['original_hex']), bytes.fromhex(row['value_hex'])
+                self.assertEqual((base[start:start + len(old)], raw[start:start + len(new)]), (old, new))
+                changed = {i for i in range(len(raw)) if raw[i] != base[i]}
+                allowed = set(range(32, 64)) | set(range(entry + 32, entry + 64)) | set(range(start, start + len(new)))
+                self.assertLessEqual(changed, allowed)
+                self.assertEqual(ref.frame(raw)['stage'], 'FramedPackage')
+                with self.assertRaises(ref.ContractError) as error:
+                    ref.validate(raw)
+                self.assertEqual(error.exception.code, row['expected'])
+
     def test_versioned_offset_erratum_preserves_v1_and_marks_absent_payloads(self):
         path = FIXTURES / 'field-table-errata-v2.json'
         self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), '0b5064e396dcbaa365bd038fa611acb88ef9869d01edd6aa434dcbb60facd678')
