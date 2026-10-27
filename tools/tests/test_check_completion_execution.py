@@ -1,5 +1,6 @@
 """Mutation tests for the non-promoting execution register."""
 import copy
+import hashlib
 import importlib.util
 from pathlib import Path
 import tempfile
@@ -136,6 +137,86 @@ class ExecutionTests(unittest.TestCase):
     def test_missing_blocker(self):
         self.assertTrue(self.errors(lambda d: d['requirements'][0].update(blockers=[])))
 
+
+    # Review/artifact identity and README counts (tranche 2, Task 1).
+
+    def test_review_reference_cannot_be_added_without_catalog(self):
+        path = 'docs/completion/execution/evidence/2026-10-26-p1-review/README.md'
+        digest = hashlib.sha256((ROOT / path).read_bytes()).hexdigest()
+        def add(data):
+            row = next(r for r in data['requirements'] if r['id'] == 'G01')
+            row['review']['references'].append({'path': path, 'sha256': digest})
+        self.assertIn('review identity drift: G01', self.errors(add))
+
+    def test_artifact_references_cannot_be_stripped(self):
+        def strip(data):
+            row = next(r for r in data['requirements'] if r['id'] == 'C14')
+            refs = row['artifacts']['references']
+            self.assertGreater(len(refs), 1)
+            row['artifacts']['references'] = [
+                ref for ref in refs if ref['path'] == 'docs/completion/plans.json']
+        self.assertIn('artifact identity drift: C14', self.errors(strip))
+
+    def test_gap_rows_cannot_gain_review_refs(self):
+        # The catalog is patched to agree, so only the independent gap rule can fire.
+        path = 'docs/completion/execution/evidence/2026-10-26-p1-review/README.md'
+        digest = hashlib.sha256((ROOT / path).read_bytes()).hexdigest()
+        sha, catalog = self.module.read_review_artifact_catalog(ROOT)
+        catalog = copy.deepcopy(catalog)
+        catalog['G01']['review'].append(path)
+        data = copy.deepcopy(self.register)
+        row = next(r for r in data['requirements'] if r['id'] == 'G01')
+        row['review']['references'].append({'path': path, 'sha256': digest})
+        with patch.object(self.module, 'read_review_artifact_catalog',
+                          return_value=(sha, catalog)):
+            errors = self.module.validate(ROOT, data)
+        self.assertIn('gap cannot carry review: G01', errors)
+        self.assertNotIn('review identity drift: G01', errors)
+
+    def test_review_artifact_catalog_requirement_closure(self):
+        sha, catalog = self.module.read_review_artifact_catalog(ROOT)
+        self.assertEqual(163, len(catalog))
+        for change in ('drop', 'extra'):
+            with self.subTest(change=change):
+                altered = copy.deepcopy(catalog)
+                if change == 'drop':
+                    altered.pop('G01')
+                else:
+                    altered['ZZ99'] = {'artifacts': [], 'review': []}
+                with patch.object(self.module, 'read_review_artifact_catalog',
+                                  return_value=(sha, altered)):
+                    errors = self.module.validate(ROOT, self.register)
+                self.assertIn('review/artifact catalog requirement closure', errors)
+
+    def test_review_artifact_catalog_hash_is_independently_pinned(self):
+        original = self.module.sha
+        def changed(path):
+            return '0' * 64 if path.name == 'review-artifact-paths-v1.json' else original(path)
+        with patch.object(self.module, 'sha', side_effect=changed):
+            errors = self.module.validate(ROOT, self.register)
+        self.assertIn('review/artifact catalog drift', errors)
+
+    def test_readme_counts_match_catalog(self):
+        readme = (ROOT / 'docs/completion/execution/README.md').read_text()
+        self.assertEqual([], [e for e in self.module.validate(ROOT, self.register, readme=readme)
+                              if e.startswith('README count drift')])
+        mutations = [
+            ('**131 candidate mappings**', '**132 candidate mappings**'),
+            ('**16 local gaps**', '**15 local gaps**'),
+            ('**16 external gaps**', '**17 external gaps**'),
+            ('**14 historical review/receipt pointers**', '**21 historical review/receipt pointers**'),
+            ('**7 scoring-packet review pointers**', '**8 scoring-packet review pointers**'),
+            ('21 unique review paths', '20 unique review paths'),
+            ('S28, S32, S36, S37, S41.', 'S28, S32, S36, S37.'),
+            ('S28, S32, S36, S37, S41.', 'S28, S32, S36, S37, S41, C14.'),
+            ('P05.01\u2013P05.04', 'P05.01\u2013P05.03'),
+            ('OS01\u2013OS06', 'OS01\u2013OS07'),
+        ]
+        for old, new in mutations:
+            with self.subTest(old=old, new=new):
+                self.assertIn(old, readme)
+                errors = self.module.validate(ROOT, self.register, readme=readme.replace(old, new, 1))
+                self.assertTrue([e for e in errors if e.startswith('README count drift')], errors)
 
 if __name__ == '__main__':
     unittest.main()

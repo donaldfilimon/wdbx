@@ -101,3 +101,10 @@ Packages 3–10 remain open under their existing requirement routing. No consume
 cutover is permitted by these private changes. Independently held research,
 external owner/crypto review, real platform hosts, signing custody and elapsed
 operation cannot be manufactured from local tests. Full completion is not claimed.
+
+## Superseded count note (2026-10-27)
+
+The Package 1 "95 source/test candidate mappings and 68 explicit unknowns" split
+above is the historical 2026-10-22 snapshot and is kept as written. The current
+register split is stated and checker-compared in `README.md` (131 candidate / 16
+local gap / 16 external gap); all 163 requirements remain open/C0/unknown.

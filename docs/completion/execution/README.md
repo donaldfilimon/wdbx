@@ -15,6 +15,9 @@ This is an execution inventory, not an evidence promotion schema.
   local workflows or sibling gateway source does not satisfy those obligations.
 - **14 historical review/receipt pointers** remain unqualified; current review
   conclusions are recorded separately. No review is inferred from source presence.
+- **7 scoring-packet review pointers** (the 2026-10-23 scoped reviews and
+  rereviews under `evidence/2026-10-23-scoring/`) are also unqualified. Together
+  with the 14 above, the register cites 21 unique review paths.
 
 Local gaps: G01, G02, G05, G12; CH01, CH02, CH04, CH26; S16, S18, S24,
 S28, S32, S36, S37, S41. Each acceptance gap repeats its exact frozen
@@ -75,8 +78,12 @@ The checker independently pins the frozen contracts and `candidate-paths-v1.json
 That catalog fixes each ID's disposition and exact source/test/inspection/plan
 identities, so repinning the register or substituting an unrelated valid plan hash
 cannot silently shrink coverage. Catalog changes require explicit review and a
-checker-pin update. Neither validator assesses scientific or cryptographic
-adequacy. Run the original completion checker too; frozen C0 inputs are unchanged.
+checker-pin update. `review-artifact-paths-v1.json` likewise fixes each ID's exact
+artifact and review paths, so artifacts cannot be stripped and review pointers
+cannot be added without a reviewed catalog change; gap rows carry no review
+pointers. The checker also compares the count bullets above and the expanded
+local/external gap ID lists with the pinned catalogs. Neither validator assesses
+scientific or cryptographic adequacy. Run the original completion checker too; frozen C0 inputs are unchanged.
 
 ## Historical language observation packet
 

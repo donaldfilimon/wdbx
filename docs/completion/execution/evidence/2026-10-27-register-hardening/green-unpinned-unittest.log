@@ -1,0 +1,30 @@
+.......F................F........
+======================================================================
+FAIL: test_current_register (test_check_completion_execution.ExecutionTests.test_current_register)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_completion_execution.py", line 27, in test_current_register
+    self.assertEqual([], self.module.validate(ROOT, self.register))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['review/artifact catalog pin pending review']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'review/artifact catalog pin pending review'
+
+- []
++ ['review/artifact catalog pin pending review']
+
+======================================================================
+FAIL: test_review_artifact_catalog_hash_is_independently_pinned (test_check_completion_execution.ExecutionTests.test_review_artifact_catalog_hash_is_independently_pinned)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_completion_execution.py", line 197, in test_review_artifact_catalog_hash_is_independently_pinned
+    self.assertIn('review/artifact catalog drift', errors)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'review/artifact catalog drift' not found in ['review/artifact catalog pin pending review']
+
+----------------------------------------------------------------------
+Ran 33 tests in 49.268s
+
+FAILED (failures=2)

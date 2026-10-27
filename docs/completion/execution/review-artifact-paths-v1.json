@@ -1,0 +1,2630 @@
+{
+  "G01": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "G02": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "G03": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "G04": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "G05": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "G06": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "G07": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "G08": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "G09": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "G10": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "G11": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "G12": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "G13": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P01.01": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P01.02": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P01.03": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P01.04": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P01.05": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P02.01": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution-status.json",
+      "docs/completion/complete-episode-decoder-v1-source.json",
+      "docs/completion/complete-episode-python-source.json"
+    ],
+    "review": [
+      "docs/superpowers/plans/2026-10-20-complete-episode-prototype-receipt.md"
+    ]
+  },
+  "P02.02": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution-status.json",
+      "docs/completion/complete-episode-decoder-v1-source.json",
+      "docs/completion/complete-episode-python-source.json",
+      "docs/completion/execution/evidence/2026-10-22/p1-structure-vector.py",
+      "docs/completion/execution/evidence/2026-10-22/p1-structure-vector.json",
+      "docs/completion/execution/p1-dependency-decision.md",
+      "docs/completion/execution/p1-libsodium-decision.md",
+      "docs/completion/execution/p1-trust-slice.md",
+      "docs/execution/p1-local-slices-summary.md",
+      "docs/completion/execution/owner-review.md",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/SPEC.md",
+      "docs/completion/execution/evidence/2026-10-22-continuation/crypto-dependencies/inventory.json",
+      "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/runtime-inventory.json",
+      "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/pyca-retained-matrix.log",
+      "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/matrix.log",
+      "docs/completion/execution/evidence/2026-10-22-continuation/trust/build_vectors.py",
+      "docs/completion/execution/evidence/2026-10-22-continuation/trust/commands.json",
+      "crates/abi-wdbx/Cargo.toml",
+      "docs/contracts/README.md",
+      "docs/superpowers/specs/2026-10-20-wdbx-cose-trust-prototype-design.md"
+    ],
+    "review": [
+      "docs/superpowers/plans/2026-10-20-complete-episode-decoder-receipt.md",
+      "docs/execution/p1-local-slices-summary.md"
+    ]
+  },
+  "P02.03": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution-status.json",
+      "docs/completion/complete-episode-decoder-v1-source.json",
+      "docs/completion/complete-episode-python-source.json",
+      "docs/completion/execution/evidence/2026-10-22/p1-structure-vector.py",
+      "docs/completion/execution/evidence/2026-10-22/p1-structure-vector.json",
+      "docs/completion/execution/p1-dependency-decision.md",
+      "docs/completion/execution/p1-libsodium-decision.md",
+      "docs/completion/execution/p1-trust-slice.md",
+      "docs/execution/p1-local-slices-summary.md",
+      "docs/completion/execution/owner-review.md",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/SPEC.md",
+      "docs/completion/execution/evidence/2026-10-22-continuation/crypto-dependencies/inventory.json",
+      "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/runtime-inventory.json",
+      "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/pyca-retained-matrix.log",
+      "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/matrix.log",
+      "docs/completion/execution/evidence/2026-10-22-continuation/trust/build_vectors.py",
+      "docs/completion/execution/evidence/2026-10-22-continuation/trust/commands.json",
+      "crates/abi-wdbx/Cargo.toml",
+      "docs/contracts/README.md",
+      "docs/superpowers/specs/2026-10-20-wdbx-cose-trust-prototype-design.md"
+    ],
+    "review": [
+      "docs/superpowers/plans/2026-10-21-cose-cross-language-witness-receipt.md",
+      "docs/execution/p1-local-slices-summary.md"
+    ]
+  },
+  "P03.01": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P03.02": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P03.03": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P03.04": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P04.01": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P04.02": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P04.03": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": [
+      "docs/superpowers/plans/2026-10-21-retrieval-baseline-receipt.md"
+    ]
+  },
+  "P05.01": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P05.02": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P05.03": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P05.04": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P06.01": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P06.02": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P06.03": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P07.01": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P07.02": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P07.03": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P07.04": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P08.01": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/identity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/browser-gate-before-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/browser-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/kernel-baseline.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/lint-with-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/lint.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-clippy-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-test-gate-before-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-test-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-behavior-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-fixture-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-kernel-suite.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-repeat-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-native-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-negative.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-runtime-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-js-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-parity-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-kind-negative.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-artifact-hashes.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-source-manifest.json",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/task-8-language-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/task-8-language-numeric-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/task-8-language-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-22-studio/identity-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/parity-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/language-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/language-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/language-fix2-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/language-numeric-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/language-parity-review.md"
+    ]
+  },
+  "P08.02": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-source-manifest.json",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/task-8-language-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/task-8-language-numeric-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/task-8-language-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-22-language/language/language-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/language-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/language-fix2-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/language-numeric-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/language-parity-review.md"
+    ]
+  },
+  "P08.03": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-source-manifest.json",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/task-8-language-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/task-8-language-numeric-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/task-8-language-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json",
+      "docs/completion/execution/scoring-orchestration-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-attachment-mismatch.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-parity-final.log",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/layout-policy-audit.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/artifact-qualification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/summary.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/final/product-freeze.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-22-language/language/language-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/language-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/language-fix2-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/language-numeric-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/language-parity-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-rereview.md"
+    ]
+  },
+  "P08.04": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P08.05": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P08.06": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P08.07": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P08.08": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P08.09": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/scoring-orchestration-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-attachment-mismatch.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-parity-final.log",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/layout-policy-audit.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/artifact-qualification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/summary.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/final/product-freeze.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-rereview.md"
+    ]
+  },
+  "P08.10": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/identity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/browser-gate-before-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/browser-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/kernel-baseline.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/lint-with-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/lint.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-clippy-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-test-gate-before-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-test-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-behavior-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-fixture-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-kernel-suite.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-repeat-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-native-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-negative.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-runtime-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-js-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-parity-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-kind-negative.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-artifact-hashes.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-source-manifest.json",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/task-8-language-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/task-8-language-numeric-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/task-8-language-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json",
+      "docs/completion/execution/scoring-orchestration-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-attachment-mismatch.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-parity-final.log",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/layout-policy-audit.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/artifact-qualification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/summary.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/final/product-freeze.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-22-studio/identity-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/parity-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/language-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/language-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/language-fix2-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/language-numeric-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/language-parity-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-rereview.md"
+    ]
+  },
+  "P09.01": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P09.02": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P09.03": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P10.01": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P10.02": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P10.03": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "P10.04": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "CH01": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "CH02": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "CH03": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "CH04": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "CH05": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/identity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/browser-gate-before-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/browser-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/kernel-baseline.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/lint-with-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/lint.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-clippy-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-test-gate-before-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-test-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-behavior-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-fixture-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-kernel-suite.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-repeat-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-native-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-negative.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-runtime-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-js-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-parity-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-kind-negative.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-artifact-hashes.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-source-manifest.json",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/task-8-language-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/task-8-language-numeric-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/task-8-language-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-22-studio/identity-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/parity-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/language-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/language-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/language-fix2-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/language-numeric-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/language-parity-review.md"
+    ]
+  },
+  "CH06": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/identity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/browser-gate-before-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/browser-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/kernel-baseline.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/lint-with-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/lint.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-clippy-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-test-gate-before-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-test-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-behavior-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-fixture-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-kernel-suite.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-repeat-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-native-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-negative.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-runtime-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-js-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-parity-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-kind-negative.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-artifact-hashes.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-source-manifest.json",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/task-8-language-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/task-8-language-numeric-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/task-8-language-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-22-studio/identity-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/parity-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/language-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/language-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/language-fix2-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/language-numeric-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/language-parity-review.md"
+    ]
+  },
+  "CH07": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-source-manifest.json",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/task-8-language-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/task-8-language-numeric-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/task-8-language-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-22-language/language/language-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/language-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/language-fix2-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/language-numeric-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/language-parity-review.md"
+    ]
+  },
+  "CH08": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-source-manifest.json",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/task-8-language-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/task-8-language-numeric-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/task-8-language-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-22-language/language/language-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/language-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/language-fix2-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/language-numeric-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/language-parity-review.md"
+    ]
+  },
+  "CH09": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-source-manifest.json",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/task-8-language-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/task-8-language-numeric-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/task-8-language-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json",
+      "docs/completion/execution/scoring-orchestration-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-attachment-mismatch.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-parity-final.log",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/layout-policy-audit.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/artifact-qualification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/summary.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/final/product-freeze.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-22-language/language/language-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/language-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/language-fix2-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/language-numeric-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/language-parity-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-rereview.md"
+    ]
+  },
+  "CH10": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/scoring-orchestration-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-attachment-mismatch.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-parity-final.log",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/layout-policy-audit.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/artifact-qualification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/summary.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/final/product-freeze.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-rereview.md"
+    ]
+  },
+  "CH11": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/scoring-orchestration-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-attachment-mismatch.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-parity-final.log",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/layout-policy-audit.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/artifact-qualification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/summary.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/final/product-freeze.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-rereview.md"
+    ]
+  },
+  "CH12": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "CH13": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "CH14": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/scoring-orchestration-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-attachment-mismatch.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-parity-final.log",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/layout-policy-audit.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/artifact-qualification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/summary.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/final/product-freeze.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-rereview.md"
+    ]
+  },
+  "CH15": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "CH16": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "CH17": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "CH18": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/scoring-orchestration-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-attachment-mismatch.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-parity-final.log",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/layout-policy-audit.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/artifact-qualification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/summary.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/final/product-freeze.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-rereview.md"
+    ]
+  },
+  "CH19": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "CH20": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/scoring-orchestration-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-attachment-mismatch.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-parity-final.log",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/layout-policy-audit.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/artifact-qualification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/summary.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/final/product-freeze.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-rereview.md"
+    ]
+  },
+  "CH21": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-source-manifest.json",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/task-8-language-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/task-8-language-numeric-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/task-8-language-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-22-language/language/language-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/language-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/language-fix2-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/language-numeric-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/language-parity-review.md"
+    ]
+  },
+  "CH22": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "CH23": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-source-manifest.json",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/task-8-language-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/task-8-language-numeric-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/task-8-language-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json",
+      "docs/completion/execution/scoring-orchestration-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-attachment-mismatch.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-parity-final.log",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/layout-policy-audit.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/artifact-qualification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/summary.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/final/product-freeze.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-22-language/language/language-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/language-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/language-fix2-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/language-numeric-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/language-parity-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-rereview.md"
+    ]
+  },
+  "CH24": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "CH25": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "S01": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/identity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/browser-gate-before-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/browser-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/kernel-baseline.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/lint-with-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/lint.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-clippy-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-test-gate-before-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-test-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-behavior-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-fixture-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-kernel-suite.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-repeat-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-native-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-negative.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-runtime-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-js-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-parity-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-kind-negative.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-artifact-hashes.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-source-manifest.json",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/task-8-language-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/task-8-language-numeric-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/task-8-language-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-22-studio/identity-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/parity-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/language-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/language-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/language-fix2-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/language-numeric-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/language-parity-review.md"
+    ]
+  },
+  "S02": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/identity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/browser-gate-before-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/browser-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/kernel-baseline.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/lint-with-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/lint.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-clippy-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-test-gate-before-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-test-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-behavior-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-fixture-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-kernel-suite.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-repeat-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-native-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-negative.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-runtime-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-js-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-parity-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-kind-negative.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-artifact-hashes.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-22-studio/identity-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/parity-task-review.md"
+    ]
+  },
+  "S03": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/identity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/browser-gate-before-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/browser-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/kernel-baseline.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/lint-with-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/lint.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-clippy-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-test-gate-before-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-test-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-behavior-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-fixture-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-kernel-suite.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-repeat-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-native-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-negative.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-runtime-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-js-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-parity-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-kind-negative.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-artifact-hashes.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-22-studio/identity-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/parity-task-review.md"
+    ]
+  },
+  "S04": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/identity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/browser-gate-before-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/browser-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/kernel-baseline.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/lint-with-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/lint.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-clippy-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-test-gate-before-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-test-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-behavior-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-fixture-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-kernel-suite.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-repeat-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-native-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-negative.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-runtime-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-js-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-parity-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-kind-negative.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-artifact-hashes.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-source-manifest.json",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/task-8-language-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/task-8-language-numeric-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/task-8-language-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-22-studio/identity-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/parity-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/language-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/language-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/language-fix2-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/language-numeric-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/language-parity-review.md"
+    ]
+  },
+  "S05": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-source-manifest.json",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/task-8-language-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/task-8-language-numeric-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/task-8-language-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-22-language/language/language-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/language-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/language-fix2-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/language-numeric-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/language-parity-review.md"
+    ]
+  },
+  "S06": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-source-manifest.json",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/task-8-language-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/task-8-language-numeric-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/task-8-language-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-22-language/language/language-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/language-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/language-fix2-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/language-numeric-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/language-parity-review.md"
+    ]
+  },
+  "S07": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "docs/completion/execution/scoring-orchestration-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-attachment-mismatch.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-parity-final.log",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/layout-policy-audit.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/artifact-qualification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/summary.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/final/product-freeze.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-rereview.md"
+    ]
+  },
+  "S08": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "docs/completion/execution/scoring-orchestration-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-attachment-mismatch.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-parity-final.log",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/layout-policy-audit.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/artifact-qualification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/summary.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/final/product-freeze.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-rereview.md"
+    ]
+  },
+  "S09": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "docs/completion/execution/scoring-orchestration-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-attachment-mismatch.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-parity-final.log",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/layout-policy-audit.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/artifact-qualification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/summary.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/final/product-freeze.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-rereview.md"
+    ]
+  },
+  "S10": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "docs/completion/execution/scoring-orchestration-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-attachment-mismatch.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-parity-final.log",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/layout-policy-audit.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/artifact-qualification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/summary.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/final/product-freeze.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-rereview.md"
+    ]
+  },
+  "S11": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "docs/completion/execution/scoring-orchestration-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-attachment-mismatch.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-parity-final.log",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/layout-policy-audit.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/artifact-qualification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/summary.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/final/product-freeze.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-rereview.md"
+    ]
+  },
+  "S12": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "docs/completion/execution/scoring-orchestration-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-attachment-mismatch.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-parity-final.log",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/layout-policy-audit.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/artifact-qualification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/summary.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/final/product-freeze.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-rereview.md"
+    ]
+  },
+  "S13": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "docs/completion/execution/scoring-orchestration-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-attachment-mismatch.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-parity-final.log",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/layout-policy-audit.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/artifact-qualification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/summary.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/final/product-freeze.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-rereview.md"
+    ]
+  },
+  "S14": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "docs/completion/execution/scoring-orchestration-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-attachment-mismatch.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-parity-final.log",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/layout-policy-audit.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/artifact-qualification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/summary.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/final/product-freeze.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-rereview.md"
+    ]
+  },
+  "S15": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "docs/completion/execution/scoring-orchestration-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/pre-integration-verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-attachment-mismatch.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/03-parity-final.log",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-report.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/layout-policy-audit.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/source-freeze.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/artifact-qualification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/verification.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/summary.json",
+      "docs/completion/execution/evidence/2026-10-23-scoring/final/product-freeze.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-23-scoring/scoring/task-8-scoring-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/task-8-orchestration-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/orchestration/fix1/task-8-orchestration-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/task-8-canonical-budget-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/canonical-budget/fix1/task-8-canonical-budget-fix1-rereview.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/canonical-final/task-8-scoring-parity-review.md",
+      "docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/task-8-scoring-parity-fix1-rereview.md"
+    ]
+  },
+  "S16": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json"
+    ],
+    "review": []
+  },
+  "S17": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/identity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/browser-gate-before-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/browser-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/kernel-baseline.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/lint-with-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/lint.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-clippy-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-test-gate-before-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-test-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-behavior-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-fixture-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-kernel-suite.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-repeat-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-native-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-negative.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-runtime-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-js-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-parity-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-kind-negative.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-artifact-hashes.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-22-studio/identity-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/parity-task-review.md"
+    ]
+  },
+  "S18": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json"
+    ],
+    "review": []
+  },
+  "S19": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-source-manifest.json",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/task-8-language-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/task-8-language-numeric-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/task-8-language-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-22-language/language/language-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/language-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/language-fix2-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/language-numeric-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/language-parity-review.md"
+    ]
+  },
+  "S20": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-source-manifest.json",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/task-8-language-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/task-8-language-numeric-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/task-8-language-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-22-language/language/language-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/language-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/language-fix2-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/language-numeric-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/language-parity-review.md"
+    ]
+  },
+  "S21": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-source-manifest.json",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/task-8-language-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/task-8-language-numeric-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/task-8-language-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-22-language/language/language-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/language-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/language-fix2-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/language-numeric-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/language-parity-review.md"
+    ]
+  },
+  "S22": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json"
+    ],
+    "review": []
+  },
+  "S23": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json"
+    ],
+    "review": []
+  },
+  "S24": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json"
+    ],
+    "review": []
+  },
+  "S25": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-source-manifest.json",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/task-8-language-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/task-8-language-numeric-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/task-8-language-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-22-language/language/language-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/language-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/language-fix2-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/language-numeric-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/language-parity-review.md"
+    ]
+  },
+  "S26": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json"
+    ],
+    "review": []
+  },
+  "S27": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json"
+    ],
+    "review": []
+  },
+  "S28": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json"
+    ],
+    "review": []
+  },
+  "S29": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "docs/completion/execution/evidence/2026-10-26-wave1-tranche1/requirement-mapping.json"
+    ],
+    "review": []
+  },
+  "S30": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json"
+    ],
+    "review": []
+  },
+  "S31": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json"
+    ],
+    "review": []
+  },
+  "S32": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json"
+    ],
+    "review": []
+  },
+  "S33": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "docs/completion/execution/evidence/2026-10-26-wave1-tranche1/requirement-mapping.json"
+    ],
+    "review": []
+  },
+  "S34": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json"
+    ],
+    "review": []
+  },
+  "S35": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json"
+    ],
+    "review": []
+  },
+  "S36": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json"
+    ],
+    "review": []
+  },
+  "S37": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json"
+    ],
+    "review": []
+  },
+  "S38": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json"
+    ],
+    "review": []
+  },
+  "S39": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json"
+    ],
+    "review": []
+  },
+  "S40": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/identity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/browser-gate-before-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/browser-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/kernel-baseline.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/lint-with-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/lint.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-clippy-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-test-gate-before-parity.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/native-test-gate.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-behavior-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-fixture-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-kernel-suite.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-repeat-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-native-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-negative.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-runtime-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-js-red.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-clippy.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-parity-green.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-kind-negative.log",
+      "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-artifact-hashes.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-22-studio/identity-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-studio/parity-task-review.md"
+    ]
+  },
+  "S41": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json"
+    ],
+    "review": []
+  },
+  "S42": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json"
+    ],
+    "review": []
+  },
+  "S43": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json"
+    ],
+    "review": []
+  },
+  "S44": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json"
+    ],
+    "review": []
+  },
+  "S45": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json"
+    ],
+    "review": []
+  },
+  "S46": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/studio-research-v1.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/current-source-manifest.json",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/task-8-language-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/task-8-language-numeric-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/task-8-language-parity-report.md",
+      "docs/completion/execution/evidence/2026-10-22-language/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/gates/summary.json",
+      "docs/completion/execution/evidence/2026-10-22-language/final-fix/identity-accessor-extension.json"
+    ],
+    "review": [
+      "docs/completion/execution/evidence/2026-10-22-language/language/language-task-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-1/language-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/fix-2/language-fix2-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/language/numeric-followup/language-numeric-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/text-scan-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/text-scan/fix-1/text-scan-fix1-review.md",
+      "docs/completion/execution/evidence/2026-10-22-language/parity/language-parity-review.md"
+    ]
+  },
+  "CH26": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "C01": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution-status.json",
+      "docs/completion/complete-episode-decoder-v1-source.json",
+      "docs/completion/complete-episode-python-source.json"
+    ],
+    "review": [
+      "docs/superpowers/plans/2026-10-20-complete-episode-prototype-receipt.md"
+    ]
+  },
+  "C02": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution-status.json",
+      "docs/completion/complete-episode-decoder-v1-source.json",
+      "docs/completion/complete-episode-python-source.json"
+    ],
+    "review": [
+      "docs/superpowers/plans/2026-10-20-complete-episode-prototype-receipt.md"
+    ]
+  },
+  "C03": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution-status.json",
+      "docs/completion/complete-episode-decoder-v1-source.json",
+      "docs/completion/complete-episode-python-source.json"
+    ],
+    "review": [
+      "docs/superpowers/plans/2026-10-20-complete-episode-prototype-receipt.md"
+    ]
+  },
+  "C04": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution-status.json",
+      "docs/completion/complete-episode-decoder-v1-source.json",
+      "docs/completion/complete-episode-python-source.json"
+    ],
+    "review": [
+      "docs/superpowers/plans/2026-10-20-complete-episode-prototype-receipt.md"
+    ]
+  },
+  "C05": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution-status.json",
+      "docs/completion/complete-episode-decoder-v1-source.json",
+      "docs/completion/complete-episode-python-source.json"
+    ],
+    "review": [
+      "docs/superpowers/plans/2026-10-20-complete-episode-prototype-receipt.md"
+    ]
+  },
+  "C06": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution-status.json",
+      "docs/completion/complete-episode-decoder-v1-source.json",
+      "docs/completion/complete-episode-python-source.json"
+    ],
+    "review": [
+      "docs/superpowers/plans/2026-10-20-complete-episode-prototype-receipt.md"
+    ]
+  },
+  "C07": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution-status.json",
+      "docs/completion/complete-episode-decoder-v1-source.json",
+      "docs/completion/complete-episode-python-source.json"
+    ],
+    "review": [
+      "docs/superpowers/plans/2026-10-20-complete-episode-prototype-receipt.md"
+    ]
+  },
+  "C08": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution-status.json",
+      "docs/completion/complete-episode-decoder-v1-source.json",
+      "docs/completion/complete-episode-python-source.json"
+    ],
+    "review": [
+      "docs/superpowers/plans/2026-10-20-complete-episode-prototype-receipt.md"
+    ]
+  },
+  "C09": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution-status.json",
+      "docs/completion/complete-episode-decoder-v1-source.json",
+      "docs/completion/complete-episode-python-source.json"
+    ],
+    "review": [
+      "docs/superpowers/plans/2026-10-20-complete-episode-prototype-receipt.md"
+    ]
+  },
+  "C10": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution-status.json",
+      "docs/completion/complete-episode-decoder-v1-source.json",
+      "docs/completion/complete-episode-python-source.json",
+      "docs/completion/execution/p1-dependency-decision.md",
+      "docs/completion/execution/p1-libsodium-decision.md",
+      "docs/completion/execution/p1-trust-slice.md",
+      "docs/execution/p1-local-slices-summary.md",
+      "docs/completion/execution/owner-review.md",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/SPEC.md",
+      "docs/completion/execution/evidence/2026-10-22-continuation/crypto-dependencies/inventory.json",
+      "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/runtime-inventory.json",
+      "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/pyca-retained-matrix.log",
+      "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/matrix.log",
+      "docs/completion/execution/evidence/2026-10-22-continuation/trust/build_vectors.py",
+      "docs/completion/execution/evidence/2026-10-22-continuation/trust/commands.json",
+      "crates/abi-wdbx/Cargo.toml",
+      "docs/contracts/README.md",
+      "docs/superpowers/specs/2026-10-20-wdbx-cose-trust-prototype-design.md"
+    ],
+    "review": [
+      "docs/superpowers/plans/2026-10-21-cose-cross-language-witness-receipt.md",
+      "docs/execution/p1-local-slices-summary.md"
+    ]
+  },
+  "C11": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution-status.json",
+      "docs/completion/complete-episode-decoder-v1-source.json",
+      "docs/completion/complete-episode-python-source.json",
+      "docs/completion/execution/p1-dependency-decision.md",
+      "docs/completion/execution/p1-libsodium-decision.md",
+      "docs/completion/execution/p1-trust-slice.md",
+      "docs/execution/p1-local-slices-summary.md",
+      "docs/completion/execution/owner-review.md",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/SPEC.md",
+      "docs/completion/execution/evidence/2026-10-22-continuation/crypto-dependencies/inventory.json",
+      "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/runtime-inventory.json",
+      "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/pyca-retained-matrix.log",
+      "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/matrix.log",
+      "docs/completion/execution/evidence/2026-10-22-continuation/trust/build_vectors.py",
+      "docs/completion/execution/evidence/2026-10-22-continuation/trust/commands.json",
+      "crates/abi-wdbx/Cargo.toml",
+      "docs/contracts/README.md",
+      "docs/superpowers/specs/2026-10-20-wdbx-cose-trust-prototype-design.md"
+    ],
+    "review": [
+      "docs/execution/p1-local-slices-summary.md"
+    ]
+  },
+  "C12": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution-status.json",
+      "docs/completion/complete-episode-decoder-v1-source.json",
+      "docs/completion/complete-episode-python-source.json"
+    ],
+    "review": []
+  },
+  "C13": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution-status.json",
+      "docs/completion/complete-episode-decoder-v1-source.json",
+      "docs/completion/complete-episode-python-source.json"
+    ],
+    "review": []
+  },
+  "C14": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution-status.json",
+      "docs/completion/complete-episode-decoder-v1-source.json",
+      "docs/completion/complete-episode-python-source.json"
+    ],
+    "review": []
+  },
+  "C15": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution-status.json",
+      "docs/completion/complete-episode-decoder-v1-source.json",
+      "docs/completion/complete-episode-python-source.json"
+    ],
+    "review": []
+  },
+  "C16": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution-status.json",
+      "docs/completion/complete-episode-decoder-v1-source.json",
+      "docs/completion/complete-episode-python-source.json"
+    ],
+    "review": []
+  },
+  "C17": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "C18": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "C19": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "C20": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "C21": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "OS01": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "OS02": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "OS03": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "OS04": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "OS05": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "OS06": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "E01": {
+    "artifacts": [
+      "docs/completion/plans.json",
+      "docs/completion/execution/p1-dependency-decision.md",
+      "docs/completion/execution/p1-libsodium-decision.md",
+      "docs/completion/execution/p1-trust-slice.md",
+      "docs/execution/p1-local-slices-summary.md",
+      "docs/completion/execution/owner-review.md",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/SPEC.md",
+      "docs/completion/execution/evidence/2026-10-22-continuation/crypto-dependencies/inventory.json",
+      "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/runtime-inventory.json",
+      "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/pyca-retained-matrix.log",
+      "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/matrix.log",
+      "docs/completion/execution/evidence/2026-10-22-continuation/trust/build_vectors.py",
+      "docs/completion/execution/evidence/2026-10-22-continuation/trust/commands.json",
+      "crates/abi-wdbx/Cargo.toml",
+      "docs/contracts/README.md",
+      "docs/superpowers/specs/2026-10-20-wdbx-cose-trust-prototype-design.md"
+    ],
+    "review": [
+      "docs/execution/p1-local-slices-summary.md"
+    ]
+  },
+  "E02": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "E03": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "E04": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "E05": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "E06": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "E07": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  },
+  "E08": {
+    "artifacts": [
+      "docs/completion/plans.json"
+    ],
+    "review": []
+  }
+}
