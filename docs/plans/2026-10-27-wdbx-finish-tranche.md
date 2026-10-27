@@ -99,3 +99,11 @@
 | Studio kernel/native | 82 task-8 requirements | Separate workspace (`specimen-studio/`) with its own guide and gates. Should be its own plan. |
 | ABI/Abbey consumers, federation, Studio sync, platforms | tasks 5, 6, 7, 9, 10 | Owned by other repositories or operators. Needs separate-host federation, signing receipts, staging drills and elapsed C7 operation. |
 | HawkScan | — | Documented missing prerequisites (`HAWK_API_KEY` unset). Reported skipped. |
+
+## Execution outcome (2026-10-27)
+
+- Task 1 (`dc54126`): the prior writer's I1 fix was adopted after the full gate passed on it (62 suites, 1211 tests).
+- Task 2 (`2603bf7`, `8e00bbb`, `8dc84fe`): M3 fixed. M6 is partly covered by `n02-matrix-negatives-v1.json`, eight single-defect vectors asserted by both parsers. M1/M2/M4/M5 are documented in package clarification 1.0.2, and M8 status docs are updated. Every new test was mutation-checked RED against the old behaviour.
+- Task 3 (`56fb6a8`): the [N02 fixes review](../completion/execution/evidence/2026-10-26-source-pin-migration-review/n02-fixes-review.md) returned APPROVE, which meets admission condition 1. The [catalog review](../completion/execution/evidence/2026-10-26-source-pin-migration-review/catalog-model-migration-review.md) returned APPROVE WITH REQUIRED FIXES, and I1–I3 were applied. The release checker is green in live mode with no drift.
+- Task 4: the status index lives in [`docs/README.md`](../README.md), not the root README. Ruling: root `README.md` is a pinned live release source, so editing it would need another reviewed source-snapshot migration.
+- Deferred: N02 m5 (a retained temporary is not reported in `StagedObject`), m6 (tokenizer profile error offset is one byte late), and the remaining M6 items listed in `n02-fixtures.md`.

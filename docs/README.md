@@ -5,6 +5,24 @@ The [repository README](../README.md) and [agent instructions](../AGENTS.md)
 explain the current Rust substrate. This index does not replace their detailed
 implementation and security boundaries.
 
+## Where things stand
+
+A short index; the detailed, hedged account is the [repository README's "Status: honest"](../README.md#status-honest).
+
+| Question | Where to look |
+| --- | --- |
+| What does the program require? | [`docs/completion/requirements.json`](completion/requirements.json): 163 requirements, all `proposed`/C0 (contract check `tools/check_completion.py`). |
+| What is implemented against each requirement? | [`docs/completion/execution/register-v1.json`](completion/execution/register-v1.json) and [`progress.md`](completion/execution/progress.md) (check `tools/check_completion_execution.py`). Mappings are candidates, not promotions. |
+| What is the release scope and source identity? | [`docs/completion/substrate-release/`](completion/substrate-release/README.md) (check `tools/check_substrate_release.py`, live and `--snapshot-only`). |
+| What is being worked on now? | [`docs/plans/`](plans/), newest first; the current tranche is [2026-10-27 WDBX finish tranche](plans/2026-10-27-wdbx-finish-tranche.md), including its "Remaining work" table. |
+| How do I check a change? | `bash tools/check.sh` with the pinned toolchain (see the [README gate section](../README.md#gate)). [`specimen-studio/`](../specimen-studio/README.md) has its own guide and gates; the root gate does not qualify it. |
+| What can never be closed locally? | ABI normative schema approval and consumer qualification, independent crypto review, research efficacy experiments, separate-host federation, platform installation/signing receipts, private staging and recovery drills, and elapsed C7 operation. |
+
+Requirement ownership: WDBX work packages 1–4 hold 57 requirements, the Studio
+kernel/native package (8) holds 82, ABI/Abbey/Studio-sync/federation packages
+(5, 6, 7, 9) hold 14, and platform operators (10) hold 10. Passing gates and
+identity pins never promote a requirement past C0.
+
 ## Choose a starting point
 
 | Goal | Read |
