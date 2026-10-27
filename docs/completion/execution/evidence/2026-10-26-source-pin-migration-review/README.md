@@ -202,3 +202,27 @@ anything past C0.
   `--drift-report` after the v2.rs migration (38 errors, 1 path).
 - [validation.json](validation.json): commands and exit codes.
 
+## Applied migration: `model` routing and `lib.rs` (2026-10-27)
+
+Preconditions: [N02 independent review](n02-independent-review.md) condition 1
+met by the [approved N02 fixes review](n02-fixes-review.md); owner decision in
+chat to route `model` to a release task. Applied as an in-place pin migration of
+`catalog-v1.json` (catalog `version` stays 1) after an
+[independent catalog review](catalog-model-migration-review.md):
+
+| Item | Before | After |
+| --- | --- | --- |
+| 38 `lib.rs` module rows `sha256` | `ca24c1bf76f97ef897d3bce1bfa31bebd9871bad702b91cd054c51937e477dc7` | `afb2a62420f0fa8632248ddda78d9329331efc22d50cf40e50a09d0d9bcf9210` |
+| `MOD-0048`..`MOD-0069` `line` | n | n + 1 |
+| New module rows | none | `MOD-0084` (`lib.rs`), `MOD-0085`..`MOD-0090` (`model/mod.rs`), `MOD-0091`..`MOD-0096` (`model/contract.rs`) |
+| New format row | none | `FORMAT-model-package` (`model/package/mod.rs`) |
+| `CATALOG_PIN` | `e65441f2a36c099a1c752735ee9d3f109fe0b30c57e71158585e77408b8b955f` | `6dd4b1c4cdeb156229a763e786e0ec53616d525fe4439ead217ba7108dbfc23f` |
+
+All new rows are `declaration-coverage-only`, owner `WDBX compatibility
+maintainer`, task 3, with an open `missing_behavior_blocker`. RED: with only the
+catalog edited, `test_valid` failed and `--snapshot-only` refused. GREEN: after
+the pin, the 53 release tests pass, live and `--snapshot-only` exit 0, and
+`--drift-report` reports no drifted path
+([drift-report-after-model-migration.json](drift-report-after-model-migration.json)).
+Identity pins do not qualify behaviour or move anything past C0.
+

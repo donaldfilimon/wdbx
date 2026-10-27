@@ -15,9 +15,9 @@ contract without comparing current WDBX source identities. Neither command
 runs the Rust, Studio, hardware, crypto or operational gates.
 
 - `catalog-v1.json` freezes scope routing, source hashes, inspection anchors,
-  83 lexical public-module declarations (including abi-compute's three private
+  96 lexical public-module declarations (including abi-compute's three private
   implementation modules exposed through public reexports), four Cargo feature
-  selections, and twenty persistence-format families. Cfg-gated and nested
+  selections, and twenty-one persistence-format families. Cfg-gated and nested
   public declarations are conservatively included; this is not a rustdoc reachability audit.
 - `inventory-v1.json` holds the 163 historical routes, all 22 release tasks,
   task checklist/acceptance clauses, normative source-clause candidates,
@@ -110,3 +110,14 @@ that review and an independent review, only `FORMAT-v2-journals` was migrated
 `lib.rs` module rows, which stay blocked on routing for the uncatalogued `model`
 growth. The remaining migration is proposed, not applied, in
 [the source-pin migration review](../execution/evidence/2026-10-26-source-pin-migration-review/README.md).
+
+On 2026-10-27, after the N02 fixes were independently approved and the owner
+routed `model` to release task 3, a second reviewed pin migration added
+`MOD-0084`..`MOD-0096` (`pub mod model;` and the twelve public module
+declarations in `model/mod.rs` and `model/contract.rs`) and
+`FORMAT-model-package` (`model/package/mod.rs`), each `declaration-coverage-only`
+with an open `missing_behavior_blocker`, and moved the 38 `lib.rs` rows to the
+current identity (22 with a +1 line anchor). Live validation then reports no
+drift. Like the other format rows, `FORMAT-model-package` pins its module root
+only: edits confined to `header.rs`, `directory.rs`, `write.rs` or
+`components/` do not drift it. Identity pins remain C0.

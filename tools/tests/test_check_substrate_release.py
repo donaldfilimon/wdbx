@@ -356,8 +356,18 @@ class LiveRelease(unittest.TestCase):
         self.write(format_path, b'pub fn read_v2_root() {}')
         rows = {r['path']: r for r in self.report()['drifted_paths']}
         self.assertEqual({module_path, format_path}, set(rows))
-        self.assertEqual(38, len(rows[module_path]['declaration_ids']))
+        self.assertEqual(39, len(rows[module_path]['declaration_ids']))
         self.assertEqual(1, len(rows[format_path]['declaration_ids']))
+
+    def test_model_rows_refuse_live_drift(self):
+        format_path = 'crates/abi-wdbx/src/model/package/mod.rs'
+        module_path = 'crates/abi-wdbx/src/model/mod.rs'
+        self.write(format_path, b'//! changed package root')
+        self.write(module_path, b'pub mod contract;')
+        rows = {r['path']: r for r in self.report()['drifted_paths']}
+        self.assertEqual({module_path, format_path}, set(rows))
+        self.assertEqual(['FORMAT-model-package'], rows[format_path]['declaration_ids'])
+        self.assertEqual(['MOD-%04d' % n for n in range(85, 91)], rows[module_path]['declaration_ids'])
 
     def test_missing_source_and_os_read_error(self):
         from unittest.mock import patch
