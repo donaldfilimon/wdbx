@@ -122,16 +122,20 @@ Active engine/ID/save migration, durable utilities, real host authorization/effe
 full research controls/efficacy, scheduler/ATP/voting, ABI-owner receipt and
 hardware/platform/UI/elapsed-operation qualification remain open.
 
-## Current scoring and orchestration observations
+## Scoring and orchestration observations (2026-10-23 packet)
 
-The current packet is `evidence/2026-10-23-scoring/register/`, with final runtime
-and scoped review receipts in `parity/canonical-final/` and `parity/review-fix1/`,
-and four separate Studio gates in `gates/review-fix1/`. The resolved mapping is
-also copied to `evidence/2026-10-23-scoring/evidence/requirement-mapping.json` for
-final-review routing. Only S07–S15 move to partial local mechanism candidates:
-129 candidates / 18 local gaps / 16 external gaps. All 163 requirements remain
-open/C0/unknown; all 46 S and 18 D frozen rows and baseline observations remain.
-There are 24 distinct bounded observations, preserving the previous 15 IDs.
+The counts in this section describe that packet's snapshot; the current register
+counts are the 131 / 16 / 16 stated at the top of this file and in the Wave 1
+tranche 1 section below. The packet is `evidence/2026-10-23-scoring/register/`,
+with final runtime and scoped review receipts in `parity/canonical-final/` and
+`parity/review-fix1/`, and four separate Studio gates in `gates/review-fix1/`. The
+resolved mapping is also copied to
+`evidence/2026-10-23-scoring/evidence/requirement-mapping.json` for final-review
+routing. Only S07–S15 moved to partial local mechanism candidates, leaving 129
+candidates / 18 local gaps / 16 external gaps at that packet. All 163 requirements
+remain open/C0/unknown; all 46 S and 18 D frozen rows and baseline observations
+remain. There are 24 distinct bounded observations, preserving the previous 15
+IDs.
 
 S07/S08 expose exact rational supplied-ATP, strength and jitter policy, with
 inclusive endpoints/thresholds and draw accounting. These numeric policy fixtures
