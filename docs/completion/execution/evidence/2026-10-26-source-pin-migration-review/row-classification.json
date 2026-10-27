@@ -1,7 +1,6 @@
 {
   "version": 1,
-  "claim_policy": "review record only; no pin, catalog, contract or C0 status change",
-  "pinned_at_commit": "96c4b13",
+  "claim_policy": "review record; only FORMAT-v2-journals sha256 and CATALOG_PIN migrated (fix round 1); no inventory, contract or C0 status change",
   "paths": {
     "crates/abi-wdbx/src/lib.rs": {
       "expected_sha256": "ca24c1bf76f97ef897d3bce1bfa31bebd9871bad702b91cd054c51937e477dc7",
@@ -39,37 +38,127 @@
       "path": "crates/abi-wdbx/src/lib.rs",
       "line": 47,
       "declaration": "pub mod model;",
-      "commit": "a043e4f"
+      "commit": "a043e4f",
+      "packet": "N01",
+      "review_status": "accepted (independent spec/code review and index-fix re-review, cb129cf)",
+      "reached_main_via": "reviewed modernization cohort 2221889 merged by da4ba2b",
+      "owning_plans": [
+        "docs/plans/2026-10-25-native-model-contracts.md",
+        "docs/plans/2026-10-25-native-model-cpu.md"
+      ],
+      "owning_contracts": "docs/contracts/model/",
+      "company_items": [
+        "M2",
+        "M4"
+      ]
     },
     {
       "path": "crates/abi-wdbx/src/model/mod.rs",
       "declaration": "pub mod contract;",
-      "commit": "a043e4f"
+      "commit": "a043e4f",
+      "packet": "N01",
+      "review_status": "accepted (independent spec/code review and index-fix re-review, cb129cf)",
+      "reached_main_via": "reviewed modernization cohort 2221889 merged by da4ba2b",
+      "owning_plans": [
+        "docs/plans/2026-10-25-native-model-contracts.md",
+        "docs/plans/2026-10-25-native-model-cpu.md"
+      ],
+      "owning_contracts": "docs/contracts/model/",
+      "company_items": [
+        "M2",
+        "M4"
+      ]
     },
     {
       "path": "crates/abi-wdbx/src/model/mod.rs",
       "declaration": "pub mod error;",
-      "commit": "a043e4f"
+      "commit": "a043e4f",
+      "packet": "N01",
+      "review_status": "accepted (independent spec/code review and index-fix re-review, cb129cf)",
+      "reached_main_via": "reviewed modernization cohort 2221889 merged by da4ba2b",
+      "owning_plans": [
+        "docs/plans/2026-10-25-native-model-contracts.md",
+        "docs/plans/2026-10-25-native-model-cpu.md"
+      ],
+      "owning_contracts": "docs/contracts/model/",
+      "company_items": [
+        "M2",
+        "M4"
+      ]
     },
     {
       "path": "crates/abi-wdbx/src/model/mod.rs",
       "declaration": "pub mod ids;",
-      "commit": "a043e4f"
+      "commit": "a043e4f",
+      "packet": "N01",
+      "review_status": "accepted (independent spec/code review and index-fix re-review, cb129cf)",
+      "reached_main_via": "reviewed modernization cohort 2221889 merged by da4ba2b",
+      "owning_plans": [
+        "docs/plans/2026-10-25-native-model-contracts.md",
+        "docs/plans/2026-10-25-native-model-cpu.md"
+      ],
+      "owning_contracts": "docs/contracts/model/",
+      "company_items": [
+        "M2",
+        "M4"
+      ]
     },
     {
       "path": "crates/abi-wdbx/src/model/mod.rs",
       "declaration": "pub mod limits;",
-      "commit": "a043e4f"
+      "commit": "a043e4f",
+      "packet": "N01",
+      "review_status": "accepted (independent spec/code review and index-fix re-review, cb129cf)",
+      "reached_main_via": "reviewed modernization cohort 2221889 merged by da4ba2b",
+      "owning_plans": [
+        "docs/plans/2026-10-25-native-model-contracts.md",
+        "docs/plans/2026-10-25-native-model-cpu.md"
+      ],
+      "owning_contracts": "docs/contracts/model/",
+      "company_items": [
+        "M2",
+        "M4"
+      ]
     },
     {
       "path": "crates/abi-wdbx/src/model/mod.rs",
       "declaration": "pub mod package;",
-      "commit": "55f33a6"
+      "commit": "55f33a6",
+      "related_commits": [
+        "8ad18a8"
+      ],
+      "packet": "N02",
+      "review_status": "pending (plan: independent review and integration remain pending)",
+      "reached_main_via": "WIP-preservation merge 2b4c231 of 85c3baa (idle 012-native-package working tree)",
+      "owning_plans": [
+        "docs/plans/2026-10-25-native-package.md",
+        "docs/plans/2026-10-25-native-model-cpu.md"
+      ],
+      "owning_contracts": "docs/contracts/model/",
+      "company_items": [
+        "M2",
+        "M4"
+      ]
     },
     {
       "path": "crates/abi-wdbx/src/model/mod.rs",
       "declaration": "pub mod tokenizer;",
-      "commit": "55f33a6"
+      "commit": "55f33a6",
+      "related_commits": [
+        "8ad18a8"
+      ],
+      "packet": "N02",
+      "review_status": "pending (plan: independent review and integration remain pending)",
+      "reached_main_via": "WIP-preservation merge 2b4c231 of 85c3baa (idle 012-native-package working tree)",
+      "owning_plans": [
+        "docs/plans/2026-10-25-native-package.md",
+        "docs/plans/2026-10-25-native-model-cpu.md"
+      ],
+      "owning_contracts": "docs/contracts/model/",
+      "company_items": [
+        "M2",
+        "M4"
+      ]
     }
   ],
   "rows": [
@@ -652,7 +741,26 @@
       "file_transitions": [
         "4c01514: adds `pub fn read_v2_root` (17 lines) calling existing `recover`; no encoder, writer, journal layout or VERSION marker change"
       ],
-      "verdict": "not migrated: reviewed-additive candidate; catalog pin migration requires independent review (self-review only here)"
+      "verdict": "migrated in fix round 1: approved by this review (bc6dbfa) and an independent read-only review (\"v2.rs migration: APPROVE\")",
+      "migration": {
+        "sha256_before": "28a6283b886b6290ea00cdd7500efa248724ab28d60ae3fa2bdba297eb8e0d64",
+        "sha256_after": "80e50d5537e148d0f6b36842881764c29f0ee3921c98cd7fb906e91c8fe62759",
+        "catalog_pin_before": "d9b2cbe9ea14c65166bfa407686aae0eeffe76608d0bca46f1a246ee0c419248",
+        "catalog_pin_after": "e65441f2a36c099a1c752735ee9d3f109fe0b30c57e71158585e77408b8b955f"
+      }
+    }
+  ],
+  "pin_baseline_commit": "96c4b13",
+  "unpinned_additive_v2_exports": [
+    {
+      "path": "crates/abi-wdbx/src/v2/types.rs",
+      "item": "V2Snapshot::kv_keys",
+      "commit": "4c01514"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v2/types.rs",
+      "item": "V2Snapshot::kv_versions",
+      "commit": "e5fd43b"
     }
   ]
 }

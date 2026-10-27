@@ -14,7 +14,7 @@ import re
 import sys
 
 MAX_BYTES = 8 * 1024 * 1024
-CATALOG_PIN = 'd9b2cbe9ea14c65166bfa407686aae0eeffe76608d0bca46f1a246ee0c419248'
+CATALOG_PIN = 'e65441f2a36c099a1c752735ee9d3f109fe0b30c57e71158585e77408b8b955f'
 DEPENDENCIES = {1: [], 2: [1], 3: [1], 4: [2, 3], 5: [4], 6: [2, 4, 5], 7: [3], 8: [7], 9: [4, 8], 10: [9], 11: [2, 3], 12: [3, 9], 13: [2, 3], 14: [13], 15: [13], 16: [2, 4], 17: [4, 16], 18: [4, 5], 19: [2, 4, 9, 18], 20: [4, 5, 6, 9, 11, 12, 14, 15, 16, 17, 18, 19], 21: [3, 19, 20], 22: [20, 21]}
 PROTOCOL_PIN = '46fcc50ae82ca122645b75ceeda4be013d19e1f950ce0c90b16bec919f38219d'
 BASELINE_PIN = 'c63443d76942595ba64b0515feca7fe180c61cf9edb1ab35ecaa2d5a734d1b76'

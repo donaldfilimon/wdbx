@@ -104,6 +104,9 @@ materialize synthetic live declarations and mock only their temporary catalog
 pin; the real immutable-pin and promotion-refusal tests remain enforced.
 
 The per-row review of these 39 rows (16 identity-only, 22 identity-only with a
-+1 line anchor, 1 additive export, blocked by uncatalogued `model` growth) and a
-proposed, unapplied migration are recorded in
++1 line anchor, 1 additive export) is recorded in the review linked below. After
+that review and an independent review, only `FORMAT-v2-journals` was migrated
+(its `sha256` and `CATALOG_PIN`). Live validation now refuses exactly the 38
+`lib.rs` module rows, which stay blocked on routing for the uncatalogued `model`
+growth. The remaining migration is proposed, not applied, in
 [the source-pin migration review](../execution/evidence/2026-10-26-source-pin-migration-review/README.md).

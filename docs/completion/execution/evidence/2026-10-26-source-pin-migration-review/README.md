@@ -1,9 +1,15 @@
 # Substrate release source-pin migration review — 2026-10-26
 
 Review of the 39 live declaration-drift rows refused by
-`tools/check_substrate_release.py`. Reviewed tree: `e5fd43b` (local main). This
-record changes no pin, catalog, inventory, contract or C0 status. Live validation
-still exits **1**; `--snapshot-only` exits **0**. No migration is applied.
+`tools/check_substrate_release.py`. Reviewed tree: `e5fd43b` (local main). The
+catalog was frozen in `96c4b13`, which is the pin baseline for both paths.
+
+**Outcome (fix round 1, 2026-10-27):** only `FORMAT-v2-journals` was migrated,
+after this review and an independent review both approved it (see
+[v2.rs migration](#v2rs-migration-applied)). The 38 `lib.rs` rows stay
+unmigrated and still drifting. Live validation exits **1** with exactly 38 errors
+on one path; `--snapshot-only` exits **0**. No inventory, contract or C0 status
+changed.
 
 ## Structural finding: migration is per file, never per row
 
@@ -42,19 +48,40 @@ shasum -a 256` for `96c4b13`, `da4ba2b`, `2b4c231`, `433ce50` and `4c01514`, and
 
 File-level verdicts:
 
-- `lib.rs` carries **semantic** growth: `pub mod model;` exposes a new public
-  module tree (`contract`, `error`, `ids`, `limits` from `a043e4f`; `package`,
-  `tokenizer` from `55f33a6`) and the native model package format
-  (`tests/fixtures/model-v1/`). The catalog has no row for it. Neither
-  `protocols-v1.json` nor `sources/plan.md` names a release task or owner for the
-  native model package (N02), so routing it is a scope decision. Refreshing the
-  `lib.rs` hash would also make the README's "83 lexical public-module
-  declarations" statement false. The `read_v2_root` reexport is additive.
+- `lib.rs` carries **semantic** growth: `pub mod model;` exposes a public module
+  tree and the native model package format (`tests/fixtures/model-v1/`). The
+  substrate release catalog has no row for it, and neither `protocols-v1.json`
+  nor `sources/plan.md` routes it to a release task. Refreshing the `lib.rs` hash
+  would admit that unrouted tree and would make the release README's "83 lexical
+  public-module declarations" false. The `read_v2_root` reexport is additive.
+  The tree has two parts with different review states:
+  - **Reviewed (N01, `a043e4f`):** `pub mod model;` and `contract`, `error`,
+    `ids`, `limits`. This commit is an ancestor of the reviewed modernization
+    cohort `2221889`, which `da4ba2b` merged. Its independent spec/code review and
+    the index-fix re-review are recorded as accepted (`cb129cf`) in
+    [`docs/plans/2026-10-25-native-model-cpu.md`](../../../../plans/2026-10-25-native-model-cpu.md)
+    and [`docs/plans/2026-10-25-native-model-contracts.md`](../../../../plans/2026-10-25-native-model-contracts.md).
+  - **Review pending (N02, `55f33a6`, with `8ad18a8`):** `package` and
+    `tokenizer`. These are not in `2221889`. They reached main through the
+    WIP-preservation merge `2b4c231` of `85c3baa` (snapshot of the idle
+    `012-native-package` working tree). The native-model plan states that N02
+    "independent review and integration remain pending"; see
+    [`docs/plans/2026-10-25-native-package.md`](../../../../plans/2026-10-25-native-package.md).
+  - **Owning plan and contracts:** [`docs/contracts/model/`](../../../../contracts/model/README.md)
+    (binding [native-package design](../../../../contracts/model/native-package-design-v1.md),
+    `package-v1.md`, `tokenizer-v1.md`), under company master items M2/M4. The
+    model work has an owner; what is missing is routing in the *substrate release*
+    catalog. That routing should reuse N01's accepted review and wait for N02's
+    pending one.
 - `v2.rs` is **additive export**: `read_v2_root` checks the existing
   `ABI-WDBX 2\n` `VERSION` marker and calls the existing `recover`. It takes no
   writer lease and changes no write path, journal layout, encoder or marker.
   Journal bytes are unchanged. Tests: `crates/abi-wdbx/src/v2/tests.rs`,
-  `crates/abi-wdbx/tests/typed_cli.rs`.
+  `crates/abi-wdbx/tests/typed_cli.rs`. In the same window
+  `crates/abi-wdbx/src/v2/types.rs` gained the public read-only
+  `V2Snapshot::kv_keys` (`4c01514`) and `kv_versions` (`e5fd43b`). Those are
+  additive v2-module exports with no format effect. No catalog row pins
+  `v2/types.rs`, so they are noted here but do not affect this pin.
 
 ## Row table
 
@@ -98,41 +125,72 @@ File-level verdicts:
 | `MOD-0067` | `pub mod v3;` | 3 | 66 → 67 | identity-only (line anchor +1) | Not migrated: blocked by the `model` growth on the shared `lib.rs` identity |
 | `MOD-0068` | `pub mod versioned;` | 3 | 67 → 68 | identity-only (line anchor +1) | Not migrated: blocked by the `model` growth on the shared `lib.rs` identity |
 | `MOD-0069` | `pub mod wal;` | 3 | 68 → 69 | identity-only (line anchor +1) | Not migrated: blocked by the `model` growth on the shared `lib.rs` identity |
-| `FORMAT-v2-journals` | journal format bytes, `v2.rs` | 3 | n/a | additive export (`4c01514`) | Not migrated: candidate for a reviewed migration; needs independent review |
+| `FORMAT-v2-journals` | journal format bytes, `v2.rs` | 3 | n/a | additive export (`4c01514`) | **Migrated** (fix round 1): approved by this review and an independent review |
 
 Summary: 16 identity-only rows with the same line, 22 identity-only rows with the
 line anchor shifted by one, 1 additive-export row, 0 semantic rows. The semantic
-change is uncatalogued growth that shares `lib.rs` with the 38 module rows.
+change has no row of its own by construction, because it is uncatalogued: it is
+the `model` growth that shares the `lib.rs` file identity with the 38 module rows
+and blocks them.
 
-## Why nothing was migrated
+## Why `lib.rs` was not migrated
 
-The checker and release README document only one mechanism: "deliberate
-independent review and a version/pin migration" (edit `catalog-v1.json`, update
-the checker's `CATALOG_PIN`). There is no blessing command. The release README
-explicitly rejects "a blanket refresh of two hashes".
+The checker and release README document one mechanism: "deliberate independent
+review and a version/pin migration" (edit `catalog-v1.json`, update the
+checker's `CATALOG_PIN`). There is no blessing command.
 
-- `lib.rs` (38 rows): migrating the hash would accept uncatalogued module and
-  format growth. **Blocked** on owner routing for `model` (named WDBX
-  compatibility maintainer and release-scope owner).
-- `v2.rs` (1 row): this review classifies it as additive. Applying it still means
-  editing the frozen catalog and changing `CATALOG_PIN` on self-review only. That
-  is not the independent review the contract requires. **Deferred** to that
-  reviewer; this record supplies the evidence.
+- `lib.rs` (38 rows): migrating the hash would accept the uncatalogued `model`
+  growth, including the N02 part whose review is pending. **Blocked** on
+  release-scope routing for `model` by the WDBX compatibility maintainer and the
+  native-model plan owner.
 
-## Proposed migration (not applied)
+## v2.rs migration (applied)
 
-1. Owner decision: route `model` (and nested `contract`, `error`, `ids`,
-   `limits`, `package`, `tokenizer`) to a release task or record an explicit
-   exclusion. Add declaration rows and a `FORMAT-model-package` row for the
-   model-v1 format, each with owner/task and an open `missing_behavior_blocker`.
-2. Update `MOD-0048`..`MOD-0069` `line` anchors (+1). Update `lib.rs` rows to
-   `afb2a62420f0fa8632248ddda78d9329331efc22d50cf40e50a09d0d9bcf9210` and `FORMAT-v2-journals` to `80e50d5537e148d0f6b36842881764c29f0ee3921c98cd7fb906e91c8fe62759`.
-3. Bump the catalog version or record the in-place pin migration. Update
-   `CATALOG_PIN`, the counts in the release README (83 modules / 20 formats) and
-   the 38-row expectation in
-   `test_two_paths_group_module_and_format_rows`. The RED step is
-   `test_valid` failing on the catalog change; GREEN is the reviewed pin.
-4. Re-run live, `--drift-report` and `--snapshot-only` and the release suite.
+Two reviews approved moving `FORMAT-v2-journals` alone:
+
+1. This review (`bc6dbfa`) classified the `v2.rs` change as an additive
+   read-only export.
+2. An independent read-only review of `e5fd43b..bc6dbfa` gave "v2.rs
+   migration: APPROVE". It found the full `96c4b13..HEAD` diff of `v2.rs` is one
+   17-line addition. `read_v2_root` reuses `V2Error::UnsupportedVersion` and
+   `io_error`, writes nothing, takes no lease and leaves the journal format
+   unchanged. `FORMAT-v2-journals` is the only catalog row (and no source
+   `live_path`) on `v2.rs`, so it can move without touching `lib.rs`.
+   Conditions: change only that row's `sha256` and `CATALOG_PIN`; leave `lib.rs`
+   rows and line anchors alone; re-run `--snapshot-only`, `--drift-report` and
+   the release suite.
+
+Applied, as a pin migration of `catalog-v1.json` in place (catalog `version`
+stays 1):
+
+| Item | Before | After |
+| --- | --- | --- |
+| `FORMAT-v2-journals.sha256` | `28a6283b886b6290ea00cdd7500efa248724ab28d60ae3fa2bdba297eb8e0d64` | `80e50d5537e148d0f6b36842881764c29f0ee3921c98cd7fb906e91c8fe62759` |
+| `CATALOG_PIN` (`tools/check_substrate_release.py`) | `d9b2cbe9ea14c65166bfa407686aae0eeffe76608d0bca46f1a246ee0c419248` | `e65441f2a36c099a1c752735ee9d3f109fe0b30c57e71158585e77408b8b955f` |
+
+RED: with only the catalog edited, `test_valid` failed and `--snapshot-only`
+refused ("catalog changed; independently reviewed version/pin migration
+required"). GREEN: after the pin update, `--snapshot-only` exits 0, the 52 release
+tests pass, and `--drift-report` exits 1 with 38 errors on the single path
+`crates/abi-wdbx/src/lib.rs`
+([drift-report-after-v2-migration.json](drift-report-after-v2-migration.json)).
+The row stays `declaration-coverage-only` with its open
+`missing_behavior_blocker`. An identity pin does not qualify behaviour or move
+anything past C0.
+
+## Proposed remaining migration (not applied)
+
+1. Owner decision: route `model` to a release task or record an explicit
+   exclusion. Reuse N01's accepted review for `contract`, `error`, `ids` and
+   `limits`. Wait for N02's independent review before admitting `package` and
+   `tokenizer`. Add declaration rows and a `FORMAT-model-package` row for
+   model-v1, each with owner/task and an open `missing_behavior_blocker`.
+2. Update `MOD-0048`..`MOD-0069` `line` anchors (+1) and the `lib.rs` rows to
+   `afb2a62420f0fa8632248ddda78d9329331efc22d50cf40e50a09d0d9bcf9210`.
+3. Update `CATALOG_PIN`, the release README counts (83 modules / 20 formats) and
+   any count-dependent tests. RED is `test_valid` on the catalog edit; GREEN is
+   the reviewed pin.
+4. Re-run live, `--drift-report`, `--snapshot-only` and the release suite.
 
 ## Artifacts
 
@@ -140,5 +198,7 @@ explicitly rejects "a blanket refresh of two hashes".
   SHA-256 `0c4d2ffe4b233c9606d6d8e7538ffbab5057a42734a750833f930417a5238457`.
 - [row-classification.json](row-classification.json): the machine-readable form
   of the table above.
+- [drift-report-after-v2-migration.json](drift-report-after-v2-migration.json):
+  `--drift-report` after the v2.rs migration (38 errors, 1 path).
 - [validation.json](validation.json): commands and exit codes.
 

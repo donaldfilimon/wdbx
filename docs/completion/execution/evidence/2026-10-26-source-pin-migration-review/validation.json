@@ -51,8 +51,50 @@
     }
   ],
   "frozen_unchanged": {
-    "docs/completion/substrate-release/catalog-v1.json": "d9b2cbe9ea14c65166bfa407686aae0eeffe76608d0bca46f1a246ee0c419248",
-    "tools/check_substrate_release.py": "unchanged"
+    "note": "superseded in fix round 1: catalog-v1.json and CATALOG_PIN changed only for FORMAT-v2-journals",
+    "catalog_sha256_before": "d9b2cbe9ea14c65166bfa407686aae0eeffe76608d0bca46f1a246ee0c419248"
   },
-  "claim": "No pin, catalog or C0 status change; no qualification."
+  "claim": "No pin, catalog or C0 status change; no qualification.",
+  "fix_round_1": {
+    "head_before": "07b786e",
+    "commands": [
+      {
+        "command": "python3 -m unittest tools.tests.test_check_substrate_release.ReleaseContract.test_valid (catalog edited, pin not)",
+        "exit": 1,
+        "result": "RED: catalog changed; independently reviewed version/pin migration required"
+      },
+      {
+        "command": "python3 tools/check_substrate_release.py --snapshot-only (catalog edited, pin not)",
+        "exit": 1
+      },
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 tools/check_completion.py",
+        "exit": 0
+      },
+      {
+        "command": "python3 tools/check_completion_execution.py",
+        "exit": 0
+      },
+      {
+        "command": "python3 tools/check_substrate_release.py --snapshot-only",
+        "exit": 0
+      },
+      {
+        "command": "python3 tools/check_substrate_release.py --drift-report",
+        "exit": 1,
+        "result": "38 errors, 1 path crates/abi-wdbx/src/lib.rs; sha256 dc058d9703645f8cae32d4686f15fd4db8cef1c08513e8de44cffcf9f5a91fa7"
+      },
+      {
+        "command": "python3 tools/check_substrate_release.py",
+        "exit": 1
+      },
+      {
+        "command": "python3 -m unittest discover -s tools/tests -p test_check_substrate_release.py",
+        "exit": 0,
+        "result": "52 tests OK"
+      }
+    ],
+    "catalog_sha256_after": "e65441f2a36c099a1c752735ee9d3f109fe0b30c57e71158585e77408b8b955f",
+    "root_gate": "not rerun; the checker change is a pin constant only and the root gate runs no Python release checker"
+  }
 }

@@ -53468,7 +53468,7 @@
     {
       "id": "FORMAT-v2-journals",
       "path": "crates/abi-wdbx/src/v2.rs",
-      "sha256": "28a6283b886b6290ea00cdd7500efa248724ab28d60ae3fa2bdba297eb8e0d64",
+      "sha256": "80e50d5537e148d0f6b36842881764c29f0ee3921c98cd7fb906e91c8fe62759",
       "source_assertion": "FORMAT-v2-journals bytes defined by crates/abi-wdbx/src/v2.rs",
       "classification": "declaration-coverage-only",
       "owner": "WDBX compatibility maintainer",
