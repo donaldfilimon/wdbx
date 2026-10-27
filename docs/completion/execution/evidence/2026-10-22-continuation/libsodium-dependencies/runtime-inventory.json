@@ -1,0 +1,153 @@
+{
+  "artifacts": [
+    {
+      "bytes": 686,
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/requirements-local-arm64.txt",
+      "sha256": "a708f38ae7f6737f8389003ddfa7aa60502906de110efb638ef3b0e30a5ed2f3"
+    },
+    {
+      "bytes": 808,
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/install.log",
+      "sha256": "021703954f412cb8d4083ab3c551d0f8ccb3f192d3420387fe9e8c934c39c336"
+    },
+    {
+      "bytes": 46,
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/interpreter.txt",
+      "sha256": "99dd4ee54c0a53cf1963cf2d7220280f330a219d071e7ca4b32048c95d992a3a"
+    },
+    {
+      "bytes": 1204,
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/probe.py",
+      "sha256": "a49a7ce4b057f3a5f5e19f3df5122ed27a201a13813af37ba049e949dc52d002"
+    },
+    {
+      "bytes": 786,
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/probe.log",
+      "sha256": "456d0e29518e81bed412a9ea3a4fd80d5d3794350a829aee87ff2d358878ff6c"
+    },
+    {
+      "bytes": 5774,
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/ph-vector.json",
+      "sha256": "1dd5396db6779447b116710285dbf7259c7b4ec749b579ab4cc6283475ede8c7"
+    },
+    {
+      "bytes": 15072,
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/matrix.log",
+      "sha256": "3beaaeab2045663bc4dd5cf2cae2a600ff9a4b7f0da1f9bd195ebf4ec867fd7b"
+    },
+    {
+      "bytes": 14859,
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/pyca-retained-matrix.log",
+      "sha256": "eae3a8b768d5bab72ba02fd90f6e5c3342fc248d666bc4f308254349f5093f54"
+    }
+  ],
+  "bounded_matrix_result": "libsodium checker exit0: Python10 tests and Rust feature crypto tests, weakkey refusal; unratified local bounded matrix only",
+  "captured_at_utc": "2026-10-22T23:04:04.348923+00:00",
+  "distributions": [
+    {
+      "files": [
+        {
+          "bytes": 1133120,
+          "path": "/tmp/wdbx-p1-libsodium.0EvVu6/venv/lib/python3.12/site-packages/nacl/_sodium.abi3.so",
+          "sha256": "49032c357199dde6ae341319e558ce3ed9daa80f5ac83972aa9a63158b0b5371"
+        },
+        {
+          "bytes": 9977,
+          "path": "/tmp/wdbx-p1-libsodium.0EvVu6/venv/lib/python3.12/site-packages/pynacl-1.6.2.dist-info/METADATA",
+          "sha256": "143914f93191bef3bff7ba953dea6a38fb05f7f9e38e2a2e6ae31bd14ba81709"
+        },
+        {
+          "bytes": 113,
+          "path": "/tmp/wdbx-p1-libsodium.0EvVu6/venv/lib/python3.12/site-packages/pynacl-1.6.2.dist-info/WHEEL",
+          "sha256": "774f57056f629491b487caf13d1c741cc38b9b845b1120836d216c7014bddfa4"
+        }
+      ],
+      "license": "Apache-2.0",
+      "name": "PyNaCl",
+      "requires_dist": [
+        "cffi>=1.4.1; platform_python_implementation != \"PyPy\" and python_version < \"3.9\"",
+        "cffi>=2.0.0; platform_python_implementation != \"PyPy\" and python_version >= \"3.9\"",
+        "pytest>=7.4.0; extra == \"tests\"",
+        "pytest-cov>=2.10.1; extra == \"tests\"",
+        "pytest-xdist>=3.5.0; extra == \"tests\"",
+        "hypothesis>=3.27.0; extra == \"tests\"",
+        "sphinx<7; extra == \"docs\"",
+        "sphinx_rtd_theme; extra == \"docs\""
+      ],
+      "requires_python": ">=3.8",
+      "version": "1.6.2"
+    },
+    {
+      "files": [
+        {
+          "bytes": 229552,
+          "path": "/tmp/wdbx-p1-libsodium.0EvVu6/venv/lib/python3.12/site-packages/_cffi_backend.cpython-312-darwin.so",
+          "sha256": "90177c34e639a067ee1f5a2028320b3af2940d47dfaf9583727b59abf0b3263f"
+        },
+        {
+          "bytes": 2527,
+          "path": "/tmp/wdbx-p1-libsodium.0EvVu6/venv/lib/python3.12/site-packages/cffi-2.1.1.dist-info/METADATA",
+          "sha256": "558bafb9093a8e790175d9ecff9688382981d744877dad86fd6770db0f4dc918"
+        },
+        {
+          "bytes": 136,
+          "path": "/tmp/wdbx-p1-libsodium.0EvVu6/venv/lib/python3.12/site-packages/cffi-2.1.1.dist-info/WHEEL",
+          "sha256": "65d47419e480660d7ba329a734f3f7358ce8eba23b2db4806ef595c5328959fe"
+        }
+      ],
+      "license": "MIT-0",
+      "name": "cffi",
+      "requires_dist": [
+        "pycparser; implementation_name != \"PyPy\""
+      ],
+      "requires_python": ">=3.10",
+      "version": "2.1.1"
+    },
+    {
+      "files": [
+        {
+          "bytes": 8238,
+          "path": "/tmp/wdbx-p1-libsodium.0EvVu6/venv/lib/python3.12/site-packages/pycparser-3.11.dist-info/METADATA",
+          "sha256": "e3a74c846648bb55f4f907284b745e2003b87b96d9c9d17a8a50cf37804541c9"
+        },
+        {
+          "bytes": 91,
+          "path": "/tmp/wdbx-p1-libsodium.0EvVu6/venv/lib/python3.12/site-packages/pycparser-3.11.dist-info/WHEEL",
+          "sha256": "61532836a2b3111b7ec23519c09df7c41180c27165fb872a6d8913b566b88ad1"
+        }
+      ],
+      "license": "BSD-3-Clause",
+      "name": "pycparser",
+      "requires_dist": [],
+      "requires_python": ">=3.10",
+      "version": "3.11"
+    }
+  ],
+  "interpreter": "/tmp/wdbx-p1-libsodium.0EvVu6/venv/bin/python",
+  "libsodium_identity": "Exact reviewed PyNaCl1.6.2 wheel, tagged bundled1.0.20-stable 2025-12-31 build; no exposed PyNaCl runtime version API; native module hash retained",
+  "limitations": [
+    "Wheel hash not authenticated build provenance.",
+    "Host macOS arm64 local execution only.",
+    "Observed bounded matrix is not general strict-equivalence proof or production crypto qualification.",
+    "No global or bundled Python packages modified."
+  ],
+  "native_module": {
+    "bytes": 1133120,
+    "path": "/tmp/wdbx-p1-libsodium.0EvVu6/venv/lib/python3.12/site-packages/nacl/_sodium.abi3.so",
+    "sha256": "49032c357199dde6ae341319e558ce3ed9daa80f5ac83972aa9a63158b0b5371"
+  },
+  "pyca_retained_result": "checker exit1 after passing suites, intentional weakkey backend qualification disagreement preserved",
+  "python": "3.12.14",
+  "python_executable": {
+    "bytes": 18058560,
+    "path": "/Users/donald/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "sha256": "494f72dd95d0dc196169c5821219fc6cfa9c1ef582332b95b53874b10acea6e0"
+  },
+  "status": "bounded private local execution, NOT production qualification",
+  "system_site_packages": false,
+  "venv_config": {
+    "bytes": 393,
+    "path": "/tmp/wdbx-p1-libsodium.0EvVu6/venv/pyvenv.cfg",
+    "sha256": "f1eb104786de2cbccd78fc55ea35d0002f28b614028aa6db80f5e2a929c76dc7"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "backend_probe": {
+    "backend": "libsodium bundled by PyNaCl 1.6.2 (wheel provenance pinned separately)",
+    "distributions": {
+      "PyNaCl": "1.6.2",
+      "cffi": "2.1.1",
+      "pycparser": "3.11"
+    },
+    "profile": "wdbx-complete-cose-sign1-prototype-v1",
+    "python": "3.12.14",
+    "qualification_scope": "single known disagreement probe only; no full qualification",
+    "raw_weak_key_accepted": false,
+    "selected_backend": "libsodium",
+    "strict_parity_qualified": false
+  },
+  "full_p1_ph_result": {
+    "ok": true,
+    "reason": "InvalidSignature",
+    "valid": false
+  },
+  "raw_signature_outcomes": {
+    "identity_R": false,
+    "invalid_R": false,
+    "native_ed25519ph_confusion": false,
+    "noncanonical_S": false,
+    "ordinary_positive": true
+  }
+}

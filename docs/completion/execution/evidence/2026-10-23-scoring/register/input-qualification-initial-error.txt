@@ -1,0 +1,1 @@
+Initial hash-only qualification process exited 1: broad file enumeration included docs/completion/__pycache__/contract_vectors.cpython-315.pyc and contract_vectors_v1.cpython-315.pyc, which are generated runtime caches absent from git HEAD. Corrected enumeration excludes __pycache__; no contract/checker/source was modified and no product/frozen checks were run by this process.

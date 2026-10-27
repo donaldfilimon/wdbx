@@ -1,0 +1,89 @@
+[
+  {
+    "command": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+      "tools/check_completion_execution.py"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "python_version": "3.9.6 (default, Oct 15 2026, 19:11:49) \n[Clang 21.0.0 (clang-2100.3.34.1)]",
+    "started_utc": "2026-10-23T02:58:38.673974+00:00",
+    "exit_code": 0,
+    "log": "system-execution-checker.log",
+    "log_sha256": "7db51a594198bccc2ebeaa015f6c56c4aa8ef9d9ac56a324b1f859734c08c302"
+  },
+  {
+    "command": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools/tests",
+      "-p",
+      "test_check_completion_execution.py"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "python_version": "3.9.6 (default, Oct 15 2026, 19:11:49) \n[Clang 21.0.0 (clang-2100.3.34.1)]",
+    "started_utc": "2026-10-23T02:58:39.335004+00:00",
+    "exit_code": 0,
+    "log": "system-execution-27-mutations.log",
+    "log_sha256": "e2df512da279568f096da16208ead20c6da660a88d854c09b435f327138a7ccf"
+  },
+  {
+    "command": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+      "/Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-22-language/final-fix/check-final-closure.py"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "python_version": "3.9.6 (default, Oct 15 2026, 19:11:49) \n[Clang 21.0.0 (clang-2100.3.34.1)]",
+    "started_utc": "2026-10-23T02:58:47.715909+00:00",
+    "exit_code": 0,
+    "log": "system-final-closure.log",
+    "log_sha256": "9a5817e27d0339627228210ef13413d2432f595772ea00296999739c464de8ef"
+  },
+  {
+    "command": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+      "tools/check_completion.py"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "python_version": "3.9.6 (default, Oct 15 2026, 19:11:49) \n[Clang 21.0.0 (clang-2100.3.34.1)]",
+    "started_utc": "2026-10-23T02:58:48.059127+00:00",
+    "exit_code": 0,
+    "log": "system-frozen-completion-checker.log",
+    "log_sha256": "2f88e13061eb9a6f8cf0ae9d4a6efe063939a54ef1bb299cba4d2554389365d4"
+  },
+  {
+    "command": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools/tests",
+      "-p",
+      "test_check_completion.py"
+    ],
+    "cwd": "/Users/donald/sources/repos/wdbx",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "python_version": "3.9.6 (default, Oct 15 2026, 19:11:49) \n[Clang 21.0.0 (clang-2100.3.34.1)]",
+    "started_utc": "2026-10-23T02:58:48.139241+00:00",
+    "exit_code": 0,
+    "log": "system-frozen-completion-tests.log",
+    "log_sha256": "6fca5b2812dfc25d93471776494a13402a38c502e399a6e979fc3bb70c8e1ac9"
+  }
+]

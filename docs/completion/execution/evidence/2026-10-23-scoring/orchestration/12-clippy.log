@@ -1,0 +1,35 @@
+    Checking specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+error: this `if` statement can be collapsed
+   --> native/specimen-kernel/src/orchestration_v3/attachments.rs:202:9
+    |
+202 | /         if let AttachmentMode::Soft(a) = link.mode {
+203 | |             if a.numerator() < 0 || a.numerator() > a.denominator() || a.denominator() > 1_000_000 {
+204 | |                 return Err(Error::Invalid);
+205 | |             }
+206 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#collapsible_if
+    = note: `-D clippy::collapsible-if` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::collapsible_if)]`
+help: collapse nested if block
+    |
+202 ~         if let AttachmentMode::Soft(a) = link.mode
+203 ~             && (a.numerator() < 0 || a.numerator() > a.denominator() || a.denominator() > 1_000_000) {
+204 |                 return Err(Error::Invalid);
+205 ~             }
+    |
+
+error: manual slice size calculation
+   --> native/specimen-kernel/src/orchestration_v3/attachments.rs:324:15
+    |
+324 |             + captures.len() * std::mem::size_of::<RouteCapture>()
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: try: `std::mem::size_of_val(captures)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#manual_slice_size_calculation
+    = note: `-D clippy::manual-slice-size-calculation` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::manual_slice_size_calculation)]`
+
+error: could not compile `specimen-kernel` (lib) due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `specimen-kernel` (lib test) due to 2 previous errors

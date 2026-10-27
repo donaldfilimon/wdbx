@@ -1,0 +1,20 @@
+   Compiling abi-wdbx v0.1.0 (/Users/donald/sources/repos/wdbx/crates/abi-wdbx)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.43s
+     Running unittests src/lib.rs (target/debug/deps/abi_wdbx-5938aa6878b1731e)
+
+running 12 tests
+test v3::complete_episode::crypto::trust::tests::canonical_command_binds_grant_order_principal_revision_and_optional_zero ... ok
+test v3::complete_episode::crypto::trust::tests::current_authorization_precedes_replay_and_no_failure_reserves_id ... ok
+test v3::complete_episode::crypto::trust::tests::old_history_scope_is_authorized_before_conflict_or_receipt ... ok
+test v3::complete_episode::crypto::trust::tests::exact_retry_after_revocation_is_historical_and_immutable ... ok
+test v3::complete_episode::crypto::trust::tests::registration_identifiers_grants_purpose_and_key_refusals ... ok
+test v3::complete_episode::crypto::trust::tests::stale_revision_unknown_key_and_invalid_transition_leave_id_reusable ... ok
+test v3::complete_episode::crypto::trust::tests::independent_command_and_snapshot_vectors_and_typed_rejections ... ok
+test v3::complete_episode::crypto::trust_snapshot_is_readable_from_crypto_siblings ... ok
+test v3::complete_episode::crypto::trust::tests::complete_single_key_transition_matrix_and_failure_atomicity ... ok
+test v3::complete_episode::crypto::trust::tests::rotation_is_atomic_and_requires_all_metadata_equal ... ok
+test v3::complete_episode::crypto::trust::tests::snapshots_are_immutable_and_math_keys_remain_resolvable_in_all_states ... ok
+test v3::complete_episode::crypto::trust::tests::resource_boundaries_overflow_and_failed_id_correction ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 458 filtered out; finished in 0.14s
+

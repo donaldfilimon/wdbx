@@ -1,0 +1,42 @@
+{
+  "retained_artifacts": "/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-identity-parity.Xgldlk",
+  "files": [
+    {
+      "path": "target/debug/examples/identity_probe",
+      "bytes": 1516176,
+      "sha256": "398653223dadbd049b758aee5ef4f32e8263fe7f8cf69cce2050ebb5062e099a"
+    },
+    {
+      "path": "default.wasm",
+      "bytes": 2556788,
+      "sha256": "58d010f48c79f6ad109d975d186a817c9569488c0cd33cd1d563639607da47ca"
+    },
+    {
+      "path": "identity.wasm",
+      "bytes": 2664509,
+      "sha256": "3b6475da09548aaa3e9531fac36f2d896d9866452dfde9de26994e84569c560b"
+    },
+    {
+      "path": "native.json",
+      "bytes": 4205,
+      "sha256": "60aaef7f217d27a6fe505f2c6405239e3032902e9964472e24273bca97c07580"
+    },
+    {
+      "path": "wasm.json",
+      "bytes": 4205,
+      "sha256": "60aaef7f217d27a6fe505f2c6405239e3032902e9964472e24273bca97c07580"
+    },
+    {
+      "path": "native-corrupt-kind.json",
+      "bytes": 4206,
+      "sha256": "f33556413753ae1bc45c6fd6a86165ab97acccc776b47d2e89d47cf46a74d75a"
+    },
+    {
+      "path": "negative-wasm.json",
+      "bytes": 4205,
+      "sha256": "60aaef7f217d27a6fe505f2c6405239e3032902e9964472e24273bca97c07580"
+    }
+  ],
+  "negative_result": 1,
+  "mutation": "capacity.spill.kind only; all other decoded properties preserved"
+}

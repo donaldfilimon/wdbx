@@ -1,0 +1,230 @@
+{
+  "baseline": "4c01514",
+  "initial_branch_count": 25,
+  "initial_worktree_count": 16,
+  "branches": [
+    {
+      "branch": "main",
+      "unique": "0",
+      "commits": ""
+    },
+    {
+      "branch": "task/agent-main-plans-20261025",
+      "unique": "0",
+      "commits": ""
+    },
+    {
+      "branch": "task/finish-abi-c07-20261025",
+      "unique": "0",
+      "commits": ""
+    },
+    {
+      "branch": "task/integrate-20261026",
+      "unique": "0",
+      "commits": ""
+    },
+    {
+      "branch": "task/modernization-abbey-gtk-20261025",
+      "unique": "0",
+      "commits": ""
+    },
+    {
+      "branch": "task/modernization-baseline-20261025",
+      "unique": "0",
+      "commits": ""
+    },
+    {
+      "branch": "task/modernization-consumer-dependencies-20261025",
+      "unique": "0",
+      "commits": ""
+    },
+    {
+      "branch": "task/modernization-dependency-cohort-20261025",
+      "unique": "0",
+      "commits": ""
+    },
+    {
+      "branch": "task/modernization-native-model-contracts-20261025",
+      "unique": "0",
+      "commits": ""
+    },
+    {
+      "branch": "task/modernization-native-package-20261025",
+      "unique": "0",
+      "commits": ""
+    },
+    {
+      "branch": "task/modernization-reviewed-cohort-20261025",
+      "unique": "0",
+      "commits": ""
+    },
+    {
+      "branch": "task/modernization-schema3-wdbx-20261025",
+      "unique": "0",
+      "commits": ""
+    },
+    {
+      "branch": "task/modernization-source-custody-20261025",
+      "unique": "0",
+      "commits": ""
+    },
+    {
+      "branch": "task/modernization-studio-gtk-20261025",
+      "unique": "0",
+      "commits": ""
+    },
+    {
+      "branch": "task/modernization-studio-zip9-20261025",
+      "unique": "0",
+      "commits": ""
+    },
+    {
+      "branch": "task/modernization-updater-zip9-20261025",
+      "unique": "0",
+      "commits": ""
+    },
+    {
+      "branch": "task/modernization-worker-lock-20261025",
+      "unique": "0",
+      "commits": ""
+    },
+    {
+      "branch": "task/wip-000-baseline-20261026",
+      "unique": "0",
+      "commits": ""
+    },
+    {
+      "branch": "task/wip-002-source-custody-20261026",
+      "unique": "0",
+      "commits": ""
+    },
+    {
+      "branch": "task/wip-003-dependency-cohort-20261026",
+      "unique": "0",
+      "commits": ""
+    },
+    {
+      "branch": "task/wip-004-worker-lock-20261026",
+      "unique": "0",
+      "commits": ""
+    },
+    {
+      "branch": "task/wip-005-consumer-dependencies-20261026",
+      "unique": "0",
+      "commits": ""
+    },
+    {
+      "branch": "task/wip-007-updater-zip9-20261026",
+      "unique": "0",
+      "commits": ""
+    },
+    {
+      "branch": "task/wip-008-studio-zip9-20261026",
+      "unique": "0",
+      "commits": ""
+    },
+    {
+      "branch": "task/wip-012-native-package-20261026",
+      "unique": "0",
+      "commits": ""
+    }
+  ],
+  "worktrees": [
+    {
+      "identity": "main",
+      "head": "4c01514e4745321a67f2a2152e49e5a9546efa8f",
+      "status": "",
+      "ignored_path_count": 338520
+    },
+    {
+      "identity": "task/finish-abi-c07-20261025",
+      "head": "222188989941bc786b92321565b854031fec8016",
+      "status": "",
+      "ignored_path_count": 0
+    },
+    {
+      "identity": "task/agent-main-plans-20261025",
+      "head": "c4203de3f1427aad3dd0056b97f3266c1b213240",
+      "status": "",
+      "ignored_path_count": 0
+    },
+    {
+      "identity": "task/modernization-baseline-20261025",
+      "head": "6372def9afbccfb3d6e72b00cb22904cef76618f",
+      "status": "M AGENTS.md\n M specimen-studio/AGENTS.md",
+      "ignored_path_count": 6699
+    },
+    {
+      "identity": "task/modernization-reviewed-cohort-20261025",
+      "head": "222188989941bc786b92321565b854031fec8016",
+      "status": "",
+      "ignored_path_count": 2
+    },
+    {
+      "identity": "task/modernization-source-custody-20261025",
+      "head": "755ba2e3211c766439012ce933a9ebbf59e6d6b7",
+      "status": "M AGENTS.md\n M specimen-studio/AGENTS.md",
+      "ignored_path_count": 20
+    },
+    {
+      "identity": "task/modernization-dependency-cohort-20261025",
+      "head": "6372def9afbccfb3d6e72b00cb22904cef76618f",
+      "status": "M AGENTS.md\n M specimen-studio/AGENTS.md",
+      "ignored_path_count": 0
+    },
+    {
+      "identity": "task/modernization-worker-lock-20261025",
+      "head": "755ba2e3211c766439012ce933a9ebbf59e6d6b7",
+      "status": "M AGENTS.md\n M specimen-studio/AGENTS.md",
+      "ignored_path_count": 0
+    },
+    {
+      "identity": "task/modernization-consumer-dependencies-20261025",
+      "head": "81ae29a7c472d42765fd1f09f75c1288b0252d30",
+      "status": "M AGENTS.md\n M specimen-studio/AGENTS.md",
+      "ignored_path_count": 4818
+    },
+    {
+      "identity": "task/modernization-updater-zip9-20261025",
+      "head": "81ae29a7c472d42765fd1f09f75c1288b0252d30",
+      "status": "M AGENTS.md\n M specimen-studio/AGENTS.md",
+      "ignored_path_count": 0
+    },
+    {
+      "identity": "task/modernization-studio-zip9-20261025",
+      "head": "0a1f8a8dce71c0d006186bf3ae4494211d7f6909",
+      "status": "M AGENTS.md\n M specimen-studio/AGENTS.md",
+      "ignored_path_count": 4366
+    },
+    {
+      "identity": "task/modernization-abbey-gtk-20261025",
+      "head": "81ae29a7c472d42765fd1f09f75c1288b0252d30",
+      "status": "",
+      "ignored_path_count": 0
+    },
+    {
+      "identity": "task/modernization-studio-gtk-20261025",
+      "head": "b4a87225a836ab0efb3a9897a6724f6a9c2efff3",
+      "status": "",
+      "ignored_path_count": 83284
+    },
+    {
+      "identity": "task/modernization-native-model-contracts-20261025",
+      "head": "cb129cf9591034b481854b6fd4f2a58ac0db6628",
+      "status": "",
+      "ignored_path_count": 1969
+    },
+    {
+      "identity": "task/modernization-native-package-20261025",
+      "head": "8ad18a8ea3b88a0be69716e8ba69c6e16351231a",
+      "status": "M crates/abi-wdbx/src/model/package/components/mod.rs\n M crates/abi-wdbx/src/model/package/stage.rs\n M crates/abi-wdbx/src/model/package/write.rs\n M crates/abi-wdbx/src/model/package/write/schema.rs\n M crates/abi-wdbx/tests/fixtures/model-v1/n02-fixtures.md\n M crates/abi-wdbx/tests/model_package.rs\n M crates/abi-wdbx/tests/model_package_bounds.rs\n M crates/abi-wdbx/tests/model_tokenizer.rs\n M crates/abi-wdbx/tests/support/model_package.rs\n?? crates/abi-wdbx/src/model/package/stage/\n?? crates/abi-wdbx/src/model/package/write/preflight.rs\n?? crates/abi-wdbx/src/model/package/write/preflight/\n?? crates/abi-wdbx/src/model/package/write/tests.rs",
+      "ignored_path_count": 3522
+    },
+    {
+      "identity": "task/modernization-schema3-wdbx-20261025",
+      "head": "81ae29a7c472d42765fd1f09f75c1288b0252d30",
+      "status": "",
+      "ignored_path_count": 0
+    }
+  ]
+}

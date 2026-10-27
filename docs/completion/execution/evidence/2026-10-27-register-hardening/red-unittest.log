@@ -1,0 +1,59 @@
+F.............E.......E.FEF......
+======================================================================
+ERROR: test_gap_rows_cannot_gain_review_refs (test_check_completion_execution.ExecutionTests.test_gap_rows_cannot_gain_review_refs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_completion_execution.py", line 164, in test_gap_rows_cannot_gain_review_refs
+    sha, catalog = self.module.read_review_artifact_catalog(ROOT)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'execution' has no attribute 'read_review_artifact_catalog'
+
+======================================================================
+ERROR: test_readme_counts_match_catalog (test_check_completion_execution.ExecutionTests.test_readme_counts_match_catalog)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_completion_execution.py", line 201, in test_readme_counts_match_catalog
+    self.assertEqual([], [e for e in self.module.validate(ROOT, self.register, readme=readme)
+                                     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: validate() got an unexpected keyword argument 'readme'
+
+======================================================================
+ERROR: test_review_artifact_catalog_requirement_closure (test_check_completion_execution.ExecutionTests.test_review_artifact_catalog_requirement_closure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_completion_execution.py", line 177, in test_review_artifact_catalog_requirement_closure
+    sha, catalog = self.module.read_review_artifact_catalog(ROOT)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'execution' has no attribute 'read_review_artifact_catalog'
+
+======================================================================
+FAIL: test_artifact_references_cannot_be_stripped (test_check_completion_execution.ExecutionTests.test_artifact_references_cannot_be_stripped)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_completion_execution.py", line 158, in test_artifact_references_cannot_be_stripped
+    self.assertIn('artifact identity drift: C14', self.errors(strip))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'artifact identity drift: C14' not found in []
+
+======================================================================
+FAIL: test_review_artifact_catalog_hash_is_independently_pinned (test_check_completion_execution.ExecutionTests.test_review_artifact_catalog_hash_is_independently_pinned)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_completion_execution.py", line 197, in test_review_artifact_catalog_hash_is_independently_pinned
+    self.assertIn('review/artifact catalog drift', errors)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'review/artifact catalog drift' not found in []
+
+======================================================================
+FAIL: test_review_reference_cannot_be_added_without_catalog (test_check_completion_execution.ExecutionTests.test_review_reference_cannot_be_added_without_catalog)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "tools/tests/test_check_completion_execution.py", line 149, in test_review_reference_cannot_be_added_without_catalog
+    self.assertIn('review identity drift: G01', self.errors(add))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'review identity drift: G01' not found in []
+
+----------------------------------------------------------------------
+Ran 33 tests in 33.101s
+
+FAILED (failures=3, errors=3)

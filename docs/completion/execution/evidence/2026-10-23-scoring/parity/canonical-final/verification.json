@@ -1,0 +1,90 @@
+{
+  "scope": "post-canonical-budget-fix1 actual finite native/WASM semantic, fixed24 decision and logical diagnostic witness; awaiting root independent probe review and four Studio gates",
+  "retained_artifacts": "/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-scoring-parity.qdu7oH",
+  "summary": {
+    "result": "PASS",
+    "logical_charge_profile": "logical-charge-v1",
+    "fixed_boundary_rows": 24,
+    "matching_logical_diagnostics": 68,
+    "semantic_bytes": 243932,
+    "semantic_native_sha256": "7125a31a9932c95a0df0cf42c505cfe988c29653d9d36f10237f7fa7182be4d8",
+    "semantic_wasm_sha256": "7125a31a9932c95a0df0cf42c505cfe988c29653d9d36f10237f7fa7182be4d8",
+    "raw_native_bytes": 250864,
+    "raw_wasm_bytes": 250863,
+    "native_sha256": "dbd6d97c45ba23a50f912294560fe98d1ada86c29c927a9d24602034d52b19ab",
+    "wasm_sha256": "22a904c903ab0dc5a00f455dbd1b7412b51ea5ff4b41c5c363b9059d194c2d51",
+    "host_calls": 0,
+    "feature_imports": [
+      {
+        "module": "env",
+        "name": "progress",
+        "kind": "function"
+      },
+      {
+        "module": "env",
+        "name": "now_ms",
+        "kind": "function"
+      },
+      {
+        "module": "env",
+        "name": "random_u32",
+        "kind": "function"
+      }
+    ],
+    "default_exports": [
+      "memory",
+      "alloc",
+      "call",
+      "free",
+      "probe_raw"
+    ],
+    "feature_sha256": "3f3b0b94759ad2d4a591f28cbe590e10aefb32432d9e21364b5199145affe520",
+    "default_sha256": "d1112a5120d987ae4a376dc3169e29d9d9674f62a7657a8d4e1fc9f9d2e69395"
+  },
+  "negative_comparator_exit": {
+    "arithmetic": 1,
+    "quarantine": 1,
+    "boundary": 1
+  },
+  "environment": {
+    "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+    "RUSTUP_TOOLCHAIN": "1.99.1",
+    "CARGO_NET_OFFLINE": "true",
+    "DYLD_LIBRARY_PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib"
+  },
+  "commands": [
+    {
+      "command": "bash specimen-studio/scripts/check-scoring-parity.sh",
+      "exit": 0,
+      "log": "09-parity-frozen.log"
+    },
+    {
+      "command": "cargo test --manifest-path specimen-studio/Cargo.toml --offline --locked -p specimen-wasm --features scoring-probe --target-dir /tmp/task-8-scoring-parity-canonical-dev-target",
+      "exit": 0,
+      "passed": 16,
+      "summaries": [
+        13,
+        0,
+        0,
+        3,
+        0
+      ],
+      "log": "10-feature-tests.log"
+    },
+    {
+      "command": "cargo clippy --manifest-path specimen-studio/Cargo.toml --offline --locked -p specimen-wasm --features scoring-probe --all-targets --target-dir /tmp/task-8-scoring-parity-canonical-dev-target -- -D warnings",
+      "exit": 0,
+      "log": "11-feature-clippy.log"
+    },
+    {
+      "command": "rustfmt --check --edition 2024 <owned Rust sources including nested budget_probe/attachment.rs and minimal lib registration>",
+      "exit": 0,
+      "log": "12-fmt.log"
+    },
+    {
+      "command": "git diff --check -- <owned probe and registration paths>",
+      "exit": 0,
+      "log": "13-diff-check.log"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+ 995 |       pending: fg.length + mt.length,
+ 996 |       active: active.size,
+ 997 |       quarantined: [...active.values()].filter((a) => a.revoked).length,
+ 998 |     };
+ 999 |     for (const [k, v] of Object.entries(expected))
+1000 |       eq(e.counts[k], v, `broker independent transition ${q.op}/${k}`);
+             ^
+AssertionError: broker independent transition cancel/quarantined
+
+0 !== 1
+
+ generatedMessage: false,
+     actual: 0,
+   expected: 1,
+   operator: "deepStrictEqual",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at replay (/Users/donald/sources/repos/wdbx/specimen-studio/tests/scoring-parity.mjs:1000:7)
+      at validate (/Users/donald/sources/repos/wdbx/specimen-studio/tests/scoring-parity.mjs:1190:3)
+
+Bun v1.4.4-canary.1+ea6a2c7b7 (macOS arm64)

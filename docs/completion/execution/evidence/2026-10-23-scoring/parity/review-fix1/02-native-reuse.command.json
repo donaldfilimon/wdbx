@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-scoring-parity.qdu7oH/target/debug/examples/scoring_probe"
+  ],
+  "cwd": "/Users/donald/sources/repos/wdbx/specimen-studio",
+  "env": {
+    "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+    "RUSTUP_TOOLCHAIN": "1.99.1",
+    "CARGO_NET_OFFLINE": "true",
+    "DYLD_LIBRARY_PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib"
+  },
+  "started_utc": "2026-10-23T05:49:09.947764+00:00",
+  "exit": 0,
+  "log": "02-native-reuse.log",
+  "stdout": "native.json"
+}

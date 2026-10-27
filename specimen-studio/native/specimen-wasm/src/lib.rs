@@ -1,6 +1,12 @@
 //! The specimen kernel for the browser: a JSON command ABI (`call`) plus the
 //! P0 fixed-host probe that the conformance goldens pin.
 pub mod dispatch;
+#[cfg(feature = "identity-probe")]
+pub mod identity_probe;
+#[cfg(feature = "language-probe")]
+pub mod language_probe;
+#[cfg(feature = "scoring-probe")]
+pub mod scoring_probe;
 use serde_json::{Value, json};
 use specimen_kernel::{engine, host::FixedHost, neural::Network};
 use std::sync::atomic::AtomicBool;
@@ -121,6 +127,27 @@ mod exports {
     #[unsafe(no_mangle)]
     pub unsafe extern "C" fn probe_raw(ptr: *mut u8, len: usize) -> u64 {
         hand_out(crate::probe(&take(ptr, len)).into_bytes())
+    }
+
+    /// Bounded synthetic language experiment; absent from default builds.
+    #[cfg(feature = "language-probe")]
+    #[unsafe(no_mangle)]
+    pub extern "C" fn language_probe_raw() -> u64 {
+        hand_out(crate::language_probe::run().into_bytes())
+    }
+
+    /// Finite scoring/broker mechanism witness; absent from default builds.
+    #[cfg(feature = "scoring-probe")]
+    #[unsafe(no_mangle)]
+    pub extern "C" fn scoring_probe_raw() -> u64 {
+        hand_out(crate::scoring_probe::run().into_bytes())
+    }
+
+    /// Bounded synthetic identity experiment; absent from default builds.
+    #[cfg(feature = "identity-probe")]
+    #[unsafe(no_mangle)]
+    pub extern "C" fn identity_probe_raw() -> u64 {
+        hand_out(crate::identity_probe::run().into_bytes())
     }
 }
 

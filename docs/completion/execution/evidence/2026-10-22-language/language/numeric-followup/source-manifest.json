@@ -1,0 +1,20 @@
+[
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+    "sha256": "85cca7eb74f62ec4f0d46160ac1e3c3f67e277335bd837d2e6c2b9d14307aac9",
+    "bytes": 6923,
+    "lines": 221
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+    "sha256": "fdd924811789d97eedc9bd1959f7d0fb812cea39bc8f3ad716a0d59f56f0a136",
+    "bytes": 25962,
+    "lines": 753
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+    "sha256": "cc035996fb04eea519daa164450ad67046693630309273a635df13106bb7664b",
+    "bytes": 6416,
+    "lines": 189
+  }
+]

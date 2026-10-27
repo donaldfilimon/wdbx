@@ -1,0 +1,173 @@
+{
+  "baseline_commit": "ad92e81",
+  "source_commit": "97af6e53fffb1a460fbfd52a93fbda007af58d4f",
+  "source_sha256": {
+    "docs/completion/execution/evidence/2026-10-26-studio-preservation-transition.json": "12866d64310e4c251dcb2b3772f928a320a6a65a8cbd02784db28d616a879053",
+    "docs/completion/substrate-release/README.md": "7c852baff9e71adf2f3810322252034a92caaf192b39f0f0e82bd097c3f4bfc9",
+    "specimen-studio/docs/verification/2026-10-26-preservation-successor.md": "1d2637f8806792af31f49e6298f8c6eab9c6fb3b430838b0a84d8f060f922e29",
+    "specimen-studio/scripts/check-language-parity.sh": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad",
+    "specimen-studio/scripts/check-scoring-parity.sh": "9a3bcef9b79a99a51fa175baec12b2fdea8b25b8f98f6afa4ee34c0286128438",
+    "specimen-studio/scripts/check_preservation.py": "4070469df8b78bef3ca572625628460f24fb75f35d793b193338fe3e92293612",
+    "specimen-studio/scripts/tests/test_check_preservation.py": "66518c62225a1f6b12bcae996bd851f39e9a875814f1018bf99d021d3e2e42a5",
+    "tools/check_substrate_release.py": "3119d4a558fa78ad3118496ac2601135bb3116fb9a2a5399a0da444a15e308d5",
+    "tools/tests/test_check_substrate_release.py": "42698722a6c162bfde439ef5e0ec2aec817c434edc49e97590071e9a11dda2f0",
+    "docs/completion/execution/register-v1.json": "d410ccf44c2f8fce42254ce4bef2f3597a8102f2bab4ebf8769a576186835745"
+  },
+  "frozen_before_and_after": {
+    "docs/completion/substrate-release/catalog-v1.json": "d9b2cbe9ea14c65166bfa407686aae0eeffe76608d0bca46f1a246ee0c419248",
+    "docs/completion/substrate-release/baseline-v1.json": "c63443d76942595ba64b0515feca7fe180c61cf9edb1ab35ecaa2d5a734d1b76",
+    "docs/completion/requirements.json": "571e55910ca882db6141c616f1a0de036baec7fe211c371ca1ddfeb04691fa65",
+    "docs/completion/execution/evidence/2026-10-22-language/legacy-baseline.json": "15d8d8fe9682da055b757536abaf0d856224b13596e2d0865d5069e987f8a4c0",
+    "docs/completion/execution/evidence/2026-10-23-scoring/preservation-baseline.json": "16e8371d58abe5e44ba656a8f35efb89c142f70023c3116337264eae51b9a11a"
+  },
+  "environment": {
+    "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)\nbinary: rustc\ncommit-hash: 58cf8f9c35b355199727627d07ae34a4e2846d67\ncommit-date: 2026-10-13\nhost: aarch64-apple-darwin\nrelease: 1.99.1\nLLVM version: 23.1.1",
+    "cargo": "cargo 1.99.1 (5f94df478 2026-08-27)",
+    "bun": "1.4.4",
+    "python": "Python 3.15.1",
+    "python39": "Python 3.9.6",
+    "hawk_available": false,
+    "hawk_api_key_present": false
+  },
+  "runs": [
+    {
+      "name": "preservation-final",
+      "command": "/usr/bin/python3 -m unittest discover -s specimen-studio/scripts/tests -p test_check_preservation.py",
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 0.86,
+      "log": ".work/preservation-continuation/preservation-final.log",
+      "sha256": "86122612c0b4569c2456b243d3b33c1f90803a29fd51ef3609eba76204bbb078",
+      "cwd": "."
+    },
+    {
+      "name": "release-python39-final",
+      "command": "/usr/bin/python3 -m unittest discover -s tools/tests -p test_check_substrate_release.py",
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 5.74,
+      "log": ".work/preservation-continuation/release-python39-final.log",
+      "sha256": "e7719835aee050ccbf143a7ff5bf845a147d10870b7f6087cbe14f7175fb17d2",
+      "cwd": "."
+    },
+    {
+      "name": "completion-tests",
+      "command": "python3 -m unittest discover -s tools/tests -p \"test_check_completion*.py\"",
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 52.78,
+      "log": ".work/preservation-continuation/completion-tests.log",
+      "sha256": "0512e424dafef2b822ca732087340e1bee68b6b663d1c64de4192c0e7952f555",
+      "cwd": "."
+    },
+    {
+      "name": "completion",
+      "command": "python3 tools/check_completion.py",
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 0.22,
+      "log": ".work/preservation-continuation/completion.log",
+      "sha256": "2f88e13061eb9a6f8cf0ae9d4a6efe063939a54ef1bb299cba4d2554389365d4",
+      "cwd": "."
+    },
+    {
+      "name": "execution",
+      "command": "python3 tools/check_completion_execution.py",
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 1.22,
+      "log": ".work/preservation-continuation/execution.log",
+      "sha256": "7db51a594198bccc2ebeaa015f6c56c4aa8ef9d9ac56a324b1f859734c08c302",
+      "cwd": "."
+    },
+    {
+      "name": "release-snapshot",
+      "command": "python3 tools/check_substrate_release.py --snapshot-only",
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 0.14,
+      "log": ".work/preservation-continuation/release-snapshot.log",
+      "sha256": "9d5169614996256e8d948da2726bd6245d1f8e84f5a92238e11f4512cb2b8b7f",
+      "cwd": "."
+    },
+    {
+      "name": "release-live",
+      "command": "python3 tools/check_substrate_release.py",
+      "exit": 1,
+      "expected_exit": 1,
+      "seconds": 0.12,
+      "log": ".work/preservation-continuation/release-live.log",
+      "sha256": "18a7355eb3a41c628dc522f472060b39f2051679a3bf3119747e6cd62218d531",
+      "cwd": "."
+    },
+    {
+      "name": "release-drift-report",
+      "command": "python3 tools/check_substrate_release.py --drift-report",
+      "exit": 1,
+      "expected_exit": 1,
+      "seconds": 0.13,
+      "log": ".work/preservation-continuation/release-drift-report.log",
+      "sha256": "56af836635f93906e122dc8c502ed797ce76436d0fb72fc7338920aa9b244ca7",
+      "cwd": "."
+    },
+    {
+      "name": "language-historical",
+      "command": "python3 specimen-studio/scripts/check_preservation.py --profile language --mode historical",
+      "exit": 1,
+      "expected_exit": 1,
+      "seconds": 0.06,
+      "log": ".work/preservation-continuation/language-historical.log",
+      "sha256": "5bc86db33d342419d149c987b85727d342d90b0ed20ac754a28097a8e01355b4",
+      "cwd": "."
+    },
+    {
+      "name": "scoring-historical",
+      "command": "python3 specimen-studio/scripts/check_preservation.py --profile scoring --mode historical",
+      "exit": 1,
+      "expected_exit": 1,
+      "seconds": 0.09,
+      "log": ".work/preservation-continuation/scoring-historical.log",
+      "sha256": "b60d4c192e746bb134cf942fca63e07638941cecd1f11024b39290ce54d9257d",
+      "cwd": "."
+    },
+    {
+      "name": "root",
+      "command": "bash tools/check.sh",
+      "cwd": ".",
+      "exit": 0,
+      "log": ".work/preservation-continuation/root.log",
+      "sha256": "c5627a1ead341b6b42ef7eed83f3d6ddc2a062a332cf16ba1da72a6f3c1a0252",
+      "rust_totals": {
+        "passed": 1201,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    {
+      "name": "studio",
+      "command": "bun run check",
+      "cwd": "specimen-studio",
+      "exit": 0,
+      "log": ".work/preservation-continuation/studio.log",
+      "sha256": "d5a30ba1b50ef6079617f3408a86d17cddd52e95035bb38738c878dee49506ec"
+    },
+    {
+      "name": "language-current",
+      "command": "bash scripts/check-language-parity.sh",
+      "cwd": "specimen-studio",
+      "exit": 0,
+      "log": ".work/preservation-continuation/language-current.log",
+      "sha256": "253e6b5c1e6fc48e5c031e77b8f8d2735927280c70a25b11bec35685dc1e1c81"
+    },
+    {
+      "name": "scoring-current",
+      "command": "bash scripts/check-scoring-parity.sh",
+      "cwd": "specimen-studio",
+      "exit": 0,
+      "log": ".work/preservation-continuation/scoring-current.log",
+      "sha256": "0ffaafe3025af8a7af34d109ac8851f75ad9389e77816e025d4a9df6f24af69a"
+    }
+  ],
+  "scope": "Local C0 implementation and observation only; historical refusal and unapproved source-version migration remain visible.",
+  "review": "Clean whole-range review, no actionable findings or deferred minors; final completion suite subsequently passed 64 tests."
+}

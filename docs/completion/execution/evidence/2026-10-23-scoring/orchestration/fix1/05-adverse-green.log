@@ -1,0 +1,24 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[52057]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "orchestration_v3_fix1") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 1.05s
+     Running tests/orchestration_v3_fix1.rs (specimen-studio/target/debug/deps/orchestration_v3_fix1-76b4ab726258c655)
+
+running 8 tests
+test i2_lower_work_limit_reserves_cleanup_before_accepting_more_cycles ... ok
+test i2_retained_cancelled_records_keep_cleanup_reservation_until_retirement ... ok
+test i2_attachment_cleanup_headroom_failure_preserves_rng_visit_and_retry ... ok
+test i1_nested_capture_matching_uses_one_lowered_work_meter_and_retry ... ok
+test i1_decline_validates_identity_and_scope_without_reserving_a_full_queue ... ok
+test i2_completion_cleanup_headroom_failure_preserves_active_work ... ok
+test i2_restart_many_small_cycles_has_one_bounded_cleanup_and_keeps_composed_metadata ... ok
+test i1_oversized_selected_and_declined_descriptors_are_atomic_and_retryable ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+

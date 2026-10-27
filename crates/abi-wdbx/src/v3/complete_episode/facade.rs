@@ -132,6 +132,25 @@ impl PrototypeLedger {
         })
     }
 
+    /// Open with required signatures from the supplied historical trust keys.
+    ///
+    /// Every record must have a valid signature from one of these keys, and
+    /// the new writer's key must be included. Missing, invalid, and unresolved
+    /// signatures are corruption, checked before crash-tail repair. The host
+    /// must supply this policy on every open; it is not persisted. These keys
+    /// establish historical mathematics only, not current admission authority.
+    /// Compatibility `open` and `open_with_signer` remain permissive.
+    /// This provisional API has no ABI ratification or stability promise.
+    pub fn open_authenticated(
+        directory: impl AsRef<Path>,
+        signer: EpisodeSigner,
+        trusted_keys: &[VerifyingKey],
+    ) -> Result<Self, CompleteEpisodeStoreError> {
+        Ok(Self {
+            store: CompleteEpisodeStore::open_authenticated(directory, signer, trusted_keys)?,
+        })
+    }
+
     /// Validate, hash, durably append, and return a content-free receipt.
     pub fn append(
         &mut self,

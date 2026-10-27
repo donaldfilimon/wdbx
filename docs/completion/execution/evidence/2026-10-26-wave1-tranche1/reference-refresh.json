@@ -1,0 +1,30 @@
+{
+  "recorded_date": "2026-10-26",
+  "scope": "Execution register pinned current-reference refresh only; inventory structure, dispositions and candidate routing unchanged; historical receipts untouched.",
+  "trigger": "Wave 1 tranche 1 gated the test-only `pub(super) use simulator::AdmissionSimulator;` re-export with #[cfg(test)] to remove the unused-import warning; tools/check_completion_execution.py then reported reference drift on that one path.",
+  "procedure": "Recomputed the current bytes of only the drifted path and replaced its register rows' sha256 pins in place. No disposition, routing, status, evidence level, test result or reconciled catalog changed.",
+  "changes": [
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/mod.rs",
+      "prior_sha256": "e42d996f32cb8316da05d2cb2b2043c8c9778622a64ceb9c57e9da8fd80dbc60",
+      "current_sha256": "8e913ad8a8bce6c776b11aaacae4010470454ff93755a37f488926b06b40cf1a",
+      "updated_reference_rows": 6
+    }
+  ],
+  "not_refreshed": "docs/completion/substrate-release/baseline-v1.json and docs/completion/substrate-decisions/source-manifest-v1.json also list this path; tools/check_substrate_release.py already failed at BASE d082034 with MOD-0032..MOD-0069 source identity drift and reports the identical 38-line failure set after this change. It is not repinned here.",
+  "after_checks": [
+    {
+      "command": "python3 tools/check_completion_execution.py",
+      "log": "execution-checker-after.log"
+    },
+    {
+      "command": "python3 -m unittest discover -s tools/tests -p test_check_completion_execution.py",
+      "log": "execution-checker-tests.log"
+    },
+    {
+      "command": "python3 tools/check_completion.py",
+      "log": "frozen-checker-after.log"
+    }
+  ],
+  "claims": "All 163 requirements remain open/C0/unknown; source-hash agreement establishes byte identity only."
+}

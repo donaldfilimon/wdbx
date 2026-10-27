@@ -1,0 +1,117 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+    Finished `test` profile [unoptimized] target(s) in 0.49s
+     Running tests/atp_v3.rs (target/debug/deps/atp_v3-b2d488f88ae1f10e)
+
+running 14 tests
+test d10_admission_normalizes_signed_zero_without_mutating_callers ... ok
+test d10_state_admission_rejects_each_nonfinite_and_out_of_range_field ... ok
+test d10_idle_decay_matches_independently_rounded_exp_minus_one ... FAILED
+test d10_clamps_before_releasing_both_valence_signs_and_arousal ... FAILED
+test d10_output_and_negative_zero_elapsed_have_only_positive_zero_bits ... FAILED
+test d10_release_is_inclusive_at_point_eight_five_and_preserves_adjacent_float_boundary ... FAILED
+test d10_elapsed_cap_is_exactly_3600_for_all_larger_finite_values ... FAILED
+test d10_stimulus_admission_rejects_each_nonfinite_and_out_of_range_field ... ok
+test d10_entry_cooldown_ignores_stimulus_and_zero_elapsed_preserves_it ... FAILED
+test d10_elapsed_refusal_is_typed_and_inputs_remain_immutable ... FAILED
+test d10_zero_elapsed_charges_and_success_leaves_inputs_immutable ... FAILED
+test d10_zero_intensity_blocks_valence_charge_but_declared_urgency_adds_point_one ... FAILED
+test s24_cooldown_crossing_zero_waits_until_the_next_separate_step_to_charge ... FAILED
+test s24_repeated_scalar_calls_have_no_jitter_or_hidden_state_and_cycles_build_release_decay ... FAILED
+
+failures:
+
+---- d10_idle_decay_matches_independently_rounded_exp_minus_one stdout ----
+
+thread 'd10_idle_decay_matches_independently_rounded_exp_minus_one' (6876345) panicked at native/specimen-kernel/tests/atp_v3.rs:113:5:
+assertion `left == right` failed
+  left: [3204448256, 1048576000, 0]
+ right: [3191626418, 1035754162, 0]
+
+---- d10_clamps_before_releasing_both_valence_signs_and_arousal stdout ----
+
+thread 'd10_clamps_before_releasing_both_valence_signs_and_arousal' (6876341) panicked at native/specimen-kernel/tests/atp_v3.rs:208:5:
+assertion `left == right` failed
+  left: [3212836864, 1065353216, 0]
+ right: [3209481421, 1056964608, 1106247680]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- d10_output_and_negative_zero_elapsed_have_only_positive_zero_bits stdout ----
+
+thread 'd10_output_and_negative_zero_elapsed_have_only_positive_zero_bits' (6876346) panicked at native/specimen-kernel/tests/atp_v3.rs:178:5:
+assertion `left == right` failed
+  left: [2147483649, 0, 1106247680]
+ right: [0, 0, 0]
+
+---- d10_release_is_inclusive_at_point_eight_five_and_preserves_adjacent_float_boundary stdout ----
+
+thread 'd10_release_is_inclusive_at_point_eight_five_and_preserves_adjacent_float_boundary' (6876347) panicked at native/specimen-kernel/tests/atp_v3.rs:208:5:
+assertion `left == right` failed
+  left: [1056964608, 1062836634, 0]
+ right: [1053609165, 1054448026, 1106247680]
+
+---- d10_elapsed_cap_is_exactly_3600_for_all_larger_finite_values stdout ----
+
+thread 'd10_elapsed_cap_is_exactly_3600_for_all_larger_finite_values' (6876342) panicked at native/specimen-kernel/tests/atp_v3.rs:123:5:
+assertion `left == right` failed
+  left: [3212836864, 1065353216, 1106247680]
+ right: [2970461235, 822977587, 0]
+
+---- d10_entry_cooldown_ignores_stimulus_and_zero_elapsed_preserves_it stdout ----
+
+thread 'd10_entry_cooldown_ignores_stimulus_and_zero_elapsed_preserves_it' (6876344) panicked at native/specimen-kernel/tests/atp_v3.rs:157:5:
+assertion `left == right` failed
+  left: 30.0
+ right: 20.0
+
+---- d10_elapsed_refusal_is_typed_and_inputs_remain_immutable stdout ----
+
+thread 'd10_elapsed_refusal_is_typed_and_inputs_remain_immutable' (6876343) panicked at native/specimen-kernel/tests/atp_v3.rs:78:9:
+assertion `left == right` failed
+  left: Ok(Transition { state: State { v: 0.25, a: 0.5, cooldown_seconds: 10.0 }, applied_elapsed: NaN, released: false, cooldown_at_entry: false })
+ right: Err(NotFinite)
+
+---- d10_zero_elapsed_charges_and_success_leaves_inputs_immutable stdout ----
+
+thread 'd10_zero_elapsed_charges_and_success_leaves_inputs_immutable' (6876350) panicked at native/specimen-kernel/tests/atp_v3.rs:208:5:
+assertion `left == right` failed
+  left: [0, 0, 0]
+ right: [1045220557, 1045220557, 0]
+
+---- d10_zero_intensity_blocks_valence_charge_but_declared_urgency_adds_point_one stdout ----
+
+thread 'd10_zero_intensity_blocks_valence_charge_but_declared_urgency_adds_point_one' (6876351) panicked at native/specimen-kernel/tests/atp_v3.rs:208:5:
+assertion `left == right` failed
+  left: [1048576000, 1048576000, 0]
+ right: [1048576000, 1051931443, 0]
+
+---- s24_cooldown_crossing_zero_waits_until_the_next_separate_step_to_charge stdout ----
+
+thread 's24_cooldown_crossing_zero_waits_until_the_next_separate_step_to_charge' (6876352) panicked at native/specimen-kernel/tests/atp_v3.rs:208:5:
+assertion `left == right` failed
+  left: [0, 0, 1065353216]
+ right: [0, 0, 0]
+
+---- s24_repeated_scalar_calls_have_no_jitter_or_hidden_state_and_cycles_build_release_decay stdout ----
+
+thread 's24_repeated_scalar_calls_have_no_jitter_or_hidden_state_and_cycles_build_release_decay' (6876353) panicked at native/specimen-kernel/tests/atp_v3.rs:208:5:
+assertion `left == right` failed
+  left: [0, 0, 0]
+ right: [1045220557, 1045220557, 0]
+
+
+failures:
+    d10_clamps_before_releasing_both_valence_signs_and_arousal
+    d10_elapsed_cap_is_exactly_3600_for_all_larger_finite_values
+    d10_elapsed_refusal_is_typed_and_inputs_remain_immutable
+    d10_entry_cooldown_ignores_stimulus_and_zero_elapsed_preserves_it
+    d10_idle_decay_matches_independently_rounded_exp_minus_one
+    d10_output_and_negative_zero_elapsed_have_only_positive_zero_bits
+    d10_release_is_inclusive_at_point_eight_five_and_preserves_adjacent_float_boundary
+    d10_zero_elapsed_charges_and_success_leaves_inputs_immutable
+    d10_zero_intensity_blocks_valence_charge_but_declared_urgency_adds_point_one
+    s24_cooldown_crossing_zero_waits_until_the_next_separate_step_to_charge
+    s24_repeated_scalar_calls_have_no_jitter_or_hidden_state_and_cycles_build_release_decay
+
+test result: FAILED. 3 passed; 11 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p specimen-kernel --test atp_v3`

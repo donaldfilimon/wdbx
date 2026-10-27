@@ -1,0 +1,47 @@
+{
+  "qualification": "Inventory/mutation checks only; no product, efficacy or hardware qualification.",
+  "results": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 tools/check_completion.py",
+      "exit_status": 0,
+      "log": "docs/completion/execution/evidence/2026-10-22-studio/register/current-frozen-completion.log"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 tools/check_completion_execution.py",
+      "exit_status": 0,
+      "log": "docs/completion/execution/evidence/2026-10-22-studio/register/current-execution.log"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tools/tests -p test_check_completion_execution.py",
+      "exit_status": 0,
+      "log": "docs/completion/execution/evidence/2026-10-22-studio/register/current-execution-mutations.log"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 /usr/bin/python3 tools/check_completion.py",
+      "exit_status": 0,
+      "log": "docs/completion/execution/evidence/2026-10-22-studio/register/system-frozen-completion.log"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 /usr/bin/python3 tools/check_completion_execution.py",
+      "exit_status": 0,
+      "log": "docs/completion/execution/evidence/2026-10-22-studio/register/system-execution.log"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 /usr/bin/python3 -m unittest discover -s tools/tests -p test_check_completion_execution.py",
+      "exit_status": 0,
+      "log": "docs/completion/execution/evidence/2026-10-22-studio/register/system-execution-mutations.log"
+    }
+  ],
+  "closure_results": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 docs/completion/execution/evidence/2026-10-22-studio/register/check-observation-closure.py",
+      "exit_status": 0,
+      "log": "docs/completion/execution/evidence/2026-10-22-studio/register/current-observation-closure.log"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 /usr/bin/python3 docs/completion/execution/evidence/2026-10-22-studio/register/check-observation-closure.py",
+      "exit_status": 0,
+      "log": "docs/completion/execution/evidence/2026-10-22-studio/register/system-observation-closure.log"
+    }
+  ]
+}

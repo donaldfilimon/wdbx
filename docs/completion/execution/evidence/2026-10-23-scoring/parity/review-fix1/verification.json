@@ -1,0 +1,188 @@
+{
+  "scope": "I1 binding-only lint fix; reused qualified native/WASM binaries without rebuild; original broad gates remain root-owned",
+  "commands": [
+    {
+      "argv": [
+        "bun",
+        "run",
+        "lint",
+        "tests/scoring-parity.mjs"
+      ],
+      "cwd": "/Users/donald/sources/repos/wdbx/specimen-studio",
+      "env": {
+        "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+        "RUSTUP_TOOLCHAIN": "1.99.1",
+        "CARGO_NET_OFFLINE": "true",
+        "DYLD_LIBRARY_PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib"
+      },
+      "started_utc": "2026-10-23T05:49:09.239492+00:00",
+      "exit": 0,
+      "log": "01-targeted-lint.log",
+      "stdout": null
+    },
+    {
+      "argv": [
+        "/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-scoring-parity.qdu7oH/target/debug/examples/scoring_probe"
+      ],
+      "cwd": "/Users/donald/sources/repos/wdbx/specimen-studio",
+      "env": {
+        "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+        "RUSTUP_TOOLCHAIN": "1.99.1",
+        "CARGO_NET_OFFLINE": "true",
+        "DYLD_LIBRARY_PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib"
+      },
+      "started_utc": "2026-10-23T05:49:09.947764+00:00",
+      "exit": 0,
+      "log": "02-native-reuse.log",
+      "stdout": "native.json"
+    },
+    {
+      "argv": [
+        "bun",
+        "tests/scoring-parity.mjs",
+        "/Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/native.json",
+        "/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-scoring-parity.qdu7oH/scoring.wasm",
+        "/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-scoring-parity.qdu7oH/default.wasm",
+        "/Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/wasm.json",
+        "/Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/corrupt-arithmetic.json",
+        "/Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/corrupt-quarantine.json",
+        "/Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/corrupt-boundary.json"
+      ],
+      "cwd": "/Users/donald/sources/repos/wdbx/specimen-studio",
+      "env": {
+        "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+        "RUSTUP_TOOLCHAIN": "1.99.1",
+        "CARGO_NET_OFFLINE": "true",
+        "DYLD_LIBRARY_PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib"
+      },
+      "started_utc": "2026-10-23T05:49:10.001807+00:00",
+      "exit": 0,
+      "log": "03-positive.log",
+      "stdout": null
+    },
+    {
+      "argv": [
+        "bun",
+        "tests/scoring-parity.mjs",
+        "--self-test",
+        "/Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/native.json"
+      ],
+      "cwd": "/Users/donald/sources/repos/wdbx/specimen-studio",
+      "env": {
+        "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+        "RUSTUP_TOOLCHAIN": "1.99.1",
+        "CARGO_NET_OFFLINE": "true",
+        "DYLD_LIBRARY_PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib"
+      },
+      "started_utc": "2026-10-23T05:49:10.083775+00:00",
+      "exit": 0,
+      "log": "04-self-test.log",
+      "stdout": null
+    },
+    {
+      "argv": [
+        "bun",
+        "tests/scoring-parity.mjs",
+        "--check-json",
+        "/Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/corrupt-arithmetic.json"
+      ],
+      "cwd": "/Users/donald/sources/repos/wdbx/specimen-studio",
+      "env": {
+        "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+        "RUSTUP_TOOLCHAIN": "1.99.1",
+        "CARGO_NET_OFFLINE": "true",
+        "DYLD_LIBRARY_PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib"
+      },
+      "started_utc": "2026-10-23T05:49:10.122345+00:00",
+      "exit": 1,
+      "log": "05-negative-arithmetic.log",
+      "stdout": null
+    },
+    {
+      "argv": [
+        "bun",
+        "tests/scoring-parity.mjs",
+        "--check-json",
+        "/Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/corrupt-quarantine.json"
+      ],
+      "cwd": "/Users/donald/sources/repos/wdbx/specimen-studio",
+      "env": {
+        "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+        "RUSTUP_TOOLCHAIN": "1.99.1",
+        "CARGO_NET_OFFLINE": "true",
+        "DYLD_LIBRARY_PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib"
+      },
+      "started_utc": "2026-10-23T05:49:10.141246+00:00",
+      "exit": 1,
+      "log": "06-negative-quarantine.log",
+      "stdout": null
+    },
+    {
+      "argv": [
+        "bun",
+        "tests/scoring-parity.mjs",
+        "--check-json",
+        "/Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/corrupt-boundary.json"
+      ],
+      "cwd": "/Users/donald/sources/repos/wdbx/specimen-studio",
+      "env": {
+        "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+        "RUSTUP_TOOLCHAIN": "1.99.1",
+        "CARGO_NET_OFFLINE": "true",
+        "DYLD_LIBRARY_PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib"
+      },
+      "started_utc": "2026-10-23T05:49:10.164192+00:00",
+      "exit": 1,
+      "log": "07-negative-boundary.log",
+      "stdout": null
+    }
+  ],
+  "summary": {
+    "result": "PASS",
+    "logical_charge_profile": "logical-charge-v1",
+    "fixed_boundary_rows": 24,
+    "matching_logical_diagnostics": 68,
+    "semantic_bytes": 243932,
+    "semantic_native_sha256": "7125a31a9932c95a0df0cf42c505cfe988c29653d9d36f10237f7fa7182be4d8",
+    "semantic_wasm_sha256": "7125a31a9932c95a0df0cf42c505cfe988c29653d9d36f10237f7fa7182be4d8",
+    "raw_native_bytes": 250864,
+    "raw_wasm_bytes": 250863,
+    "native_sha256": "dbd6d97c45ba23a50f912294560fe98d1ada86c29c927a9d24602034d52b19ab",
+    "wasm_sha256": "22a904c903ab0dc5a00f455dbd1b7412b51ea5ff4b41c5c363b9059d194c2d51",
+    "host_calls": 0,
+    "feature_imports": [
+      {
+        "module": "env",
+        "name": "progress",
+        "kind": "function"
+      },
+      {
+        "module": "env",
+        "name": "now_ms",
+        "kind": "function"
+      },
+      {
+        "module": "env",
+        "name": "random_u32",
+        "kind": "function"
+      }
+    ],
+    "default_exports": [
+      "memory",
+      "alloc",
+      "call",
+      "free",
+      "probe_raw"
+    ],
+    "feature_sha256": "3f3b0b94759ad2d4a591f28cbe590e10aefb32432d9e21364b5199145affe520",
+    "default_sha256": "d1112a5120d987ae4a376dc3169e29d9d9674f62a7657a8d4e1fc9f9d2e69395"
+  },
+  "semantic_unchanged_from_canonical_final": true,
+  "js_sha256": "383f38db2e815634135093021ec953147dcb0568f111a353ef3e9022a4150e17",
+  "negative_exit_statuses": {
+    "arithmetic": 1,
+    "quarantine": 1,
+    "boundary": 1
+  },
+  "rust_rebuilds": 0
+}

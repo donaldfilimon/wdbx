@@ -1,0 +1,15 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+error[E0432]: unresolved import `specimen_kernel::orchestration_v3`
+ --> native/specimen-kernel/tests/orchestration_v3/support.rs:1:115
+  |
+1 | use specimen_kernel::{identity::*, language::Expr, language_v3::*, scanner_v3::routes::*, scoring_v3::*, text_v3, orchestration_v3::*};
+  |                                                                                                                   ^^^^^^^^^^^^^^^^ could not find `orchestration_v3` in `specimen_kernel`
+
+error[E0432]: unresolved import `specimen_kernel::orchestration_v3`
+ --> native/specimen-kernel/tests/orchestration_v3.rs:3:22
+  |
+3 | use specimen_kernel::orchestration_v3::*;
+  |                      ^^^^^^^^^^^^^^^^ could not find `orchestration_v3` in `specimen_kernel`
+
+For more information about this error, try `rustc --explain E0432`.
+error: could not compile `specimen-kernel` (test "orchestration_v3") due to 2 previous errors

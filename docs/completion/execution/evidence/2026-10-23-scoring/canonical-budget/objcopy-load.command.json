@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy",
+    "--version"
+  ],
+  "env": {
+    "DYLD_LIBRARY_PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib"
+  },
+  "exit": 0
+}

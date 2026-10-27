@@ -1,0 +1,931 @@
+{
+  "version": 1,
+  "recorded_at_utc": "2026-10-23T00:51:48.778282+00:00",
+  "scope": "Reviewed Studio identity foundation, actual optional parity witness and unqualified requirement observations; parent package8 remains incomplete",
+  "base_revision": "36bc99b699de60be6c07b2838d74580084fb5d4c",
+  "source_state": "Uncommitted canonical checkout; file identities below identify actual bytes",
+  "environment": {
+    "platform": "macOS-27.2-arm64-arm-64bit-Mach-O",
+    "rust_toolchain": "1.99.1",
+    "rust_path": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+    "bun": "1.4.4",
+    "node": "v26.12.0",
+    "python_current": "Python 3.15.0",
+    "python_system": "Python 3.9.6"
+  },
+  "commands": [
+    {
+      "cwd": "specimen-studio",
+      "command": "bun run check",
+      "exit_code": 0,
+      "log": "browser-gate.log",
+      "scope": "Types, studio lint, default WASM build, 221 Bun tests and production Worker build."
+    },
+    {
+      "cwd": "specimen-studio",
+      "command": "bun run lint",
+      "exit_code": 0,
+      "log": "lint-with-parity.log"
+    },
+    {
+      "cwd": "specimen-studio",
+      "command": "bun run test:native",
+      "exit_code": 0,
+      "log": "native-test-gate.log",
+      "scope": "151 passing Rust tests; one existing ignored test; optional-probe tests intentionally not enabled by this default gate."
+    },
+    {
+      "cwd": "specimen-studio",
+      "command": "bun run check:native",
+      "exit_code": 0,
+      "log": "native-clippy-gate.log"
+    },
+    {
+      "cwd": ".",
+      "command": "bash specimen-studio/scripts/check-identity-parity.sh",
+      "exit_code": 0,
+      "log": "task-8-parity-runtime-green.log",
+      "scope": "Historical pre-final-fix witness: one native arm64 runtime and Bun WASM engine; default-export absence and exact 4168-byte output equality."
+    },
+    {
+      "cwd": ".",
+      "command": "Corrupted-native-output comparator command documented verbatim in parity-report.md",
+      "exit_code": 1,
+      "log": "task-8-parity-negative.log",
+      "scope": "Historical pre-final-fix expected rejection, never a passing parity output."
+    },
+    {
+      "cwd": ".",
+      "command": "python3 tools/check_completion_execution.py",
+      "exit_code": 0,
+      "log": "final-fix/final-fix-current-execution-checker.log"
+    },
+    {
+      "cwd": ".",
+      "command": "python3 tools/check_completion.py",
+      "exit_code": 0,
+      "log": "final-fix/final-fix-current-completion-checker.log"
+    },
+    {
+      "cwd": ".",
+      "command": "python3 -m unittest discover -s tools/tests -p test_check_completion_execution.py",
+      "exit_code": 0,
+      "log": "final-fix/final-fix-current-execution-mutations.log"
+    },
+    {
+      "cwd": ".",
+      "command": "/usr/bin/python3 -m unittest discover -s tools/tests -p test_check_completion_execution.py",
+      "exit_code": 0,
+      "log": "final-fix/final-fix-system-execution-mutations.log"
+    },
+    {
+      "cwd": ".",
+      "command": "bash specimen-studio/scripts/check-identity-parity.sh",
+      "exit_code": 0,
+      "log": "final-fix/final-fix-parity-green.log",
+      "scope": "Current4205byte trace includes actual Inserted/Duplicate outcomes; native/WASM bytes identical; defaultmodule compiled and exports inspected."
+    },
+    {
+      "cwd": ".",
+      "command": "Kind-only corrupted-native comparator command documented in final-fix-report.md",
+      "exit_code": 1,
+      "log": "final-fix/final-fix-kind-negative.log",
+      "scope": "Current variant-level expected rejection with refs unchanged."
+    },
+    {
+      "cwd": ".",
+      "command": "cargo test --locked --manifest-path specimen-studio/Cargo.toml -p specimen-wasm --features identity-probe --test identity_probe",
+      "exit_code": 0,
+      "log": "final-fix/final-fix-native-green.log"
+    },
+    {
+      "cwd": ".",
+      "command": "cargo clippy --locked --manifest-path specimen-studio/Cargo.toml -p specimen-wasm --all-targets --features identity-probe -- -D warnings",
+      "exit_code": 0,
+      "log": "final-fix/final-fix-clippy.log"
+    }
+  ],
+  "review": "Separate automated task and final tranche specification/quality review, not named ABI-owner or external scientific/cryptographic qualification. See review-summary.md.",
+  "limits": [
+    "All163 requirements remain open/C0; observed local test passes never close whole requirements.",
+    "Prepared keys/trees only: no text-v3 parser/encoder, production save/command migration, full engine integration or automatic offline sync.",
+    "No efficacy experiment, real model/OCR/GPU execution, installed platform or elapsed operation qualification.",
+    "Nonfatal host rust-objcopy/LLVM diagnostic and Bun1.4.4-canary differ from clean toolchain/CI runtime qualification.",
+    "No root substrate Rust source changed this tranche; prior root gates remain historical snapshots. Default Studio gates preceded the final opt-in trace/doc-only fix; affected feature tests/Clippy/parity were rerun on amended source.",
+    "No commits, deployment, credentials or live-store tests."
+  ],
+  "files": [
+    {
+      "path": "crates/abi-wdbx/Cargo.toml",
+      "sha256": "a4dca8395b0768d127b42e106eb28bfbcacd0672a91c06322638db5f83d95975"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/SPEC.md",
+      "sha256": "62eaabb7d7f9752c15253764fff67304d635ffd054b2f2ac9e64224fb3db4506"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/evaluate.rs",
+      "sha256": "362c8c191af591cf973d04c8b8c8119b29ea58a6f73809c399fde1a3385b89de"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/mod.rs",
+      "sha256": "e42d996f32cb8316da05d2cb2b2043c8c9778622a64ceb9c57e9da8fd80dbc60"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/scenarios.rs",
+      "sha256": "2f476d0b7243500a0a58765acfa652c056576babc3fd037e7b5da08ba832eeed"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/simulator.rs",
+      "sha256": "c9d08a48e1109dc0db8e2279fa715137e4658b9dd46d132961653fbb0e6e66e6"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs",
+      "sha256": "6ee16787bd91deb9369ed7c654a53e5535cef21f4cafb21ceeadc278cb37a8e7"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/mod.rs",
+      "sha256": "3c67d8fbe0f7eb152f92b6856851130c4922b016f556ac5a25a362a8f375eef1"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/profile.rs",
+      "sha256": "30110ee1ecb5a0d214f6564c6a9426a00d045dc997465866ada91030c2044a05"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/python_witness_tests.rs",
+      "sha256": "a580b56f2f688de108f81629316b2da71f9ed69f71bf1500c407363ed745044a"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/tests.rs",
+      "sha256": "882c05e8ada9827143172f97f245eb0e3df54ebbc88ff53c2a478a396ceb7d63"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/apply.rs",
+      "sha256": "2b2848eb378b63bf427f0218b1ad2487e8636126fc7846283ce00e0a6931e002"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/command.rs",
+      "sha256": "41869e254acca2dd9ce04385ce1064a0f87af5afd6c3c2b369e31e71a20946b4"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/mod.rs",
+      "sha256": "ec4c7dc34a3817410106de8faa08b9197f58eba607cdab38a93d125c11e6f391"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/snapshot.rs",
+      "sha256": "b79f8784e783ef5dcaed058bf2f3261e88927c12ccbc2980ec2a6e85e2b83099"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/tests.rs",
+      "sha256": "88fd718c06216f94c60b94e49dba1eca0c0a01a4f1127fee25a7b496102d3587"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/verify.rs",
+      "sha256": "3f82562b5a7456ffc3040d5b23cd7bd6c3ad3b5fe5c3f9487402ee938309706c"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs",
+      "sha256": "7d23d94d31188e3051a79a1fac042aefee20754a94542f254fc593ca97668d98"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/facade.rs",
+      "sha256": "593b2b1c35a9fd3df489639be9911bcc1e8772eb4d66aebb6e7ad240bd70e6c3"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/ledger.rs",
+      "sha256": "753a8c400796a70e61d310ce1e86c47509083edb9fe8b4bc096222182b719df0"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/complete_episode/mod.rs",
+      "sha256": "69508342cd1868ea752b1116bc3c443837b97bc1f8cc5ac970065fffe0837d12"
+    },
+    {
+      "path": "crates/abi-wdbx/src/v3/episode/cose/trust.rs",
+      "sha256": "4ace7beb5f0b3fb61d725975c70c1d743435e90a5c9db4e8a4767cac683f2592"
+    },
+    {
+      "path": "crates/abi-wdbx/tests/v3_complete_episode_authenticated.rs",
+      "sha256": "d114f5e5871bed914dde04d6fff9258cc18b47616778c046593bebbb7c9c625a"
+    },
+    {
+      "path": "docs/completion/execution/README.md",
+      "sha256": "f5a1dbeb9ae278326f1f854362a993756e19a48f143c448d553e38c721c6d630"
+    },
+    {
+      "path": "docs/completion/execution/candidate-paths-v1.json",
+      "sha256": "a16ae935f1bedcf851c23d5a64b7be3aed5807447b70216892dc8ded005c4ee2"
+    },
+    {
+      "path": "docs/completion/execution/continuation.md",
+      "sha256": "cc29da3deb04d572cc3004793bd7acb68c22d1f8b1655f0f993c03ad81425cc6"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/contracts-final.log",
+      "sha256": "2f88e13061eb9a6f8cf0ae9d4a6efe063939a54ef1bb299cba4d2554389365d4"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/contracts-tests-final.log",
+      "sha256": "cf28697d2d257e81e18b9b2a2625bd4e6e00188c2380d83eba3b7f1f7c918f32"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/crypto-dependencies/cargo-metadata.json",
+      "sha256": "629bf9eda63c9fdaa1c18b6ce2044eb4c7402619465c887e66ea2481959dded8"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/crypto-dependencies/cargo-tree.txt",
+      "sha256": "a89172e71f3636f672c1563092676bb8f4e8629b26bb7770a7e74c32d624822d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/crypto-dependencies/inventory.json",
+      "sha256": "60474ed394815596b0c1c6272be20c89731f0539b251e676c730a89fe20af816"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/crypto-dependencies/osv-query.json",
+      "sha256": "4311e9b374d4324bd5538a18cfebcd2981d20ae7169928caf86734c93aed43a3"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/crypto-dependencies/probe.log",
+      "sha256": "8caf7cb494069fae25cf2fb53fedb51ab68081347d107cb68ef452d272ff65a1"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/crypto-dependencies/probe.py",
+      "sha256": "2d12282261109c31491dc1a721789365010b7c7d02e9b677a9932f32b303630c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/crypto-dependencies/probe.rs",
+      "sha256": "2766326f02508f6c4d6b4dd92ac3be323512cc3b6f249c2e31d3045cb462aeab"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/crypto-dependencies/rust-probe.log",
+      "sha256": "d3b4f5750aa67993b8505cbbfbf9086f7c5daeea862c1eabe43ecb72776e7f8e"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/feature-clippy-final.log",
+      "sha256": "6f2de79524e9b5247cf088bb1e6cfc9281849b7c0ba2185cff6b8f560b6ad085"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/cffi-pypi.json",
+      "sha256": "2255e530e3f80593a354e3d84a29966924d0e10309d1e3a6d50f845ab7d8df66"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/changelog.txt",
+      "sha256": "f5ebc06c3edf1f875fd2709ce5f8e5857b08c342aaa665b5a3c3bf9363ccee33"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/inspection-manifest.json",
+      "sha256": "6eab4845a16c69de3e74386103d46ff173a141f17aa45bff72818c81ce035fcd"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/install.log",
+      "sha256": "021703954f412cb8d4083ab3c551d0f8ccb3f192d3420387fe9e8c934c39c336"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/interpreter.txt",
+      "sha256": "99dd4ee54c0a53cf1963cf2d7220280f330a219d071e7ca4b32048c95d992a3a"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/libsodium-verify.txt",
+      "sha256": "cce38c5b716b867c150019af12af9f090c9b15c25165e0318907c585c753ea96"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/matrix.log",
+      "sha256": "3beaaeab2045663bc4dd5cf2cae2a600ff9a4b7f0da1f9bd195ebf4ec867fd7b"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/nacl__bindings__crypto_sign.py",
+      "sha256": "3f948b91f440ab9963e452db03506e06b283c305b45e30caff1a67f091386aa2"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/nacl__signing.py",
+      "sha256": "d96e50f4d33cd7bd00aefbf5fbd066a3e6591cec5a15275bb3351f1cd188f61d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/osv-query.json",
+      "sha256": "0a2ce9a2485f55d3bdc9ed3d114499d703660141fdf75d65d13db5d9e5d634c9"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/ph-vector.json",
+      "sha256": "1dd5396db6779447b116710285dbf7259c7b4ec749b579ab4cc6283475ede8c7"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/probe.log",
+      "sha256": "456d0e29518e81bed412a9ea3a4fd80d5d3794350a829aee87ff2d358878ff6c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/probe.py",
+      "sha256": "a49a7ce4b057f3a5f5e19f3df5122ed27a201a13813af37ba049e949dc52d002"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/pyca-retained-matrix.log",
+      "sha256": "eae3a8b768d5bab72ba02fd90f6e5c3342fc248d666bc4f308254349f5093f54"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/pycparser-pypi.json",
+      "sha256": "f3711214301b5595f24eb4fe232a70836a6187ab4a93e895d0307006456ed41a"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/pynacl-1.6.2.dist-info__METADATA",
+      "sha256": "143914f93191bef3bff7ba953dea6a38fb05f7f9e38e2a2e6ae31bd14ba81709"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/pynacl-1.6.2.dist-info__WHEEL",
+      "sha256": "774f57056f629491b487caf13d1c741cc38b9b845b1120836d216c7014bddfa4"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/pynacl-pypi.json",
+      "sha256": "a0f8d5d1795869eaf0dfad7e00896b9902dd691cb0b64b792aaeae14649934c0"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/requirements-local-arm64.txt",
+      "sha256": "a708f38ae7f6737f8389003ddfa7aa60502906de110efb638ef3b0e30a5ed2f3"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/runtime-inventory.json",
+      "sha256": "35b4dc032efb9be96f1d4f76fbbf56109d1eb2b3034a3a5b5acdff1b037bf82f"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/upstream-vendored-directory.json",
+      "sha256": "806c31a123b5233a2ef0ac408c179426ad22aa480a2d8137553275c0fe0f66f1"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/wheel-selection.json",
+      "sha256": "232aaa80af5367e3a949abe960a717acc89a1dc8ed6779ab1e8bc69e781cded7"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-final.log",
+      "sha256": "dbe3f4b104daab6b104c7d06e2e736a53193e19b7f4f2969e55aac26f126b97c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/p1-clippy-initial.log",
+      "sha256": "6ea41393da4a089f942907af3b2b5634ef1b03cd77b748852f736466e282fd88"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/p1-feature-first.log",
+      "sha256": "d497343931aeeb73a62db6d8c3bd110a30998213080f58f24b13cc1428077c63"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/p1-libsodium-rust-first.log",
+      "sha256": "b3bfc2ac34a1ba389eb5bc8af24cf69ceeb0de298f87be24087de0b98533e3bc"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/p1-slices-2-3.log",
+      "sha256": "60b8d5de7e3f5c80e0009a4e99fcbe5b7a2e49229a9a74c1dd7afbf4eaa4d2f4"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/pyca-final-known-failure.log",
+      "sha256": "9ce2b92b9a479a01ae76ae9645cf9803bf05fa7c5985a184c90e1b9d2e227fb8"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/receipt.json",
+      "sha256": "bfeb5fe894433233efaf191b47b98e4e60e7aced38cf67b65e4590dd0dbfff83"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/register/diff-check-before-final-module-comment.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/register/diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/register/execution-check-before-final-module-comment.log",
+      "sha256": "7db51a594198bccc2ebeaa015f6c56c4aa8ef9d9ac56a324b1f859734c08c302"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/register/execution-check.log",
+      "sha256": "7db51a594198bccc2ebeaa015f6c56c4aa8ef9d9ac56a324b1f859734c08c302"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/register/frozen-check-before-final-module-comment.log",
+      "sha256": "2f88e13061eb9a6f8cf0ae9d4a6efe063939a54ef1bb299cba4d2554389365d4"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/register/frozen-check.log",
+      "sha256": "2f88e13061eb9a6f8cf0ae9d4a6efe063939a54ef1bb299cba4d2554389365d4"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/register/tests-current-before-final-module-comment.log",
+      "sha256": "56ea69ea3ae2109f0f67a4954364d5634da262f2e185566d1a102f600fcb22a0"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/register/tests-current.log",
+      "sha256": "f26ef25dc5aa00a9a6d6227eea283ed8dbf767de3d019640a7c8720f8e6c1a6f"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/register/tests-system-before-final-module-comment.log",
+      "sha256": "218dff64e878f6ad4d91195d964739d377b188de70170bebcddf27dadeeec463"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/register/tests-system.log",
+      "sha256": "4995ddb8c21dbb7107558584c0ff06e6d7d4060d4e3683824a05724c7c255c8d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/report-authority-green.log",
+      "sha256": "e82998b1bec67117dc1198b99ebb520fc08598439272b1c576622cdb81a134ec"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/report-authority-red.log",
+      "sha256": "a5de283d33bdc0599e3b361e3ef3bce8f3c4737623f359e222d8dc15a73b7813"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/review-summary.md",
+      "sha256": "51e57ebcbe9c9dbb129c4dcf04989cdf636c6f55ebb8323dc25a58ab88f4d436"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/root-gate-before-comment.log",
+      "sha256": "2ae09dd5cc64ae43447cd2e2d84a3968e6c81854079fe130d7436b785c670cd6"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/root-gate-final.log",
+      "sha256": "a6314323b7e8ac955d0ac5ac1003ac77ab412b90e0e86f5ab261887ed9c63715"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/spatial-evidence-tests-final.log",
+      "sha256": "27aeba3f06b9768b07439464dd1a417ec055fc6e211e01b225ad0a3ae8e4ec21"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/spatial-inventory-final.log",
+      "sha256": "67d7038acbdca3bd811df46a7b10f33bc5d5d5e7f05436aaeceec705ad333ea6"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/trust/build_vectors.py",
+      "sha256": "e68b00e35ebaeeb3ce0d7a6f661b815678189631b65cf7797e8f98c812bdbdda"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/trust/clippy-final.log",
+      "sha256": "5fda5ab91df7d7b7845e428584ff6b5fd8f8247d7ff18ece2c49232260cb66ae"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/trust/clippy-initial.log",
+      "sha256": "77c5104abb878e2a1908b6b7ced92bfcd2d8f0d7123d320d9478bbdf074424d5"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/trust/commands.json",
+      "sha256": "295c4ffc9ea8dbe079235d4d7181a6e8d72065de98667bb904727f50404b0eda"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/trust/tests-final.log",
+      "sha256": "4ba598166a9f991b3dae2b124745505abde51b7e46a657777707132de27d1bfc"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/verify-first-green.log",
+      "sha256": "406133c80eaf2a399000c8aa896da623df87f333a1de05ab2fa86d49d9f914de"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/verify-red.log",
+      "sha256": "57bf2d6e940806dc0521b9d25b9997ee100c0b60a085b43893c6a7fb1718838d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/browser-gate-before-parity.log",
+      "sha256": "427de1be37b4fa24ad2c8fbaee7922f01f4db08e777459d8cfe605b4cab60f6c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/browser-gate.log",
+      "sha256": "ac42b9f4806f66605ba5e18e71969a43dc184962ed766fd68fe072db448c1e17"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/evidence-report.md",
+      "sha256": "fc7d23876bbe30c2776de5900160fa09788874a01f7ae4288e2f7e4dec72981b"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/evidence-task-review.md",
+      "sha256": "8d3bb9fb7df5bd395ce4d3a55abced73c43cd84e47a0174695537f9f9d9f29e5"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix-report.md",
+      "sha256": "331ee098c53928f01314d840fdeaaa609787b1436eab4c07a9b21150ee6cf9f1"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix-rereview.md",
+      "sha256": "8fa3afe3288ff0a0b0e31008e40e0e18a745f77eef956e3f60e1418e881c57fa"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/check-observation-closure.py",
+      "sha256": "79990e2ac98d48cd181a25eb556edcf65c6727496dcdf9227e8975a31983fa1e"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-artifact-hashes.json",
+      "sha256": "32a6da2d3c1978b6d30fe19c0fffb367519764edfd417523a7832242f524ddff"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-before-hashes.json",
+      "sha256": "bf6e68089d5d97c1c33d8fafbe50bcd7160e9087a4219096714eb4e27bdfe093"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-clippy.log",
+      "sha256": "94a03ec56f4fbfa976d83e5405c17be60e15714d3e54b16c0d430d38e74f3666"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-current-completion-checker.log",
+      "sha256": "42019881303d2d441aaa8338548fbfe2e5faa8651d08df270f99487e6f363d50"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-current-execution-checker.log",
+      "sha256": "e1dcf5c9d9faf90928fb2378eae491f15ac2f5dc3837907ad16c5a78843f1aba"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-current-execution-mutations.log",
+      "sha256": "d559ecb0378aec27a9b7b0ee82e15837134321620e7063aa7c1357be599244ee"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-current-hashes.json",
+      "sha256": "33c762de7d9f1c84286e73e1151e5dd0c221f247374a6593c99b616b5b0fece7"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-current-observation-closure.log",
+      "sha256": "516fd717bb797571f7c325e4be4f8d6014d1f75d6a9a09a025d88c7594262102"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-diff-check.log",
+      "sha256": "a0d3b965215a5334a3e51eb1f93bc4bf15e87eea2d4056f9443dbb3ca4c79fb0"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-evidence-hashes.json",
+      "sha256": "91ef9ae89a697556dc268c25d207f6f6e6be99893c73814e9adba78c63d0ef3a"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-js-red.log",
+      "sha256": "69c1bc40ded094bf9b97ed36ef4206b8b3d5f59a0f234c6341bb85d88088a929"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-kind-negative.log",
+      "sha256": "8a790cf4a73de77a1c2c0bbca15bfe5256f1953939d70a28e50703dd2e1d4e47"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-green.log",
+      "sha256": "734e733033a28bb9fd86cbfae576c20cab7386f72a7295adc976014a4c3b82d6"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-red.log",
+      "sha256": "065b1daf4ed76a8a1f3b10281359c9a9418f10cc5f9d9fdc655dd5f2c7b20579"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-parity-green.log",
+      "sha256": "abb2e4e3a1f4f5892d9e81a955a549b50dba2d4c3bce549f557987a8169c6afb"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-preservation.log",
+      "sha256": "d49c290fe05e90bde662d4ad895355db56fb9e47a5cf2cea959fb646d1aae258"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-results.json",
+      "sha256": "128ecc7bea72a15c5dfb7c0b1b8ba05e712a0ec7de4c2deae1703302c18a7c77"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-system-completion-checker.log",
+      "sha256": "b68f7234f9aeb9ad844768a31d3ea9ef62b2a8bfe17813dc092b15aa74d9b020"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-system-execution-checker.log",
+      "sha256": "fd8795cae5015dfbeac608387906b520155fe2ae29c706da9cf72daded75707f"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-system-execution-mutations.log",
+      "sha256": "7570cffb6f32e07746cdf4e8f52b6bcc662a5c944a0f7da6c8278cb1fffe0d4c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-system-observation-closure.log",
+      "sha256": "2ed9ed2d8c49707774bd73826c2bc1988a5281336eff101bb603374a918fd8a0"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/final-review-before-fix.md",
+      "sha256": "ab99fc38bdb3822637a295b1486d77c6cc89fb019faf1631f0dc4a32595dd8bf"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/identity-report.md",
+      "sha256": "00d390ae6e61e42f91fe08e9299f7d20f6a5fd85c1910ea197843e9b2b868c31"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/identity-task-review.md",
+      "sha256": "cf702b1431466a2079cf3569dd80f73ffe37f369284b6d18bc828abf98afaf60"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/kernel-baseline.log",
+      "sha256": "38e3dc08f02fba400646edad501914470ed6ae6b26e14fc05790e74bd587ab0e"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/lint-with-parity.log",
+      "sha256": "fe82195262b09727902d8ea57ceb3e12a09e5df0c6f26157db77f5c51b45d9f5"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/lint.log",
+      "sha256": "fe82195262b09727902d8ea57ceb3e12a09e5df0c6f26157db77f5c51b45d9f5"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/native-clippy-gate.log",
+      "sha256": "17ca166f05b3d66e7a34731d27e0ab0440fa096381ee9768e0e09e1a3f70ee65"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/native-test-gate-before-parity.log",
+      "sha256": "d3dd6a967220a077bc7d7131f76abdd69f654ad588f3e9d9ebea3900166bfbb6"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/native-test-gate.log",
+      "sha256": "0761bbcccf57104eb31a196f8a865691cf5dc3abd2f623d27d22e1a353394564"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/parity-report.md",
+      "sha256": "00b591e8d34219be17e3f64ce2fe286095fcca26f114e1b7b3f48776f3059890"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/parity-task-review.md",
+      "sha256": "b8697ab7ee2eab7a04d74f941dd9ca77a28fb8eb8cda47e9dad89971843285bf"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/prior-source-reuse.json",
+      "sha256": "6adca22b71f2b8956c03a7fcd5ebf3dc027582e3380d55c401b2e0404067e2af"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/register/check-observation-closure.py",
+      "sha256": "79990e2ac98d48cd181a25eb556edcf65c6727496dcdf9227e8975a31983fa1e"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/register/current-execution-mutations.log",
+      "sha256": "327c417538fec2ce35bcb3e91279c0771516cee14684235cc60839b17e3e7f3c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/register/current-execution.log",
+      "sha256": "ae1fb5e51dfc0815434451d97a371e3f1326559c394e4ab9450cd277338f46ca"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/register/current-frozen-completion.log",
+      "sha256": "4557a988573e8e5bfdc3343ecba9e55e6bc1292ebd178b44ef41f68f203912b7"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/register/current-observation-closure.log",
+      "sha256": "45602569e4142c94a1c37f763769277f4817a7b96013819ad9414afeb8f7b3b3"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/register/preservation-check.log",
+      "sha256": "bd5a4493e61be0796fc888662c909f347c3e2df98fe63f73e2463c35ce363e0d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/register/system-execution-mutations.log",
+      "sha256": "fc3e34f08b50979344146fdae64a7b8fe119d078ca591022efec3e20df84b884"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/register/system-execution.log",
+      "sha256": "c31067118ec7d94925272c32499269ee1fb1608a7157193666b7adb460c1637f"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/register/system-frozen-completion.log",
+      "sha256": "fa08533b648c34870335a4029f1c414014f33dc26c7e013770dd4ce4677a9baa"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/register/system-observation-closure.log",
+      "sha256": "9765b8c215d78cab103f6bf0abcdaf8a61febce2b0886ea9874324b74b147d8c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/register/verification-summary.json",
+      "sha256": "be8e796c7ccf2ddcb26c462a0293b8695ffcd0452d7eb1ee9c4a5fb60740cd33"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/review-summary.md",
+      "sha256": "e17169bc3f5dff1de53050b1881a267940e7b9c1d40c03eae52140aefebe4629"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/root-execution-after-fix.log",
+      "sha256": "7db51a594198bccc2ebeaa015f6c56c4aa8ef9d9ac56a324b1f859734c08c302"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/root-execution-final.log",
+      "sha256": "7db51a594198bccc2ebeaa015f6c56c4aa8ef9d9ac56a324b1f859734c08c302"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/root-frozen-after-fix.log",
+      "sha256": "2f88e13061eb9a6f8cf0ae9d4a6efe063939a54ef1bb299cba4d2554389365d4"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/root-frozen-final.log",
+      "sha256": "2f88e13061eb9a6f8cf0ae9d4a6efe063939a54ef1bb299cba4d2554389365d4"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/root-observation-closure-after-fix.log",
+      "sha256": "617de11c87fbfb084eb723b0aa0026c68296311c124d45b08da40499af5557c3"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/root-observation-closure-final.log",
+      "sha256": "bfc69a2031ca6e682e1b299b68360a9aea2717f2dd88c0c9841cd7c234490437"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/source-audit-hashes.json",
+      "sha256": "8d2de2473c7551bf1c0433a3342c24436745e491200552ae2b5833c01cc25143"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/source-audit.json",
+      "sha256": "6ba4a19fa95ba3c3c52f416dc55acdd9a91bb478e787e069649e8a4ad0c16331"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-behavior-red.log",
+      "sha256": "1f20e9263f43ebf514ce5c6aceba15325f1ba290b601c5d1851b9323d87a23e3"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-clippy.log",
+      "sha256": "b8b9cbcb38cd6d46e4d40764605fae05d11a347f9f044b0f30afef9a80ebb373"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-fixture-green.log",
+      "sha256": "61e63994c74364a85392f7c3610e50428f773e287e59c1f13e967bde111b032c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-green.log",
+      "sha256": "1b2747beeccde95770d7a8913804eff409b76c912d49a02b5c9e12d46078becc"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-kernel-suite.log",
+      "sha256": "ca526c7e9228b273fc8a1d671ff0808bb986bde014fa98372ba914a3b71da961"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-red.log",
+      "sha256": "c63e8c47cfba2b371ae2a195c6eaec2df7caf4ec0ed9c9e2a520a1ec8bb5b300"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/task-8-identity-repeat-red.log",
+      "sha256": "606fbe09fed1ad80a4d423e6b7c277a22833eeeb529012acd092bc48667456c8"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-clippy.log",
+      "sha256": "35a70448344f7995cd96764c1f05bd69236020884053a920f97bd6e6e46a43fc"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-native-green.log",
+      "sha256": "7aa211f15110f641fc0536c5c528e4a8aeef80a2977c9491307add5daa9dd6be"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-negative.log",
+      "sha256": "e562e0c36b7e1ea2a714f5e19136f0523f0de6e2acba7ceb1b3a10117120b9c2"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-red.log",
+      "sha256": "29e6936f2cec73df731b0a390dcbb83467e7806864a5da06341436a12a1a80b1"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-studio/task-8-parity-runtime-green.log",
+      "sha256": "25e098e4eb69385bca7cee0cfac448710bb0f1a9f569a89b8dbefcb0a14a261d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22/execution-check.log",
+      "sha256": "4caf2228cf4a093dc2a4b4da635e0969c3f815713a49183af2e41c9080415189"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22/execution-tests-system-python.log",
+      "sha256": "b7620c06c5b5fbd4b30426152577ba7d2bba2ac49c63afd63ca887bc7df7d9af"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22/execution-tests.log",
+      "sha256": "a3573d4ec4d121cb5246908e5c0b0ef51c28e68fcb455091b2e7e7f0bd0f7da6"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22/frozen-contract-check.log",
+      "sha256": "2f88e13061eb9a6f8cf0ae9d4a6efe063939a54ef1bb299cba4d2554389365d4"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22/frozen-contract-tests.log",
+      "sha256": "c544b5ac40c284d679160422009d6c4e5f00e7076ac4ab7b3e5dd200f0ef723b"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22/p1-structure-vector.json",
+      "sha256": "49e99dab8ba1f43d32f58dd5bb84c1128439a5a77a5de48ac3f535f27c3f0015"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22/p1-structure-vector.py",
+      "sha256": "acdcdf1049751d816b15308db36c655f6b91e14bb78fd92e1cd533ef0df61fbc"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22/receipt.json",
+      "sha256": "c2440c453a817ee4adee7d1e1f23f0697ce63f345785fd9345c05a5712bca12a"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22/review-summary.md",
+      "sha256": "11b11291975df6fdc1db6801af335ececf5a5e3c15aa73098cf5c1e2c011cec6"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22/root-gate-clippy-failed.log",
+      "sha256": "b8705d23deda4eae7e5f71b851d822fe44b30a2c4c6aec84fc0a44b2f512c98b"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22/root-gate-final.log",
+      "sha256": "5c491fa40f89c56dc09738758439b5b0ee94c712e8388184b95423d26c615923"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22/root-gate-initial-failed.log",
+      "sha256": "6c2a2081dae19d4232d631281d58bc3642ba411b4c5e64c850e2416dcc0e5de6"
+    },
+    {
+      "path": "docs/completion/execution/owner-review.md",
+      "sha256": "11fb26bd7f346597b88005a56391a9235fff94a8f29b947a4d3c0e776030d86b"
+    },
+    {
+      "path": "docs/completion/execution/p1-dependency-decision.md",
+      "sha256": "10e287a40e71ac18112926ae82629b045678a56a6557c5318e7b813974fed405"
+    },
+    {
+      "path": "docs/completion/execution/p1-libsodium-decision.md",
+      "sha256": "e7cfa994f9c8a131dbb7e0d69f98c7461dbf1c79bfc1c59e25ee09005cdde05f"
+    },
+    {
+      "path": "docs/completion/execution/p1-trust-slice.md",
+      "sha256": "ee9fbe345807fbe7430814304b827c682ff0bb671a6349a063eea50afa2d313f"
+    },
+    {
+      "path": "docs/completion/execution/progress.md",
+      "sha256": "a989c4081d9b303d97a53ee75661dd19158f9e6923e2ab2098eb673562cb5540"
+    },
+    {
+      "path": "docs/completion/execution/register-v1.json",
+      "sha256": "535a89bf360bdc3a0fbbaa581455a426d0a2b49a367073dde0a37bfecc1179ec"
+    },
+    {
+      "path": "docs/completion/execution/studio-research-v1.json",
+      "sha256": "27e55f78913a395012cce1c7a021042565803dfc4a2dbe46d7ad2e15c06d278d"
+    },
+    {
+      "path": "docs/completion/execution/studio-research.md",
+      "sha256": "5de233db49b692a1bb8919f79111b9a9b73779570f7e2a8eea729288dd314aeb"
+    },
+    {
+      "path": "docs/contracts/README.md",
+      "sha256": "06e4535357e69baa379fc18ff9ee7791406a57965acf7a16783cea3cc2db057a"
+    },
+    {
+      "path": "docs/execution/p1-local-slices-summary.md",
+      "sha256": "5b55968c4ec60a4009bc3a8ea0ed689bc3ff6bfba2448b38a7c19b268c790b12"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/identity/index.rs",
+      "sha256": "99b7810b5cd10fc483aad1233298f00704af28c826e3337be013bd9266cb55bf"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+      "sha256": "2b28dc381bc67ee27cb484618188b2457fc58f53a37da09057ace5e1b67182c1"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/identity/model.rs",
+      "sha256": "12cda88d9ac5968b0d92279f4dc5ebaf1041c5d4b5c49c5ac5ee999be2373f35"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/identity/validate.rs",
+      "sha256": "6ecb1b0659f9261c4f56a9cf016fd0fe9fd075407d9d26b44d4609636d1218d8"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/src/lib.rs",
+      "sha256": "268b1480c2c25a4e78ad9ae5e818f2f9f9b1d4d8f505345c0ae655cd76350ee9"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/identity.rs",
+      "sha256": "cbd00705139c9ca9633ae8802284c472006da2289661d5797c966d1fb3b764c1"
+    },
+    {
+      "path": "specimen-studio/native/specimen-kernel/tests/identity_fixture.rs",
+      "sha256": "25ce6e4b7174218a6247ebb9261c04c74163bc019980629178945b197700a0d0"
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "sha256": "5e3c35f9bb576b9561a05c58b92837e45d001a11171b4c037082f0a75de60b2d"
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/examples/identity_probe.rs",
+      "sha256": "5efecffd49a4912984914bb36c5be4468db17edd424f63ba6ad77c0a403c39f7"
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/identity_probe.rs",
+      "sha256": "1219bef564855db408cd83fad1f95071e01afa501ef9715e0fbe17a615807c35"
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "sha256": "d7b6b4896c2216f788121555facdd676bc1e49bd9d4fb8d1498f8119552970ad"
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/tests/identity_probe.rs",
+      "sha256": "86316c8343f8c5d4f72d04d43ce67478bd0847b48aff93dd327320aabb3b5ab3"
+    },
+    {
+      "path": "specimen-studio/scripts/check-identity-parity.sh",
+      "sha256": "d2a7f3978cf918e56af9e280e10153959094cc4588cb35a096022fff3996d80d"
+    },
+    {
+      "path": "specimen-studio/tests/identity-parity.mjs",
+      "sha256": "938b098eab09f16b33151503603f9ee96a9e31984494b77cda4c0da00d5e7d48"
+    },
+    {
+      "path": "tools/check_completion_execution.py",
+      "sha256": "8e7000bbb9d9445843e4eccc7a19c42619c527cf520089360d1c7febf0da10cd"
+    },
+    {
+      "path": "tools/check_p1_crypto.sh",
+      "sha256": "ab875d8d196f9382e43b382bd848bad9453d057f37c80543a348bc357acc9295"
+    },
+    {
+      "path": "tools/tests/test_check_completion_execution.py",
+      "sha256": "a0d5101a31d30612d0e92151ae69ce27fec8a3dc8c216518283d0b8a9df569c5"
+    },
+    {
+      "path": "tools/tests/test_wdbx_complete_p1_crypto.py",
+      "sha256": "00dfd29fdae563b21f4f0e0d979ca60763ac44529f44d43b54a0ca9b40d3c663"
+    },
+    {
+      "path": "tools/wdbx_complete_p1_crypto.py",
+      "sha256": "9a9df3ae043d1da6a2084c1a29b25ac7f668e485716404ce0c38e820bbe3985d"
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "retained_artifacts": "/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-scoring-parity.qdu7oH",
+  "qualified": [
+    {
+      "kind": "native-binary",
+      "path": "/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-scoring-parity.qdu7oH/target/debug/examples/scoring_probe",
+      "sha256": "4c2f592bc85580d048bff143ce6e9a64bc3d30ea1b9afb79f6aff629c95f0aaa",
+      "qualified_against": "canonical-final/09-artifacts.sha256"
+    },
+    {
+      "kind": "native-json",
+      "path": "/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-scoring-parity.qdu7oH/native.json",
+      "sha256": "dbd6d97c45ba23a50f912294560fe98d1ada86c29c927a9d24602034d52b19ab",
+      "qualified_against": "canonical-final/09-artifacts.sha256"
+    },
+    {
+      "kind": "feature-wasm",
+      "path": "/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-scoring-parity.qdu7oH/scoring.wasm",
+      "sha256": "3f3b0b94759ad2d4a591f28cbe590e10aefb32432d9e21364b5199145affe520",
+      "qualified_against": "canonical-final/09-artifacts.sha256"
+    },
+    {
+      "kind": "default-wasm",
+      "path": "/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-scoring-parity.qdu7oH/default.wasm",
+      "sha256": "d1112a5120d987ae4a376dc3169e29d9d9674f62a7657a8d4e1fc9f9d2e69395",
+      "qualified_against": "canonical-final/09-artifacts.sha256"
+    }
+  ],
+  "other_probe_files_unchanged": [
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/budget_probe/attachment.rs",
+      "sha256": "effefe3d1735007ff2de1a222166190132baf7724bf96f9ecb971ca82d2d80ce",
+      "lines": 198,
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/budget_probe.rs",
+      "sha256": "10c0d242dc0c81ecee57833d6ad602cc32d0401e8f0d7fec6313a7338e4d0d25",
+      "lines": 279,
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/entries.rs",
+      "sha256": "a7afe9ee6a9015eb7d0da4a404d2476adbb8da61599febce97541d0528b40a42",
+      "lines": 302,
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/mod.rs",
+      "sha256": "c04a74e932b28ed207a9008bede38edb597bbda726b7368023394fb9ca02d86f",
+      "lines": 63,
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/numeric.rs",
+      "sha256": "a057f079512b8e12115a5a9a47dcbf33970db44e352803a6e14537eb5de5f973",
+      "lines": 146,
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/orchestration.rs",
+      "sha256": "0b3b9a3c38e016607d1cf2ca6000cd43ef314dcb33437402c101e20731694589",
+      "lines": 380,
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/scoring_probe/project.rs",
+      "sha256": "7bfe6ced1895c93218ce8078e0d008f7eaec5ee48e20f629c91636c52dc52ee5",
+      "lines": 46,
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "sha256": "a189f2cde52f2fd2f55e48c7b6d5e50782330cd0732f147d574999deaa87c3f1",
+      "lines": 227,
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "sha256": "c5f140c3c5a78d9ed64b922f14e604f87a0516fa279234ed5ea74facac870104",
+      "lines": 22,
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/examples/scoring_probe.rs",
+      "sha256": "e6ef97ea22719c16b091180d5378d714d07a09c5641b12ae603335251b8f350e",
+      "lines": 3,
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/native/specimen-wasm/tests/scoring_probe.rs",
+      "sha256": "08890cdab8d388a4560e9f1c572b0773222fd9a21f843f3828840a7878ceb8a2",
+      "lines": 108,
+      "unchanged": true
+    },
+    {
+      "path": "specimen-studio/scripts/check-scoring-parity.sh",
+      "sha256": "68ba89109bb145855bbbae2a93bd1e47ea76f7e010a324fd0763ac5a9ab4a005",
+      "lines": 89,
+      "unchanged": true
+    }
+  ],
+  "reviewed_kernel_files_unchanged": 25
+}

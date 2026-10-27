@@ -1,0 +1,56 @@
+40 | writeFileSync(outputPath, actual);
+41 | assert.deepEqual(actual, native, 'native and WASM runtime bytes differ');
+42 | const out = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(actual));
+43 | assert.equal(out.schema, 'task8-identity-mechanism-probe-v1');
+44 | assert.equal(Object.hasOwn(out, 'error'), false, 'shared error output is not parity');
+45 | assert.deepEqual(out.capacity, {
+            ^
+AssertionError: Expected values to be strictly deep-equal:
++ actual - expected
+... Skipped lines
+
+  {
+    collision_error: 'DuplicateRef',
+    collision_unchanged: true,
+    full: 'Full',
+    full_unchanged: true,
+...
+      entry: 1001,
+-     kind: 'Duplicate',
+      node: 1
+    },
+    spill: {
+      entry: 1021,
+-     kind: 'Inserted',
+      node: 2
+    }
+  }
+
+ generatedMessage: true,
+     actual: {
+  full: "Full",
+  full_unchanged: true,
+  collision_error: "DuplicateRef",
+  collision_unchanged: true,
+  spill: [Object ...],
+  repeat: [Object ...],
+  nodes: [Array ...],
+  refs: [Array ...],
+},
+   expected: {
+  full: "Full",
+  full_unchanged: true,
+  collision_error: "DuplicateRef",
+  collision_unchanged: true,
+  spill: [Object ...],
+  repeat: [Object ...],
+  nodes: [Array ...],
+  refs: [Array ...],
+},
+   operator: "deepStrictEqual",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at /Users/donald/sources/repos/wdbx/specimen-studio/tests/identity-parity.mjs:45:8
+
+Bun v1.4.4-canary.1+ea6a2c7b7 (macOS arm64)

@@ -1,0 +1,44 @@
+--- before-parity/specimen-studio/native/specimen-wasm/Cargo.toml
++++ after-parity/specimen-studio/native/specimen-wasm/Cargo.toml
+@@ -7,12 +7,16 @@
+ [features]
+ identity-probe = []
+ language-probe = []
++scoring-probe = []
+ [[example]]
+ name = "identity_probe"
+ required-features = ["identity-probe"]
+ [[example]]
+ name = "language_probe"
+ required-features = ["language-probe"]
++[[example]]
++name = "scoring_probe"
++required-features = ["scoring-probe"]
+ [dependencies]
+ specimen-kernel = { path = "../specimen-kernel" }
+ serde_json.workspace = true
+--- before-parity/specimen-studio/native/specimen-wasm/src/lib.rs
++++ after-parity/specimen-studio/native/specimen-wasm/src/lib.rs
+@@ -5,6 +5,8 @@
+ pub mod identity_probe;
+ #[cfg(feature = "language-probe")]
+ pub mod language_probe;
++#[cfg(feature = "scoring-probe")]
++pub mod scoring_probe;
+ use serde_json::{Value, json};
+ use specimen_kernel::{engine, host::FixedHost, neural::Network};
+ use std::sync::atomic::AtomicBool;
+@@ -134,6 +136,13 @@
+         hand_out(crate::language_probe::run().into_bytes())
+     }
+ 
++    /// Finite scoring/broker mechanism witness; absent from default builds.
++    #[cfg(feature = "scoring-probe")]
++    #[unsafe(no_mangle)]
++    pub extern "C" fn scoring_probe_raw() -> u64 {
++        hand_out(crate::scoring_probe::run().into_bytes())
++    }
++
+     /// Bounded synthetic identity experiment; absent from default builds.
+     #[cfg(feature = "identity-probe")]
+     #[unsafe(no_mangle)]

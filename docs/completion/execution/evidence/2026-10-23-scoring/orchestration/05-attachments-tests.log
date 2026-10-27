@@ -1,0 +1,98 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+warning: function `evaluate` is never used
+  --> native/specimen-kernel/tests/orchestration_v3/support.rs:22:8
+   |
+22 | pub fn evaluate(id:u128,c:&Comparison<'_>)->Option<Contribution>{let binding=TargetBinding{node:c.record.node,entry:c.record.referen...
+   |        ^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `issuer` is never used
+  --> native/specimen-kernel/tests/orchestration_v3/support.rs:23:8
+   |
+23 | pub fn issuer<'a>(c:&'a Comparison<'a>)->(Broker<'a>,CompletedIssuer){let p=scope();let mut b=Broker::new(p.clone(),1,Limits::defaul...
+   |        ^^^^^^
+
+warning: function `attached` is never used
+  --> native/specimen-kernel/tests/orchestration_v3/support.rs:24:8
+   |
+24 | pub fn attached<'a>(f:&'a Fixture,deps:&'a[u128],group:u128)->Comparison<'a>{let mut c=f.comparison();c.dependencies=deps;c.attachme...
+   |        ^^^^^^^^
+
+warning: field `binding` is never read
+ --> native/specimen-kernel/tests/orchestration_v3/support.rs:2:124
+  |
+2 | pub struct Fixture { pub source: Prepared, pub target: Prepared, pub record: EntryRecord, pub origin: CandidateOrigin, pub binding: T...
+  |            ------- field in this struct                                                                                    ^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: methods `request` and `vote` are never used
+  --> native/specimen-kernel/tests/orchestration_v3/support.rs:16:9
+   |
+ 3 | impl Fixture {
+   | ------------ methods in this implementation
+...
+16 |  pub fn request(&self,id:u128)->EntryRequest<'_>{EntryRequest{id,source:&self.source.clauses()[0].variants()[0],target:&self.target....
+   |         ^^^^^^^
+17 |  pub fn comparison(&self)->Comparison<'_>{Comparison{record:&self.record,source:&self.source.clauses()[0].variants()[0],target:&self...
+18 |  pub fn vote(&self,id:u128)->Option<Contribution>{evaluate_entry(self.request(id),&mut DrawTape::new(0,"test",&[],0).unwrap(),Scorin...
+   |         ^^^^
+
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[39536]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "orchestration_v3") generated 4 warnings
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[39538]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "orchestration_v3_attachments") generated 3 warnings
+    Finished `test` profile [unoptimized] target(s) in 0.54s
+     Running tests/orchestration_v3.rs (specimen-studio/target/debug/deps/orchestration_v3-adb3570e0cb1cbd2)
+
+running 4 tests
+test s15_cancel_quarantines_until_generation_bound_fence ... ok
+test complete_graph_preserves_admission_order_not_numeric_job_order ... ok
+test s14_all_1501_admitted_comparisons_drain_without_truncation ... ok
+test s14_exact_pending_boundary_atomic_overlimit_and_byte_backpressure ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+
+     Running tests/orchestration_v3_attachments.rs (specimen-studio/target/debug/deps/orchestration_v3_attachments-4037fd7033d7486d)
+
+running 5 tests
+test s12_empty_remainder_unicode_wrong_scope_and_issuer_are_refused_safely ... FAILED
+test s12_remainder_preserves_full_capture_context_and_only_whole_target_authority ... FAILED
+test s13_backpressure_does_not_consume_visit_or_rng_and_retry_is_once ... ok
+test s12_hard_evaluates_below_threshold_without_forcing_target_vote ... ok
+test s12_affinity_endpoints_and_interior_draws_are_exact ... ok
+
+failures:
+
+---- s12_empty_remainder_unicode_wrong_scope_and_issuer_are_refused_safely stdout ----
+
+thread 's12_empty_remainder_unicode_wrong_scope_and_issuer_are_refused_safely' (5547878) panicked at native/specimen-kernel/tests/orchestration_v3/support.rs:23:349:
+called `Option::unwrap()` on a `None` value
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- s12_remainder_preserves_full_capture_context_and_only_whole_target_authority stdout ----
+
+thread 's12_remainder_preserves_full_capture_context_and_only_whole_target_authority' (5547880) panicked at native/specimen-kernel/tests/orchestration_v3/support.rs:23:349:
+called `Option::unwrap()` on a `None` value
+
+
+failures:
+    s12_empty_remainder_unicode_wrong_scope_and_issuer_are_refused_safely
+    s12_remainder_preserves_full_capture_context_and_only_whole_target_authority
+
+test result: FAILED. 3 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p specimen-kernel --test orchestration_v3_attachments`

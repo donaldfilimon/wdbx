@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "profiles": {
+    "language": {
+      "baseline_sha256": "15d8d8fe9682da055b757536abaf0d856224b13596e2d0865d5069e987f8a4c0",
+      "changes": [
+        {
+          "path": "specimen-studio/Cargo.lock",
+          "prior_sha256": "164da1d1a61f57a16d651708af6959644c5d543f44f8e6bcb0bb0a7142ce7a98",
+          "current_sha256": "668a48b9eaf9c5bcdc7b2cce4b73ebf9e1d2a618f3053f103a03fbc3ffe2545a",
+          "provenance": [
+            "81ae29a7c472d42765fd1f09f75c1288b0252d30",
+            "85cced5f07ad96b1dd28c52b5c7c2ac33a965088"
+          ],
+          "rationale": "Reviewed maintained dependency/GTK macro compatibility modernization."
+        },
+        {
+          "path": "specimen-studio/native/specimen-core/src/persistence.rs",
+          "prior_sha256": "31a82e06eb71d76dd4fbc709c39972387e53b888648a4c10bc2609017c3307a7",
+          "current_sha256": "31528825e46c8d0f4c41ef97c3bf24051ea3f0c22c76dc126a5ac77b81c66de5",
+          "provenance": [
+            "e2c122e62696d923f4ce9fe5eef0918b2c0af4f6"
+          ],
+          "rationale": "ZIP9 fallible member names and stricter malformed archive header validation; valid portable save behavior retained."
+        }
+      ]
+    },
+    "scoring": {
+      "baseline_sha256": "16e8371d58abe5e44ba656a8f35efb89c142f70023c3116337264eae51b9a11a",
+      "changes": [
+        {
+          "path": "specimen-studio/AGENTS.md",
+          "prior_sha256": "0eccace558435af55a8b6d0340166e23f801c6b4ba54d6b186904f823985bede",
+          "current_sha256": "5824a001c6131e029872d9bc0bb16a5619644e7095e3afeee4ddeb377dc2186e",
+          "provenance": [
+            "6dc916ff5c7b082eef071ee3fc1dea27855e202b"
+          ],
+          "rationale": "Reviewed instruction consolidation; scoring prior identity is from 651d178."
+        },
+        {
+          "path": "specimen-studio/native/specimen-core/Cargo.toml",
+          "prior_sha256": "618b0a27d80dcdf66c5691a5ced0ceeb447976609cdebfcb0b3b4dd841e5595b",
+          "current_sha256": "6c413af9dd1c0c5de6eb0c86b760edf8b3d80a02442413b32228b878d0afdec8",
+          "provenance": [
+            "81ae29a7c472d42765fd1f09f75c1288b0252d30"
+          ],
+          "rationale": "Reviewed maintained dependency/GTK macro compatibility modernization."
+        },
+        {
+          "path": "specimen-studio/native/specimen-core/src/persistence.rs",
+          "prior_sha256": "31a82e06eb71d76dd4fbc709c39972387e53b888648a4c10bc2609017c3307a7",
+          "current_sha256": "31528825e46c8d0f4c41ef97c3bf24051ea3f0c22c76dc126a5ac77b81c66de5",
+          "provenance": [
+            "e2c122e62696d923f4ce9fe5eef0918b2c0af4f6"
+          ],
+          "rationale": "ZIP9 fallible member names and stricter malformed archive header validation; valid portable save behavior retained."
+        },
+        {
+          "path": "specimen-studio/scripts/check-language-parity.sh",
+          "prior_sha256": "6c1be55a67f90936ab0d1e38383997308ce00138830df54b157823b0ab57201d",
+          "current_sha256": "223a004e06e8c5df0763f05730653aec508df09a5f2ab053566e14d506d139ad",
+          "provenance": [
+            "ad92e81039921d4b34b25e1bf1e6e87b82be7a1c"
+          ],
+          "rationale": "This continuation wires reviewed preservation checker; final implementation commit is bound by the task report."
+        }
+      ]
+    }
+  }
+}

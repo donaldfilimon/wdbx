@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "bun",
+    "tests/scoring-parity.mjs",
+    "--self-test",
+    "/Users/donald/sources/repos/wdbx/docs/completion/execution/evidence/2026-10-23-scoring/parity/review-fix1/native.json"
+  ],
+  "cwd": "/Users/donald/sources/repos/wdbx/specimen-studio",
+  "env": {
+    "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+    "RUSTUP_TOOLCHAIN": "1.99.1",
+    "CARGO_NET_OFFLINE": "true",
+    "DYLD_LIBRARY_PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib"
+  },
+  "started_utc": "2026-10-23T05:49:10.083775+00:00",
+  "exit": 0,
+  "log": "04-self-test.log",
+  "stdout": null
+}

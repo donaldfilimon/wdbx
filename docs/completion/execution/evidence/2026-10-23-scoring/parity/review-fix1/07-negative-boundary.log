@@ -1,0 +1,26 @@
+1240 |       'fixed attachment independent logical counts',
+1241 |     );
+1242 |   };
+1243 |   const receipt = (r, accepted, selected, draw) => {
+1244 |     keys(r, 'error disposition trace');
+1245 |     eq(
+           ^
+AssertionError: fixed boundary actual refusal/outcome
++ actual - expected
+
++ null
+- 'Backpressure'
+
+ generatedMessage: false,
+     actual: null,
+   expected: "Backpressure",
+   operator: "deepStrictEqual",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at receipt (/Users/donald/sources/repos/wdbx/specimen-studio/tests/scoring-parity.mjs:1245:5)
+      at attachmentBoundaries (/Users/donald/sources/repos/wdbx/specimen-studio/tests/scoring-parity.mjs:1293:5)
+      at fixedBudgets (/Users/donald/sources/repos/wdbx/specimen-studio/tests/scoring-parity.mjs:1559:3)
+      at validate (/Users/donald/sources/repos/wdbx/specimen-studio/tests/scoring-parity.mjs:1717:3)
+
+Bun v1.4.4-canary.1+ea6a2c7b7 (macOS arm64)

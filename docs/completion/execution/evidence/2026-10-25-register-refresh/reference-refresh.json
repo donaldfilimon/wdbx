@@ -1,0 +1,66 @@
+{
+  "recorded_date": "2026-10-25",
+  "scope": "Execution register pinned current-reference refresh only; inventory structure, dispositions and candidate routing unchanged; historical receipts untouched.",
+  "trigger": "The root AGENTS.md guidance was consolidated into docs/agent-guide.md and specimen-studio/AGENTS.md gained a checkout-scope section after the register's inspection snapshot was pinned. tools/check_completion_execution.py failed with reference drift on AGENTS.md, specimen-studio/AGENTS.md and Cargo.toml.",
+  "procedure": "Recomputed the current bytes of only the three drifted reference paths and replaced their register rows' sha256 pins in place. No disposition, routing, status, evidence level, test result or reconciled catalog changed. Interpreters: /usr/bin/python3 and python3 (3.15.1) both reproduce every PASSED result below.",
+  "changes": [
+    {
+      "path": "AGENTS.md",
+      "prior_sha256": "cfb4309195af484ba91c54f94f633c381a040063ee0a439cc04091b73e2f1795",
+      "current_sha256": "cb4142a3f7c6c652883b51ddbe0e823cd0e3b65a05055637db2fcc007ca835ec",
+      "updated_reference_rows": 6
+    },
+    {
+      "path": "specimen-studio/AGENTS.md",
+      "prior_sha256": "0eccace558435af55a8b6d0340166e23f801c6b4ba54d6b186904f823985bede",
+      "current_sha256": "5824a001c6131e029872d9bc0bb16a5619644e7095e3afeee4ddeb377dc2186e",
+      "updated_reference_rows": 16
+    },
+    {
+      "path": "Cargo.toml",
+      "prior_sha256": "f8cb4e0cc0e74b166c3d72b04023be03fb3e6d3dd9c1ed6fe07deddf0dd29dbb",
+      "current_sha256": "174781fe0cf6ac159b5debf60134d9a61c6ee24cb02c272e1de451551f275a2a",
+      "updated_reference_rows": 1
+    }
+  ],
+  "after_checks": [
+    {
+      "command": "python3 tools/check_completion_execution.py",
+      "result": "Execution register valid: 163 reconciled open C0 requirements; no conformance or test-pass claim.",
+      "exit": 0,
+      "log": "execution-checker-after.log"
+    },
+    {
+      "command": "python3 tools/check_completion.py",
+      "result": "Completion contracts valid: 163 C0 requirements, 46 acceptance cases; no implementation/efficacy claim.",
+      "exit": 0,
+      "log": "frozen-checker-after.log"
+    },
+    {
+      "command": "python3 tools/tests/test_check_completion.py",
+      "result": "OK",
+      "exit": 0,
+      "log": "frozen-checker-tests.log"
+    },
+    {
+      "command": "python3 tools/tests/test_check_completion_execution.py",
+      "result": "OK",
+      "exit": 0,
+      "log": "execution-checker-tests.log"
+    },
+    {
+      "command": "python3 tools/check_substrate_release.py",
+      "result": "Substrate release C0 contract valid; no implementation, approval or release qualification claim.",
+      "exit": 0,
+      "log": "substrate-release-checker.log"
+    },
+    {
+      "command": "python3 tools/tests/test_check_substrate_release.py",
+      "result": "OK",
+      "exit": 0,
+      "log": "substrate-release-tests.log"
+    }
+  ],
+  "known_remaining_limitations": "Per-tranche closure checkers under evidence/2026-10-22-studio, 2026-10-22-language and 2026-10-23-scoring are point-in-time scripts. They previously passed at their own snapshot and now fail against later tree state: studio/log tranches see extended mechanism-observation lists, and the scoring closure additionally sees the post-2026-10-23 AGENTS.md consolidation. Their stored logs remain authoritative for their recorded snapshots; nothing in this refresh rewrites them.",
+  "claims": "All 163 requirements remain open/C0/unknown; source-hash agreement establishes byte identity only."
+}

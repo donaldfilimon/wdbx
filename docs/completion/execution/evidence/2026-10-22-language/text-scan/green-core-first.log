@@ -1,0 +1,59 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[3431]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[3433]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "scanner_v3") generated 1 warning
+warning: `specimen-kernel` (test "text_v3") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 2.58s
+     Running tests/scanner_v3.rs (specimen-studio/target/debug/deps/scanner_v3-a4f5ea4564e0ae35)
+
+running 4 tests
+test s06_direct_checked_i128_reducer_subtracts_before_single_clamp ... ok
+test profile_absence_consequences_are_visible_and_modality_is_explicit ... ok
+test s05_same_low_key_scans_distinct_original_numeric_evidence ... ok
+test multiset_repeats_bigrams_operand_order_and_exact_decimals ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/text_v3.rs (specimen-studio/target/debug/deps/text_v3-f17e03a8bc1d3e2f)
+
+running 4 tests
+test medium_order_roles_operators_and_high_complete_values_survive ... FAILED
+test low_numeric_coarsening_retains_quotes_negation_and_controls ... FAILED
+test exact_ast_token_boundaries_and_full_digest_framing ... ok
+test ids_whitespace_and_utf8_spans_are_excluded_original_limit_is_characters ... ok
+
+failures:
+
+---- medium_order_roles_operators_and_high_complete_values_survive stdout ----
+
+thread 'medium_order_roles_operators_and_high_complete_values_survive' (4278227) panicked at native/specimen-kernel/tests/text_v3.rs:11:55:
+called `Result::unwrap()` on an `Err` value: Syntax
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- low_numeric_coarsening_retains_quotes_negation_and_controls stdout ----
+
+thread 'low_numeric_coarsening_retains_quotes_negation_and_controls' (4278226) panicked at native/specimen-kernel/tests/text_v3.rs:38:9:
+assertion `left != right` failed: hello and world vs hello or world
+  left: PatternKey { encoder_version: "text-v3", modality: "text", resolution: "low", digest: [193, 161, 14, 131, 53, 100, 232, 90, 203, 143, 192, 95, 180, 97, 176, 113, 199, 113, 16, 222, 129, 80, 99, 185, 252, 184, 96, 250, 87, 144, 54, 239] }
+ right: PatternKey { encoder_version: "text-v3", modality: "text", resolution: "low", digest: [193, 161, 14, 131, 53, 100, 232, 90, 203, 143, 192, 95, 180, 97, 176, 113, 199, 113, 16, 222, 129, 80, 99, 185, 252, 184, 96, 250, 87, 144, 54, 239] }
+
+
+failures:
+    low_numeric_coarsening_retains_quotes_negation_and_controls
+    medium_order_roles_operators_and_high_complete_values_survive
+
+test result: FAILED. 2 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p specimen-kernel --test text_v3`

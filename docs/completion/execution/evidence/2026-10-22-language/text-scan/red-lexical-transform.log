@@ -1,0 +1,39 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[18498]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "text_v3") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 0.46s
+     Running tests/text_v3.rs (specimen-studio/target/debug/deps/text_v3-f17e03a8bc1d3e2f)
+
+running 8 tests
+test exact_ast_token_boundaries_and_full_digest_framing ... ok
+test high_complete_numeric_ast_and_low_quoted_literal_content_are_retained ... ok
+test low_and_medium_lexical_transforms_ignore_punctuation ... FAILED
+test medium_order_roles_operators_and_high_complete_values_survive ... ok
+test ids_whitespace_and_utf8_spans_are_excluded_original_limit_is_characters ... ok
+test low_numeric_coarsening_retains_quotes_negation_and_controls ... ok
+test punctuation_does_not_count_as_lexical_ast_complexity ... ok
+test medium_roles_change_key_but_host_rule_refs_do_not ... ok
+
+failures:
+
+---- low_and_medium_lexical_transforms_ignore_punctuation stdout ----
+
+thread 'low_and_medium_lexical_transforms_ignore_punctuation' (4343302) panicked at native/specimen-kernel/tests/text_v3.rs:189:9:
+assertion `left == right` failed
+  left: PatternKey { encoder_version: "text-v3", modality: "text", resolution: "low", digest: [67, 213, 254, 59, 103, 135, 43, 125, 23, 77, 156, 255, 96, 166, 70, 37, 64, 132, 29, 212, 242, 58, 157, 31, 63, 90, 147, 134, 156, 212, 121, 165] }
+ right: PatternKey { encoder_version: "text-v3", modality: "text", resolution: "low", digest: [56, 227, 230, 170, 37, 213, 82, 35, 197, 134, 252, 107, 210, 45, 5, 97, 230, 74, 219, 243, 68, 155, 71, 61, 225, 22, 150, 135, 134, 2, 24, 76] }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    low_and_medium_lexical_transforms_ignore_punctuation
+
+test result: FAILED. 7 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p specimen-kernel --test text_v3`

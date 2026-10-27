@@ -1,0 +1,121 @@
+{
+  "qualification": "New observation task evidence only; old raw evidence is preserved and not relabeled.",
+  "files": [
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/before-candidate-paths-v1.json",
+      "sha256": "a16ae935f1bedcf851c23d5a64b7be3aed5807447b70216892dc8ded005c4ee2"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/before-register-v1.json",
+      "sha256": "535a89bf360bdc3a0fbbaa581455a426d0a2b49a367073dde0a37bfecc1179ec"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/before-studio-research-v1.json",
+      "sha256": "27e55f78913a395012cce1c7a021042565803dfc4a2dbe46d7ad2e15c06d278d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/check-observation-closure.py",
+      "sha256": "66fe4726b1b5dc6899ce8a085b9aec0ab70fe1287b0fdc739b85ee793824f669"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/current-README.md",
+      "sha256": "153b1166f86c3a2215ebbc3cfd5a0b197429621faf8b959de2332b335d60245c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/current-commands.json",
+      "sha256": "caf2a2c7dea41957d7039cdff61a5bff7fd4605603b29c544d80be664fc84121"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/current-execution-27-mutations.log",
+      "sha256": "c52b8e3325d6af22342c23ce4a50650156b86268ebea12b557b8287c78c56ff0"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/current-execution-checker.log",
+      "sha256": "7db51a594198bccc2ebeaa015f6c56c4aa8ef9d9ac56a324b1f859734c08c302"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/current-frozen-completion-checker.log",
+      "sha256": "2f88e13061eb9a6f8cf0ae9d4a6efe063939a54ef1bb299cba4d2554389365d4"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/current-frozen-completion-tests.log",
+      "sha256": "0b34927681c67e49cc9b53b9c76ad0372b036163c5a39dcc7bcb57bad15aa51f"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/current-hash-refresh.json",
+      "sha256": "bddbabfe16d1af208c471ae1a93c395f66a8bbc855f484e596c925d53a70a257"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/current-inventory-manifest.json",
+      "sha256": "fb0048cd339206c4b791f9ff5e1e55d0b78ba7b04465cceb52f31e7c22c42763"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/current-observation-closure.log",
+      "sha256": "3320a6c703633d9aa4bc5221786bb3d45663f66a85038d07d2136ad20a9e7e72"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/current-source-manifest.json",
+      "sha256": "8090f09eb2ad42278424139463b9083b813f428276e42e4b305f5652dfcb5b70"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/current-studio-research.md",
+      "sha256": "e29d74e9d73468cecf49aaa5e8ecc31645052663582c76859213383bf33f02ba"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/diff-check-command.json",
+      "sha256": "95250fb7fefa5847a9e5a87ae1f973103cfb5ade36e19f2997a8cd8494add3a7"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/frozen-before.json",
+      "sha256": "60c7954883d1a39693f75b6f66bcb314c00111745dd1df496fd22797109b5bb5"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/prior-evidence-identities.json",
+      "sha256": "e2520a431b690a9d152ceb9d8411da17043eee54e19440a0aaf4a47eab720b1a"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/refresh-observations.py",
+      "sha256": "f3ee8511fc511e873a0a663cd03ee5016859a5457494acb3baa293f238554c4f"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/requirement-mapping.json",
+      "sha256": "3dd64d10cef3e1c5cd9a26a9e1fa552e0b9cc3c7164c766c18c33c41ca16e6eb"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/run-validation.py",
+      "sha256": "1d2fad7ff20fe93f36e7ee5d74990997e327ec0e27e98c9d47d1e28dfbe5880c"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/system-commands.json",
+      "sha256": "5cb461dc8866d78748a76eeb920e4dec450bcd08abb724d4d5e4d461986ddb4f"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/system-execution-27-mutations.log",
+      "sha256": "43552b5ad86dbe722f08c3a6711daf6fe8e8cd981331b722d2a9308b7661f284"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/system-execution-checker.log",
+      "sha256": "7db51a594198bccc2ebeaa015f6c56c4aa8ef9d9ac56a324b1f859734c08c302"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/system-frozen-completion-checker.log",
+      "sha256": "2f88e13061eb9a6f8cf0ae9d4a6efe063939a54ef1bb299cba4d2554389365d4"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/system-frozen-completion-tests.log",
+      "sha256": "db1afb8f33569bacde7fa3646832ac8628f5c2afc4385a29543dd3fb0adf76ac"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/system-observation-closure.log",
+      "sha256": "3320a6c703633d9aa4bc5221786bb3d45663f66a85038d07d2136ad20a9e7e72"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-language/register/task-8-language-evidence-report.md",
+      "sha256": "6445a22bd89641e529328791d039bc02c3138104d9664732d196821b01b5aa69"
+    }
+  ]
+}

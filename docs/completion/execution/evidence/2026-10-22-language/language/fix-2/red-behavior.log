@@ -1,0 +1,30 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[92453]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "language_v3_limits") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 0.99s
+     Running tests/language_v3_limits.rs (specimen-studio/target/debug/deps/language_v3_limits-0309d5f5bd993ee7)
+
+running 1 test
+test shared_rewrite_work_budget_is_not_reset_between_clauses ... FAILED
+
+failures:
+
+---- shared_rewrite_work_budget_is_not_reset_between_clauses stdout ----
+
+thread 'shared_rewrite_work_budget_is_not_reset_between_clauses' (4220557) panicked at native/specimen-kernel/tests/language_v3_limits.rs:151:5:
+assertion failed: matches!(run("x;x"),Err(LanguageError::StepBudget))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    shared_rewrite_work_budget_is_not_reset_between_clauses
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p specimen-kernel --test language_v3_limits`

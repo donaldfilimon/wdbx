@@ -1,0 +1,115 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+warning: method `same_semantics` is never used
+   --> native/specimen-kernel/src/identity/model.rs:100:19
+    |
+ 99 | impl EntryRecord {
+    | ---------------- method in this implementation
+100 |     pub(super) fn same_semantics(&self, other: &Self) -> bool {
+    |                   ^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `specimen-kernel` (lib) generated 1 warning
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[67079]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "identity") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 1.46s
+     Running tests/identity.rs (specimen-studio/target/debug/deps/identity-b8c4ab09ba5b7476)
+
+running 11 tests
+test alternative_tree_and_slot_order_are_identity ... FAILED
+test s03_capacity_plus_one_spills_atomically_with_host_reference ... FAILED
+test rebuild_rejects_corruption_without_replacing_current_state ... FAILED
+test invalid_mutations_are_transactional_and_validate_nested_trees ... FAILED
+test pattern_character_limit_preserves_multibyte_original_bytes ... FAILED
+test repeats_compare_complete_structures_across_keys_and_population ... FAILED
+test s17_resource_links_are_nonunique_and_optional ... FAILED
+test s01_s02_collisions_retain_originals_and_concrete_nodes ... FAILED
+test s40_array_hash_crossover_and_multiple_chunks_preserve_all_matches ... FAILED
+test s04_every_complete_key_dimension_is_used ... FAILED
+test resources_enforce_cap_and_rebuild_array_hash_equivalence ... FAILED
+
+failures:
+
+---- alternative_tree_and_slot_order_are_identity stdout ----
+
+thread 'alternative_tree_and_slot_order_are_identity' (3721428) panicked at native/specimen-kernel/tests/identity.rs:28:18:
+expected insertion, got Full
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- s03_capacity_plus_one_spills_atomically_with_host_reference stdout ----
+
+thread 's03_capacity_plus_one_spills_atomically_with_host_reference' (3721435) panicked at native/specimen-kernel/tests/identity.rs:28:18:
+expected insertion, got Full
+
+---- rebuild_rejects_corruption_without_replacing_current_state stdout ----
+
+thread 'rebuild_rejects_corruption_without_replacing_current_state' (3721431) panicked at native/specimen-kernel/tests/identity.rs:28:18:
+expected insertion, got Full
+
+---- invalid_mutations_are_transactional_and_validate_nested_trees stdout ----
+
+thread 'invalid_mutations_are_transactional_and_validate_nested_trees' (3721429) panicked at native/specimen-kernel/tests/identity.rs:28:18:
+expected insertion, got Full
+
+---- pattern_character_limit_preserves_multibyte_original_bytes stdout ----
+
+thread 'pattern_character_limit_preserves_multibyte_original_bytes' (3721430) panicked at native/specimen-kernel/tests/identity.rs:28:18:
+expected insertion, got Full
+
+---- repeats_compare_complete_structures_across_keys_and_population stdout ----
+
+thread 'repeats_compare_complete_structures_across_keys_and_population' (3721432) panicked at native/specimen-kernel/tests/identity.rs:28:18:
+expected insertion, got Full
+
+---- s17_resource_links_are_nonunique_and_optional stdout ----
+
+thread 's17_resource_links_are_nonunique_and_optional' (3721437) panicked at native/specimen-kernel/tests/identity.rs:125:5:
+assertion `left == right` failed
+  left: []
+ right: [ResourceRef(501), ResourceRef(502), ResourceRef(503)]
+
+---- s01_s02_collisions_retain_originals_and_concrete_nodes stdout ----
+
+thread 's01_s02_collisions_retain_originals_and_concrete_nodes' (3721434) panicked at native/specimen-kernel/tests/identity.rs:28:18:
+expected insertion, got Full
+
+---- s40_array_hash_crossover_and_multiple_chunks_preserve_all_matches stdout ----
+
+thread 's40_array_hash_crossover_and_multiple_chunks_preserve_all_matches' (3721438) panicked at native/specimen-kernel/tests/identity.rs:28:18:
+expected insertion, got Full
+
+---- s04_every_complete_key_dimension_is_used stdout ----
+
+thread 's04_every_complete_key_dimension_is_used' (3721436) panicked at native/specimen-kernel/tests/identity.rs:28:18:
+expected insertion, got Full
+
+---- resources_enforce_cap_and_rebuild_array_hash_equivalence stdout ----
+
+thread 'resources_enforce_cap_and_rebuild_array_hash_equivalence' (3721433) panicked at native/specimen-kernel/tests/identity.rs:206:9:
+assertion `left == right` failed
+  left: []
+ right: [ResourceRef(50000), ResourceRef(50001), ResourceRef(50002), ResourceRef(50003), ResourceRef(50004), ResourceRef(50005), ResourceRef(50006), ResourceRef(50007), ResourceRef(50008), ResourceRef(50009), ResourceRef(50010), ResourceRef(50011), ResourceRef(50012), ResourceRef(50013), ResourceRef(50014), ResourceRef(50015), ResourceRef(50016), ResourceRef(50017), ResourceRef(50018), ResourceRef(50019), ResourceRef(50020), ResourceRef(50021), ResourceRef(50022), ResourceRef(50023), ResourceRef(50024), ResourceRef(50025), ResourceRef(50026), ResourceRef(50027), ResourceRef(50028), ResourceRef(50029), ResourceRef(50030), ResourceRef(50031), ResourceRef(50032), ResourceRef(50033), ResourceRef(50034), ResourceRef(50035), ResourceRef(50036), ResourceRef(50037), ResourceRef(50038), ResourceRef(50039), ResourceRef(50040), ResourceRef(50041), ResourceRef(50042), ResourceRef(50043), ResourceRef(50044), ResourceRef(50045), ResourceRef(50046), ResourceRef(50047), ResourceRef(50048), ResourceRef(50049), ResourceRef(50050), ResourceRef(50051), ResourceRef(50052), ResourceRef(50053), ResourceRef(50054), ResourceRef(50055), ResourceRef(50056), ResourceRef(50057), ResourceRef(50058), ResourceRef(50059), ResourceRef(50060), ResourceRef(50061), ResourceRef(50062), ResourceRef(50063)]
+
+
+failures:
+    alternative_tree_and_slot_order_are_identity
+    invalid_mutations_are_transactional_and_validate_nested_trees
+    pattern_character_limit_preserves_multibyte_original_bytes
+    rebuild_rejects_corruption_without_replacing_current_state
+    repeats_compare_complete_structures_across_keys_and_population
+    resources_enforce_cap_and_rebuild_array_hash_equivalence
+    s01_s02_collisions_retain_originals_and_concrete_nodes
+    s03_capacity_plus_one_spills_atomically_with_host_reference
+    s04_every_complete_key_dimension_is_used
+    s17_resource_links_are_nonunique_and_optional
+    s40_array_hash_crossover_and_multiple_chunks_preserve_all_matches
+
+test result: FAILED. 0 passed; 11 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p specimen-kernel --test identity`

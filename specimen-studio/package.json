@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "vite",
     "build": "bun --bun vinext build",
-    "build:wasm": "cargo build --locked -p specimen-wasm --target wasm32-unknown-unknown --release && mkdir -p lib/specimen/wasm && cp -f target/wasm32-unknown-unknown/release/specimen_wasm.wasm lib/specimen/wasm/",
+    "build:wasm": "sh scripts/build-wasm.sh",
     "start": "wrangler dev --config dist/server/wrangler.json",
     "lint": "oxlint",
     "format": "oxfmt",
@@ -21,10 +21,12 @@
     "desktop:build": "bun --bun vite build --config vite.desktop.config.ts",
     "desktop": "tauri dev --no-default-features",
     "desktop:package": "bun --bun tauri build",
-    "test:native": "cargo test --locked -p specimen-kernel -p specimen-core -p specimen-wasm -p specimen-tui",
-    "check:native": "cargo clippy --workspace --all-targets -- -D warnings",
+    "test:native": "sh scripts/pinned-cargo.sh test --locked -p specimen-kernel -p specimen-core -p specimen-wasm -p specimen-tui",
+    "check:native": "bun run check:gtk && sh scripts/pinned-cargo.sh clippy --workspace --all-targets -- -D warnings",
     "check": "sh scripts/check-instructions.sh && bunx tsc --noEmit && bun run lint:studio && bun run build:wasm && bun test && bun run build",
-    "check:all": "bun run check && bun run check:native"
+    "check:all": "bun run check && bun run check:native",
+    "check:gtk": "python3 scripts/check_gtk_vendor.py --metadata && python3 -m unittest discover -s scripts/tests -p \"*gtk*.py\" -v",
+    "test:gtk": "sh scripts/pinned-cargo.sh test --locked --manifest-path native/vendor/Cargo.toml -p gtk-compat-tests --no-default-features --test diagnostics"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",

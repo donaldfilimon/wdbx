@@ -1,0 +1,4 @@
+$ PYTHONDONTWRITEBYTECODE=1 python3 tools/check_completion.py
+Completion contracts valid: 163 C0 requirements, 46 acceptance cases; no implementation/efficacy claim.
+
+exit_status=0

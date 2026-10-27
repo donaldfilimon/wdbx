@@ -1,0 +1,12 @@
+{
+  "preservation_count": 118,
+  "preservation_mismatches": 0,
+  "tracked_diff_unchanged": true,
+  "kernel_passed": 254,
+  "kernel_failed": 0,
+  "kernel_ignored": 0,
+  "kernel_test_summaries": 27,
+  "warnings": [],
+  "branch": "main",
+  "head": "36bc99b699de60be6c07b2838d74580084fb5d4c"
+}

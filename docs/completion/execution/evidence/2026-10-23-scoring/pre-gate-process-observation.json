@@ -1,0 +1,5 @@
+{
+  "scope": "Pre-gate project runtime check; executable and cwd matching only, no process arguments/environment retained",
+  "studio_matching_process_count": 0,
+  "action": "read only; no process stopped or dependency files modified"
+}

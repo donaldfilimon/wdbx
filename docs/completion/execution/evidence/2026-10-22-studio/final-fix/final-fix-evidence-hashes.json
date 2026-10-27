@@ -1,0 +1,107 @@
+[
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/check-observation-closure.py",
+    "bytes": 3725,
+    "sha256": "79990e2ac98d48cd181a25eb556edcf65c6727496dcdf9227e8975a31983fa1e"
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-artifact-hashes.json",
+    "bytes": 1309,
+    "sha256": "32a6da2d3c1978b6d30fe19c0fffb367519764edfd417523a7832242f524ddff"
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-before-hashes.json",
+    "bytes": 7779,
+    "sha256": "bf6e68089d5d97c1c33d8fafbe50bcd7160e9087a4219096714eb4e27bdfe093"
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-clippy.log",
+    "bytes": 166,
+    "sha256": "94a03ec56f4fbfa976d83e5405c17be60e15714d3e54b16c0d430d38e74f3666"
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-current-completion-checker.log",
+    "bytes": 173,
+    "sha256": "42019881303d2d441aaa8338548fbfe2e5faa8651d08df270f99487e6f363d50"
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-current-execution-checker.log",
+    "bytes": 177,
+    "sha256": "e1dcf5c9d9faf90928fb2378eae491f15ac2f5dc3837907ad16c5a78843f1aba"
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-current-execution-mutations.log",
+    "bytes": 243,
+    "sha256": "d559ecb0378aec27a9b7b0ee82e15837134321620e7063aa7c1357be599244ee"
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-current-hashes.json",
+    "bytes": 933,
+    "sha256": "33c762de7d9f1c84286e73e1151e5dd0c221f247374a6593c99b616b5b0fece7"
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-current-observation-closure.log",
+    "bytes": 621,
+    "sha256": "516fd717bb797571f7c325e4be4f8d6014d1f75d6a9a09a025d88c7594262102"
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-diff-check.log",
+    "bytes": 54,
+    "sha256": "a0d3b965215a5334a3e51eb1f93bc4bf15e87eea2d4056f9443dbb3ca4c79fb0"
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-js-red.log",
+    "bytes": 1450,
+    "sha256": "69c1bc40ded094bf9b97ed36ef4206b8b3d5f59a0f234c6341bb85d88088a929"
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-kind-negative.log",
+    "bytes": 10029,
+    "sha256": "8a790cf4a73de77a1c2c0bbca15bfe5256f1953939d70a28e50703dd2e1d4e47"
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-green.log",
+    "bytes": 2350,
+    "sha256": "734e733033a28bb9fd86cbfae576c20cab7386f72a7295adc976014a4c3b82d6"
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-native-red.log",
+    "bytes": 2960,
+    "sha256": "065b1daf4ed76a8a1f3b10281359c9a9418f10cc5f9d9fdc655dd5f2c7b20579"
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-parity-green.log",
+    "bytes": 8306,
+    "sha256": "abb2e4e3a1f4f5892d9e81a955a549b50dba2d4c3bce549f557987a8169c6afb"
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-preservation.log",
+    "bytes": 905,
+    "sha256": "d49c290fe05e90bde662d4ad895355db56fb9e47a5cf2cea959fb646d1aae258"
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-results.json",
+    "bytes": 2470,
+    "sha256": "128ecc7bea72a15c5dfb7c0b1b8ba05e712a0ec7de4c2deae1703302c18a7c77"
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-system-completion-checker.log",
+    "bytes": 164,
+    "sha256": "b68f7234f9aeb9ad844768a31d3ea9ef62b2a8bfe17813dc092b15aa74d9b020"
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-system-execution-checker.log",
+    "bytes": 168,
+    "sha256": "fd8795cae5015dfbeac608387906b520155fe2ae29c706da9cf72daded75707f"
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-system-execution-mutations.log",
+    "bytes": 234,
+    "sha256": "7570cffb6f32e07746cdf4e8f52b6bcc662a5c944a0f7da6c8278cb1fffe0d4c"
+  },
+  {
+    "path": "docs/completion/execution/evidence/2026-10-22-studio/final-fix/final-fix-system-observation-closure.log",
+    "bytes": 612,
+    "sha256": "2ed9ed2d8c49707774bd73826c2bc1988a5281336eff101bb603374a918fd8a0"
+  }
+]

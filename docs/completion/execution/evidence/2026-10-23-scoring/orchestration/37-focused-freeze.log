@@ -1,0 +1,70 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[99584]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[99585]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[99591]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "orchestration_v3_graph") generated 1 warning
+warning: `specimen-kernel` (test "orchestration_v3_attachments") generated 1 warning
+warning: `specimen-kernel` (test "orchestration_v3") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 2.37s
+     Running tests/orchestration_v3.rs (specimen-studio/target/debug/deps/orchestration_v3-adb3570e0cb1cbd2)
+
+running 11 tests
+test huge_metadata_and_late_invalid_batch_are_refused_before_any_acceptance ... ok
+test s15_wrong_scope_binding_duplicate_completion_and_restart_are_atomic ... ok
+test complete_graph_preserves_admission_order_not_numeric_job_order ... ok
+test delayed_cycle_controls_cannot_touch_reused_identity ... ok
+test s15_explicit_deadline_and_discovery_barrier_never_compose_partial ... ok
+test s15_foreground_fifo_eight_to_one_maintenance_even_with_permanent_refill ... ok
+test scoped_retirement_releases_only_drained_cancelled_metadata_and_preserves_quarantine ... ok
+test s15_cancel_quarantines_until_generation_bound_fence ... ok
+test s14_all_1501_admitted_comparisons_drain_without_truncation ... ok
+test sealed_cycle_rejects_new_jobs_and_expired_ready_cycle_never_composes ... ok
+test s14_exact_pending_boundary_atomic_overlimit_and_byte_backpressure ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.23s
+
+     Running tests/orchestration_v3_attachments.rs (specimen-studio/target/debug/deps/orchestration_v3_attachments-4037fd7033d7486d)
+
+running 12 tests
+test s13_backpressure_does_not_consume_visit_or_rng_and_retry_is_once ... ok
+test attachment_foreground_fifo_and_maintenance_use_one_capacity ... ok
+test retired_cycle_receipt_cannot_authorize_reused_cycle_and_job_ids ... ok
+test contextual_capture_cannot_be_rebound_into_delegated_target ... ok
+test s12_hard_evaluates_below_threshold_without_forcing_target_vote ... ok
+test s12_remainder_preserves_full_capture_context_and_only_whole_target_authority ... ok
+test s12_all_explicit_target_entries_share_pool_and_group_survives ... ok
+test cancellation_drops_owned_attachment_payload_without_touching_other_cycle ... ok
+test s12_empty_remainder_unicode_wrong_scope_and_issuer_are_refused_safely ... ok
+test s12_affinity_endpoints_and_interior_draws_are_exact ... ok
+test s13_bidirectional_revisit_stops_without_reset_or_second_draw ... ok
+test s13_fifth_attachment_depth_is_refused_with_no_recursive_dispatch ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/orchestration_v3_graph.rs (specimen-studio/target/debug/deps/orchestration_v3_graph-be1d607d155b8e33)
+
+running 3 tests
+test exact_redundancy_runs_once_with_original_election_lineage ... ok
+test dangling_dependency_and_cycle_refuse_before_arbitration_draws ... ok
+test complete_complementary_actions_fact_and_dependency_graph_keeps_all_origins ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

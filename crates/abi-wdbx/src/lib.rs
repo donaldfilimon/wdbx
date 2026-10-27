@@ -44,6 +44,7 @@ pub mod hash;
 pub mod hnsw;
 pub mod index;
 pub mod manifest;
+pub mod model;
 pub mod multiway;
 pub mod mvcc;
 pub mod net_line;
@@ -151,7 +152,7 @@ pub use tls_config::{TLS_CERT_ENV, TLS_KEY_ENV, TlsConfig};
 pub use v2::{
     CausalHeads, CommittedTransaction, CompactionReport, ConflictSet, RecordId, SegmentCodecKind,
     SegmentCodecPolicy, V2Error, V2Mutation, V2Snapshot, V2Store, Version, VersionedSnapshot,
-    open_versioned_read_only,
+    open_versioned_read_only, read_v2_root,
 };
 pub use versioned::{
     RecordedVectorPair, VersionedError, VersionedSearchResult, VersionedStats, VersionedStore,

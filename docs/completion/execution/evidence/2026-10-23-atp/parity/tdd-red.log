@@ -1,0 +1,64 @@
+   Compiling serde_core v1.0.229
+   Compiling zmij v1.0.23
+   Compiling libm v0.2.16
+   Compiling serde_json v1.0.154
+   Compiling memchr v2.8.3
+   Compiling itoa v1.0.18
+   Compiling atp-private-diagnostic v0.0.0 (/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-atp-parity.5o_lbjh5)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.22s
+     Running unittests /Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/research/atp_probe.rs (/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-atp-parity.5o_lbjh5/target/debug/deps/atp_private_diagnostic-c75c4fcaa317e133)
+
+running 5 tests
+test tests::trace_is_repeatable_and_bounded ... FAILED
+test tests::cooldown_crossing_cannot_charge_same_step ... FAILED
+test tests::inclusive_release_is_observed_in_trace ... FAILED
+test tests::m1_order_sensitive_charge_uses_original_private_implementation ... FAILED
+test tests::malformed_elapsed_has_exact_refusal ... FAILED
+
+failures:
+
+---- tests::trace_is_repeatable_and_bounded stdout ----
+
+thread 'tests::trace_is_repeatable_and_bounded' (6942598) panicked at /Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/research/atp_probe.rs:36:9:
+assertion failed: a.len() > 1000 && a.len() < 65536
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- tests::cooldown_crossing_cannot_charge_same_step stdout ----
+
+thread 'tests::cooldown_crossing_cannot_charge_same_step' (6942594) panicked at /Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/research/atp_probe.rs:24:9:
+assertion `left == right` failed
+  left: Null
+ right: "00000000"
+
+---- tests::inclusive_release_is_observed_in_trace stdout ----
+
+thread 'tests::inclusive_release_is_observed_in_trace' (6942595) panicked at /Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/research/atp_probe.rs:19:9:
+assertion `left == right` failed
+  left: Null
+ right: true
+
+---- tests::m1_order_sensitive_charge_uses_original_private_implementation stdout ----
+
+thread 'tests::m1_order_sensitive_charge_uses_original_private_implementation' (6942596) panicked at /Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/research/atp_probe.rs:15:9:
+assertion `left == right` failed
+  left: Null
+ right: "3c9374bd"
+
+---- tests::malformed_elapsed_has_exact_refusal stdout ----
+
+thread 'tests::malformed_elapsed_has_exact_refusal' (6942597) panicked at /Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel/research/atp_probe.rs:29:9:
+assertion `left == right` failed
+  left: Null
+ right: "Elapsed::NotFinite"
+
+
+failures:
+    tests::cooldown_crossing_cannot_charge_same_step
+    tests::inclusive_release_is_observed_in_trace
+    tests::m1_order_sensitive_charge_uses_original_private_implementation
+    tests::malformed_elapsed_has_exact_refusal
+    tests::trace_is_repeatable_and_bounded
+
+test result: FAILED. 0 passed; 5 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `--lib`

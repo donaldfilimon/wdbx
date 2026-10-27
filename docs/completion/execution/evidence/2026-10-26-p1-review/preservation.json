@@ -1,0 +1,161 @@
+{
+  "policy": "No force, reset, clean, push or remote deletion. All original branch tips were reachable from main. Every dirty tracked file matched main before stashing; archives verified against every regular file and symlink; all ignored paths relocated intact. Process open-file inspection found no users of additional worktrees. Existing adjacent consumer paths retain relative canonical aliases.",
+  "bundle": ".work/p1-completion/recovery/all-refs.bundle",
+  "bundle_verified": true,
+  "worktrees": [
+    {
+      "branch": "task/finish-abi-c07-20261025",
+      "archive": ".work/p1-completion/recovery/01.tar",
+      "sha256": "f43eea0fe33508d7fc2b7d469263806482e1456bd68b89fb4a82761f3dfae8af",
+      "bytes": 82360320,
+      "members_verified": 2844,
+      "stash": null,
+      "ignored_paths_relocated": 0,
+      "compatibility_alias_retained": true
+    },
+    {
+      "branch": "task/agent-main-plans-20261025",
+      "archive": ".work/p1-completion/recovery/02.tar",
+      "sha256": "b765f9baeb3a9688858887285f505881e2e9bcc642e63c9c7c2b0e0d1f2cce02",
+      "bytes": 20674560,
+      "members_verified": 1419,
+      "stash": null,
+      "ignored_paths_relocated": 0,
+      "compatibility_alias_retained": false
+    },
+    {
+      "branch": "task/modernization-baseline-20261025",
+      "archive": ".work/p1-completion/recovery/03.tar",
+      "sha256": "44b8dda02029d8dae2d0e1b952b6ee8d232d3e434f892386689613c83cc9fdda",
+      "bytes": 881479680,
+      "members_verified": 9733,
+      "stash": "35b429d87f5dcdca91da26ba217f2c050731eb97",
+      "ignored_paths_relocated": 3,
+      "compatibility_alias_retained": true
+    },
+    {
+      "branch": "task/modernization-reviewed-cohort-20261025",
+      "archive": ".work/p1-completion/recovery/04.tar",
+      "sha256": "047cdb94ca86f2e84bbeb08d26178b5dd5d85b86de81177785d2ad8ab3aee765",
+      "bytes": 82421760,
+      "members_verified": 2848,
+      "stash": null,
+      "ignored_paths_relocated": 2,
+      "compatibility_alias_retained": true
+    },
+    {
+      "branch": "task/modernization-source-custody-20261025",
+      "archive": ".work/p1-completion/recovery/05.tar",
+      "sha256": "490c96e9d4593544c886a9085708c755120bde545054b77077fe053e7de8a2c3",
+      "bytes": 80230400,
+      "members_verified": 2654,
+      "stash": "4960ee46026eecd939de6d2e0267c55883b628d8",
+      "ignored_paths_relocated": 2,
+      "compatibility_alias_retained": false
+    },
+    {
+      "branch": "task/modernization-dependency-cohort-20261025",
+      "archive": ".work/p1-completion/recovery/06.tar",
+      "sha256": "e04b7f7813f3e5b819cbd02449c12166f4fa87b73f95f72fdb914225dc0349c7",
+      "bytes": 79339520,
+      "members_verified": 2621,
+      "stash": "4c2bae217f81fc41cd4411ac1ce7d2691d4f0d2f",
+      "ignored_paths_relocated": 0,
+      "compatibility_alias_retained": true
+    },
+    {
+      "branch": "task/modernization-worker-lock-20261025",
+      "archive": ".work/p1-completion/recovery/07.tar",
+      "sha256": "e6b8b0b2a3b7236b429630a76dec7b369e21a68d59bcb2b2054a00e34d2b4bcf",
+      "bytes": 79718400,
+      "members_verified": 2629,
+      "stash": "3085c5dc66278a53a1eefd83d261ebc789c43362",
+      "ignored_paths_relocated": 0,
+      "compatibility_alias_retained": true
+    },
+    {
+      "branch": "task/modernization-consumer-dependencies-20261025",
+      "archive": ".work/p1-completion/recovery/08.tar",
+      "sha256": "daf09abb206186ebcd4fa312bfdc5e3b6980c0a15b506f065ea5837986ed4c77",
+      "bytes": 1946398720,
+      "members_verified": 8375,
+      "stash": "420a9779d059644f004dc905d9168206a1707717",
+      "ignored_paths_relocated": 1,
+      "compatibility_alias_retained": true
+    },
+    {
+      "branch": "task/modernization-updater-zip9-20261025",
+      "archive": ".work/p1-completion/recovery/09.tar",
+      "sha256": "50564ef9c400afa909dc86928dc717b563e79d1783da345e4c4f169217116711",
+      "bytes": 79718400,
+      "members_verified": 2629,
+      "stash": "5351bc94f978d55c14ec5ad1f89aecdf94b63e13",
+      "ignored_paths_relocated": 0,
+      "compatibility_alias_retained": true
+    },
+    {
+      "branch": "task/modernization-studio-zip9-20261025",
+      "archive": ".work/p1-completion/recovery/10.tar",
+      "sha256": "35df9b9cab8de47ccee6a22a4bd72c1205ee2eb300c3fd8bde1fe597bcdd2e9c",
+      "bytes": 1082009600,
+      "members_verified": 7958,
+      "stash": "0c14e9b59ce31ef5bbafe4750fdf6cf45a1eac1f",
+      "ignored_paths_relocated": 2,
+      "compatibility_alias_retained": false
+    },
+    {
+      "branch": "task/modernization-abbey-gtk-20261025",
+      "archive": ".work/p1-completion/recovery/11.tar",
+      "sha256": "c35b9c69af78355d54901b258edc707ce9c7bf19309a6aee718f3284837188ba",
+      "bytes": 79708160,
+      "members_verified": 2629,
+      "stash": null,
+      "ignored_paths_relocated": 0,
+      "compatibility_alias_retained": true
+    },
+    {
+      "branch": "task/modernization-studio-gtk-20261025",
+      "archive": ".work/p1-completion/recovery/12.tar",
+      "sha256": "2759a12c5440757ba2864eb4e4cefae90ca979f164fdaa2413d130a915bbd529",
+      "bytes": 4510935040,
+      "members_verified": 94761,
+      "stash": null,
+      "ignored_paths_relocated": 17,
+      "compatibility_alias_retained": false
+    },
+    {
+      "branch": "task/modernization-native-model-contracts-20261025",
+      "archive": ".work/p1-completion/recovery/13.tar",
+      "sha256": "91fb6dc7db51c1749c9acce5629858cfccb63339d615bac764d10178bac209f3",
+      "bytes": 377200640,
+      "members_verified": 5154,
+      "stash": null,
+      "ignored_paths_relocated": 4,
+      "compatibility_alias_retained": false
+    },
+    {
+      "branch": "task/modernization-native-package-20261025",
+      "archive": ".work/p1-completion/recovery/14.tar",
+      "sha256": "bbab314f571b110575dace35e0e54d1ba7d6152b98381ebea35241ec146b8581",
+      "bytes": 1106206720,
+      "members_verified": 6969,
+      "stash": "3c604130d259689f8cf22f65625e22d282d12de0",
+      "ignored_paths_relocated": 3,
+      "compatibility_alias_retained": false
+    },
+    {
+      "branch": "task/modernization-schema3-wdbx-20261025",
+      "archive": ".work/p1-completion/recovery/15.tar",
+      "sha256": "050ae6800a8715e3a74ab53d3fc391552e15c9d5669abd5bd12c125cdd945f0c",
+      "bytes": 79708160,
+      "members_verified": 2629,
+      "stash": null,
+      "ignored_paths_relocated": 0,
+      "compatibility_alias_retained": true
+    }
+  ],
+  "final_local_branches": [
+    "main"
+  ],
+  "final_registered_worktrees": 1
+}

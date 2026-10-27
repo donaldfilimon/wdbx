@@ -1,0 +1,72 @@
+{
+  "scope": "finite synthetic mechanism witness only; final source freeze awaiting root canonical-budget follow-up and independent review",
+  "retained_artifacts": "/var/folders/c_/thtfn_7d1p9378rxsp4pwz6c0000gn/T/task-8-scoring-parity.9QDsxN",
+  "summary": {
+    "result": "PASS",
+    "semantic_bytes": 209566,
+    "semantic_native_sha256": "6d3b506580e52316ea849e62965b11b959b2b36ebbad8000fc00d5ee0db879ef",
+    "semantic_wasm_sha256": "6d3b506580e52316ea849e62965b11b959b2b36ebbad8000fc00d5ee0db879ef",
+    "raw_native_bytes": 216457,
+    "raw_wasm_bytes": 216452,
+    "native_sha256": "33dacbb0fe54140441dd1c1d3aa25ee33fcbc7c721612d4f120e67e346519a6a",
+    "wasm_sha256": "148aa710c12fe18000116d50299a805ab99078f532de5b5ed59cf859e8c6e98e",
+    "host_calls": 0,
+    "feature_imports": [
+      {
+        "module": "env",
+        "name": "progress",
+        "kind": "function"
+      },
+      {
+        "module": "env",
+        "name": "now_ms",
+        "kind": "function"
+      },
+      {
+        "module": "env",
+        "name": "random_u32",
+        "kind": "function"
+      }
+    ],
+    "default_exports": [
+      "memory",
+      "alloc",
+      "call",
+      "free",
+      "probe_raw"
+    ],
+    "feature_sha256": "4565aa5af173113741eb6ee1d546d294cb61a679f66121c5ff522af52c6f4df8",
+    "default_sha256": "747b1b6c2d7ccb8591b845d55d37668ad9535a6676004ee8c946cee665c9f7fb"
+  },
+  "negative_comparator_exit": {
+    "arithmetic": 1,
+    "quarantine": 1
+  },
+  "commands": [
+    {
+      "command": "cargo test --manifest-path specimen-studio/Cargo.toml --locked -p specimen-wasm --features scoring-probe --test scoring_probe --target-dir /tmp/task-8-scoring-parity-dev-target",
+      "exit": 0,
+      "log": "21-focused-frozen.log"
+    },
+    {
+      "command": "cargo clippy --manifest-path specimen-studio/Cargo.toml --locked -p specimen-wasm --features scoring-probe --all-targets --target-dir /tmp/task-8-scoring-parity-dev-target -- -D warnings",
+      "exit": 0,
+      "log": "22-clippy-frozen.log"
+    },
+    {
+      "command": "rustfmt --check --edition 2024 <owned Rust and minimal lib registration>",
+      "exit": 0,
+      "log": "23-fmt-frozen.log"
+    },
+    {
+      "command": "bash specimen-studio/scripts/check-scoring-parity.sh",
+      "exit": 0,
+      "log": "20-parity-frozen.log"
+    },
+    {
+      "command": "git diff --check -- <owned paths>",
+      "exit": 0,
+      "log": "24-diff-check-frozen.log"
+    }
+  ]
+}

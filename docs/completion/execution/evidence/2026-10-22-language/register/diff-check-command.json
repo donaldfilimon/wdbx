@@ -1,0 +1,10 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--check"
+  ],
+  "cwd": "/Users/donald/sources/repos/wdbx",
+  "exit_code": 0,
+  "log": "diff-check.log"
+}

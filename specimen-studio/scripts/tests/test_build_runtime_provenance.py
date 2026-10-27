@@ -9,6 +9,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import tarfile
 import unittest
 from unittest.mock import patch
 
@@ -112,6 +113,63 @@ class RuntimeProvenanceTests(unittest.TestCase):
                 if only == 'diffusion':
                     self.assertFalse((self.root / 'work/runtimes/llama-build').exists())
                     self.assertTrue((self.root / 'work/runtimes' / ('diffusion-' + PINS['diffusion'][:12]) / 'ggml/LICENSE').exists())
+
+    def test_llama_api_sidecar_disables_both_unpinned_ui_routes(self):
+        result = self.run_helper('llama')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        state = json.loads((self.root / 'work/runtimes/llama-build/state.json').read_text())
+        self.assertEqual(state.get('LLAMA_BUILD_UI'), 'OFF')
+        self.assertEqual(state.get('LLAMA_USE_PREBUILT_UI'), 'OFF')
+        self.assertEqual(state['LLAMA_BUILD_SERVER'], 'ON')
+
+    def test_existing_ui_cache_is_refused_without_deleting_it(self):
+        for relative in ['work/runtimes/llama-build/tools/ui/dist',
+                         'work/runtimes/llama-' + PINS['llama'][:12] + '/tools/ui/dist']:
+            with self.subTest(cache=relative):
+                cache = self.root / relative
+                cache.mkdir(parents=True, exist_ok=True)
+                index = cache / 'index.html'
+                index.write_bytes(b'unqualified cached UI')
+                result = self.run_helper('llama')
+                self.assertNotEqual(result.returncode, 0)
+                self.assertEqual(index.read_bytes(), b'unqualified cached UI')
+                index.unlink()
+
+    def test_stale_build_ui_stops_before_any_source_download(self):
+        source = self.root / 'work/runtimes' / ('llama-' + PINS['llama'][:12])
+        shutil.rmtree(source)
+        assets = self.root / 'work/runtimes/llama-build/tools/ui/dist'
+        assets.mkdir(parents=True)
+        (assets / 'index.html').write_bytes(b'preserve unqualified UI')
+        spec = importlib.util.spec_from_file_location('runtime_builder_no_download', HELPER)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        with patch.object(module, '__file__', str(self.root / 'scripts/build-runtimes.py')), \
+             patch.object(module.urllib.request, 'urlretrieve', side_effect=AssertionError('download attempted')), \
+             patch.dict(os.environ, self.env, clear=True):
+            with self.assertRaisesRegex(ValueError, 'cached embedded UI'):
+                module.main(['--only', 'llama'])
+        self.assertEqual((assets / 'index.html').read_bytes(), b'preserve unqualified UI')
+
+    def test_clean_source_extraction_runs_on_gate_python(self):
+        source = self.root / 'work/runtimes' / ('llama-' + PINS['llama'][:12])
+        shutil.rmtree(source)
+        archive = Path(self.temp.name) / 'source.tar.gz'
+        top = 'llama-' + PINS['llama']
+        with tarfile.open(archive, 'w:gz') as contents:
+            for relative, data in [('CMakeLists.txt', b'# fixture\n'), ('LICENSE', b'llama license')]:
+                member = tarfile.TarInfo(top + '/' + relative)
+                member.size = len(data)
+                contents.addfile(member, io.BytesIO(data))
+        spec = importlib.util.spec_from_file_location('runtime_builder_clean', HELPER)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        with patch.object(module, '__file__', str(self.root / 'scripts/build-runtimes.py')), \
+             patch.object(module.urllib.request, 'urlretrieve', side_effect=lambda url, dest: shutil.copy2(archive, dest)), \
+             patch.dict(os.environ, self.env, clear=True), contextlib.redirect_stdout(io.StringIO()):
+            module.main(['--only', 'llama'])
+        self.assertEqual((source / 'LICENSE').read_text(), 'llama license')
+        self.assertTrue((self.root / 'src-tauri/binaries/llama-server').is_file())
 
     def test_wrong_version_leaves_existing_destination_unchanged(self):
         # Omitting the pre-copy identity check overwrites this known-good artifact.

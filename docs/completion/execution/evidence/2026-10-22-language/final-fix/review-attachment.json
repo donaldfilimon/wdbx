@@ -1,0 +1,166 @@
+{
+  "kind": "C0-only partial-mechanism review attachment; no requirement promotion",
+  "review": {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/language-final-fix-rereview.md",
+    "sha256": "3077d4ef73c86aba1d213b9eafe8cfbc8921491cfb31a90a9f00c15f57ad0249"
+  },
+  "source_freeze": {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/product-freeze.json",
+    "sha256": "94c567b079532c225a63f31383aadde3bd75313b12f9182b646aaba1170c131c"
+  },
+  "mapping": {
+    "path": "docs/completion/execution/evidence/2026-10-22-language/final-fix/requirement-mapping.json",
+    "sha256": "70128cbc98d69d3974a8d4014a1ec73a539d7d4a30aba377680cdd4ad6a9d0f0"
+  },
+  "requirements": [
+    {
+      "id": "CH05",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent source/quality review of current bounded mechanisms only; whole requirement unqualified"
+    },
+    {
+      "id": "CH06",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent source/quality review of current bounded mechanisms only; whole requirement unqualified"
+    },
+    {
+      "id": "CH07",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent source/quality review of current bounded mechanisms only; whole requirement unqualified"
+    },
+    {
+      "id": "CH08",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent source/quality review of current bounded mechanisms only; whole requirement unqualified"
+    },
+    {
+      "id": "CH09",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent source/quality review of current bounded mechanisms only; whole requirement unqualified"
+    },
+    {
+      "id": "CH21",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent source/quality review of current bounded mechanisms only; whole requirement unqualified"
+    },
+    {
+      "id": "CH23",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent source/quality review of current bounded mechanisms only; whole requirement unqualified"
+    },
+    {
+      "id": "P08.01",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent source/quality review of current bounded mechanisms only; whole requirement unqualified"
+    },
+    {
+      "id": "P08.02",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent source/quality review of current bounded mechanisms only; whole requirement unqualified"
+    },
+    {
+      "id": "P08.03",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent source/quality review of current bounded mechanisms only; whole requirement unqualified"
+    },
+    {
+      "id": "P08.10",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent source/quality review of current bounded mechanisms only; whole requirement unqualified"
+    },
+    {
+      "id": "S01",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent source/quality review of current bounded mechanisms only; whole requirement unqualified"
+    },
+    {
+      "id": "S04",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent source/quality review of current bounded mechanisms only; whole requirement unqualified"
+    },
+    {
+      "id": "S05",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent source/quality review of current bounded mechanisms only; whole requirement unqualified"
+    },
+    {
+      "id": "S06",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent source/quality review of current bounded mechanisms only; whole requirement unqualified"
+    },
+    {
+      "id": "S19",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent source/quality review of current bounded mechanisms only; whole requirement unqualified"
+    },
+    {
+      "id": "S20",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent source/quality review of current bounded mechanisms only; whole requirement unqualified"
+    },
+    {
+      "id": "S21",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent source/quality review of current bounded mechanisms only; whole requirement unqualified"
+    },
+    {
+      "id": "S25",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent source/quality review of current bounded mechanisms only; whole requirement unqualified"
+    },
+    {
+      "id": "S46",
+      "status": "open",
+      "evidence_level": "C0",
+      "test_result": "unknown",
+      "scope": "Independent source/quality review of current bounded mechanisms only; whole requirement unqualified"
+    }
+  ],
+  "design_decisions": [
+    "D01",
+    "D02",
+    "D05",
+    "D06",
+    "D17"
+  ],
+  "disposition": "All three Important findings and three small Minors addressed; no new Critical/Important. Environment limitations retained.",
+  "remaining_blockers": "ABI-owner acceptance, active engine/save/import integration, durable utilities/real host authorization and effects, scientific efficacy/contamination controls/adjudication, scheduler/ATP/voting, installed/UI/hardware/platform and elapsed-operation qualification remain open."
+}

@@ -1,0 +1,1 @@
+Initial formatter runner failed before executing rustfmt: root was computed one parent too high, cwd /Users/donald/sources/repos/specimen-studio did not exist. FileNotFoundError; corrected base.parents[6] to base.parents[5]. No source formatted in failed attempt.

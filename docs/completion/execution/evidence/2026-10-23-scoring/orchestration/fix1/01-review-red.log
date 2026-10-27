@@ -1,0 +1,37 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[28873]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "orchestration_v3_fix1") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 1.81s
+     Running tests/orchestration_v3_fix1.rs (specimen-studio/target/debug/deps/orchestration_v3_fix1-76b4ab726258c655)
+
+running 2 tests
+test i2_lower_work_limit_reserves_cleanup_before_accepting_more_cycles ... FAILED
+test i1_oversized_selected_and_declined_descriptors_are_atomic_and_retryable ... FAILED
+
+failures:
+
+---- i2_lower_work_limit_reserves_cleanup_before_accepting_more_cycles stdout ----
+
+thread 'i2_lower_work_limit_reserves_cleanup_before_accepting_more_cycles' (5869838) panicked at native/specimen-kernel/tests/orchestration_v3_fix1.rs:15:176:
+called `Result::unwrap_err()` on an `Ok` value: CycleHandle { owner: (), id: 1, generation: 1, incarnation: 1 }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- i1_oversized_selected_and_declined_descriptors_are_atomic_and_retryable stdout ----
+
+thread 'i1_oversized_selected_and_declined_descriptors_are_atomic_and_retryable' (5869837) panicked at native/specimen-kernel/tests/orchestration_v3_fix1.rs:10:691:
+called `Result::unwrap_err()` on an `Ok` value: AttachmentReceipt { disposition: AffinityDeclined, trace: Some(AffinityTrace { random: DrawIdentity { seed: 1, stream: "fix1" }, draw: None, affinity: Some(Rational { numerator: 0, denominator: 1 }), selected: false }) }
+
+
+failures:
+    i1_oversized_selected_and_declined_descriptors_are_atomic_and_retryable
+    i2_lower_work_limit_reserves_cleanup_before_accepting_more_cycles
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p specimen-kernel --test orchestration_v3_fix1`

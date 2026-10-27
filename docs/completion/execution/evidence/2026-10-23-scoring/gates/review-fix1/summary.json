@@ -1,0 +1,78 @@
+{
+  "scope": "Four separate Studio source gates; no installed, efficacy, ABI, UI-theme or platform qualification.",
+  "source_files": 324,
+  "gates": [
+    {
+      "name": "browser",
+      "command": [
+        "bun",
+        "run",
+        "check"
+      ],
+      "exit_code": 0,
+      "source_unchanged_during_gate": true,
+      "record": {
+        "path": "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/browser.json",
+        "sha256": "93403767ae8d92a487871fdbc92ec4ff0a45d2239fcd4e93b1e645683b0eedb5"
+      },
+      "log": {
+        "path": "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/browser.log",
+        "sha256": "60e40907cd31b997f1b340355ac450c5b4755faa5913c741ba3ca4423b53890c"
+      }
+    },
+    {
+      "name": "lint",
+      "command": [
+        "bun",
+        "run",
+        "lint"
+      ],
+      "exit_code": 0,
+      "source_unchanged_during_gate": true,
+      "record": {
+        "path": "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/lint.json",
+        "sha256": "0cd23da4251a6e8bbe37164e6e1d570197936b2f04cbe2919fda371b9f2b9189"
+      },
+      "log": {
+        "path": "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/lint.log",
+        "sha256": "fe82195262b09727902d8ea57ceb3e12a09e5df0c6f26157db77f5c51b45d9f5"
+      }
+    },
+    {
+      "name": "native-test",
+      "command": [
+        "bun",
+        "run",
+        "test:native"
+      ],
+      "exit_code": 0,
+      "source_unchanged_during_gate": true,
+      "record": {
+        "path": "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/native-test.json",
+        "sha256": "dd413947c9fed3f15333cd5d9a8dad9494a2c7e823d9919587bd96129bbd3840"
+      },
+      "log": {
+        "path": "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/native-test.log",
+        "sha256": "a811ae70df6012203935170561526f6d9930f9d15eb3e843ac6def02eadd0e99"
+      }
+    },
+    {
+      "name": "native-clippy",
+      "command": [
+        "bun",
+        "run",
+        "check:native"
+      ],
+      "exit_code": 0,
+      "source_unchanged_during_gate": true,
+      "record": {
+        "path": "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/native-clippy.json",
+        "sha256": "bcbd96079411c643ab532dba8a3be0444eb091bbf971189f827397e82165a58e"
+      },
+      "log": {
+        "path": "docs/completion/execution/evidence/2026-10-23-scoring/gates/review-fix1/native-clippy.log",
+        "sha256": "d86290bf8f8dd3fdcff7f05a88d0317bf4cdead7292c15462cdaae3342487787"
+      }
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin",
+  "RUSTUP_TOOLCHAIN": "1.99.1",
+  "CARGO_NET_OFFLINE": "true",
+  "DYLD_LIBRARY_PATH": "/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib"
+}

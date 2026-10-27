@@ -449,6 +449,23 @@ fn append_journal_object(
     file.sync_all().map_err(|error| io_error(path, &error))
 }
 
+/// Recover an existing v2 root without creating, locking, or rewriting any file.
+///
+/// The root must already carry the v2 `VERSION` marker. Recovery verifies every
+/// published journal object exactly as [`V2Store::open_with_security`] does, but
+/// takes no writer lease, so a reader never contends with or blocks maintenance.
+pub fn read_v2_root(root: &Path, security: &ObjectSecurity) -> Result<V2Snapshot, V2Error> {
+    let version_path = root.join("VERSION");
+    let found = std::fs::read(&version_path).map_err(|error| io_error(&version_path, &error))?;
+    if found != b"ABI-WDBX 2\n" {
+        return Err(V2Error::UnsupportedVersion {
+            path: version_path,
+            found: String::from_utf8_lossy(&found).into_owned(),
+        });
+    }
+    recover(root, security)
+}
+
 fn recover(root: &Path, security: &ObjectSecurity) -> Result<V2Snapshot, V2Error> {
     recover_with_policy(root, security, false)
 }

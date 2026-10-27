@@ -1,0 +1,23 @@
+{
+  "recorded_date": "2026-10-25",
+  "scope": "Isolated offline build/test of the opt-in atp-diagnostic whitebox research files, which are not registered in any Cargo workspace member. Widow verification of staged research sources; no kernel, probe, gate, golden or dependency change.",
+  "trigger": "research/atp_probe.rs, research/atp_fixtures.rs and research/atp_example.rs compile only inside the documented isolated offline temporary Cargo workspace. No stored receipt exercised them at this working-tree state.",
+  "setup": "Scratch workspace at specimen-studio/work/atp-diagnostic (git-ignored) pinned serde_json =1.0.154 and libm =0.2.16 from Studio's unchanged lockfile; lib.rs includes research/atp_probe.rs by path with feature atp-diagnostic; bin.rs reproduces research/atp_example.rs's main via the probe module.",
+  "commands": [
+    {
+      "location": "specimen-studio/work/atp-diagnostic",
+      "env": "RUSTUP_TOOLCHAIN=1.99.1, PATH pinned 1.99.1 toolchain first, CARGO_NET_OFFLINE=1",
+      "command": "cargo test --offline --features atp-diagnostic",
+      "result": "5 passed; 0 failed; 0 ignored (atp_probe tests: order-sensitive charge, decay/cap, release, malformed elapsed, repeatability bounds)",
+      "exit": 0
+    },
+    {
+      "command": "cargo build --offline && ./target/debug/atp_example",
+      "result": "trace.json: schema private-atp-diagnostic-v1, profile logicalf32-v1, 60 rows",
+      "exit": 0
+    }
+  ],
+  "raw_logs": ["check.log", "trace.json"],
+  "limits": "Private unratified prototype parity evidence only; compares no wasm32 artifact and no fixture beyond the authored synthetic set; no shipped artifact, runtime, ABI or interface is created. The unformatted-at-default-rustfmt bodies of the three research files are byte-pinned by docs/completion/substrate-release/baseline-v1.json and remain unchanged.",
+  "claims": "All 163 requirements remain open/C0/unknown."
+}

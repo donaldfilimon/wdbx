@@ -1,0 +1,57 @@
+{
+  "scope": "Nonexecuting inspection only; no downloaded wheel execution or installation",
+  "files": [
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/cffi-pypi.json",
+      "sha256": "2255e530e3f80593a354e3d84a29966924d0e10309d1e3a6d50f845ab7d8df66"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/changelog.txt",
+      "sha256": "f5ebc06c3edf1f875fd2709ce5f8e5857b08c342aaa665b5a3c3bf9363ccee33"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/libsodium-verify.txt",
+      "sha256": "cce38c5b716b867c150019af12af9f090c9b15c25165e0318907c585c753ea96"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/nacl__bindings__crypto_sign.py",
+      "sha256": "3f948b91f440ab9963e452db03506e06b283c305b45e30caff1a67f091386aa2"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/nacl__signing.py",
+      "sha256": "d96e50f4d33cd7bd00aefbf5fbd066a3e6591cec5a15275bb3351f1cd188f61d"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/osv-query.json",
+      "sha256": "0a2ce9a2485f55d3bdc9ed3d114499d703660141fdf75d65d13db5d9e5d634c9"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/pycparser-pypi.json",
+      "sha256": "f3711214301b5595f24eb4fe232a70836a6187ab4a93e895d0307006456ed41a"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/pynacl-1.6.2.dist-info__METADATA",
+      "sha256": "143914f93191bef3bff7ba953dea6a38fb05f7f9e38e2a2e6ae31bd14ba81709"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/pynacl-1.6.2.dist-info__WHEEL",
+      "sha256": "774f57056f629491b487caf13d1c741cc38b9b845b1120836d216c7014bddfa4"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/pynacl-pypi.json",
+      "sha256": "a0f8d5d1795869eaf0dfad7e00896b9902dd691cb0b64b792aaeae14649934c0"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/requirements-local-arm64.txt",
+      "sha256": "a708f38ae7f6737f8389003ddfa7aa60502906de110efb638ef3b0e30a5ed2f3"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/upstream-vendored-directory.json",
+      "sha256": "806c31a123b5233a2ef0ac408c179426ad22aa480a2d8137553275c0fe0f66f1"
+    },
+    {
+      "path": "docs/completion/execution/evidence/2026-10-22-continuation/libsodium-dependencies/wheel-selection.json",
+      "sha256": "232aaa80af5367e3a949abe960a717acc89a1dc8ed6779ab1e8bc69e781cded7"
+    }
+  ]
+}

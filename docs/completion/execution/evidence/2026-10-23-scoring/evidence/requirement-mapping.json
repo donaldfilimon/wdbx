@@ -1,0 +1,1035 @@
+{
+  "kind": "Current bounded requirement routing; no claim promotion",
+  "hash_policy": "Current source refs hash-bound; historical receipts never relabelled as current execution",
+  "cases": {
+    "S07": {
+      "test": "scoring_v3_policy",
+      "name": "s07_endpoints_are_tested_after_atp",
+      "impl": [
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/policy.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/math.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/draws.rs"
+      ],
+      "support": [
+        "s07_atp_negative_valence_dampens_before_inclusive_gate"
+      ],
+      "assertion": "Numeric policy applies supplied ATP before endpoint selection: 100 becomes baseline95/effective96 with two draws; exact baseline -100/+100 remains unchanged with Endpoint reason and an empty draw tape.",
+      "blockers": [
+        "Direct assertion is the numeric policy API, not an actual scanner-to-active-engine endpoint trace. Supplied ATP snapshot does not establish durable ATP dynamics.",
+        "Active engine/commands/feedback adoption and ID/save/import projection or migration remain unqualified.",
+        "Whole frozen case/requirement remains open/C0/unknown; partial mechanism evidence does not qualify efficacy or acceptance.",
+        "Final source-bound local runtime/gate observations are finite synthetic mechanisms, not physical memory/concurrency, real host fencing, scientific efficacy, ABI acceptance, installed/default adoption or all-target qualification. Historical original orchestration/probe reviews require changes; scoped fix1 reviews address their named findings. Original/intermediate failure logs remain historical; final whole-tranche review is pending."
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_policy.rs"
+      ]
+    },
+    "S08": {
+      "test": "scoring_v3_policy",
+      "name": "s08_maximum_strength_only_protects_qualified_baselines",
+      "impl": [
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/policy.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/math.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/draws.rs"
+      ],
+      "support": [
+        "exact_threshold_neighbors_and_strength_gate"
+      ],
+      "assertion": "Strength100 protects qualified baseline50 without draws; baseline49 still consumes two draws and reaches effective50. Exact threshold neighbors and zero-strength refusal are separately pinned.",
+      "blockers": [
+        "Current-strength numeric protection does not establish feedback transitions, crystallization persistence, S28 closure or actual host adoption.",
+        "Active engine/commands/feedback adoption and ID/save/import projection or migration remain unqualified.",
+        "Whole frozen case/requirement remains open/C0/unknown; partial mechanism evidence does not qualify efficacy or acceptance.",
+        "Final source-bound local runtime/gate observations are finite synthetic mechanisms, not physical memory/concurrency, real host fencing, scientific efficacy, ABI acceptance, installed/default adoption or all-target qualification. Historical original orchestration/probe reviews require changes; scoped fix1 reviews address their named findings. Original/intermediate failure logs remain historical; final whole-tranche review is pending."
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_policy.rs"
+      ]
+    },
+    "S09": {
+      "test": "scoring_v3_contributions",
+      "name": "s09_every_qualified_entry_in_a_node_can_contribute",
+      "impl": [
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/contribution.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/election.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs"
+      ],
+      "support": [
+        "s12_all_explicit_target_entries_share_pool_and_group_survives"
+      ],
+      "assertion": "Two separately evaluated prepared scanner entries with different EntryRefs on one NodeRef both produce private contributions; separate routed attachment test dispatches/completes both explicit target entries and retains all three plan nodes.",
+      "blockers": [
+        "Two successful entry emissions are not an all-population active-engine scan or complete production candidate collection.",
+        "Active engine/commands/feedback adoption and ID/save/import projection or migration remain unqualified.",
+        "Whole frozen case/requirement remains open/C0/unknown; partial mechanism evidence does not qualify efficacy or acceptance.",
+        "Final source-bound local runtime/gate observations are finite synthetic mechanisms, not physical memory/concurrency, real host fencing, scientific efficacy, ABI acceptance, installed/default adoption or all-target qualification. Historical original orchestration/probe reviews require changes; scoped fix1 reviews address their named findings. Original/intermediate failure logs remain historical; final whole-tranche review is pending."
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_contributions.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs"
+      ]
+    },
+    "S10": {
+      "test": "orchestration_v3_graph",
+      "name": "complete_complementary_actions_fact_and_dependency_graph_keeps_all_origins",
+      "impl": [
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/arbitration.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs"
+      ],
+      "support": [
+        "s10_complementary_entries_survive_without_election"
+      ],
+      "assertion": "Three distinct NodeRefs from orchestration support are actually scanned and completed; composed IDs [8,2,3] preserve IntermediateFact, explicit dependency8 and origin. The scorer-only complementary fixture uses one NodeRef and is separately scoped.",
+      "blockers": [
+        "Arithmetic source roots and host-supplied dependency facts do not establish empirical resolved-SPO reasoning, semantic chain construction, full output/script/support/feedback provenance or execution.",
+        "Active engine/commands/feedback adoption and ID/save/import projection or migration remain unqualified.",
+        "Whole frozen case/requirement remains open/C0/unknown; partial mechanism evidence does not qualify efficacy or acceptance.",
+        "Final source-bound local runtime/gate observations are finite synthetic mechanisms, not physical memory/concurrency, real host fencing, scientific efficacy, ABI acceptance, installed/default adoption or all-target qualification. Historical original orchestration/probe reviews require changes; scoped fix1 reviews address their named findings. Original/intermediate failure logs remain historical; final whole-tranche review is pending."
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_graph.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_contributions.rs"
+      ]
+    },
+    "S11": {
+      "test": "scoring_v3_contributions",
+      "name": "fanout_siblings_share_root_but_keep_distinct_origin_provenance",
+      "impl": [
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/arbitration.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/contribution.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/election.rs"
+      ],
+      "support": [
+        "s11_actual_redundancy_elects_only_within_its_group",
+        "zero_confidence_redundancy_abstains_without_forging_bypass_confidence",
+        "different_parent_captures_inhibition_and_tree_are_complementary",
+        "attached_facts_and_referenced_dependencies_are_exempt",
+        "sorted_inhibition_sets_ignore_order_but_keep_input_target_codes_distinct",
+        "named_typed_capture_values_are_ordered_and_spans_are_only_provenance",
+        "distinct_dependency_sets_remain_complementary",
+        "canonical_actions_exclude_node_identity_and_election_weight"
+      ],
+      "assertion": "Actual bounded Thesaurus preparation produces distinct fanout IDs sharing one root; private contributions group candidates[1,2] and keep one survivor. Separate redundant-group test selects2 while complementary3 survives; zero-weight group abstains without draws or forged confidence.",
+      "blockers": [
+        "Typed exact capture/parent/inhibition/dependency equality is not linguistic semantic equivalence, host authorization or an executable v3 inhibition interpreter. Selected legacy Expr projection is inert.",
+        "Active engine/commands/feedback adoption and ID/save/import projection or migration remain unqualified.",
+        "Whole frozen case/requirement remains open/C0/unknown; partial mechanism evidence does not qualify efficacy or acceptance.",
+        "Final source-bound local runtime/gate observations are finite synthetic mechanisms, not physical memory/concurrency, real host fencing, scientific efficacy, ABI acceptance, installed/default adoption or all-target qualification. Historical original orchestration/probe reviews require changes; scoped fix1 reviews address their named findings. Original/intermediate failure logs remain historical; final whole-tranche review is pending."
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_contributions.rs"
+      ]
+    },
+    "S12": {
+      "test": "orchestration_v3_attachments",
+      "name": "s12_hard_evaluates_below_threshold_without_forcing_target_vote",
+      "impl": [
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/contribution.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "support": [
+        "s12_remainder_preserves_full_capture_context_and_only_whole_target_authority",
+        "contextual_capture_cannot_be_rebound_into_delegated_target"
+      ],
+      "assertion": "Qualified private issuer schedules one hard target without affinity draws; seal/discovery refuse before drain. Actual target scorer returns None, completion records no vote, and the plan contains issuer1 only.",
+      "blockers": [
+        "Host-supplied UTF-8 remainder is validated, not inferred or established as a complete unmatched partition. Trusted discovery/snapshot authority, actual workers and active-engine attachment routing remain unqualified. No S16/S18 support-retrieval claim.",
+        "Active engine/commands/feedback adoption and ID/save/import projection or migration remain unqualified.",
+        "Whole frozen case/requirement remains open/C0/unknown; partial mechanism evidence does not qualify efficacy or acceptance.",
+        "Final source-bound local runtime/gate observations are finite synthetic mechanisms, not physical memory/concurrency, real host fencing, scientific efficacy, ABI acceptance, installed/default adoption or all-target qualification. Historical original orchestration/probe reviews require changes; scoped fix1 reviews address their named findings. Original/intermediate failure logs remain historical; final whole-tranche review is pending."
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs"
+      ]
+    },
+    "S13": {
+      "test": "orchestration_v3_attachments",
+      "name": "s13_bidirectional_revisit_stops_without_reset_or_second_draw",
+      "impl": [
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "support": [
+        "s13_fifth_attachment_depth_is_refused_with_no_recursive_dispatch",
+        "s13_backpressure_does_not_consume_visit_or_rng_and_retry_is_once"
+      ],
+      "assertion": "Bidirectional1->2->1 then repeated target/span refuses Repeated with pending0/draw0; fourth handoff is accepted but fifth refuses Depth without recursive dispatch. Backpressure retry retains visit and RNG atomicity.",
+      "blockers": [
+        "Local root/span/byte visits and depth do not qualify semantic partition completeness, host branch correctness, live attachment topology or production integration.",
+        "Active engine/commands/feedback adoption and ID/save/import projection or migration remain unqualified.",
+        "Whole frozen case/requirement remains open/C0/unknown; partial mechanism evidence does not qualify efficacy or acceptance.",
+        "Final source-bound local runtime/gate observations are finite synthetic mechanisms, not physical memory/concurrency, real host fencing, scientific efficacy, ABI acceptance, installed/default adoption or all-target qualification. Historical original orchestration/probe reviews require changes; scoped fix1 reviews address their named findings. Original/intermediate failure logs remain historical; final whole-tranche review is pending."
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs"
+      ]
+    },
+    "S14": {
+      "test": "orchestration_v3",
+      "name": "s14_all_1501_admitted_comparisons_drain_without_truncation",
+      "impl": [
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "support": [
+        "s14_exact_pending_boundary_atomic_overlimit_and_byte_backpressure"
+      ],
+      "assertion": "1501 logical descriptors yield1000 private leases and501 pending; full capacity refuses dispatch, all leases complete with None, and closed/sealed cycle is Ready. This is model lease accounting, not1501 scanner executions or physical concurrency.",
+      "blockers": [
+        "No production lookup-to-queue integration, host-wide one-broker ownership, actual worker high-resolution scan enforcement, physical peak/allocator/concurrency measurement or all-target runtime qualification. Small actual scanner/broker parity scenarios are separate. Logical-charge-v1 is not physical memory or ABI acceptance.",
+        "Active engine/commands/feedback adoption and ID/save/import projection or migration remain unqualified.",
+        "Whole frozen case/requirement remains open/C0/unknown; partial mechanism evidence does not qualify efficacy or acceptance.",
+        "Final source-bound local runtime/gate observations are finite synthetic mechanisms, not physical memory/concurrency, real host fencing, scientific efficacy, ABI acceptance, installed/default adoption or all-target qualification. Historical original orchestration/probe reviews require changes; scoped fix1 reviews address their named findings. Original/intermediate failure logs remain historical; final whole-tranche review is pending."
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs"
+      ]
+    },
+    "S15": {
+      "test": "orchestration_v3_attachments",
+      "name": "attachment_foreground_fifo_and_maintenance_use_one_capacity",
+      "impl": [
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "support": [
+        "s15_foreground_fifo_eight_to_one_maintenance_even_with_permanent_refill",
+        "s15_cancel_quarantines_until_generation_bound_fence",
+        "i1_oversized_selected_and_declined_descriptors_are_atomic_and_retryable",
+        "i2_lower_work_limit_reserves_cleanup_before_accepting_more_cycles",
+        "i2_restart_many_small_cycles_has_one_bounded_cleanup_and_keeps_composed_metadata"
+      ],
+      "assertion": "One active-limit1 broker serves foreground, maintenance and attachment leases in order[10,11,12,13,14,15,16,17,99,2]. Separate FIFO8:1 and quarantine/fence assertions pin logical fairness and cancellation capacity; fix1 pins bounded validation/cleanup.",
+      "blockers": [
+        "Pure shared-domain protocol cannot establish host-wide ownership if multiple brokers are supplied, trusted host fencing/termination, physical worker concurrency, operational fairness/cancellation or PHAGY/growth adoption. Restart generation is not save/load migration.",
+        "Active engine/commands/feedback adoption and ID/save/import projection or migration remain unqualified.",
+        "Whole frozen case/requirement remains open/C0/unknown; partial mechanism evidence does not qualify efficacy or acceptance.",
+        "Final source-bound local runtime/gate observations are finite synthetic mechanisms, not physical memory/concurrency, real host fencing, scientific efficacy, ABI acceptance, installed/default adoption or all-target qualification. Historical original orchestration/probe reviews require changes; scoped fix1 reviews address their named findings. Original/intermediate failure logs remain historical; final whole-tranche review is pending."
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_fix1.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs"
+      ]
+    }
+  },
+  "program_chapter_routes": {
+    "P08.03": {
+      "implementation": [
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/policy.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/math.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/draws.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/election.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/contribution.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/arbitration.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_policy.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_election.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_contributions.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_graph.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_fix1.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3/support.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs"
+      ],
+      "bounded_relation_and_blocker": "Exact scoring and local orchestration mechanisms; full production cycle/support/runtime and research calibration remain unqualified."
+    },
+    "CH09": {
+      "implementation": [
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/policy.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/math.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/draws.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/election.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/contribution.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/arbitration.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_policy.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_election.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_contributions.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs"
+      ],
+      "bounded_relation_and_blocker": "Exact rational policy, actual prepared-entry evidence, alternatives, emissions and scoped arbitration; no whole-chunk scanner, empirical calibration or complete admission."
+    },
+    "CH10": {
+      "implementation": [
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_graph.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_fix1.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3/support.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs"
+      ],
+      "bounded_relation_and_blocker": "Validated hard/soft handoff, capture containment and completion barrier; no semantic unmatched partition, automatic wiring/promotion or support retrieval."
+    },
+    "CH11": {
+      "implementation": [
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/policy.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/math.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/draws.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/election.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/contribution.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/arbitration.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_policy.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_election.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_contributions.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_graph.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_fix1.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3/support.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs"
+      ],
+      "bounded_relation_and_blocker": "Inert complementary/redundant action plan and explicit host dependencies; no semantic chain construction, v3 host/script execution or full presentation/aftercare."
+    },
+    "CH14": {
+      "implementation": [
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/policy.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/math.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/draws.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_policy.rs"
+      ],
+      "bounded_relation_and_blocker": "Bounded supplied rational ATP snapshot modulation only; no decay/buildup/release/cooldown/urgency/reward or tone meaning preservation."
+    },
+    "CH18": {
+      "implementation": [
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/contribution.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/arbitration.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_contributions.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_graph.rs"
+      ],
+      "bounded_relation_and_blocker": "Private references/origins retained in inert plan; final OutputSegment maps, paraphrase lineage, whole-answer/color feedback and production attribution remain absent."
+    },
+    "P08.09": {
+      "implementation": [
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_graph.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_fix1.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3/support.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs"
+      ],
+      "bounded_relation_and_blocker": "Shared queue limits/FIFO8:1/quarantine model; no idle interval/tag-PHAGY jobs, adaptive raft, latency or host-wide actual scan enforcement."
+    },
+    "CH20": {
+      "implementation": [
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_graph.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_fix1.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3/support.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs"
+      ],
+      "bounded_relation_and_blocker": "Local queue and explicit cancellation/retirement protocol; no measured concurrency, PHAGY/growth adoption or full operational scheduler."
+    },
+    "CH23": {
+      "implementation": [
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_graph.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_fix1.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3/support.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs"
+      ],
+      "bounded_relation_and_blocker": "Bounded queue admission/cleanup only; no elapsed-operation, hardware/physical-memory evidence or full budget qualification."
+    },
+    "P08.10": {
+      "implementation": [
+        "specimen-studio/native/specimen-wasm/Cargo.toml",
+        "specimen-studio/native/specimen-wasm/src/lib.rs",
+        "specimen-studio/native/specimen-wasm/src/scoring_probe/mod.rs",
+        "specimen-studio/native/specimen-wasm/src/scoring_probe/numeric.rs",
+        "specimen-studio/native/specimen-wasm/src/scoring_probe/entries.rs",
+        "specimen-studio/native/specimen-wasm/src/scoring_probe/orchestration.rs",
+        "specimen-studio/native/specimen-wasm/src/scoring_probe/project.rs",
+        "specimen-studio/native/specimen-wasm/src/scoring_probe/budget_probe.rs",
+        "specimen-studio/native/specimen-wasm/examples/scoring_probe.rs",
+        "specimen-studio/native/specimen-wasm/src/scoring_probe/budget_probe/attachment.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-wasm/tests/scoring_probe.rs",
+        "specimen-studio/tests/scoring-parity.mjs",
+        "specimen-studio/scripts/check-scoring-parity.sh"
+      ],
+      "bounded_relation_and_blocker": "Actual finite feature-WASM/native strict semantic/logical accounting parity with 24 fixed-boundary outcomes and 68 diagnostics; three negative processes and source-bound four Studio gates. Default WASM compile/export inspection only. No all-target, installed, physical-memory/concurrency, scientific or ABI qualification."
+    }
+  },
+  "decisions": {
+    "D06": {
+      "implementation": [
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/policy.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/math.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/draws.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/election.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/contribution.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/arbitration.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_policy.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_election.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_contributions.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs"
+      ],
+      "bounded_relation_and_blocker": "Exact prepared-entry scanner/evidence, reducer and policy API; scores are not probabilities. Full-chunk scanner, empirical calibration/failure-reduction research and full production admission remain open."
+    },
+    "D07": {
+      "implementation": [
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/policy.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/math.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/draws.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_policy.rs"
+      ],
+      "bounded_relation_and_blocker": "S07/S08 and exact jitter/draw/cap/snapback policy; supplied ATP only. No D10/P08.05/S24/S25 promotion, full ATP dynamics, tone or research efficacy."
+    },
+    "D08": {
+      "implementation": [
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/policy.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/math.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/draws.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/election.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/contribution.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/arbitration.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_policy.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_election.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_contributions.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_graph.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_fix1.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3/support.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs"
+      ],
+      "bounded_relation_and_blocker": "Exact typed redundancy/exemptions, inert canonical Expr and stable explicit-dependency plan; host semantic meaning, authorization and executable v3 action remain unqualified."
+    },
+    "D16": {
+      "implementation": [
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_graph.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_fix1.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3/support.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs"
+      ],
+      "bounded_relation_and_blocker": "S14/S15 shared protocol, explicit deadline/discovery and scoped retirement/reuse; no tag-PHAGY job catalog, fresh idle scheduling, adaptive raft, latency or host-wide physical execution."
+    }
+  },
+  "unchanged_dependencies": [
+    "P08.01",
+    "P08.02"
+  ],
+  "no_new_disposition": [
+    "P08.04",
+    "P08.05",
+    "P08.06",
+    "P08.07",
+    "P08.08",
+    "CH24",
+    "D10",
+    "D15",
+    "D18",
+    "S16",
+    "S18",
+    "S24-S45"
+  ],
+  "groups": [
+    {
+      "ids": [
+        "S07"
+      ],
+      "decisions": [
+        "D06",
+        "D07",
+        "D08"
+      ],
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/policy.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/math.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/draws.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_policy.rs"
+      ],
+      "boundary": "Numeric policy applies supplied ATP before endpoint selection: 100 becomes baseline95/effective96 with two draws; exact baseline -100/+100 remains unchanged with Endpoint reason and an empty draw tape."
+    },
+    {
+      "ids": [
+        "S08"
+      ],
+      "decisions": [
+        "D06",
+        "D07",
+        "D08"
+      ],
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/policy.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/math.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/draws.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_policy.rs"
+      ],
+      "boundary": "Strength100 protects qualified baseline50 without draws; baseline49 still consumes two draws and reaches effective50. Exact threshold neighbors and zero-strength refusal are separately pinned."
+    },
+    {
+      "ids": [
+        "S09"
+      ],
+      "decisions": [
+        "D06",
+        "D08",
+        "D16"
+      ],
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/contribution.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/election.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_contributions.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs"
+      ],
+      "boundary": "Two separately evaluated prepared scanner entries with different EntryRefs on one NodeRef both produce private contributions; separate routed attachment test dispatches/completes both explicit target entries and retains all three plan nodes."
+    },
+    {
+      "ids": [
+        "S10"
+      ],
+      "decisions": [
+        "D06",
+        "D08",
+        "D16"
+      ],
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/arbitration.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_graph.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_contributions.rs"
+      ],
+      "boundary": "Three distinct NodeRefs from orchestration support are actually scanned and completed; composed IDs [8,2,3] preserve IntermediateFact, explicit dependency8 and origin. The scorer-only complementary fixture uses one NodeRef and is separately scoped."
+    },
+    {
+      "ids": [
+        "S11"
+      ],
+      "decisions": [
+        "D06",
+        "D08"
+      ],
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/arbitration.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/contribution.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/election.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_contributions.rs"
+      ],
+      "boundary": "Actual bounded Thesaurus preparation produces distinct fanout IDs sharing one root; private contributions group candidates[1,2] and keep one survivor. Separate redundant-group test selects2 while complementary3 survives; zero-weight group abstains without draws or forged confidence."
+    },
+    {
+      "ids": [
+        "S12"
+      ],
+      "decisions": [
+        "D06",
+        "D08",
+        "D16"
+      ],
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/contribution.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs"
+      ],
+      "boundary": "Qualified private issuer schedules one hard target without affinity draws; seal/discovery refuse before drain. Actual target scorer returns None, completion records no vote, and the plan contains issuer1 only."
+    },
+    {
+      "ids": [
+        "S13"
+      ],
+      "decisions": [
+        "D06",
+        "D08",
+        "D16"
+      ],
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs"
+      ],
+      "boundary": "Bidirectional1->2->1 then repeated target/span refuses Repeated with pending0/draw0; fourth handoff is accepted but fifth refuses Depth without recursive dispatch. Backpressure retry retains visit and RNG atomicity."
+    },
+    {
+      "ids": [
+        "S14"
+      ],
+      "decisions": [
+        "D06",
+        "D08",
+        "D16"
+      ],
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs"
+      ],
+      "boundary": "1501 logical descriptors yield1000 private leases and501 pending; full capacity refuses dispatch, all leases complete with None, and closed/sealed cycle is Ready. This is model lease accounting, not1501 scanner executions or physical concurrency."
+    },
+    {
+      "ids": [
+        "S15"
+      ],
+      "decisions": [
+        "D06",
+        "D08",
+        "D16"
+      ],
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_fix1.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs"
+      ],
+      "boundary": "One active-limit1 broker serves foreground, maintenance and attachment leases in order[10,11,12,13,14,15,16,17,99,2]. Separate FIFO8:1 and quarantine/fence assertions pin logical fairness and cancellation capacity; fix1 pins bounded validation/cleanup."
+    },
+    {
+      "ids": [
+        "P08.03"
+      ],
+      "decisions": [
+        "D06",
+        "D07",
+        "D08",
+        "D16"
+      ],
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/policy.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/math.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/draws.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/election.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/contribution.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/arbitration.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_policy.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_election.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_contributions.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_graph.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_fix1.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3/support.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs"
+      ],
+      "boundary": "Exact scoring and local orchestration mechanisms; full production cycle/support/runtime and research calibration remain unqualified."
+    },
+    {
+      "ids": [
+        "CH09"
+      ],
+      "decisions": [
+        "D06",
+        "D07",
+        "D08",
+        "D16"
+      ],
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/policy.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/math.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/draws.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/election.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/contribution.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/arbitration.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_policy.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_election.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_contributions.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs"
+      ],
+      "boundary": "Exact rational policy, actual prepared-entry evidence, alternatives, emissions and scoped arbitration; no whole-chunk scanner, empirical calibration or complete admission."
+    },
+    {
+      "ids": [
+        "CH10"
+      ],
+      "decisions": [
+        "D06",
+        "D08",
+        "D16"
+      ],
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_graph.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_fix1.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3/support.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs"
+      ],
+      "boundary": "Validated hard/soft handoff, capture containment and completion barrier; no semantic unmatched partition, automatic wiring/promotion or support retrieval."
+    },
+    {
+      "ids": [
+        "CH11"
+      ],
+      "decisions": [
+        "D06",
+        "D07",
+        "D08",
+        "D16"
+      ],
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/policy.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/math.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/draws.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/election.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/contribution.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/arbitration.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_policy.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_election.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_contributions.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_graph.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_fix1.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3/support.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs"
+      ],
+      "boundary": "Inert complementary/redundant action plan and explicit host dependencies; no semantic chain construction, v3 host/script execution or full presentation/aftercare."
+    },
+    {
+      "ids": [
+        "CH14"
+      ],
+      "decisions": [
+        "D06",
+        "D07",
+        "D08"
+      ],
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/policy.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/math.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/draws.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_policy.rs"
+      ],
+      "boundary": "Bounded supplied rational ATP snapshot modulation only; no decay/buildup/release/cooldown/urgency/reward or tone meaning preservation."
+    },
+    {
+      "ids": [
+        "CH18"
+      ],
+      "decisions": [
+        "D06",
+        "D08",
+        "D16"
+      ],
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/contribution.rs",
+        "specimen-studio/native/specimen-kernel/src/scoring_v3/arbitration.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/scoring_v3_contributions.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_graph.rs"
+      ],
+      "boundary": "Private references/origins retained in inert plan; final OutputSegment maps, paraphrase lineage, whole-answer/color feedback and production attribution remain absent."
+    },
+    {
+      "ids": [
+        "P08.09"
+      ],
+      "decisions": [
+        "D06",
+        "D08",
+        "D16"
+      ],
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_graph.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_fix1.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3/support.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs"
+      ],
+      "boundary": "Shared queue limits/FIFO8:1/quarantine model; no idle interval/tag-PHAGY jobs, adaptive raft, latency or host-wide actual scan enforcement."
+    },
+    {
+      "ids": [
+        "CH20"
+      ],
+      "decisions": [
+        "D06",
+        "D08",
+        "D16"
+      ],
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_graph.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_fix1.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3/support.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs"
+      ],
+      "boundary": "Local queue and explicit cancellation/retirement protocol; no measured concurrency, PHAGY/growth adoption or full operational scheduler."
+    },
+    {
+      "ids": [
+        "CH23"
+      ],
+      "decisions": [
+        "D06",
+        "D08",
+        "D16"
+      ],
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/mod.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/broker.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/attachments.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/compose.rs",
+        "specimen-studio/native/specimen-kernel/src/orchestration_v3/budget.rs",
+        "specimen-studio/native/specimen-kernel/src/logical_charge_v1.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_attachments.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_graph.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3_fix1.rs",
+        "specimen-studio/native/specimen-kernel/tests/orchestration_v3/support.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_budget_v1.rs",
+        "specimen-studio/native/specimen-kernel/tests/scoring_orchestration_attachment_budget_v1.rs"
+      ],
+      "boundary": "Bounded queue admission/cleanup only; no elapsed-operation, hardware/physical-memory evidence or full budget qualification."
+    },
+    {
+      "ids": [
+        "P08.10"
+      ],
+      "decisions": [
+        "D06",
+        "D07",
+        "D08",
+        "D16"
+      ],
+      "sources": [
+        "specimen-studio/native/specimen-wasm/Cargo.toml",
+        "specimen-studio/native/specimen-wasm/src/lib.rs",
+        "specimen-studio/native/specimen-wasm/src/scoring_probe/mod.rs",
+        "specimen-studio/native/specimen-wasm/src/scoring_probe/numeric.rs",
+        "specimen-studio/native/specimen-wasm/src/scoring_probe/entries.rs",
+        "specimen-studio/native/specimen-wasm/src/scoring_probe/orchestration.rs",
+        "specimen-studio/native/specimen-wasm/src/scoring_probe/project.rs",
+        "specimen-studio/native/specimen-wasm/src/scoring_probe/budget_probe.rs",
+        "specimen-studio/native/specimen-wasm/examples/scoring_probe.rs",
+        "specimen-studio/native/specimen-wasm/src/scoring_probe/budget_probe/attachment.rs"
+      ],
+      "tests": [
+        "specimen-studio/native/specimen-wasm/tests/scoring_probe.rs",
+        "specimen-studio/tests/scoring-parity.mjs",
+        "specimen-studio/scripts/check-scoring-parity.sh"
+      ],
+      "boundary": "Actual finite feature-WASM/native strict semantic/logical accounting parity with 24 fixed-boundary outcomes and 68 diagnostics; three negative processes and source-bound four Studio gates. Default WASM compile/export inspection only. No all-target, installed, physical-memory/concurrency, scientific or ABI qualification."
+    },
+    {
+      "ids": [
+        "P08.03",
+        "P08.10"
+      ],
+      "decisions": [
+        "D06",
+        "D07",
+        "D08",
+        "D16"
+      ],
+      "sources": [
+        "specimen-studio/native/specimen-kernel/src/lib.rs",
+        "docs/completion/execution/scoring-orchestration-v3-profile.md",
+        "docs/completion/execution/evidence/2026-10-23-scoring/continuation-rulings.md"
+      ],
+      "tests": [],
+      "boundary": "Minimal additive registration and current bounded profile/rulings; no engine/default adoption."
+    }
+  ]
+}

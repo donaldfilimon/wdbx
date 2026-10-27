@@ -1,0 +1,38 @@
+=== rustc/toolchain
+rustc 1.99.1 (58cf8f9c3 2026-10-13)
+binary: rustc
+commit-hash: 58cf8f9c35b355199727627d07ae34a4e2846d67
+commit-date: 2026-10-13
+host: aarch64-apple-darwin
+release: 1.99.1
+LLVM version: 23.1.1
+=== cargo test --offline --features atp-diagnostic (isolated scratch workspace specimen-studio/work/atp-diagnostic, pinned 1.99.1)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.05s
+     Running unittests lib.rs (target/debug/deps/atp_private_diagnostic-82acc0172f0c3f45)
+
+running 5 tests
+test atp_probe::tests::m1_order_sensitive_charge_uses_original_private_implementation ... ok
+test atp_probe::tests::cooldown_crossing_cannot_charge_same_step ... ok
+test atp_probe::tests::trace_is_repeatable_and_bounded ... ok
+test atp_probe::tests::malformed_elapsed_has_exact_refusal ... ok
+test atp_probe::tests::inclusive_release_is_observed_in_trace ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests bin.rs (target/debug/deps/atp_example-503fda9633bd161b)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests atp_private_diagnostic
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+exit=0
+=== cargo build --offline then atp_example
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.01s
+trace-exit=0
+21830d81adf93f91f597ceec608125707a7e45bc  trace.json

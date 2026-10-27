@@ -1,0 +1,10 @@
+# PATH=/Users/donald/.local/bin:/Users/donald/.nvm/versions/node/v26.12.0/bin:/Users/donald/.config/enconvo/bin:/Users/donald/.swiftly/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/opt/homebrew/bin:/Users/donald/.cargo/bin:/Users/donald/Library/pnpm
+/opt/homebrew/bin/cargo
+/opt/homebrew/bin/cargo
+pinned-cargo: ignoring inherited RUSTC
+pinned-cargo: ignoring inherited RUSTC_WRAPPER
+cargo 1.99.1 (5f94df478 2026-08-27)
+EXIT=0
+/Volumes/Extreme SSD/Development/dev/repos/local/the-donald-company/company/legacy/wdbx/specimen-studio/target
+/tmp/x-wdbx-probe
+/tmp/y-wdbx-probe

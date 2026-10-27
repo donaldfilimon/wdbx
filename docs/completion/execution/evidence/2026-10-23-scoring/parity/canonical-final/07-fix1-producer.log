@@ -1,0 +1,4 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+   Compiling specimen-wasm v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-wasm)
+    Finished `dev` profile [unoptimized] target(s) in 4.88s
+     Running `/tmp/task-8-scoring-parity-canonical-dev-target/debug/examples/scoring_probe`

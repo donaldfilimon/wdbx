@@ -1,0 +1,34 @@
+Task8.language fix wave2, 2026-10-22
+Working directory /Users/donald/sources/repos/wdbx
+Every cargo/rustfmt command used exact explicit environment:
+RUSTUP_TOOLCHAIN=1.99.1
+PATH=/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin:/usr/bin:/bin:/opt/homebrew/bin
+No installs, network, environment repair/workaround, staging or commits.
+
+red-api.log (compile-only field absence) and red-behavior.log (real repeated-rewrite assertion failure, after approved field addition and before work-counter wiring):
+cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --test language_v3_limits shared_rewrite_work_budget_is_not_reset_between_clauses -- --exact
+
+green-first.log (retained intermediate type-inference compiler error) and green-second.log (30 tests passed before extra budget validation test):
+cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --no-fail-fast --test language_v3 --test language_v3_scripts --test language_v3_limits
+
+Exact-owned formatting:
+rustfmt --edition 2024 specimen-studio/native/specimen-kernel/src/language_v3/mod.rs specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs
+
+clippy.log (passed final source):
+cargo clippy --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --all-targets -- -D warnings
+
+green-focused.log (31 passed final):
+cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked --no-fail-fast --test language_v3 --test language_v3_scripts --test language_v3_limits
+
+kernel-suite.log (111 passed final):
+cargo test --manifest-path specimen-studio/Cargo.toml -p specimen-kernel --locked
+
+fmt-check.log:
+rustfmt --edition 2024 --check specimen-studio/native/specimen-kernel/src/language_v3/mod.rs specimen-studio/native/specimen-kernel/tests/language_v3.rs specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs
+
+diff-check.log:
+git diff --check
+
+source-manifest.json: Python hashlib.sha256 plus read_text().splitlines(), exact owned source/tests, all<1000lines assertion.
+log-manifest.json: Python hashlib.sha256 over retained raw *.log files.
+Tool shell wrappers tail logs after cargo; the compiler/test summaries inside raw logs establish verdicts. Existing rust-objcopy/libLLVM warnings retained. Prior fix-1/root evidence files untouched except the requested appended main report/durable copy.

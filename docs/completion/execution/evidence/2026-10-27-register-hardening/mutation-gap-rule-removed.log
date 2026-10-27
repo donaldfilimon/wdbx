@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_gap_rows_cannot_gain_review_refs (test_pinned_execution.ExecutionTests.test_gap_rows_cannot_gain_review_refs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<scratchpad>/t1-dryrun/test_pinned_execution.py", line 173, in test_gap_rows_cannot_gain_review_refs
+    self.assertIn('gap cannot carry review: G01', errors)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'gap cannot carry review: G01' not found in ['README count drift: historical_review [14] != 15', 'README count drift: total_review [21] != 22']
+
+----------------------------------------------------------------------
+Ran 1 test in 0.637s
+
+FAILED (failures=1)

@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/opt/homebrew/bin/python3",
+    "docs/completion/execution/evidence/2026-10-23-scoring/register/check-scoring-closure.py"
+  ],
+  "cwd": "/Users/donald/sources/repos/wdbx",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "started_utc": "2026-10-23T05:59:38.374721+00:00",
+  "ended_utc": "2026-10-23T05:59:39.361787+00:00",
+  "exit_code": 0,
+  "log": {
+    "path": "docs/completion/execution/evidence/2026-10-23-scoring/register/current-closure.log",
+    "sha256": "8d3773e3434b1bd8e2775bce8d4a16f62d35f1d1b74134a1f65073ec6a47ae22"
+  },
+  "scope": "Mutable inventory/checker/observation closure only; no product or frozen-check rerun."
+}

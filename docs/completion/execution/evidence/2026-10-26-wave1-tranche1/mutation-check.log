@@ -1,0 +1,24 @@
+## mutant 1: min->max shortening count
+test s29_removing_last_same_pattern_node_unlinks_resources ... ok
+test s29_unflipped_node_at_one_is_not_removed ... ok
+test s29_spent_same_pattern_node_is_removed_and_peers_remain ... ok
+test s33_four_weak_with_five_strong_keeps_four ... FAILED
+test s32_five_weak_with_four_strong_shortens_recipient_to_four ... FAILED
+test s32_remixed_tail_blocks_shortening ... FAILED
+test result: FAILED. 3 passed; 3 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+## mutant 2: remixed tail guard disabled
+test s29_unflipped_node_at_one_is_not_removed ... ok
+test s29_spent_same_pattern_node_is_removed_and_peers_remain ... ok
+test s29_removing_last_same_pattern_node_unlinks_resources ... ok
+test s32_remixed_tail_blocks_shortening ... FAILED
+test s32_five_weak_with_four_strong_shortens_recipient_to_four ... ok
+test s33_four_weak_with_five_strong_keeps_four ... ok
+test result: FAILED. 5 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+## mutant 3: resource unlink ignores surviving peers
+test s29_removing_last_same_pattern_node_unlinks_resources ... ok
+test s29_unflipped_node_at_one_is_not_removed ... ok
+test s29_spent_same_pattern_node_is_removed_and_peers_remain ... FAILED
+test s32_remixed_tail_blocks_shortening ... ok
+test s32_five_weak_with_four_strong_shortens_recipient_to_four ... ok
+test s33_four_weak_with_five_strong_keeps_four ... ok
+test result: FAILED. 5 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s

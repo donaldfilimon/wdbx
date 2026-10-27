@@ -1,0 +1,4064 @@
+{
+  "G01": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "AGENTS.md",
+      "docs/completion/baseline.json"
+    ]
+  },
+  "G02": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "AGENTS.md",
+      "docs/completion/baseline.json"
+    ]
+  },
+  "G03": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/episode/store/canonical.rs",
+      "crates/abi-wdbx/src/v2.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_memory_candidate.rs",
+      "crates/abi-wdbx/tests/v3_memory_edge.rs",
+      "crates/abi-wdbx/tests/v3_cross_language_commitment.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/episode/store/canonical.rs",
+      "crates/abi-wdbx/src/v2.rs",
+      "crates/abi-wdbx/tests/v3_memory_candidate.rs",
+      "crates/abi-wdbx/tests/v3_memory_edge.rs",
+      "crates/abi-wdbx/tests/v3_cross_language_commitment.rs"
+    ]
+  },
+  "G04": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-core/src/canonical/manifest.rs",
+      "specimen-studio/lib/specimen/canonical-loss.json"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/canonical.rs",
+      "specimen-studio/tests/canonical-loss.test.js"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-core/src/canonical/manifest.rs",
+      "specimen-studio/lib/specimen/canonical-loss.json",
+      "specimen-studio/native/specimen-core/tests/canonical.rs",
+      "specimen-studio/tests/canonical-loss.test.js"
+    ]
+  },
+  "G05": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/episode/store/query/constraints.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/episode/store/deletion.rs",
+      "specimen-studio/native/specimen-core/src/canonical/mod.rs"
+    ]
+  },
+  "G06": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/replication/shard.rs",
+      "crates/abi-wdbx/src/v3/replication/term.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/src/v3/replication/tests/quorum.rs",
+      "crates/abi-wdbx/src/v3/replication/tests/fencing.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/replication/shard.rs",
+      "crates/abi-wdbx/src/v3/replication/term.rs",
+      "crates/abi-wdbx/src/v3/replication/tests/quorum.rs",
+      "crates/abi-wdbx/src/v3/replication/tests/fencing.rs"
+    ]
+  },
+  "G07": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/federation/importer.rs",
+      "crates/abi-wdbx/src/v3/federation/grant.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_federation/trust.rs",
+      "crates/abi-wdbx/tests/v3_federation/exchange.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/federation/importer.rs",
+      "crates/abi-wdbx/src/v3/federation/grant.rs",
+      "crates/abi-wdbx/tests/v3_federation/trust.rs",
+      "crates/abi-wdbx/tests/v3_federation/exchange.rs"
+    ]
+  },
+  "G08": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/offline/outbox.rs",
+      "crates/abi-wdbx/src/v3/offline/reauthorize.rs",
+      "crates/abi-wdbx/src/v3/offline/merge.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_offline_outbox/lifecycle.rs",
+      "crates/abi-wdbx/tests/v3_offline_outbox/merge.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/offline/outbox.rs",
+      "crates/abi-wdbx/src/v3/offline/reauthorize.rs",
+      "crates/abi-wdbx/src/v3/offline/merge.rs",
+      "crates/abi-wdbx/tests/v3_offline_outbox/lifecycle.rs",
+      "crates/abi-wdbx/tests/v3_offline_outbox/merge.rs"
+    ]
+  },
+  "G09": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/offline/outbox.rs",
+      "crates/abi-wdbx/src/v3/offline/reauthorize.rs",
+      "crates/abi-wdbx/src/v3/offline/merge.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_offline_outbox/lifecycle.rs",
+      "crates/abi-wdbx/tests/v3_offline_outbox/merge.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/offline/outbox.rs",
+      "crates/abi-wdbx/src/v3/offline/reauthorize.rs",
+      "crates/abi-wdbx/src/v3/offline/merge.rs",
+      "crates/abi-wdbx/tests/v3_offline_outbox/lifecycle.rs",
+      "crates/abi-wdbx/tests/v3_offline_outbox/merge.rs"
+    ]
+  },
+  "G10": {
+    "disposition": "external_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/shared-types-v1.json"
+    ],
+    "inspected": [
+      "specimen-studio/AGENTS.md",
+      "specimen-studio/scripts/qualification-summary.py",
+      "specimen-studio/tests/qualification-summary.test.js"
+    ]
+  },
+  "G11": {
+    "disposition": "external_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/shared-types-v1.json"
+    ],
+    "inspected": [
+      "specimen-studio/AGENTS.md",
+      "specimen-studio/scripts/qualification-summary.py",
+      "specimen-studio/tests/qualification-summary.test.js"
+    ]
+  },
+  "G12": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "tools/check_rust_sizes.sh",
+      "Cargo.toml",
+      "specimen-studio/native/specimen-core/Cargo.toml",
+      "specimen-studio/native/specimen-kernel/Cargo.toml"
+    ]
+  },
+  "G13": {
+    "disposition": "candidate",
+    "implementation": [
+      "tools/check_completion.py",
+      "docs/completion/requirements.json",
+      "docs/completion/designs.json",
+      "docs/completion/experiments.json"
+    ],
+    "tests": [
+      "tools/tests/test_check_completion.py"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "tools/check_completion.py",
+      "docs/completion/requirements.json",
+      "docs/completion/designs.json",
+      "docs/completion/experiments.json",
+      "tools/tests/test_check_completion.py"
+    ]
+  },
+  "P01.01": {
+    "disposition": "candidate",
+    "implementation": [
+      "tools/check_completion.py",
+      "docs/completion/requirements.json",
+      "docs/completion/designs.json",
+      "docs/completion/experiments.json"
+    ],
+    "tests": [
+      "tools/tests/test_check_completion.py"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "tools/check_completion.py",
+      "docs/completion/requirements.json",
+      "docs/completion/designs.json",
+      "docs/completion/experiments.json",
+      "tools/tests/test_check_completion.py"
+    ]
+  },
+  "P01.02": {
+    "disposition": "candidate",
+    "implementation": [
+      "tools/check_completion.py",
+      "docs/completion/requirements.json",
+      "docs/completion/designs.json",
+      "docs/completion/experiments.json"
+    ],
+    "tests": [
+      "tools/tests/test_check_completion.py"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "tools/check_completion.py",
+      "docs/completion/requirements.json",
+      "docs/completion/designs.json",
+      "docs/completion/experiments.json",
+      "tools/tests/test_check_completion.py"
+    ]
+  },
+  "P01.03": {
+    "disposition": "candidate",
+    "implementation": [
+      "tools/check_completion.py",
+      "docs/completion/requirements.json",
+      "docs/completion/designs.json",
+      "docs/completion/experiments.json"
+    ],
+    "tests": [
+      "tools/tests/test_check_completion.py"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "tools/check_completion.py",
+      "docs/completion/requirements.json",
+      "docs/completion/designs.json",
+      "docs/completion/experiments.json",
+      "tools/tests/test_check_completion.py"
+    ]
+  },
+  "P01.04": {
+    "disposition": "candidate",
+    "implementation": [
+      "tools/check_completion.py",
+      "docs/completion/requirements.json",
+      "docs/completion/designs.json",
+      "docs/completion/experiments.json"
+    ],
+    "tests": [
+      "tools/tests/test_check_completion.py"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "tools/check_completion.py",
+      "docs/completion/requirements.json",
+      "docs/completion/designs.json",
+      "docs/completion/experiments.json",
+      "tools/tests/test_check_completion.py"
+    ]
+  },
+  "P01.05": {
+    "disposition": "candidate",
+    "implementation": [
+      "tools/check_completion.py",
+      "docs/completion/requirements.json",
+      "docs/completion/designs.json",
+      "docs/completion/experiments.json"
+    ],
+    "tests": [
+      "tools/tests/test_check_completion.py"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "tools/check_completion.py",
+      "docs/completion/requirements.json",
+      "docs/completion/designs.json",
+      "docs/completion/experiments.json",
+      "tools/tests/test_check_completion.py"
+    ]
+  },
+  "P02.01": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/canonical.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/validate.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/ledger.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/facade.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/src/v3/complete_episode/tests/coverage.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/tests/draft_shape.rs",
+      "crates/abi-wdbx/tests/v3_complete_episode_authenticated.rs",
+      "crates/abi-wdbx/tests/v3_complete_episode_ledger.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/canonical.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/validate.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/ledger.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/facade.rs"
+    ]
+  },
+  "P02.02": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/complete_episode/decode.rs",
+      "crates/abi-wdbx/src/v3/episode/cose/trust.rs",
+      "crates/abi-wdbx/src/v3/episode/cose/verify.rs",
+      "crates/abi-wdbx/src/v3/episode/signing.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/ledger.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/facade.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/profile.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/mod.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/verify.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/mod.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/command.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/apply.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/snapshot.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/mod.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/evaluate.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/simulator.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/src/v3/complete_episode/tests/decode_bounds.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/tests/decode_malformed.rs",
+      "crates/abi-wdbx/tests/v3_episode_cose.rs",
+      "crates/abi-wdbx/tests/v3_episode_signing.rs",
+      "crates/abi-wdbx/tests/v3_complete_episode_authenticated.rs",
+      "crates/abi-wdbx/tests/v3_complete_episode_ledger.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/tests.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/tests.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/scenarios.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/complete_episode/decode.rs",
+      "crates/abi-wdbx/src/v3/episode/cose/trust.rs",
+      "crates/abi-wdbx/src/v3/episode/cose/verify.rs",
+      "crates/abi-wdbx/src/v3/episode/signing.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/ledger.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/facade.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/profile.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/mod.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/verify.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/mod.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/command.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/apply.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/snapshot.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/mod.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/evaluate.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/simulator.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/tests.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/scenarios.rs"
+    ]
+  },
+  "P02.03": {
+    "disposition": "candidate",
+    "implementation": [
+      "tools/wdbx_cose_sign1_p1.py",
+      "tools/wdbx_complete_episode_decode.py",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/profile.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/mod.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/verify.rs",
+      "tools/wdbx_complete_p1_crypto.py",
+      "tools/check_p1_crypto.sh"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_cross_language_cose.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/tests/python_decode_mutations.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/tests.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/python_witness_tests.rs",
+      "tools/tests/test_wdbx_complete_p1_crypto.py"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "tools/wdbx_cose_sign1_p1.py",
+      "tools/wdbx_complete_episode_decode.py",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/profile.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/mod.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/verify.rs",
+      "tools/wdbx_complete_p1_crypto.py",
+      "tools/check_p1_crypto.sh",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/python_witness_tests.rs",
+      "tools/tests/test_wdbx_complete_p1_crypto.py"
+    ]
+  },
+  "P03.01": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/episode/admission.rs",
+      "crates/abi-wdbx/src/v3/episode/store/admission_gate.rs",
+      "crates/abi-wdbx/src/v3/episode/store/validate.rs",
+      "crates/abi-wdbx/src/v3/episode/store/quota/mod.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_admission_decision.rs",
+      "crates/abi-wdbx/tests/v3_quota_windows.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/episode/admission.rs",
+      "crates/abi-wdbx/src/v3/episode/store/admission_gate.rs",
+      "crates/abi-wdbx/src/v3/episode/store/validate.rs",
+      "crates/abi-wdbx/src/v3/episode/store/quota/mod.rs"
+    ]
+  },
+  "P03.02": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/episode/store/deletion.rs",
+      "crates/abi-wdbx/src/v3/episode/store/holds/mod.rs",
+      "crates/abi-wdbx/src/v3/episode/store/lineage.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_deletion_lifecycle.rs",
+      "crates/abi-wdbx/tests/v3_retention_expiry.rs",
+      "crates/abi-wdbx/tests/v3_holds_revocation.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/episode/store/deletion.rs",
+      "crates/abi-wdbx/src/v3/episode/store/holds/mod.rs",
+      "crates/abi-wdbx/src/v3/episode/store/lineage.rs"
+    ]
+  },
+  "P03.03": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/episode/store/deletion.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_deletion_lifecycle.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/episode/store/deletion.rs"
+    ]
+  },
+  "P03.04": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/episode/store/deletion.rs",
+      "crates/abi-wdbx/src/v3/episode/store/admission_gate.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/ledger.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/facade.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_deletion_lifecycle.rs",
+      "crates/abi-wdbx/tests/v3_admission_decision.rs",
+      "crates/abi-wdbx/tests/v3_complete_episode_authenticated.rs",
+      "crates/abi-wdbx/tests/v3_complete_episode_ledger.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/episode/store/deletion.rs",
+      "crates/abi-wdbx/src/v3/episode/store/admission_gate.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/ledger.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/facade.rs"
+    ]
+  },
+  "P04.01": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/dimensions.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/result.rs",
+      "crates/abi-wdbx/src/v3/ranking/signals.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_constitutional_query.rs",
+      "crates/abi-wdbx/tests/v3_dimension_ranking.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/dimensions.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/result.rs",
+      "crates/abi-wdbx/src/v3/ranking/signals.rs"
+    ]
+  },
+  "P04.02": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/episode/store/query/verdict.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/ranking/vector.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_constitutional_query.rs",
+      "crates/abi-wdbx/tests/v3_constitutional_query_holds.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/episode/store/query/verdict.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/ranking/vector.rs"
+    ]
+  },
+  "P04.03": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/evaluation/harness.rs",
+      "crates/abi-wdbx/src/evaluation/constitution.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_retrieval_baseline.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/evaluation/harness.rs",
+      "crates/abi-wdbx/src/evaluation/constitution.rs"
+    ]
+  },
+  "P05.01": {
+    "disposition": "external_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "AGENTS.md",
+      "specimen-studio/native/specimen-core/src/canonical/mod.rs",
+      "specimen-studio/native/specimen-core/src/canonical/manifest.rs",
+      "docs/completion/shared-types-v1.json"
+    ]
+  },
+  "P05.02": {
+    "disposition": "external_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "AGENTS.md",
+      "specimen-studio/native/specimen-core/src/canonical/mod.rs",
+      "specimen-studio/native/specimen-core/src/canonical/manifest.rs",
+      "docs/completion/shared-types-v1.json"
+    ]
+  },
+  "P05.03": {
+    "disposition": "external_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "AGENTS.md",
+      "specimen-studio/native/specimen-core/src/canonical/mod.rs",
+      "specimen-studio/native/specimen-core/src/canonical/manifest.rs",
+      "docs/completion/shared-types-v1.json"
+    ]
+  },
+  "P05.04": {
+    "disposition": "external_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "AGENTS.md",
+      "specimen-studio/native/specimen-core/src/canonical/mod.rs",
+      "specimen-studio/native/specimen-core/src/canonical/manifest.rs",
+      "docs/completion/shared-types-v1.json"
+    ]
+  },
+  "P06.01": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/federation/identity.rs",
+      "crates/abi-wdbx/src/v3/federation/grant.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_federation/trust.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/federation/identity.rs",
+      "crates/abi-wdbx/src/v3/federation/grant.rs"
+    ]
+  },
+  "P06.02": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/federation/importer.rs",
+      "crates/abi-wdbx/src/v3/federation/exporter.rs",
+      "crates/abi-wdbx/src/v3/federation/state.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_federation/exchange.rs",
+      "crates/abi-wdbx/tests/v3_federation/reconciliation.rs",
+      "crates/abi-wdbx/tests/v3_federation/deletion.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/federation/importer.rs",
+      "crates/abi-wdbx/src/v3/federation/exporter.rs",
+      "crates/abi-wdbx/src/v3/federation/state.rs"
+    ]
+  },
+  "P06.03": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/federation/importer.rs",
+      "crates/abi-wdbx/src/v3/federation/foreign.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_federation/reconciliation.rs",
+      "crates/abi-wdbx/tests/v3_federation/deletion.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/federation/importer.rs",
+      "crates/abi-wdbx/src/v3/federation/foreign.rs"
+    ]
+  },
+  "P07.01": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/offline/outbox.rs",
+      "crates/abi-wdbx/src/v3/offline/reauthorize.rs",
+      "crates/abi-wdbx/src/v3/offline/drain.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_offline_outbox/lifecycle.rs",
+      "crates/abi-wdbx/tests/v3_offline_outbox/format.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/offline/outbox.rs",
+      "crates/abi-wdbx/src/v3/offline/reauthorize.rs",
+      "crates/abi-wdbx/src/v3/offline/drain.rs"
+    ]
+  },
+  "P07.02": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/offline/asset.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_offline_outbox/asset.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/offline/asset.rs"
+    ]
+  },
+  "P07.03": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/offline/merge.rs",
+      "crates/abi-wdbx/src/v3/offline/types.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_offline_outbox/merge.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/offline/merge.rs",
+      "crates/abi-wdbx/src/v3/offline/types.rs"
+    ]
+  },
+  "P07.04": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/offline/reauthorize.rs",
+      "crates/abi-wdbx/src/v3/offline/outbox.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_offline_outbox/lifecycle.rs",
+      "crates/abi-wdbx/tests/v3_offline_outbox/asset.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/offline/reauthorize.rs",
+      "crates/abi-wdbx/src/v3/offline/outbox.rs"
+    ]
+  },
+  "P08.01": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/lib.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/model.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/validate.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/index.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/identity_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/identity_probe.rs",
+      "specimen-studio/native/specimen-kernel/src/text_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/model.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity_fixture.rs",
+      "specimen-studio/native/specimen-wasm/tests/identity_probe.rs",
+      "specimen-studio/tests/identity-parity.mjs",
+      "specimen-studio/scripts/check-identity-parity.sh",
+      "specimen-studio/native/specimen-kernel/tests/text_v3.rs",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/lib.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/model.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/validate.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/index.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/identity_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/identity_probe.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity_fixture.rs",
+      "specimen-studio/native/specimen-wasm/tests/identity_probe.rs",
+      "specimen-studio/tests/identity-parity.mjs",
+      "specimen-studio/scripts/check-identity-parity.sh",
+      "specimen-studio/native/specimen-kernel/src/text_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/tests/text_v3.rs",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/register/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/register/current-source-manifest.json",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/model.rs",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ]
+  },
+  "P08.02": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/model.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/register/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/register/current-source-manifest.json",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/model.rs",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ]
+  },
+  "P08.03": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/rational.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/tests/kernel.test.js",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/rational.rs",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3.rs",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/register/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/register/current-source-manifest.json",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ]
+  },
+  "P08.04": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/neural.rs",
+      "specimen-studio/native/specimen-kernel/src/engine.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-kernel/src/neural.rs",
+      "specimen-studio/tests/kernel.test.js"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/neural.rs",
+      "specimen-studio/native/specimen-kernel/src/engine.rs"
+    ]
+  },
+  "P08.05": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs"
+    ]
+  },
+  "P08.06": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-core/src/vision.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/src/vision.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-core/src/vision.rs"
+    ]
+  },
+  "P08.07": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/command/parse.rs",
+      "specimen-studio/native/specimen-kernel/src/command/apply.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/tests/kernel.test.js"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/command/parse.rs",
+      "specimen-studio/native/specimen-kernel/src/command/apply.rs"
+    ]
+  },
+  "P08.08": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-core/src/scheduler.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-core/src/scheduler.rs"
+    ]
+  },
+  "P08.09": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/src/scheduler.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/raft_partition.rs",
+      "specimen-studio/native/specimen-core/src/scheduler.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/src/scheduler.rs"
+    ]
+  },
+  "P08.10": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-kernel/src/lib.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/model.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/validate.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/index.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/identity_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/identity_probe.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs"
+    ],
+    "tests": [
+      "specimen-studio/tests/wasm-probe.test.js",
+      "specimen-studio/native/specimen-kernel/tests/identity.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity_fixture.rs",
+      "specimen-studio/native/specimen-wasm/tests/identity_probe.rs",
+      "specimen-studio/tests/identity-parity.mjs",
+      "specimen-studio/scripts/check-identity-parity.sh",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-kernel/src/lib.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/model.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/validate.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/index.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/identity_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/identity_probe.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity_fixture.rs",
+      "specimen-studio/native/specimen-wasm/tests/identity_probe.rs",
+      "specimen-studio/tests/identity-parity.mjs",
+      "specimen-studio/scripts/check-identity-parity.sh",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/register/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/register/current-source-manifest.json"
+    ]
+  },
+  "P09.01": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-core/src/canonical/mod.rs",
+      "specimen-studio/native/specimen-core/src/persistence/canonical.rs",
+      "specimen-studio/native/specimen-core/src/canonical/manifest.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/canonical.rs",
+      "specimen-studio/native/specimen-core/tests/canonical_store.rs",
+      "specimen-studio/tests/canonical-loss.test.js"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-core/src/canonical/mod.rs",
+      "specimen-studio/native/specimen-core/src/persistence/canonical.rs",
+      "specimen-studio/native/specimen-core/src/canonical/manifest.rs",
+      "specimen-studio/native/specimen-core/tests/canonical.rs",
+      "specimen-studio/native/specimen-core/tests/canonical_store.rs",
+      "specimen-studio/tests/canonical-loss.test.js"
+    ]
+  },
+  "P09.02": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/lib/specimen/native.ts",
+      "specimen-studio/lib/specimen/kernel-worker.ts",
+      "specimen-studio/native/specimen-core/src/persistence.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/tests/kernel-worker.test.js",
+      "specimen-studio/tests/native-network.test.js",
+      "specimen-studio/tests/ui-contract.test.js"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/lib/specimen/native.ts",
+      "specimen-studio/lib/specimen/kernel-worker.ts",
+      "specimen-studio/native/specimen-core/src/persistence.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/tests/kernel-worker.test.js",
+      "specimen-studio/tests/native-network.test.js",
+      "specimen-studio/tests/ui-contract.test.js"
+    ]
+  },
+  "P09.03": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-core/src/persistence.rs",
+      "specimen-studio/native/specimen-core/src/canonical/rebuild.rs",
+      "specimen-studio/lib/specimen/storage.ts"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/native/specimen-core/tests/canonical_store.rs",
+      "specimen-studio/tests/canonical-loss.test.js"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-core/src/persistence.rs",
+      "specimen-studio/native/specimen-core/src/canonical/rebuild.rs",
+      "specimen-studio/lib/specimen/storage.ts",
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/native/specimen-core/tests/canonical_store.rs",
+      "specimen-studio/tests/canonical-loss.test.js"
+    ]
+  },
+  "P10.01": {
+    "disposition": "external_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/shared-types-v1.json"
+    ],
+    "inspected": [
+      "specimen-studio/AGENTS.md",
+      "specimen-studio/scripts/qualification-summary.py",
+      "specimen-studio/tests/qualification-summary.test.js"
+    ]
+  },
+  "P10.02": {
+    "disposition": "external_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/shared-types-v1.json"
+    ],
+    "inspected": [
+      "specimen-studio/AGENTS.md",
+      "specimen-studio/scripts/qualification-summary.py",
+      "specimen-studio/tests/qualification-summary.test.js"
+    ]
+  },
+  "P10.03": {
+    "disposition": "external_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/shared-types-v1.json"
+    ],
+    "inspected": [
+      "specimen-studio/AGENTS.md",
+      "specimen-studio/scripts/qualification-summary.py",
+      "specimen-studio/tests/qualification-summary.test.js"
+    ]
+  },
+  "P10.04": {
+    "disposition": "external_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/shared-types-v1.json"
+    ],
+    "inspected": [
+      "specimen-studio/AGENTS.md",
+      "specimen-studio/scripts/qualification-summary.py",
+      "specimen-studio/tests/qualification-summary.test.js"
+    ]
+  },
+  "CH01": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/AGENTS.md",
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/requirements.json"
+    ]
+  },
+  "CH02": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/AGENTS.md",
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/requirements.json"
+    ]
+  },
+  "CH03": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs"
+    ]
+  },
+  "CH04": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/AGENTS.md",
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/requirements.json"
+    ]
+  },
+  "CH05": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/lib.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/model.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/validate.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/index.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/identity_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/identity_probe.rs",
+      "specimen-studio/native/specimen-kernel/src/text_v3/mod.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity_fixture.rs",
+      "specimen-studio/native/specimen-wasm/tests/identity_probe.rs",
+      "specimen-studio/tests/identity-parity.mjs",
+      "specimen-studio/scripts/check-identity-parity.sh",
+      "specimen-studio/native/specimen-kernel/tests/text_v3.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/lib.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/model.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/validate.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/index.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/identity_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/identity_probe.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity_fixture.rs",
+      "specimen-studio/native/specimen-wasm/tests/identity_probe.rs",
+      "specimen-studio/tests/identity-parity.mjs",
+      "specimen-studio/scripts/check-identity-parity.sh",
+      "specimen-studio/native/specimen-kernel/src/text_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/tests/text_v3.rs",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/register/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/register/current-source-manifest.json",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ]
+  },
+  "CH06": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/lib.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/model.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/validate.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/index.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/identity_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/identity_probe.rs",
+      "specimen-studio/native/specimen-kernel/src/text_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/model.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity_fixture.rs",
+      "specimen-studio/native/specimen-wasm/tests/identity_probe.rs",
+      "specimen-studio/tests/identity-parity.mjs",
+      "specimen-studio/scripts/check-identity-parity.sh",
+      "specimen-studio/native/specimen-kernel/tests/text_v3.rs",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/lib.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/model.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/validate.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/index.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/identity_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/identity_probe.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity_fixture.rs",
+      "specimen-studio/native/specimen-wasm/tests/identity_probe.rs",
+      "specimen-studio/tests/identity-parity.mjs",
+      "specimen-studio/scripts/check-identity-parity.sh",
+      "specimen-studio/native/specimen-kernel/src/text_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/tests/text_v3.rs",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/register/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/register/current-source-manifest.json",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/model.rs",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ]
+  },
+  "CH07": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/register/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/register/current-source-manifest.json",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ]
+  },
+  "CH08": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/model.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/register/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/register/current-source-manifest.json",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/model.rs",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ]
+  },
+  "CH09": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/rational.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/tests/kernel.test.js",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/rational.rs",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3.rs",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/register/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/register/current-source-manifest.json",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ]
+  },
+  "CH10": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/tests/kernel.test.js"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs"
+    ]
+  },
+  "CH11": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/tests/kernel.test.js"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs"
+    ]
+  },
+  "CH12": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/tests/kernel.test.js"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs"
+    ]
+  },
+  "CH13": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/neural.rs",
+      "specimen-studio/native/specimen-kernel/src/engine.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-kernel/src/neural.rs",
+      "specimen-studio/tests/kernel.test.js"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/neural.rs",
+      "specimen-studio/native/specimen-kernel/src/engine.rs"
+    ]
+  },
+  "CH14": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs"
+    ]
+  },
+  "CH15": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ]
+  },
+  "CH16": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-core/src/vision.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/src/vision.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-core/src/vision.rs"
+    ]
+  },
+  "CH17": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/command/parse.rs",
+      "specimen-studio/native/specimen-kernel/src/command/apply.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/tests/kernel.test.js"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/command/parse.rs",
+      "specimen-studio/native/specimen-kernel/src/command/apply.rs"
+    ]
+  },
+  "CH18": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/tests/kernel.test.js"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs"
+    ]
+  },
+  "CH19": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-core/src/scheduler.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-core/src/scheduler.rs"
+    ]
+  },
+  "CH20": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/src/scheduler.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/raft_partition.rs",
+      "specimen-studio/native/specimen-core/src/scheduler.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/src/scheduler.rs"
+    ]
+  },
+  "CH21": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/register/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/register/current-source-manifest.json",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ]
+  },
+  "CH22": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/command/parse.rs",
+      "specimen-studio/native/specimen-kernel/src/command/apply.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/tests/kernel.test.js"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/command/parse.rs",
+      "specimen-studio/native/specimen-kernel/src/command/apply.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/tests/kernel.test.js"
+    ]
+  },
+  "CH23": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/src/scheduler.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/rational.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/model.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/raft_partition.rs",
+      "specimen-studio/native/specimen-core/src/scheduler.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3.rs",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/src/scheduler.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/register/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/register/current-source-manifest.json",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/rational.rs",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/model.rs",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs"
+    ]
+  },
+  "CH24": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-core/src/persistence.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-core/src/persistence.rs"
+    ]
+  },
+  "CH25": {
+    "disposition": "candidate",
+    "implementation": [
+      "tools/check_completion.py",
+      "docs/completion/studio-acceptance-v1.json"
+    ],
+    "tests": [
+      "tools/tests/test_check_completion.py"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "tools/check_completion.py",
+      "docs/completion/studio-acceptance-v1.json",
+      "tools/tests/test_check_completion.py"
+    ]
+  },
+  "S01": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/lib.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/model.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/validate.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/index.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/identity_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/identity_probe.rs",
+      "specimen-studio/native/specimen-kernel/src/text_v3/mod.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-kernel/tests/identity.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity_fixture.rs",
+      "specimen-studio/native/specimen-wasm/tests/identity_probe.rs",
+      "specimen-studio/tests/identity-parity.mjs",
+      "specimen-studio/scripts/check-identity-parity.sh",
+      "specimen-studio/native/specimen-kernel/tests/text_v3.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/native/specimen-kernel/src/lib.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/model.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/validate.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/index.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/identity_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/identity_probe.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity_fixture.rs",
+      "specimen-studio/native/specimen-wasm/tests/identity_probe.rs",
+      "specimen-studio/tests/identity-parity.mjs",
+      "specimen-studio/scripts/check-identity-parity.sh",
+      "specimen-studio/native/specimen-kernel/src/text_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/tests/text_v3.rs",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/register/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/register/current-source-manifest.json",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ]
+  },
+  "S02": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/lib.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/model.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/validate.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/index.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/identity_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/identity_probe.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-kernel/tests/identity.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity_fixture.rs",
+      "specimen-studio/native/specimen-wasm/tests/identity_probe.rs",
+      "specimen-studio/tests/identity-parity.mjs",
+      "specimen-studio/scripts/check-identity-parity.sh"
+    ],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/native/specimen-kernel/src/lib.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/model.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/validate.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/index.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/identity_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/identity_probe.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity_fixture.rs",
+      "specimen-studio/native/specimen-wasm/tests/identity_probe.rs",
+      "specimen-studio/tests/identity-parity.mjs",
+      "specimen-studio/scripts/check-identity-parity.sh"
+    ]
+  },
+  "S03": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/lib.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/model.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/validate.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/index.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/identity_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/identity_probe.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-kernel/tests/identity.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity_fixture.rs",
+      "specimen-studio/native/specimen-wasm/tests/identity_probe.rs",
+      "specimen-studio/tests/identity-parity.mjs",
+      "specimen-studio/scripts/check-identity-parity.sh"
+    ],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/native/specimen-kernel/src/lib.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/model.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/validate.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/index.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/identity_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/identity_probe.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity_fixture.rs",
+      "specimen-studio/native/specimen-wasm/tests/identity_probe.rs",
+      "specimen-studio/tests/identity-parity.mjs",
+      "specimen-studio/scripts/check-identity-parity.sh"
+    ]
+  },
+  "S04": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/lib.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/model.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/validate.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/index.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/identity_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/identity_probe.rs",
+      "specimen-studio/native/specimen-kernel/src/text_v3/mod.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-kernel/tests/identity.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity_fixture.rs",
+      "specimen-studio/native/specimen-wasm/tests/identity_probe.rs",
+      "specimen-studio/tests/identity-parity.mjs",
+      "specimen-studio/scripts/check-identity-parity.sh",
+      "specimen-studio/native/specimen-kernel/tests/text_v3.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/native/specimen-kernel/src/lib.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/model.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/validate.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/index.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/identity_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/identity_probe.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity_fixture.rs",
+      "specimen-studio/native/specimen-wasm/tests/identity_probe.rs",
+      "specimen-studio/tests/identity-parity.mjs",
+      "specimen-studio/scripts/check-identity-parity.sh",
+      "specimen-studio/native/specimen-kernel/src/text_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/tests/text_v3.rs",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/register/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/register/current-source-manifest.json",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ]
+  },
+  "S05": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/rational.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/model.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3.rs",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/rational.rs",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3.rs",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/register/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/register/current-source-manifest.json",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/model.rs",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ]
+  },
+  "S06": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/rational.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/rational.rs",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3.rs",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/register/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/register/current-source-manifest.json",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ]
+  },
+  "S07": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ]
+  },
+  "S08": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ]
+  },
+  "S09": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ]
+  },
+  "S10": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ]
+  },
+  "S11": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ]
+  },
+  "S12": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ]
+  },
+  "S13": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ]
+  },
+  "S14": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ]
+  },
+  "S15": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ]
+  },
+  "S16": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ]
+  },
+  "S17": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/lib.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/model.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/validate.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/index.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/identity_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/identity_probe.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-kernel/tests/identity.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity_fixture.rs",
+      "specimen-studio/native/specimen-wasm/tests/identity_probe.rs",
+      "specimen-studio/tests/identity-parity.mjs",
+      "specimen-studio/scripts/check-identity-parity.sh"
+    ],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/native/specimen-kernel/src/lib.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/model.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/validate.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/index.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/identity_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/identity_probe.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity_fixture.rs",
+      "specimen-studio/native/specimen-wasm/tests/identity_probe.rs",
+      "specimen-studio/tests/identity-parity.mjs",
+      "specimen-studio/scripts/check-identity-parity.sh"
+    ]
+  },
+  "S18": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ]
+  },
+  "S19": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/register/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/register/current-source-manifest.json",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ]
+  },
+  "S20": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/model.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/register/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/register/current-source-manifest.json",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/model.rs",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ]
+  },
+  "S21": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/model.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/register/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/register/current-source-manifest.json",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/model.rs",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ]
+  },
+  "S22": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/neural.rs",
+      "specimen-studio/native/specimen-kernel/src/engine.rs"
+    ],
+    "tests": [
+      "specimen-studio/tests/kernel.test.js"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/neural.rs",
+      "specimen-studio/native/specimen-kernel/src/engine.rs"
+    ]
+  },
+  "S23": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/neural.rs",
+      "specimen-studio/native/specimen-kernel/src/engine.rs"
+    ],
+    "tests": [
+      "specimen-studio/tests/kernel.test.js"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/neural.rs",
+      "specimen-studio/native/specimen-kernel/src/engine.rs"
+    ]
+  },
+  "S24": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ]
+  },
+  "S25": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/register/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/register/current-source-manifest.json"
+    ]
+  },
+  "S26": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs"
+    ]
+  },
+  "S27": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/mutate.rs"
+    ],
+    "tests": [
+      "specimen-studio/tests/kernel.test.js"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/mutate.rs"
+    ]
+  },
+  "S28": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ]
+  },
+  "S29": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ]
+  },
+  "S30": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs"
+    ]
+  },
+  "S31": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/tests/kernel.test.js"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs"
+    ]
+  },
+  "S32": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ]
+  },
+  "S33": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ]
+  },
+  "S34": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/mutate.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/mutate.rs"
+    ]
+  },
+  "S35": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/mutate.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/mutate.rs"
+    ]
+  },
+  "S36": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ]
+  },
+  "S37": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ]
+  },
+  "S38": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-core/src/scheduler.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/src/scheduler.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-core/src/scheduler.rs"
+    ]
+  },
+  "S39": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/search.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/raft_partition.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/search.rs"
+    ]
+  },
+  "S40": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/lib.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/model.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/validate.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/index.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/identity_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/identity_probe.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity_fixture.rs",
+      "specimen-studio/native/specimen-wasm/tests/identity_probe.rs",
+      "specimen-studio/tests/identity-parity.mjs",
+      "specimen-studio/scripts/check-identity-parity.sh"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/lib.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/model.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/validate.rs",
+      "specimen-studio/native/specimen-kernel/src/identity/index.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/identity_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/identity_probe.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity.rs",
+      "specimen-studio/native/specimen-kernel/tests/identity_fixture.rs",
+      "specimen-studio/native/specimen-wasm/tests/identity_probe.rs",
+      "specimen-studio/tests/identity-parity.mjs",
+      "specimen-studio/scripts/check-identity-parity.sh"
+    ]
+  },
+  "S41": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/designs.json",
+      "docs/completion/plans.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/engine.rs",
+      "specimen-studio/native/specimen-kernel/src/mutate.rs",
+      "specimen-studio/native/specimen-kernel/src/search.rs",
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ]
+  },
+  "S42": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-core/src/vision.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/src/vision.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-core/src/vision.rs"
+    ]
+  },
+  "S43": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/mutate.rs"
+    ],
+    "tests": [
+      "specimen-studio/tests/kernel.test.js"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/mutate.rs"
+    ]
+  },
+  "S44": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-core/src/persistence.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-core/src/persistence.rs"
+    ]
+  },
+  "S45": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-core/src/persistence.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-core/tests/conformance.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-core/src/persistence.rs"
+    ]
+  },
+  "S46": {
+    "disposition": "candidate",
+    "implementation": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/model.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs"
+    ],
+    "tests": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/native/specimen-kernel/src/language.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+      "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_limits.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_numeric.rs",
+      "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs",
+      "docs/completion/execution/language-v3-profile.md",
+      "docs/completion/execution/evidence/2026-10-22-language/register/requirement-mapping.json",
+      "docs/completion/execution/evidence/2026-10-22-language/register/current-source-manifest.json",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/matching.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/mod.rs",
+      "specimen-studio/native/specimen-kernel/src/scanner_v3/routes/model.rs",
+      "specimen-studio/native/specimen-kernel/tests/scanner_v3_routes.rs",
+      "specimen-studio/native/specimen-wasm/Cargo.toml",
+      "specimen-studio/native/specimen-wasm/src/lib.rs",
+      "specimen-studio/native/specimen-wasm/src/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/examples/language_probe.rs",
+      "specimen-studio/native/specimen-wasm/tests/language_probe.rs",
+      "specimen-studio/tests/language-parity.mjs",
+      "specimen-studio/scripts/check-language-parity.sh"
+    ]
+  },
+  "CH26": {
+    "disposition": "local_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "specimen-studio/AGENTS.md",
+      "docs/completion/studio-acceptance-v1.json",
+      "docs/completion/requirements.json"
+    ]
+  },
+  "C01": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/canonical.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/validate.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/src/v3/complete_episode/tests/coverage.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/tests/draft_mapping.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/canonical.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/validate.rs"
+    ]
+  },
+  "C02": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/canonical.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/validate.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/src/v3/complete_episode/tests/coverage.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/tests/draft_mapping.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/canonical.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/validate.rs"
+    ]
+  },
+  "C03": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/canonical.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/validate.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/src/v3/complete_episode/tests/coverage.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/tests/draft_mapping.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/canonical.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/validate.rs"
+    ]
+  },
+  "C04": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/canonical.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/validate.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/src/v3/complete_episode/tests/coverage.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/tests/draft_mapping.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/canonical.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/validate.rs"
+    ]
+  },
+  "C05": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/canonical.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/validate.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/src/v3/complete_episode/tests/coverage.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/tests/draft_mapping.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/canonical.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/validate.rs"
+    ]
+  },
+  "C06": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/canonical.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/validate.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/src/v3/complete_episode/tests/coverage.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/tests/draft_mapping.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/canonical.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/validate.rs"
+    ]
+  },
+  "C07": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/canonical.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/validate.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/src/v3/complete_episode/tests/coverage.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/tests/draft_mapping.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/canonical.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/validate.rs"
+    ]
+  },
+  "C08": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/episode/store/lineage.rs",
+      "crates/abi-wdbx/src/v3/episode/store/holds/mod.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/src/v3/complete_episode/tests/coverage.rs",
+      "crates/abi-wdbx/tests/v3_memory_edge.rs",
+      "crates/abi-wdbx/tests/v3_holds_revocation.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/episode/store/lineage.rs",
+      "crates/abi-wdbx/src/v3/episode/store/holds/mod.rs"
+    ]
+  },
+  "C09": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/canonical.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/validate.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/src/v3/complete_episode/tests/coverage.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/tests/draft_mapping.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/canonical.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/validate.rs"
+    ]
+  },
+  "C10": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/complete_episode/canonical.rs",
+      "crates/abi-wdbx/src/v3/episode/signing.rs",
+      "crates/abi-wdbx/src/v3/episode/cose/verify.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/ledger.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/facade.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/mod.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/profile.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/verify.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/mod.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/command.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/apply.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/snapshot.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/src/v3/complete_episode/tests/decode_roundtrip.rs",
+      "crates/abi-wdbx/tests/v3_episode_signing.rs",
+      "crates/abi-wdbx/tests/v3_episode_cose.rs",
+      "crates/abi-wdbx/tests/v3_complete_episode_authenticated.rs",
+      "crates/abi-wdbx/tests/v3_complete_episode_ledger.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/tests.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/complete_episode/canonical.rs",
+      "crates/abi-wdbx/src/v3/episode/signing.rs",
+      "crates/abi-wdbx/src/v3/episode/cose/verify.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/ledger.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/facade.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/mod.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/profile.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/verify.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/mod.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/command.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/apply.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/snapshot.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/tests.rs"
+    ]
+  },
+  "C11": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/episode/store/query/dimensions.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/verdict.rs",
+      "crates/abi-wdbx/src/v3/ranking/signals.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/mod.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/profile.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/verify.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/mod.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/command.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/apply.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/snapshot.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/mod.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/evaluate.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/simulator.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_constitutional_query.rs",
+      "crates/abi-wdbx/tests/v3_dimension_ranking.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/tests.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/scenarios.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/episode/store/query/dimensions.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/verdict.rs",
+      "crates/abi-wdbx/src/v3/ranking/signals.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/mod.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/profile.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/verify.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/mod.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/command.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/apply.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/snapshot.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/mod.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/evaluate.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/simulator.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/tests.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/scenarios.rs"
+    ]
+  },
+  "C12": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/episode/store/query/dimensions.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/verdict.rs",
+      "crates/abi-wdbx/src/v3/ranking/signals.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_constitutional_query.rs",
+      "crates/abi-wdbx/tests/v3_dimension_ranking.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/episode/store/query/dimensions.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/verdict.rs",
+      "crates/abi-wdbx/src/v3/ranking/signals.rs"
+    ]
+  },
+  "C13": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/episode/store/query/dimensions.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/verdict.rs",
+      "crates/abi-wdbx/src/v3/ranking/signals.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_constitutional_query.rs",
+      "crates/abi-wdbx/tests/v3_dimension_ranking.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/episode/store/query/dimensions.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/verdict.rs",
+      "crates/abi-wdbx/src/v3/ranking/signals.rs"
+    ]
+  },
+  "C14": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/ranking/vector.rs",
+      "crates/abi-wdbx/src/v3/ranking/adapter.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_dimension_ranking.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/ranking/vector.rs",
+      "crates/abi-wdbx/src/v3/ranking/adapter.rs"
+    ]
+  },
+  "C15": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/episode/store/query/constraints.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_constitutional_query.rs",
+      "crates/abi-wdbx/tests/v3_constitutional_query_holds.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/episode/store/query/constraints.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs"
+    ]
+  },
+  "C16": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/replication/term.rs",
+      "crates/abi-wdbx/src/v3/replication/shard.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/ledger.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/facade.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/src/v3/replication/tests/fencing.rs",
+      "crates/abi-wdbx/tests/v3_complete_episode_authenticated.rs",
+      "crates/abi-wdbx/tests/v3_complete_episode_ledger.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/replication/term.rs",
+      "crates/abi-wdbx/src/v3/replication/shard.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/ledger.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/facade.rs"
+    ]
+  },
+  "C17": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/episode/admission.rs",
+      "crates/abi-wdbx/src/v3/episode/store/validate.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/src/v3/complete_episode/tests/draft_shape.rs",
+      "crates/abi-wdbx/tests/v3_admission_decision.rs",
+      "crates/abi-wdbx/tests/v3_retention_expiry.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/episode/admission.rs",
+      "crates/abi-wdbx/src/v3/episode/store/validate.rs"
+    ]
+  },
+  "C18": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/episode/admission.rs",
+      "crates/abi-wdbx/src/v3/episode/store/validate.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/src/v3/complete_episode/tests/draft_shape.rs",
+      "crates/abi-wdbx/tests/v3_admission_decision.rs",
+      "crates/abi-wdbx/tests/v3_retention_expiry.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/episode/admission.rs",
+      "crates/abi-wdbx/src/v3/episode/store/validate.rs"
+    ]
+  },
+  "C19": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/episode/admission.rs",
+      "crates/abi-wdbx/src/v3/episode/store/validate.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/src/v3/complete_episode/tests/draft_shape.rs",
+      "crates/abi-wdbx/tests/v3_admission_decision.rs",
+      "crates/abi-wdbx/tests/v3_retention_expiry.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/episode/admission.rs",
+      "crates/abi-wdbx/src/v3/episode/store/validate.rs"
+    ]
+  },
+  "C20": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/episode/admission.rs",
+      "crates/abi-wdbx/src/v3/episode/store/validate.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/src/v3/complete_episode/tests/draft_shape.rs",
+      "crates/abi-wdbx/tests/v3_admission_decision.rs",
+      "crates/abi-wdbx/tests/v3_retention_expiry.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/episode/admission.rs",
+      "crates/abi-wdbx/src/v3/episode/store/validate.rs"
+    ]
+  },
+  "C21": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/episode/admission.rs",
+      "crates/abi-wdbx/src/v3/episode/store/validate.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/src/v3/complete_episode/tests/draft_shape.rs",
+      "crates/abi-wdbx/tests/v3_admission_decision.rs",
+      "crates/abi-wdbx/tests/v3_retention_expiry.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/complete_episode/types.rs",
+      "crates/abi-wdbx/src/v3/episode/admission.rs",
+      "crates/abi-wdbx/src/v3/episode/store/validate.rs"
+    ]
+  },
+  "OS01": {
+    "disposition": "external_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/shared-types-v1.json"
+    ],
+    "inspected": [
+      "specimen-studio/AGENTS.md",
+      "specimen-studio/scripts/qualification-summary.py",
+      "specimen-studio/tests/qualification-summary.test.js"
+    ]
+  },
+  "OS02": {
+    "disposition": "external_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/shared-types-v1.json"
+    ],
+    "inspected": [
+      "specimen-studio/AGENTS.md",
+      "specimen-studio/scripts/qualification-summary.py",
+      "specimen-studio/tests/qualification-summary.test.js"
+    ]
+  },
+  "OS03": {
+    "disposition": "external_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/shared-types-v1.json"
+    ],
+    "inspected": [
+      "specimen-studio/AGENTS.md",
+      "specimen-studio/scripts/qualification-summary.py",
+      "specimen-studio/tests/qualification-summary.test.js"
+    ]
+  },
+  "OS04": {
+    "disposition": "external_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/shared-types-v1.json"
+    ],
+    "inspected": [
+      "specimen-studio/AGENTS.md",
+      "specimen-studio/scripts/qualification-summary.py",
+      "specimen-studio/tests/qualification-summary.test.js"
+    ]
+  },
+  "OS05": {
+    "disposition": "external_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/shared-types-v1.json"
+    ],
+    "inspected": [
+      "specimen-studio/AGENTS.md",
+      "specimen-studio/scripts/qualification-summary.py",
+      "specimen-studio/tests/qualification-summary.test.js"
+    ]
+  },
+  "OS06": {
+    "disposition": "external_gap",
+    "implementation": [],
+    "tests": [],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/shared-types-v1.json"
+    ],
+    "inspected": [
+      "specimen-studio/AGENTS.md",
+      "specimen-studio/scripts/qualification-summary.py",
+      "specimen-studio/tests/qualification-summary.test.js"
+    ]
+  },
+  "E01": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/episode/store/query/dimensions.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/ranking/signals.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/mod.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/profile.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/verify.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/mod.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/command.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/apply.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/snapshot.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/mod.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/evaluate.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/simulator.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_constitutional_query.rs",
+      "crates/abi-wdbx/tests/v3_dimension_ranking.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/tests.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/scenarios.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/episode/store/query/dimensions.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/ranking/signals.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/mod.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/profile.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/verify.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/mod.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/command.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/apply.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/snapshot.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/mod.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/evaluate.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/simulator.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/verify_tests.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/trust/tests.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/tests.rs",
+      "crates/abi-wdbx/src/v3/complete_episode/crypto/admission/scenarios.rs"
+    ]
+  },
+  "E02": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/episode/store/query/dimensions.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/ranking/signals.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_constitutional_query.rs",
+      "crates/abi-wdbx/tests/v3_dimension_ranking.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/episode/store/query/dimensions.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/ranking/signals.rs"
+    ]
+  },
+  "E03": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/episode/store/query/dimensions.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/ranking/signals.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_constitutional_query.rs",
+      "crates/abi-wdbx/tests/v3_dimension_ranking.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/episode/store/query/dimensions.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/ranking/signals.rs"
+    ]
+  },
+  "E04": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/episode/store/query/dimensions.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/ranking/signals.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_constitutional_query.rs",
+      "crates/abi-wdbx/tests/v3_dimension_ranking.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/episode/store/query/dimensions.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/ranking/signals.rs"
+    ]
+  },
+  "E05": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/episode/store/query/dimensions.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/ranking/signals.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_constitutional_query.rs",
+      "crates/abi-wdbx/tests/v3_dimension_ranking.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/episode/store/query/dimensions.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/ranking/signals.rs"
+    ]
+  },
+  "E06": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/episode/store/query/dimensions.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/ranking/signals.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_constitutional_query.rs",
+      "crates/abi-wdbx/tests/v3_dimension_ranking.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/episode/store/query/dimensions.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/ranking/signals.rs"
+    ]
+  },
+  "E07": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/episode/store/query/dimensions.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/ranking/signals.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_constitutional_query.rs",
+      "crates/abi-wdbx/tests/v3_dimension_ranking.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/episode/store/query/dimensions.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/ranking/signals.rs"
+    ]
+  },
+  "E08": {
+    "disposition": "candidate",
+    "implementation": [
+      "crates/abi-wdbx/src/v3/episode/store/query/dimensions.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/ranking/signals.rs"
+    ],
+    "tests": [
+      "crates/abi-wdbx/tests/v3_constitutional_query.rs",
+      "crates/abi-wdbx/tests/v3_dimension_ranking.rs"
+    ],
+    "qualification_plan": [
+      "docs/completion/plans.json",
+      "docs/completion/designs.json"
+    ],
+    "inspected": [
+      "crates/abi-wdbx/src/v3/episode/store/query/dimensions.rs",
+      "crates/abi-wdbx/src/v3/episode/store/query/project.rs",
+      "crates/abi-wdbx/src/v3/ranking/signals.rs"
+    ]
+  }
+}

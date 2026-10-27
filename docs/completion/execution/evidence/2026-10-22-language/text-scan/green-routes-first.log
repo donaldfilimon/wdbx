@@ -1,0 +1,22 @@
+   Compiling specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+warning: stripping debug info with `rust-objcopy` failed: signal: 6 (SIGABRT)
+  |
+  = note: dyld[14824]: Library not loaded: @rpath/libLLVM.dylib
+            Referenced from: <D6B3C499-A2AF-3E42-8F77-C42BD658AAB5> /Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/rust-objcopy
+            Reason: tried: '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/.rustup/toolchains/1.99.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib' (no such file), '/Users/donald/sources/repos/wdbx/specimen-studio/target/debug/deps/libLLVM.dylib' (no such file), '/Users/donald/lib/libLLVM.dylib' (no such file), '/usr/local/lib/libLLVM.dylib' (no such file), '/usr/lib/libLLVM.dylib' (no such file, not in dyld cache)
+          
+
+warning: `specimen-kernel` (test "scanner_v3_routes") generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 1.73s
+     Running tests/scanner_v3_routes.rs (specimen-studio/target/debug/deps/scanner_v3_routes-0e36100fb8daf36c)
+
+running 6 tests
+test blocked_routes_retain_constraints_without_successful_automaton_execution ... ok
+test grammar_wildcard_and_automaton_routes_cross_literal_keys_and_keep_captures ... ok
+test population_scope_reference_and_registration_failures_are_atomic ... ok
+test s05_distinct_originals_share_low_key_but_full_scanner_evidence_differs ... ok
+test duplicate_paths_and_repeated_contains_keep_distinct_capture_origins ... ok
+test runaway_and_shared_budgets_return_errors_without_partial_candidates ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

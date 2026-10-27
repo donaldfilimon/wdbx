@@ -1,0 +1,56 @@
+{
+  "kind": "Current bounded requirement routing; no claim promotion",
+  "hash_policy": "Current source refs hash-bound; historical receipts never relabelled as current execution",
+  "recorded_date": "2026-10-26",
+  "test_file": "specimen-studio/native/specimen-kernel/tests/lifecycle_local_gaps_v1.rs",
+  "command": "PATH=<rustup 1.99.1 bin>:/usr/bin:$PATH CARGO_BUILD_JOBS=2 cargo test --locked -p specimen-kernel --test lifecycle_local_gaps_v1 < /dev/null (from specimen-studio/)",
+  "logs": {
+    "tests": "kernel-lifecycle-tests.log",
+    "mutants": "mutation-check.log",
+    "fix1_tests": "fix1-kernel-lifecycle-tests.log",
+    "fix1_mutants": "fix1-mutation-check.log"
+  },
+  "test_commit": "20007bd",
+  "cases": {
+    "S29": {
+      "test": "lifecycle_local_gaps_v1",
+      "names": [
+        "s29_spent_same_pattern_node_is_removed_and_peers_remain",
+        "s29_removing_last_same_pattern_node_unlinks_resources",
+        "s29_unflipped_node_at_one_is_not_removed"
+      ],
+      "impl": [
+        "specimen-studio/native/specimen-kernel/src/mutate.rs"
+      ],
+      "assertion": "Negative feedback taking one of two same-patternId nodes from strength 1 to 0 removes only that record and its attachments while an unrelated b->c attachment and node survive; the peer is byte-identical and keeps resource links. Removing the last same-patternId node unlinks resources (boundary); an unflipped coin leaves the node at 1 (negative).",
+      "blockers": [
+        "Logical ID is patternId; removal of the zero-strength record is by ref inside mutate::feedback. Other strength-decrement paths (maintenance, imports) are not exercised.",
+        "Synthetic in-memory fixtures on FixedHost only; no saved-store, import/ID-migration, UI, browser/WASM parity or installed-application path is exercised.",
+        "Whole frozen case/requirement remains open/C0/unknown; direct assertions are candidate evidence, not acceptance, efficacy or independent review."
+      ]
+    },
+    "S33": {
+      "test": "lifecycle_local_gaps_v1",
+      "names": [
+        "s33_four_weak_with_five_strong_keeps_four"
+      ],
+      "impl": [
+        "specimen-studio/native/specimen-kernel/src/engine.rs"
+      ],
+      "assertion": "engine::maintain mutation with four weak and five strong alternatives commits one remix; the recipient keeps exactly its four slot ids (no fifth added) and the donor keeps five, unchanged.",
+      "blockers": [
+        "Single seeded fixture; other pool sizes and multi-entry nodes are covered only by the shared min(weak,strong) mechanism.",
+        "Synthetic in-memory fixtures on FixedHost only; no saved-store, import/ID-migration, UI, browser/WASM parity or installed-application path is exercised.",
+        "Whole frozen case/requirement remains open/C0/unknown; direct assertions are candidate evidence, not acceptance, efficacy or independent review."
+      ]
+    }
+  },
+  "disposition_change": "S29, S33: local_gap -> candidate. S32 withdrawn (fix round 1) and restored to its BASE local_gap row. Counts 129/18/16 -> 131/16/16. All 163 remain open/C0/unknown.",
+  "fix1_commit_tests": "Same commit as this mapping revision (fix round 1: S29 negative control, S32 withdrawal).",
+  "withdrawn": {
+    "S32": {
+      "reverted_to": "local_gap",
+      "reason": "Frozen design docs/completion/synthesis-contract-v1.md:131-132 and designs.json require tail retirement by recipient-ref order (not array position) and atomic storage of the selected mapping and permanent retired refs. engine::maintain truncates by array position and stores neither; the earlier fixture (ids w0..w4) could not distinguish the two orders. The adjacent tests remain as shortening_mechanism_* and are not S32 evidence."
+    }
+  }
+}

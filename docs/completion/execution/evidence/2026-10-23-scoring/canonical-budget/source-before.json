@@ -1,0 +1,5 @@
+{
+  "specimen-studio/native/specimen-kernel/src/lib.rs": "361b35e56069f153008797b4975f4a5328a8c6fba0644fd6c9206d097f7d491c",
+  "specimen-studio/native/specimen-kernel/src/scoring_v3/budget.rs": "5230076cc5c567fbacd7261dd115caa7d4af129201fbb872f795321a2fe12981",
+  "specimen-studio/native/specimen-kernel/src/orchestration_v3/budget.rs": "05358e060925aa811e183cb943bc31632d877faf01f8f3ecae7ce9337e542076"
+}

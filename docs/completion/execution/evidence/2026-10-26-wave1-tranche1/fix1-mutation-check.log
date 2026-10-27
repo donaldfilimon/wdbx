@@ -1,0 +1,8 @@
+## mutant 4: remove_node clears every attachment
+test s29_unflipped_node_at_one_is_not_removed ... ok
+test s29_spent_same_pattern_node_is_removed_and_peers_remain ... FAILED
+test s29_removing_last_same_pattern_node_unlinks_resources ... ok
+test shortening_mechanism_remixed_tail_blocks_shortening ... ok
+test s33_four_weak_with_five_strong_keeps_four ... ok
+test shortening_mechanism_keeps_first_min_slots_by_array_position ... ok
+test result: FAILED. 5 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s

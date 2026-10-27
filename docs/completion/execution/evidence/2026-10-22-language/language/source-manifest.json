@@ -1,0 +1,52 @@
+[
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/arithmetic.rs",
+    "sha256": "dbd2dfa4859c27c2d34dec0b94a50f71176490501f7f3bc032947d4cb6c820c7",
+    "lines": 214
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/mod.rs",
+    "sha256": "b479b4d1426a30352fdb4a68212f84bebf36249963466a1cfa97656a11a3ac73",
+    "lines": 66
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/model.rs",
+    "sha256": "eb5789eea988a9dd5cbf042a14a6b75559e8768cb281cb1f0bdb1e1581a3ecc3",
+    "lines": 371
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/prepare.rs",
+    "sha256": "7163cdfe560177689fde421ebf0d1bf522285a730a7ebf6c5a3d3d9acd053c29",
+    "lines": 751
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/script/tape.rs",
+    "sha256": "5f4e4138fdb860288085f877ebe1eb81c7f336b599571a63d8f0e4216fb51c1f",
+    "lines": 71
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/script.rs",
+    "sha256": "05dcccfcb31a6f56c9acdd517c71d317618c220d72384a40f934cc11f646a49f",
+    "lines": 565
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/tables.rs",
+    "sha256": "afe5b7dba0b053c195991a887b2ca7a73bfc8d4cace870510423b50ab5a4dc4f",
+    "lines": 266
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/src/language_v3/tokenize.rs",
+    "sha256": "5cb736d802fa8bf7b932037b2feec26b90f71b5f04383d2d51068e4a2d5bd9d1",
+    "lines": 77
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/tests/language_v3.rs",
+    "sha256": "409a1207f7be4fcff014f4ed40bbcb73a165f5a6d97fcf9202215c7baafa3604",
+    "lines": 821
+  },
+  {
+    "path": "specimen-studio/native/specimen-kernel/tests/language_v3_scripts.rs",
+    "sha256": "4c1ea40e3057c06ef8d06e17a0cb88b18fa1e211d8b13ab3cd711905dab9268b",
+    "lines": 319
+  }
+]

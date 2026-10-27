@@ -1,0 +1,25 @@
+    Checking specimen-kernel v0.2.0 (/Users/donald/sources/repos/wdbx/specimen-studio/native/specimen-kernel)
+error: this `if` statement can be collapsed
+   --> native/specimen-kernel/src/language_v3/script.rs:318:5
+    |
+318 | /     if let Value::Text(text) = &value {
+319 | |         if text.len() > budget.output_bytes {
+320 | |             return Err(LanguageError::OutputBudget);
+321 | |         }
+322 | |     }
+    | |_____^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#collapsible_if
+    = note: `-D clippy::collapsible-if` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::collapsible_if)]`
+help: collapse nested if block
+    |
+318 ~     if let Value::Text(text) = &value
+319 ~         && text.len() > budget.output_bytes {
+320 |             return Err(LanguageError::OutputBudget);
+321 ~         }
+    |
+
+error: could not compile `specimen-kernel` (lib test) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `specimen-kernel` (lib) due to 1 previous error
