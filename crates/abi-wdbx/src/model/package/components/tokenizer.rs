@@ -1,14 +1,18 @@
 //! Tokenizer schema 1.0; imported provenance is never synthesized.
 use super::{Cursor, Result};
 use crate::model::{
-    contract::tokenizer::{Merge, Tokenizer},
+    contract::tokenizer::{Merge, Normalization, SpecialPolicy, Tokenizer},
+    error::ErrorKind as E,
     ids::TokenId,
 };
 pub(super) fn parse(r: &mut Cursor<'_, '_>) -> Result<Tokenizer> {
     r.tokenizer_cap()?;
     let identity = r.string(4096)?;
-    let normalization = r.e8()?;
-    let special_policy = r.e8()?;
+    // Clarification 1.0.1: profile bytes use the tokenizer family, as in the witness.
+    let normalization = Normalization::try_from(r.u8()?)
+        .map_err(|_| r.error(E::InvalidTokenizer, "tokenizer-profile"))?;
+    let special_policy = SpecialPolicy::try_from(r.u8()?)
+        .map_err(|_| r.error(E::InvalidTokenizer, "tokenizer-profile"))?;
     let reserved = r.u16()?;
     let pad_id = TokenId(r.u32()?);
     let bos_id = TokenId(r.u32()?);

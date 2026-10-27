@@ -52,3 +52,13 @@ outside the supplied values/slice are outside this per-call budget.
 Idempotent staging verifies and syncs the same existing file handle, then syncs
 the directory. Both an already-present object and a no-clobber collision require
 this data sync; a sync failure returns an error rather than a durable receipt.
+
+`tokenizer-profile-negatives-v1.json`, SHA-256
+`d6feb7ebeb2a8446008f1bcf7dbbc8ed65345dec21acd614d886c580049e8a4a`, adds two
+semantic negatives for tokenizer clarification 1.0.1 without touching
+`manifest.json` or any `.hex`: frozen `inference` with tokenizer component byte
+20 (`normalization`) set to 1, and with byte 21 (`special_policy`) set to 2, each
+with recomputed component-4 and directory SHA-256. A scratch `struct`/`hashlib`
+worksheet produced them, never the witness or the Rust writer. Both languages pin
+the file digest and expect `InvalidTokenizer`; Python also checks that only the
+named byte and the two hashes differ from `inference`.

@@ -143,6 +143,30 @@ class BpeTrainerReferenceTests(unittest.TestCase):
             ref.validate(bytes(raw))
         self.assertEqual(error.exception.code, 'InvalidTensor')
 
+    def test_tokenizer_profile_bytes_have_tokenizer_family(self):
+        path = FIXTURES / 'tokenizer-profile-negatives-v1.json'
+        self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), 'd6feb7ebeb2a8446008f1bcf7dbbc8ed65345dec21acd614d886c580049e8a4a')
+        doc = json.loads(path.read_bytes())
+        self.assertEqual(doc['format'], 'native-model-tokenizer-profile-negatives-v1')
+        self.assertEqual({row['field'] for row in doc['vectors']}, {'normalization', 'special_policy'})
+        for row in doc['vectors']:
+            with self.subTest(row['name']):
+                raw = bytes.fromhex(row['hex'])
+                self.assertEqual(hashlib.sha256(raw).hexdigest(), row['artifact_sha256'])
+                base = bytes.fromhex((FIXTURES / (row['base'] + '.hex')).read_text())
+                self.assertEqual(hashlib.sha256(base).hexdigest(), row['base_artifact_sha256'])
+                entry = 96 + 3 * 80
+                self.assertEqual(struct.unpack_from('<H', raw, entry)[0], row['component_kind'])
+                offset = struct.unpack_from('<Q', raw, entry + 16)[0]
+                changed = {i for i in range(len(raw)) if raw[i] != base[i]}
+                allowed = set(range(32, 64)) | set(range(entry + 32, entry + 64))
+                self.assertEqual(changed - allowed, {offset + row['component_offset']})
+                self.assertEqual((base[offset + row['component_offset']], raw[offset + row['component_offset']]), (row['original'], row['value']))
+                self.assertEqual(ref.frame(raw)['stage'], 'FramedPackage')
+                with self.assertRaises(ref.ContractError) as error:
+                    ref.validate(raw)
+                self.assertEqual(error.exception.code, row['expected'])
+
     def test_versioned_offset_erratum_preserves_v1_and_marks_absent_payloads(self):
         path = FIXTURES / 'field-table-errata-v2.json'
         self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), '0b5064e396dcbaa365bd038fa611acb88ef9869d01edd6aa434dcbb60facd678')

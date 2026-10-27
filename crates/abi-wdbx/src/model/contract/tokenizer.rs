@@ -14,7 +14,7 @@ impl TryFrom<u8> for Normalization {
         match value {
             0 => Ok(Self::None),
             _ => Err(super::super::error::ModelError::new(
-                super::super::error::ErrorKind::NonCanonical,
+                super::super::error::ErrorKind::InvalidTokenizer,
                 "Normalization",
                 None,
                 None,
@@ -36,7 +36,7 @@ impl TryFrom<u8> for SpecialPolicy {
         match value {
             1 => Ok(Self::TypedStructural),
             _ => Err(super::super::error::ModelError::new(
-                super::super::error::ErrorKind::NonCanonical,
+                super::super::error::ErrorKind::InvalidTokenizer,
                 "SpecialPolicy",
                 None,
                 None,
